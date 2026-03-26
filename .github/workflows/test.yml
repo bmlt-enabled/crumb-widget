@@ -1,0 +1,37 @@
+name: test
+on:
+  push:
+    branches-ignore: ['main']
+
+jobs:
+  test-ts:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: checkout 🛒
+        uses: actions/checkout@v6
+
+      - name: node 24 ❇️
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'npm'
+
+      - name: cache dependencies 💾
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: make npm ♦️
+        run: |
+          npm ci
+
+      - name: make lint-js 🧹
+        run: |
+          npm run lint
+
+      - name: make test-js 🧪
+        run: |
+          npm run test
