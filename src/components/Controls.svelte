@@ -113,7 +113,7 @@
 
       <!-- Venue type filter -->
       <div class="min-w-[140px]">
-        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">Format</p>
+        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">Venue Type</p>
         <div class="flex flex-wrap gap-1">
           {#each VENUE_TYPES as vt (vt.value)}
             <button
