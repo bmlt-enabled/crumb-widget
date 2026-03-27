@@ -14,6 +14,8 @@ export interface AppConfig {
   defaultView: 'list' | 'map';
   containerId: string;
   locationMarker?: MarkerConfig;
+  tiles?: TilesConfig;
+  tilesDark?: TilesConfig;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -38,10 +40,17 @@ export interface FilterState {
 
 export type ViewType = 'list' | 'map' | 'detail';
 
+export interface TilesConfig {
+  url: string;
+  attribution: string;
+}
+
 export interface BmltMeetingListGlobalConfig {
   language?: string;
   defaultView?: 'list' | 'map';
   map?: {
+    tiles?: TilesConfig;
+    tiles_dark?: TilesConfig;
     markers?: {
       location?: MarkerConfig;
     };

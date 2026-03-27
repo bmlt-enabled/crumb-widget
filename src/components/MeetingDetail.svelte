@@ -12,7 +12,7 @@
 
 <div class="mx-auto max-w-2xl px-4 py-6">
   <!-- Back button -->
-  <button onclick={clearSelectedMeeting} class="mb-4 flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800">
+  <button onclick={clearSelectedMeeting} class="bmlt-link mb-4 flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800">
     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
     </svg>
@@ -24,17 +24,17 @@
   <!-- Venue type badge -->
   <div class="mb-4">
     {#if meeting.isInPerson}
-      <span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-sm font-medium text-green-700">In-Person</span>
+      <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-sm font-medium text-green-700">In-Person</span>
     {:else if meeting.isVirtual}
-      <span class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-sm font-medium text-blue-700">Virtual</span>
+      <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-sm font-medium text-blue-700">Virtual</span>
     {:else if meeting.isHybrid}
-      <span class="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1 text-sm font-medium text-purple-700">Hybrid</span>
+      <span class="bmlt-badge-hybrid inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1 text-sm font-medium text-purple-700">Hybrid</span>
     {/if}
   </div>
 
   <div class="space-y-4">
     <!-- Schedule -->
-    <div class="rounded-lg border border-gray-200 p-4">
+    <div class="bmlt-card rounded-lg border border-gray-200 p-4">
       <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700">
         <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -54,7 +54,7 @@
 
     <!-- Location (in-person or hybrid) -->
     {#if !meeting.isVirtual && meeting.formattedAddress}
-      <div class="rounded-lg border border-gray-200 p-4">
+      <div class="bmlt-card rounded-lg border border-gray-200 p-4">
         <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700">
           <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -69,7 +69,7 @@
         {#if meeting.location_info}
           <p class="mt-1 text-sm text-gray-500">{meeting.location_info}</p>
         {/if}
-        <a href={getDirectionsUrl(meeting)} target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800">
+        <a href={getDirectionsUrl(meeting)} target="_blank" rel="noopener noreferrer" class="bmlt-link mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800">
           Get directions
           <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -81,7 +81,7 @@
     <!-- Virtual meeting link -->
     {#if meeting.isVirtual || meeting.isHybrid}
       {#if meeting.virtual_meeting_link || meeting.virtual_meeting_additional_info}
-        <div class="rounded-lg border border-gray-200 p-4">
+        <div class="bmlt-card rounded-lg border border-gray-200 p-4">
           <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700">
             <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
@@ -98,7 +98,7 @@
               href={meeting.virtual_meeting_link}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              class="bmlt-btn-primary inline-flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
               Join Meeting
               <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +115,7 @@
 
     <!-- Formats -->
     {#if meeting.resolvedFormats.length > 0}
-      <div class="rounded-lg border border-gray-200 p-4">
+      <div class="bmlt-card rounded-lg border border-gray-200 p-4">
         <h3 class="mb-2 text-sm font-semibold text-gray-700">Meeting Formats</h3>
         <div class="flex flex-wrap gap-1.5">
           {#each meeting.resolvedFormats as fmt (fmt.id)}
@@ -127,7 +127,7 @@
 
     <!-- Notes -->
     {#if meeting.comments}
-      <div class="rounded-lg border border-gray-200 p-4">
+      <div class="bmlt-card rounded-lg border border-gray-200 p-4">
         <h3 class="mb-2 text-sm font-semibold text-gray-700">Notes</h3>
         <p class="text-sm text-gray-600">{meeting.comments}</p>
       </div>
@@ -135,9 +135,9 @@
 
     <!-- Contact -->
     {#if meeting.email_contact}
-      <div class="rounded-lg border border-gray-200 p-4">
+      <div class="bmlt-card rounded-lg border border-gray-200 p-4">
         <h3 class="mb-2 text-sm font-semibold text-gray-700">Contact</h3>
-        <a href="mailto:{meeting.email_contact}" class="text-sm text-blue-600 hover:text-blue-800">
+        <a href="mailto:{meeting.email_contact}" class="bmlt-link text-sm text-blue-600 hover:text-blue-800">
           {meeting.email_contact}
         </a>
       </div>

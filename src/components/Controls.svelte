@@ -43,7 +43,7 @@
     <button
       onclick={() => (showFilters = !showFilters)}
       class="relative flex items-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition-colors {showFilters
-        ? 'border-blue-500 bg-blue-50 text-blue-700'
+        ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
         : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
     >
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@
       </svg>
       Filters
       {#if activeFilterCount > 0}
-        <span class="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-xs text-white">{activeFilterCount}</span>
+        <span class="bmlt-btn-primary absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-xs text-white">{activeFilterCount}</span>
       {/if}
     </button>
 
@@ -66,7 +66,7 @@
         <button
           onclick={() => setView('list')}
           class="flex items-center gap-1.5 rounded-l-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view !== 'detail' && uiState.view === 'list'
-            ? 'bg-blue-600 text-white'
+            ? 'bmlt-btn-primary bg-blue-600 text-white'
             : 'text-gray-700 hover:bg-gray-50'}"
           title="List view"
         >
@@ -77,7 +77,9 @@
         </button>
         <button
           onclick={() => setView('map')}
-          class="flex items-center gap-1.5 rounded-r-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view === 'map' ? 'bg-blue-600 text-white' : 'text-gray-700 hover:bg-gray-50'}"
+          class="flex items-center gap-1.5 rounded-r-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view === 'map'
+            ? 'bmlt-btn-primary bg-blue-600 text-white'
+            : 'text-gray-700 hover:bg-gray-50'}"
           title="Map view"
         >
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,8 +106,9 @@
           {#each WEEKDAYS.slice(1) as day, i (i)}
             <button
               onclick={() => toggleArrayFilter('weekdays', i + 1)}
-              class="rounded px-2 py-0.5 text-xs font-medium transition-colors {uiState.filters.weekdays.includes(i + 1) ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}"
-              >{day.slice(0, 3)}</button
+              class="rounded px-2 py-0.5 text-xs font-medium transition-colors {uiState.filters.weekdays.includes(i + 1)
+                ? 'bmlt-btn-primary bg-blue-600 text-white'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{day.slice(0, 3)}</button
             >
           {/each}
         </div>
@@ -119,7 +122,7 @@
             <button
               onclick={() => toggleArrayFilter('venueTypes', vt.value)}
               class="rounded px-2 py-0.5 text-xs font-medium transition-colors {uiState.filters.venueTypes.includes(vt.value)
-                ? 'bg-blue-600 text-white'
+                ? 'bmlt-btn-primary bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{vt.label}</button
             >
           {/each}
@@ -134,7 +137,7 @@
             <button
               onclick={() => toggleArrayFilter('timeOfDay', tod.value)}
               class="rounded px-2 py-0.5 text-xs font-medium transition-colors {uiState.filters.timeOfDay.includes(tod.value)
-                ? 'bg-blue-600 text-white'
+                ? 'bmlt-btn-primary bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{tod.label}</button
             >
           {/each}

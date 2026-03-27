@@ -26,4 +26,6 @@ export function initConfig(el: HTMLElement): void {
   config.defaultView = globalCfg.defaultView ?? defaultView;
   config.containerId = el.id || 'bmlt-meeting-list';
   config.locationMarker = globalCfg.map?.markers?.location;
+  config.tiles = globalCfg.map?.tiles;
+  config.tilesDark = globalCfg.map?.tiles_dark;
 }

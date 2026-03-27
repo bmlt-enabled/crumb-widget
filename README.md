@@ -57,7 +57,124 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults:
 | Property | Type | Description |
 |---|---|---|
 | `defaultView` | `'list' \| 'map'` | Default view on load. Takes precedence over `data-view`. |
+| `map.tiles` | `TilesConfig` | Custom map tile provider. See below. |
+| `map.tiles_dark` | `TilesConfig` | Alternate tile provider used when `prefers-color-scheme: dark`. See below. |
 | `map.markers.location` | `MarkerConfig` | Custom map marker for meeting locations. See below. |
+
+#### CSS customization
+
+You can theme the widget using CSS custom properties on the `#bmlt-meeting-list` element. Here are all available variables and their defaults:
+
+```css
+#bmlt-meeting-list {
+  --bmlt-font-family: system-ui, -apple-system, sans-serif;
+  --bmlt-font-size: 16px;
+  --bmlt-background: #ffffff;
+  --bmlt-text: #111827;
+  --bmlt-border: #e5e7eb;
+  --bmlt-accent: #2563eb;        /* buttons, active states, links */
+  --bmlt-accent-light: #eff6ff;  /* row hover, active filter panel */
+  --bmlt-border-radius: 8px;
+  --bmlt-in-person: #15803d;
+  --bmlt-in-person-bg: #dcfce7;
+  --bmlt-virtual: #1d4ed8;
+  --bmlt-virtual-bg: #dbeafe;
+  --bmlt-hybrid: #7e22ce;
+  --bmlt-hybrid-bg: #f3e8ff;
+}
+```
+
+Only specify the variables you want to override:
+
+```css
+#bmlt-meeting-list {
+  --bmlt-accent: #dc2626;
+  --bmlt-accent-light: #fef2f2;
+  --bmlt-border-radius: 0px;
+}
+```
+
+#### Dark mode
+
+Use a media query to adapt colors when the visitor's OS is in dark mode:
+
+```css
+@media (prefers-color-scheme: dark) {
+  #bmlt-meeting-list {
+    --bmlt-background: #111827;
+    --bmlt-text: #f9fafb;
+    --bmlt-border: #374151;
+    --bmlt-accent: #60a5fa;
+    --bmlt-accent-light: #1e3a5f;
+    --bmlt-in-person-bg: #14532d;
+    --bmlt-in-person: #86efac;
+    --bmlt-virtual-bg: #1e3a5f;
+    --bmlt-virtual: #93c5fd;
+    --bmlt-hybrid-bg: #3b0764;
+    --bmlt-hybrid: #d8b4fe;
+  }
+}
+```
+
+#### Custom map tile provider
+
+By default the map uses [OpenStreetMap](https://www.openstreetmap.org/) tiles. Switch to any [Leaflet-compatible tile provider](https://leaflet-extras.github.io/leaflet-providers/preview/) using `map.tiles`:
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    map: {
+      tiles: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }
+    }
+  };
+</script>
+<script src="app.js"></script>
+```
+
+#### Dark mode tiles
+
+Add `map.tiles_dark` to use a different tile layer when the visitor's OS is in dark mode. The tile layer swaps automatically when the theme changes — no page reload needed. If omitted, the same tiles are used in all color schemes.
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    map: {
+      tiles: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      },
+      tiles_dark: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      },
+    }
+  };
+</script>
+<script src="app.js"></script>
+```
+
+**Example with Mapbox:**
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    map: {
+      tiles: {
+        url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=<pk.your.access.token>',
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+      },
+      tiles_dark: {
+        url: 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=<pk.your.access.token>',
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+      },
+    }
+  };
+</script>
+<script src="app.js"></script>
+```
 
 #### Custom map marker
 

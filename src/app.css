@@ -15,6 +15,81 @@
   box-sizing: border-box;
 }
 
+/* ─── CSS custom properties ─────────────────────────────────
+   Override any of these on #bmlt-meeting-list to theme the widget.
+   ─────────────────────────────────────────────────────────── */
+#bmlt-meeting-list {
+  --bmlt-font-family: system-ui, -apple-system, sans-serif;
+  --bmlt-font-size: 16px;
+  --bmlt-background: #ffffff;
+  --bmlt-text: #111827;
+  --bmlt-border: #e5e7eb;
+  --bmlt-accent: #2563eb;
+  --bmlt-accent-light: #eff6ff;
+  --bmlt-border-radius: 8px;
+  --bmlt-in-person: #15803d;
+  --bmlt-in-person-bg: #dcfce7;
+  --bmlt-virtual: #1d4ed8;
+  --bmlt-virtual-bg: #dbeafe;
+  --bmlt-hybrid: #7e22ce;
+  --bmlt-hybrid-bg: #f3e8ff;
+}
+
+.bmlt-meeting-list {
+  font-family: var(--bmlt-font-family);
+  font-size: var(--bmlt-font-size);
+  color: var(--bmlt-text);
+  background-color: var(--bmlt-background);
+}
+
+/* Controls bar */
+.bmlt-meeting-list .bmlt-controls {
+  background-color: var(--bmlt-background);
+  border-color: var(--bmlt-border);
+}
+
+/* Primary accent buttons (active filter chips, active view toggle, join button) */
+.bmlt-meeting-list .bmlt-btn-primary {
+  background-color: var(--bmlt-accent);
+}
+
+/* Links and link-style buttons */
+.bmlt-meeting-list .bmlt-link {
+  color: var(--bmlt-accent);
+}
+
+/* Active state on the Filters toggle button */
+.bmlt-meeting-list .bmlt-filter-toggle-active {
+  border-color: var(--bmlt-accent);
+  background-color: var(--bmlt-accent-light);
+  color: var(--bmlt-accent);
+}
+
+/* Table row hover */
+.bmlt-meeting-list .bmlt-row:hover {
+  background-color: var(--bmlt-accent-light);
+}
+
+/* Venue type badges */
+.bmlt-meeting-list .bmlt-badge-in-person {
+  background-color: var(--bmlt-in-person-bg);
+  color: var(--bmlt-in-person);
+}
+.bmlt-meeting-list .bmlt-badge-virtual {
+  background-color: var(--bmlt-virtual-bg);
+  color: var(--bmlt-virtual);
+}
+.bmlt-meeting-list .bmlt-badge-hybrid {
+  background-color: var(--bmlt-hybrid-bg);
+  color: var(--bmlt-hybrid);
+}
+
+/* Detail view cards */
+.bmlt-meeting-list .bmlt-card {
+  border-color: var(--bmlt-border);
+  border-radius: var(--bmlt-border-radius);
+}
+
 .bmlt-meeting-list *,
 .bmlt-meeting-list *::before,
 .bmlt-meeting-list *::after {

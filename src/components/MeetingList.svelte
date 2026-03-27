@@ -30,7 +30,7 @@
       </thead>
       <tbody class="divide-y divide-gray-100">
         {#each meetings as meeting (meeting.id_bigint)}
-          <tr class="cursor-pointer transition-colors hover:bg-blue-50" onclick={() => selectMeeting(meeting.id_bigint)}>
+          <tr class="bmlt-row cursor-pointer transition-colors hover:bg-blue-50" onclick={() => selectMeeting(meeting.id_bigint)}>
             <td class="px-4 py-3 whitespace-nowrap text-gray-600">
               <span class="font-medium text-gray-800">{meeting.dayShort}</span>
               <br />
@@ -51,14 +51,14 @@
             </td>
             <td class="hidden px-4 py-3 sm:table-cell">
               {#if meeting.isInPerson}
-                <span class="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
                   <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
                   In-Person
                 </span>
               {:else if meeting.isVirtual}
-                <span class="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
                   <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       stroke-linecap="round"
@@ -70,7 +70,7 @@
                   Virtual
                 </span>
               {:else if meeting.isHybrid}
-                <span class="inline-flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700">
+                <span class="bmlt-badge-hybrid inline-flex items-center gap-1 rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-700">
                   <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>

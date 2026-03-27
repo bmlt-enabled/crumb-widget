@@ -193,6 +193,10 @@
           <li class="section-label">Configuration</li>
           <li><a href="#attributes">Data Attributes</a></li>
           <li><a href="#global-config">Global Config</a></li>
+          <li><a href="#css-vars">CSS Variables</a></li>
+          <li><a href="#css-dark-mode">Dark Mode CSS</a></li>
+          <li><a href="#tile-config">Tile Provider</a></li>
+          <li><a href="#tile-dark-config">Dark Mode Tiles</a></li>
           <li><a href="#marker-config">Marker Config</a></li>
           <li class="section-label">Examples</li>
           <li><a href="#example-basic">Basic embed</a></li>
@@ -305,6 +309,23 @@
               <td>Override the default view. Takes precedence over <code>data-view</code>.</td>
             </tr>
             <tr>
+              <td>map.tiles</td>
+              <td><code>TilesConfig</code></td>
+              <td>
+                Custom map tile provider. Replaces the default OpenStreetMap tiles.
+                See <a href="#tile-config">Tile Provider</a> below.
+              </td>
+            </tr>
+            <tr>
+              <td>map.tiles_dark</td>
+              <td><code>TilesConfig</code></td>
+              <td>
+                Alternate tile provider used when <code>prefers-color-scheme: dark</code>.
+                Swaps automatically on OS theme change.
+                See <a href="#tile-dark-config">Dark Mode Tiles</a> below.
+              </td>
+            </tr>
+            <tr>
               <td>map.markers.location</td>
               <td><code>MarkerConfig</code></td>
               <td>
@@ -314,6 +335,154 @@
             </tr>
           </tbody>
         </table>
+
+        <h2 id="css-vars">CSS Variables</h2>
+        <p>
+          The widget exposes CSS custom properties so you can theme it without touching JavaScript.
+          Set any of these on the <code>#bmlt-meeting-list</code> element — only specify the ones you want to override.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Variable</th><th>Default</th><th>Controls</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>--bmlt-font-family</td><td><code>system-ui, -apple-system, sans-serif</code></td><td>Widget font stack</td></tr>
+            <tr><td>--bmlt-font-size</td><td><code>16px</code></td><td>Base font size</td></tr>
+            <tr><td>--bmlt-background</td><td><code>#ffffff</code></td><td>Widget and controls bar background</td></tr>
+            <tr><td>--bmlt-text</td><td><code>#111827</code></td><td>Primary text color</td></tr>
+            <tr><td>--bmlt-border</td><td><code>#e5e7eb</code></td><td>Borders and dividers</td></tr>
+            <tr><td>--bmlt-accent</td><td><code>#2563eb</code></td><td>Active buttons, links, focus indicators</td></tr>
+            <tr><td>--bmlt-accent-light</td><td><code>#eff6ff</code></td><td>Row hover, active filter panel background</td></tr>
+            <tr><td>--bmlt-border-radius</td><td><code>8px</code></td><td>Card and button corner radius</td></tr>
+            <tr><td>--bmlt-in-person</td><td><code>#15803d</code></td><td>In-person badge text</td></tr>
+            <tr><td>--bmlt-in-person-bg</td><td><code>#dcfce7</code></td><td>In-person badge background</td></tr>
+            <tr><td>--bmlt-virtual</td><td><code>#1d4ed8</code></td><td>Virtual badge text</td></tr>
+            <tr><td>--bmlt-virtual-bg</td><td><code>#dbeafe</code></td><td>Virtual badge background</td></tr>
+            <tr><td>--bmlt-hybrid</td><td><code>#7e22ce</code></td><td>Hybrid badge text</td></tr>
+            <tr><td>--bmlt-hybrid-bg</td><td><code>#f3e8ff</code></td><td>Hybrid badge background</td></tr>
+          </tbody>
+        </table>
+
+        <div class="demo">
+          <div class="demo-header">CSS — change accent color and remove rounded corners</div>
+          <pre><code>#bmlt-meeting-list {
+  --bmlt-accent: #dc2626;
+  --bmlt-accent-light: #fef2f2;
+  --bmlt-border-radius: 0px;
+}</code></pre>
+        </div>
+
+        <h2 id="css-dark-mode">Dark Mode CSS</h2>
+        <p>
+          Use a CSS media query to adapt the widget's colors when the visitor's OS is in dark mode.
+          This works independently of — or alongside — the <a href="#tile-dark-config">dark mode tile</a> option.
+        </p>
+
+        <div class="demo">
+          <div class="demo-header">CSS — dark mode theme</div>
+          <pre><code>@media (prefers-color-scheme: dark) {
+  #bmlt-meeting-list {
+    --bmlt-background: #111827;
+    --bmlt-text: #f9fafb;
+    --bmlt-border: #374151;
+    --bmlt-accent: #60a5fa;
+    --bmlt-accent-light: #1e3a5f;
+    --bmlt-in-person: #86efac;
+    --bmlt-in-person-bg: #14532d;
+    --bmlt-virtual: #93c5fd;
+    --bmlt-virtual-bg: #1e3a5f;
+    --bmlt-hybrid: #d8b4fe;
+    --bmlt-hybrid-bg: #3b0764;
+  }
+}</code></pre>
+        </div>
+
+        <h2 id="tile-config">Tile Provider</h2>
+        <p>
+          By default the map uses <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap</a> tiles.
+          Switch to any <a href="https://leaflet-extras.github.io/leaflet-providers/preview/" target="_blank" rel="noopener">Leaflet-compatible tile provider</a>
+          by setting <code>map.tiles</code>.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>url</td>
+              <td><code>string</code></td>
+              <td>Tile URL template. Use <code>{z}</code>, <code>{x}</code>, <code>{y}</code> placeholders (and <code>{r}</code> for retina where supported).</td>
+            </tr>
+            <tr>
+              <td>attribution</td>
+              <td><code>string</code></td>
+              <td>Attribution HTML displayed in the map's attribution control. Required by most tile providers' terms of service.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="demo">
+          <div class="demo-header">HTML — Stadia Maps example</div>
+          <pre><code>&lt;script&gt;
+  var BmltMeetingListConfig = {
+    map: {
+      tiles: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+        attribution: '&amp;copy; &lt;a href="https://www.stadiamaps.com/" target="_blank"&gt;Stadia Maps&lt;/a&gt; &amp;copy; &lt;a href="https://openmaptiles.org/" target="_blank"&gt;OpenMapTiles&lt;/a&gt; &amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors',
+      }
+    }
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <h2 id="tile-dark-config">Dark Mode Tiles</h2>
+        <p>
+          Set <code>map.tiles_dark</code> to use a different tile layer for visitors with
+          <code>prefers-color-scheme: dark</code>. The layer swaps automatically when the OS
+          theme changes — no page reload needed. If omitted, the same tiles are used in all
+          color schemes.
+        </p>
+
+        <div class="demo">
+          <div class="demo-header">HTML — light + dark tiles</div>
+          <pre><code>&lt;script&gt;
+  var BmltMeetingListConfig = {
+    map: {
+      tiles: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
+        attribution: '&amp;copy; &lt;a href="https://www.stadiamaps.com/" target="_blank"&gt;Stadia Maps&lt;/a&gt; &amp;copy; &lt;a href="https://openmaptiles.org/" target="_blank"&gt;OpenMapTiles&lt;/a&gt; &amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors',
+      },
+      tiles_dark: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        attribution: '&amp;copy; &lt;a href="https://www.stadiamaps.com/" target="_blank"&gt;Stadia Maps&lt;/a&gt; &amp;copy; &lt;a href="https://openmaptiles.org/" target="_blank"&gt;OpenMapTiles&lt;/a&gt; &amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors',
+      },
+    }
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="demo">
+          <div class="demo-header">HTML — Mapbox example</div>
+          <pre><code>&lt;script&gt;
+  var BmltMeetingListConfig = {
+    map: {
+      tiles: {
+        url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=&lt;pk.your.access.token&gt;',
+        attribution: 'Map data &amp;copy; &lt;a href="https://www.openstreetmap.org/"&gt;OpenStreetMap&lt;/a&gt;, Imagery &amp;copy; &lt;a href="https://www.mapbox.com/"&gt;Mapbox&lt;/a&gt;',
+      },
+      tiles_dark: {
+        url: 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=&lt;pk.your.access.token&gt;',
+        attribution: 'Map data &amp;copy; &lt;a href="https://www.openstreetmap.org/"&gt;OpenStreetMap&lt;/a&gt;, Imagery &amp;copy; &lt;a href="https://www.mapbox.com/"&gt;Mapbox&lt;/a&gt;',
+      },
+    }
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
 
         <h2 id="marker-config">Marker Config</h2>
         <p>
