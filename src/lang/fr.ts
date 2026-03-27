@@ -1,0 +1,45 @@
+export const frTranslations = {
+  // Controls
+  searchMeetings: 'Rechercher des réunions...',
+  filters: 'Filtres',
+  day: 'Jour',
+  venueType: 'Type de lieu',
+  timeOfDay: 'Moment de la journée',
+  clearAllFilters: 'Effacer tous les filtres',
+  listView: 'Vue liste',
+  mapView: 'Vue carte',
+  list: 'Liste',
+  map: 'Carte',
+  inPerson: 'Présentiel',
+  virtual: 'Virtuel',
+  morning: 'Matin',
+  afternoon: 'Après-midi',
+  evening: 'Soirée',
+  night: 'Nuit',
+  // Meeting list
+  noMeetingsFound: 'Aucune réunion trouvée',
+  tryAdjustingFilters: "Essayez d'ajuster votre recherche ou vos filtres",
+  dayAndTime: 'Jour et heure',
+  meetingColumn: 'Réunion',
+  location: 'Lieu',
+  type: 'Type',
+  onlineMeeting: 'Réunion en ligne',
+  showing: 'Affichage de',
+  meeting: 'réunion',
+  meetings: 'réunions',
+  // Meeting detail
+  backToMeetings: 'Retour aux réunions',
+  schedule: 'Horaire',
+  at: 'à',
+  duration: 'Durée',
+  getDirections: 'Itinéraire',
+  onlineMeetingSection: 'Réunion en ligne',
+  joinMeeting: 'Rejoindre la réunion',
+  meetingFormats: 'Formats de réunion',
+  notes: 'Notes',
+  contact: 'Contact',
+  // Loading
+  loadingMeetings: 'Chargement des réunions\u2026',
+  // Map
+  noInPersonMeetings: 'Aucune réunion en présentiel à afficher sur la carte avec les filtres actuels'
+};

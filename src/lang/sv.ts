@@ -1,0 +1,45 @@
+export const svTranslations = {
+  // Controls
+  searchMeetings: 'Sök möten...',
+  filters: 'Filter',
+  day: 'Dag',
+  venueType: 'Mötestyp',
+  timeOfDay: 'Tid på dagen',
+  clearAllFilters: 'Rensa alla filter',
+  listView: 'Listvy',
+  mapView: 'Kartvy',
+  list: 'Lista',
+  map: 'Karta',
+  inPerson: 'Fysiskt',
+  virtual: 'Virtuellt',
+  morning: 'Morgon',
+  afternoon: 'Eftermiddag',
+  evening: 'Kväll',
+  night: 'Natt',
+  // Meeting list
+  noMeetingsFound: 'Inga möten hittades',
+  tryAdjustingFilters: 'Försök att justera din sökning eller filter',
+  dayAndTime: 'Dag & tid',
+  meetingColumn: 'Möte',
+  location: 'Plats',
+  type: 'Typ',
+  onlineMeeting: 'Online-möte',
+  showing: 'Visar',
+  meeting: 'möte',
+  meetings: 'möten',
+  // Meeting detail
+  backToMeetings: 'Tillbaka till möten',
+  schedule: 'Schema',
+  at: 'kl.',
+  duration: 'Varaktighet',
+  getDirections: 'Vägbeskrivning',
+  onlineMeetingSection: 'Online-möte',
+  joinMeeting: 'Gå med i mötet',
+  meetingFormats: 'Mötesformat',
+  notes: 'Anteckningar',
+  contact: 'Kontakt',
+  // Loading
+  loadingMeetings: 'Laddar möten\u2026',
+  // Map
+  noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter'
+};

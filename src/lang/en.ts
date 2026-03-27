@@ -1,0 +1,45 @@
+export const enTranslations = {
+  // Controls
+  searchMeetings: 'Search meetings...',
+  filters: 'Filters',
+  day: 'Day',
+  venueType: 'Venue Type',
+  timeOfDay: 'Time of Day',
+  clearAllFilters: 'Clear all filters',
+  listView: 'List view',
+  mapView: 'Map view',
+  list: 'List',
+  map: 'Map',
+  inPerson: 'In-Person',
+  virtual: 'Virtual',
+  morning: 'Morning',
+  afternoon: 'Afternoon',
+  evening: 'Evening',
+  night: 'Night',
+  // Meeting list
+  noMeetingsFound: 'No meetings found',
+  tryAdjustingFilters: 'Try adjusting your search or filters',
+  dayAndTime: 'Day & Time',
+  meetingColumn: 'Meeting',
+  location: 'Location',
+  type: 'Type',
+  onlineMeeting: 'Online meeting',
+  showing: 'Showing',
+  meeting: 'meeting',
+  meetings: 'meetings',
+  // Meeting detail
+  backToMeetings: 'Back to meetings',
+  schedule: 'Schedule',
+  at: 'at',
+  duration: 'Duration',
+  getDirections: 'Get Directions',
+  onlineMeetingSection: 'Online Meeting',
+  joinMeeting: 'Join Meeting',
+  meetingFormats: 'Meeting Formats',
+  notes: 'Notes',
+  contact: 'Contact',
+  // Loading
+  loadingMeetings: 'Loading meetings\u2026',
+  // Map
+  noInPersonMeetings: 'No in-person meetings to show on map with current filters'
+};

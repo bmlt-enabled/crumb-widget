@@ -2,17 +2,18 @@
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
   import { dataState } from '@stores/data.svelte';
   import { WEEKDAYS } from '@utils/format';
+  import { t } from '@stores/localization';
 
-  const VENUE_TYPES = [
-    { value: 1, label: 'In-Person' },
-    { value: 2, label: 'Virtual' }
+  const VENUE_TYPE_VALUES = [
+    { value: 1, key: 'inPerson' as const },
+    { value: 2, key: 'virtual' as const }
   ];
 
-  const TIME_OF_DAY = [
-    { value: 'morning', label: 'Morning' },
-    { value: 'afternoon', label: 'Afternoon' },
-    { value: 'evening', label: 'Evening' },
-    { value: 'night', label: 'Night' }
+  const TIME_OF_DAY_VALUES = [
+    { value: 'morning', key: 'morning' as const },
+    { value: 'afternoon', key: 'afternoon' as const },
+    { value: 'evening', key: 'evening' as const },
+    { value: 'night', key: 'night' as const }
   ];
 
   const hasMapMeetings = $derived(dataState.meetings.some((m) => m.venue_type === 1 || m.venue_type === 3));
@@ -31,7 +32,7 @@
       </svg>
       <input
         type="search"
-        placeholder="Search meetings..."
+        placeholder={$t.searchMeetings}
         value={uiState.filters.search}
         oninput={(e) => updateFilter('search', (e.target as HTMLInputElement).value)}
         class="w-full rounded-lg border border-gray-300 bg-gray-50 py-2 pr-3 pl-9 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
@@ -53,7 +54,7 @@
           d="M3 4a1 1 0 011-1h16a1 1 0 010 2H4a1 1 0 01-1-1zm3 4a1 1 0 011-1h10a1 1 0 010 2H7a1 1 0 01-1-1zm3 4a1 1 0 011-1h4a1 1 0 010 2h-4a1 1 0 01-1-1z"
         />
       </svg>
-      Filters
+      {$t.filters}
       {#if activeFilterCount > 0}
         <span class="bmlt-btn-primary absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-xs text-white">{activeFilterCount}</span>
       {/if}
@@ -67,19 +68,19 @@
           class="flex items-center gap-1.5 rounded-l-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view !== 'detail' && uiState.view === 'list'
             ? 'bmlt-btn-primary bg-blue-600 text-white'
             : 'text-gray-700 hover:bg-gray-50'}"
-          title="List view"
+          title={$t.listView}
         >
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
           </svg>
-          <span class="hidden sm:inline">List</span>
+          <span class="hidden sm:inline">{$t.list}</span>
         </button>
         <button
           onclick={() => setView('map')}
           class="flex items-center gap-1.5 rounded-r-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view === 'map'
             ? 'bmlt-btn-primary bg-blue-600 text-white'
             : 'text-gray-700 hover:bg-gray-50'}"
-          title="Map view"
+          title={$t.mapView}
         >
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -89,7 +90,7 @@
               d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
             />
           </svg>
-          <span class="hidden sm:inline">Map</span>
+          <span class="hidden sm:inline">{$t.map}</span>
         </button>
       </div>
     {/if}
@@ -100,7 +101,7 @@
     <div class="mt-3 flex flex-wrap gap-4 border-t border-gray-100 pt-3">
       <!-- Weekday filter -->
       <div class="min-w-[160px]">
-        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">Day</p>
+        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">{$t.day}</p>
         <div class="flex flex-wrap gap-1">
           {#each WEEKDAYS.slice(1) as day, i (i)}
             <button
@@ -115,14 +116,14 @@
 
       <!-- Venue type filter -->
       <div class="min-w-[140px]">
-        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">Venue Type</p>
+        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">{$t.venueType}</p>
         <div class="flex flex-wrap gap-1">
-          {#each VENUE_TYPES as vt (vt.value)}
+          {#each VENUE_TYPE_VALUES as vt (vt.value)}
             <button
               onclick={() => toggleArrayFilter('venueTypes', vt.value)}
               class="rounded px-2 py-0.5 text-xs font-medium transition-colors {uiState.filters.venueTypes.includes(vt.value)
                 ? 'bmlt-btn-primary bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{vt.label}</button
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{$t[vt.key]}</button
             >
           {/each}
         </div>
@@ -130,14 +131,14 @@
 
       <!-- Time of day filter -->
       <div class="min-w-[160px]">
-        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">Time of Day</p>
+        <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">{$t.timeOfDay}</p>
         <div class="flex flex-wrap gap-1">
-          {#each TIME_OF_DAY as tod (tod.value)}
+          {#each TIME_OF_DAY_VALUES as tod (tod.value)}
             <button
               onclick={() => toggleArrayFilter('timeOfDay', tod.value)}
               class="rounded px-2 py-0.5 text-xs font-medium transition-colors {uiState.filters.timeOfDay.includes(tod.value)
                 ? 'bmlt-btn-primary bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{tod.label}</button
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}">{$t[tod.key]}</button
             >
           {/each}
         </div>
@@ -145,7 +146,7 @@
 
       {#if activeFilterCount > 0}
         <div class="flex items-end">
-          <button onclick={resetFilters} class="text-xs text-red-600 underline hover:text-red-800">Clear all filters</button>
+          <button onclick={resetFilters} class="text-xs text-red-600 underline hover:text-red-800">{$t.clearAllFilters}</button>
         </div>
       {/if}
     </div>

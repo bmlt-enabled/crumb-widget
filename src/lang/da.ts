@@ -1,0 +1,45 @@
+export const daTranslations = {
+  // Controls
+  searchMeetings: 'Søg møder...',
+  filters: 'Filtre',
+  day: 'Dag',
+  venueType: 'Mødetype',
+  timeOfDay: 'Tid på dagen',
+  clearAllFilters: 'Ryd alle filtre',
+  listView: 'Listevisning',
+  mapView: 'Kortvisning',
+  list: 'Liste',
+  map: 'Kort',
+  inPerson: 'Fysisk',
+  virtual: 'Virtuelt',
+  morning: 'Morgen',
+  afternoon: 'Eftermiddag',
+  evening: 'Aften',
+  night: 'Nat',
+  // Meeting list
+  noMeetingsFound: 'Ingen møder fundet',
+  tryAdjustingFilters: 'Prøv at justere din søgning eller filtre',
+  dayAndTime: 'Dag & tid',
+  meetingColumn: 'Møde',
+  location: 'Sted',
+  type: 'Type',
+  onlineMeeting: 'Online møde',
+  showing: 'Viser',
+  meeting: 'møde',
+  meetings: 'møder',
+  // Meeting detail
+  backToMeetings: 'Tilbage til møder',
+  schedule: 'Tidsplan',
+  at: 'kl.',
+  duration: 'Varighed',
+  getDirections: 'Vejvisning',
+  onlineMeetingSection: 'Online møde',
+  joinMeeting: 'Deltag i mødet',
+  meetingFormats: 'Mødeformater',
+  notes: 'Noter',
+  contact: 'Kontakt',
+  // Loading
+  loadingMeetings: 'Indlæser møder\u2026',
+  // Map
+  noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre'
+};

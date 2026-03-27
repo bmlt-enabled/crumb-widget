@@ -6,6 +6,8 @@
   import type { ProcessedMeeting, MarkerConfig, TilesConfig } from '@/types/index';
   import { selectMeeting } from '@stores/ui.svelte';
   import { openDirections } from '@utils/format';
+  import { t } from '@stores/localization';
+  import { get } from 'svelte/store';
 
   interface Props {
     meetings: ProcessedMeeting[];
@@ -54,7 +56,7 @@
     const btn = document.createElement('button');
     btn.className = 'bmlt-btn-secondary';
     btn.style.cssText = 'margin-top:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;cursor:pointer;font-family:inherit';
-    btn.innerHTML = `<svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Get Directions`;
+    btn.innerHTML = `<svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${get(t).getDirections}`;
     btn.addEventListener('click', () => openDirections(group[0]));
     div.appendChild(btn);
 
@@ -142,7 +144,7 @@
 
   {#if !mappableMeetings.length && meetings.length > 0}
     <div class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm">
-      <p class="text-sm text-gray-500">No in-person meetings to show on map with current filters</p>
+      <p class="text-sm text-gray-500">{$t.noInPersonMeetings}</p>
     </div>
   {/if}
 </div>

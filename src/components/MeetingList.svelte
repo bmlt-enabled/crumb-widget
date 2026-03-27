@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ProcessedMeeting } from '@/types/index';
   import { selectMeeting } from '@stores/ui.svelte';
+  import { t } from '@stores/localization';
 
   interface Props {
     meetings: ProcessedMeeting[];
@@ -14,18 +15,18 @@
     <svg class="mb-3 h-10 w-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
-    <p class="text-sm font-medium">No meetings found</p>
-    <p class="mt-1 text-xs">Try adjusting your search or filters</p>
+    <p class="text-sm font-medium">{$t.noMeetingsFound}</p>
+    <p class="mt-1 text-xs">{$t.tryAdjustingFilters}</p>
   </div>
 {:else}
   <div class="overflow-x-auto">
     <table class="w-full text-sm">
       <thead class="sticky top-0 bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
-          <th class="px-4 py-2 text-left">Day &amp; Time</th>
-          <th class="px-4 py-2 text-left">Meeting</th>
-          <th class="hidden px-4 py-2 text-left md:table-cell">Location</th>
-          <th class="hidden px-4 py-2 text-left sm:table-cell">Type</th>
+          <th class="px-4 py-2 text-left">{$t.dayAndTime}</th>
+          <th class="px-4 py-2 text-left">{$t.meetingColumn}</th>
+          <th class="hidden px-4 py-2 text-left md:table-cell">{$t.location}</th>
+          <th class="hidden px-4 py-2 text-left sm:table-cell">{$t.type}</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100">
@@ -44,7 +45,7 @@
             </td>
             <td class="hidden px-4 py-3 text-gray-600 md:table-cell">
               {#if meeting.isVirtual}
-                <span class="text-xs text-gray-400 italic">Online meeting</span>
+                <span class="text-xs text-gray-400 italic">{$t.onlineMeeting}</span>
               {:else}
                 <span class="truncate text-xs">{meeting.formattedAddress}</span>
               {/if}
@@ -56,7 +57,7 @@
                     <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     </svg>
-                    In-Person
+                    {$t.inPerson}
                   </span>
                 {/if}
                 {#if meeting.isVirtual}
@@ -69,7 +70,7 @@
                         d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
                       />
                     </svg>
-                    Virtual
+                    {$t.virtual}
                   </span>
                 {/if}
               </div>
@@ -80,6 +81,8 @@
     </table>
   </div>
   <div class="border-t border-gray-100 px-4 py-2 text-xs text-gray-400">
-    Showing {meetings.length} meeting{meetings.length !== 1 ? 's' : ''}
+    {$t.showing}
+    {meetings.length}
+    {meetings.length !== 1 ? $t.meetings : $t.meeting}
   </div>
 {/if}

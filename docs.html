@@ -193,6 +193,7 @@
           <li class="section-label">Configuration</li>
           <li><a href="#attributes">Data Attributes</a></li>
           <li><a href="#global-config">Global Config</a></li>
+          <li><a href="#language">Language</a></li>
           <li><a href="#css-vars">CSS Variables</a></li>
           <li><a href="#css-dark-mode">Dark Mode CSS</a></li>
           <li><a href="#css-classes">CSS Helper Classes</a></li>
@@ -292,7 +293,7 @@
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;script&gt;
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     defaultView: 'map'
   };
 &lt;/script&gt;
@@ -308,6 +309,15 @@
               <td>defaultView</td>
               <td><code>'list' | 'map'</code></td>
               <td>Override the default view. Takes precedence over <code>data-view</code>.</td>
+            </tr>
+            <tr>
+              <td>language</td>
+              <td><code>string</code></td>
+              <td>
+                Override the UI language (e.g. <code>'es'</code>, <code>'fr'</code>).
+                Defaults to <code>navigator.language</code>, falling back to English.
+                Supported: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>.
+              </td>
             </tr>
             <tr>
               <td>map.tiles</td>
@@ -334,6 +344,35 @@
                 See <a href="#marker-config">Marker Config</a> below.
               </td>
             </tr>
+          </tbody>
+        </table>
+
+        <h2 id="language">Language</h2>
+        <p>
+          The widget automatically detects the visitor's language from <code>navigator.language</code> and falls back to English.
+          Override it with the <code>language</code> config property:
+        </p>
+        <pre><code class="language-html">&lt;script&gt;
+  var BmltMeetingListConfig = {
+    language: 'es'
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        <p>
+          Language codes are matched on the base tag, so <code>'fr-CA'</code> uses <code>fr</code>.
+          Supported languages:
+        </p>
+        <table>
+          <thead><tr><th>Code</th><th>Language</th></tr></thead>
+          <tbody>
+            <tr><td><code>en</code></td><td>English</td></tr>
+            <tr><td><code>es</code></td><td>Spanish</td></tr>
+            <tr><td><code>fr</code></td><td>French</td></tr>
+            <tr><td><code>de</code></td><td>German</td></tr>
+            <tr><td><code>pt</code></td><td>Portuguese</td></tr>
+            <tr><td><code>it</code></td><td>Italian</td></tr>
+            <tr><td><code>sv</code></td><td>Swedish</td></tr>
+            <tr><td><code>da</code></td><td>Danish</td></tr>
           </tbody>
         </table>
 
@@ -452,7 +491,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Stadia Maps example</div>
           <pre><code>&lt;script&gt;
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -475,7 +514,7 @@
         <div class="demo">
           <div class="demo-header">HTML — light + dark tiles</div>
           <pre><code>&lt;script&gt;
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -494,7 +533,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Mapbox example</div>
           <pre><code>&lt;script&gt;
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=&lt;pk.your.access.token&gt;',
@@ -542,7 +581,7 @@
         <div class="demo">
           <div class="demo-header">HTML — custom marker example</div>
           <pre><code>&lt;script&gt;
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       markers: {
         location: {

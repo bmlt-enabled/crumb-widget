@@ -41,11 +41,11 @@ All attributes are set on the `#bmlt-meeting-list` div.
 
 ### Optional Global Config
 
-Define `BmltMeetingListConfig` before loading `app.js` to override defaults:
+Define `BmltMeetingListConfig` before loading `app.js` to override defaults. Use `var` (not `let`) so the variable is set on `window` and readable by the widget:
 
 ```html
 <script>
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     defaultView: 'map'
   };
 </script>
@@ -57,9 +57,25 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults:
 | Property | Type | Description |
 |---|---|---|
 | `defaultView` | `'list' \| 'map'` | Default view on load. Takes precedence over `data-view`. |
+| `language` | `string` | Override the UI language (e.g. `'es'`, `'fr'`). Defaults to `navigator.language`. |
 | `map.tiles` | `TilesConfig` | Custom map tile provider. See below. |
 | `map.tiles_dark` | `TilesConfig` | Alternate tile provider used when `prefers-color-scheme: dark`. See below. |
 | `map.markers.location` | `MarkerConfig` | Custom map marker for meeting locations. See below. |
+
+#### Language
+
+By default the widget uses `navigator.language` to pick a language, falling back to English. Override with `language`:
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    language: 'es'
+  };
+</script>
+<script src="app.js"></script>
+```
+
+Supported languages: `en`, `es`, `fr`, `de`, `pt`, `it`, `sv`, `da`. Language codes are matched on the base tag (e.g. `'fr-CA'` uses `fr`).
 
 #### CSS customization
 
@@ -142,7 +158,7 @@ By default the map uses [OpenStreetMap](https://www.openstreetmap.org/) tiles. S
 
 ```html
 <script>
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -160,7 +176,7 @@ Add `map.tiles_dark` to use a different tile layer when the visitor's OS is in d
 
 ```html
 <script>
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -180,7 +196,7 @@ Add `map.tiles_dark` to use a different tile layer when the visitor's OS is in d
 
 ```html
 <script>
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=<pk.your.access.token>',
@@ -202,7 +218,7 @@ Replace the default NA marker with any image or HTML:
 
 ```html
 <script>
-  let BmltMeetingListConfig = {
+  var BmltMeetingListConfig = {
     map: {
       markers: {
         location: {

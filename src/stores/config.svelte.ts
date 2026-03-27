@@ -1,4 +1,5 @@
 import type { AppConfig } from '@/types';
+import { initLocalization } from './localization';
 
 const defaultConfig: AppConfig = {
   rootServerUrl: '',
@@ -28,4 +29,7 @@ export function initConfig(el: HTMLElement): void {
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
+
+  const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
+  initLocalization(language);
 }
