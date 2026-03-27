@@ -61,5 +61,11 @@ export function openDirections(meeting: Meeting): void {
     url = lat && lng ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` : `https://www.google.com/maps/dir/?api=1&destination=${addr}`;
   }
 
-  window.open(url, '_blank', 'noopener,noreferrer');
+  if (platform === 'web') {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  } else {
+    // On iOS/Android, navigate directly so the OS opens the native maps app
+    // without showing a "Open this page in Maps?" confirmation dialog
+    window.location.href = url;
+  }
 }
