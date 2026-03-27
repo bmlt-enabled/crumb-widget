@@ -12,7 +12,7 @@
 
 <div class="mx-auto max-w-2xl px-4 py-6">
   <!-- Back button -->
-  <button onclick={clearSelectedMeeting} class="bmlt-link mb-4 flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800">
+  <button onclick={clearSelectedMeeting} class="bmlt-link mb-4 flex cursor-pointer items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800">
     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
     </svg>
