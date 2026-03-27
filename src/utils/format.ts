@@ -50,6 +50,40 @@ export function getPlatform(): Platform {
   return 'web';
 }
 
+const CONFERENCE_PROVIDERS: Record<string, string> = {
+  'bluejeans.com': 'Bluejeans',
+  'discord.gg': 'Discord',
+  'freeconference.com': 'Free Conference',
+  'freeconferencecall.com': 'FreeConferenceCall',
+  'goto.com': 'GoTo',
+  'gotomeet.me': 'GoTo',
+  'gotomeeting.com': 'GoTo',
+  'horizon.meta.com': 'Virtual Reality',
+  'maps.secondlife.com': 'Virtual Reality',
+  'meet.google.com': 'Google Meet',
+  'meet.jit.si': 'Jitsi',
+  'meetings.dialpad.com': 'Dialpad',
+  'signal.group': 'Signal',
+  'skype.com': 'Skype',
+  'slurl.com': 'Virtual Reality',
+  'teams.live.com': 'Teams',
+  'teams.microsoft.com': 'Teams',
+  'vrchat.com': 'Virtual Reality',
+  'webex.com': 'WebEx',
+  'zoho.com': 'Zoho',
+  'zoom.us': 'Zoom'
+};
+
+export function getConferenceProvider(url: string): string | undefined {
+  try {
+    const hostname = new URL(url).hostname;
+    const match = Object.keys(CONFERENCE_PROVIDERS).find((domain) => hostname === domain || hostname.endsWith(`.${domain}`));
+    return match ? CONFERENCE_PROVIDERS[match] : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function getDirectionsUrl(meeting: Meeting): string {
   const lat = meeting.latitude;
   const lng = meeting.longitude;

@@ -6,7 +6,7 @@
   import type { ProcessedMeeting, TilesConfig } from '@/types';
   import { clearSelectedMeeting } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
-  import { getDirectionsUrl } from '@utils/format';
+  import { getDirectionsUrl, getConferenceProvider } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { t } from '@stores/localization';
   import CalendarButton from './CalendarButton.svelte';
@@ -174,12 +174,17 @@
                 href={meeting.virtual_meeting_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="bmlt-btn-primary mt-1.5 inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+                class="bmlt-btn-primary mt-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-all hover:brightness-90"
               >
-                {$t.joinMeeting}
-                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  />
                 </svg>
+                {getConferenceProvider(meeting.virtual_meeting_link ?? '') ?? $t.joinMeeting}
               </a>
             {/if}
             {#if meeting.virtual_meeting_additional_info}
@@ -244,10 +249,15 @@
               rel="noopener noreferrer"
               class="bmlt-btn-primary inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
-              {$t.joinMeeting}
               <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                />
               </svg>
+              {getConferenceProvider(meeting.virtual_meeting_link ?? '') ?? $t.joinMeeting}
             </a>
           {/if}
         </div>
