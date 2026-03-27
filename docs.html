@@ -195,6 +195,7 @@
           <li><a href="#global-config">Global Config</a></li>
           <li><a href="#css-vars">CSS Variables</a></li>
           <li><a href="#css-dark-mode">Dark Mode CSS</a></li>
+          <li><a href="#css-classes">CSS Helper Classes</a></li>
           <li><a href="#tile-config">Tile Provider</a></li>
           <li><a href="#tile-dark-config">Dark Mode Tiles</a></li>
           <li><a href="#marker-config">Marker Config</a></li>
@@ -391,6 +392,34 @@
     --bmlt-virtual: #93c5fd;
     --bmlt-virtual-bg: #1e3a5f;
   }
+}</code></pre>
+        </div>
+
+        <h2 id="css-classes">CSS Helper Classes</h2>
+        <p>
+          These classes are applied internally and can also be targeted in your own CSS for further customization.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Class</th><th>Used on</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>bmlt-btn-primary</td><td>Filled accent buttons — active filter chips, view toggle, Join Meeting</td></tr>
+            <tr><td>bmlt-btn-secondary</td><td>Outlined buttons — Get Directions</td></tr>
+            <tr><td>bmlt-link</td><td>Link-style buttons — Back, email contact</td></tr>
+            <tr><td>bmlt-badge-in-person</td><td>In-person venue badge</td></tr>
+            <tr><td>bmlt-badge-virtual</td><td>Virtual venue badge</td></tr>
+            <tr><td>bmlt-card</td><td>Detail section cards</td></tr>
+            <tr><td>bmlt-row</td><td>Meeting list table rows</td></tr>
+          </tbody>
+        </table>
+
+        <div class="demo">
+          <div class="demo-header">CSS — example: override the outlined button hover</div>
+          <pre><code>#bmlt-meeting-list .bmlt-btn-secondary:hover {
+  background-color: transparent;
+  opacity: 0.8;
 }</code></pre>
         </div>
 

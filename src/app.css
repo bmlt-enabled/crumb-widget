@@ -52,9 +52,21 @@
   background-color: var(--bmlt-accent);
 }
 
+/* Outlined secondary button (e.g. Get Directions) */
+.bmlt-meeting-list .bmlt-btn-secondary {
+  color: var(--bmlt-accent);
+  border-color: var(--bmlt-accent);
+  background-color: transparent;
+  cursor: pointer;
+}
+.bmlt-meeting-list .bmlt-btn-secondary:hover {
+  background-color: var(--bmlt-accent-light);
+}
+
 /* Links and link-style buttons */
 .bmlt-meeting-list .bmlt-link {
   color: var(--bmlt-accent);
+  cursor: pointer;
 }
 
 /* Active state on the Filters toggle button */

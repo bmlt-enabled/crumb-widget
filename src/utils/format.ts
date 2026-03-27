@@ -36,10 +36,30 @@ export function sortMeetings<T extends { weekday_tinyint: number; start_time: st
   });
 }
 
-export function getDirectionsUrl(meeting: Meeting): string {
-  if (meeting.latitude && meeting.longitude) {
-    return `https://www.google.com/maps/dir/?api=1&destination=${meeting.latitude},${meeting.longitude}`;
+export type Platform = 'web' | 'ios' | 'android';
+
+export function getPlatform(): Platform {
+  if (typeof window === 'undefined') return 'web';
+  const ua = window.navigator.userAgent.toLowerCase();
+  if (/android/.test(ua)) return 'android';
+  if (/iphone|ipad|ipod/.test(ua) || (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1)) return 'ios';
+  return 'web';
+}
+
+export function openDirections(meeting: Meeting): void {
+  const lat = meeting.latitude;
+  const lng = meeting.longitude;
+  const addr = encodeURIComponent(formatAddress(meeting));
+  const platform = getPlatform();
+
+  let url: string;
+  if (platform === 'ios') {
+    url = lat && lng ? `maps://?daddr=${lat},${lng}` : `maps://?q=${addr}`;
+  } else if (platform === 'android') {
+    url = lat && lng ? `geo:${lat},${lng}?q=${lat},${lng}` : `geo:0,0?q=${addr}`;
+  } else {
+    url = lat && lng ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` : `https://www.google.com/maps/dir/?api=1&destination=${addr}`;
   }
-  const addr = formatAddress(meeting);
-  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(addr)}`;
+
+  window.open(url, '_blank', 'noopener,noreferrer');
 }

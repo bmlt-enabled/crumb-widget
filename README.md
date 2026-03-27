@@ -112,6 +112,29 @@ Use a media query to adapt colors when the visitor's OS is in dark mode:
 }
 ```
 
+#### CSS helper classes
+
+These classes are used internally and can also be targeted in your own CSS to further customize the widget:
+
+| Class | Used on |
+|---|---|
+| `bmlt-btn-primary` | Filled accent buttons (active filter chips, view toggle, Join Meeting) |
+| `bmlt-btn-secondary` | Outlined buttons (Get Directions) |
+| `bmlt-link` | Link-style buttons (Back, email) |
+| `bmlt-badge-in-person` | In-person venue badge |
+| `bmlt-badge-virtual` | Virtual venue badge |
+| `bmlt-card` | Detail section cards |
+| `bmlt-row` | Meeting list table rows |
+
+Example — make the outlined button fully transparent on hover:
+
+```css
+#bmlt-meeting-list .bmlt-btn-secondary:hover {
+  background-color: transparent;
+  opacity: 0.8;
+}
+```
+
 #### Custom map tile provider
 
 By default the map uses [OpenStreetMap](https://www.openstreetmap.org/) tiles. Switch to any [Leaflet-compatible tile provider](https://leaflet-extras.github.io/leaflet-providers/preview/) using `map.tiles`:
