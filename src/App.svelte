@@ -108,7 +108,7 @@
     <Loading />
   {:else if uiState.view === 'detail' && selectedMeeting}
     <!-- Detail view (no Controls) -->
-    <div class="flex-1 overflow-y-auto">
+    <div class="flex-1 overflow-hidden">
       <MeetingDetail meeting={selectedMeeting} />
     </div>
   {:else}
