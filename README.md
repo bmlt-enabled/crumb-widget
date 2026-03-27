@@ -52,6 +52,36 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults:
 <script src="app.js"></script>
 ```
 
+#### Available properties
+
+| Property | Type | Description |
+|---|---|---|
+| `defaultView` | `'list' \| 'map'` | Default view on load. Takes precedence over `data-view`. |
+| `map.markers.location` | `MarkerConfig` | Custom map marker for meeting locations. See below. |
+
+#### Custom map marker
+
+Replace the default NA marker with any image or HTML:
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    map: {
+      markers: {
+        location: {
+          html: '<img src="https://example.com/marker.png">',
+          width: 23,
+          height: 33
+        }
+      }
+    }
+  };
+</script>
+<script src="app.js"></script>
+```
+
+`html` is rendered as the marker's inner HTML (can be an `<img>` tag or inline SVG). `width` and `height` set the icon size in pixels and control the click/popup anchor point.
+
 ## Examples
 
 **Show all meetings on a server:**
@@ -145,7 +175,7 @@ index.html                 # Dev test page
 
 ### Build Output
 
-`npm run build` produces `public/app.js` — a single IIFE bundle with all CSS (Tailwind + Leaflet) injected at runtime. No separate stylesheet is needed. Leaflet marker images are loaded from `unpkg.com`.
+`npm run build` produces `public/app.js` — a single IIFE bundle with all CSS (Tailwind + Leaflet) injected at runtime. No separate stylesheet is needed. The default NA meeting marker is embedded as a base64 data URI.
 
 The built file is committed to the repo so it can be served directly from GitHub Pages.
 

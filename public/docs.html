@@ -193,6 +193,7 @@
           <li class="section-label">Configuration</li>
           <li><a href="#attributes">Data Attributes</a></li>
           <li><a href="#global-config">Global Config</a></li>
+          <li><a href="#marker-config">Marker Config</a></li>
           <li class="section-label">Examples</li>
           <li><a href="#example-basic">Basic embed</a></li>
           <li><a href="#example-service-body">Service body filter</a></li>
@@ -303,8 +304,63 @@
               <td><code>'list' | 'map'</code></td>
               <td>Override the default view. Takes precedence over <code>data-view</code>.</td>
             </tr>
+            <tr>
+              <td>map.markers.location</td>
+              <td><code>MarkerConfig</code></td>
+              <td>
+                Custom map marker for meeting locations. Replaces the default NA marker.
+                See <a href="#marker-config">Marker Config</a> below.
+              </td>
+            </tr>
           </tbody>
         </table>
+
+        <h2 id="marker-config">Marker Config</h2>
+        <p>
+          The <code>map.markers.location</code> object lets you replace the default NA map pin
+          with any image or inline SVG.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Property</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>html</td>
+              <td><code>string</code></td>
+              <td>HTML rendered inside the marker element. Typically an <code>&lt;img&gt;</code> tag or inline SVG.</td>
+            </tr>
+            <tr>
+              <td>width</td>
+              <td><code>number</code></td>
+              <td>Icon width in pixels.</td>
+            </tr>
+            <tr>
+              <td>height</td>
+              <td><code>number</code></td>
+              <td>Icon height in pixels. The anchor point is set to the bottom-center of the icon.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="demo">
+          <div class="demo-header">HTML — custom marker example</div>
+          <pre><code>&lt;script&gt;
+  var BmltMeetingListConfig = {
+    map: {
+      markers: {
+        location: {
+          html: '&lt;img src="https://example.com/my-marker.png"&gt;',
+          width: 23,
+          height: 33
+        }
+      }
+    }
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
 
         <h2 id="example-basic">Example: Basic Embed</h2>
         <p>Show all meetings on a public BMLT server:</p>

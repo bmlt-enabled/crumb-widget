@@ -20,3 +20,9 @@
 .bmlt-meeting-list *::after {
   box-sizing: inherit;
 }
+
+/* Custom marker icon container — no background or border */
+.bmlt-marker {
+  background: none !important;
+  border: none !important;
+}
