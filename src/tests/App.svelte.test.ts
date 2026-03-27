@@ -22,7 +22,7 @@ const baseConfig: AppConfig = {
   defaultView: 'list',
   containerId: 'bmlt-meeting-list',
   showCalendar: true,
-  columns: ['time', 'name', 'location']
+  columns: ['time', 'name', 'location', 'address']
 };
 
 function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeeting {

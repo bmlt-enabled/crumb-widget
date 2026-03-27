@@ -59,7 +59,7 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults. Use
 | `defaultView` | `'list' \| 'map'` | Default view on load. Takes precedence over `data-view`. |
 | `language` | `string` | Override the UI language (e.g. `'es'`, `'fr'`). Defaults to `navigator.language`. |
 | `calendar` | `boolean` | Show the **Add to Calendar** button on meeting detail. Default: `true`. Set to `false` to hide it. |
-| `columns` | `string[]` | Columns to show in list view. Default: `['time', 'name', 'location']`. Omit any to hide it. Available values: `time`, `name`, `location`, `service_body`. `service_body` is hidden by default. |
+| `columns` | `string[]` | Columns to show in list view. Default: `['time', 'name', 'location', 'address']`. Omit any to hide it. Available values: `time`, `name`, `location` (venue name), `address` (street address badges), `service_body`. `service_body` is hidden by default. |
 | `map.tiles` | `TilesConfig` | Custom map tile provider. See below. |
 | `map.tiles_dark` | `TilesConfig` | Alternate tile provider used when `prefers-color-scheme: dark`. See below. |
 | `map.markers.location` | `MarkerConfig` | Custom map marker for meeting locations. See below. |

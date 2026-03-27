@@ -22,6 +22,7 @@ export const deTranslations = {
   dayAndTime: 'Uhrzeit',
   meetingColumn: 'Treffen',
   location: 'Ort',
+  address: 'Adresse',
   serviceBody: 'Dienstbereich',
   onlineMeeting: 'Online-Treffen',
   showing: 'Angezeigt',

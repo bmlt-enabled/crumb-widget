@@ -22,6 +22,7 @@ export const esTranslations = {
   dayAndTime: 'Hora',
   meetingColumn: 'Reunión',
   location: 'Lugar',
+  address: 'Dirección',
   serviceBody: 'Cuerpo de servicio',
   onlineMeeting: 'Reunión en línea',
   showing: 'Mostrando',

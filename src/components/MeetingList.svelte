@@ -29,6 +29,7 @@
           {#if cols.has('time')}<th class="px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
           {#if cols.has('location')}<th class="hidden px-4 py-2 text-left md:table-cell">{$t.location}</th>{/if}
+          {#if cols.has('address')}<th class="hidden px-4 py-2 text-left lg:table-cell">{$t.address}</th>{/if}
           {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-left lg:table-cell">{$t.serviceBody}</th>{/if}
         </tr>
       </thead>
@@ -51,7 +52,12 @@
               </td>
             {/if}
             {#if cols.has('location')}
-              <td class="hidden px-4 py-3 md:table-cell">
+              <td class="hidden px-4 py-3 text-sm text-gray-600 md:table-cell">
+                {meeting.location_text ?? ''}
+              </td>
+            {/if}
+            {#if cols.has('address')}
+              <td class="hidden px-4 py-3 lg:table-cell">
                 <div class="flex flex-wrap gap-1">
                   {#if meeting.isInPerson}
                     <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">

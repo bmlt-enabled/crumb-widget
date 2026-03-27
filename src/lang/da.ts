@@ -22,6 +22,7 @@ export const daTranslations = {
   dayAndTime: 'Tid',
   meetingColumn: 'Møde',
   location: 'Sted',
+  address: 'Adresse',
   serviceBody: 'Servicekrop',
   onlineMeeting: 'Online møde',
   showing: 'Viser',

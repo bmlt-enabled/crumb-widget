@@ -22,6 +22,7 @@ export const enTranslations = {
   dayAndTime: 'Time',
   meetingColumn: 'Meeting',
   location: 'Location',
+  address: 'Address',
   serviceBody: 'Service Body',
   onlineMeeting: 'Online meeting',
   showing: 'Showing',

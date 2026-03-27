@@ -22,6 +22,7 @@ export const svTranslations = {
   dayAndTime: 'Tid',
   meetingColumn: 'Möte',
   location: 'Plats',
+  address: 'Adress',
   serviceBody: 'Servicekropp',
   onlineMeeting: 'Online-möte',
   showing: 'Visar',

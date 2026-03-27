@@ -41,7 +41,7 @@ export interface FilterState {
 
 export type ViewType = 'list' | 'map' | 'detail';
 
-export type Column = 'time' | 'name' | 'location' | 'service_body';
+export type Column = 'time' | 'name' | 'location' | 'address' | 'service_body';
 
 export interface TilesConfig {
   url: string;
