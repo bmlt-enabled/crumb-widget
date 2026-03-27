@@ -1,7 +1,7 @@
 import { SvelteMap } from 'svelte/reactivity';
 import { BmltClient } from 'bmlt-query-client';
 import type { Format } from 'bmlt-query-client';
-import type { ProcessedMeeting } from '@/types/index';
+import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, WEEKDAYS, WEEKDAYS_SHORT, sortMeetings } from '@utils/format';
 
 interface DataState {

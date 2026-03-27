@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { AppConfig } from '@/types/index';
-  import type { ProcessedMeeting } from '@/types/index';
+  import type { AppConfig } from '@/types';
+  import type { ProcessedMeeting } from '@/types';
   import { loadData, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import Controls from '@components/Controls.svelte';

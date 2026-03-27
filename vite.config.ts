@@ -20,7 +20,6 @@ export default defineConfig({
       '@assets': resolve(__dirname, 'src/assets')
     }
   },
-  publicDir: false,
   plugins: [
     tailwindcss(),
     svelte(),
@@ -29,19 +28,12 @@ export default defineConfig({
     {
       name: 'copy-docs',
       closeBundle() {
-        copyFileSync('docs.html', 'public/docs.html');
+        copyFileSync('docs.html', 'dist/docs.html');
+        copyFileSync('demo.html', 'dist/index.html');
       }
     }
   ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/tests/setup.ts',
-    include: ['src/**/*.{test,spec}.{js,ts}']
-  },
   build: {
-    outDir: 'public',
-    emptyOutDir: false,
     cssCodeSplit: false,
     minify: 'oxc',
     rolldownOptions: {
@@ -56,5 +48,11 @@ export default defineConfig({
         pluginTimings: false
       }
     }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/tests/setup.ts',
+    include: ['src/**/*.{test,spec}.{js,ts}']
   }
 });
