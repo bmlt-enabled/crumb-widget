@@ -291,7 +291,7 @@
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     defaultView: 'map'
   };
 &lt;/script&gt;
@@ -359,8 +359,6 @@
             <tr><td>--bmlt-in-person-bg</td><td><code>#dcfce7</code></td><td>In-person badge background</td></tr>
             <tr><td>--bmlt-virtual</td><td><code>#1d4ed8</code></td><td>Virtual badge text</td></tr>
             <tr><td>--bmlt-virtual-bg</td><td><code>#dbeafe</code></td><td>Virtual badge background</td></tr>
-            <tr><td>--bmlt-hybrid</td><td><code>#7e22ce</code></td><td>Hybrid badge text</td></tr>
-            <tr><td>--bmlt-hybrid-bg</td><td><code>#f3e8ff</code></td><td>Hybrid badge background</td></tr>
           </tbody>
         </table>
 
@@ -392,8 +390,6 @@
     --bmlt-in-person-bg: #14532d;
     --bmlt-virtual: #93c5fd;
     --bmlt-virtual-bg: #1e3a5f;
-    --bmlt-hybrid: #d8b4fe;
-    --bmlt-hybrid-bg: #3b0764;
   }
 }</code></pre>
         </div>
@@ -426,7 +422,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Stadia Maps example</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -449,7 +445,7 @@
         <div class="demo">
           <div class="demo-header">HTML — light + dark tiles</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -468,7 +464,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Mapbox example</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=&lt;pk.your.access.token&gt;',
@@ -516,7 +512,7 @@
         <div class="demo">
           <div class="demo-header">HTML — custom marker example</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       markers: {
         location: {
@@ -627,11 +623,11 @@ add_shortcode( 'bmlt_meeting_list', 'bmlt_meeting_list_shortcode' );</code></pre
         <h2 id="features">Features</h2>
         <ul>
           <li><strong>List view</strong> — meeting table sorted by day and time, with venue type badges</li>
-          <li><strong>Map view</strong> — interactive Leaflet map for in-person and hybrid meetings; click a marker to see meetings at that location</li>
+          <li><strong>Map view</strong> — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location</li>
           <li><strong>Detail view</strong> — full meeting info: schedule, address with Google Maps directions, virtual meeting join button, formats, and notes</li>
           <li><strong>Text search</strong> — real-time filter across meeting name, location, and notes</li>
           <li><strong>Weekday filter</strong> — toggle individual days of the week</li>
-          <li><strong>Venue type filter</strong> — in-person, virtual, or hybrid</li>
+          <li><strong>Venue type filter</strong> — in-person or virtual (meetings with both an in-person location and an online link appear under both)</li>
           <li><strong>Time of day filter</strong> — morning, afternoon, evening, or night</li>
           <li><strong>Recursive service body support</strong> — child service bodies are always included</li>
           <li><strong>Multiple service bodies</strong> — comma-separate IDs to combine regions</li>

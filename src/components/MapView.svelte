@@ -37,7 +37,7 @@
     });
   }
 
-  const mappableMeetings = $derived(meetings.filter((m) => (m.isInPerson || m.isHybrid) && m.latitude && m.longitude));
+  const mappableMeetings = $derived(meetings.filter((m) => m.isInPerson && m.latitude && m.longitude));
 
   function buildPopupContent(group: ProcessedMeeting[]): HTMLElement {
     const div = document.createElement('div');

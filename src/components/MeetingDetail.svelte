@@ -25,10 +25,9 @@
   <div class="mb-4">
     {#if meeting.isInPerson}
       <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-1 text-sm font-medium text-green-700">In-Person</span>
-    {:else if meeting.isVirtual}
+    {/if}
+    {#if meeting.isVirtual}
       <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2.5 py-1 text-sm font-medium text-blue-700">Virtual</span>
-    {:else if meeting.isHybrid}
-      <span class="bmlt-badge-hybrid inline-flex items-center gap-1 rounded-full bg-purple-100 px-2.5 py-1 text-sm font-medium text-purple-700">Hybrid</span>
     {/if}
   </div>
 
@@ -53,7 +52,7 @@
     </div>
 
     <!-- Location (in-person or hybrid) -->
-    {#if !meeting.isVirtual && meeting.formattedAddress}
+    {#if meeting.isInPerson && meeting.formattedAddress}
       <div class="bmlt-card rounded-lg border border-gray-200 p-4">
         <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700">
           <svg class="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +78,7 @@
     {/if}
 
     <!-- Virtual meeting link -->
-    {#if meeting.isVirtual || meeting.isHybrid}
+    {#if meeting.isVirtual}
       {#if meeting.virtual_meeting_link || meeting.virtual_meeting_additional_info}
         <div class="bmlt-card rounded-lg border border-gray-200 p-4">
           <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700">

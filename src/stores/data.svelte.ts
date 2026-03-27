@@ -60,9 +60,8 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
         dayName: WEEKDAYS[weekday] ?? '',
         dayShort: WEEKDAYS_SHORT[weekday] ?? '',
         resolvedFormats,
-        isVirtual: venueType === 2,
-        isInPerson: venueType === 1,
-        isHybrid: venueType === 3
+        isInPerson: venueType === 1 || venueType === 3,
+        isVirtual: venueType === 2 || venueType === 3
       };
     });
 

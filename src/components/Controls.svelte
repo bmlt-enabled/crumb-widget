@@ -5,8 +5,7 @@
 
   const VENUE_TYPES = [
     { value: 1, label: 'In-Person' },
-    { value: 2, label: 'Virtual' },
-    { value: 3, label: 'Hybrid' }
+    { value: 2, label: 'Virtual' }
   ];
 
   const TIME_OF_DAY = [

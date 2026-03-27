@@ -31,7 +31,7 @@
       result = result.filter((m) => weekdays.includes(m.weekday_tinyint));
     }
     if (venueTypes.length > 0) {
-      result = result.filter((m) => venueTypes.includes(m.venue_type));
+      result = result.filter((m) => (venueTypes.includes(1) && m.isInPerson) || (venueTypes.includes(2) && m.isVirtual));
     }
     if (timeOfDay.length > 0) {
       result = result.filter((m) => timeOfDay.includes(m.timeOfDay));

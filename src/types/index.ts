@@ -27,7 +27,6 @@ export interface ProcessedMeeting extends Meeting {
   resolvedFormats: Format[];
   isVirtual: boolean;
   isInPerson: boolean;
-  isHybrid: boolean;
 }
 
 export interface FilterState {

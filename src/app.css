@@ -18,7 +18,8 @@
 /* ─── CSS custom properties ─────────────────────────────────
    Override any of these on #bmlt-meeting-list to theme the widget.
    ─────────────────────────────────────────────────────────── */
-#bmlt-meeting-list {
+/* :where() gives zero specificity so any external CSS on #bmlt-meeting-list always wins */
+:where(#bmlt-meeting-list) {
   --bmlt-font-family: system-ui, -apple-system, sans-serif;
   --bmlt-font-size: 16px;
   --bmlt-background: #ffffff;
@@ -31,8 +32,6 @@
   --bmlt-in-person-bg: #dcfce7;
   --bmlt-virtual: #1d4ed8;
   --bmlt-virtual-bg: #dbeafe;
-  --bmlt-hybrid: #7e22ce;
-  --bmlt-hybrid-bg: #f3e8ff;
 }
 
 .bmlt-meeting-list {
@@ -78,10 +77,6 @@
 .bmlt-meeting-list .bmlt-badge-virtual {
   background-color: var(--bmlt-virtual-bg);
   color: var(--bmlt-virtual);
-}
-.bmlt-meeting-list .bmlt-badge-hybrid {
-  background-color: var(--bmlt-hybrid-bg);
-  color: var(--bmlt-hybrid);
 }
 
 /* Detail view cards */

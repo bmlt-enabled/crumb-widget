@@ -49,7 +49,6 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
     resolvedFormats: [],
     isVirtual: false,
     isInPerson: true,
-    isHybrid: false,
     ...overrides
   };
 }

@@ -7,10 +7,10 @@ Built with Svelte 5, compiled to a **single self-contained JavaScript file** wit
 ## Features
 
 - **List view** — sortable meeting table with day, time, name, location, and venue type
-- **Map view** — interactive Leaflet map for in-person and hybrid meetings; click a marker to see meetings at that location
+- **Map view** — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location
 - **Detail view** — full meeting info including schedule, address with directions link, virtual meeting join button, formats, and notes
 - **Search** — real-time text filter across meeting name, location, and notes
-- **Filters** — weekday, venue type (in-person / virtual / hybrid), and time of day (morning / afternoon / evening / night)
+- **Filters** — weekday, venue type (in-person / virtual), and time of day (morning / afternoon / evening / night)
 - **BMLT native** — queries any BMLT root server directly via [`bmlt-query-client`](https://github.com/bmlt-enabled/bmlt-query-client)
 - **Service body filtering** — single ID or a comma-separated list, with recursive child service body support
 
@@ -45,7 +45,7 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults:
 
 ```html
 <script>
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     defaultView: 'map'
   };
 </script>
@@ -79,8 +79,6 @@ You can theme the widget using CSS custom properties on the `#bmlt-meeting-list`
   --bmlt-in-person-bg: #dcfce7;
   --bmlt-virtual: #1d4ed8;
   --bmlt-virtual-bg: #dbeafe;
-  --bmlt-hybrid: #7e22ce;
-  --bmlt-hybrid-bg: #f3e8ff;
 }
 ```
 
@@ -110,8 +108,6 @@ Use a media query to adapt colors when the visitor's OS is in dark mode:
     --bmlt-in-person: #86efac;
     --bmlt-virtual-bg: #1e3a5f;
     --bmlt-virtual: #93c5fd;
-    --bmlt-hybrid-bg: #3b0764;
-    --bmlt-hybrid: #d8b4fe;
   }
 }
 ```
@@ -122,7 +118,7 @@ By default the map uses [OpenStreetMap](https://www.openstreetmap.org/) tiles. S
 
 ```html
 <script>
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -140,7 +136,7 @@ Add `map.tiles_dark` to use a different tile layer when the visitor's OS is in d
 
 ```html
 <script>
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -160,7 +156,7 @@ Add `map.tiles_dark` to use a different tile layer when the visitor's OS is in d
 
 ```html
 <script>
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       tiles: {
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=<pk.your.access.token>',
@@ -182,7 +178,7 @@ Replace the default NA marker with any image or HTML:
 
 ```html
 <script>
-  var BmltMeetingListConfig = {
+  let BmltMeetingListConfig = {
     map: {
       markers: {
         location: {
