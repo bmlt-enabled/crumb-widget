@@ -30,8 +30,12 @@ export function formatAddress(meeting: Meeting): string {
 }
 
 export function sortMeetings<T extends { weekday_tinyint: number; start_time: string }>(meetings: T[]): T[] {
+  // Rotate so today's weekday sorts first; BMLT weekday_tinyint is 1=Sun…7=Sat
+  const today = new Date().getDay() + 1; // 1–7 matching BMLT
+  const offset = (day: number) => (day - today + 7) % 7;
   return [...meetings].sort((a, b) => {
-    if (a.weekday_tinyint !== b.weekday_tinyint) return a.weekday_tinyint - b.weekday_tinyint;
+    const dayDiff = offset(a.weekday_tinyint) - offset(b.weekday_tinyint);
+    if (dayDiff !== 0) return dayDiff;
     return a.start_time.localeCompare(b.start_time);
   });
 }
