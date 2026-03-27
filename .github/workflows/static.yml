@@ -48,3 +48,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Configure S3 AWS Credentials 🪪
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/gh-ci-s3-cdn
+          role-session-name: gh-actions
+          aws-region: us-east-1
+      - name: Copy Artifacts to S3 🪣
+        run: |
+          aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/bmlt-client.js
