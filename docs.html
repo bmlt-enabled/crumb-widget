@@ -177,15 +177,108 @@
       }
       .demo pre { border-radius: 0; margin: 0; }
 
+      /* Live Demo button */
+      .live-demo-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 2rem;
+        background: #2563eb;
+        color: #fff !important;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        margin-bottom: 2.5rem;
+        transition: background 0.15s;
+      }
+      .live-demo-btn:hover { background: #1d4ed8; text-decoration: none; }
+
+      /* Mobile top bar */
+      .mobile-bar {
+        display: none;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 0.75rem 1.25rem;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .mobile-bar .logo-text { font-size: 0.95rem; font-weight: 700; color: #111827; }
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span { display: block; width: 22px; height: 2px; background: #374151; border-radius: 2px; }
+
+      /* Nav close button — mobile only */
+      .nav-close-row { display: none; }
+
+      /* Table scroll wrapper */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0 1.5rem; }
+      .table-wrap table { margin: 0; }
+
       @media (max-width: 768px) {
-        nav { display: none; }
-        main { padding: 2rem 1.25rem; }
+        .mobile-bar { display: flex; }
+
+        nav {
+          display: none;
+          position: fixed;
+          inset: 0;
+          z-index: 200;
+          background: #fff;
+          width: 100%;
+          padding: 1rem 1.25rem;
+          border-right: none;
+          height: 100%;
+          overflow-y: auto;
+        }
+        nav.open { display: block; }
+
+        .nav-close-row {
+          display: flex;
+          justify-content: flex-end;
+          margin-bottom: 0.75rem;
+        }
+        .nav-close-btn {
+          background: none;
+          border: 1px solid #e5e7eb;
+          border-radius: 6px;
+          cursor: pointer;
+          color: #374151;
+          padding: 0.25rem 0.6rem;
+          font-size: 1rem;
+          line-height: 1;
+        }
+
+        main { padding: 1.5rem 1rem; max-width: 100%; }
+        h1 { font-size: 1.5rem; }
+        h2 { font-size: 1.15rem; }
+        pre { font-size: 0.8rem; }
+        .live-demo-btn { display: flex; justify-content: center; }
+        td:first-child { white-space: normal; }
       }
     </style>
   </head>
   <body>
+    <div class="mobile-bar">
+      <span class="logo-text">BMLT Meeting List</span>
+      <button class="hamburger" onclick="document.getElementById('site-nav').classList.toggle('open')" aria-label="Toggle navigation" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
     <div class="page">
-      <nav>
+      <nav id="site-nav">
+        <div class="nav-close-row">
+          <button class="nav-close-btn" onclick="document.getElementById('site-nav').classList.remove('open')" aria-label="Close navigation">✕</button>
+        </div>
         <a class="logo" href="#">BMLT Meeting List</a>
         <ul>
           <li><a href="meetings.html">→ Live Demo</a></li>
@@ -216,16 +309,12 @@
       </nav>
 
       <main>
-        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
-          <div>
-            <h1>BMLT Meeting List</h1>
-            <p class="subtitle">An embeddable NA meeting finder widget for any website.</p>
-          </div>
-          <a href="meetings.html" style="display:inline-flex; align-items:center; gap:0.5rem; margin-top:0.5rem; padding:0.6rem 1.25rem; background:#2563eb; color:#fff; border-radius:8px; font-size:0.9rem; font-weight:600; white-space:nowrap; text-decoration:none;" onmouseover="this.style.background='#1d4ed8'" onmouseout="this.style.background='#2563eb'">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            Live Demo
-          </a>
-        </div>
+        <h1>BMLT Meeting List</h1>
+        <p class="subtitle">An embeddable NA meeting finder widget for any website.</p>
+        <a href="meetings.html" class="live-demo-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Live Demo
+        </a>
 
         <h2 id="overview">Overview</h2>
         <p>
@@ -256,7 +345,7 @@
         <h2 id="attributes">Data Attributes</h2>
         <p>All configuration is set as <code>data-*</code> attributes on the <code>#bmlt-meeting-list</code> div.</p>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr>
               <th>Attribute</th>
@@ -294,7 +383,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <h2 id="global-config">Global Config Object</h2>
         <p>
@@ -312,7 +401,7 @@
 &lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr><th>Property</th><th>Type</th><th>Description</th></tr>
           </thead>
@@ -390,7 +479,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <h2 id="language">Language</h2>
         <p>
@@ -407,7 +496,7 @@
           Language codes are matched on the base tag, so <code>'fr-CA'</code> uses <code>fr</code>.
           Supported languages:
         </p>
-        <table>
+        <div class="table-wrap"><table>
           <thead><tr><th>Code</th><th>Language</th></tr></thead>
           <tbody>
             <tr><td><code>en</code></td><td>English</td></tr>
@@ -419,7 +508,7 @@
             <tr><td><code>sv</code></td><td>Swedish</td></tr>
             <tr><td><code>da</code></td><td>Danish</td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <h2 id="geolocation">Geolocation</h2>
         <p>
@@ -441,7 +530,7 @@
           The <code>?view=</code> query parameter sets the initial view and overrides <code>data-view</code>
           and <code>defaultView</code>:
         </p>
-        <table>
+        <div class="table-wrap"><table>
           <thead><tr><th>Value</th><th>Behaviour</th></tr></thead>
           <tbody>
             <tr><td><code>list</code></td><td>Force list view on load</td></tr>
@@ -454,7 +543,7 @@
               </td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
         <p>Example: <code>https://example.org/meetings/?view=auto</code></p>
         <p><code>?view=list</code> and <code>?view=map</code> disable auto-geolocation even if <code>geolocation: true</code> is set.</p>
 
@@ -464,7 +553,7 @@
           Set any of these on the <code>#bmlt-meeting-list</code> element — only specify the ones you want to override.
         </p>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr><th>Variable</th><th>Default</th><th>Controls</th></tr>
           </thead>
@@ -483,7 +572,7 @@
             <tr><td>--bmlt-virtual</td><td><code>#1d4ed8</code></td><td>Virtual badge text</td></tr>
             <tr><td>--bmlt-virtual-bg</td><td><code>#dbeafe</code></td><td>Virtual badge background</td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <div class="demo">
           <div class="demo-header">CSS — change accent color and remove rounded corners</div>
@@ -522,7 +611,7 @@
           These classes are applied internally and can also be targeted in your own CSS for further customization.
         </p>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr><th>Class</th><th>Used on</th></tr>
           </thead>
@@ -535,7 +624,7 @@
             <tr><td>bmlt-card</td><td>Detail section cards</td></tr>
             <tr><td>bmlt-row</td><td>Meeting list table rows</td></tr>
           </tbody>
-        </table>
+        </table></div>
 
         <div class="demo">
           <div class="demo-header">CSS — example: override the outlined button hover</div>
@@ -552,7 +641,7 @@
           by setting <code>map.tiles</code>.
         </p>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr><th>Property</th><th>Type</th><th>Description</th></tr>
           </thead>
@@ -568,7 +657,7 @@
               <td>Attribution HTML displayed in the map's attribution control. Required by most tile providers' terms of service.</td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <div class="demo">
           <div class="demo-header">HTML — Stadia Maps example</div>
@@ -637,7 +726,7 @@
           with any image or inline SVG.
         </p>
 
-        <table>
+        <div class="table-wrap"><table>
           <thead>
             <tr><th>Property</th><th>Type</th><th>Description</th></tr>
           </thead>
@@ -658,7 +747,7 @@
               <td>Icon height in pixels. The anchor point is set to the bottom-center of the icon.</td>
             </tr>
           </tbody>
-        </table>
+        </table></div>
 
         <div class="demo">
           <div class="demo-header">HTML — custom marker example</div>
@@ -793,5 +882,10 @@ add_shortcode( 'bmlt_meeting_list', 'bmlt_meeting_list_shortcode' );</code></pre
         </ul>
       </main>
     </div>
+    <script>
+      document.getElementById('site-nav').addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') this.classList.remove('open');
+      });
+    </script>
   </body>
 </html>
