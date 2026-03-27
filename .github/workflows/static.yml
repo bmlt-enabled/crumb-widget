@@ -54,6 +54,6 @@ jobs:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions/gh-ci-tf-bmlt-cdn
           role-session-name: gh-actions
           aws-region: us-east-1
-      - name: Copy Artifacts to S3 🪣
+      - name: Copy Build to S3 🪣
         run: |
-          aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/bmlt-client.js
+          aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/bmlt-client/app.js
