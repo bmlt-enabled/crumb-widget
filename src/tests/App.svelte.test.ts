@@ -2,7 +2,7 @@ import { describe, test, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent } from '@testing-library/svelte';
 import App from '@/App.svelte';
-import type { AppConfig } from '@/types/index';
+import type { AppConfig, Format } from '@/types/index';
 import { dataState } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import type { ProcessedMeeting } from '@/types/index';
@@ -26,6 +26,17 @@ const baseConfig: AppConfig = {
   geolocation: false,
   geolocationRadius: 10
 };
+
+function makeFormat(overrides: Partial<Format> = {}): Format {
+  return {
+    id: '1',
+    key_string: 'O',
+    name_string: 'Open',
+    description_string: 'Open to all',
+    lang: 'en',
+    ...overrides
+  };
+}
 
 function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeeting {
   return {
@@ -182,6 +193,103 @@ describe('filtering', () => {
     await fireEvent.click(monButtons[0]);
 
     expect(screen.getByText('Showing 1 meeting')).toBeInTheDocument();
+  });
+});
+
+describe('format filter', () => {
+  test('format dropdown appears when meetings have formats', async () => {
+    const fmt = makeFormat({ id: '1', name_string: 'Open' });
+    dataState.meetings = [makeMeeting({ resolvedFormats: [fmt], format_shared_id_list: '1' })];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+
+    expect(screen.getByText('Format', { selector: 'p' })).toBeInTheDocument();
+    expect(screen.getByText('Any format')).toBeInTheDocument();
+  });
+
+  test('format dropdown is hidden when no meetings have formats', async () => {
+    dataState.meetings = [makeMeeting({ resolvedFormats: [] })];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+
+    expect(screen.queryByText('Any format')).not.toBeInTheDocument();
+  });
+
+  test('selecting a format filters to meetings with that format', async () => {
+    const openFmt = makeFormat({ id: '1', name_string: 'Open' });
+    const closedFmt = makeFormat({ id: '2', name_string: 'Closed' });
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'Open Meeting', resolvedFormats: [openFmt], format_shared_id_list: '1' }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Closed Meeting', resolvedFormats: [closedFmt], format_shared_id_list: '2' })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+
+    expect(screen.getAllByText('Open Meeting')[0]).toBeInTheDocument();
+    expect(screen.queryByText('Closed Meeting')).not.toBeInTheDocument();
+  });
+
+  test('selecting multiple formats shows meetings matching any selected format (OR logic)', async () => {
+    const openFmt = makeFormat({ id: '1', name_string: 'Open' });
+    const closedFmt = makeFormat({ id: '2', name_string: 'Closed' });
+    const candlelightFmt = makeFormat({ id: '3', name_string: 'Candlelight' });
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'Open Meeting', resolvedFormats: [openFmt], format_shared_id_list: '1' }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Closed Meeting', resolvedFormats: [closedFmt], format_shared_id_list: '2' }),
+      makeMeeting({ id_bigint: '3', meeting_name: 'Candlelight Meeting', resolvedFormats: [candlelightFmt], format_shared_id_list: '3' })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+    await fireEvent.click(screen.getByRole('button', { name: 'Closed' }));
+
+    expect(screen.getAllByText('Open Meeting')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Closed Meeting')[0]).toBeInTheDocument();
+    expect(screen.queryByText('Candlelight Meeting')).not.toBeInTheDocument();
+  });
+
+  test('format filter button shows selected count', async () => {
+    const openFmt = makeFormat({ id: '1', name_string: 'Open' });
+    dataState.meetings = [makeMeeting({ resolvedFormats: [openFmt], format_shared_id_list: '1' })];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+
+    expect(screen.getByText('1 selected')).toBeInTheDocument();
+  });
+
+  test('format selection contributes to active filter count badge', async () => {
+    const fmt = makeFormat({ id: '1', name_string: 'Open' });
+    dataState.meetings = [makeMeeting({ resolvedFormats: [fmt], format_shared_id_list: '1' })];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+
+    expect(screen.getByText('1', { selector: 'span' })).toBeInTheDocument();
+  });
+
+  test('clear all filters resets format selection', async () => {
+    const fmt = makeFormat({ id: '1', name_string: 'Open' });
+    dataState.meetings = [makeMeeting({ resolvedFormats: [fmt], format_shared_id_list: '1' })];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+    await fireEvent.click(screen.getByText('Clear all filters'));
+
+    expect(screen.getByText('Any format')).toBeInTheDocument();
   });
 });
 

@@ -5,6 +5,7 @@ export const deTranslations = {
   day: 'Tag',
   venueType: 'Veranstaltungsart',
   timeOfDay: 'Tageszeit',
+  format: 'Format',
   clearAllFilters: 'Alle Filter löschen',
   listView: 'Listenansicht',
   mapView: 'Kartenansicht',

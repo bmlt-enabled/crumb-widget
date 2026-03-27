@@ -5,6 +5,7 @@ export const svTranslations = {
   day: 'Dag',
   venueType: 'Mötestyp',
   timeOfDay: 'Tid på dagen',
+  format: 'Format',
   clearAllFilters: 'Rensa alla filter',
   listView: 'Listvy',
   mapView: 'Kartvy',

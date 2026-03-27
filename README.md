@@ -10,7 +10,7 @@ Built with Svelte 5, compiled to a **single self-contained JavaScript file** wit
 - **Map view** — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location
 - **Detail view** — full meeting info including schedule, address with directions link, virtual meeting join button, formats, and notes
 - **Search** — real-time text filter across meeting name, location, and notes
-- **Filters** — weekday, venue type (in-person / virtual), and time of day (morning / afternoon / evening / night)
+- **Filters** — weekday, venue type (in-person / virtual), time of day (morning / afternoon / evening / night), and meeting format (dropdown, multi-select)
 - **Near Me** — optional geolocation button that loads meetings near the user's current location (requires `geolocation: true`)
 - **Add to Calendar** — add any meeting to iCal/Apple Calendar or Google Calendar directly from the detail view
 - **BMLT native** — queries any BMLT root server directly via [`bmlt-query-client`](https://github.com/bmlt-enabled/bmlt-query-client)

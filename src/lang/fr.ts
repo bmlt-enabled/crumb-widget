@@ -5,6 +5,7 @@ export const frTranslations = {
   day: 'Jour',
   venueType: 'Type de lieu',
   timeOfDay: 'Moment de la journée',
+  format: 'Format',
   clearAllFilters: 'Effacer tous les filtres',
   listView: 'Vue liste',
   mapView: 'Vue carte',

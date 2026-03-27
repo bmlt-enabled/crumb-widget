@@ -21,7 +21,17 @@
 
   const activeFilterCount = $derived(uiState.filters.weekdays.length + uiState.filters.venueTypes.length + uiState.filters.timeOfDay.length + uiState.filters.formatIds.length);
 
+  const availableFormats = $derived([...new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f])).values()].sort((a, b) => a.name_string.localeCompare(b.name_string)));
+
   let showFilters = $state(false);
+  let showFormatDropdown = $state(false);
+  let formatDropdownEl = $state<HTMLDivElement | undefined>();
+
+  function handleWindowClick(e: MouseEvent) {
+    if (formatDropdownEl && !formatDropdownEl.contains(e.target as Node)) {
+      showFormatDropdown = false;
+    }
+  }
 
   type GeoStatus = 'idle' | 'locating' | 'active' | 'error';
   let geoStatus = $state<GeoStatus>('idle');
@@ -61,6 +71,8 @@
     );
   }
 </script>
+
+<svelte:window onclick={handleWindowClick} />
 
 <div class="bmlt-controls border-b border-gray-200 bg-white px-4 py-3">
   <!-- Top row: search + view toggle -->
@@ -227,6 +239,49 @@
           {/each}
         </div>
       </div>
+
+      <!-- Format filter -->
+      {#if availableFormats.length > 0}
+        <div class="min-w-[140px]">
+          <p class="mb-1.5 text-xs font-semibold tracking-wide text-gray-500 uppercase">{$t.format}</p>
+          <div class="relative" bind:this={formatDropdownEl}>
+            <button
+              onclick={(e) => {
+                e.stopPropagation();
+                showFormatDropdown = !showFormatDropdown;
+              }}
+              class="flex items-center gap-1.5 rounded border px-2 py-1 text-xs font-medium transition-colors {uiState.filters.formatIds.length > 0
+                ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
+                : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
+            >
+              {uiState.filters.formatIds.length > 0 ? `${uiState.filters.formatIds.length} selected` : 'Any format'}
+              <svg class="h-3 w-3 transition-transform {showFormatDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {#if showFormatDropdown}
+              <div class="absolute top-full left-0 z-10 mt-1 max-h-48 w-48 overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+                {#each availableFormats as fmt (fmt.id)}
+                  <button
+                    onclick={() => toggleArrayFilter('formatIds', fmt.id)}
+                    class="flex w-full items-center gap-2 px-3 py-1.5 text-left text-xs hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+                    title={fmt.description_string}
+                  >
+                    <span class="flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded border {uiState.filters.formatIds.includes(fmt.id) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
+                      {#if uiState.filters.formatIds.includes(fmt.id)}
+                        <svg class="h-2.5 w-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                        </svg>
+                      {/if}
+                    </span>
+                    {fmt.name_string}
+                  </button>
+                {/each}
+              </div>
+            {/if}
+          </div>
+        </div>
+      {/if}
 
       {#if activeFilterCount > 0}
         <div class="flex items-end">

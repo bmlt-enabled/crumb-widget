@@ -5,6 +5,7 @@ export const enTranslations = {
   day: 'Day',
   venueType: 'Venue Type',
   timeOfDay: 'Time of Day',
+  format: 'Format',
   clearAllFilters: 'Clear all filters',
   listView: 'List view',
   mapView: 'Map view',

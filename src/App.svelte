@@ -53,7 +53,7 @@
   });
 
   const filteredMeetings = $derived.by((): ProcessedMeeting[] => {
-    const { search, weekdays, venueTypes, timeOfDay } = uiState.filters;
+    const { search, weekdays, venueTypes, timeOfDay, formatIds } = uiState.filters;
     let result = dataState.meetings;
 
     if (weekdays.length > 0) {
@@ -64,6 +64,9 @@
     }
     if (timeOfDay.length > 0) {
       result = result.filter((m) => timeOfDay.includes(m.timeOfDay));
+    }
+    if (formatIds.length > 0) {
+      result = result.filter((m) => m.resolvedFormats.some((f) => formatIds.includes(f.id)));
     }
     if (search.trim()) {
       const q = search.toLowerCase().trim();

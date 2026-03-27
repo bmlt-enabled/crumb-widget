@@ -5,6 +5,7 @@ export const daTranslations = {
   day: 'Dag',
   venueType: 'Mødetype',
   timeOfDay: 'Tid på dagen',
+  format: 'Format',
   clearAllFilters: 'Ryd alle filtre',
   listView: 'Listevisning',
   mapView: 'Kortvisning',

@@ -5,6 +5,7 @@ export const ptTranslations = {
   day: 'Dia',
   venueType: 'Tipo de local',
   timeOfDay: 'Período do dia',
+  format: 'Formato',
   clearAllFilters: 'Limpar todos os filtros',
   listView: 'Exibição em lista',
   mapView: 'Exibição no mapa',
