@@ -40,7 +40,7 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
 
     const formatsMap = new SvelteMap<string, Format>();
     for (const fmt of formatsResp) {
-      formatsMap.set(fmt.shared_id_bigint, fmt);
+      formatsMap.set(fmt.id, fmt);
     }
     dataState.formats = formatsMap;
 

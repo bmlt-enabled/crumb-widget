@@ -118,7 +118,7 @@
       <div class="rounded-lg border border-gray-200 p-4">
         <h3 class="mb-2 text-sm font-semibold text-gray-700">Meeting Formats</h3>
         <div class="flex flex-wrap gap-1.5">
-          {#each meeting.resolvedFormats as fmt (fmt.shared_id_bigint)}
+          {#each meeting.resolvedFormats as fmt (fmt.id)}
             <span class="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-700" title={fmt.description_string}>{fmt.name_string}</span>
           {/each}
         </div>
