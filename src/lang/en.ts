@@ -19,10 +19,10 @@ export const enTranslations = {
   // Meeting list
   noMeetingsFound: 'No meetings found',
   tryAdjustingFilters: 'Try adjusting your search or filters',
-  dayAndTime: 'Day & Time',
+  dayAndTime: 'Time',
   meetingColumn: 'Meeting',
   location: 'Location',
-  type: 'Type',
+  serviceBody: 'Service Body',
   onlineMeeting: 'Online meeting',
   showing: 'Showing',
   meeting: 'meeting',

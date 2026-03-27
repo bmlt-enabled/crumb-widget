@@ -19,10 +19,10 @@ export const ptTranslations = {
   // Meeting list
   noMeetingsFound: 'Nenhuma reunião encontrada',
   tryAdjustingFilters: 'Tente ajustar sua pesquisa ou filtros',
-  dayAndTime: 'Dia e hora',
+  dayAndTime: 'Hora',
   meetingColumn: 'Reunião',
   location: 'Local',
-  type: 'Tipo',
+  serviceBody: 'Corpo de serviço',
   onlineMeeting: 'Reunião online',
   showing: 'Exibindo',
   meeting: 'reunião',

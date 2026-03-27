@@ -145,6 +145,14 @@
       </div>
     {/if}
 
+    <!-- Service Body -->
+    {#if meeting.service_body_name}
+      <div class="bmlt-card rounded-lg border border-gray-200 p-4">
+        <h3 class="mb-2 text-sm font-semibold text-gray-700">{$t.serviceBody}</h3>
+        <p class="text-sm text-gray-600">{meeting.service_body_name}</p>
+      </div>
+    {/if}
+
     <!-- Contact -->
     {#if meeting.email_contact}
       <div class="bmlt-card rounded-lg border border-gray-200 p-4">

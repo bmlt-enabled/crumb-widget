@@ -19,10 +19,10 @@ export const svTranslations = {
   // Meeting list
   noMeetingsFound: 'Inga möten hittades',
   tryAdjustingFilters: 'Försök att justera din sökning eller filter',
-  dayAndTime: 'Dag & tid',
+  dayAndTime: 'Tid',
   meetingColumn: 'Möte',
   location: 'Plats',
-  type: 'Typ',
+  serviceBody: 'Servicekropp',
   onlineMeeting: 'Online-möte',
   showing: 'Visar',
   meeting: 'möte',

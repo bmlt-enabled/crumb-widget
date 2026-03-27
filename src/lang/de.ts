@@ -19,10 +19,10 @@ export const deTranslations = {
   // Meeting list
   noMeetingsFound: 'Keine Treffen gefunden',
   tryAdjustingFilters: 'Versuche, deine Suche oder Filter anzupassen',
-  dayAndTime: 'Tag & Uhrzeit',
+  dayAndTime: 'Uhrzeit',
   meetingColumn: 'Treffen',
   location: 'Ort',
-  type: 'Typ',
+  serviceBody: 'Dienstbereich',
   onlineMeeting: 'Online-Treffen',
   showing: 'Angezeigt',
   meeting: 'Treffen',

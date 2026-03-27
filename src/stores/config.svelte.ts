@@ -1,7 +1,7 @@
 import type { AppConfig, Column } from '@/types';
 import { initLocalization } from './localization';
 
-const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'type'];
+const ALL_COLUMNS: Column[] = ['time', 'name', 'location'];
 
 const defaultConfig: AppConfig = {
   rootServerUrl: '',

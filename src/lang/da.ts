@@ -19,10 +19,10 @@ export const daTranslations = {
   // Meeting list
   noMeetingsFound: 'Ingen møder fundet',
   tryAdjustingFilters: 'Prøv at justere din søgning eller filtre',
-  dayAndTime: 'Dag & tid',
+  dayAndTime: 'Tid',
   meetingColumn: 'Møde',
   location: 'Sted',
-  type: 'Type',
+  serviceBody: 'Servicekrop',
   onlineMeeting: 'Online møde',
   showing: 'Viser',
   meeting: 'møde',

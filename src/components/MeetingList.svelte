@@ -29,7 +29,7 @@
           {#if cols.has('time')}<th class="px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
           {#if cols.has('location')}<th class="hidden px-4 py-2 text-left md:table-cell">{$t.location}</th>{/if}
-          {#if cols.has('type')}<th class="hidden px-4 py-2 text-left sm:table-cell">{$t.type}</th>{/if}
+          {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-left lg:table-cell">{$t.serviceBody}</th>{/if}
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100">
@@ -51,28 +51,19 @@
               </td>
             {/if}
             {#if cols.has('location')}
-              <td class="hidden px-4 py-3 text-gray-600 md:table-cell">
-                {#if meeting.isVirtual && !meeting.isInPerson}
-                  <span class="text-xs text-gray-400 italic">{$t.onlineMeeting}</span>
-                {:else}
-                  <span class="truncate text-xs">{meeting.formattedAddress}</span>
-                {/if}
-              </td>
-            {/if}
-            {#if cols.has('type')}
-              <td class="hidden px-4 py-3 sm:table-cell">
+              <td class="hidden px-4 py-3 md:table-cell">
                 <div class="flex flex-wrap gap-1">
                   {#if meeting.isInPerson}
                     <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                      <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
-                      {$t.inPerson}
+                      <span class="max-w-[16rem] truncate">{meeting.formattedAddress || meeting.location_text}</span>
                     </span>
                   {/if}
                   {#if meeting.isVirtual}
                     <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
-                      <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
@@ -80,10 +71,15 @@
                           d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
                         />
                       </svg>
-                      {$t.virtual}
+                      {$t.onlineMeeting}
                     </span>
                   {/if}
                 </div>
+              </td>
+            {/if}
+            {#if cols.has('service_body')}
+              <td class="hidden px-4 py-3 text-xs text-gray-600 lg:table-cell">
+                {meeting.service_body_name ?? ''}
               </td>
             {/if}
           </tr>
