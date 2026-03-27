@@ -28,6 +28,7 @@
   --bmlt-accent: #2563eb;
   --bmlt-accent-light: #eff6ff;
   --bmlt-border-radius: 8px;
+  --bmlt-row-alt: #f9fafb;
   --bmlt-in-person: #15803d;
   --bmlt-in-person-bg: #dcfce7;
   --bmlt-virtual: #1d4ed8;
@@ -74,6 +75,11 @@
   border-color: var(--bmlt-accent);
   background-color: var(--bmlt-accent-light);
   color: var(--bmlt-accent);
+}
+
+/* Table row alternating background */
+.bmlt-meeting-list .bmlt-row:nth-child(even) {
+  background-color: var(--bmlt-row-alt);
 }
 
 /* Table row hover */

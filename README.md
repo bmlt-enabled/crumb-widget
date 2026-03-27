@@ -75,6 +75,7 @@ You can theme the widget using CSS custom properties on the `#bmlt-meeting-list`
   --bmlt-accent: #2563eb;        /* buttons, active states, links */
   --bmlt-accent-light: #eff6ff;  /* row hover, active filter panel */
   --bmlt-border-radius: 8px;
+  --bmlt-row-alt: #f9fafb;       /* alternating row tint */
   --bmlt-in-person: #15803d;
   --bmlt-in-person-bg: #dcfce7;
   --bmlt-virtual: #1d4ed8;

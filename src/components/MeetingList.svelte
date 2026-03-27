@@ -30,7 +30,7 @@
       </thead>
       <tbody class="divide-y divide-gray-100">
         {#each meetings as meeting (meeting.id_bigint)}
-          <tr class="bmlt-row cursor-pointer transition-colors hover:bg-blue-50" onclick={() => selectMeeting(meeting.id_bigint)}>
+          <tr class="bmlt-row cursor-pointer transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting.id_bigint)}>
             <td class="px-4 py-3 whitespace-nowrap text-gray-600">
               <span class="font-medium text-gray-800">{meeting.dayShort}</span>
               <br />
