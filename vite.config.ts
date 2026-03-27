@@ -6,6 +6,7 @@ import { svelteTesting } from '@testing-library/svelte/vite';
 import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import { resolve } from 'path';
+import { copyFileSync } from 'fs';
 
 export default defineConfig({
   base: './',
@@ -20,7 +21,18 @@ export default defineConfig({
     }
   },
   publicDir: false,
-  plugins: [tailwindcss(), svelte(), cssInjectedByJsPlugin(), svelteTesting()],
+  plugins: [
+    tailwindcss(),
+    svelte(),
+    cssInjectedByJsPlugin(),
+    svelteTesting(),
+    {
+      name: 'copy-docs',
+      closeBundle() {
+        copyFileSync('docs.html', 'public/docs.html');
+      }
+    }
+  ],
   test: {
     globals: true,
     environment: 'jsdom',
