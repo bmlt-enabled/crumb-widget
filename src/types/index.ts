@@ -16,6 +16,7 @@ export interface AppConfig {
   locationMarker?: MarkerConfig;
   tiles?: TilesConfig;
   tilesDark?: TilesConfig;
+  showCalendar: boolean;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -47,6 +48,7 @@ export interface TilesConfig {
 export interface BmltMeetingListGlobalConfig {
   language?: string;
   defaultView?: 'list' | 'map';
+  calendar?: boolean;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

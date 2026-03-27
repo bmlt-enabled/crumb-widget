@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { ProcessedMeeting } from '@/types';
   import { clearSelectedMeeting } from '@stores/ui.svelte';
+  import { config } from '@stores/config.svelte';
   import { openDirections } from '@utils/format';
   import { t } from '@stores/localization';
+  import CalendarButton from './CalendarButton.svelte';
 
   interface Props {
     meeting: ProcessedMeeting;
@@ -51,6 +53,11 @@
       </p>
       {#if meeting.duration_time && meeting.duration_time !== '01:00:00'}
         <p class="mt-1 text-sm text-gray-500">{$t.duration}: {meeting.duration_time.slice(0, 5).replace(/^0/, '')}</p>
+      {/if}
+      {#if config.showCalendar}
+        <div class="mt-3">
+          <CalendarButton {meeting} />
+        </div>
       {/if}
     </div>
 

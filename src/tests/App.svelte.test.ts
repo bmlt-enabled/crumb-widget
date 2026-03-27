@@ -20,7 +20,8 @@ const baseConfig: AppConfig = {
   rootServerUrl: 'https://test.example.org/main_server',
   serviceBodyIds: [],
   defaultView: 'list',
-  containerId: 'bmlt-meeting-list'
+  containerId: 'bmlt-meeting-list',
+  showCalendar: true
 };
 
 function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeeting {

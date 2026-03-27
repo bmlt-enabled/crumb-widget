@@ -5,7 +5,8 @@ const defaultConfig: AppConfig = {
   rootServerUrl: '',
   serviceBodyIds: [],
   defaultView: 'list',
-  containerId: 'bmlt-meeting-list'
+  containerId: 'bmlt-meeting-list',
+  showCalendar: true
 };
 
 export const config = $state<AppConfig>({ ...defaultConfig });
@@ -29,6 +30,7 @@ export function initConfig(el: HTMLElement): void {
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
+  config.showCalendar = globalCfg.calendar !== false;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);
