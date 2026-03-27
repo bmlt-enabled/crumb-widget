@@ -31,7 +31,7 @@ export default defineConfig({
     outDir: 'public',
     emptyOutDir: false,
     cssCodeSplit: false,
-    minify: 'terser',
+    minify: 'oxc',
     rolldownOptions: {
       input: 'src/main.ts',
       output: {
