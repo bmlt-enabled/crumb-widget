@@ -25,6 +25,7 @@ export function setView(view: ViewType): void {
 export function selectMeeting(id: string): void {
   uiState.selectedMeetingId = id;
   uiState.view = 'detail';
+  history.pushState({ bmltDetail: id }, '');
 }
 
 export function clearSelectedMeeting(): void {

@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import type { AppConfig } from '@/types';
   import type { ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
-  import { uiState } from '@stores/ui.svelte';
+  import { uiState, clearSelectedMeeting } from '@stores/ui.svelte';
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
@@ -16,7 +16,16 @@
 
   const { config }: Props = $props();
 
+  function onPopState(): void {
+    if (uiState.view === 'detail') clearSelectedMeeting();
+  }
+
+  onDestroy(() => {
+    window.removeEventListener('popstate', onPopState);
+  });
+
   onMount(async () => {
+    window.addEventListener('popstate', onPopState);
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
 
     // Determine whether to attempt geolocation on load
