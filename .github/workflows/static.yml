@@ -51,7 +51,7 @@ jobs:
       - name: Configure S3 AWS Credentials 🪪
         uses: aws-actions/configure-aws-credentials@v6
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/gh-ci-s3-cdn
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions/gh-ci-tf-bmlt-cdn
           role-session-name: gh-actions
           aws-region: us-east-1
       - name: Copy Artifacts to S3 🪣
