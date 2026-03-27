@@ -3,13 +3,11 @@
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
   import type { Map as LeafletMap, Marker, LayerGroup, TileLayer } from 'leaflet';
-  import type { ProcessedMeeting, MarkerConfig, TilesConfig } from '@/types/index';
-  // MarkerConfig still needed for the Props interface
+  import type { ProcessedMeeting, MarkerConfig, TilesConfig } from '@/types';
   import { selectMeeting } from '@stores/ui.svelte';
-  import { openDirections } from '@utils/format';
+  import { getDirectionsUrl } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { t } from '@stores/localization';
-  import { get } from 'svelte/store';
 
   interface Props {
     meetings: ProcessedMeeting[];
@@ -39,12 +37,10 @@
       div.appendChild(row);
     }
 
-    const btn = document.createElement('button');
-    btn.className = 'bmlt-btn-secondary';
-    btn.style.cssText = 'margin-top:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;cursor:pointer;font-family:inherit';
-    btn.innerHTML = `<svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${get(t).getDirections}`;
-    btn.addEventListener('click', () => openDirections(group[0]));
-    div.appendChild(btn);
+    div.insertAdjacentHTML(
+      'beforeend',
+      `<a href="${getDirectionsUrl(group[0])}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;text-decoration:none;font-family:inherit">${$t.getDirections}</a>`
+    );
 
     return div;
   }

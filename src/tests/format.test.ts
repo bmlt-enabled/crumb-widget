@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatTime, getTimeOfDay, formatAddress, sortMeetings, getPlatform, openDirections } from '@utils/format';
+import { formatTime, getTimeOfDay, formatAddress, sortMeetings, getPlatform, getDirectionsUrl } from '@utils/format';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -144,50 +144,37 @@ describe('getPlatform', () => {
   });
 });
 
-describe('openDirections', () => {
+describe('getDirectionsUrl', () => {
   const setNav = (ua: string, platform = '', maxTouchPoints = 0) => {
     Object.defineProperty(window.navigator, 'userAgent', { value: ua, configurable: true });
     Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
     Object.defineProperty(window.navigator, 'maxTouchPoints', { value: maxTouchPoints, configurable: true });
   };
 
-  beforeEach(() => {
-    // Replace window.location with a writable mock
-    Object.defineProperty(window, 'location', { value: { href: '' }, writable: true, configurable: true });
-    vi.spyOn(window, 'open').mockReturnValue(null);
-  });
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-  });
-
-  test('iOS: sets location.href to maps:// URL with coordinates', () => {
+  test('iOS: returns maps:// URL with coordinates', () => {
     setNav('mozilla/5.0 (iphone; cpu iphone os 17_0)', 'iPhone', 5);
-    openDirections(makeMeeting({ latitude: 34.05, longitude: -118.24 }));
-    expect(window.location.href).toBe('maps://?daddr=34.05,-118.24');
+    expect(getDirectionsUrl(makeMeeting({ latitude: 34.05, longitude: -118.24 }))).toBe('maps://?daddr=34.05,-118.24');
   });
 
   test('iOS: falls back to address when no coordinates', () => {
     setNav('mozilla/5.0 (iphone; cpu iphone os 17_0)', 'iPhone', 5);
-    openDirections(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Anytown', location_province: 'CA' }));
-    expect(window.location.href).toBe('maps://?q=123%20Main%20St%2C%20Anytown%2C%20CA');
+    expect(getDirectionsUrl(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Anytown', location_province: 'CA' }))).toBe(
+      'maps://?q=123%20Main%20St%2C%20Anytown%2C%20CA'
+    );
   });
 
-  test('Android: sets location.href to geo: URL', () => {
+  test('Android: returns geo: URL', () => {
     setNav('mozilla/5.0 (linux; android 13; pixel 7)');
-    openDirections(makeMeeting({ latitude: 34.05, longitude: -118.24 }));
-    expect(window.location.href).toBe('geo:34.05,-118.24?q=34.05,-118.24');
+    expect(getDirectionsUrl(makeMeeting({ latitude: 34.05, longitude: -118.24 }))).toBe('geo:34.05,-118.24?q=34.05,-118.24');
   });
 
-  test('web: calls window.open with Google Maps URL', () => {
+  test('web: returns Google Maps URL with coordinates', () => {
     setNav('mozilla/5.0 (windows nt 10.0)', 'Win32', 0);
-    openDirections(makeMeeting({ latitude: 34.05, longitude: -118.24 }));
-    expect(window.open).toHaveBeenCalledWith('https://www.google.com/maps/dir/?api=1&destination=34.05,-118.24', '_blank', 'noopener,noreferrer');
+    expect(getDirectionsUrl(makeMeeting({ latitude: 34.05, longitude: -118.24 }))).toBe('https://www.google.com/maps/dir/?api=1&destination=34.05,-118.24');
   });
 
   test('web: falls back to address when no coordinates', () => {
     setNav('mozilla/5.0 (windows nt 10.0)', 'Win32', 0);
-    openDirections(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Springfield' }));
-    expect(window.open).toHaveBeenCalledWith(expect.stringContaining('123%20Main%20St'), '_blank', 'noopener,noreferrer');
+    expect(getDirectionsUrl(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Springfield' }))).toContain('123%20Main%20St');
   });
 });

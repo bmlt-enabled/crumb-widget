@@ -6,7 +6,7 @@
   import type { ProcessedMeeting, TilesConfig } from '@/types';
   import { clearSelectedMeeting } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
-  import { openDirections } from '@utils/format';
+  import { getDirectionsUrl } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { t } from '@stores/localization';
   import CalendarButton from './CalendarButton.svelte';
@@ -53,20 +53,15 @@
       darkMq.addEventListener('change', onColorSchemeChange);
     }
 
-    const popupEl = document.createElement('div');
-    popupEl.style.cssText = 'min-width:180px';
-    popupEl.innerHTML = `<p style="font-size:13px;margin:0 0 8px">${meeting.formattedAddress}</p>`;
-    const dirBtn = document.createElement('button');
-    dirBtn.className = 'bmlt-btn-secondary';
-    dirBtn.style.cssText = 'display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;cursor:pointer;font-family:inherit';
-    dirBtn.innerHTML = `<svg width="11" height="11" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>${$t.getDirections}`;
-    dirBtn.addEventListener('click', () => openDirections(meeting));
-    popupEl.appendChild(dirBtn);
+    const popupHtml = `<div style="min-width:180px">
+      <p style="font-size:13px;margin:0 0 8px">${meeting.formattedAddress}</p>
+      <a href="${getDirectionsUrl(meeting)}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:4px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;text-decoration:none;font-family:inherit">${$t.getDirections}</a>
+    </div>`;
 
     L.marker([meeting.latitude, meeting.longitude], {
       icon: buildMarkerIcon(config.locationMarker ?? DEFAULT_LOCATION_MARKER)
     })
-      .bindPopup(popupEl)
+      .bindPopup(popupHtml)
       .addTo(leafletMap!);
   });
 
@@ -94,16 +89,18 @@
     <div class="shrink-0 overflow-y-auto p-4 sm:w-72 sm:border-r sm:border-gray-200 lg:w-80">
       <!-- Get Directions (in-person) -->
       {#if meeting.isInPerson && meeting.formattedAddress}
-        <button
-          onclick={() => openDirections(meeting)}
-          class="bmlt-btn-secondary mb-4 flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+        <a
+          href={getDirectionsUrl(meeting)}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bmlt-btn-secondary mb-4 flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 no-underline transition-colors hover:bg-gray-50"
         >
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
           {$t.getDirections}
-        </button>
+        </a>
       {/if}
 
       <!-- Unified info card -->
@@ -228,7 +225,12 @@
         <div class="flex h-full flex-col items-center justify-center gap-4 bg-gray-50 p-8 text-center">
           <div class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
             <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
             </svg>
           </div>
           <div>

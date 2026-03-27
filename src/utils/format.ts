@@ -50,26 +50,15 @@ export function getPlatform(): Platform {
   return 'web';
 }
 
-export function openDirections(meeting: Meeting): void {
+export function getDirectionsUrl(meeting: Meeting): string {
   const lat = meeting.latitude;
   const lng = meeting.longitude;
   const addr = encodeURIComponent(formatAddress(meeting));
   const platform = getPlatform();
-
-  let url: string;
   if (platform === 'ios') {
-    url = lat && lng ? `maps://?daddr=${lat},${lng}` : `maps://?q=${addr}`;
+    return lat && lng ? `maps://?daddr=${lat},${lng}` : `maps://?q=${addr}`;
   } else if (platform === 'android') {
-    url = lat && lng ? `geo:${lat},${lng}?q=${lat},${lng}` : `geo:0,0?q=${addr}`;
-  } else {
-    url = lat && lng ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` : `https://www.google.com/maps/dir/?api=1&destination=${addr}`;
+    return lat && lng ? `geo:${lat},${lng}?q=${lat},${lng}` : `geo:0,0?q=${addr}`;
   }
-
-  if (platform === 'web') {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  } else {
-    // On iOS/Android, navigate directly so the OS opens the native maps app
-    // without showing a "Open this page in Maps?" confirmation dialog
-    window.location.href = url;
-  }
+  return lat && lng ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` : `https://www.google.com/maps/dir/?api=1&destination=${addr}`;
 }
