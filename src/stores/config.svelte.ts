@@ -8,7 +8,7 @@ const defaultConfig: AppConfig = {
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'bmlt-meeting-list',
-  showCalendar: true,
+  showCalendar: false,
   columns: ALL_COLUMNS,
   geolocation: false,
   geolocationRadius: 10
@@ -35,7 +35,7 @@ export function initConfig(el: HTMLElement): void {
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
-  config.showCalendar = globalCfg.calendar !== false;
+  config.showCalendar = globalCfg.calendar === true;
   config.columns = globalCfg.columns ?? ALL_COLUMNS;
   config.geolocation = globalCfg.geolocation ?? false;
   config.geolocationRadius = globalCfg.geolocationRadius ?? 10;

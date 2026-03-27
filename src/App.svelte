@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy } from 'svelte';
+  import { onMount } from 'svelte';
   import type { AppConfig } from '@/types';
   import type { ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
@@ -20,12 +20,7 @@
     if (uiState.view === 'detail') clearSelectedMeeting();
   }
 
-  onDestroy(() => {
-    window.removeEventListener('popstate', onPopState);
-  });
-
   onMount(async () => {
-    window.addEventListener('popstate', onPopState);
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
 
     // Determine whether to attempt geolocation on load
@@ -94,6 +89,8 @@
 
   const selectedMeeting = $derived(uiState.selectedMeetingId ? dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId) : undefined);
 </script>
+
+<svelte:window onpopstate={onPopState} />
 
 <div class="bmlt-meeting-list flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white font-sans text-base">
   <!-- Header -->
