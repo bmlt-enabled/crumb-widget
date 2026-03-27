@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
-import { formatTime, getTimeOfDay, formatAddress, sortMeetings } from '@utils/format';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
+import { formatTime, getTimeOfDay, formatAddress, sortMeetings, getPlatform, openDirections } from '@utils/format';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -69,20 +69,125 @@ describe('formatAddress', () => {
 });
 
 describe('sortMeetings', () => {
-  test('sorts by weekday then start time', () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  test('sorts by time within the same day', () => {
+    vi.setSystemTime(new Date(2024, 0, 7)); // Sunday (bmlt=1) — today, so all same offset
+    const meetings = [makeMeeting({ id_bigint: '2', weekday_tinyint: 1, start_time: '19:00:00' }), makeMeeting({ id_bigint: '1', weekday_tinyint: 1, start_time: '09:00:00' })];
+    expect(sortMeetings(meetings).map((m) => m.id_bigint)).toEqual(['1', '2']);
+  });
+
+  test('starts from today, not Sunday', () => {
+    vi.setSystemTime(new Date(2024, 0, 3)); // Wednesday (getDay=3, bmlt=4)
     const meetings = [
-      makeMeeting({ id_bigint: '3', weekday_tinyint: 4, start_time: '09:00:00' }),
-      makeMeeting({ id_bigint: '1', weekday_tinyint: 2, start_time: '19:00:00' }),
-      makeMeeting({ id_bigint: '2', weekday_tinyint: 2, start_time: '09:00:00' })
+      makeMeeting({ id_bigint: 'sun', weekday_tinyint: 1 }), // offset 4
+      makeMeeting({ id_bigint: 'wed', weekday_tinyint: 4 }), // offset 0 — today
+      makeMeeting({ id_bigint: 'tue', weekday_tinyint: 3 }) // offset 6
     ];
-    const sorted = sortMeetings(meetings);
-    expect(sorted.map((m) => m.id_bigint)).toEqual(['2', '1', '3']);
+    expect(sortMeetings(meetings).map((m) => m.id_bigint)).toEqual(['wed', 'sun', 'tue']);
+  });
+
+  test('wraps around the end of the week', () => {
+    vi.setSystemTime(new Date(2024, 0, 6)); // Saturday (getDay=6, bmlt=7)
+    const meetings = [
+      makeMeeting({ id_bigint: 'mon', weekday_tinyint: 2 }), // offset 2
+      makeMeeting({ id_bigint: 'sat', weekday_tinyint: 7 }), // offset 0 — today
+      makeMeeting({ id_bigint: 'sun', weekday_tinyint: 1 }) // offset 1
+    ];
+    expect(sortMeetings(meetings).map((m) => m.id_bigint)).toEqual(['sat', 'sun', 'mon']);
   });
 
   test('does not mutate the original array', () => {
+    vi.setSystemTime(new Date(2024, 0, 1)); // Monday
     const meetings = [makeMeeting({ id_bigint: '2', weekday_tinyint: 3 }), makeMeeting({ id_bigint: '1', weekday_tinyint: 2 })];
     const original = [...meetings];
     sortMeetings(meetings);
     expect(meetings.map((m) => m.id_bigint)).toEqual(original.map((m) => m.id_bigint));
+  });
+});
+
+describe('getPlatform', () => {
+  const setNav = (ua: string, platform = '', maxTouchPoints = 0) => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: ua, configurable: true });
+    Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
+    Object.defineProperty(window.navigator, 'maxTouchPoints', { value: maxTouchPoints, configurable: true });
+  };
+
+  test('detects android', () => {
+    setNav('mozilla/5.0 (linux; android 13; pixel 7)');
+    expect(getPlatform()).toBe('android');
+  });
+
+  test('detects iPhone', () => {
+    setNav('mozilla/5.0 (iphone; cpu iphone os 17_0)', 'iPhone', 5);
+    expect(getPlatform()).toBe('ios');
+  });
+
+  test('detects iPad via MacIntel + maxTouchPoints', () => {
+    setNav('mozilla/5.0 (macintosh; intel mac os x 10_15_7)', 'MacIntel', 5);
+    expect(getPlatform()).toBe('ios');
+  });
+
+  test('returns web for desktop mac', () => {
+    setNav('mozilla/5.0 (macintosh; intel mac os x 10_15_7)', 'MacIntel', 0);
+    expect(getPlatform()).toBe('web');
+  });
+
+  test('returns web for desktop windows', () => {
+    setNav('mozilla/5.0 (windows nt 10.0; win64; x64)', 'Win32', 0);
+    expect(getPlatform()).toBe('web');
+  });
+});
+
+describe('openDirections', () => {
+  const setNav = (ua: string, platform = '', maxTouchPoints = 0) => {
+    Object.defineProperty(window.navigator, 'userAgent', { value: ua, configurable: true });
+    Object.defineProperty(window.navigator, 'platform', { value: platform, configurable: true });
+    Object.defineProperty(window.navigator, 'maxTouchPoints', { value: maxTouchPoints, configurable: true });
+  };
+
+  beforeEach(() => {
+    // Replace window.location with a writable mock
+    Object.defineProperty(window, 'location', { value: { href: '' }, writable: true, configurable: true });
+    vi.spyOn(window, 'open').mockReturnValue(null);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  test('iOS: sets location.href to maps:// URL with coordinates', () => {
+    setNav('mozilla/5.0 (iphone; cpu iphone os 17_0)', 'iPhone', 5);
+    openDirections(makeMeeting({ latitude: 34.05, longitude: -118.24 }));
+    expect(window.location.href).toBe('maps://?daddr=34.05,-118.24');
+  });
+
+  test('iOS: falls back to address when no coordinates', () => {
+    setNav('mozilla/5.0 (iphone; cpu iphone os 17_0)', 'iPhone', 5);
+    openDirections(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Anytown', location_province: 'CA' }));
+    expect(window.location.href).toBe('maps://?q=123%20Main%20St%2C%20Anytown%2C%20CA');
+  });
+
+  test('Android: sets location.href to geo: URL', () => {
+    setNav('mozilla/5.0 (linux; android 13; pixel 7)');
+    openDirections(makeMeeting({ latitude: 34.05, longitude: -118.24 }));
+    expect(window.location.href).toBe('geo:34.05,-118.24?q=34.05,-118.24');
+  });
+
+  test('web: calls window.open with Google Maps URL', () => {
+    setNav('mozilla/5.0 (windows nt 10.0)', 'Win32', 0);
+    openDirections(makeMeeting({ latitude: 34.05, longitude: -118.24 }));
+    expect(window.open).toHaveBeenCalledWith('https://www.google.com/maps/dir/?api=1&destination=34.05,-118.24', '_blank', 'noopener,noreferrer');
+  });
+
+  test('web: falls back to address when no coordinates', () => {
+    setNav('mozilla/5.0 (windows nt 10.0)', 'Win32', 0);
+    openDirections(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Springfield' }));
+    expect(window.open).toHaveBeenCalledWith(expect.stringContaining('123%20Main%20St'), '_blank', 'noopener,noreferrer');
   });
 });

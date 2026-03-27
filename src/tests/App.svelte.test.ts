@@ -130,6 +130,34 @@ describe('filtering', () => {
     expect(screen.queryByText('In-Person Group')).not.toBeInTheDocument();
   });
 
+  test('meetings with both in-person and virtual appear under In-Person filter', async () => {
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'In-Person Only', venue_type: 1, isInPerson: true, isVirtual: false }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Both Options', venue_type: 3, isInPerson: true, isVirtual: true })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByRole('button', { name: 'In-Person' }));
+
+    expect(screen.getByText('In-Person Only')).toBeInTheDocument();
+    expect(screen.getByText('Both Options')).toBeInTheDocument();
+  });
+
+  test('meetings with both in-person and virtual appear under Virtual filter', async () => {
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'Virtual Only', venue_type: 2, isInPerson: false, isVirtual: true }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Both Options', venue_type: 3, isInPerson: true, isVirtual: true })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Virtual' }));
+
+    expect(screen.getByText('Virtual Only')).toBeInTheDocument();
+    expect(screen.getByText('Both Options')).toBeInTheDocument();
+  });
+
   test('filters meetings by text search', async () => {
     dataState.meetings = [makeMeeting({ id_bigint: '1', meeting_name: 'Serenity Group' }), makeMeeting({ id_bigint: '2', meeting_name: 'Courage to Change' })];
     render(App, { props: { config: baseConfig } });
