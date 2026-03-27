@@ -39,6 +39,11 @@ export const ptTranslations = {
   meetingFormats: 'Formatos de reunião',
   notes: 'Notas',
   contact: 'Contato',
+  // Geolocation
+  nearMe: 'Perto de mim',
+  locating: 'Localizando\u2026',
+  locationDenied: 'Acesso à localização negado',
+  locationError: 'Não foi possível obter a localização',
   // Loading
   loadingMeetings: 'Carregando reuniões\u2026',
   // Map

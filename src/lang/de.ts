@@ -39,6 +39,11 @@ export const deTranslations = {
   meetingFormats: 'Treffenformate',
   notes: 'Notizen',
   contact: 'Kontakt',
+  // Geolocation
+  nearMe: 'In meiner Nähe',
+  locating: 'Standort wird ermittelt\u2026',
+  locationDenied: 'Standortzugriff verweigert',
+  locationError: 'Standort konnte nicht ermittelt werden',
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',
   // Map

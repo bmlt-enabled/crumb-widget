@@ -39,6 +39,11 @@ export const esTranslations = {
   meetingFormats: 'Formatos de reunión',
   notes: 'Notas',
   contact: 'Contacto',
+  // Geolocation
+  nearMe: 'Cerca de mí',
+  locating: 'Localizando\u2026',
+  locationDenied: 'Acceso a ubicación denegado',
+  locationError: 'No se puede obtener la ubicación',
   // Loading
   loadingMeetings: 'Cargando reuniones\u2026',
   // Map

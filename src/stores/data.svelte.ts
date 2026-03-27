@@ -1,6 +1,6 @@
 import { SvelteMap } from 'svelte/reactivity';
 import { BmltClient } from 'bmlt-query-client';
-import type { Format } from 'bmlt-query-client';
+import type { Meeting, Format } from 'bmlt-query-client';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, WEEKDAYS, WEEKDAYS_SHORT, sortMeetings } from '@utils/format';
 
@@ -17,6 +17,28 @@ export const dataState = $state<DataState>({
   loading: false,
   error: null
 });
+
+function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
+  return meetingsResp.map((m) => {
+    const weekday = Number(m.weekday_tinyint);
+    const venueType = Number(m.venue_type);
+    const formatIds = m.format_shared_id_list ? m.format_shared_id_list.split(',') : [];
+    const resolvedFormats = formatIds.map((id) => dataState.formats.get(id.trim())).filter(Boolean) as Format[];
+    return {
+      ...m,
+      weekday_tinyint: weekday,
+      venue_type: venueType,
+      formattedTime: formatTime(m.start_time),
+      formattedAddress: formatAddress(m),
+      timeOfDay: getTimeOfDay(m.start_time),
+      dayName: WEEKDAYS[weekday] ?? '',
+      dayShort: WEEKDAYS_SHORT[weekday] ?? '',
+      resolvedFormats,
+      isInPerson: venueType === 1 || venueType === 3,
+      isVirtual: venueType === 2 || venueType === 3
+    };
+  });
+}
 
 export async function loadData(rootServerUrl: string, serviceBodyIds: number[] = []): Promise<void> {
   if (!rootServerUrl) {
@@ -44,28 +66,40 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
     }
     dataState.formats = formatsMap;
 
-    const processed: ProcessedMeeting[] = meetingsResp.map((m) => {
-      // BMLT API returns numeric fields as strings; coerce to numbers for reliable comparisons
-      const weekday = Number(m.weekday_tinyint);
-      const venueType = Number(m.venue_type);
-      const formatIds = m.format_shared_id_list ? m.format_shared_id_list.split(',') : [];
-      const resolvedFormats = formatIds.map((id) => formatsMap.get(id.trim())).filter(Boolean) as Format[];
-      return {
-        ...m,
-        weekday_tinyint: weekday,
-        venue_type: venueType,
-        formattedTime: formatTime(m.start_time),
-        formattedAddress: formatAddress(m),
-        timeOfDay: getTimeOfDay(m.start_time),
-        dayName: WEEKDAYS[weekday] ?? '',
-        dayShort: WEEKDAYS_SHORT[weekday] ?? '',
-        resolvedFormats,
-        isInPerson: venueType === 1 || venueType === 3,
-        isVirtual: venueType === 2 || venueType === 3
-      };
+    dataState.meetings = sortMeetings(processMeetings(meetingsResp));
+  } catch (err) {
+    dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
+  } finally {
+    dataState.loading = false;
+  }
+}
+
+export async function loadDataByCoordinates(rootServerUrl: string, latitude: number, longitude: number, serviceBodyIds: number[] = [], radiusMiles: number = 10): Promise<void> {
+  if (!rootServerUrl) {
+    dataState.error = 'No root server URL configured. Add data-root-server to your embed element.';
+    return;
+  }
+
+  dataState.loading = true;
+  dataState.error = null;
+
+  try {
+    const client = new BmltClient({ rootServerURL: rootServerUrl });
+
+    // Fetch formats if not already loaded
+    if (dataState.formats.size === 0) {
+      const formatsResp = await client.getFormats();
+      const formatsMap = new SvelteMap<string, Format>();
+      for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
+      dataState.formats = formatsMap;
+    }
+
+    const meetingsResp = await client.searchMeetingsByCoordinates({ latitude, longitude }, radiusMiles, undefined, {
+      ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
+      page_size: 5000
     });
 
-    dataState.meetings = sortMeetings(processed);
+    dataState.meetings = sortMeetings(processMeetings(meetingsResp));
   } catch (err) {
     dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
   } finally {

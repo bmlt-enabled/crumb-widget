@@ -4,6 +4,7 @@ export const uiState = $state<{
   view: ViewType;
   selectedMeetingId: string | null;
   filters: FilterState;
+  geoActive: boolean;
 }>({
   view: 'list',
   selectedMeetingId: null,
@@ -13,7 +14,8 @@ export const uiState = $state<{
     venueTypes: [],
     timeOfDay: [],
     formatIds: []
-  }
+  },
+  geoActive: false
 });
 
 export function setView(view: ViewType): void {

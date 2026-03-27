@@ -39,6 +39,11 @@ export const frTranslations = {
   meetingFormats: 'Formats de réunion',
   notes: 'Notes',
   contact: 'Contact',
+  // Geolocation
+  nearMe: 'Près de moi',
+  locating: 'Localisation\u2026',
+  locationDenied: 'Accès à la localisation refusé',
+  locationError: "Impossible d'obtenir la localisation",
   // Loading
   loadingMeetings: 'Chargement des réunions\u2026',
   // Map

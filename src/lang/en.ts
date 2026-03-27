@@ -39,6 +39,11 @@ export const enTranslations = {
   meetingFormats: 'Meeting Formats',
   notes: 'Notes',
   contact: 'Contact',
+  // Geolocation
+  nearMe: 'Near Me',
+  locating: 'Locating\u2026',
+  locationDenied: 'Location access denied',
+  locationError: 'Unable to get location',
   // Loading
   loadingMeetings: 'Loading meetings\u2026',
   // Map

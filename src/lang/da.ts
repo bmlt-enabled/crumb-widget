@@ -39,6 +39,11 @@ export const daTranslations = {
   meetingFormats: 'Mødeformater',
   notes: 'Noter',
   contact: 'Kontakt',
+  // Geolocation
+  nearMe: 'Nær mig',
+  locating: 'Finder placering\u2026',
+  locationDenied: 'Placeringsadgang nægtet',
+  locationError: 'Kunne ikke hente placering',
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',
   // Map

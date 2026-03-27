@@ -142,7 +142,7 @@
 <div class="relative h-full w-full">
   <div bind:this={mapEl} class="h-full min-h-96 w-full"></div>
 
-  {#if !mappableMeetings.length && meetings.length > 0}
+  {#if !mappableMeetings.length}
     <div class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm">
       <p class="text-sm text-gray-500">{$t.noInPersonMeetings}</p>
     </div>

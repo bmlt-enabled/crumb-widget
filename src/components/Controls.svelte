@@ -1,6 +1,7 @@
 <script lang="ts">
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
-  import { dataState } from '@stores/data.svelte';
+  import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
+  import { config } from '@stores/config.svelte';
   import { WEEKDAYS } from '@utils/format';
   import { t } from '@stores/localization';
 
@@ -21,6 +22,44 @@
   const activeFilterCount = $derived(uiState.filters.weekdays.length + uiState.filters.venueTypes.length + uiState.filters.timeOfDay.length + uiState.filters.formatIds.length);
 
   let showFilters = $state(false);
+
+  type GeoStatus = 'idle' | 'locating' | 'active' | 'error';
+  let geoStatus = $state<GeoStatus>('idle');
+  let geoError = $state('');
+  let geoErrorTimer: ReturnType<typeof setTimeout> | null = null;
+
+  async function handleNearMe() {
+    if (uiState.geoActive) {
+      uiState.geoActive = false;
+      geoStatus = 'idle';
+      await loadData(config.rootServerUrl, config.serviceBodyIds);
+      return;
+    }
+    if (geoStatus === 'locating') return;
+
+    geoStatus = 'locating';
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.serviceBodyIds, config.geolocationRadius);
+        if (dataState.error) {
+          geoError = dataState.error;
+          geoStatus = 'error';
+          if (geoErrorTimer) clearTimeout(geoErrorTimer);
+          geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), 4000);
+        } else {
+          uiState.geoActive = true;
+          geoStatus = 'active';
+        }
+      },
+      (err) => {
+        geoError = err.code === 1 ? $t.locationDenied : $t.locationError;
+        geoStatus = 'error';
+        if (geoErrorTimer) clearTimeout(geoErrorTimer);
+        geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), 4000);
+      },
+      { timeout: 10000 }
+    );
+  }
 </script>
 
 <div class="bmlt-controls border-b border-gray-200 bg-white px-4 py-3">
@@ -60,8 +99,53 @@
       {/if}
     </button>
 
+    <!-- Near Me button -->
+    {#if config.geolocation}
+      <div class="relative">
+        <button
+          onclick={handleNearMe}
+          disabled={geoStatus === 'locating'}
+          class="flex items-center gap-1.5 rounded-lg border px-3 py-2 text-sm font-medium transition-colors {uiState.geoActive
+            ? 'bmlt-geo-active border-blue-500 bg-blue-600 text-white'
+            : geoStatus === 'error'
+              ? 'border-red-300 bg-red-50 text-red-700'
+              : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:cursor-wait disabled:opacity-60'}"
+        >
+          {#if geoStatus === 'locating'}
+            <svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            <span class="hidden sm:inline">{$t.locating}</span>
+          {:else if geoStatus === 'error'}
+            <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+            </svg>
+            <span class="hidden sm:inline">{geoError}</span>
+          {:else}
+            <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span class="hidden sm:inline">{$t.nearMe}</span>
+          {/if}
+        </button>
+        {#if uiState.geoActive}
+          <button
+            onclick={handleNearMe}
+            class="absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-800 text-white hover:bg-blue-900"
+            aria-label="Clear location"
+          >
+            <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        {/if}
+      </div>
+    {/if}
+
     <!-- View toggle -->
-    {#if hasMapMeetings}
+    {#if hasMapMeetings || uiState.view === 'map' || uiState.geoActive}
       <div class="flex rounded-lg border border-gray-300 bg-white">
         <button
           onclick={() => setView('list')}

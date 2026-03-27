@@ -39,6 +39,11 @@ export const svTranslations = {
   meetingFormats: 'Mötesformat',
   notes: 'Anteckningar',
   contact: 'Kontakt',
+  // Geolocation
+  nearMe: 'Nära mig',
+  locating: 'Söker plats\u2026',
+  locationDenied: 'Platsåtkomst nekad',
+  locationError: 'Kunde inte hämta plats',
   // Loading
   loadingMeetings: 'Laddar möten\u2026',
   // Map

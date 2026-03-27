@@ -9,7 +9,9 @@ const defaultConfig: AppConfig = {
   defaultView: 'list',
   containerId: 'bmlt-meeting-list',
   showCalendar: true,
-  columns: ALL_COLUMNS
+  columns: ALL_COLUMNS,
+  geolocation: false,
+  geolocationRadius: 10
 };
 
 export const config = $state<AppConfig>({ ...defaultConfig });
@@ -35,6 +37,8 @@ export function initConfig(el: HTMLElement): void {
   config.tilesDark = globalCfg.map?.tiles_dark;
   config.showCalendar = globalCfg.calendar !== false;
   config.columns = globalCfg.columns ?? ALL_COLUMNS;
+  config.geolocation = globalCfg.geolocation ?? false;
+  config.geolocationRadius = globalCfg.geolocationRadius ?? 10;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

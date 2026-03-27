@@ -6,11 +6,13 @@ Built with Svelte 5, compiled to a **single self-contained JavaScript file** wit
 
 ## Features
 
-- **List view** — sortable meeting table with day, time, name, location, and venue type
+- **List view** — responsive meeting table with time, location, and address columns; collapses to card layout on mobile
 - **Map view** — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location
 - **Detail view** — full meeting info including schedule, address with directions link, virtual meeting join button, formats, and notes
 - **Search** — real-time text filter across meeting name, location, and notes
 - **Filters** — weekday, venue type (in-person / virtual), and time of day (morning / afternoon / evening / night)
+- **Near Me** — optional geolocation button that loads meetings near the user's current location (requires `geolocation: true`)
+- **Add to Calendar** — add any meeting to iCal/Apple Calendar or Google Calendar directly from the detail view
 - **BMLT native** — queries any BMLT root server directly via [`bmlt-query-client`](https://github.com/bmlt-enabled/bmlt-query-client)
 - **Service body filtering** — single ID or a comma-separated list, with recursive child service body support
 
@@ -37,7 +39,7 @@ All attributes are set on the `#bmlt-meeting-list` div.
 |---|---|---|
 | `data-root-server` | Yes | Full URL to your BMLT root server (e.g. `https://example.org/main_server`) |
 | `data-service-body` | No | Filter by service body. Accepts a single ID (`"42"`) or comma-separated list (`"42,57,103"`). Omit to show all meetings on the server. Searches are recursive — child service bodies are always included. |
-| `data-view` | No | Default view on load: `list` (default) or `map` |
+| `data-view` | No | Default view on load: `list` (default) or `map`. Can also be set via the `?view=` query parameter (see [URL Query Parameters](#url-query-parameters)). |
 
 ### Optional Global Config
 
@@ -60,6 +62,8 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults. Use
 | `language` | `string` | Override the UI language (e.g. `'es'`, `'fr'`). Defaults to `navigator.language`. |
 | `calendar` | `boolean` | Show the **Add to Calendar** button on meeting detail. Default: `true`. Set to `false` to hide it. |
 | `columns` | `string[]` | Columns to show in list view. Default: `['time', 'name', 'location', 'address']`. Omit any to hide it. Available values: `time`, `name`, `location` (venue name), `address` (street address badges), `service_body`. `service_body` is hidden by default. |
+| `geolocation` | `boolean` | Show a **Near Me** button that searches for meetings near the user's current location. Also auto-geolocates on page load. Default: `false`. |
+| `geolocationRadius` | `number` | Search radius in miles when using geolocation. Default: `10`. |
 | `map.tiles` | `TilesConfig` | Custom map tile provider. See below. |
 | `map.tiles_dark` | `TilesConfig` | Alternate tile provider used when `prefers-color-scheme: dark`. See below. |
 | `map.markers.location` | `MarkerConfig` | Custom map marker for meeting locations. See below. |
@@ -78,6 +82,36 @@ By default the widget uses `navigator.language` to pick a language, falling back
 ```
 
 Supported languages: `en`, `es`, `fr`, `de`, `pt`, `it`, `sv`, `da`. Language codes are matched on the base tag (e.g. `'fr-CA'` uses `fr`).
+
+#### Geolocation
+
+Enable the Near Me button with `geolocation: true`. When enabled, the widget also auto-geolocates on page load.
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    geolocation: true,
+    geolocationRadius: 25
+  };
+</script>
+<script src="app.js"></script>
+```
+
+Requires a secure context (HTTPS). If permission is denied or geolocation fails, the widget falls back to loading all meetings.
+
+#### URL Query Parameters
+
+The `?view=` query parameter controls the initial view and overrides `data-view` and `defaultView`:
+
+| Value | Behaviour |
+|---|---|
+| `list` | Force list view on load |
+| `map` | Force map view on load |
+| `auto` | Geolocate on load → success: map with nearby results; fail: list with all meetings |
+
+Example: `https://example.org/meetings/?view=auto`
+
+Note: `?view=list` and `?view=map` disable auto-geolocation even if `config.geolocation` is `true`.
 
 #### CSS customization
 
@@ -317,8 +351,11 @@ src/
     MeetingDetail.svelte   # Full meeting detail view
     MapView.svelte         # Leaflet map
     Loading.svelte         # Loading spinner
+    CalendarButton.svelte  # Add to Calendar button (iCal & Google Calendar)
   utils/
     format.ts              # Time, address, and sort helpers
+    calendar.ts            # iCal / Google Calendar URL helpers
+    localization.ts        # Localization store and language loading
   tests/
     App.svelte.test.ts     # Component integration tests
     format.test.ts         # Unit tests for format utilities

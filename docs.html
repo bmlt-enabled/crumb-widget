@@ -194,6 +194,8 @@
           <li><a href="#attributes">Data Attributes</a></li>
           <li><a href="#global-config">Global Config</a></li>
           <li><a href="#language">Language</a></li>
+          <li><a href="#geolocation">Geolocation</a></li>
+          <li><a href="#query-params">URL Query Parameters</a></li>
           <li><a href="#css-vars">CSS Variables</a></li>
           <li><a href="#css-dark-mode">Dark Mode CSS</a></li>
           <li><a href="#css-classes">CSS Helper Classes</a></li>
@@ -279,6 +281,7 @@
               <td>
                 Default view when the widget loads.
                 <br><em>Values:</em> <code>list</code> (default) or <code>map</code>
+                <br>Can be overridden at runtime by the <code>?view=</code> query parameter (see <a href="#query-params">URL Query Parameters</a>).
               </td>
             </tr>
           </tbody>
@@ -338,6 +341,21 @@
               </td>
             </tr>
             <tr>
+              <td>geolocation</td>
+              <td><code>boolean</code></td>
+              <td>
+                Show a <strong>Near Me</strong> button and auto-geolocate on page load to find meetings near the user.
+                Requires HTTPS. Default: <code>false</code>. Falls back to full meeting load if permission is denied.
+              </td>
+            </tr>
+            <tr>
+              <td>geolocationRadius</td>
+              <td><code>number</code></td>
+              <td>
+                Search radius in miles when using geolocation. Default: <code>10</code>.
+              </td>
+            </tr>
+            <tr>
               <td>map.tiles</td>
               <td><code>TilesConfig</code></td>
               <td>
@@ -393,6 +411,43 @@
             <tr><td><code>da</code></td><td>Danish</td></tr>
           </tbody>
         </table>
+
+        <h2 id="geolocation">Geolocation</h2>
+        <p>
+          Enable the <strong>Near Me</strong> button with <code>geolocation: true</code>. When enabled, the widget
+          also attempts to geolocate the user automatically on page load and show meetings nearby.
+          Requires a secure context (HTTPS). If permission is denied or unavailable, the widget silently
+          falls back to loading all meetings.
+        </p>
+        <pre><code>&lt;script&gt;
+  var BmltMeetingListConfig = {
+    geolocation: true,
+    geolocationRadius: 25  // miles, default 10
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+
+        <h2 id="query-params">URL Query Parameters</h2>
+        <p>
+          The <code>?view=</code> query parameter sets the initial view and overrides <code>data-view</code>
+          and <code>defaultView</code>:
+        </p>
+        <table>
+          <thead><tr><th>Value</th><th>Behaviour</th></tr></thead>
+          <tbody>
+            <tr><td><code>list</code></td><td>Force list view on load</td></tr>
+            <tr><td><code>map</code></td><td>Force map view on load</td></tr>
+            <tr>
+              <td><code>auto</code></td>
+              <td>
+                Geolocate on load — success shows map with nearby results;
+                failure falls back to list with all meetings
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Example: <code>https://example.org/meetings/?view=auto</code></p>
+        <p><code>?view=list</code> and <code>?view=map</code> disable auto-geolocation even if <code>geolocation: true</code> is set.</p>
 
         <h2 id="css-vars">CSS Variables</h2>
         <p>

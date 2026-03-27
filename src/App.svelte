@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import type { AppConfig } from '@/types';
   import type { ProcessedMeeting } from '@/types';
-  import { loadData, dataState } from '@stores/data.svelte';
+  import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
@@ -16,10 +16,39 @@
 
   const { config }: Props = $props();
 
-  onMount(() => {
-    loadData(config.rootServerUrl, config.serviceBodyIds);
-    if (config.defaultView === 'map') {
+  onMount(async () => {
+    const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
+
+    // Determine whether to attempt geolocation on load
+    const tryGeo = viewParam === 'auto' || (!viewParam && config.geolocation);
+
+    // Set initial view (before data loads so map renders immediately if needed)
+    if (viewParam === 'map' || (!viewParam && !config.geolocation && config.defaultView === 'map')) {
       uiState.view = 'map';
+    }
+
+    if (tryGeo && navigator.geolocation) {
+      dataState.loading = true;
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.serviceBodyIds, config.geolocationRadius);
+          if (!dataState.error) {
+            uiState.geoActive = true;
+            uiState.view = 'map';
+          } else {
+            uiState.view = 'list';
+            await loadData(config.rootServerUrl, config.serviceBodyIds);
+          }
+        },
+        async () => {
+          // denied or unavailable — fall back to list + full load
+          uiState.view = 'list';
+          await loadData(config.rootServerUrl, config.serviceBodyIds);
+        },
+        { timeout: 10000 }
+      );
+    } else {
+      await loadData(config.rootServerUrl, config.serviceBodyIds);
     }
   });
 

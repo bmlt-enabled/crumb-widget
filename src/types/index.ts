@@ -18,6 +18,8 @@ export interface AppConfig {
   tilesDark?: TilesConfig;
   showCalendar: boolean;
   columns: Column[];
+  geolocation: boolean;
+  geolocationRadius: number;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -53,6 +55,8 @@ export interface BmltMeetingListGlobalConfig {
   defaultView?: 'list' | 'map';
   calendar?: boolean;
   columns?: Column[];
+  geolocation?: boolean;
+  geolocationRadius?: number;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;
