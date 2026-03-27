@@ -22,13 +22,67 @@
     <p class="mt-1 text-xs">{$t.tryAdjustingFilters}</p>
   </div>
 {:else}
-  <div class="overflow-x-auto">
+  <!-- Mobile cards (below sm) -->
+  <div class="divide-y divide-gray-100 sm:hidden">
+    {#each meetings as meeting (meeting.id_bigint)}
+      <button type="button" class="bmlt-row flex w-full cursor-pointer gap-3 px-4 py-3 text-left transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting.id_bigint)}>
+        <!-- Left: time -->
+        {#if cols.has('time')}
+          <div class="w-16 shrink-0 text-gray-600">
+            <span class="font-medium text-gray-800">{meeting.dayShort}</span>
+            <br />
+            <span class="text-xs">{meeting.formattedTime}</span>
+          </div>
+        {/if}
+        <!-- Right: name + location details -->
+        <div class="min-w-0 flex-1">
+          {#if cols.has('name')}
+            <p class="font-medium text-gray-900">{meeting.meeting_name}</p>
+          {/if}
+          {#if cols.has('location') && meeting.location_text}
+            <p class="mt-0.5 text-xs text-gray-600">{meeting.location_text}</p>
+          {/if}
+          {#if cols.has('address')}
+            <div class="mt-1 flex flex-wrap gap-1">
+              {#if meeting.isInPerson}
+                <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
+                  <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  </svg>
+                  <span class="break-words">{meeting.formattedAddress || meeting.location_text}</span>
+                </span>
+              {/if}
+              {#if meeting.isVirtual}
+                <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
+                  <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                    />
+                  </svg>
+                  {$t.onlineMeeting}
+                </span>
+              {/if}
+            </div>
+          {/if}
+          {#if cols.has('service_body') && meeting.service_body_name}
+            <p class="mt-0.5 text-xs text-gray-500">{meeting.service_body_name}</p>
+          {/if}
+        </div>
+      </button>
+    {/each}
+  </div>
+
+  <!-- Desktop table (sm+) -->
+  <div class="hidden overflow-x-auto sm:block">
     <table class="w-full text-sm">
       <thead class="sticky top-0 bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
           {#if cols.has('time')}<th class="px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
-          {#if cols.has('location')}<th class="hidden px-4 py-2 text-left sm:table-cell">{$t.location}</th>{/if}
+          {#if cols.has('location')}<th class="px-4 py-2 text-left">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-left">{$t.address}</th>{/if}
           {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-left lg:table-cell">{$t.serviceBody}</th>{/if}
         </tr>
@@ -52,7 +106,7 @@
               </td>
             {/if}
             {#if cols.has('location')}
-              <td class="hidden px-4 py-3 text-sm text-gray-600 sm:table-cell">
+              <td class="px-4 py-3 text-sm text-gray-600">
                 {meeting.location_text ?? ''}
               </td>
             {/if}
@@ -93,6 +147,7 @@
       </tbody>
     </table>
   </div>
+
   <div class="border-t border-gray-100 px-4 py-2 text-xs text-gray-400">
     {$t.showing}
     {meetings.length}

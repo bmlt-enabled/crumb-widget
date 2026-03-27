@@ -86,9 +86,9 @@ describe('App', () => {
   test('shows meeting list when data is loaded', () => {
     dataState.meetings = [makeMeeting()];
     render(App, { props: { config: baseConfig } });
-    expect(screen.getByText('Monday Night Meeting')).toBeInTheDocument();
-    expect(screen.getByText('Mon')).toBeInTheDocument();
-    expect(screen.getByText('7:00 PM')).toBeInTheDocument();
+    expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Mon')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('7:00 PM')[0]).toBeInTheDocument();
   });
 
   test('shows meeting count in header', () => {
@@ -114,7 +114,7 @@ describe('filtering', () => {
     const monButtons = screen.getAllByRole('button', { name: 'Mon' });
     await fireEvent.click(monButtons[0]);
 
-    expect(screen.getByText('Monday Meeting')).toBeInTheDocument();
+    expect(screen.getAllByText('Monday Meeting')[0]).toBeInTheDocument();
     expect(screen.queryByText('Wednesday Meeting')).not.toBeInTheDocument();
   });
 
@@ -128,7 +128,7 @@ describe('filtering', () => {
     await fireEvent.click(screen.getByText('Filters'));
     await fireEvent.click(screen.getByRole('button', { name: 'Virtual' }));
 
-    expect(screen.getByText('Zoom Group')).toBeInTheDocument();
+    expect(screen.getAllByText('Zoom Group')[0]).toBeInTheDocument();
     expect(screen.queryByText('In-Person Group')).not.toBeInTheDocument();
   });
 
@@ -142,8 +142,8 @@ describe('filtering', () => {
     await fireEvent.click(screen.getByText('Filters'));
     await fireEvent.click(screen.getByRole('button', { name: 'In-Person' }));
 
-    expect(screen.getByText('In-Person Only')).toBeInTheDocument();
-    expect(screen.getByText('Both Options')).toBeInTheDocument();
+    expect(screen.getAllByText('In-Person Only')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Both Options')[0]).toBeInTheDocument();
   });
 
   test('meetings with both in-person and virtual appear under Virtual filter', async () => {
@@ -156,8 +156,8 @@ describe('filtering', () => {
     await fireEvent.click(screen.getByText('Filters'));
     await fireEvent.click(screen.getByRole('button', { name: 'Virtual' }));
 
-    expect(screen.getByText('Virtual Only')).toBeInTheDocument();
-    expect(screen.getByText('Both Options')).toBeInTheDocument();
+    expect(screen.getAllByText('Virtual Only')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Both Options')[0]).toBeInTheDocument();
   });
 
   test('filters meetings by text search', async () => {
@@ -167,7 +167,7 @@ describe('filtering', () => {
     const searchInput = screen.getByPlaceholderText('Search meetings...');
     await fireEvent.input(searchInput, { target: { value: 'serenity' } });
 
-    expect(screen.getByText('Serenity Group')).toBeInTheDocument();
+    expect(screen.getAllByText('Serenity Group')[0]).toBeInTheDocument();
     expect(screen.queryByText('Courage to Change')).not.toBeInTheDocument();
   });
 
@@ -188,7 +188,7 @@ describe('meeting detail', () => {
     dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Monday Night Meeting'));
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
 
     expect(screen.getByText('Back to meetings')).toBeInTheDocument();
     // Time is embedded in "Monday at 7:00 PM" so match with regex
@@ -199,9 +199,9 @@ describe('meeting detail', () => {
     dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Monday Night Meeting'));
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
     await fireEvent.click(screen.getByText('Back to meetings'));
 
-    expect(screen.getByText('Monday Night Meeting')).toBeInTheDocument();
+    expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
   });
 });
