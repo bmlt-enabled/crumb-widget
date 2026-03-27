@@ -22,7 +22,7 @@ Built with Svelte 5, compiled to a **single self-contained JavaScript file** wit
   data-root-server="https://your-server/main_server"
   data-view="list"
 ></div>
-<script src="https://your-cdn/app.js"></script>
+<script src="https://cdn.aws.bmlt.app/app.js"></script>
 ```
 
 That's it. The widget self-initializes when the script loads.
