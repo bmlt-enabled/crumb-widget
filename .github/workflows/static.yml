@@ -39,7 +39,7 @@ jobs:
             ${{ runner.os }}-node-
       - name: Build
         run: |
-          npm ci
+          npm install
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
