@@ -1,0 +1,75 @@
+import { SvelteMap } from 'svelte/reactivity';
+import { BmltClient } from 'bmlt-query-client';
+import type { Format } from 'bmlt-query-client';
+import type { ProcessedMeeting } from '@/types/index';
+import { formatTime, formatAddress, getTimeOfDay, WEEKDAYS, WEEKDAYS_SHORT, sortMeetings } from '@utils/format';
+
+interface DataState {
+  meetings: ProcessedMeeting[];
+  formats: SvelteMap<string, Format>;
+  loading: boolean;
+  error: string | null;
+}
+
+export const dataState = $state<DataState>({
+  meetings: [],
+  formats: new SvelteMap(),
+  loading: false,
+  error: null
+});
+
+export async function loadData(rootServerUrl: string, serviceBodyIds: number[] = []): Promise<void> {
+  if (!rootServerUrl) {
+    dataState.error = 'No root server URL configured. Add data-root-server to your embed element.';
+    return;
+  }
+
+  dataState.loading = true;
+  dataState.error = null;
+
+  try {
+    const client = new BmltClient({ rootServerURL: rootServerUrl });
+
+    const [formatsResp, meetingsResp] = await Promise.all([
+      client.getFormats(),
+      client.searchMeetings({
+        ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
+        page_size: 5000
+      })
+    ]);
+
+    const formatsMap = new SvelteMap<string, Format>();
+    for (const fmt of formatsResp) {
+      formatsMap.set(fmt.shared_id_bigint, fmt);
+    }
+    dataState.formats = formatsMap;
+
+    const processed: ProcessedMeeting[] = meetingsResp.map((m) => {
+      // BMLT API returns numeric fields as strings; coerce to numbers for reliable comparisons
+      const weekday = Number(m.weekday_tinyint);
+      const venueType = Number(m.venue_type);
+      const formatIds = m.format_shared_id_list ? m.format_shared_id_list.split(',') : [];
+      const resolvedFormats = formatIds.map((id) => formatsMap.get(id.trim())).filter(Boolean) as Format[];
+      return {
+        ...m,
+        weekday_tinyint: weekday,
+        venue_type: venueType,
+        formattedTime: formatTime(m.start_time),
+        formattedAddress: formatAddress(m),
+        timeOfDay: getTimeOfDay(m.start_time),
+        dayName: WEEKDAYS[weekday] ?? '',
+        dayShort: WEEKDAYS_SHORT[weekday] ?? '',
+        resolvedFormats,
+        isVirtual: venueType === 2,
+        isInPerson: venueType === 1,
+        isHybrid: venueType === 3
+      };
+    });
+
+    dataState.meetings = sortMeetings(processed);
+  } catch (err) {
+    dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
+  } finally {
+    dataState.loading = false;
+  }
+}

@@ -1,205 +1,175 @@
-# Svelte 5 + TypeScript + Vite + Tailwind CSS Bootstrap
+# BMLT Meeting List
 
-A modern starter template for building web applications with Svelte 5, TypeScript, Vite, and Tailwind CSS.
+An embeddable NA meeting finder widget. Drop a `<div>` and a `<script>` tag into any WordPress site or plain HTML page and get a fully functional meeting finder — search, filters, list view, and an interactive map.
 
-## Table of Contents
-- [Features](#features)
-- [Why Use This Template?](#why-use-this-template)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Available Scripts](#available-scripts)
-- [Project Structure](#project-structure)
-- [Technology Stack](#technology-stack)
-- [Development Features](#development-features)
-  - [Hot Module Replacement (HMR)](#hot-module-replacement-hmr)
-  - [TypeScript Configuration](#typescript-configuration)
-  - [Tailwind CSS Integration](#tailwind-css-integration)
-- [Continuous Integration & Deployment](#continuous-integration--deployment)
-  - [Testing & Linting Workflow](#testing--linting-workflow)
-  - [Deployment Workflow](#deployment-workflow)
-  - [Release Workflow](#release-workflow)
-  - [Workflow Files](#workflow-files)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+Built with Svelte 5, compiled to a **single self-contained JavaScript file** with CSS injected. No dependencies required on the host page.
 
 ## Features
 
-- 🚀 [Svelte 5](https://svelte.dev) with TypeScript
-- ⚡️ [Vite](https://vitejs.dev) for lightning-fast development
-- 🎨 [Tailwind CSS 4](https://tailwindcss.com) for utility-first styling
-- 🧪 [Vitest](https://vitest.dev) for unit testing
-- 📝 TypeScript for type safety
-- 🔍 ESLint for code linting
-- ✨ Prettier for code formatting
-- 🎯 Pre-configured with best practices
+- **List view** — sortable meeting table with day, time, name, location, and venue type
+- **Map view** — interactive Leaflet map for in-person and hybrid meetings; click a marker to see meetings at that location
+- **Detail view** — full meeting info including schedule, address with directions link, virtual meeting join button, formats, and notes
+- **Search** — real-time text filter across meeting name, location, and notes
+- **Filters** — weekday, venue type (in-person / virtual / hybrid), and time of day (morning / afternoon / evening / night)
+- **BMLT native** — queries any BMLT root server directly via [`bmlt-query-client`](https://github.com/bmlt-enabled/bmlt-query-client)
+- **Service body filtering** — single ID or a comma-separated list, with recursive child service body support
 
-## Why Use This Template?
+## Quick Start
 
-This template is ideal if you want to use Svelte without the full SvelteKit framework. It's perfect for:
+```html
+<div
+  id="bmlt-meeting-list"
+  data-root-server="https://your-server/main_server"
+  data-view="list"
+></div>
+<script src="https://your-cdn/app.js"></script>
+```
 
-- **Simple SPAs**: When you don't need server-side rendering or complex routing
-- **Custom Stack**: When you want to choose your own routing, state management, and other tools
-- **Learning Svelte**: Great for understanding Svelte basics without framework overhead
-- **Prototypes**: Quick to start and easy to build upon
-- **Static Sites**: Perfect for sites that don't need a backend
-- **Component Libraries**: Ideal for developing standalone component libraries
+That's it. The widget self-initializes when the script loads.
 
-While SvelteKit is an excellent full-featured framework, this template provides a lighter alternative when you:
-- Want more control over your project structure
-- Don't need server-side rendering
-- Prefer to add features as needed
-- Want to minimize bundle size for simple applications
+## Configuration
 
-## Getting Started
+### `data-*` Attributes
+
+All attributes are set on the `#bmlt-meeting-list` div.
+
+| Attribute | Required | Description |
+|---|---|---|
+| `data-root-server` | Yes | Full URL to your BMLT root server (e.g. `https://example.org/main_server`) |
+| `data-service-body` | No | Filter by service body. Accepts a single ID (`"42"`) or comma-separated list (`"42,57,103"`). Omit to show all meetings on the server. Searches are recursive — child service bodies are always included. |
+| `data-view` | No | Default view on load: `list` (default) or `map` |
+
+### Optional Global Config
+
+Define `BmltMeetingListConfig` before loading `app.js` to override defaults:
+
+```html
+<script>
+  var BmltMeetingListConfig = {
+    defaultView: 'map'
+  };
+</script>
+<script src="app.js"></script>
+```
+
+## Examples
+
+**Show all meetings on a server:**
+```html
+<div id="bmlt-meeting-list" data-root-server="https://latest.aws.bmlt.app/main_server"></div>
+```
+
+**Filter to one service body, default to map:**
+```html
+<div
+  id="bmlt-meeting-list"
+  data-root-server="https://bmlt.sezf.org/main_server"
+  data-service-body="42"
+  data-view="map"
+></div>
+```
+
+**Filter to multiple service bodies:**
+```html
+<div
+  id="bmlt-meeting-list"
+  data-root-server="https://bmlt.sezf.org/main_server"
+  data-service-body="42,57,103"
+></div>
+```
+
+## Development
 
 ### Prerequisites
 
-- Node.js (version 18 or higher)
-- npm or yarn or pnpm
+- Node.js 18+
+- npm
 
-### Installation
+### Setup
 
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/svelte5-vite-ts-tailwind-eslint.git
-cd svelte5-vite-ts-tailwind-eslint
-```
-
-2. Install dependencies:
-```bash
+git clone https://github.com/bmlt-enabled/bmlt-client.git
+cd bmlt-client
 npm install
 ```
 
-3. Start the development server:
+The widget depends on [`bmlt-query-client`](https://github.com/bmlt-enabled/bmlt-query-client) as a local sibling repo. Clone it alongside this one:
+
+```
+workspace/
+  bmlt-client/       ← this repo
+  bmlt-query-client/ ← required sibling
+```
+
+### Commands
+
 ```bash
-npm run dev
+npm run dev        # Dev server at localhost:5173 (edit index.html to point at your BMLT server)
+npm run build      # Build → public/app.js
+npm run preview    # Serve public/ to test the built bundle
+npm run lint       # Prettier + ESLint + svelte-check
+npm run format     # Auto-format all source files
+npm run test       # Run test suite once
+npm run test:watch # Run tests in watch mode
+npm run coverage   # Generate coverage report
 ```
 
-Visit `http://localhost:5173` to see your application.
-
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:ui` - Run tests with UI
-- `npm run coverage` - Generate test coverage report
-- `npm run lint` - Lint code
-- `npm run format` - Format code
-
-## Project Structure
+### Project Structure
 
 ```
-/
-├── src/
-│   ├── lib/
-│   │   └── Counter.svelte
-│   ├── app.css
-│   ├── main.ts
-│   └── App.svelte
-├── public/
-├── index.html
-├── package.json
-├── vite.config.ts
-├── tsconfig.json
-├── tailwind.config.ts
-└── README.md
+src/
+  main.ts                  # Entry point — reads data-* attrs, mounts app
+  app.css                  # Tailwind import + widget CSS reset
+  App.svelte               # Root component — view routing, filtering
+  types/index.ts           # Shared TypeScript types
+  stores/
+    config.svelte.ts       # Config parsed from DOM attributes
+    data.svelte.ts         # Meeting data loading (BmltClient)
+    ui.svelte.ts           # UI state: view, selected meeting, filters
+  components/
+    Controls.svelte        # Search bar, filter chips, list/map toggle
+    MeetingList.svelte     # Meeting table
+    MeetingDetail.svelte   # Full meeting detail view
+    MapView.svelte         # Leaflet map
+    Loading.svelte         # Loading spinner
+  utils/
+    format.ts              # Time, address, and sort helpers
+  tests/
+    App.svelte.test.ts     # Component integration tests
+    format.test.ts         # Unit tests for format utilities
+public/
+  app.js                   # Built output (committed for distribution)
+  index.html               # Production test page
+index.html                 # Dev test page
 ```
 
-## Technology Stack
+### Build Output
 
-- **Framework**: Svelte 5
-- **Build Tool**: Vite 6
-- **Styling**: Tailwind CSS 4
-- **Testing**: Vitest
-- **Language**: TypeScript
-- **Code Quality**:
-  - ESLint for linting
-  - Prettier for formatting
-  - TypeScript for type checking
+`npm run build` produces `public/app.js` — a single IIFE bundle with all CSS (Tailwind + Leaflet) injected at runtime. No separate stylesheet is needed. Leaflet marker images are loaded from `unpkg.com`.
 
-## Development Features
+The built file is committed to the repo so it can be served directly from GitHub Pages.
 
-### Hot Module Replacement (HMR)
+## Tech Stack
 
-The template includes HMR support for Svelte components.
+| | |
+|---|---|
+| Framework | Svelte 5 (runes API) |
+| Build | Vite 8 + `vite-plugin-css-injected-by-js` |
+| Styling | Tailwind CSS 4 |
+| Maps | Leaflet 1.9 |
+| Data | [bmlt-query-client](https://github.com/bmlt-enabled/bmlt-query-client) |
+| Language | TypeScript 5 (strict) |
+| Testing | Vitest + @testing-library/svelte |
+| Linting | ESLint 10 + Prettier 3 + svelte-check |
 
-### TypeScript Configuration
+## CI/CD
 
-The project uses TypeScript for type safety. Key configurations include:
-
-- Strict mode enabled
-- Svelte type definitions included
-- Path aliases configured
-- Global type definitions in `src/vite-env.d.ts`
-
-### Tailwind CSS Integration
-
-Tailwind CSS is pre-configured with:
-
-- JIT (Just-In-Time) mode enabled
-- Dark mode support (`class` strategy)
-- Custom color schemes
-- Prettier plugin for automatic class sorting
-
-## Continuous Integration & Deployment
-
-This template comes with pre-configured GitHub Actions workflows for automated testing, linting, and deployment:
-
-### Testing & Linting Workflow
-- Runs on every push to non-main branches
-- Uses Node.js 22
-- Steps:
-  1. Install dependencies
-  2. Run ESLint checks
-  3. Run test suite
-
-### Deployment Workflow
-- Automatically deploys to GitHub Pages
-- Triggers on:
-  - Push to main branch
-  - Manual workflow dispatch
-- Builds and deploys the static site
-- Provides deployment URL in workflow summary
-
-### Release Workflow
-- Triggers when tags are pushed
-- Creates GitHub releases automatically
-- Features:
-  - Builds the project
-  - Creates .zip and .tar.gz archives
-  - Generates release notes from CHANGELOG.md
-  - Supports beta/rc releases with proper prerelease marking
-  - Attaches build artifacts to releases
-
-### Workflow Files
-```
-.github/workflows/
-├── test.yml     # Testing and linting
-├── static.yml   # GitHub Pages deployment
-└── release.yml  # Release automation
-```
-
-To use these workflows:
-1. Enable GitHub Pages in your repository settings
-2. For releases, push a tag (e.g., `git tag 1.0.0 && git push origin 1.0.0`)
-3. Ensure your CHANGELOG.md is updated before creating releases
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+| Workflow | Trigger | Action |
+|---|---|---|
+| `test.yml` | Push to non-main branches | Lint + test |
+| `static.yml` | Push to `main` | Build and deploy to GitHub Pages |
+| `release.yml` | Tag push | Create GitHub release with `app.js` attached |
 
 ## License
 
-This project is licensed under the MIT License—see the LICENSE file for details.
-
-## Acknowledgments
-
-- Svelte team for the amazing framework
-- Vite team for the build tool
-- Tailwind CSS team for the styling framework
-- All contributors to the included tools and libraries
+MIT — see [LICENSE](LICENSE).

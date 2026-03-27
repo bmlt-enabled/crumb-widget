@@ -3,19 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BMLT Meeting Finder - Dev</title>
+    <title>BMLT Meeting Finder</title>
     <style>
       body { margin: 0; padding: 20px; background: #f3f4f6; font-family: system-ui, sans-serif; }
       #bmlt-meeting-list { height: 80vh; max-width: 1000px; margin: 0 auto; }
     </style>
   </head>
   <body>
+    <!--
+      Embed the meeting finder by:
+      1. Adding this div with your BMLT root server URL
+      2. Optionally filter by service body IDs with data-service-body="123" or data-service-body="1,2,3"
+      3. Loading the app.js script
+    -->
     <div
       id="bmlt-meeting-list"
       data-root-server="https://bmlt.sezf.org/main_server/"
       data-service-body="95,173"
       data-view="list"
     ></div>
-    <script type="module" src="/src/main.ts"></script>
+
+    <script src="./app.js"></script>
   </body>
 </html>

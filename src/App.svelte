@@ -1,8 +1,95 @@
 <script lang="ts">
-  import './app.css';
-  import HelloWorld from '@components/HelloWorld.svelte';
+  import { onMount } from 'svelte';
+  import type { AppConfig } from '@/types/index';
+  import type { ProcessedMeeting } from '@/types/index';
+  import { loadData, dataState } from '@stores/data.svelte';
+  import { uiState } from '@stores/ui.svelte';
+  import Controls from '@components/Controls.svelte';
+  import MeetingList from '@components/MeetingList.svelte';
+  import MeetingDetail from '@components/MeetingDetail.svelte';
+  import MapView from '@components/MapView.svelte';
+  import Loading from '@components/Loading.svelte';
+
+  interface Props {
+    config: AppConfig;
+  }
+
+  const { config }: Props = $props();
+
+  onMount(() => {
+    loadData(config.rootServerUrl, config.serviceBodyIds);
+    if (config.defaultView === 'map') {
+      uiState.view = 'map';
+    }
+  });
+
+  const filteredMeetings = $derived.by((): ProcessedMeeting[] => {
+    const { search, weekdays, venueTypes, timeOfDay } = uiState.filters;
+    let result = dataState.meetings;
+
+    if (weekdays.length > 0) {
+      result = result.filter((m) => weekdays.includes(m.weekday_tinyint));
+    }
+    if (venueTypes.length > 0) {
+      result = result.filter((m) => venueTypes.includes(m.venue_type));
+    }
+    if (timeOfDay.length > 0) {
+      result = result.filter((m) => timeOfDay.includes(m.timeOfDay));
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase().trim();
+      result = result.filter(
+        (m) =>
+          m.meeting_name.toLowerCase().includes(q) ||
+          m.formattedAddress.toLowerCase().includes(q) ||
+          m.location_municipality?.toLowerCase().includes(q) ||
+          m.location_text?.toLowerCase().includes(q) ||
+          m.comments?.toLowerCase().includes(q)
+      );
+    }
+
+    return result;
+  });
+
+  const selectedMeeting = $derived(uiState.selectedMeetingId ? dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId) : undefined);
 </script>
 
-<main class="container mx-auto p-4">
-  <HelloWorld />
-</main>
+<div class="bmlt-meeting-list flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white font-sans text-base">
+  <!-- Header -->
+  <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
+    <h1 class="text-lg font-bold text-gray-800">NA Meeting Finder</h1>
+    {#if !dataState.loading && !dataState.error}
+      <span class="text-xs text-gray-400">{dataState.meetings.length} meetings</span>
+    {/if}
+  </div>
+
+  {#if dataState.error}
+    <!-- Error state -->
+    <div class="flex flex-col items-center justify-center py-16 text-center">
+      <svg class="mb-3 h-10 w-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+      </svg>
+      <p class="text-sm font-medium text-red-700">Error loading meetings</p>
+      <p class="mt-1 max-w-sm text-xs text-gray-500">{dataState.error}</p>
+    </div>
+  {:else if dataState.loading}
+    <Loading />
+  {:else if uiState.view === 'detail' && selectedMeeting}
+    <!-- Detail view (no Controls) -->
+    <div class="flex-1 overflow-y-auto">
+      <MeetingDetail meeting={selectedMeeting} />
+    </div>
+  {:else}
+    <!-- Controls + list/map -->
+    <Controls />
+    <div class="relative flex-1 overflow-hidden">
+      {#if uiState.view === 'map'}
+        <MapView meetings={filteredMeetings} />
+      {:else}
+        <div class="h-full overflow-y-auto">
+          <MeetingList meetings={filteredMeetings} />
+        </div>
+      {/if}
+    </div>
+  {/if}
+</div>

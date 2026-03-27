@@ -11,7 +11,7 @@ jobs:
       id-token: write
       contents: write
     env:
-      RELEASE_NAME: svelte5-vite-ts-tailwind-eslint
+      RELEASE_NAME: bmlt-client
     steps:
       - name: Checkout 🛒
         uses: actions/checkout@v6
