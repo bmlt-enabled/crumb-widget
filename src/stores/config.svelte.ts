@@ -1,12 +1,15 @@
-import type { AppConfig } from '@/types';
+import type { AppConfig, Column } from '@/types';
 import { initLocalization } from './localization';
+
+const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'type'];
 
 const defaultConfig: AppConfig = {
   rootServerUrl: '',
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'bmlt-meeting-list',
-  showCalendar: true
+  showCalendar: true,
+  columns: ALL_COLUMNS
 };
 
 export const config = $state<AppConfig>({ ...defaultConfig });
@@ -31,6 +34,7 @@ export function initConfig(el: HTMLElement): void {
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
   config.showCalendar = globalCfg.calendar !== false;
+  config.columns = globalCfg.columns ?? ALL_COLUMNS;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

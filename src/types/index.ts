@@ -17,6 +17,7 @@ export interface AppConfig {
   tiles?: TilesConfig;
   tilesDark?: TilesConfig;
   showCalendar: boolean;
+  columns: Column[];
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -40,6 +41,8 @@ export interface FilterState {
 
 export type ViewType = 'list' | 'map' | 'detail';
 
+export type Column = 'time' | 'name' | 'location' | 'type';
+
 export interface TilesConfig {
   url: string;
   attribution: string;
@@ -49,6 +52,7 @@ export interface BmltMeetingListGlobalConfig {
   language?: string;
   defaultView?: 'list' | 'map';
   calendar?: boolean;
+  columns?: Column[];
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

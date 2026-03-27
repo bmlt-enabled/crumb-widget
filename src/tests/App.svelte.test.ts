@@ -21,7 +21,8 @@ const baseConfig: AppConfig = {
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'bmlt-meeting-list',
-  showCalendar: true
+  showCalendar: true,
+  columns: ['time', 'name', 'location', 'type']
 };
 
 function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeeting {

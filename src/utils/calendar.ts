@@ -59,7 +59,7 @@ export function formatGoogleCalendarUrl(meeting: ProcessedMeeting): string {
     params.set('ctz', meeting.time_zone);
   }
 
-  if (meeting.isInPerson && meeting.formattedAddress) {
+  if (meeting.isInPerson && (meeting.location_text || meeting.formattedAddress)) {
     params.set('location', [meeting.location_text, meeting.formattedAddress].filter(Boolean).join(', '));
   } else if (meeting.virtual_meeting_link) {
     params.set('location', meeting.virtual_meeting_link);
@@ -92,7 +92,7 @@ export function downloadIcs(meeting: ProcessedMeeting): void {
     `RRULE:FREQ=WEEKLY;BYDAY=${BYDAY[meeting.weekday_tinyint]}`
   ];
 
-  if (meeting.isInPerson && meeting.formattedAddress) {
+  if (meeting.isInPerson && (meeting.location_text || meeting.formattedAddress)) {
     const loc = [meeting.location_text, meeting.formattedAddress].filter(Boolean).join(', ');
     lines.push(`LOCATION:${loc.replace(/,/g, '\\,')}`);
   }
