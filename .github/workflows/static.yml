@@ -30,9 +30,16 @@ jobs:
         with:
           node-version: 24
           cache: 'npm'
+      - name: cache dependencies 💾
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Build
         run: |
-          npm install
+          npm ci
           npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4

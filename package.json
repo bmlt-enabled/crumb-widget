@@ -44,7 +44,7 @@
     "vitest": "^4.0.14"
   },
   "dependencies": {
-    "bmlt-query-client": "file:../bmlt-query-client",
+    "bmlt-query-client": "^1.0.5",
     "globals": "^17.4.0",
     "leaflet": "^1.9.4"
   }

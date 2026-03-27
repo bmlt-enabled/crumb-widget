@@ -10,6 +10,12 @@ jobs:
       - name: checkout 🛒
         uses: actions/checkout@v6
 
+      - name: checkout bmlt-query-client 🛒
+        uses: actions/checkout@v6
+        with:
+          repository: bmlt-enabled/bmlt-query-client
+          path: ../bmlt-query-client
+
       - name: node 24 ❇️
         uses: actions/setup-node@v6
         with:
