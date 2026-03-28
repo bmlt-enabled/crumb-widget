@@ -64,11 +64,15 @@
 }
 
 /* Primary accent buttons (active filter chips, active view toggle, join button) */
-#bmlt-meeting-list .bmlt-btn-primary {
+#bmlt-meeting-list .bmlt-btn-primary,
+#bmlt-meeting-list .bmlt-btn-primary:hover,
+#bmlt-meeting-list .bmlt-btn-primary:focus,
+#bmlt-meeting-list .bmlt-btn-primary:active {
   background-color: var(--bmlt-accent) !important;
   color: #ffffff !important;
   text-decoration: none !important;
   box-shadow: none !important;
+  outline: none !important;
 }
 
 /* Outlined secondary button (e.g. Get Directions) */
