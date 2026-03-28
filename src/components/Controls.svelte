@@ -298,6 +298,11 @@
       {/if}
     </div>
 
+    <!-- Clear all filters — desktop only, inline so no layout shift -->
+    {#if activeFilterCount > 0 || uiState.filters.search}
+      <button onclick={resetFilters} class="hidden text-xs whitespace-nowrap text-red-600 underline hover:text-red-800 sm:ml-auto sm:block">{$t.clearAllFilters}</button>
+    {/if}
+
     <!-- List / Map view toggle -->
     {#if showViewToggle}
       <div class="flex rounded-lg border border-gray-300 bg-white sm:ml-auto sm:flex-none">
@@ -333,11 +338,4 @@
       </div>
     {/if}
   </div>
-
-  <!-- Clear all filters -->
-  {#if activeFilterCount > 0 || uiState.filters.search}
-    <div class="mt-2 text-right">
-      <button onclick={resetFilters} class="text-xs text-red-600 underline hover:text-red-800">{$t.clearAllFilters}</button>
-    </div>
-  {/if}
 </div>

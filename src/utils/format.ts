@@ -36,6 +36,27 @@ export function formatTime(
   }).format(date);
 }
 
+export function formatEndTime(startTimeStr: string, durationStr: string, options?: { locale?: string; force24Hour?: boolean }): string | null {
+  const [sh, sm] = startTimeStr.split(':').map(Number);
+  const [dh, dm] = durationStr.split(':').map(Number);
+  if ([sh, sm, dh, dm].some(Number.isNaN)) return null;
+  const totalMins = sh * 60 + sm + dh * 60 + dm;
+  if (totalMins === sh * 60 + sm) return null; // zero duration
+  const date = new Date();
+  date.setHours(Math.floor(totalMins / 60) % 24, totalMins % 60, 0, 0);
+  const use24Hour = options?.force24Hour ?? is24HourTime(options?.locale);
+  return new Intl.DateTimeFormat(options?.locale, { hour: 'numeric', minute: '2-digit', hour12: !use24Hour }).format(date);
+}
+
+export function getTimezoneAbbr(timezone: string): string {
+  try {
+    const part = new Intl.DateTimeFormat('en', { timeZone: timezone, timeZoneName: 'short' }).formatToParts(new Date()).find((p) => p.type === 'timeZoneName');
+    return part?.value ?? timezone;
+  } catch {
+    return timezone;
+  }
+}
+
 export function getTimeOfDay(timeStr: string): 'morning' | 'afternoon' | 'evening' | 'night' {
   const h = parseInt(timeStr.split(':')[0], 10);
   if (h >= 4 && h < 12) return 'morning';

@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatTime, getTimeOfDay, formatAddress, sortMeetings, getPlatform, getDirectionsUrl } from '@utils/format';
+import { formatTime, formatEndTime, getTimezoneAbbr, getTimeOfDay, formatAddress, sortMeetings, getPlatform, getDirectionsUrl } from '@utils/format';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -9,6 +9,32 @@ describe('formatTime', () => {
   test('formats afternoon', () => expect(formatTime('14:30:00')).toBe('2:30 PM'));
   test('formats end of day', () => expect(formatTime('23:59:00')).toBe('11:59 PM'));
   test('pads minutes', () => expect(formatTime('08:05:00')).toBe('8:05 AM'));
+});
+
+describe('formatEndTime', () => {
+  test('adds duration to get end time', () => expect(formatEndTime('09:00:00', '01:30:00')).toBe('10:30 AM'));
+  test('handles duration crossing noon', () => expect(formatEndTime('11:00:00', '01:30:00')).toBe('12:30 PM'));
+  test('handles duration crossing midnight', () => expect(formatEndTime('23:00:00', '01:30:00')).toBe('12:30 AM'));
+  test('handles zero-minute duration', () => expect(formatEndTime('09:00:00', '01:00:00')).toBe('10:00 AM'));
+  test('returns null for zero duration', () => expect(formatEndTime('09:00:00', '00:00:00')).toBeNull());
+  test('returns null for invalid start time', () => expect(formatEndTime('bad', '01:00:00')).toBeNull());
+  test('returns null for invalid duration', () => expect(formatEndTime('09:00:00', 'bad')).toBeNull());
+  test('respects 24-hour option', () => expect(formatEndTime('09:00:00', '01:30:00', { force24Hour: true })).toBe('10:30'));
+});
+
+describe('getTimezoneAbbr', () => {
+  test('returns short abbreviation for valid IANA timezone', () => {
+    const abbr = getTimezoneAbbr('America/New_York');
+    // Will be EST or EDT depending on time of year — either is correct
+    expect(abbr).toMatch(/^E[DS]T$/);
+  });
+  test('returns short abbreviation for Pacific time', () => {
+    const abbr = getTimezoneAbbr('America/Los_Angeles');
+    expect(abbr).toMatch(/^P[DS]T$/);
+  });
+  test('returns the raw string for an invalid timezone', () => {
+    expect(getTimezoneAbbr('Not/ATimezone')).toBe('Not/ATimezone');
+  });
 });
 
 describe('getTimeOfDay', () => {

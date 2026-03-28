@@ -6,7 +6,7 @@
   import type { ProcessedMeeting, TilesConfig } from '@/types';
   import { push } from '@bmlt-enabled/svelte-spa-router';
   import { config } from '@stores/config.svelte';
-  import { getDirectionsUrl, getConferenceProvider } from '@utils/format';
+  import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { t } from '@stores/localization';
 
@@ -112,17 +112,19 @@
         <!-- Schedule row -->
         <div class="px-4 py-4">
           <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.schedule}</p>
-          <p class="mt-1 text-base font-medium text-gray-900">
-            {meeting.dayName}
-            {$t.at}
-            {meeting.formattedTime}
+          <div class="mt-1">
+            <p class="text-base font-medium text-gray-900">
+              {meeting.dayName},
+              {#if meeting.duration_time && formatEndTime(meeting.start_time, meeting.duration_time)}
+                {formatTime(meeting.start_time)} – {formatEndTime(meeting.start_time, meeting.duration_time)}
+              {:else}
+                {meeting.formattedTime}
+              {/if}
+            </p>
             {#if meeting.time_zone}
-              <span class="font-normal text-gray-500">({meeting.time_zone})</span>
+              <p class="text-sm text-gray-500">{getTimezoneAbbr(meeting.time_zone)}</p>
             {/if}
-          </p>
-          {#if meeting.duration_time && meeting.duration_time !== '01:00:00'}
-            <p class="mt-0.5 text-sm text-gray-500">{$t.duration}: {meeting.duration_time.slice(0, 5).replace(/^0/, '')}</p>
-          {/if}
+          </div>
         </div>
 
         <!-- Venue + formats row -->
@@ -149,13 +151,15 @@
         {#if meeting.isInPerson && meeting.formattedAddress}
           <div class="px-4 py-4">
             <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.address}</p>
-            {#if meeting.location_text}
-              <p class="mt-1 text-base font-medium text-gray-900">{meeting.location_text}</p>
-            {/if}
-            <p class="mt-0.5 text-base text-gray-700">{meeting.formattedAddress}</p>
-            {#if meeting.location_info}
-              <p class="mt-0.5 text-sm text-gray-500">{meeting.location_info}</p>
-            {/if}
+            <div class="mt-1">
+              {#if meeting.location_text}
+                <p class="text-sm text-gray-500">{meeting.location_text}</p>
+              {/if}
+              <p class="text-base text-gray-700">{meeting.formattedAddress}</p>
+              {#if meeting.location_info}
+                <p class="text-sm text-gray-500">{meeting.location_info}</p>
+              {/if}
+            </div>
           </div>
         {/if}
 

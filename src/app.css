@@ -137,6 +137,20 @@
   box-sizing: inherit;
 }
 
+/* Without Tailwind's preflight, browsers apply default margins to block elements.
+   Reset them inside the widget so layout is fully controlled by utility classes. */
+#bmlt-meeting-list p,
+#bmlt-meeting-list h1,
+#bmlt-meeting-list h2,
+#bmlt-meeting-list h3,
+#bmlt-meeting-list h4,
+#bmlt-meeting-list ul,
+#bmlt-meeting-list ol,
+#bmlt-meeting-list li {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 /* Prevent WordPress/host-site CSS from leaking into the widget */
 #bmlt-meeting-list a {
   box-shadow: none !important;
