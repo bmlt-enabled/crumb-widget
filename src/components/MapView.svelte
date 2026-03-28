@@ -23,6 +23,7 @@
   let markersLayer: LayerGroup | null = null;
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
+  let resizeObserver: ResizeObserver | null = null;
 
   const mappableMeetings = $derived(meetings.filter((m) => m.isInPerson && m.latitude && m.longitude));
 
@@ -105,9 +106,13 @@
 
     markersLayer = L.layerGroup().addTo(leafletMap);
     renderMarkers();
+
+    resizeObserver = new ResizeObserver(() => leafletMap?.invalidateSize());
+    resizeObserver.observe(mapEl);
   });
 
   onDestroy(() => {
+    resizeObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
     leafletMap?.remove();
   });

@@ -92,7 +92,7 @@
   });
 </script>
 
-<div class="bmlt-meeting-list flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white font-sans text-base">
+<div class="bmlt-meeting-list flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white font-sans text-base" style="height: {config.height}px">
   <!-- Header -->
   <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
     <h1 class="text-lg font-bold text-gray-800">NA Meeting Finder</h1>

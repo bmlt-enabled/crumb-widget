@@ -19,6 +19,7 @@ export interface AppConfig {
   columns: Column[];
   geolocation: boolean;
   geolocationRadius: number;
+  height: number;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -55,6 +56,7 @@ export interface BmltMeetingListGlobalConfig {
   columns?: Column[];
   geolocation?: boolean;
   geolocationRadius?: number;
+  height?: number;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;
