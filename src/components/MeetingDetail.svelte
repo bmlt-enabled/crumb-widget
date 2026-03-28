@@ -18,6 +18,8 @@
 
   const showMap = $derived(meeting.isInPerson && !!meeting.latitude && !!meeting.longitude);
 
+  let activeFmtId = $state<string | null>(null);
+
   const DEFAULT_TILES: TilesConfig = {
     url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -141,8 +143,21 @@
           {#if meeting.resolvedFormats.length > 0}
             <div class="mt-2 flex flex-wrap gap-1">
               {#each meeting.resolvedFormats as fmt (fmt.id)}
-                <span class="rounded bg-gray-100 px-2 py-0.5 text-sm text-gray-600" title={fmt.description_string}>{fmt.name_string}</span>
+                <button
+                  class="cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2 py-0.5 text-sm text-gray-600 select-none"
+                  style="font-family:inherit"
+                  title={fmt.description_string}
+                  onclick={() => {
+                    activeFmtId = activeFmtId === fmt.id ? null : fmt.id;
+                  }}>{fmt.name_string}</button
+                >
               {/each}
+              {#if activeFmtId}
+                {@const activeFmt = meeting.resolvedFormats.find((f) => f.id === activeFmtId)}
+                {#if activeFmt?.description_string}
+                  <p class="w-full text-sm text-gray-500 sm:hidden">{activeFmt.description_string}</p>
+                {/if}
+              {/if}
             </div>
           {/if}
         </div>
