@@ -128,8 +128,10 @@
   text-decoration: none;
 }
 
-/* Prevent host-site CSS from breaking SVG icons (e.g. themes that set svg { fill: currentColor }) */
+/* Prevent host-site CSS from breaking SVG icons (e.g. themes that set svg { fill: currentColor }).
+   All icons in this widget are stroke-based, so fill should always be none. */
 .bmlt-meeting-list svg {
+  fill: none !important;
   max-width: none;
   overflow: visible;
 }
