@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "all": "npm run format && npm run lint && npm run test && npm run build"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
