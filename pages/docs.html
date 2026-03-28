@@ -808,48 +808,47 @@
 
         <h2 id="example-wordpress">Example: WordPress</h2>
         <p>
-          Add the following to your theme's <code>functions.php</code> to enqueue the script
-          and render the widget via a shortcode:
+          The easiest way to add BMLT UI to a WordPress site is the official
+          <a href="https://wordpress.org/plugins/bmlt-client/" target="_blank" rel="noopener"><strong>BMLT Client</strong></a>
+          plugin (<a href="https://github.com/bmlt-enabled/bmlt-client" target="_blank" rel="noopener">GitHub</a>).
+          It wraps this widget in a shortcode with a settings screen — no code required.
+        </p>
+
+        <h3>Installation</h3>
+        <ol>
+          <li>Search for <strong>BMLT Client</strong> in the WordPress plugin directory, or upload the plugin ZIP manually.</li>
+          <li>Activate the plugin.</li>
+          <li>Go to <strong>Settings → BMLT Client</strong> and enter your root server URL.</li>
+          <li>Add the shortcode to any page or post.</li>
+        </ol>
+
+        <h3>Shortcode</h3>
+        <div class="demo">
+          <div class="demo-header">WordPress shortcode</div>
+          <pre><code>[bmlt_client]</code></pre>
+        </div>
+        <p>The root server URL set in the plugin settings is used by default. You can override it — or filter by service body — directly in the shortcode:</p>
+        <div class="demo">
+          <div class="demo-header">WordPress shortcode — with overrides</div>
+          <pre><code>[bmlt_client root_server="https://your-server/main_server" service_body="42"]</code></pre>
+        </div>
+
+        <h3>Advanced configuration</h3>
+        <p>
+          All <a href="#global-config">global config options</a> (language, geolocation, columns, map tiles, etc.)
+          can be set from your theme's <code>functions.php</code> via the <code>bmltclient_config</code> filter:
         </p>
         <div class="demo">
           <div class="demo-header">PHP — functions.php</div>
-          <pre><code>function bmlt_meeting_list_shortcode( $atts ) {
-    $atts = shortcode_atts( [
-        'root_server'  =&gt; '',
-        'service_body' =&gt; '',
-        'view'         =&gt; 'list',
-    ], $atts );
-
-    wp_enqueue_script(
-        'bmlt-meeting-list',
-        'https://cdn.aws.bmlt.app/bmlt-ui/app.js',
-        [],
-        null,
-        true
-    );
-
-    $service_body = esc_attr( $atts['service_body'] );
-    $root_server  = esc_url( $atts['root_server'] );
-    $view         = esc_attr( $atts['view'] );
-
-    return sprintf(
-        '&lt;div id="bmlt-meeting-list" data-root-server="%s" data-service-body="%s" data-view="%s" style="height:80vh"&gt;&lt;/div&gt;',
-        $root_server,
-        $service_body,
-        $view
-    );
-}
-add_shortcode( 'bmlt_meeting_list', 'bmlt_meeting_list_shortcode' );</code></pre>
-        </div>
-        <p>Then use the shortcode in any page or post:</p>
-        <div class="demo">
-          <div class="demo-header">WordPress shortcode</div>
-          <pre><code>[bmlt_meeting_list root_server="https://bmlt.sezf.org/main_server" service_body="42"]</code></pre>
-        </div>
-
-        <div class="callout">
-          The widget container needs a defined height. Set it via inline style, your theme's CSS, or
-          the shortcode wrapper. <code>height: 80vh</code> works well for most page layouts.
+          <pre><code>add_filter( 'bmltclient_config', function( $config ) {
+    return array_merge( $config, [
+        'language'          =&gt; 'en',
+        'geolocation'       =&gt; true,
+        'geolocationRadius' =&gt; 20,
+        'height'            =&gt; 800,
+        'columns'           =&gt; [ 'time', 'name', 'location', 'address', 'service_body' ],
+    ] );
+} );</code></pre>
         </div>
 
         <h2 id="features">Features</h2>
