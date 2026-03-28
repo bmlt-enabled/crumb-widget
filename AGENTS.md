@@ -52,7 +52,7 @@ Optional global config object (must be defined before `app.js` loads):
 
 ```html
 <script>
-  var BmltMeetingListConfig = { defaultView: 'map' };
+  var BmltUiConfig = { defaultView: 'map' };
 </script>
 ```
 

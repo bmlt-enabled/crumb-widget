@@ -68,6 +68,6 @@ export interface BmltMeetingListGlobalConfig {
 
 declare global {
   interface Window {
-    BmltMeetingListConfig?: BmltMeetingListGlobalConfig;
+    BmltUiConfig?: BmltMeetingListGlobalConfig;
   }
 }

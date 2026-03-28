@@ -21,7 +21,7 @@ export function initConfig(el: HTMLElement): void {
   const serviceBody = el.getAttribute('data-service-body') ?? '';
   const defaultView = (el.getAttribute('data-view') as 'list' | 'map') ?? 'list';
 
-  const globalCfg = window.BmltMeetingListConfig ?? {};
+  const globalCfg = window.BmltUiConfig ?? {};
 
   config.rootServerUrl = rootServer;
   config.serviceBodyIds = serviceBody

@@ -387,14 +387,14 @@
 
         <h2 id="global-config">Global Config Object</h2>
         <p>
-          For options not available as data attributes, define <code>BmltMeetingListConfig</code>
+          For options not available as data attributes, define <code>BmltUiConfig</code>
           as a global variable <strong>before</strong> loading the script.
         </p>
 
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     defaultView: 'map'
   };
 &lt;/script&gt;
@@ -479,7 +479,7 @@
           Override it with the <code>language</code> config property:
         </p>
         <pre><code class="language-html">&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     language: 'es'
   };
 &lt;/script&gt;
@@ -510,7 +510,7 @@
           falls back to loading all meetings.
         </p>
         <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     geolocation: true,
     geolocationRadius: 25  // miles, default 10
   };
@@ -654,7 +654,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Stadia Maps example</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -677,7 +677,7 @@
         <div class="demo">
           <div class="demo-header">HTML — light + dark tiles</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -696,7 +696,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Mapbox example</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     map: {
       tiles: {
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=&lt;pk.your.access.token&gt;',
@@ -744,7 +744,7 @@
         <div class="demo">
           <div class="demo-header">HTML — custom marker example</div>
           <pre><code>&lt;script&gt;
-  var BmltMeetingListConfig = {
+  var BmltUiConfig = {
     map: {
       markers: {
         location: {
