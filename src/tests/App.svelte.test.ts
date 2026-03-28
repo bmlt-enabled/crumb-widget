@@ -138,10 +138,9 @@ describe('filtering', () => {
     dataState.meetings = [makeMeeting({ id_bigint: '1', meeting_name: 'Monday Meeting', weekday_tinyint: 2 }), makeMeeting({ id_bigint: '2', meeting_name: 'Wednesday Meeting', weekday_tinyint: 4 })];
     render(App, { props: { config: baseConfig } });
 
-    // Open filters, then click the Mon filter chip (button role to avoid the dayShort cell)
-    await fireEvent.click(screen.getByText('Filters'));
-    const monButtons = screen.getAllByRole('button', { name: 'Mon' });
-    await fireEvent.click(monButtons[0]);
+    // Open the Any Day dropdown and click Monday
+    await fireEvent.click(screen.getByText('Any Day'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
 
     expect(screen.getAllByText('Monday Meeting')[0]).toBeInTheDocument();
     expect(screen.queryByText('Wednesday Meeting')).not.toBeInTheDocument();
@@ -154,7 +153,7 @@ describe('filtering', () => {
     ];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Virtual' }));
 
     expect(screen.getAllByText('Zoom Group')[0]).toBeInTheDocument();
@@ -168,7 +167,7 @@ describe('filtering', () => {
     ];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'In-Person' }));
 
     expect(screen.getAllByText('In-Person Only')[0]).toBeInTheDocument();
@@ -182,7 +181,7 @@ describe('filtering', () => {
     ];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Virtual' }));
 
     expect(screen.getAllByText('Virtual Only')[0]).toBeInTheDocument();
@@ -204,9 +203,8 @@ describe('filtering', () => {
     dataState.meetings = [makeMeeting({ id_bigint: '1', meeting_name: 'Monday Meeting', weekday_tinyint: 2 }), makeMeeting({ id_bigint: '2', meeting_name: 'Wednesday Meeting', weekday_tinyint: 4 })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-    const monButtons = screen.getAllByRole('button', { name: 'Mon' });
-    await fireEvent.click(monButtons[0]);
+    await fireEvent.click(screen.getByText('Any Day'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
 
     expect(screen.getByText('Showing 1 meeting')).toBeInTheDocument();
   });
@@ -218,19 +216,19 @@ describe('format filter', () => {
     dataState.meetings = [makeMeeting({ resolvedFormats: [fmt], format_shared_id_list: '1' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-
-    expect(screen.getByText('Format', { selector: 'p' })).toBeInTheDocument();
-    expect(screen.getByText('Any format')).toBeInTheDocument();
+    // Any Format button is always visible; open it to see the format item
+    expect(screen.getByText('Any Format')).toBeInTheDocument();
+    await fireEvent.click(screen.getByText('Any Format'));
+    expect(screen.getByRole('button', { name: 'Open' })).toBeInTheDocument();
   });
 
   test('format dropdown is hidden when no meetings have formats', async () => {
     dataState.meetings = [makeMeeting({ resolvedFormats: [] })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-
-    expect(screen.queryByText('Any format')).not.toBeInTheDocument();
+    // Open the type dropdown — format items should not appear
+    await fireEvent.click(screen.getByText('Any Format'));
+    expect(screen.queryByRole('button', { name: 'Open' })).not.toBeInTheDocument();
   });
 
   test('selecting a format filters to meetings with that format', async () => {
@@ -242,8 +240,7 @@ describe('format filter', () => {
     ];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
 
     expect(screen.getAllByText('Open Meeting')[0]).toBeInTheDocument();
@@ -261,8 +258,7 @@ describe('format filter', () => {
     ];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
     await fireEvent.click(screen.getByRole('button', { name: 'Closed' }));
 
@@ -271,28 +267,28 @@ describe('format filter', () => {
     expect(screen.queryByText('Candlelight Meeting')).not.toBeInTheDocument();
   });
 
-  test('format filter button shows selected count', async () => {
+  test('format filter button shows selected format name', async () => {
     const openFmt = makeFormat({ id: '1', name_string: 'Open' });
     dataState.meetings = [makeMeeting({ resolvedFormats: [openFmt], format_shared_id_list: '1' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
 
-    expect(screen.getByText('1 selected')).toBeInTheDocument();
+    // Button label updates to show the selected format name
+    expect(screen.getAllByText('Open')[0]).toBeInTheDocument();
+    expect(screen.queryByText('Any Format')).not.toBeInTheDocument();
   });
 
-  test('format selection contributes to active filter count badge', async () => {
+  test('active format filter shows clear all filters link', async () => {
     const fmt = makeFormat({ id: '1', name_string: 'Open' });
     dataState.meetings = [makeMeeting({ resolvedFormats: [fmt], format_shared_id_list: '1' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
 
-    expect(screen.getByText('1', { selector: 'span' })).toBeInTheDocument();
+    expect(screen.getByText('Clear all filters')).toBeInTheDocument();
   });
 
   test('clear all filters resets format selection', async () => {
@@ -300,12 +296,11 @@ describe('format filter', () => {
     dataState.meetings = [makeMeeting({ resolvedFormats: [fmt], format_shared_id_list: '1' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getByText('Filters'));
-    await fireEvent.click(screen.getByText('Any format'));
+    await fireEvent.click(screen.getByText('Any Format'));
     await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
     await fireEvent.click(screen.getByText('Clear all filters'));
 
-    expect(screen.getByText('Any format')).toBeInTheDocument();
+    expect(screen.getByText('Any Format')).toBeInTheDocument();
   });
 });
 
