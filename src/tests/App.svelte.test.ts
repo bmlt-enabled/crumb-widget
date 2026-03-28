@@ -96,7 +96,7 @@ beforeEach(() => {
 describe('App', () => {
   test('renders header', () => {
     render(App, { props: { config: baseConfig } });
-    expect(screen.getByText('NA Meeting Finder')).toBeInTheDocument();
+    expect(screen.getByText('Meeting Finder')).toBeInTheDocument();
   });
 
   test('shows loading spinner while loading', () => {
