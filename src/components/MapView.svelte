@@ -29,6 +29,12 @@
   let showSearchArea = $state(false);
   let skipNextFit = false;
   let suppressMoveEnd = false;
+  let suppressPopupMoveEnd = false;
+  let searchCenter: { lat: number; lng: number } | null = null;
+  // Minimum displacement (degrees) before "Search this area" appears.
+  // ~0.05° ≈ 5 km at the equator — small enough to feel responsive,
+  // large enough to suppress accidental nudges.
+  const SEARCH_THRESHOLD = 0.3;
 
   const mappableMeetings = $derived(meetings.filter((m) => m.isInPerson && m.latitude && m.longitude));
 
@@ -103,6 +109,7 @@
   function handleSearchArea(): void {
     if (!leafletMap || !onsearcharea) return;
     const center = leafletMap.getCenter();
+    searchCenter = { lat: center.lat, lng: center.lng };
     showSearchArea = false;
     skipNextFit = true;
     onsearcharea(center.lat, center.lng);
@@ -110,12 +117,27 @@
 
   onMount(() => {
     leafletMap = L.map(mapEl);
+    leafletMap.on('popupopen', () => {
+      suppressPopupMoveEnd = true;
+    });
+
     leafletMap.on('moveend', () => {
       if (suppressMoveEnd) {
         suppressMoveEnd = false;
+        // Capture the post-fit center as the new search baseline
+        const c = leafletMap!.getCenter();
+        searchCenter = { lat: c.lat, lng: c.lng };
         return;
       }
-      if (geoActive && onsearcharea) showSearchArea = true;
+      if (suppressPopupMoveEnd) {
+        suppressPopupMoveEnd = false;
+        return;
+      }
+      if (geoActive && onsearcharea && searchCenter) {
+        const c = leafletMap!.getCenter();
+        const dist = Math.sqrt(Math.pow(c.lat - searchCenter.lat, 2) + Math.pow(c.lng - searchCenter.lng, 2));
+        showSearchArea = dist > SEARCH_THRESHOLD;
+      }
     });
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
