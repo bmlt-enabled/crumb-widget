@@ -87,6 +87,14 @@
   background-color: var(--bmlt-accent-light);
 }
 
+/* Skip off-screen rendering for mobile card rows.
+   content-visibility is ignored on display:table-row so desktop <tr> rows
+   are unaffected; this only kicks in for the flex <button> mobile cards. */
+.bmlt-meeting-list .bmlt-row {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 72px;
+}
+
 /* Venue type badges */
 .bmlt-meeting-list .bmlt-badge-in-person {
   background-color: var(--bmlt-in-person-bg);
