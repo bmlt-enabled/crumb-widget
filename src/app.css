@@ -1,9 +1,22 @@
-@import 'tailwindcss';
+/* Import theme tokens (CSS vars) and utilities, but NOT preflight.
+   Preflight resets global page styles — on WordPress that breaks the host theme.
+   Our all:initial on the container handles the reset we need. */
+@import 'tailwindcss/theme.css';
+@import 'tailwindcss/utilities.css';
+
+/* Load the JS config so Tailwind applies important:true globally.
+   This makes every utility !important, which lets them beat WordPress's
+   unlayered CSS (unlayered always wins over @layer in the normal cascade,
+   but !important beats non-!important regardless of layering). */
+@config '../tailwind.config.js';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Scope Tailwind styles inside the widget container */
-.bmlt-meeting-list {
+/* ─── Container reset ───────────────────────────────────────────────────────
+   all:initial stops inherited styles from the WordPress host page leaking in.
+   We use the ID selector for higher specificity than WordPress class selectors.
+   ─────────────────────────────────────────────────────────────────────────── */
+#bmlt-meeting-list {
   all: initial;
   font-family:
     system-ui,
@@ -15,10 +28,10 @@
   box-sizing: border-box;
 }
 
-/* ─── CSS custom properties ─────────────────────────────────
+/* ─── CSS custom properties ─────────────────────────────────────────────────
    Override any of these on #bmlt-meeting-list to theme the widget.
-   ─────────────────────────────────────────────────────────── */
-/* :where() gives zero specificity so any external CSS on #bmlt-meeting-list always wins */
+   :where() gives zero specificity so any external CSS always wins.
+   ─────────────────────────────────────────────────────────────────────────── */
 :where(#bmlt-meeting-list) {
   --bmlt-font-family: system-ui, -apple-system, sans-serif;
   --bmlt-font-size: 16px;
@@ -35,105 +48,107 @@
   --bmlt-virtual-bg: #dbeafe;
 }
 
-.bmlt-meeting-list {
-  font-family: var(--bmlt-font-family);
-  font-size: var(--bmlt-font-size);
-  color: var(--bmlt-text);
-  background-color: var(--bmlt-background);
+/* Apply custom-property values to the container.
+   !important ensures WordPress's unlayered host styles can't override these. */
+#bmlt-meeting-list {
+  font-family: var(--bmlt-font-family) !important;
+  font-size: var(--bmlt-font-size) !important;
+  color: var(--bmlt-text) !important;
+  background-color: var(--bmlt-background) !important;
 }
 
 /* Controls bar */
-.bmlt-meeting-list .bmlt-controls {
-  background-color: var(--bmlt-background);
-  border-color: var(--bmlt-border);
+#bmlt-meeting-list .bmlt-controls {
+  background-color: var(--bmlt-background) !important;
+  border-color: var(--bmlt-border) !important;
 }
 
 /* Primary accent buttons (active filter chips, active view toggle, join button) */
-.bmlt-meeting-list .bmlt-btn-primary {
-  background-color: var(--bmlt-accent);
+#bmlt-meeting-list .bmlt-btn-primary {
+  background-color: var(--bmlt-accent) !important;
   color: #ffffff !important;
   text-decoration: none !important;
   box-shadow: none !important;
 }
 
 /* Outlined secondary button (e.g. Get Directions) */
-.bmlt-meeting-list .bmlt-btn-secondary {
-  color: var(--bmlt-accent);
+#bmlt-meeting-list .bmlt-btn-secondary {
+  color: var(--bmlt-accent) !important;
   border: 1px solid var(--bmlt-accent) !important;
-  background-color: transparent;
-  cursor: pointer;
+  background-color: transparent !important;
+  cursor: pointer !important;
   text-decoration: none !important;
   box-shadow: none !important;
 }
-.bmlt-meeting-list .bmlt-btn-secondary:hover {
-  background-color: var(--bmlt-accent-light);
+#bmlt-meeting-list .bmlt-btn-secondary:hover {
+  background-color: var(--bmlt-accent-light) !important;
 }
 
 /* Links and link-style buttons */
-.bmlt-meeting-list .bmlt-link {
-  color: var(--bmlt-accent);
-  cursor: pointer;
+#bmlt-meeting-list .bmlt-link {
+  color: var(--bmlt-accent) !important;
+  cursor: pointer !important;
 }
 
-/* Active state on the Filters toggle button */
-.bmlt-meeting-list .bmlt-filter-toggle-active {
-  border-color: var(--bmlt-accent);
-  background-color: var(--bmlt-accent-light);
-  color: var(--bmlt-accent);
+/* Active state on filter/view toggle buttons */
+#bmlt-meeting-list .bmlt-filter-toggle-active {
+  border-color: var(--bmlt-accent) !important;
+  background-color: var(--bmlt-accent-light) !important;
+  color: var(--bmlt-accent) !important;
 }
 
 /* Table row alternating background */
-.bmlt-meeting-list .bmlt-row:nth-child(even) {
-  background-color: var(--bmlt-row-alt);
+#bmlt-meeting-list .bmlt-row:nth-child(even) {
+  background-color: var(--bmlt-row-alt) !important;
 }
 
 /* Table row hover */
-.bmlt-meeting-list .bmlt-row:hover {
-  background-color: var(--bmlt-accent-light);
+#bmlt-meeting-list .bmlt-row:hover {
+  background-color: var(--bmlt-accent-light) !important;
 }
 
 /* Skip off-screen rendering for mobile card rows.
    content-visibility is ignored on display:table-row so desktop <tr> rows
    are unaffected; this only kicks in for the flex <button> mobile cards. */
-.bmlt-meeting-list .bmlt-row {
+#bmlt-meeting-list .bmlt-row {
   content-visibility: auto;
   contain-intrinsic-size: auto 72px;
 }
 
 /* Venue type badges */
-.bmlt-meeting-list .bmlt-badge-in-person {
-  background-color: var(--bmlt-in-person-bg);
-  color: var(--bmlt-in-person);
+#bmlt-meeting-list .bmlt-badge-in-person {
+  background-color: var(--bmlt-in-person-bg) !important;
+  color: var(--bmlt-in-person) !important;
 }
-.bmlt-meeting-list .bmlt-badge-virtual {
-  background-color: var(--bmlt-virtual-bg);
-  color: var(--bmlt-virtual);
+#bmlt-meeting-list .bmlt-badge-virtual {
+  background-color: var(--bmlt-virtual-bg) !important;
+  color: var(--bmlt-virtual) !important;
 }
 
 /* Detail view cards */
-.bmlt-meeting-list .bmlt-card {
-  border-color: var(--bmlt-border);
-  border-radius: var(--bmlt-border-radius);
+#bmlt-meeting-list .bmlt-card {
+  border-color: var(--bmlt-border) !important;
+  border-radius: var(--bmlt-border-radius) !important;
 }
 
-.bmlt-meeting-list *,
-.bmlt-meeting-list *::before,
-.bmlt-meeting-list *::after {
+#bmlt-meeting-list *,
+#bmlt-meeting-list *::before,
+#bmlt-meeting-list *::after {
   box-sizing: inherit;
 }
 
 /* Prevent WordPress/host-site CSS from leaking into the widget */
-.bmlt-meeting-list a {
-  box-shadow: none;
-  text-decoration: none;
+#bmlt-meeting-list a {
+  box-shadow: none !important;
+  text-decoration: none !important;
 }
 
 /* Prevent host-site CSS from breaking SVG icons (e.g. themes that set svg { fill: currentColor }).
    All icons in this widget are stroke-based, so fill should always be none. */
-.bmlt-meeting-list svg {
+#bmlt-meeting-list svg {
   fill: none !important;
-  max-width: none;
-  overflow: visible;
+  max-width: none !important;
+  overflow: visible !important;
 }
 
 /* Custom marker icon container — no background or border */
