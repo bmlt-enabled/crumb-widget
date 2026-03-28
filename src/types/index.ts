@@ -19,7 +19,7 @@ export interface AppConfig {
   columns: Column[];
   geolocation: boolean;
   geolocationRadius: number;
-  height: number;
+  height?: number;
 }
 
 export interface ProcessedMeeting extends Meeting {

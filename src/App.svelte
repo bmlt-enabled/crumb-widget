@@ -93,7 +93,10 @@
   });
 </script>
 
-<div class="bmlt-meeting-list flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white font-sans text-base" style="height: {config.height}px">
+<div
+  class="bmlt-meeting-list flex flex-col rounded-lg border border-gray-200 bg-white font-sans text-base {config.height ? 'overflow-hidden' : ''}"
+  style={config.height ? `height: ${config.height}px` : ''}
+>
   <!-- Header -->
   <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
     <h1 class="text-lg font-bold text-gray-800">Meeting Finder</h1>
@@ -115,13 +118,13 @@
     <Loading />
   {:else if selectedMeeting}
     <!-- Detail view (no Controls) -->
-    <div class="min-h-0 flex-1 overflow-hidden">
+    <div class={config.height ? 'min-h-0 flex-1 overflow-y-auto' : ''}>
       <MeetingDetail meeting={selectedMeeting} />
     </div>
   {:else}
     <!-- Controls + list/map -->
     <Controls />
-    <div class="relative min-h-0 flex-1 overflow-hidden">
+    <div class="relative {config.height ? 'min-h-0 flex-1 overflow-hidden' : ''}">
       {#if uiState.view === 'map'}
         <MapView
           meetings={filteredMeetings}
@@ -134,7 +137,7 @@
           }}
         />
       {:else}
-        <div class="h-full overflow-y-auto">
+        <div class={config.height ? 'h-full overflow-y-auto' : ''}>
           <MeetingList meetings={filteredMeetings} />
         </div>
       {/if}
