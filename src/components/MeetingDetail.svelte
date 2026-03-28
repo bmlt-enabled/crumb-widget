@@ -85,14 +85,14 @@
   <!-- Body: two columns -->
   <div class="flex min-h-0 flex-1 flex-col sm:flex-row">
     <!-- Left: scrollable info panel -->
-    <div class="overflow-y-auto p-4 {showMap ? 'shrink-0 sm:w-72 sm:border-r sm:border-gray-200 lg:w-80' : 'mx-auto w-full max-w-lg'}">
+    <div class="overflow-y-auto py-4 {showMap ? 'shrink-0 sm:w-72 sm:border-r sm:border-gray-200 lg:w-80' : 'mx-auto w-full max-w-lg'}">
       <!-- Get Directions (in-person) -->
       {#if meeting.isInPerson && meeting.formattedAddress}
         <a
           href={getDirectionsUrl(meeting)}
           target="_blank"
           rel="noopener noreferrer"
-          class="bmlt-btn-secondary mb-4 flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2.5 text-base font-medium text-gray-700 no-underline transition-colors hover:bg-gray-50"
+          class="bmlt-btn-secondary mx-4 mb-4 flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2.5 text-base font-medium text-gray-700 no-underline transition-colors hover:bg-gray-50"
         >
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
