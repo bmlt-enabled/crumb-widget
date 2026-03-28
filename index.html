@@ -13,13 +13,15 @@
     <div
       id="bmlt-meeting-list"
       data-root-server="https://bmlt.sezf.org/main_server/"
+      data-service-body="95,173"
+      data-view="list"
     ></div>
     <script>
       var BmltUiConfig = {
         language: 'en',
         columns: ['time', 'name', 'location', 'address', 'service_body'],
-        geolocation: true,          // show Near Me button
-        geolocationRadius: 25       // optional, miles (default 10)
+        // geolocation: true,          // show Near Me button
+        // geolocationRadius: 25       // optional, miles (default 10)
       };
     </script>
     <script type="module" src="/src/main.ts"></script>

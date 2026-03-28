@@ -96,7 +96,7 @@
     {#if config.geolocation}
       <button
         onclick={handleNearMe}
-        disabled={geoStatus === 'locating'}
+        disabled={geoStatus === 'locating' || (uiState.geoActive && config.serviceBodyIds.length === 0)}
         class="flex w-full items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors sm:w-auto {uiState.geoActive
           ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
           : geoStatus === 'error'
@@ -123,7 +123,7 @@
             {uiState.geoActive ? $t.nearMe : $t.anywhere}
           {/if}
         </span>
-        {#if uiState.geoActive}
+        {#if uiState.geoActive && config.serviceBodyIds.length > 0}
           <svg class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
           </svg>

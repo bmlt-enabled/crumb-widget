@@ -435,7 +435,9 @@
               <td><code>boolean</code></td>
               <td>
                 Show a <strong>Near Me</strong> button and auto-geolocate on page load to find meetings near the user.
-                Requires HTTPS. Default: <code>false</code>. Falls back to full meeting load if permission is denied.
+                Requires HTTPS. Default: <code>false</code>. If geolocation fails or is denied, an error is shown — no
+                fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code> filters have no effect on
+                geolocation searches; results are determined entirely by proximity.
               </td>
             </tr>
             <tr>
@@ -506,8 +508,18 @@
         <p>
           Enable the <strong>Near Me</strong> button with <code>geolocation: true</code>. When enabled, the widget
           also attempts to geolocate the user automatically on page load and show meetings nearby.
-          Requires a secure context (HTTPS). If permission is denied or unavailable, the widget silently
-          falls back to loading all meetings.
+          Requires a secure context (HTTPS).
+        </p>
+        <p>
+          If geolocation is denied or unavailable, an error message is displayed — there is no silent fallback to
+          loading all meetings. This is intentional: on large servers without service body scoping, loading all
+          meetings could return tens of thousands of results.
+        </p>
+        <p>
+          <strong>Service body filters have no effect on geolocation searches.</strong> When using Near Me, results
+          are determined entirely by the user's coordinates and <code>geolocationRadius</code>. If no
+          <code>serviceBodyIds</code> are configured, the Near Me button cannot be toggled off — geolocation is the
+          only data source.
         </p>
         <pre><code>&lt;script&gt;
   var BmltUiConfig = {
