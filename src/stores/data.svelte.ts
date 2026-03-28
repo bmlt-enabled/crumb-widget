@@ -95,7 +95,6 @@ export async function loadDataByCoordinates(rootServerUrl: string, latitude: num
     }
 
     const meetingsResp = await client.searchMeetingsByCoordinates({ latitude, longitude }, radiusMiles, undefined, {
-      ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
       page_size: 5000
     });
 

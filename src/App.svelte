@@ -4,6 +4,7 @@
   import type { AppConfig, ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
+  import { t } from '@stores/localization';
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
@@ -27,26 +28,26 @@
       uiState.view = 'map';
     }
 
-    if (tryGeo && navigator.geolocation) {
-      dataState.loading = true;
-      navigator.geolocation.getCurrentPosition(
-        async (pos) => {
-          await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.serviceBodyIds, config.geolocationRadius);
-          if (!dataState.error) {
-            uiState.geoActive = true;
-            uiState.view = 'map';
-          } else {
-            uiState.view = 'list';
-            await loadData(config.rootServerUrl, config.serviceBodyIds);
-          }
-        },
-        async () => {
-          // denied or unavailable — fall back to list + full load
-          uiState.view = 'list';
-          await loadData(config.rootServerUrl, config.serviceBodyIds);
-        },
-        { timeout: 10000 }
-      );
+    if (tryGeo) {
+      if (!navigator.geolocation) {
+        dataState.error = $t.locationError;
+      } else {
+        dataState.loading = true;
+        navigator.geolocation.getCurrentPosition(
+          async (pos) => {
+            await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.serviceBodyIds, config.geolocationRadius);
+            if (!dataState.error) {
+              uiState.geoActive = true;
+              uiState.view = 'map';
+            }
+          },
+          (err) => {
+            dataState.error = err.code === 1 ? $t.locationDenied : $t.locationError;
+            dataState.loading = false;
+          },
+          { timeout: 10000 }
+        );
+      }
     } else {
       await loadData(config.rootServerUrl, config.serviceBodyIds);
     }
