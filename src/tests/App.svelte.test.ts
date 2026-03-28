@@ -1,6 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen, fireEvent } from '@testing-library/svelte';
+import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
 import { dataState } from '@stores/data.svelte';
@@ -13,6 +13,23 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
   return {
     ...actual,
     loadData: vi.fn()
+  };
+});
+
+// Make push/pop synchronous in tests — the real push() awaits tick() before
+// setting the hash, which breaks fireEvent-based assertions.
+vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@bmlt-enabled/svelte-spa-router')>();
+  return {
+    ...actual,
+    push: vi.fn((path: string) => {
+      window.location.hash = path.startsWith('#') ? path : '#' + path;
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    }),
+    pop: vi.fn(() => {
+      window.location.hash = '#/';
+      window.dispatchEvent(new HashChangeEvent('hashchange'));
+    })
   };
 });
 
@@ -73,7 +90,6 @@ beforeEach(() => {
   dataState.error = null;
   resetFilters();
   uiState.view = 'list';
-  uiState.selectedMeetingId = null;
 });
 
 describe('App', () => {
@@ -299,7 +315,7 @@ describe('meeting detail', () => {
 
     await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
 
-    expect(screen.getByText('Back to meetings')).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
     // Time is embedded in "Monday at 7:00 PM" so match with regex
     expect(screen.getByText(/7:00 PM/)).toBeInTheDocument();
   });
@@ -309,8 +325,9 @@ describe('meeting detail', () => {
     render(App, { props: { config: baseConfig } });
 
     await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await waitFor(() => screen.getByText('Back to meetings'));
     await fireEvent.click(screen.getByText('Back to meetings'));
 
-    expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
+    await waitFor(() => expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument());
   });
 });

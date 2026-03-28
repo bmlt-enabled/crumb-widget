@@ -4,6 +4,7 @@
   import 'leaflet/dist/leaflet.css';
   import type { Map as LeafletMap, TileLayer } from 'leaflet';
   import type { ProcessedMeeting, TilesConfig } from '@/types';
+  import { push } from '@bmlt-enabled/svelte-spa-router';
   import { config } from '@stores/config.svelte';
   import { getDirectionsUrl, getConferenceProvider } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
@@ -72,7 +73,7 @@
 <div class="flex h-full flex-col">
   <!-- Header -->
   <div class="shrink-0 border-b border-gray-200 bg-white px-4 py-3">
-    <button onclick={() => history.back()} class="bmlt-link mb-1.5 flex cursor-pointer items-center gap-1 text-base text-blue-600 hover:text-blue-800">
+    <button onclick={() => push('/')} class="bmlt-link mb-1.5 flex cursor-pointer items-center gap-1 text-base text-blue-600 hover:text-blue-800">
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>

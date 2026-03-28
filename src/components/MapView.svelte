@@ -33,7 +33,7 @@
       const row = document.createElement('div');
       row.style.cssText = 'cursor:pointer;padding:4px 0;border-bottom:1px solid #eee';
       row.innerHTML = `<strong style="display:block;font-size:13px">${m.meeting_name}</strong><span style="font-size:12px;color:#666">${m.dayName} ${m.formattedTime}</span>`;
-      row.addEventListener('click', () => selectMeeting(m.id_bigint));
+      row.addEventListener('click', () => selectMeeting(m));
       div.appendChild(row);
     }
 

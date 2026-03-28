@@ -161,7 +161,7 @@
       <div class="flex rounded-lg border border-gray-300 bg-white">
         <button
           onclick={() => setView('list')}
-          class="flex items-center gap-1.5 rounded-l-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view !== 'detail' && uiState.view === 'list'
+          class="flex items-center gap-1.5 rounded-l-lg px-3 py-2 text-sm font-medium transition-colors {uiState.view === 'list'
             ? 'bmlt-btn-primary bg-blue-600 text-white'
             : 'text-gray-700 hover:bg-gray-50'}"
           title={$t.listView}

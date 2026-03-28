@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { AppConfig } from '@/types';
-  import type { ProcessedMeeting } from '@/types';
+  import { router } from '@bmlt-enabled/svelte-spa-router';
+  import type { AppConfig, ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
-  import { uiState, clearSelectedMeeting } from '@stores/ui.svelte';
+  import { uiState } from '@stores/ui.svelte';
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
@@ -15,10 +15,6 @@
   }
 
   const { config }: Props = $props();
-
-  function onPopState(): void {
-    if (uiState.view === 'detail') clearSelectedMeeting();
-  }
 
   onMount(async () => {
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
@@ -87,10 +83,14 @@
     return result;
   });
 
-  const selectedMeeting = $derived(uiState.selectedMeetingId ? dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId) : undefined);
+  // Derive selected meeting from the current hash route: #/{slug}-{id}
+  const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {
+    const match = router.location.match(/^\/(.+)-(\d+)$/);
+    if (!match) return undefined;
+    const id = match[2];
+    return dataState.meetings.find((m) => m.id_bigint === id);
+  });
 </script>
-
-<svelte:window onpopstate={onPopState} />
 
 <div class="bmlt-meeting-list flex h-full flex-col overflow-hidden rounded-lg border border-gray-200 bg-white font-sans text-base">
   <!-- Header -->
@@ -112,7 +112,7 @@
     </div>
   {:else if dataState.loading}
     <Loading />
-  {:else if uiState.view === 'detail' && selectedMeeting}
+  {:else if selectedMeeting}
     <!-- Detail view (no Controls) -->
     <div class="flex-1 overflow-hidden">
       <MeetingDetail meeting={selectedMeeting} />

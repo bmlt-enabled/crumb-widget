@@ -84,6 +84,14 @@ export function getConferenceProvider(url: string): string | undefined {
   }
 }
 
+export function meetingSlug(meeting: { meeting_name: string; id_bigint: string }): string {
+  const name = meeting.meeting_name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return `${name || 'meeting'}-${meeting.id_bigint}`;
+}
+
 export function getDirectionsUrl(meeting: Meeting): string {
   const lat = meeting.latitude;
   const lng = meeting.longitude;

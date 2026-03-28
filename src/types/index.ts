@@ -40,7 +40,7 @@ export interface FilterState {
   formatIds: string[];
 }
 
-export type ViewType = 'list' | 'map' | 'detail';
+export type ViewType = 'list' | 'map';
 
 export type Column = 'time' | 'name' | 'location' | 'address' | 'service_body';
 
