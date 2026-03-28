@@ -154,7 +154,10 @@
 }
 
 /* Without Tailwind's preflight, browsers apply default margins to block elements.
-   Reset them inside the widget so layout is fully controlled by utility classes. */
+   Reset them inside the widget so layout is fully controlled by utility classes.
+   No !important here — the (1,0,1) specificity beats browser UA and WordPress's
+   plain element rules, while Tailwind's !important utilities can still override
+   these resets when explicit spacing is needed (e.g. mt-3 on a <p>). */
 #bmlt-meeting-list p,
 #bmlt-meeting-list h1,
 #bmlt-meeting-list h2,
@@ -163,8 +166,8 @@
 #bmlt-meeting-list ul,
 #bmlt-meeting-list ol,
 #bmlt-meeting-list li {
-  margin: 0 !important;
-  padding: 0 !important;
+  margin: 0;
+  padding: 0;
 }
 
 /* Prevent WordPress/host-site CSS from leaking into the widget */

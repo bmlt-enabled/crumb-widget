@@ -2,6 +2,7 @@
   import type { ProcessedMeeting } from '@/types/index';
   import { selectMeeting } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
+  import { formatShortAddress } from '@utils/format';
   import { t } from '@stores/localization';
 
   interface Props {
@@ -40,7 +41,7 @@
             <p class="bmlt-link text-lg font-semibold text-blue-600">{meeting.meeting_name}</p>
           {/if}
           {#if cols.has('location') && meeting.location_text}
-            <p class="mt-0.5 text-gray-600">{meeting.location_text}</p>
+            <p class="mt-0.5 text-base text-gray-600">{meeting.location_text}</p>
           {/if}
           {#if cols.has('address')}
             <div class="mt-1.5 flex flex-wrap gap-2">
@@ -49,7 +50,7 @@
                   <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
-                  <span class="break-words">{meeting.formattedAddress || meeting.location_text}</span>
+                  <span class="break-words">{formatShortAddress(meeting) || meeting.location_text}</span>
                 </span>
               {/if}
               {#if meeting.isVirtual}
@@ -68,7 +69,7 @@
             </div>
           {/if}
           {#if cols.has('service_body') && meeting.service_body_name}
-            <p class="mt-1 text-sm text-gray-500">{meeting.service_body_name}</p>
+            <p class="mt-2.5 text-base text-gray-500">{meeting.service_body_name}</p>
           {/if}
         </div>
       </button>
@@ -77,7 +78,7 @@
 
   <!-- Desktop table (sm+) -->
   <div class="hidden overflow-x-auto sm:block">
-    <table class="w-full text-sm">
+    <table class="w-full text-base">
       <thead class="sticky top-0 bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
           {#if cols.has('time')}<th class="px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
@@ -106,7 +107,7 @@
               </td>
             {/if}
             {#if cols.has('location')}
-              <td class="px-4 py-4 text-gray-600">
+              <td class="px-4 py-4 text-base text-gray-600">
                 {meeting.location_text ?? ''}
               </td>
             {/if}
@@ -118,7 +119,7 @@
                       <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
-                      <span class="max-w-[16rem] truncate">{meeting.formattedAddress || meeting.location_text}</span>
+                      <span class="max-w-[16rem] truncate">{formatShortAddress(meeting) || meeting.location_text}</span>
                     </span>
                   {/if}
                   {#if meeting.isVirtual}
@@ -138,7 +139,7 @@
               </td>
             {/if}
             {#if cols.has('service_body')}
-              <td class="hidden px-4 py-4 text-xs text-gray-600 lg:table-cell">
+              <td class="hidden px-4 py-4 text-base text-gray-600 lg:table-cell">
                 {meeting.service_body_name ?? ''}
               </td>
             {/if}

@@ -74,6 +74,13 @@ export function formatAddress(meeting: Meeting): string {
   return parts.join(', ') || meeting.location_text || '';
 }
 
+export function formatShortAddress(meeting: Meeting): string {
+  const parts: string[] = [];
+  if (meeting.location_street) parts.push(meeting.location_street);
+  if (meeting.location_municipality) parts.push(meeting.location_municipality);
+  return parts.join(', ') || meeting.location_text || '';
+}
+
 export function sortMeetings<T extends { weekday_tinyint: number; start_time: string }>(meetings: T[]): T[] {
   // Rotate so today's weekday sorts first; BMLT weekday_tinyint is 1=Sun…7=Sat
   const today = new Date().getDay() + 1; // 1–7 matching BMLT
