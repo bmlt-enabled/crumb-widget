@@ -85,7 +85,7 @@
   <!-- Body: two columns -->
   <div class="flex min-h-0 flex-1 flex-col sm:flex-row">
     <!-- Left: scrollable info panel -->
-    <div class="shrink-0 overflow-y-auto p-4 sm:w-72 sm:border-r sm:border-gray-200 lg:w-80">
+    <div class="overflow-y-auto p-4 {showMap ? 'shrink-0 sm:w-72 sm:border-r sm:border-gray-200 lg:w-80' : 'mx-auto w-full max-w-lg'}">
       <!-- Get Directions (in-person) -->
       {#if meeting.isInPerson && meeting.formattedAddress}
         <a
@@ -220,47 +220,11 @@
       </div>
     </div>
 
-    <!-- Right: map or virtual placeholder -->
-    <div class="min-h-64 flex-1 sm:min-h-0">
-      {#if showMap}
+    <!-- Right: map (in-person with coords only) -->
+    {#if showMap}
+      <div class="min-h-64 flex-1 sm:min-h-0">
         <div bind:this={mapEl} class="h-full min-h-64 w-full"></div>
-      {:else}
-        <!-- Virtual / no-location placeholder -->
-        <div class="flex h-full flex-col items-center justify-center gap-4 bg-gray-50 p-8 text-center">
-          <div class="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-            <svg class="h-8 w-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-              />
-            </svg>
-          </div>
-          <div>
-            <p class="text-sm font-semibold text-gray-700">{$t.onlineMeetingSection}</p>
-            <p class="mt-1 text-xs text-gray-500">This meeting takes place online</p>
-          </div>
-          {#if meeting.virtual_meeting_link}
-            <a
-              href={meeting.virtual_meeting_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="bmlt-btn-primary inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-            >
-              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                />
-              </svg>
-              {getConferenceProvider(meeting.virtual_meeting_link ?? '') ?? $t.joinMeeting}
-            </a>
-          {/if}
-        </div>
-      {/if}
-    </div>
+      </div>
+    {/if}
   </div>
 </div>
