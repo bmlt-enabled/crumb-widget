@@ -63,11 +63,13 @@
   border-color: var(--bmlt-border) !important;
 }
 
-/* Primary accent buttons (active filter chips, active view toggle, join button) */
-#bmlt-meeting-list .bmlt-btn-primary,
-#bmlt-meeting-list .bmlt-btn-primary:hover,
-#bmlt-meeting-list .bmlt-btn-primary:focus,
-#bmlt-meeting-list .bmlt-btn-primary:active {
+/* Primary accent buttons (active filter chips, active view toggle, join button).
+   Uses :is(#bmlt-meeting-list) to raise specificity to (2,x,x) so we beat
+   WordPress themes that use two ID selectors on button:hover rules. */
+#bmlt-meeting-list:is(#bmlt-meeting-list) .bmlt-btn-primary,
+#bmlt-meeting-list:is(#bmlt-meeting-list) .bmlt-btn-primary:hover,
+#bmlt-meeting-list:is(#bmlt-meeting-list) .bmlt-btn-primary:focus,
+#bmlt-meeting-list:is(#bmlt-meeting-list) .bmlt-btn-primary:active {
   background-color: var(--bmlt-accent) !important;
   color: #ffffff !important;
   text-decoration: none !important;

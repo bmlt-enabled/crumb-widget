@@ -129,7 +129,7 @@
 
         <!-- Venue + formats row -->
         <div class="px-4 py-4">
-          <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.venueType}</p>
+          <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.format}</p>
           <div class="mt-1 flex flex-wrap gap-1.5">
             {#if meeting.isInPerson}
               <span class="bmlt-badge-in-person inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-sm font-medium text-green-700">{$t.inPerson}</span>
