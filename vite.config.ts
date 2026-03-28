@@ -28,8 +28,8 @@ export default defineConfig({
     {
       name: 'copy-docs',
       closeBundle() {
-        copyFileSync('docs.html', 'dist/index.html');
-        copyFileSync('demo.html', 'dist/meetings.html');
+        copyFileSync('pages/docs.html', 'dist/index.html');
+        copyFileSync('pages/meetings.html', 'dist/meetings.html');
       }
     }
   ],
