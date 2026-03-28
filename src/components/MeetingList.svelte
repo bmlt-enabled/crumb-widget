@@ -25,36 +25,36 @@
   <!-- Mobile cards (below sm) -->
   <div class="divide-y divide-gray-100 sm:hidden">
     {#each meetings as meeting (meeting.id_bigint)}
-      <button type="button" class="bmlt-row flex w-full cursor-pointer gap-3 px-4 py-3 text-left transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting)}>
+      <button type="button" class="bmlt-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting)}>
         <!-- Left: time -->
         {#if cols.has('time')}
-          <div class="w-16 shrink-0 text-gray-600">
-            <span class="font-medium text-gray-800">{meeting.dayShort}</span>
+          <div class="w-20 shrink-0 text-gray-600">
+            <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
             <br />
-            <span class="text-xs">{meeting.formattedTime}</span>
+            <span class="font-semibold text-gray-800">{meeting.dayShort}</span>
           </div>
         {/if}
         <!-- Right: name + location details -->
         <div class="min-w-0 flex-1">
           {#if cols.has('name')}
-            <p class="font-medium text-gray-900">{meeting.meeting_name}</p>
+            <p class="bmlt-link text-lg font-semibold text-blue-600">{meeting.meeting_name}</p>
           {/if}
           {#if cols.has('location') && meeting.location_text}
-            <p class="mt-0.5 text-xs text-gray-600">{meeting.location_text}</p>
+            <p class="mt-0.5 text-gray-600">{meeting.location_text}</p>
           {/if}
           {#if cols.has('address')}
-            <div class="mt-1 flex flex-wrap gap-1">
+            <div class="mt-1.5 flex flex-wrap gap-2">
               {#if meeting.isInPerson}
-                <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                  <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span class="bmlt-badge-in-person inline-flex items-center gap-1.5 rounded-lg bg-green-100 px-3 py-1.5 text-sm font-medium text-green-700">
+                  <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   </svg>
                   <span class="break-words">{meeting.formattedAddress || meeting.location_text}</span>
                 </span>
               {/if}
               {#if meeting.isVirtual}
-                <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
-                  <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span class="bmlt-badge-virtual inline-flex items-center gap-1.5 rounded-lg bg-blue-100 px-3 py-1.5 text-sm font-medium text-blue-700">
+                  <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       stroke-linecap="round"
                       stroke-linejoin="round"
@@ -68,7 +68,7 @@
             </div>
           {/if}
           {#if cols.has('service_body') && meeting.service_body_name}
-            <p class="mt-0.5 text-xs text-gray-500">{meeting.service_body_name}</p>
+            <p class="mt-1 text-sm text-gray-500">{meeting.service_body_name}</p>
           {/if}
         </div>
       </button>
@@ -91,39 +91,39 @@
         {#each meetings as meeting (meeting.id_bigint)}
           <tr class="bmlt-row cursor-pointer transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
-              <td class="px-4 py-3 whitespace-nowrap text-gray-600">
-                <span class="font-medium text-gray-800">{meeting.dayShort}</span>
+              <td class="px-4 py-4 whitespace-nowrap text-gray-600">
+                <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
                 <br />
-                <span class="text-xs">{meeting.formattedTime}</span>
+                <span class="font-medium text-gray-800">{meeting.dayShort}</span>
               </td>
             {/if}
             {#if cols.has('name')}
-              <td class="px-4 py-3">
-                <span class="font-medium text-gray-900">{meeting.meeting_name}</span>
+              <td class="px-4 py-4">
+                <span class="bmlt-link font-medium text-blue-600">{meeting.meeting_name}</span>
                 {#if meeting.comments}
                   <p class="mt-0.5 max-w-xs truncate text-xs text-gray-500">{meeting.comments}</p>
                 {/if}
               </td>
             {/if}
             {#if cols.has('location')}
-              <td class="px-4 py-3 text-sm text-gray-600">
+              <td class="px-4 py-4 text-gray-600">
                 {meeting.location_text ?? ''}
               </td>
             {/if}
             {#if cols.has('address')}
-              <td class="px-4 py-3">
-                <div class="flex flex-wrap gap-1">
+              <td class="px-4 py-4">
+                <div class="flex flex-wrap gap-2">
                   {#if meeting.isInPerson}
-                    <span class="bmlt-badge-in-person inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700">
-                      <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span class="bmlt-badge-in-person inline-flex items-center gap-1.5 rounded-lg bg-green-100 px-3 py-1.5 text-sm font-medium text-green-700">
+                      <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
                       <span class="max-w-[16rem] truncate">{meeting.formattedAddress || meeting.location_text}</span>
                     </span>
                   {/if}
                   {#if meeting.isVirtual}
-                    <span class="bmlt-badge-virtual inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700">
-                      <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span class="bmlt-badge-virtual inline-flex items-center gap-1.5 rounded-lg bg-blue-100 px-3 py-1.5 text-sm font-medium text-blue-700">
+                      <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path
                           stroke-linecap="round"
                           stroke-linejoin="round"
@@ -138,7 +138,7 @@
               </td>
             {/if}
             {#if cols.has('service_body')}
-              <td class="hidden px-4 py-3 text-xs text-gray-600 lg:table-cell">
+              <td class="hidden px-4 py-4 text-xs text-gray-600 lg:table-cell">
                 {meeting.service_body_name ?? ''}
               </td>
             {/if}
