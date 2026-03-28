@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@bmlt-enabled/svelte-spa-router": "^5.0.7",
-    "bmlt-query-client": "^1.0.6",
+    "bmlt-query-client": "^1.0.7",
     "globals": "^17.4.0",
     "leaflet": "^1.9.4",
     "localized-strings": "^2.0.3"

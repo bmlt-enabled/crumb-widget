@@ -52,7 +52,7 @@
     geoStatus = 'locating';
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.serviceBodyIds, config.geolocationRadius);
+        await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
         if (dataState.error) {
           geoError = dataState.error;
           geoStatus = 'error';

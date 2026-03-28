@@ -35,7 +35,7 @@
         dataState.loading = true;
         navigator.geolocation.getCurrentPosition(
           async (pos) => {
-            await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.serviceBodyIds, config.geolocationRadius);
+            await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
             if (!dataState.error) {
               uiState.geoActive = true;
               uiState.view = 'map';

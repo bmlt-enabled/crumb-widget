@@ -52,13 +52,10 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
   try {
     const client = new BmltClient({ rootServerURL: rootServerUrl });
 
-    const [formatsResp, meetingsResp] = await Promise.all([
-      client.getFormats(),
-      client.searchMeetings({
-        ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
-        page_size: 5000
-      })
-    ]);
+    const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
+      ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
+      page_size: 5000
+    });
 
     const formatsMap = new SvelteMap<string, Format>();
     for (const fmt of formatsResp) {
@@ -74,7 +71,7 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
   }
 }
 
-export async function loadDataByCoordinates(rootServerUrl: string, latitude: number, longitude: number, serviceBodyIds: number[] = [], radiusMiles: number = 10): Promise<void> {
+export async function loadDataByCoordinates(rootServerUrl: string, latitude: number, longitude: number, radiusMiles: number = 10): Promise<void> {
   if (!rootServerUrl) {
     dataState.error = 'No root server URL configured. Add data-root-server to your embed element.';
     return;
@@ -86,17 +83,17 @@ export async function loadDataByCoordinates(rootServerUrl: string, latitude: num
   try {
     const client = new BmltClient({ rootServerURL: rootServerUrl });
 
-    // Fetch formats if not already loaded
-    if (dataState.formats.size === 0) {
-      const formatsResp = await client.getFormats();
-      const formatsMap = new SvelteMap<string, Format>();
-      for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
-      dataState.formats = formatsMap;
-    }
-
-    const meetingsResp = await client.searchMeetingsByCoordinates({ latitude, longitude }, radiusMiles, undefined, {
+    const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
+      lat_val: latitude,
+      long_val: longitude,
+      geo_width: radiusMiles,
+      sort_results_by_distance: true,
       page_size: 5000
     });
+
+    const formatsMap = new SvelteMap<string, Format>();
+    for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
+    dataState.formats = formatsMap;
 
     dataState.meetings = sortMeetings(processMeetings(meetingsResp));
   } catch (err) {
