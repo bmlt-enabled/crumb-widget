@@ -56,4 +56,4 @@ jobs:
           aws-region: us-east-1
       - name: Copy Build to S3 🪣
         run: |
-          aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/bmlt-client/app.js
+          aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/bmlt-ui/app.js

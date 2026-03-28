@@ -1,4 +1,4 @@
-# BMLT Client
+# BMLT UI
 
 An embeddable NA meeting finder widget. Drop a `<div>` and a `<script>` tag into any page and get a fully functional
 meeting finder - search, filters, list view, map, and meeting detail.
@@ -27,7 +27,7 @@ for everyone are generally out of scope. If you need deep customization, this ma
   data-root-server="https://your-server/main_server"
   data-service-body="123"
 ></div>
-<script src="https://cdn.aws.bmlt.app/bmlt-client/app.js"></script>
+<script src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"></script>
 ```
 
 Full documentation at **[client.bmlt.app](https://client.bmlt.app/)**.

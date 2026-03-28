@@ -40,7 +40,8 @@ const baseConfig: AppConfig = {
   containerId: 'bmlt-meeting-list',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
-  geolocationRadius: 10
+  geolocationRadius: 10,
+  height: 600
 };
 
 function makeFormat(overrides: Partial<Format> = {}): Format {

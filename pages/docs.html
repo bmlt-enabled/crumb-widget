@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BMLT Meeting List — Documentation</title>
+    <title>BMLT UI — Documentation</title>
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -269,7 +269,7 @@
   </head>
   <body>
     <div class="mobile-bar">
-      <span class="logo-text">BMLT Meeting List</span>
+      <span class="logo-text">BMLT UI</span>
       <button class="hamburger" onclick="document.getElementById('site-nav').classList.toggle('open')" aria-label="Toggle navigation" aria-controls="site-nav">
         <span></span><span></span><span></span>
       </button>
@@ -279,7 +279,7 @@
         <div class="nav-close-row">
           <button class="nav-close-btn" onclick="document.getElementById('site-nav').classList.remove('open')" aria-label="Close navigation">✕</button>
         </div>
-        <a class="logo" href="#">BMLT Meeting List</a>
+        <a class="logo" href="#">BMLT UI</a>
         <ul>
           <li><a href="meetings.html">→ Live Demo</a></li>
           <li><a href="#overview">Overview</a></li>
@@ -309,7 +309,7 @@
       </nav>
 
       <main>
-        <h1>BMLT Meeting List</h1>
+        <h1>BMLT UI</h1>
         <p class="subtitle">An embeddable NA meeting finder widget for any website.</p>
         <a href="meetings.html" class="live-demo-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -318,7 +318,7 @@
 
         <h2 id="overview">Overview</h2>
         <p>
-          BMLT Meeting List is a self-contained JavaScript widget that queries a
+          BMLT UI is a self-contained JavaScript widget that queries a
           <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT root server</a> and renders
           a fully featured meeting finder — search, filters, list view, and an interactive map.
         </p>
@@ -337,7 +337,7 @@
   data-root-server="https://your-server/main_server"
 &gt;&lt;/div&gt;
 
-&lt;script src="https://cdn.aws.bmlt.app/bmlt-client/app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <p>The widget initializes automatically when the script loads. No JavaScript required on your end.</p>
@@ -767,7 +767,7 @@
   id="bmlt-meeting-list"
   data-root-server="https://latest.aws.bmlt.app/main_server"
 &gt;&lt;/div&gt;
-&lt;script src="https://cdn.aws.bmlt.app/bmlt-client/app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="example-service-body">Example: Filter by Service Body</h2>
@@ -822,7 +822,7 @@
 
     wp_enqueue_script(
         'bmlt-meeting-list',
-        'https://cdn.aws.bmlt.app/bmlt-client/app.js',
+        'https://cdn.aws.bmlt.app/bmlt-ui/app.js',
         [],
         null,
         true

@@ -8,8 +8,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/bmlt-enabled/bmlt-client.git
-cd bmlt-client
+git clone https://github.com/bmlt-enabled/bmlt-ui.git
+cd bmlt-ui
 npm install
 ```
 
