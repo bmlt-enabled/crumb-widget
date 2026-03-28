@@ -114,13 +114,13 @@
     <Loading />
   {:else if selectedMeeting}
     <!-- Detail view (no Controls) -->
-    <div class="flex-1 overflow-hidden">
+    <div class="min-h-0 flex-1 overflow-hidden">
       <MeetingDetail meeting={selectedMeeting} />
     </div>
   {:else}
     <!-- Controls + list/map -->
     <Controls />
-    <div class="relative flex-1 overflow-hidden">
+    <div class="relative min-h-0 flex-1 overflow-hidden">
       {#if uiState.view === 'map'}
         <MapView meetings={filteredMeetings} locationMarker={config.locationMarker} tiles={config.tiles} tilesDark={config.tilesDark} />
       {:else}
