@@ -74,6 +74,7 @@ The built file is committed to the repo so it can be served directly from GitHub
 | Styling | Tailwind CSS 4 |
 | Maps | Leaflet 1.9 |
 | Data | [bmlt-query-client](https://github.com/bmlt-enabled/bmlt-query-client) |
+| Routing | [svelte-spa-router](https://github.com/bmlt-enabled/svelte-spa-router) |
 | Language | TypeScript 5 (strict) |
 | Testing | Vitest + @testing-library/svelte |
 | Linting | ESLint 10 + Prettier 3 + svelte-check |
