@@ -94,7 +94,7 @@
           rel="noopener noreferrer"
           class="bmlt-btn-secondary mx-4 mb-4 flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2.5 text-base font-medium text-gray-700 no-underline transition-colors hover:bg-gray-50"
         >
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-4 w-4" style="fill:none;stroke:currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
@@ -170,7 +170,7 @@
                 rel="noopener noreferrer"
                 class="bmlt-btn-primary mt-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-base font-medium text-white transition-all hover:brightness-90"
               >
-                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="h-4 w-4" style="fill:none;stroke:currentColor" viewBox="0 0 24 24">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"

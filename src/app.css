@@ -51,14 +51,19 @@
 /* Primary accent buttons (active filter chips, active view toggle, join button) */
 .bmlt-meeting-list .bmlt-btn-primary {
   background-color: var(--bmlt-accent);
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: none;
 }
 
 /* Outlined secondary button (e.g. Get Directions) */
 .bmlt-meeting-list .bmlt-btn-secondary {
   color: var(--bmlt-accent);
-  border-color: var(--bmlt-accent);
+  border: 1px solid var(--bmlt-accent);
   background-color: transparent;
   cursor: pointer;
+  text-decoration: none;
+  box-shadow: none;
 }
 .bmlt-meeting-list .bmlt-btn-secondary:hover {
   background-color: var(--bmlt-accent-light);
@@ -115,6 +120,18 @@
 .bmlt-meeting-list *::before,
 .bmlt-meeting-list *::after {
   box-sizing: inherit;
+}
+
+/* Prevent WordPress/host-site CSS from leaking into the widget */
+.bmlt-meeting-list a {
+  box-shadow: none;
+  text-decoration: none;
+}
+
+/* Prevent host-site CSS from breaking SVG icons (e.g. themes that set svg { fill: currentColor }) */
+.bmlt-meeting-list svg {
+  max-width: none;
+  overflow: visible;
 }
 
 /* Custom marker icon container — no background or border */
