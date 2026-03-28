@@ -48,8 +48,5 @@ export const daTranslations = {
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',
   // Map
-  noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre',
-  addToCalendar: 'Tilføj til kalender',
-  calendarIcal: 'iCal / Apple Kalender',
-  calendarGoogle: 'Google Kalender'
+  noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre'
 };

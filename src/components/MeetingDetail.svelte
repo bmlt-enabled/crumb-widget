@@ -8,7 +8,6 @@
   import { getDirectionsUrl, getConferenceProvider } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { t } from '@stores/localization';
-  import CalendarButton from './CalendarButton.svelte';
 
   interface Props {
     meeting: ProcessedMeeting;
@@ -122,11 +121,6 @@
           </p>
           {#if meeting.duration_time && meeting.duration_time !== '01:00:00'}
             <p class="mt-0.5 text-sm text-gray-500">{$t.duration}: {meeting.duration_time.slice(0, 5).replace(/^0/, '')}</p>
-          {/if}
-          {#if config.showCalendar}
-            <div class="mt-2.5">
-              <CalendarButton {meeting} />
-            </div>
           {/if}
         </div>
 

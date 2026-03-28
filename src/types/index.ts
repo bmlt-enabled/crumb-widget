@@ -16,7 +16,6 @@ export interface AppConfig {
   locationMarker?: MarkerConfig;
   tiles?: TilesConfig;
   tilesDark?: TilesConfig;
-  showCalendar: boolean;
   columns: Column[];
   geolocation: boolean;
   geolocationRadius: number;
@@ -53,7 +52,6 @@ export interface TilesConfig {
 export interface BmltMeetingListGlobalConfig {
   language?: string;
   defaultView?: 'list' | 'map';
-  calendar?: boolean;
   columns?: Column[];
   geolocation?: boolean;
   geolocationRadius?: number;

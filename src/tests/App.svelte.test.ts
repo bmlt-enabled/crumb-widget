@@ -21,7 +21,6 @@ const baseConfig: AppConfig = {
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'bmlt-meeting-list',
-  showCalendar: true,
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
   geolocationRadius: 10

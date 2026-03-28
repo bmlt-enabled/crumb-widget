@@ -48,8 +48,5 @@ export const svTranslations = {
   // Loading
   loadingMeetings: 'Laddar möten\u2026',
   // Map
-  noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter',
-  addToCalendar: 'Lägg till i kalendern',
-  calendarIcal: 'iCal / Apple Kalender',
-  calendarGoogle: 'Google Kalender'
+  noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter'
 };

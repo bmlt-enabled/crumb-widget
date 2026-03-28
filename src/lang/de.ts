@@ -48,8 +48,5 @@ export const deTranslations = {
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',
   // Map
-  noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen',
-  addToCalendar: 'Zum Kalender hinzufügen',
-  calendarIcal: 'iCal / Apple Kalender',
-  calendarGoogle: 'Google Kalender'
+  noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen'
 };

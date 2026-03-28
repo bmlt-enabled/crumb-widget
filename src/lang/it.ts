@@ -48,8 +48,5 @@ export const itTranslations = {
   // Loading
   loadingMeetings: 'Caricamento riunioni\u2026',
   // Map
-  noInPersonMeetings: 'Nessuna riunione in presenza da mostrare sulla mappa con i filtri attuali',
-  addToCalendar: 'Aggiungi al calendario',
-  calendarIcal: 'iCal / Apple Calendario',
-  calendarGoogle: 'Google Calendar'
+  noInPersonMeetings: 'Nessuna riunione in presenza da mostrare sulla mappa con i filtri attuali'
 };

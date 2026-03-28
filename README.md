@@ -60,7 +60,6 @@ Define `BmltMeetingListConfig` before loading `app.js` to override defaults. Use
 |---|---|---|
 | `defaultView` | `'list' \| 'map'` | Default view on load. Takes precedence over `data-view`. |
 | `language` | `string` | Override the UI language (e.g. `'es'`, `'fr'`). Defaults to `navigator.language`. |
-| `calendar` | `boolean` | Show the **Add to Calendar** button on meeting detail. Default: `true`. Set to `false` to hide it. |
 | `columns` | `string[]` | Columns to show in list view. Default: `['time', 'name', 'location', 'address']`. Omit any to hide it. Available values: `time`, `name`, `location` (venue name), `address` (street address badges), `service_body`. `service_body` is hidden by default. |
 | `geolocation` | `boolean` | Show a **Near Me** button that searches for meetings near the user's current location. Also auto-geolocates on page load. Default: `false`. |
 | `geolocationRadius` | `number` | Search radius in miles when using geolocation. Default: `10`. |
@@ -354,7 +353,6 @@ src/
     CalendarButton.svelte  # Add to Calendar button (iCal & Google Calendar)
   utils/
     format.ts              # Time, address, and sort helpers
-    calendar.ts            # iCal / Google Calendar URL helpers
     localization.ts        # Localization store and language loading
   tests/
     App.svelte.test.ts     # Component integration tests

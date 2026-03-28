@@ -48,9 +48,5 @@ export const enTranslations = {
   // Loading
   loadingMeetings: 'Loading meetings\u2026',
   // Map
-  noInPersonMeetings: 'No in-person meetings to show on map with current filters',
-  // Calendar
-  addToCalendar: 'Add to Calendar',
-  calendarIcal: 'iCal / Apple Calendar',
-  calendarGoogle: 'Google Calendar'
+  noInPersonMeetings: 'No in-person meetings to show on map with current filters'
 };
