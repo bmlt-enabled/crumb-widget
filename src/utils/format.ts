@@ -3,13 +3,37 @@ import type { Meeting } from '@/types/index';
 export const WEEKDAYS = ['', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 export const WEEKDAYS_SHORT = ['', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export function formatTime(timeStr: string): string {
+export function is24HourTime(locale?: string): boolean {
+  return !new Intl.DateTimeFormat(locale, {
+    hour: 'numeric'
+  }).resolvedOptions().hour12;
+}
+
+export function formatTime(
+  timeStr: string,
+  options?: {
+    locale?: string;
+    force24Hour?: boolean;
+  }
+): string {
   const [hStr, mStr] = timeStr.split(':');
-  const h = parseInt(hStr, 10);
-  const m = parseInt(mStr, 10);
-  const period = h >= 12 ? 'PM' : 'AM';
-  const hour = h === 0 ? 12 : h > 12 ? h - 12 : h;
-  return `${hour}:${m.toString().padStart(2, '0')} ${period}`;
+  const hours = parseInt(hStr, 10);
+  const minutes = parseInt(mStr, 10);
+
+  if (Number.isNaN(hours) || Number.isNaN(minutes)) {
+    return timeStr;
+  }
+
+  const use24Hour = options?.force24Hour ?? is24HourTime(options?.locale);
+
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+
+  return new Intl.DateTimeFormat(options?.locale, {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: !use24Hour
+  }).format(date);
 }
 
 export function getTimeOfDay(timeStr: string): 'morning' | 'afternoon' | 'evening' | 'night' {
