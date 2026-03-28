@@ -51,19 +51,19 @@
 /* Primary accent buttons (active filter chips, active view toggle, join button) */
 .bmlt-meeting-list .bmlt-btn-primary {
   background-color: var(--bmlt-accent);
-  color: #ffffff;
-  text-decoration: none;
-  box-shadow: none;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
 
 /* Outlined secondary button (e.g. Get Directions) */
 .bmlt-meeting-list .bmlt-btn-secondary {
   color: var(--bmlt-accent);
-  border: 1px solid var(--bmlt-accent);
+  border: 1px solid var(--bmlt-accent) !important;
   background-color: transparent;
   cursor: pointer;
-  text-decoration: none;
-  box-shadow: none;
+  text-decoration: none !important;
+  box-shadow: none !important;
 }
 .bmlt-meeting-list .bmlt-btn-secondary:hover {
   background-color: var(--bmlt-accent-light);
