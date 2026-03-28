@@ -52,5 +52,6 @@ export const deTranslations = {
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',
   // Map
-  noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen'
+  noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen',
+  searchThisArea: 'Diesen Bereich durchsuchen'
 };

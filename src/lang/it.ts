@@ -52,5 +52,6 @@ export const itTranslations = {
   // Loading
   loadingMeetings: 'Caricamento riunioni\u2026',
   // Map
-  noInPersonMeetings: 'Nessuna riunione in presenza da mostrare sulla mappa con i filtri attuali'
+  noInPersonMeetings: 'Nessuna riunione in presenza da mostrare sulla mappa con i filtri attuali',
+  searchThisArea: 'Cerca in questa area'
 };

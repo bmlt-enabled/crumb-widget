@@ -123,7 +123,16 @@
     <Controls />
     <div class="relative min-h-0 flex-1 overflow-hidden">
       {#if uiState.view === 'map'}
-        <MapView meetings={filteredMeetings} locationMarker={config.locationMarker} tiles={config.tiles} tilesDark={config.tilesDark} />
+        <MapView
+          meetings={filteredMeetings}
+          locationMarker={config.locationMarker}
+          tiles={config.tiles}
+          tilesDark={config.tilesDark}
+          geoActive={uiState.geoActive}
+          onsearcharea={async (lat, lng) => {
+            await loadDataByCoordinates(config.rootServerUrl, lat, lng, config.geolocationRadius);
+          }}
+        />
       {:else}
         <div class="h-full overflow-y-auto">
           <MeetingList meetings={filteredMeetings} />

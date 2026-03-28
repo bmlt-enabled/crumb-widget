@@ -521,6 +521,11 @@
           <code>serviceBodyIds</code> are configured, the Near Me button cannot be toggled off — geolocation is the
           only data source.
         </p>
+        <p>
+          While in map view with Near Me active, panning or zooming the map reveals a <strong>Search this area</strong>
+          button at the top of the map. Clicking it reloads meetings centered on the current map viewport, using the
+          same <code>geolocationRadius</code>. The map stays at the user's position — it does not jump to fit the new results.
+        </p>
         <pre><code>&lt;script&gt;
   var BmltUiConfig = {
     geolocation: true,
@@ -866,7 +871,7 @@
         <h2 id="features">Features</h2>
         <ul>
           <li><strong>List view</strong> — meeting table sorted by day and time, with venue type badges</li>
-          <li><strong>Map view</strong> — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location</li>
+          <li><strong>Map view</strong> — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location; pan or zoom to reveal a <em>Search this area</em> button when Near Me is active</li>
           <li><strong>Detail view</strong> — full meeting info: schedule, address with Google Maps directions, virtual meeting join button, formats, and notes</li>
           <li><strong>Text search</strong> — real-time filter across meeting name, location, and notes</li>
           <li><strong>Weekday filter</strong> — toggle individual days of the week</li>

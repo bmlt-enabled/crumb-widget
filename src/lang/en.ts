@@ -52,5 +52,6 @@ export const enTranslations = {
   // Loading
   loadingMeetings: 'Loading meetings\u2026',
   // Map
-  noInPersonMeetings: 'No in-person meetings to show on map with current filters'
+  noInPersonMeetings: 'No in-person meetings to show on map with current filters',
+  searchThisArea: 'Search this area'
 };

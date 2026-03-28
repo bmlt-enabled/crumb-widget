@@ -14,9 +14,11 @@
     locationMarker?: MarkerConfig;
     tiles?: TilesConfig;
     tilesDark?: TilesConfig;
+    geoActive?: boolean;
+    onsearcharea?: (lat: number, lng: number) => void;
   }
 
-  const { meetings, locationMarker, tiles, tilesDark }: Props = $props();
+  const { meetings, locationMarker, tiles, tilesDark, geoActive = false, onsearcharea }: Props = $props();
 
   let mapEl: HTMLDivElement;
   let leafletMap: LeafletMap | null = null;
@@ -24,6 +26,9 @@
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
   let resizeObserver: ResizeObserver | null = null;
+  let showSearchArea = $state(false);
+  let skipNextFit = false;
+  let suppressMoveEnd = false;
 
   const mappableMeetings = $derived(meetings.filter((m) => m.isInPerson && m.latitude && m.longitude));
 
@@ -69,10 +74,12 @@
       markers.push(marker);
     }
 
-    if (markers.length > 0) {
+    if (markers.length > 0 && !skipNextFit) {
+      suppressMoveEnd = true;
       const group = L.featureGroup(markers);
       leafletMap.fitBounds(group.getBounds().pad(0.1));
     }
+    skipNextFit = false;
   }
 
   const DEFAULT_TILES: TilesConfig = {
@@ -93,8 +100,23 @@
     applyTileLayer(e.matches && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
   }
 
+  function handleSearchArea(): void {
+    if (!leafletMap || !onsearcharea) return;
+    const center = leafletMap.getCenter();
+    showSearchArea = false;
+    skipNextFit = true;
+    onsearcharea(center.lat, center.lng);
+  }
+
   onMount(() => {
     leafletMap = L.map(mapEl);
+    leafletMap.on('moveend', () => {
+      if (suppressMoveEnd) {
+        suppressMoveEnd = false;
+        return;
+      }
+      if (geoActive && onsearcharea) showSearchArea = true;
+    });
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
     const isDark = darkMq.matches && !!tilesDark;
@@ -128,6 +150,14 @@
 
 <div class="relative h-full w-full">
   <div bind:this={mapEl} class="h-full min-h-96 w-full"></div>
+
+  {#if showSearchArea && geoActive && onsearcharea}
+    <div class="pointer-events-none absolute top-3 right-0 left-0 z-[1000] flex justify-center">
+      <button onclick={handleSearchArea} class="pointer-events-auto rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-lg hover:bg-gray-50">
+        {$t.searchThisArea}
+      </button>
+    </div>
+  {/if}
 
   {#if !mappableMeetings.length}
     <div class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm">

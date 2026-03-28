@@ -52,5 +52,6 @@ export const svTranslations = {
   // Loading
   loadingMeetings: 'Laddar möten\u2026',
   // Map
-  noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter'
+  noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter',
+  searchThisArea: 'Sök i det här området'
 };

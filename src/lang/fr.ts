@@ -52,5 +52,6 @@ export const frTranslations = {
   // Loading
   loadingMeetings: 'Chargement des réunions\u2026',
   // Map
-  noInPersonMeetings: 'Aucune réunion en présentiel à afficher sur la carte avec les filtres actuels'
+  noInPersonMeetings: 'Aucune réunion en présentiel à afficher sur la carte avec les filtres actuels',
+  searchThisArea: 'Rechercher dans cette zone'
 };

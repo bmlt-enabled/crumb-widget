@@ -52,5 +52,6 @@ export const esTranslations = {
   // Loading
   loadingMeetings: 'Cargando reuniones\u2026',
   // Map
-  noInPersonMeetings: 'No hay reuniones presenciales para mostrar en el mapa con los filtros actuales'
+  noInPersonMeetings: 'No hay reuniones presenciales para mostrar en el mapa con los filtros actuales',
+  searchThisArea: 'Buscar en esta área'
 };

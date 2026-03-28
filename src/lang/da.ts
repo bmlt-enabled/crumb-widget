@@ -52,5 +52,6 @@ export const daTranslations = {
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',
   // Map
-  noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre'
+  noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre',
+  searchThisArea: 'Søg i dette område'
 };
