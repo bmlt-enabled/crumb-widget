@@ -30,6 +30,8 @@
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
   let bodyObserver: MutationObserver | null = null;
+  let resizeObserver: ResizeObserver | null = null;
+  let resizeTimer: ReturnType<typeof setTimeout> | undefined;
 
   function applyTileLayer(cfg: TilesConfig): void {
     if (!leafletMap) return;
@@ -72,9 +74,17 @@
     })
       .bindPopup(popupHtml)
       .addTo(leafletMap!);
+
+    resizeObserver = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => leafletMap?.invalidateSize(), 200);
+    });
+    resizeObserver.observe(mapEl);
   });
 
   onDestroy(() => {
+    clearTimeout(resizeTimer);
+    resizeObserver?.disconnect();
     bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
     leafletMap?.remove();
