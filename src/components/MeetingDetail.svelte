@@ -73,7 +73,8 @@
       icon: buildMarkerIcon(config.locationMarker ?? DEFAULT_LOCATION_MARKER)
     })
       .bindPopup(popupHtml)
-      .addTo(leafletMap!);
+      .addTo(leafletMap!)
+      .openPopup();
 
     resizeObserver = new ResizeObserver(() => {
       clearTimeout(resizeTimer);
