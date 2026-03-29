@@ -29,6 +29,7 @@
   let leafletMap: LeafletMap | null = null;
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
+  let bodyObserver: MutationObserver | null = null;
 
   function applyTileLayer(cfg: TilesConfig): void {
     if (!leafletMap) return;
@@ -37,8 +38,14 @@
     tileLayer.addTo(leafletMap);
   }
 
-  function onColorSchemeChange(e: MediaQueryListEvent): void {
-    applyTileLayer(e.matches && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
+  function isDarkMode(): boolean {
+    if (document.body.classList.contains('dark')) return true;
+    if (document.body.classList.contains('light')) return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function onColorSchemeChange(): void {
+    applyTileLayer(isDarkMode() && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
   }
 
   onMount(() => {
@@ -47,11 +54,12 @@
     leafletMap = L.map(mapEl).setView([meeting.latitude, meeting.longitude], 15);
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
-    const isDark = darkMq.matches && !!config.tilesDark;
-    applyTileLayer(isDark ? config.tilesDark! : (config.tiles ?? DEFAULT_TILES));
+    applyTileLayer(isDarkMode() && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
 
     if (config.tilesDark) {
       darkMq.addEventListener('change', onColorSchemeChange);
+      bodyObserver = new MutationObserver(onColorSchemeChange);
+      bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     }
 
     const popupHtml = `<div style="min-width:180px">
@@ -67,14 +75,15 @@
   });
 
   onDestroy(() => {
+    bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
     leafletMap?.remove();
   });
 </script>
 
-<div class="flex h-full flex-col">
+<div class="bmlt-detail flex h-full flex-col">
   <!-- Header -->
-  <div class="shrink-0 border-b border-gray-200 bg-white px-4 py-3">
+  <div class="bmlt-detail-header shrink-0 border-b border-gray-200 bg-white px-4 py-3">
     <a href="#/" class="bmlt-link mb-1.5 flex items-center gap-1 text-base text-blue-600 hover:text-blue-800">
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />

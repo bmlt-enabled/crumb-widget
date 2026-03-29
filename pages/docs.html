@@ -680,6 +680,11 @@
             <tr><td>--bmlt-in-person-bg</td><td><code>#dcfce7</code></td><td>In-person badge background</td></tr>
             <tr><td>--bmlt-virtual</td><td><code>#1d4ed8</code></td><td>Virtual badge text</td></tr>
             <tr><td>--bmlt-virtual-bg</td><td><code>#dbeafe</code></td><td>Virtual badge background</td></tr>
+            <tr><td>--bmlt-surface</td><td><code>#ffffff</code></td><td>Input, button, and dropdown panel backgrounds</td></tr>
+            <tr><td>--bmlt-hover</td><td><code>#f9fafb</code></td><td>Neutral hover state (buttons and rows not using accent)</td></tr>
+            <tr><td>--bmlt-divider</td><td><code>#f3f4f6</code></td><td>Internal row and list divider lines</td></tr>
+            <tr><td>--bmlt-text-secondary</td><td><code>#6b7280</code></td><td>Secondary / muted text (table headers, time, location)</td></tr>
+            <tr><td>--bmlt-text-muted</td><td><code>#9ca3af</code></td><td>Very muted text (footer count, empty-state messages)</td></tr>
           </tbody>
         </table></div>
 
@@ -702,15 +707,21 @@
           <div class="demo-header">CSS — dark mode theme</div>
           <pre><code>@media (prefers-color-scheme: dark) {
   #bmlt-meeting-list {
-    --bmlt-background: #111827;
-    --bmlt-text: #f9fafb;
-    --bmlt-border: #374151;
-    --bmlt-accent: #60a5fa;
-    --bmlt-accent-light: #1e3a5f;
-    --bmlt-in-person: #86efac;
-    --bmlt-in-person-bg: #14532d;
-    --bmlt-virtual: #93c5fd;
-    --bmlt-virtual-bg: #1e3a5f;
+    --bmlt-background:    #1e293b;
+    --bmlt-text:          #f1f5f9;
+    --bmlt-border:        #334155;
+    --bmlt-accent:        #60a5fa;
+    --bmlt-accent-light:  #1e3a5f;
+    --bmlt-row-alt:       #243044;
+    --bmlt-in-person:     #86efac;
+    --bmlt-in-person-bg:  #14532d;
+    --bmlt-virtual:       #93c5fd;
+    --bmlt-virtual-bg:    #1e3a5f;
+    --bmlt-surface:       #1e293b;
+    --bmlt-hover:         #2d4060;
+    --bmlt-divider:       #334155;
+    --bmlt-text-secondary:#94a3b8;
+    --bmlt-text-muted:    #64748b;
   }
 }</code></pre>
         </div>

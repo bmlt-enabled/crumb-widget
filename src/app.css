@@ -46,6 +46,16 @@
   --bmlt-in-person-bg: #dcfce7;
   --bmlt-virtual: #1d4ed8;
   --bmlt-virtual-bg: #dbeafe;
+  /* Surface: inputs, buttons, dropdown panels */
+  --bmlt-surface: #ffffff;
+  /* Neutral hover for buttons/rows that don't use accent */
+  --bmlt-hover: #f9fafb;
+  /* Divider lines inside lists/tables (lighter than --bmlt-border) */
+  --bmlt-divider: #f3f4f6;
+  /* Secondary text (gray-500/600 equivalents) */
+  --bmlt-text-secondary: #6b7280;
+  /* Very muted text (gray-400 equivalents) */
+  --bmlt-text-muted: #9ca3af;
 }
 
 /* Apply custom-property values to the container.
@@ -129,6 +139,7 @@
 #bmlt-meeting-list .bmlt-row {
   content-visibility: auto;
   contain-intrinsic-size: auto 72px;
+  background-color: var(--bmlt-background) !important;
 }
 
 /* Venue type badges */
@@ -188,4 +199,198 @@
 .bmlt-marker {
   background: none !important;
   border: none !important;
+}
+
+/* ─── App shell ──────────────────────────────────────────────────────────────
+   The inner .bmlt-meeting-list div and app header use hardcoded Tailwind colors.
+   ─────────────────────────────────────────────────────────────────────────── */
+#bmlt-meeting-list .bmlt-meeting-list {
+  background-color: var(--bmlt-background) !important;
+  border-color: var(--bmlt-border) !important;
+}
+
+#bmlt-meeting-list .bmlt-app-header {
+  background-color: var(--bmlt-row-alt) !important;
+  border-color: var(--bmlt-border) !important;
+}
+#bmlt-meeting-list .bmlt-app-header h1 {
+  color: var(--bmlt-text) !important;
+}
+#bmlt-meeting-list .bmlt-app-header span {
+  color: var(--bmlt-text-muted) !important;
+}
+
+/* ─── Surface / input / button overrides ────────────────────────────────────
+   These target elements that use hardcoded Tailwind bg-white / text-gray-*
+   classes so they can be themed via CSS variables (e.g. for dark mode).
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Search input */
+#bmlt-meeting-list input[type='search'] {
+  background-color: var(--bmlt-surface) !important;
+  border-color: var(--bmlt-border) !important;
+  color: var(--bmlt-text) !important;
+}
+
+/* Controls bar — inactive filter/geo buttons and view-toggle container */
+#bmlt-meeting-list .bmlt-controls button:not(.bmlt-btn-primary):not(.bmlt-filter-toggle-active),
+#bmlt-meeting-list .bmlt-controls div[class*='rounded-lg'][class*='border'] {
+  background-color: var(--bmlt-surface) !important;
+  border-color: var(--bmlt-border) !important;
+  color: var(--bmlt-text) !important;
+}
+#bmlt-meeting-list .bmlt-controls button:not(.bmlt-btn-primary):not(.bmlt-filter-toggle-active):hover {
+  background-color: var(--bmlt-hover) !important;
+}
+
+/* Dropdown panels */
+#bmlt-meeting-list .bmlt-controls [class*='absolute'][class*='bg-white'] {
+  background-color: var(--bmlt-surface) !important;
+  border-color: var(--bmlt-border) !important;
+}
+/* Dropdown items */
+#bmlt-meeting-list .bmlt-controls [class*='absolute'] button {
+  color: var(--bmlt-text) !important;
+  background-color: transparent !important;
+}
+#bmlt-meeting-list .bmlt-controls [class*='absolute'] button:hover {
+  background-color: var(--bmlt-hover) !important;
+}
+/* Dropdown divider */
+#bmlt-meeting-list .bmlt-controls [class*='absolute'] [class*='border-t'] {
+  border-color: var(--bmlt-divider) !important;
+}
+/* Unchecked checkbox borders inside dropdowns */
+#bmlt-meeting-list .bmlt-controls [class*='absolute'] [class*='border-gray-400'] {
+  border-color: var(--bmlt-text-secondary) !important;
+}
+
+/* Table header */
+#bmlt-meeting-list thead {
+  background-color: var(--bmlt-row-alt) !important;
+}
+#bmlt-meeting-list th {
+  color: var(--bmlt-text-secondary) !important;
+}
+
+/* Table / mobile-card dividers */
+#bmlt-meeting-list tbody,
+#bmlt-meeting-list .divide-y {
+  border-color: var(--bmlt-divider) !important;
+}
+#bmlt-meeting-list tbody tr,
+#bmlt-meeting-list .divide-y > * {
+  border-color: var(--bmlt-divider) !important;
+}
+
+/* Table cell text — td itself and all gray-* spans within rows */
+#bmlt-meeting-list td {
+  color: var(--bmlt-text) !important;
+}
+#bmlt-meeting-list .bmlt-row [class*='text-gray-800'],
+#bmlt-meeting-list .bmlt-row [class*='text-gray-900'],
+#bmlt-meeting-list td [class*='text-gray-800'],
+#bmlt-meeting-list td [class*='text-gray-900'] {
+  color: var(--bmlt-text) !important;
+}
+#bmlt-meeting-list .bmlt-row [class*='text-gray-500'],
+#bmlt-meeting-list .bmlt-row [class*='text-gray-600'],
+#bmlt-meeting-list td [class*='text-gray-500'],
+#bmlt-meeting-list td [class*='text-gray-600'] {
+  color: var(--bmlt-text-secondary) !important;
+}
+
+/* Meeting list footer */
+#bmlt-meeting-list [class*='text-gray-400'] {
+  color: var(--bmlt-text-muted) !important;
+}
+
+/* "No meetings found" state */
+#bmlt-meeting-list [class*='text-gray-500']:not(th):not(td) {
+  color: var(--bmlt-text-secondary) !important;
+}
+
+/* ─── Leaflet popup ──────────────────────────────────────────────────────── */
+#bmlt-meeting-list .leaflet-popup-content-wrapper {
+  background-color: var(--bmlt-surface) !important;
+  color: var(--bmlt-text) !important;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4) !important;
+}
+#bmlt-meeting-list .leaflet-popup-tip {
+  background-color: var(--bmlt-surface) !important;
+}
+#bmlt-meeting-list .leaflet-popup-close-button {
+  color: var(--bmlt-text-secondary) !important;
+}
+
+/* Map overlay buttons / states */
+#bmlt-meeting-list .bmlt-map-search-btn {
+  background-color: var(--bmlt-surface) !important;
+  border-color: var(--bmlt-border) !important;
+  color: var(--bmlt-text) !important;
+}
+#bmlt-meeting-list .bmlt-map-search-btn:hover {
+  background-color: var(--bmlt-hover) !important;
+}
+#bmlt-meeting-list .bmlt-map-empty {
+  background-color: color-mix(in srgb, var(--bmlt-background) 80%, transparent) !important;
+}
+
+/* ─── Detail view overrides ──────────────────────────────────────────────── */
+
+/* Outer container and header bar */
+#bmlt-meeting-list .bmlt-detail {
+  background-color: var(--bmlt-background) !important;
+}
+#bmlt-meeting-list .bmlt-detail-header {
+  background-color: var(--bmlt-surface) !important;
+  border-color: var(--bmlt-border) !important;
+}
+#bmlt-meeting-list .bmlt-detail-header h2 {
+  color: var(--bmlt-text) !important;
+}
+
+/* Left info panel border (between panel and map) */
+#bmlt-meeting-list .bmlt-detail [class*='sm:border-r'] {
+  border-color: var(--bmlt-border) !important;
+}
+
+/* Info card: divide lines and outer border */
+#bmlt-meeting-list .bmlt-card {
+  background-color: var(--bmlt-surface) !important;
+}
+#bmlt-meeting-list .bmlt-card > * {
+  border-color: var(--bmlt-divider) !important;
+}
+
+/* Card header ("Meeting Information" label row) */
+#bmlt-meeting-list .bmlt-card > div:first-child {
+  background-color: var(--bmlt-row-alt) !important;
+}
+#bmlt-meeting-list .bmlt-card > div:first-child p {
+  color: var(--bmlt-text) !important;
+}
+
+/* Section labels (SCHEDULE, FORMAT, ADDRESS …) */
+#bmlt-meeting-list .bmlt-detail [class*='text-gray-400'][class*='uppercase'] {
+  color: var(--bmlt-text-muted) !important;
+}
+
+/* Primary text inside detail rows */
+#bmlt-meeting-list .bmlt-detail [class*='text-gray-900'],
+#bmlt-meeting-list .bmlt-detail [class*='text-gray-800'],
+#bmlt-meeting-list .bmlt-detail [class*='text-gray-700'] {
+  color: var(--bmlt-text) !important;
+}
+
+/* Secondary text inside detail rows */
+#bmlt-meeting-list .bmlt-detail [class*='text-gray-600'],
+#bmlt-meeting-list .bmlt-detail [class*='text-gray-500'] {
+  color: var(--bmlt-text-secondary) !important;
+}
+
+/* Format badges (bg-gray-100 text-gray-600) */
+#bmlt-meeting-list .bmlt-detail [class*='bg-gray-100'] {
+  background-color: var(--bmlt-row-alt) !important;
+  color: var(--bmlt-text-secondary) !important;
 }

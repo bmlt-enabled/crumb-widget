@@ -93,12 +93,9 @@
   });
 </script>
 
-<div
-  class="bmlt-meeting-list flex flex-col rounded-lg border border-gray-200 bg-white font-sans text-base {config.height ? 'overflow-hidden' : ''}"
-  style={config.height ? `height: ${config.height}px` : ''}
->
+<div class="bmlt-meeting-list flex flex-col rounded-lg border border-gray-200 font-sans text-base {config.height ? 'overflow-hidden' : ''}" style={config.height ? `height: ${config.height}px` : ''}>
   <!-- Header -->
-  <div class="flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
+  <div class="bmlt-app-header flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
     <h1 class="text-lg font-bold text-gray-800">Meeting Finder</h1>
     {#if !dataState.loading && !dataState.error}
       <span class="text-xs text-gray-400">{dataState.meetings.length} meetings</span>

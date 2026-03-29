@@ -26,7 +26,7 @@
   <!-- Mobile cards (below sm) -->
   <div class="divide-y divide-gray-100 sm:hidden">
     {#each meetings as meeting (meeting.id_bigint)}
-      <button type="button" class="bmlt-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting)}>
+      <button type="button" class="bmlt-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left transition-colors" onclick={() => selectMeeting(meeting)}>
         <!-- Left: time -->
         {#if cols.has('time')}
           <div class="w-20 shrink-0 text-gray-600">
@@ -90,7 +90,7 @@
       </thead>
       <tbody class="divide-y divide-gray-100">
         {#each meetings as meeting (meeting.id_bigint)}
-          <tr class="bmlt-row cursor-pointer transition-colors even:bg-gray-50 hover:bg-blue-50" onclick={() => selectMeeting(meeting)}>
+          <tr class="bmlt-row cursor-pointer transition-colors" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
               <td class="px-4 py-4 whitespace-nowrap text-gray-600">
                 <span class="text-sm text-gray-500">{meeting.formattedTime}</span>

@@ -25,6 +25,7 @@
   let markersLayer: LayerGroup | null = null;
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
+  let bodyObserver: MutationObserver | null = null;
   let resizeObserver: ResizeObserver | null = null;
   let showSearchArea = $state(false);
   let skipNextFit = false;
@@ -43,8 +44,8 @@
     div.style.cssText = 'min-width:180px';
     for (const m of group) {
       const row = document.createElement('div');
-      row.style.cssText = 'cursor:pointer;padding:4px 0;border-bottom:1px solid #eee';
-      row.innerHTML = `<strong style="display:block;font-size:13px">${m.meeting_name}</strong><span style="font-size:12px;color:#666">${m.dayName} ${m.formattedTime}</span>`;
+      row.style.cssText = 'cursor:pointer;padding:4px 0;border-bottom:1px solid var(--bmlt-divider)';
+      row.innerHTML = `<strong style="display:block;font-size:13px;color:var(--bmlt-text)">${m.meeting_name}</strong><span style="font-size:12px;color:var(--bmlt-text-secondary)">${m.dayName} ${m.formattedTime}</span>`;
       row.addEventListener('click', () => selectMeeting(m));
       div.appendChild(row);
     }
@@ -102,8 +103,14 @@
     tileLayer.addTo(leafletMap);
   }
 
-  function onColorSchemeChange(e: MediaQueryListEvent): void {
-    applyTileLayer(e.matches && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
+  function isDarkMode(): boolean {
+    if (document.body.classList.contains('dark')) return true;
+    if (document.body.classList.contains('light')) return false;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  function onColorSchemeChange(): void {
+    applyTileLayer(isDarkMode() && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
   }
 
   function handleSearchArea(): void {
@@ -141,11 +148,12 @@
     });
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
-    const isDark = darkMq.matches && !!tilesDark;
-    applyTileLayer(isDark ? tilesDark! : (tiles ?? DEFAULT_TILES));
+    applyTileLayer(isDarkMode() && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
 
     if (tilesDark) {
       darkMq.addEventListener('change', onColorSchemeChange);
+      bodyObserver = new MutationObserver(onColorSchemeChange);
+      bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
     }
 
     markersLayer = L.layerGroup().addTo(leafletMap);
@@ -157,6 +165,7 @@
 
   onDestroy(() => {
     resizeObserver?.disconnect();
+    bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
     leafletMap?.remove();
   });
@@ -175,15 +184,15 @@
 
   {#if showSearchArea && geoActive && onsearcharea}
     <div class="pointer-events-none absolute top-3 right-0 left-0 z-[1000] flex justify-center">
-      <button onclick={handleSearchArea} class="pointer-events-auto rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-lg hover:bg-gray-50">
+      <button onclick={handleSearchArea} class="bmlt-map-search-btn pointer-events-auto rounded-full border px-4 py-2 text-sm font-medium shadow-lg">
         {$t.searchThisArea}
       </button>
     </div>
   {/if}
 
   {#if !mappableMeetings.length}
-    <div class="absolute inset-0 flex items-center justify-center bg-white/80 backdrop-blur-sm">
-      <p class="text-sm text-gray-500">{$t.noInPersonMeetings}</p>
+    <div class="bmlt-map-empty absolute inset-0 flex items-center justify-center backdrop-blur-sm">
+      <p class="text-sm" style="color:var(--bmlt-text-secondary)">{$t.noInPersonMeetings}</p>
     </div>
   {/if}
 </div>
