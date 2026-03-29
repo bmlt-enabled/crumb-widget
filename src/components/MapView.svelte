@@ -32,6 +32,7 @@
   let suppressMoveEnd = false;
   let suppressPopupMoveEnd = false;
   let searchCenter: { lat: number; lng: number } | null = null;
+  let resizeTimer: ReturnType<typeof setTimeout> | undefined;
   // Minimum displacement (degrees) before "Search this area" appears.
   // ~0.05° ≈ 5 km at the equator — small enough to feel responsive,
   // large enough to suppress accidental nudges.
@@ -159,11 +160,18 @@
     markersLayer = L.layerGroup().addTo(leafletMap);
     renderMarkers();
 
-    resizeObserver = new ResizeObserver(() => leafletMap?.invalidateSize());
+    // Debounce invalidateSize to prevent iOS address-bar resize events from
+    // firing mid-tap, which shifts map geometry and causes Leaflet's tap handler
+    // to miss the marker and never open the popup.
+    resizeObserver = new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => leafletMap?.invalidateSize(), 200);
+    });
     resizeObserver.observe(mapEl);
   });
 
   onDestroy(() => {
+    clearTimeout(resizeTimer);
     resizeObserver?.disconnect();
     bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
