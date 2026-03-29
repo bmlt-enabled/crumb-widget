@@ -39,6 +39,7 @@ export function initConfig(el: HTMLElement): void {
   config.geolocation = globalCfg.geolocation ?? false;
   config.geolocationRadius = globalCfg.geolocationRadius ?? 10;
   config.height = globalCfg.height ?? undefined;
+  config.darkMode = globalCfg.darkMode ?? false;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

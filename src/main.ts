@@ -12,6 +12,12 @@ function init(): void {
 
   initConfig(el);
 
+  if (config.darkMode === 'auto') {
+    el.classList.add('bmlt-dark-auto');
+  } else if (config.darkMode === true) {
+    el.classList.add('bmlt-dark-force');
+  }
+
   mount(App, {
     target: el,
     props: { config }

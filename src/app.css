@@ -58,6 +58,52 @@
   --bmlt-text-muted: #9ca3af;
 }
 
+/* ─── Built-in dark mode ────────────────────────────────────────────────────
+   Applied when darkMode: 'auto' is set in BmltUiConfig. The class
+   bmlt-dark-auto is added to the container by main.ts, scoping these
+   overrides so they only activate when the host page opts in.
+   :where() keeps specificity at zero so external CSS always wins.
+   ─────────────────────────────────────────────────────────────────────────── */
+:where(#bmlt-meeting-list.bmlt-dark-force) {
+  --bmlt-background: #1e293b;
+  --bmlt-text: #f1f5f9;
+  --bmlt-border: #334155;
+  --bmlt-accent: #60a5fa;
+  --bmlt-accent-light: #1e3a5f;
+  --bmlt-border-radius: 8px;
+  --bmlt-row-alt: #243044;
+  --bmlt-in-person: #86efac;
+  --bmlt-in-person-bg: #14532d;
+  --bmlt-virtual: #93c5fd;
+  --bmlt-virtual-bg: #1e3a5f;
+  --bmlt-surface: #243044;
+  --bmlt-hover: #2d4060;
+  --bmlt-divider: #334155;
+  --bmlt-text-secondary: #94a3b8;
+  --bmlt-text-muted: #64748b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :where(#bmlt-meeting-list.bmlt-dark-auto) {
+    --bmlt-background: #1e293b;
+    --bmlt-text: #f1f5f9;
+    --bmlt-border: #334155;
+    --bmlt-accent: #60a5fa;
+    --bmlt-accent-light: #1e3a5f;
+    --bmlt-border-radius: 8px;
+    --bmlt-row-alt: #243044;
+    --bmlt-in-person: #86efac;
+    --bmlt-in-person-bg: #14532d;
+    --bmlt-virtual: #93c5fd;
+    --bmlt-virtual-bg: #1e3a5f;
+    --bmlt-surface: #243044;
+    --bmlt-hover: #2d4060;
+    --bmlt-divider: #334155;
+    --bmlt-text-secondary: #94a3b8;
+    --bmlt-text-muted: #64748b;
+  }
+}
+
 /* Apply custom-property values to the container.
    !important ensures WordPress's unlayered host styles can't override these. */
 #bmlt-meeting-list {
@@ -311,6 +357,12 @@
 }
 
 /* ─── Leaflet popup ──────────────────────────────────────────────────────── */
+#bmlt-meeting-list .leaflet-popup-content {
+  white-space: normal !important;
+  word-break: break-word !important;
+  max-width: 220px !important;
+}
+
 #bmlt-meeting-list .leaflet-popup-content-wrapper {
   background-color: var(--bmlt-surface) !important;
   color: var(--bmlt-text) !important;

@@ -20,6 +20,7 @@ export interface AppConfig {
   geolocation: boolean;
   geolocationRadius: number;
   height?: number;
+  darkMode?: 'auto' | true | false;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -57,6 +58,7 @@ export interface BmltMeetingListGlobalConfig {
   geolocation?: boolean;
   geolocationRadius?: number;
   height?: number;
+  darkMode?: 'auto' | true | false;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

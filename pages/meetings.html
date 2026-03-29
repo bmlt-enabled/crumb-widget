@@ -7,23 +7,6 @@
     <style>
       body { margin: 0; background: #ffffff; }
       body.dark { background: #0f172a; }
-      body.dark #bmlt-meeting-list {
-        --bmlt-background: #1e293b;
-        --bmlt-text: #f1f5f9;
-        --bmlt-border: #334155;
-        --bmlt-accent: #60a5fa;
-        --bmlt-accent-light: #1e3a5f;
-        --bmlt-row-alt: #243044;
-        --bmlt-in-person: #86efac;
-        --bmlt-in-person-bg: #14532d;
-        --bmlt-virtual: #93c5fd;
-        --bmlt-virtual-bg: #1e3a5f;
-        --bmlt-surface: #1e293b;
-        --bmlt-hover: #2d4060;
-        --bmlt-divider: #334155;
-        --bmlt-text-secondary: #94a3b8;
-        --bmlt-text-muted: #64748b;
-      }
       #theme-btn { position:fixed; top:6px; right:120px; z-index:9999; background:none; border:none; cursor:pointer; font-size:22px; padding:4px 6px; opacity:0.85; }
       #theme-btn:hover { opacity:1; }
     </style>
@@ -57,7 +40,21 @@
       };
     </script>
     <script src="./app.js"></script>
-    <button id="theme-btn" onclick="var d=!document.body.classList.contains('dark');document.body.classList.toggle('dark',d);document.body.classList.toggle('light',!d);localStorage.setItem('theme',d?'dark':'light');this.textContent=d?'☀️':'🌙'">🌙</button>
-    <script>var _d=localStorage.getItem('theme')==='dark'||(!localStorage.getItem('theme')&&matchMedia('(prefers-color-scheme:dark)').matches);document.body.classList.add(_d?'dark':'light');if(_d)document.getElementById('theme-btn').textContent='☀️'</script>
+    <button id="theme-btn" onclick="
+      var d = !document.body.classList.contains('dark');
+      document.body.classList.toggle('dark', d);
+      var w = document.getElementById('bmlt-meeting-list');
+      if (w) w.classList.toggle('bmlt-dark-force', d);
+      localStorage.setItem('theme', d ? 'dark' : 'light');
+      this.textContent = d ? '☀️' : '🌙';
+    ">🌙</button>
+    <script>
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark');
+        document.getElementById('theme-btn').textContent = '☀️';
+        var _w = document.getElementById('bmlt-meeting-list');
+        if (_w) _w.classList.add('bmlt-dark-force');
+      }
+    </script>
   </body>
 </html>

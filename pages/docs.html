@@ -427,7 +427,7 @@
           <li><a href="#geolocation">Geolocation</a></li>
           <li><a href="#query-params">URL Query Parameters</a></li>
           <li><a href="#css-vars">CSS Variables</a></li>
-          <li><a href="#css-dark-mode">Dark Mode CSS</a></li>
+          <li><a href="#css-dark-mode">Dark Mode</a></li>
           <li><a href="#css-classes">CSS Helper Classes</a></li>
           <li><a href="#tile-config">Tile Provider</a></li>
           <li><a href="#tile-dark-config">Dark Mode Tiles</a></li>
@@ -608,6 +608,15 @@
               </td>
             </tr>
             <tr>
+              <td>darkMode</td>
+              <td><code>'auto' | true | false</code></td>
+              <td>
+                Built-in dark color scheme. <code>'auto'</code> follows the visitor's OS preference
+                (<code>prefers-color-scheme</code>); <code>true</code> forces dark mode regardless of OS setting;
+                <code>false</code> (default) disables it. Works alongside <a href="#tile-dark-config">dark mode tiles</a>.
+              </td>
+            </tr>
+            <tr>
               <td>map.tiles</td>
               <td><code>TilesConfig</code></td>
               <td>
@@ -757,14 +766,38 @@
 }</code></pre>
         </div>
 
-        <h2 id="css-dark-mode">Dark Mode CSS</h2>
+        <h2 id="css-dark-mode">Dark Mode</h2>
         <p>
-          Use a CSS media query to adapt the widget's colors when the visitor's OS is in dark mode.
-          This works independently of — or alongside — the <a href="#tile-dark-config">dark mode tile</a> option.
+          The widget ships with a built-in dark palette. Enable it with the <code>darkMode</code> config option —
+          no extra CSS required. Works alongside the <a href="#tile-dark-config">dark mode tile</a> option.
         </p>
 
         <div class="demo">
-          <div class="demo-header">CSS — dark mode theme</div>
+          <div class="demo-header">HTML — follow OS preference</div>
+          <pre><code>&lt;script&gt;
+  var BmltUiConfig = {
+    darkMode: 'auto'
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <div class="demo">
+          <div class="demo-header">HTML — always dark</div>
+          <pre><code>&lt;script&gt;
+  var BmltUiConfig = {
+    darkMode: true
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <p>
+          To use a custom dark palette instead, override the CSS variables directly:
+        </p>
+
+        <div class="demo">
+          <div class="demo-header">CSS — custom dark theme via media query</div>
           <pre><code>@media (prefers-color-scheme: dark) {
   #bmlt-meeting-list {
     --bmlt-background:     #1e293b;
@@ -777,7 +810,7 @@
     --bmlt-in-person-bg:   #14532d;
     --bmlt-virtual:        #93c5fd;
     --bmlt-virtual-bg:     #1e3a5f;
-    --bmlt-surface:        #1e293b;
+    --bmlt-surface:        #243044;
     --bmlt-hover:          #2d4060;
     --bmlt-divider:        #334155;
     --bmlt-text-secondary: #94a3b8;

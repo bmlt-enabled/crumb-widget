@@ -5,6 +5,7 @@
   import type { Map as LeafletMap, Marker, LayerGroup, TileLayer } from 'leaflet';
   import type { ProcessedMeeting, MarkerConfig, TilesConfig } from '@/types';
   import { selectMeeting } from '@stores/ui.svelte';
+  import { config } from '@stores/config.svelte';
   import { getDirectionsUrl } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { t } from '@stores/localization';
@@ -43,7 +44,7 @@
 
   function buildPopupContent(group: ProcessedMeeting[]): HTMLElement {
     const div = document.createElement('div');
-    div.style.cssText = 'min-width:180px';
+    div.style.cssText = 'min-width:180px;max-width:240px;word-break:break-word;white-space:normal';
     for (const m of group) {
       const row = document.createElement('div');
       row.style.cssText = 'cursor:pointer;padding:4px 0;border-bottom:1px solid var(--bmlt-divider)';
@@ -78,7 +79,7 @@
     for (const [key, group] of Object.entries(groups)) {
       const [lat, lng] = key.split(',').map(Number);
       const marker = L.marker([lat, lng], { icon: buildMarkerIcon(locationMarker ?? DEFAULT_LOCATION_MARKER) });
-      marker.bindPopup(buildPopupContent(group));
+      marker.bindPopup(buildPopupContent(group), { maxWidth: 240 });
       marker.addTo(markersLayer!);
       markers.push(marker);
     }
@@ -112,9 +113,10 @@
   }
 
   function isDarkMode(): boolean {
-    if (document.body.classList.contains('dark')) return true;
-    if (document.body.classList.contains('light')) return false;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const el = document.getElementById(config.containerId);
+    if (el?.classList.contains('bmlt-dark-force')) return true;
+    if (el?.classList.contains('bmlt-dark-auto')) return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return false;
   }
 
   function onColorSchemeChange(): void {
@@ -161,7 +163,8 @@
     if (tilesDark) {
       darkMq.addEventListener('change', onColorSchemeChange);
       bodyObserver = new MutationObserver(onColorSchemeChange);
-      bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      const containerEl = document.getElementById(config.containerId) ?? document.body;
+      bodyObserver.observe(containerEl, { attributes: true, attributeFilter: ['class'] });
     }
 
     markersLayer = L.layerGroup().addTo(leafletMap);

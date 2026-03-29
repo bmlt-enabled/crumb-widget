@@ -41,9 +41,10 @@
   }
 
   function isDarkMode(): boolean {
-    if (document.body.classList.contains('dark')) return true;
-    if (document.body.classList.contains('light')) return false;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const el = document.getElementById(config.containerId);
+    if (el?.classList.contains('bmlt-dark-force')) return true;
+    if (el?.classList.contains('bmlt-dark-auto')) return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return false;
   }
 
   function onColorSchemeChange(): void {
@@ -61,10 +62,11 @@
     if (config.tilesDark) {
       darkMq.addEventListener('change', onColorSchemeChange);
       bodyObserver = new MutationObserver(onColorSchemeChange);
-      bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+      const containerEl = document.getElementById(config.containerId) ?? document.body;
+      bodyObserver.observe(containerEl, { attributes: true, attributeFilter: ['class'] });
     }
 
-    const popupHtml = `<div style="min-width:180px">
+    const popupHtml = `<div style="min-width:160px;max-width:220px;word-break:break-word;white-space:normal">
       <p style="font-size:13px;margin:0 0 8px">${meeting.formattedAddress}</p>
       <a href="${getDirectionsUrl(meeting)}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:4px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;text-decoration:none;font-family:inherit">${$t.getDirections}</a>
     </div>`;
@@ -72,7 +74,7 @@
     L.marker([meeting.latitude, meeting.longitude], {
       icon: buildMarkerIcon(config.locationMarker ?? DEFAULT_LOCATION_MARKER)
     })
-      .bindPopup(popupHtml)
+      .bindPopup(popupHtml, { maxWidth: 220 })
       .addTo(leafletMap!)
       .openPopup();
 
