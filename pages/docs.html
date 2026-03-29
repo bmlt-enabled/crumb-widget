@@ -933,6 +933,36 @@
 &lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
+        <div class="callout">
+          <strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>BmltUiConfig</code> is set, you need to load <code>app.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.
+          <pre><code>&lt;script&gt;
+(async () => {
+  const key = 'YOUR_REFERER_RESTRICTED_GOOGLE_API_KEY';
+  const { session } = await fetch(
+    `https://tile.googleapis.com/v1/createSession?key=${encodeURIComponent(key)}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mapType: 'roadmap', language: 'en-US', region: 'US' })
+    }
+  ).then(r =&gt; r.json());
+
+  window.BmltUiConfig = {
+    map: {
+      tiles: {
+        attribution: '&amp;copy; Google',
+        url: `https://tile.googleapis.com/v1/2dtiles/{z}/{x}/{y}?session=${session}&amp;key=${key}`
+      }
+    }
+  };
+
+  const s = document.createElement('script');
+  s.src = 'app.js';
+  document.body.appendChild(s);
+})();
+&lt;/script&gt;</code></pre>
+        </div>
+
         <h2 id="marker-config">Marker Config</h2>
         <p>
           The <code>map.markers.location</code> object lets you replace the default NA map pin
