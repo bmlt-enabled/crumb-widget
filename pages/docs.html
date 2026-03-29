@@ -356,6 +356,42 @@
         .live-demo-btn { display: flex; justify-content: center; }
         td:first-child { white-space: normal; }
       }
+      .demo-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+
+      .copy-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        border: 1px solid var(--doc-border);
+        background: var(--doc-surface);
+        color: var(--doc-text-muted);
+        border-radius: 6px;
+        padding: 0.3rem 0.55rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s, border-color 0.15s;
+      }
+      .copy-btn:hover {
+        background: var(--doc-nav-hover);
+        color: var(--doc-text);
+      }
+
+      .copy-btn.copied {
+        color: #15803d;
+        border-color: #86efac;
+      }
+
+      .copy-btn svg {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+      }
     </style>
   </head>
   <body>
@@ -426,21 +462,41 @@
           It ships as a <strong>single JavaScript file</strong> with all CSS injected at runtime.
           No stylesheets, no build steps, no framework required on the host page.
         </p>
-
         <h2 id="quick-start">Quick Start</h2>
-        <p>Add a container div with your BMLT root server URL, then load the script:</p>
+        <p>To get started, add a container element to your page, point it at your BMLT root server, and load the widget script. Here is a complete example:</p>
 
         <div class="demo">
-          <div class="demo-header">HTML</div>
-          <pre><code>&lt;div
-  id="bmlt-meeting-list"
-  data-root-server="https://your-server/main_server"
-&gt;&lt;/div&gt;
-
-&lt;script src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+          <div class="demo-header">
+            <span>HTML</span>
+            <button class="copy-btn" type="button" aria-label="Copy example code">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy</span>
+            </button>
+          </div>
+          <pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+    &lt;title&gt;Meeting Finder&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div
+      id="bmlt-meeting-list"
+      data-root-server="https://myserver.com/main_server/"
+      data-service-body="3"
+    &gt;&lt;/div&gt;
+    &lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
         </div>
 
-        <p>The widget initializes automatically when the script loads. No JavaScript required on your end.</p>
+        <p>The widget initializes automatically when the script loads, so no additional JavaScript is needed.</p>
+
+        <p><strong>Important:</strong> Be sure your page includes <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</code> in the <code>&lt;head&gt;</code>. This is important for proper rendering on mobile devices and small screens.</p>
 
         <h2 id="attributes">Data Attributes</h2>
         <p>All configuration is set as <code>data-*</code> attributes on the <code>#bmlt-meeting-list</code> div.</p>
@@ -1004,6 +1060,49 @@
       </main>
     </div>
     <script>
+      async function copyCode(button) {
+        const demo = button.closest('.demo');
+        const codeEl = demo?.querySelector('pre code');
+        if (!codeEl) return;
+
+        const text = codeEl.textContent || '';
+
+        try {
+          await navigator.clipboard.writeText(text);
+          const label = button.querySelector('span');
+          if (label) label.textContent = 'Copied!';
+          button.classList.add('copied');
+
+          setTimeout(() => {
+            if (label) label.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 1500);
+        } catch (err) {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'absolute';
+          textarea.style.left = '-9999px';
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textarea);
+
+          const label = button.querySelector('span');
+          if (label) label.textContent = 'Copied!';
+          button.classList.add('copied');
+
+          setTimeout(() => {
+            if (label) label.textContent = 'Copy';
+            button.classList.remove('copied');
+          }, 1500);
+        }
+      }
+
+      document.querySelectorAll('.copy-btn').forEach((button) => {
+        button.addEventListener('click', () => copyCode(button));
+      });
+
       document.getElementById('site-nav').addEventListener('click', function(e) {
         if (e.target.tagName === 'A') this.classList.remove('open');
       });
