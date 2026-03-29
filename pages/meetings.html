@@ -7,21 +7,139 @@
     <style>
       body { margin: 0; background: #ffffff; }
       body.dark { background: #0f172a; }
-      #theme-btn { position:fixed; top:6px; right:120px; z-index:9999; background:none; border:none; cursor:pointer; font-size:22px; padding:4px 6px; opacity:0.85; }
-      #theme-btn:hover { opacity:1; }
+
+      #demo-bar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid #e5e7eb;
+        font-family: system-ui, sans-serif;
+        font-size: 13px;
+      }
+      body.dark #demo-bar {
+        background: rgba(15,23,42,0.9);
+        border-color: #334155;
+        color: #f1f5f9;
+      }
+      #demo-bar label { color: inherit; opacity: 0.6; }
+      #theme-select {
+        padding: 3px 6px;
+        border-radius: 6px;
+        border: 1px solid #d1d5db;
+        background: #fff;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      body.dark #theme-select {
+        background: #1e293b;
+        border-color: #475569;
+        color: #f1f5f9;
+      }
+      #dark-btn {
+        margin-left: auto;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        padding: 2px 4px;
+        opacity: 0.8;
+        line-height: 1;
+      }
+      #dark-btn:hover { opacity: 1; }
+
+      #bmlt-meeting-list { margin-top: 41px; }
+
+      /* ── Custom themes via CSS variable overrides ───────────────────────────
+         This is how you'd add your own theme — override only the vars you want.
+         Pair with a dark variant for darkMode support.
+         ───────────────────────────────────────────────────────────────────── */
+
+      /* ocean */
+      #bmlt-meeting-list.bmlt-theme-ocean {
+        --bmlt-accent: #0891b2; --bmlt-accent-light: #ecfeff;
+        --bmlt-in-person: #0e7490; --bmlt-in-person-bg: #cffafe;
+        --bmlt-virtual: #2563eb; --bmlt-virtual-bg: #dbeafe;
+      }
+      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-ocean {
+        --bmlt-accent: #22d3ee; --bmlt-accent-light: #164e63;
+        --bmlt-in-person: #67e8f9; --bmlt-in-person-bg: #164e63;
+        --bmlt-virtual: #93c5fd; --bmlt-virtual-bg: #1e3a5f;
+      }
+
+      /* forest */
+      #bmlt-meeting-list.bmlt-theme-forest {
+        --bmlt-accent: #16a34a; --bmlt-accent-light: #f0fdf4;
+        --bmlt-in-person: #15803d; --bmlt-in-person-bg: #dcfce7;
+        --bmlt-virtual: #0284c7; --bmlt-virtual-bg: #e0f2fe;
+      }
+      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-forest {
+        --bmlt-accent: #4ade80; --bmlt-accent-light: #14532d;
+        --bmlt-in-person: #86efac; --bmlt-in-person-bg: #14532d;
+        --bmlt-virtual: #7dd3fc; --bmlt-virtual-bg: #0c4a6e;
+      }
+
+      /* warm */
+      #bmlt-meeting-list.bmlt-theme-warm {
+        --bmlt-accent: #d97706; --bmlt-accent-light: #fffbeb;
+        --bmlt-in-person: #b45309; --bmlt-in-person-bg: #fef3c7;
+        --bmlt-virtual: #0284c7; --bmlt-virtual-bg: #e0f2fe;
+      }
+      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-warm {
+        --bmlt-accent: #fbbf24; --bmlt-accent-light: #451a03;
+        --bmlt-in-person: #fcd34d; --bmlt-in-person-bg: #451a03;
+        --bmlt-virtual: #7dd3fc; --bmlt-virtual-bg: #0c4a6e;
+      }
+
+      /* rose */
+      #bmlt-meeting-list.bmlt-theme-rose {
+        --bmlt-accent: #e11d48; --bmlt-accent-light: #fff1f2;
+        --bmlt-in-person: #be123c; --bmlt-in-person-bg: #ffe4e6;
+        --bmlt-virtual: #7c3aed; --bmlt-virtual-bg: #ede9fe;
+      }
+      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-rose {
+        --bmlt-accent: #fb7185; --bmlt-accent-light: #4c0519;
+        --bmlt-in-person: #fda4af; --bmlt-in-person-bg: #4c0519;
+        --bmlt-virtual: #c4b5fd; --bmlt-virtual-bg: #2e1065;
+      }
+
+      /* slate */
+      #bmlt-meeting-list.bmlt-theme-slate {
+        --bmlt-accent: #7c3aed; --bmlt-accent-light: #ede9fe;
+        --bmlt-in-person: #6d28d9; --bmlt-in-person-bg: #ddd6fe;
+        --bmlt-virtual: #0891b2; --bmlt-virtual-bg: #ecfeff;
+      }
+      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-slate {
+        --bmlt-accent: #a78bfa; --bmlt-accent-light: #2e1065;
+        --bmlt-in-person: #c4b5fd; --bmlt-in-person-bg: #2e1065;
+        --bmlt-virtual: #22d3ee; --bmlt-virtual-bg: #164e63;
+      }
     </style>
   </head>
   <body>
-    <!--
-      Embed the meeting finder by:
-      1. Adding this div with your BMLT root server URL
-      2. Optionally filter by service body IDs with data-service-body="123" or data-service-body="1,2,3"
-      3. Loading the app.js script
-    -->
+    <div id="demo-bar">
+      <label for="theme-select">Theme</label>
+      <select id="theme-select" onchange="setTheme(this.value)">
+        <option value="default">Default</option>
+        <option value="ocean">Ocean</option>
+        <option value="forest">Forest</option>
+        <option value="warm">Warm</option>
+        <option value="rose">Rose</option>
+        <option value="slate">Slate</option>
+      </select>
+      <button id="dark-btn" onclick="toggleDark()">🌙</button>
+    </div>
+
     <div
       id="bmlt-meeting-list"
       data-root-server="https://aggregator.bmltenabled.org/main_server/"
     ></div>
+
     <script>
       var _t = atob('cGsuZXlKMUlqb2ljR3BoZFdScGIyMTJJaXdpWVNJNkltTnJOSGczTjJwdmVqQjNOWGd6YW04NU5UWTBkbWh6WlRNaWZRLmRpaC1XTDJEbm1odDdmalZWUlBwMWc=');
       var BmltUiConfig = {
@@ -29,32 +147,56 @@
         geolocationRadius: 75,
         map: {
           tiles: {
-            attribution: `Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>`,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
             url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + _t,
           },
           tiles_dark: {
-            attribution: `Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>`,
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
             url: 'https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token=' + _t,
           },
         },
       };
+
+      var THEMES = ['default', 'ocean', 'forest', 'warm', 'rose', 'slate'];
+
+      function setTheme(theme) {
+        var w = document.getElementById('bmlt-meeting-list');
+        if (!w) return;
+        THEMES.forEach(function(t) { w.classList.remove('bmlt-theme-' + t); });
+        if (theme !== 'default') w.classList.add('bmlt-theme-' + theme);
+        localStorage.setItem('bmlt-demo-theme', theme);
+      }
+
+      function toggleDark() {
+        var d = !document.body.classList.contains('dark');
+        document.body.classList.toggle('dark', d);
+        var w = document.getElementById('bmlt-meeting-list');
+        if (w) w.classList.toggle('bmlt-dark-force', d);
+        document.getElementById('dark-btn').textContent = d ? '☀️' : '🌙';
+        localStorage.setItem('bmlt-demo-dark', d ? 'dark' : 'light');
+      }
     </script>
+
     <script src="./app.js"></script>
-    <button id="theme-btn" onclick="
-      var d = !document.body.classList.contains('dark');
-      document.body.classList.toggle('dark', d);
-      var w = document.getElementById('bmlt-meeting-list');
-      if (w) w.classList.toggle('bmlt-dark-force', d);
-      localStorage.setItem('theme', d ? 'dark' : 'light');
-      this.textContent = d ? '☀️' : '🌙';
-    ">🌙</button>
+
     <script>
-      if (localStorage.getItem('theme') === 'dark') {
+      // Restore persisted preferences after app.js has run
+      var _dark = localStorage.getItem('bmlt-demo-dark') === 'dark';
+      var _theme = localStorage.getItem('bmlt-demo-theme') || 'default';
+      var _w = document.getElementById('bmlt-meeting-list');
+
+      if (_dark) {
         document.body.classList.add('dark');
-        document.getElementById('theme-btn').textContent = '☀️';
-        var _w = document.getElementById('bmlt-meeting-list');
+        document.getElementById('dark-btn').textContent = '☀️';
         if (_w) _w.classList.add('bmlt-dark-force');
       }
+
+      if (_theme !== 'default' && _w) {
+        _w.classList.add('bmlt-theme-' + _theme);
+      }
+
+      var _sel = document.getElementById('theme-select');
+      if (_sel) _sel.value = _theme;
     </script>
   </body>
 </html>
