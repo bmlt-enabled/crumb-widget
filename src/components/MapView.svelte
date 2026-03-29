@@ -33,6 +33,7 @@
   let suppressPopupMoveEnd = false;
   let searchCenter: { lat: number; lng: number } | null = null;
   let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+  let currentTileUrl: string | null = null;
   // Minimum displacement (degrees) before "Search this area" appears.
   // ~0.05° ≈ 5 km at the equator — small enough to feel responsive,
   // large enough to suppress accidental nudges.
@@ -97,6 +98,12 @@
 
   function applyTileLayer(cfg: TilesConfig): void {
     if (!leafletMap) return;
+    // Bail out if the tile URL hasn't changed — prevents spurious iOS
+    // prefers-color-scheme / MutationObserver events from tearing down and
+    // rebuilding the tile layer mid-tap, which disrupts Leaflet's touch
+    // event processing and causes markers to miss their click.
+    if (currentTileUrl === cfg.url) return;
+    currentTileUrl = cfg.url;
     if (tileLayer) {
       tileLayer.remove();
     }
