@@ -438,6 +438,10 @@
           <li><a href="#example-multi">Multiple service bodies</a></li>
           <li><a href="#example-map">Default to map</a></li>
           <li><a href="#example-wordpress">WordPress</a></li>
+          <li class="section-label">Website Builders</li>
+          <li><a href="#google-sites">Google Sites</a></li>
+          <li><a href="#squarespace">Squarespace</a></li>
+          <li><a href="#wix">Wix</a></li>
           <li class="section-label">Reference</li>
           <li><a href="#features">Features</a></li>
           <li><a href="#browser-support">Browser Support</a></li>
@@ -1049,6 +1053,82 @@
           <li><strong>Recursive service body support</strong> — child service bodies are always included</li>
           <li><strong>Multiple service bodies</strong> — comma-separate IDs to combine regions</li>
         </ul>
+
+
+        <h2 id="site-builders">Website Builders</h2>
+        <p>BMLT UI can also be embedded on common website builders, but the setup varies by platform.</p>
+
+        <h3 id="google-sites">Google Sites</h3>
+        <p>Google Sites supports embedding HTML, CSS, and JavaScript code using <strong>Insert → Embed → Embed code</strong>. You can also use a full-page embed if you want the meeting finder to live on its own page.</p>
+
+        <ol>
+          <li>Open your site in Google Sites.</li>
+          <li>Click <strong>Insert</strong> → <strong>Embed</strong>.</li>
+          <li>Choose <strong>Embed code</strong>.</li>
+          <li>Paste your widget markup and script.</li>
+          <li>Click <strong>Insert</strong>, then publish your site.</li>
+        </ol>
+
+        <div class="demo">
+          <div class="demo-header">Google Sites embed</div>
+          <pre><code>&lt;div
+  id="bmlt-meeting-list"
+  data-root-server="https://myserver.com/main_server/"
+  data-service-body="3"
+&gt;&lt;/div&gt;
+&lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <p><strong>Note:</strong> In Google Sites, JavaScript must be included inside <code>&lt;script&gt;</code> tags when using the embed code option.</p>
+
+        <h3 id="squarespace">Squarespace</h3>
+        <p>Squarespace supports custom code, but JavaScript support depends on your plan. Their documentation says advanced code blocks and code injection are available on <strong>Core, Plus, Advanced, Business, Commerce Basic, and Commerce Advanced</strong> plans.</p>
+
+        <ol>
+          <li>Edit the page where you want the widget.</li>
+          <li>Add a <strong>Code Block</strong>.</li>
+          <li>Paste the widget container and script.</li>
+          <li>Save and publish.</li>
+        </ol>
+
+        <div class="demo">
+          <div class="demo-header">Squarespace code block</div>
+          <pre><code>&lt;div
+  id="bmlt-meeting-list"
+  data-root-server="https://myserver.com/main_server/"
+  data-service-body="3"
+&gt;&lt;/div&gt;
+&lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <p><strong>Important:</strong> If JavaScript is disabled in your Squarespace code block or unavailable on your plan, the widget will not load. You may need a higher-tier Squarespace plan for JavaScript-based embeds.</p>
+
+        <h3 id="wix">Wix</h3>
+        <p>Wix supports custom code through <strong>Settings → Custom Code</strong>. Wix says this requires your site to be <strong>published</strong> and to have a <strong>connected domain</strong>. Since connecting your own domain is a Premium or Studio feature, you may need a paid plan to use the JavaScript embed method.</p>
+
+        <ol>
+          <li>Publish your site.</li>
+          <li>Make sure the site has a connected domain.</li>
+          <li>Go to <strong>Settings</strong> → <strong>Custom Code</strong>.</li>
+          <li>Add the widget script to the page where you want it to load.</li>
+          <li>Add a container element in the page content where the widget should render.</li>
+        </ol>
+
+        <div class="demo">
+          <div class="demo-header">Wix container</div>
+          <pre><code>&lt;div
+  id="bmlt-meeting-list"
+  data-root-server="https://myserver.com/main_server/"
+  data-service-body="3"
+&gt;&lt;/div&gt;</code></pre>
+        </div>
+
+        <div class="demo">
+          <div class="demo-header">Wix custom code</div>
+          <pre><code>&lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <p><strong>Important:</strong> Wix’s custom code feature is intended for third-party snippets and depends on Wix platform restrictions. If you do not see the Custom Code option, check whether your site is published and whether it has a connected domain.</p>
 
         <h2 id="browser-support">Browser Support</h2>
         <p>All modern browsers. Internet Explorer is not supported.</p>
