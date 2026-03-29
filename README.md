@@ -31,9 +31,9 @@ for everyone are generally out of scope. If you need deep customization, this ma
 </head>
 <body>
 <div
-        id="bmlt-meeting-list"
-        data-root-server="https://myserver.com/main_server/"
-        data-service-body="3"
+    id="bmlt-meeting-list"
+    data-root-server="https://myserver.com/main_server/"
+    data-service-body="3"
 ></div>
 <script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"></script>
 </body>
