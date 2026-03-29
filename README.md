@@ -22,12 +22,24 @@ for everyone are generally out of scope. If you need deep customization, this ma
 ## Quick Start
 
 ```html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meeting Finder</title>
+</head>
+<body>
 <div
-  id="bmlt-meeting-list"
-  data-root-server="https://your-server/main_server"
-  data-service-body="123"
+        id="bmlt-meeting-list"
+        data-root-server="https://myserver.com/main_server/"
+        data-service-body="3"
 ></div>
-<script src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"></script>
+<script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"></script>
+</body>
+</html>
 ```
+
+**Important:** Be sure your page includes `<meta name="viewport" content="width=device-width, initial-scale=1.0" />` in the `<head>`. This is important for proper rendering on mobile devices and small screens.
 
 Full documentation at **[client.bmlt.app](https://client.bmlt.app/)**.
