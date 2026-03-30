@@ -1,4 +1,4 @@
-# BMLT UI
+# Crumb Widget
 
 An embeddable NA meeting finder widget. Drop a `<div>` and a `<script>` tag into any page and get a fully functional
 meeting finder - search, filters, list view, map, and meeting detail.
@@ -31,15 +31,15 @@ for everyone are generally out of scope. If you need deep customization, this ma
 </head>
 <body>
 <div
-    id="bmlt-meeting-list"
+    id="crumb-widget"
     data-root-server="https://myserver.com/main_server/"
     data-service-body="3"
 ></div>
-<script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"></script>
+<script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 </body>
 </html>
 ```
 
 **Important:** Be sure your page includes `<meta name="viewport" content="width=device-width, initial-scale=1.0" />` in the `<head>`. This is important for proper rendering on mobile devices and small screens.
 
-Full documentation at **[client.bmlt.app](https://client.bmlt.app/)**.
+Full documentation at **[crumb.bmlt.app](https://crumb.bmlt.app/)**.

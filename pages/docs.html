@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BMLT UI — Documentation</title>
+    <title>BMLT Crumb Widget — Documentation</title>
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -396,7 +396,7 @@
   </head>
   <body>
     <div class="mobile-bar">
-      <span class="logo-text">BMLT UI</span>
+      <span class="logo-text">BMLT Crumb Widget</span>
       <div class="mobile-right">
         <button class="theme-toggle-mobile" onclick="toggleTheme()" aria-label="Toggle dark mode" id="mobile-theme-btn">
           <svg id="mobile-theme-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
@@ -411,7 +411,7 @@
         <div class="nav-close-row">
           <button class="nav-close-btn" onclick="document.getElementById('site-nav').classList.remove('open')" aria-label="Close navigation">✕</button>
         </div>
-        <a class="logo" href="#">BMLT UI</a>
+        <a class="logo" href="#">BMLT Crumb Widget</a>
         <button class="theme-toggle" onclick="toggleTheme()" id="nav-theme-btn">
           <svg id="nav-theme-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <span class="toggle-label" id="nav-theme-label">Light mode</span>
@@ -449,7 +449,7 @@
       </nav>
 
       <main>
-        <h1>BMLT UI</h1>
+        <h1>BMLT Crumb Widget</h1>
         <p class="subtitle">An embeddable NA meeting finder widget for any website.</p>
         <a href="meetings.html" class="live-demo-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
@@ -458,7 +458,7 @@
 
         <h2 id="overview">Overview</h2>
         <p>
-          BMLT UI is a self-contained JavaScript widget that queries a
+          Crumb Widget is a self-contained JavaScript widget that queries a
           <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT root server</a> and renders
           a fully featured meeting finder — search, filters, list view, and an interactive map.
         </p>
@@ -489,11 +489,11 @@
   &lt;/head&gt;
   &lt;body&gt;
     &lt;div
-      id="bmlt-meeting-list"
+      id="crumb-widget"
       data-root-server="https://myserver.com/main_server/"
       data-service-body="3"
     &gt;&lt;/div&gt;
-    &lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;
+    &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;</code></pre>
         </div>
@@ -503,7 +503,7 @@
         <p><strong>Important:</strong> Be sure your page includes <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</code> in the <code>&lt;head&gt;</code>. This is important for proper rendering on mobile devices and small screens.</p>
 
         <h2 id="attributes">Data Attributes</h2>
-        <p>All configuration is set as <code>data-*</code> attributes on the <code>#bmlt-meeting-list</code> div.</p>
+        <p>All configuration is set as <code>data-*</code> attributes on the <code>#crumb-widget</code> div.</p>
 
         <div class="table-wrap"><table>
           <thead>
@@ -547,14 +547,14 @@
 
         <h2 id="global-config">Global Config Object</h2>
         <p>
-          For options not available as data attributes, define <code>BmltUiConfig</code>
+          For options not available as data attributes, define <code>CrumbWidgetConfig</code>
           as a global variable <strong>before</strong> loading the script.
         </p>
 
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     defaultView: 'map'
   };
 &lt;/script&gt;
@@ -650,7 +650,7 @@
           Override it with the <code>language</code> config property:
         </p>
         <pre><code class="language-html">&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     language: 'es'
   };
 &lt;/script&gt;
@@ -696,7 +696,7 @@
           same <code>geolocationRadius</code>. The map stays at the user's position — it does not jump to fit the new results.
         </p>
         <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     geolocation: true,
     geolocationRadius: 25  // miles, default 10
   };
@@ -728,7 +728,7 @@
         <h2 id="css-vars">CSS Variables</h2>
         <p>
           The widget exposes CSS custom properties so you can theme it without touching JavaScript.
-          Set any of these on the <code>#bmlt-meeting-list</code> element — only specify the ones you want to override.
+          Set any of these on the <code>#crumb-widget</code> element — only specify the ones you want to override.
         </p>
 
         <div class="table-wrap"><table>
@@ -759,7 +759,7 @@
 
         <div class="demo">
           <div class="demo-header">CSS — change accent color and remove rounded corners</div>
-          <pre><code>#bmlt-meeting-list {
+          <pre><code>#crumb-widget {
   --bmlt-accent: #dc2626;
   --bmlt-accent-light: #fef2f2;
   --bmlt-border-radius: 0px;
@@ -775,7 +775,7 @@
         <div class="demo">
           <div class="demo-header">HTML — follow OS preference</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     darkMode: 'auto'
   };
 &lt;/script&gt;
@@ -785,7 +785,7 @@
         <div class="demo">
           <div class="demo-header">HTML — always dark</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     darkMode: true
   };
 &lt;/script&gt;
@@ -799,7 +799,7 @@
         <div class="demo">
           <div class="demo-header">CSS — custom dark theme via media query</div>
           <pre><code>@media (prefers-color-scheme: dark) {
-  #bmlt-meeting-list {
+  #crumb-widget {
     --bmlt-background:     #1e293b;
     --bmlt-text:           #f1f5f9;
     --bmlt-border:         #334155;
@@ -841,7 +841,7 @@
 
         <div class="demo">
           <div class="demo-header">CSS — example: override the outlined button hover</div>
-          <pre><code>#bmlt-meeting-list .bmlt-btn-secondary:hover {
+          <pre><code>#crumb-widget .bmlt-btn-secondary:hover {
   background-color: transparent;
   opacity: 0.8;
 }</code></pre>
@@ -875,7 +875,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Stadia Maps example</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -898,7 +898,7 @@
         <div class="demo">
           <div class="demo-header">HTML — light + dark tiles</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     map: {
       tiles: {
         url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png',
@@ -917,7 +917,7 @@
         <div class="demo">
           <div class="demo-header">HTML — Mapbox example</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     map: {
       tiles: {
         url: 'https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=&lt;pk.your.access.token&gt;',
@@ -934,7 +934,7 @@
         </div>
 
         <div class="callout">
-          <strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>BmltUiConfig</code> is set, you need to load <code>app.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.
+          <strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>CrumbWidgetConfig</code> is set, you need to load <code>app.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.
           <pre><code>&lt;script&gt;
 (async () => {
   const key = 'YOUR_REFERER_RESTRICTED_GOOGLE_API_KEY';
@@ -947,7 +947,7 @@
     }
   ).then(r =&gt; r.json());
 
-  window.BmltUiConfig = {
+  window.CrumbWidgetConfig = {
     map: {
       tiles: {
         attribution: '&amp;copy; Google',
@@ -995,7 +995,7 @@
         <div class="demo">
           <div class="demo-header">HTML — custom marker example</div>
           <pre><code>&lt;script&gt;
-  var BmltUiConfig = {
+  var CrumbWidgetConfig = {
     map: {
       markers: {
         location: {
@@ -1015,10 +1015,10 @@
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://latest.aws.bmlt.app/main_server"
 &gt;&lt;/div&gt;
-&lt;script src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="example-service-body">Example: Filter by Service Body</h2>
@@ -1026,7 +1026,7 @@
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://bmlt.sezf.org/main_server"
   data-service-body="42"
 &gt;&lt;/div&gt;
@@ -1038,7 +1038,7 @@
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://bmlt.sezf.org/main_server"
   data-service-body="42,57,103"
 &gt;&lt;/div&gt;
@@ -1049,7 +1049,7 @@
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://bmlt.sezf.org/main_server"
   data-service-body="42"
   data-view="map"
@@ -1059,17 +1059,17 @@
 
         <h2 id="example-wordpress">Example: WordPress</h2>
         <p>
-          The easiest way to add BMLT UI to a WordPress site is the official
-          <a href="https://wordpress.org/plugins/bmlt-client/" target="_blank" rel="noopener"><strong>BMLT Client</strong></a>
-          plugin (<a href="https://github.com/bmlt-enabled/bmlt-client" target="_blank" rel="noopener">GitHub</a>).
+          The easiest way to add Crumb Widget to a WordPress site is the official
+          <a href="https://wordpress.org/plugins/crumb-widget/" target="_blank" rel="noopener"><strong>Crumb</strong></a>
+          plugin (<a href="https://github.com/bmlt-enabled/crumb-widget" target="_blank" rel="noopener">GitHub</a>).
           It wraps this widget in a shortcode with a settings screen — no code required.
         </p>
 
         <h3>Installation</h3>
         <ol>
-          <li>Search for <strong>BMLT Client</strong> in the WordPress plugin directory, or upload the plugin ZIP manually.</li>
+          <li>Search for <strong>Crumb</strong> in the WordPress plugin directory, or upload the plugin ZIP manually.</li>
           <li>Activate the plugin.</li>
-          <li>Go to <strong>Settings → BMLT Client</strong> and enter your root server URL.</li>
+          <li>Go to <strong>Settings → Crumb</strong> and enter your root server URL.</li>
           <li>Add the shortcode to any page or post.</li>
         </ol>
 
@@ -1119,7 +1119,7 @@
 
 
         <h2 id="site-builders">Website Builders</h2>
-        <p>BMLT UI can also be embedded on common website builders, but the setup varies by platform.</p>
+        <p>Crumb Widget can also be embedded on common website builders, but the setup varies by platform.</p>
 
         <h3 id="google-sites">Google Sites</h3>
         <p>Google Sites supports embedding HTML, CSS, and JavaScript code using <strong>Insert → Embed → Embed code</strong>. You can also use a full-page embed if you want the meeting finder to live on its own page.</p>
@@ -1135,11 +1135,11 @@
         <div class="demo">
           <div class="demo-header">Google Sites embed</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://myserver.com/main_server/"
   data-service-body="3"
 &gt;&lt;/div&gt;
-&lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <p><strong>Note:</strong> In Google Sites, JavaScript must be included inside <code>&lt;script&gt;</code> tags when using the embed code option.</p>
@@ -1157,11 +1157,11 @@
         <div class="demo">
           <div class="demo-header">Squarespace code block</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://myserver.com/main_server/"
   data-service-body="3"
 &gt;&lt;/div&gt;
-&lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <p><strong>Important:</strong> If JavaScript is disabled in your Squarespace code block or unavailable on your plan, the widget will not load. You may need a higher-tier Squarespace plan for JavaScript-based embeds.</p>
@@ -1180,7 +1180,7 @@
         <div class="demo">
           <div class="demo-header">Wix container</div>
           <pre><code>&lt;div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://myserver.com/main_server/"
   data-service-body="3"
 &gt;&lt;/div&gt;</code></pre>
@@ -1188,7 +1188,7 @@
 
         <div class="demo">
           <div class="demo-header">Wix custom code</div>
-          <pre><code>&lt;script type="module" src="https://cdn.aws.bmlt.app/bmlt-ui/app.js"&gt;&lt;/script&gt;</code></pre>
+          <pre><code>&lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <p><strong>Important:</strong> Wix’s custom code feature is intended for third-party snippets and depends on Wix platform restrictions. If you do not see the Custom Code option, check whether your site is published and whether it has a connected domain.</p>

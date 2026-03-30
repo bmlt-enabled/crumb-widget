@@ -41,7 +41,7 @@ export default defineConfig({
       output: {
         entryFileNames: 'app.js',
         format: 'iife',
-        name: 'BmltMeetingList',
+        name: 'CrumbWidget',
         codeSplitting: false
       },
       checks: {

@@ -39,7 +39,7 @@ The widget is embedded by adding a div with data attributes and loading `app.js`
 
 ```html
 <div
-  id="bmlt-meeting-list"
+  id="crumb-widget"
   data-root-server="https://your-server/main_server"
   data-service-body="123"
   data-service-body="1,2,3"
@@ -52,7 +52,7 @@ Optional global config object (must be defined before `app.js` loads):
 
 ```html
 <script>
-  var BmltUiConfig = { defaultView: 'map' };
+  var CrumbWidgetConfig = { defaultView: 'map' };
 </script>
 ```
 
@@ -61,7 +61,7 @@ Optional global config object (must be defined before `app.js` loads):
 ```
 src/
   main.ts                    # Entry point — reads data-* attrs, mounts app
-  app.css                    # Tailwind import + .bmlt-meeting-list reset
+  app.css                    # Tailwind import + .crumb-widget reset
   App.svelte                 # Root component — filtering, view routing
   types/
     index.ts                 # Shared types: AppConfig, ProcessedMeeting, FilterState, ViewType
@@ -109,14 +109,14 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 - **Reactive collections**: Use `SvelteMap` from `svelte/reactivity` instead of native `Map` — the lint rule `svelte/prefer-svelte-reactivity` enforces this.
 - **`$derived` vs `$derived.by`**: Use `$derived(expr)` for simple expressions. Use `$derived.by(() => { ... })` when the computation has a function body — wrapping a function in `$derived(fn)` makes `fn` the derived value, not its result.
 - **Each blocks**: Always provide a key: `{#each items as item (item.id)}`.
-- **Styling**: Tailwind utility classes only. The widget uses CSS isolation via `.bmlt-meeting-list { all: initial; }` — all styles must be scoped inside that class.
+- **Styling**: Tailwind utility classes only. The widget uses CSS isolation via `.crumb-widget { all: initial; }` — all styles must be scoped inside that class.
 - **TypeScript**: Strict mode is on. Do not use `any`. BMLT API returns numeric fields as strings — always coerce with `Number()` before comparison.
 - **Formatting**: Prettier is the source of truth. Line width 200, single quotes, no trailing commas.
 - **ESLint**: `@typescript-eslint/no-explicit-any` and `no-undef` are disabled. `svelte-eslint-parser` is configured for `.svelte.ts` files.
 
 ## Data Flow
 
-1. `main.ts` reads `data-*` attributes from `#bmlt-meeting-list`, calls `initConfig()`, mounts `App.svelte`.
+1. `main.ts` reads `data-*` attributes from `#crumb-widget`, calls `initConfig()`, mounts `App.svelte`.
 2. `App.svelte` calls `loadData(rootServerUrl, serviceBodyId)` on mount.
 3. `loadData` uses `BmltClient` from `bmlt-query-client` to fetch meetings and formats in parallel. Meetings are processed into `ProcessedMeeting` (adds `formattedTime`, `formattedAddress`, `timeOfDay`, `dayName`, etc.) and stored in `dataState.meetings`.
 4. `App.svelte` computes `filteredMeetings` via `$derived.by` — applies weekday, venue type, time-of-day, and text search filters from `uiState.filters`.

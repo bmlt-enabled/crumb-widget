@@ -51,7 +51,7 @@ export interface TilesConfig {
   attribution: string;
 }
 
-export interface BmltMeetingListGlobalConfig {
+export interface CrumbWidgetConfig {
   language?: string;
   defaultView?: 'list' | 'map';
   columns?: Column[];
@@ -70,6 +70,6 @@ export interface BmltMeetingListGlobalConfig {
 
 declare global {
   interface Window {
-    BmltUiConfig?: BmltMeetingListGlobalConfig;
+    CrumbWidgetConfig?: CrumbWidgetConfig;
   }
 }

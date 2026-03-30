@@ -6,18 +6,18 @@
     <title>BMLT Meeting Finder - Dev</title>
     <style>
       body { margin: 0; padding: 20px; background: #f3f4f6; font-family: system-ui, sans-serif; }
-      #bmlt-meeting-list { height: 80vh; max-width: 1000px; margin: 0 auto; }
+      #crumb-widget { height: 80vh; max-width: 1000px; margin: 0 auto; }
     </style>
   </head>
   <body>
     <div
-      id="bmlt-meeting-list"
+      id="crumb-widget"
       data-root-server="https://bmlt.sezf.org/main_server/"
       data-service-body="95,173"
       data-view="list"
     ></div>
     <script>
-      var BmltUiConfig = {
+      var CrumbWidgetConfig = {
         language: 'en',
         columns: ['time', 'name', 'location', 'address', 'service_body'],
       };

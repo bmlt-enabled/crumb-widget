@@ -8,8 +8,8 @@
 ## Setup
 
 ```bash
-git clone https://github.com/bmlt-enabled/bmlt-ui.git
-cd bmlt-ui
+git clone https://github.com/bmlt-enabled/crumb-widget.git
+cd crumb-widget
 npm install
 ```
 

@@ -4,9 +4,9 @@ import App from './App.svelte';
 import { initConfig, config } from '@stores/config.svelte';
 
 function init(): void {
-  const el = document.getElementById('bmlt-meeting-list');
+  const el = document.getElementById('crumb-widget');
   if (!el) {
-    console.warn('[bmlt-meeting-list] No element with id="bmlt-meeting-list" found.');
+    console.warn('[crumb-widget] No element with id="crumb-widget" found.');
     return;
   }
 

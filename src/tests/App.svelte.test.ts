@@ -37,7 +37,7 @@ const baseConfig: AppConfig = {
   rootServerUrl: 'https://test.example.org/main_server',
   serviceBodyIds: [],
   defaultView: 'list',
-  containerId: 'bmlt-meeting-list',
+  containerId: 'crumb-widget',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
   geolocationRadius: 10,

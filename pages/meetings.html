@@ -53,7 +53,7 @@
       }
       #dark-btn:hover { opacity: 1; }
 
-      #bmlt-meeting-list { margin-top: 41px; }
+      #crumb-widget { margin-top: 41px; }
 
       /* ── Custom themes via CSS variable overrides ───────────────────────────
          This is how you'd add your own theme — override only the vars you want.
@@ -61,60 +61,60 @@
          ───────────────────────────────────────────────────────────────────── */
 
       /* ocean */
-      #bmlt-meeting-list.bmlt-theme-ocean {
+      #crumb-widget.bmlt-theme-ocean {
         --bmlt-accent: #0891b2; --bmlt-accent-light: #ecfeff;
         --bmlt-in-person: #0e7490; --bmlt-in-person-bg: #cffafe;
         --bmlt-virtual: #2563eb; --bmlt-virtual-bg: #dbeafe;
       }
-      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-ocean {
+      #crumb-widget.bmlt-dark-force.bmlt-theme-ocean {
         --bmlt-accent: #22d3ee; --bmlt-accent-light: #164e63;
         --bmlt-in-person: #67e8f9; --bmlt-in-person-bg: #164e63;
         --bmlt-virtual: #93c5fd; --bmlt-virtual-bg: #1e3a5f;
       }
 
       /* forest */
-      #bmlt-meeting-list.bmlt-theme-forest {
+      #crumb-widget.bmlt-theme-forest {
         --bmlt-accent: #16a34a; --bmlt-accent-light: #f0fdf4;
         --bmlt-in-person: #15803d; --bmlt-in-person-bg: #dcfce7;
         --bmlt-virtual: #0284c7; --bmlt-virtual-bg: #e0f2fe;
       }
-      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-forest {
+      #crumb-widget.bmlt-dark-force.bmlt-theme-forest {
         --bmlt-accent: #4ade80; --bmlt-accent-light: #14532d;
         --bmlt-in-person: #86efac; --bmlt-in-person-bg: #14532d;
         --bmlt-virtual: #7dd3fc; --bmlt-virtual-bg: #0c4a6e;
       }
 
       /* warm */
-      #bmlt-meeting-list.bmlt-theme-warm {
+      #crumb-widget.bmlt-theme-warm {
         --bmlt-accent: #d97706; --bmlt-accent-light: #fffbeb;
         --bmlt-in-person: #b45309; --bmlt-in-person-bg: #fef3c7;
         --bmlt-virtual: #0284c7; --bmlt-virtual-bg: #e0f2fe;
       }
-      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-warm {
+      #crumb-widget.bmlt-dark-force.bmlt-theme-warm {
         --bmlt-accent: #fbbf24; --bmlt-accent-light: #451a03;
         --bmlt-in-person: #fcd34d; --bmlt-in-person-bg: #451a03;
         --bmlt-virtual: #7dd3fc; --bmlt-virtual-bg: #0c4a6e;
       }
 
       /* rose */
-      #bmlt-meeting-list.bmlt-theme-rose {
+      #crumb-widget.bmlt-theme-rose {
         --bmlt-accent: #e11d48; --bmlt-accent-light: #fff1f2;
         --bmlt-in-person: #be123c; --bmlt-in-person-bg: #ffe4e6;
         --bmlt-virtual: #7c3aed; --bmlt-virtual-bg: #ede9fe;
       }
-      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-rose {
+      #crumb-widget.bmlt-dark-force.bmlt-theme-rose {
         --bmlt-accent: #fb7185; --bmlt-accent-light: #4c0519;
         --bmlt-in-person: #fda4af; --bmlt-in-person-bg: #4c0519;
         --bmlt-virtual: #c4b5fd; --bmlt-virtual-bg: #2e1065;
       }
 
       /* slate */
-      #bmlt-meeting-list.bmlt-theme-slate {
+      #crumb-widget.bmlt-theme-slate {
         --bmlt-accent: #7c3aed; --bmlt-accent-light: #ede9fe;
         --bmlt-in-person: #6d28d9; --bmlt-in-person-bg: #ddd6fe;
         --bmlt-virtual: #0891b2; --bmlt-virtual-bg: #ecfeff;
       }
-      #bmlt-meeting-list.bmlt-dark-force.bmlt-theme-slate {
+      #crumb-widget.bmlt-dark-force.bmlt-theme-slate {
         --bmlt-accent: #a78bfa; --bmlt-accent-light: #2e1065;
         --bmlt-in-person: #c4b5fd; --bmlt-in-person-bg: #2e1065;
         --bmlt-virtual: #22d3ee; --bmlt-virtual-bg: #164e63;
@@ -136,13 +136,13 @@
     </div>
 
     <div
-      id="bmlt-meeting-list"
+      id="crumb-widget"
       data-root-server="https://aggregator.bmltenabled.org/main_server/"
     ></div>
 
     <script>
       var _t = atob('cGsuZXlKMUlqb2ljR3BoZFdScGIyMTJJaXdpWVNJNkltTnJOSGczTjJwdmVqQjNOWGd6YW04NU5UWTBkbWh6WlRNaWZRLmRpaC1XTDJEbm1odDdmalZWUlBwMWc=');
-      var BmltUiConfig = {
+      var CrumbWidgetConfig = {
         geolocation: true,
         geolocationRadius: 75,
         map: {
@@ -160,7 +160,7 @@
       var THEMES = ['default', 'ocean', 'forest', 'warm', 'rose', 'slate'];
 
       function setTheme(theme) {
-        var w = document.getElementById('bmlt-meeting-list');
+        var w = document.getElementById('crumb-widget');
         if (!w) return;
         THEMES.forEach(function(t) { w.classList.remove('bmlt-theme-' + t); });
         if (theme !== 'default') w.classList.add('bmlt-theme-' + theme);
@@ -170,7 +170,7 @@
       function toggleDark() {
         var d = !document.body.classList.contains('dark');
         document.body.classList.toggle('dark', d);
-        var w = document.getElementById('bmlt-meeting-list');
+        var w = document.getElementById('crumb-widget');
         if (w) w.classList.toggle('bmlt-dark-force', d);
         document.getElementById('dark-btn').textContent = d ? '☀️' : '🌙';
         localStorage.setItem('bmlt-demo-dark', d ? 'dark' : 'light');
@@ -183,7 +183,7 @@
       // Restore persisted preferences after app.js has run
       var _dark = localStorage.getItem('bmlt-demo-dark') === 'dark';
       var _theme = localStorage.getItem('bmlt-demo-theme') || 'default';
-      var _w = document.getElementById('bmlt-meeting-list');
+      var _w = document.getElementById('crumb-widget');
 
       if (_dark) {
         document.body.classList.add('dark');

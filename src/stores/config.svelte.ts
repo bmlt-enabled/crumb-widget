@@ -7,7 +7,7 @@ const defaultConfig: AppConfig = {
   rootServerUrl: '',
   serviceBodyIds: [],
   defaultView: 'list',
-  containerId: 'bmlt-meeting-list',
+  containerId: 'crumb-widget',
   columns: ALL_COLUMNS,
   geolocation: false,
   geolocationRadius: 10,
@@ -21,7 +21,7 @@ export function initConfig(el: HTMLElement): void {
   const serviceBody = el.getAttribute('data-service-body') ?? '';
   const defaultView = (el.getAttribute('data-view') as 'list' | 'map') ?? 'list';
 
-  const globalCfg = window.BmltUiConfig ?? {};
+  const globalCfg = window.CrumbWidgetConfig ?? {};
 
   config.rootServerUrl = rootServer;
   config.serviceBodyIds = serviceBody
@@ -31,7 +31,7 @@ export function initConfig(el: HTMLElement): void {
         .filter((n) => !isNaN(n))
     : [];
   config.defaultView = globalCfg.defaultView ?? defaultView;
-  config.containerId = el.id || 'bmlt-meeting-list';
+  config.containerId = el.id || 'crumb-widget';
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
