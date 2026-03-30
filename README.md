@@ -7,7 +7,7 @@ Built with Svelte 5, compiled to a **single self-contained JavaScript file** wit
 
 ## Philosophy
 
-This project aims to cover the needs of most NA service bodies well — not every possible use case. It is intentionally
+This project aims to cover the needs of most NA service bodies well - not every possible use case. It is intentionally
 kept simple and focused. New features are weighed against the cost to the codebase; niche requests that bloat the project
 for everyone are generally out of scope. If you need deep customization, this may not be the right tool.
 
