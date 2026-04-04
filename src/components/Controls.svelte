@@ -259,7 +259,7 @@
         </svg>
       </button>
       {#if showTypeDropdown}
-        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
           {#each VENUE_TYPE_VALUES as vt (vt.value)}
             <button
               onclick={() => toggleArrayFilter('venueTypes', vt.value)}
