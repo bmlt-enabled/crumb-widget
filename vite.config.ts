@@ -7,13 +7,15 @@ import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import { resolve } from 'path';
 import { copyFileSync, readFileSync } from 'fs';
+import { execSync } from 'child_process';
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
+const shortSha = execSync('git rev-parse --short HEAD').toString().trim();
 
 export default defineConfig({
   base: './',
   define: {
-    __APP_VERSION__: JSON.stringify(pkg.version)
+    __APP_VERSION__: JSON.stringify(`${pkg.version}+${shortSha}`)
   },
   resolve: {
     alias: {
