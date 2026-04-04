@@ -56,6 +56,9 @@
   --bmlt-text-secondary: #6b7280;
   /* Very muted text (gray-400 equivalents) */
   --bmlt-text-muted: #9ca3af;
+  /* In-progress banner and expanded rows */
+  --bmlt-in-progress-bg: #e0e7ff;
+  --bmlt-in-progress-text: #3730a3;
 }
 
 /* ─── Built-in dark mode ────────────────────────────────────────────────────
@@ -81,6 +84,8 @@
   --bmlt-divider: #263244;
   --bmlt-text-secondary: #94a3b8;
   --bmlt-text-muted: #64748b;
+  --bmlt-in-progress-bg: #1e1b4b;
+  --bmlt-in-progress-text: #c7d2fe;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -101,6 +106,8 @@
     --bmlt-divider: #334155;
     --bmlt-text-secondary: #94a3b8;
     --bmlt-text-muted: #64748b;
+    --bmlt-in-progress-bg: #2d3748;
+    --bmlt-in-progress-text: #e2e8f0;
   }
 }
 
@@ -371,6 +378,25 @@
 #crumb-widget td [class*='text-gray-500'],
 #crumb-widget td [class*='text-gray-600'] {
   color: var(--bmlt-text-secondary) !important;
+}
+
+/* In-progress banner row */
+#crumb-widget .bmlt-in-progress-banner {
+  background-color: var(--bmlt-in-progress-bg) !important;
+  color: var(--bmlt-in-progress-text) !important;
+  cursor: pointer !important;
+  border: none !important;
+  width: 100% !important;
+  text-align: inherit !important;
+}
+
+/* In-progress expanded rows — double-class beats .bmlt-row and :nth-child specificity */
+#crumb-widget .bmlt-in-progress-row.bmlt-in-progress-row {
+  background-color: var(--bmlt-in-progress-bg) !important;
+}
+#crumb-widget .bmlt-in-progress-row.bmlt-in-progress-row:hover {
+  background-color: var(--bmlt-in-progress-bg) !important;
+  filter: none !important;
 }
 
 /* Meeting list footer */

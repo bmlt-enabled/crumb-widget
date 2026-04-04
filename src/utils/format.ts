@@ -79,13 +79,39 @@ export function formatShortAddress(meeting: Meeting): string {
   return parts.join(', ') || meeting.location_text || '';
 }
 
-export function sortMeetings<T extends { weekday_tinyint: number; start_time: string }>(meetings: T[]): T[] {
+export function isInProgress(meeting: { weekday_tinyint: number; start_time: string }, nowOffsetMinutes: number = 10): boolean {
+  const now = new Date();
+  const today = now.getDay() + 1; // BMLT: 1=Sun…7=Sat
+  if (meeting.weekday_tinyint !== today) return false;
+  const [hStr, mStr] = meeting.start_time.split(':');
+  const meetingMinutes = parseInt(hStr, 10) * 60 + parseInt(mStr, 10);
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  return meetingMinutes < nowMinutes && meetingMinutes >= nowMinutes - nowOffsetMinutes;
+}
+
+export function sortMeetings<T extends { weekday_tinyint: number; start_time: string }>(meetings: T[], nowOffsetMinutes: number = 10): T[] {
   // Rotate so today's weekday sorts first; BMLT weekday_tinyint is 1=Sun…7=Sat
-  const today = new Date().getDay() + 1; // 1–7 matching BMLT
-  const offset = (day: number) => (day - today + 7) % 7;
+  // Meetings that started more than nowOffsetMinutes ago today are pushed to the end.
+  const now = new Date();
+  const today = now.getDay() + 1; // 1–7 matching BMLT
+  const cutoffMinutes = now.getHours() * 60 + now.getMinutes() - nowOffsetMinutes;
+
+  const effectiveOffset = (day: number, startTime: string) => {
+    const dayOffset = (day - today + 7) % 7;
+    if (dayOffset === 0) {
+      const [hStr, mStr] = startTime.split(':');
+      const meetingMinutes = parseInt(hStr, 10) * 60 + parseInt(mStr, 10);
+      if (meetingMinutes < cutoffMinutes) {
+        return 7; // push past meetings to end of the week cycle
+      }
+    }
+    return dayOffset;
+  };
+
   return [...meetings].sort((a, b) => {
-    const dayDiff = offset(a.weekday_tinyint) - offset(b.weekday_tinyint);
-    if (dayDiff !== 0) return dayDiff;
+    const offA = effectiveOffset(a.weekday_tinyint, a.start_time);
+    const offB = effectiveOffset(b.weekday_tinyint, b.start_time);
+    if (offA !== offB) return offA - offB;
     return a.start_time.localeCompare(b.start_time);
   });
 }

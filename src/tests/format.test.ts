@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatTime, formatEndTime, getTimezoneAbbr, getTimeOfDay, formatAddress, sortMeetings, getPlatform, getDirectionsUrl, getGeoErrorMessage } from '@utils/format';
+import { formatTime, formatEndTime, getTimezoneAbbr, getTimeOfDay, formatAddress, sortMeetings, isInProgress, getPlatform, getDirectionsUrl, getGeoErrorMessage } from '@utils/format';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -134,6 +134,98 @@ describe('sortMeetings', () => {
     const original = [...meetings];
     sortMeetings(meetings);
     expect(meetings.map((m) => m.id_bigint)).toEqual(original.map((m) => m.id_bigint));
+  });
+
+  test('rolls past meetings on today to the end of the list', () => {
+    // Saturday 6:30pm — offset 10min means cutoff is 6:20pm
+    vi.setSystemTime(new Date(2024, 0, 6, 18, 30)); // Sat (bmlt=7) at 18:30
+    const meetings = [
+      makeMeeting({ id_bigint: 'sat-9am', weekday_tinyint: 7, start_time: '09:00:00' }), // past → end
+      makeMeeting({ id_bigint: 'sat-6pm', weekday_tinyint: 7, start_time: '18:00:00' }), // past (before 18:20) → end
+      makeMeeting({ id_bigint: 'sat-7pm', weekday_tinyint: 7, start_time: '19:00:00' }), // future → first
+      makeMeeting({ id_bigint: 'sun', weekday_tinyint: 1, start_time: '10:00:00' }) // tomorrow → second
+    ];
+    expect(sortMeetings(meetings, 10).map((m) => m.id_bigint)).toEqual(['sat-7pm', 'sun', 'sat-9am', 'sat-6pm']);
+  });
+
+  test('meeting within nowOffset window is kept at the top', () => {
+    // Saturday 6:30pm — offset 10min means cutoff is 6:20pm; 6:25pm is within window
+    vi.setSystemTime(new Date(2024, 0, 6, 18, 30)); // Sat at 18:30
+    const meetings = [
+      makeMeeting({ id_bigint: 'sat-6:25', weekday_tinyint: 7, start_time: '18:25:00' }), // started 5min ago, within offset → stays
+      makeMeeting({ id_bigint: 'sat-6:19', weekday_tinyint: 7, start_time: '18:19:00' }), // started 11min ago, past → end
+      makeMeeting({ id_bigint: 'sun', weekday_tinyint: 1, start_time: '10:00:00' })
+    ];
+    expect(sortMeetings(meetings, 10).map((m) => m.id_bigint)).toEqual(['sat-6:25', 'sun', 'sat-6:19']);
+  });
+
+  test('nowOffset=0 means only strictly past meetings roll over', () => {
+    vi.setSystemTime(new Date(2024, 0, 6, 18, 30)); // Sat at 18:30; cutoff = 18:30
+    const meetings = [
+      makeMeeting({ id_bigint: 'sat-18:30', weekday_tinyint: 7, start_time: '18:30:00' }), // exactly now → stays
+      makeMeeting({ id_bigint: 'sat-18:29', weekday_tinyint: 7, start_time: '18:29:00' }), // 1min past → end
+      makeMeeting({ id_bigint: 'sun', weekday_tinyint: 1, start_time: '10:00:00' })
+    ];
+    expect(sortMeetings(meetings, 0).map((m) => m.id_bigint)).toEqual(['sat-18:30', 'sun', 'sat-18:29']);
+  });
+});
+
+describe('isInProgress', () => {
+  beforeEach(() => vi.useFakeTimers());
+  afterEach(() => vi.useRealTimers());
+
+  test('returns true when meeting started within offset window', () => {
+    // Sat 7:15pm — a 7:10pm meeting started 5min ago, within the default 10min window
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15)); // Sat (bmlt=7)
+    expect(isInProgress({ weekday_tinyint: 7, start_time: '19:10:00' }, 10)).toBe(true);
+  });
+
+  test('returns false when meeting started before the offset window', () => {
+    // Sat 7:15pm — a 7:00pm meeting started 15min ago, outside the 10min window
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    expect(isInProgress({ weekday_tinyint: 7, start_time: '19:00:00' }, 10)).toBe(false);
+  });
+
+  test('returns false for a future meeting', () => {
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    expect(isInProgress({ weekday_tinyint: 7, start_time: '19:30:00' }, 10)).toBe(false);
+  });
+
+  test('returns false for a meeting on a different day', () => {
+    // Today is Sat (bmlt=7), meeting is on Sun (bmlt=1)
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    expect(isInProgress({ weekday_tinyint: 1, start_time: '19:10:00' }, 10)).toBe(false);
+  });
+
+  test('meeting that started exactly at now is not in progress (not yet started)', () => {
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    expect(isInProgress({ weekday_tinyint: 7, start_time: '19:15:00' }, 10)).toBe(false);
+  });
+
+  test('meeting at exactly the offset boundary is in progress', () => {
+    // 7:15pm now, offset 10min — cutoff is 7:05pm; 7:05pm meeting is exactly at boundary
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    expect(isInProgress({ weekday_tinyint: 7, start_time: '19:05:00' }, 10)).toBe(true);
+  });
+
+  test('nowOffset=0 means only meetings that started in the exact current minute are in progress', () => {
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    // With offset=0, cutoff === nowMinutes, so meetingMinutes must be >= nowMinutes — only future/exact
+    // A meeting at 19:14 started before now and is not within offset=0
+    expect(isInProgress({ weekday_tinyint: 7, start_time: '19:14:00' }, 0)).toBe(false);
+  });
+
+  test('consistent with sortMeetings — in-progress meetings are not rolled to end', () => {
+    // Sat 7:15pm, offset 10min: 7:10pm is in-progress (not past), 7:00pm is past (rolled)
+    vi.setSystemTime(new Date(2024, 0, 6, 19, 15));
+    const inProgress = { weekday_tinyint: 7, start_time: '19:10:00' };
+    const past = { weekday_tinyint: 7, start_time: '19:00:00' };
+    const sorted = sortMeetings([inProgress, past], 10);
+    // in-progress stays near top (effectiveOffset=0), past rolls to end (effectiveOffset=7)
+    expect(sorted[0]).toBe(inProgress);
+    expect(sorted[1]).toBe(past);
+    expect(isInProgress(inProgress, 10)).toBe(true);
+    expect(isInProgress(past, 10)).toBe(false);
   });
 });
 

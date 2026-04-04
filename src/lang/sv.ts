@@ -33,6 +33,7 @@ export const svTranslations = {
   showing: 'Visar',
   meeting: 'möte',
   meetings: 'möten',
+  inProgress: 'pågår',
   // Meeting detail
   backToMeetings: 'Tillbaka till möten',
   schedule: 'Schema',

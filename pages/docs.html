@@ -123,20 +123,21 @@
       .theme-toggle {
         display: flex;
         align-items: center;
-        gap: 0.4rem;
+        gap: 0.5rem;
         margin-top: 1.5rem;
-        padding: 0.35rem 0.75rem;
+        padding: 0.3rem 0.75rem;
         border-radius: 6px;
         border: 1px solid var(--doc-border);
         background: none;
-        color: var(--doc-text-dim);
-        font-size: 0.8rem;
+        color: var(--doc-nav-link);
+        font-size: 0.875rem;
+        line-height: 1.5;
         cursor: pointer;
         width: 100%;
-        transition: background 0.1s;
+        transition: background 0.1s, color 0.1s;
       }
       .theme-toggle:hover { background: var(--doc-nav-hover); }
-      .theme-toggle svg { flex-shrink: 0; }
+      .theme-toggle svg { flex-shrink: 0; display: block; }
       .theme-toggle .toggle-label { flex: 1; text-align: left; }
 
       main {
@@ -303,11 +304,16 @@
         border: 1px solid var(--doc-border);
         border-radius: 6px;
         cursor: pointer;
-        color: var(--doc-text-dim);
-        padding: 0.25rem 0.4rem;
+        color: var(--doc-text-muted);
+        padding: 0.3rem 0.45rem;
         display: flex;
         align-items: center;
+        justify-content: center;
+        line-height: 1;
+        transition: background 0.1s, color 0.1s;
       }
+      .theme-toggle-mobile:hover { background: var(--doc-nav-hover); }
+      .theme-toggle-mobile svg { display: block; }
 
       /* Nav close button — mobile only */
       .nav-close-row { display: none; }
@@ -413,7 +419,7 @@
         </div>
         <a class="logo" href="#">BMLT Crumb Widget</a>
         <button class="theme-toggle" onclick="toggleTheme()" id="nav-theme-btn">
-          <svg id="nav-theme-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="nav-theme-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <span class="toggle-label" id="nav-theme-label">Light mode</span>
         </button>
         <ul>
@@ -608,6 +614,16 @@
               </td>
             </tr>
             <tr>
+              <td>nowOffset</td>
+              <td><code>number</code></td>
+              <td>
+                Minutes of grace period before a meeting is considered past. Meetings that started within the last
+                <code>nowOffset</code> minutes still appear at the top of the list; older meetings on today's weekday
+                roll over to the end of the list (as if they occur next week). Default: <code>10</code>.
+                Set to <code>0</code> to roll over immediately once a meeting's start time has passed.
+              </td>
+            </tr>
+            <tr>
               <td>darkMode</td>
               <td><code>'auto' | true | false</code></td>
               <td>
@@ -643,6 +659,40 @@
             </tr>
           </tbody>
         </table></div>
+
+        <div class="demo">
+          <div class="demo-header">HTML — all options (kitchen sink)</div>
+          <pre><code>&lt;script&gt;
+  var CrumbWidgetConfig = {
+    defaultView: 'list',       // 'list' | 'map'
+    language: 'en',            // override UI language; defaults to navigator.language
+    columns: ['time', 'name', 'location', 'address', 'service_body'],
+    geolocation: false,        // show Near Me button
+    geolocationRadius: 10,     // search radius in miles
+    nowOffset: 10,             // minutes before a meeting is considered past and rolls to end
+    darkMode: 'auto',          // 'auto' | true | false
+    height: 600,               // widget height in pixels
+    map: {
+      tiles: {
+        url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+        attribution: '&amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt; contributors'
+      },
+      tiles_dark: {
+        url: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        attribution: '&amp;copy; &lt;a href="https://www.stadiamaps.com/" target="_blank"&gt;Stadia Maps&lt;/a&gt;'
+      },
+      markers: {
+        location: {
+          html: '&lt;img src="https://example.com/my-marker.png"&gt;',
+          width: 23,
+          height: 33
+        }
+      }
+    }
+  };
+&lt;/script&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
 
         <h2 id="language">Language</h2>
         <p>

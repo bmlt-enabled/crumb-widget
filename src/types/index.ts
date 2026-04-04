@@ -21,6 +21,7 @@ export interface AppConfig {
   geolocationRadius: number;
   height?: number;
   darkMode?: 'auto' | true | false;
+  nowOffset?: number;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -63,6 +64,7 @@ export interface CrumbWidgetConfig {
   geolocationRadius?: number;
   height?: number;
   darkMode?: 'auto' | true | false;
+  nowOffset?: number;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

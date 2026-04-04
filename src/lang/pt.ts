@@ -33,6 +33,7 @@ export const ptTranslations = {
   showing: 'Exibindo',
   meeting: 'reunião',
   meetings: 'reuniões',
+  inProgress: 'em andamento',
   // Meeting detail
   backToMeetings: 'Voltar às reuniões',
   schedule: 'Horário',

@@ -4,6 +4,7 @@ import type { Meeting, Format } from 'bmlt-query-client';
 import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
+import { config } from '@stores/config.svelte';
 
 const PAGE_SIZE = 5000;
 
@@ -64,7 +65,7 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
     }
     dataState.formats = formatsMap;
 
-    dataState.meetings = sortMeetings(processMeetings(meetingsResp));
+    dataState.meetings = sortMeetings(processMeetings(meetingsResp), config.nowOffset);
   } catch (err) {
     dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
   } finally {
@@ -96,7 +97,7 @@ export async function loadDataByCoordinates(rootServerUrl: string, latitude: num
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
     dataState.formats = formatsMap;
 
-    dataState.meetings = sortMeetings(processMeetings(meetingsResp));
+    dataState.meetings = sortMeetings(processMeetings(meetingsResp), config.nowOffset);
   } catch (err) {
     dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
   } finally {

@@ -33,6 +33,7 @@ export const deTranslations = {
   showing: 'Angezeigt',
   meeting: 'Treffen',
   meetings: 'Treffen',
+  inProgress: 'laufend',
   // Meeting detail
   backToMeetings: 'Zurück zu den Treffen',
   schedule: 'Zeitplan',

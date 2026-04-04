@@ -33,6 +33,7 @@ export const esTranslations = {
   showing: 'Mostrando',
   meeting: 'reunión',
   meetings: 'reuniones',
+  inProgress: 'en progreso',
   // Meeting detail
   backToMeetings: 'Volver a reuniones',
   schedule: 'Horario',

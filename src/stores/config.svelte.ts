@@ -11,7 +11,8 @@ const defaultConfig: AppConfig = {
   columns: ALL_COLUMNS,
   geolocation: false,
   geolocationRadius: 10,
-  height: undefined
+  height: undefined,
+  nowOffset: 10
 };
 
 export const config = $state<AppConfig>({ ...defaultConfig });
@@ -40,6 +41,7 @@ export function initConfig(el: HTMLElement): void {
   config.geolocationRadius = globalCfg.geolocationRadius ?? 10;
   config.height = globalCfg.height ?? undefined;
   config.darkMode = globalCfg.darkMode ?? false;
+  config.nowOffset = globalCfg.nowOffset ?? 10;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

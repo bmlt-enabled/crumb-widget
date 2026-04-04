@@ -33,6 +33,7 @@ export const enTranslations = {
   showing: 'Showing',
   meeting: 'meeting',
   meetings: 'meetings',
+  inProgress: 'in progress',
   // Meeting detail
   backToMeetings: 'Back to meetings',
   schedule: 'Schedule',
