@@ -1,0 +1,118 @@
+import { describe, test, expect, afterEach } from 'vitest';
+import { get } from 'svelte/store';
+import { t, setLanguage } from '@stores/localization';
+import { enTranslations } from '@/lang/en';
+import { esTranslations } from '@/lang/es';
+import { frTranslations } from '@/lang/fr';
+import { deTranslations } from '@/lang/de';
+import { ptTranslations } from '@/lang/pt';
+import { itTranslations } from '@/lang/it';
+import { svTranslations } from '@/lang/sv';
+import { daTranslations } from '@/lang/da';
+
+afterEach(() => {
+  setLanguage('en');
+});
+
+describe('language switching', () => {
+  test('defaults to English', () => {
+    expect(get(t).searchMeetings).toBe('Search meetings...');
+  });
+
+  test('switches to Spanish', () => {
+    setLanguage('es');
+    expect(get(t).searchMeetings).toBe('Buscar reuniones...');
+  });
+
+  test('switches to French', () => {
+    setLanguage('fr');
+    expect(get(t).searchMeetings).toBe('Rechercher des réunions...');
+  });
+
+  test('switches to German', () => {
+    setLanguage('de');
+    expect(get(t).searchMeetings).toBe('Treffen suchen...');
+  });
+
+  test('switches to Portuguese', () => {
+    setLanguage('pt');
+    expect(get(t).searchMeetings).toBe('Pesquisar reuniões...');
+  });
+
+  test('switches to Italian', () => {
+    setLanguage('it');
+    expect(get(t).searchMeetings).toBe('Cerca riunioni...');
+  });
+
+  test('switches to Swedish', () => {
+    setLanguage('sv');
+    expect(get(t).searchMeetings).toBe('Sök möten...');
+  });
+
+  test('switches to Danish', () => {
+    setLanguage('da');
+    expect(get(t).searchMeetings).toBe('Søg møder...');
+  });
+
+  test('falls back to English for unknown language code', () => {
+    setLanguage('xx');
+    expect(get(t).searchMeetings).toBe('Search meetings...');
+  });
+
+  test('handles BCP 47 sub-tags like en-US', () => {
+    setLanguage('en-US');
+    expect(get(t).searchMeetings).toBe('Search meetings...');
+  });
+
+  test('handles BCP 47 sub-tags like es-MX', () => {
+    setLanguage('es-MX');
+    expect(get(t).searchMeetings).toBe('Buscar reuniones...');
+  });
+});
+
+// All string keys from English that every language must provide
+const stringKeys = (Object.keys(enTranslations) as (keyof typeof enTranslations)[]).filter((k) => typeof enTranslations[k] === 'string');
+
+const allLanguages = [
+  { lang: 'en', translations: enTranslations },
+  { lang: 'es', translations: esTranslations },
+  { lang: 'fr', translations: frTranslations },
+  { lang: 'de', translations: deTranslations },
+  { lang: 'pt', translations: ptTranslations },
+  { lang: 'it', translations: itTranslations },
+  { lang: 'sv', translations: svTranslations },
+  { lang: 'da', translations: daTranslations }
+];
+
+describe('translation completeness', () => {
+  for (const { lang, translations } of allLanguages) {
+    test(`${lang}: all string keys are present and non-empty`, () => {
+      for (const key of stringKeys) {
+        const value = (translations as Record<string, unknown>)[key];
+        expect(value, `${lang} missing key: ${key}`).toBeDefined();
+        expect(typeof value, `${lang}.${key} should be a string`).toBe('string');
+        expect((value as string).length, `${lang}.${key} should not be empty`).toBeGreaterThan(0);
+      }
+    });
+
+    test(`${lang}: weekdays has exactly 7 non-empty entries`, () => {
+      expect(translations.weekdays).toHaveLength(7);
+      for (const day of translations.weekdays) {
+        expect(day.length).toBeGreaterThan(0);
+      }
+    });
+
+    test(`${lang}: weekdaysShort has exactly 7 non-empty entries`, () => {
+      expect(translations.weekdaysShort).toHaveLength(7);
+      for (const day of translations.weekdaysShort) {
+        expect(day.length).toBeGreaterThan(0);
+      }
+    });
+
+    test(`${lang}: weekdaysShort entries are shorter than or equal to weekdays entries`, () => {
+      for (let i = 0; i < 7; i++) {
+        expect(translations.weekdaysShort[i].length).toBeLessThanOrEqual(translations.weekdays[i].length);
+      }
+    });
+  }
+});
