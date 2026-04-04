@@ -3,6 +3,8 @@ import './app.css';
 import App from './App.svelte';
 import { initConfig, config } from '@stores/config.svelte';
 
+declare const __APP_VERSION__: string;
+
 function init(): void {
   const el = document.getElementById('crumb-widget');
   if (!el) {
@@ -23,6 +25,8 @@ function init(): void {
     props: { config }
   });
 }
+
+console.log(`[crumb-widget] v${__APP_VERSION__}`);
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);

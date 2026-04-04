@@ -135,8 +135,7 @@
 
         <!-- Schedule row -->
         <div class="px-4 py-4">
-          <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.schedule}</p>
-          <div class="mt-1">
+          <div>
             <p class="text-base font-medium text-gray-900">
               {meeting.dayName},
               {#if meeting.duration_time && formatEndTime(meeting.start_time, meeting.duration_time)}
@@ -153,8 +152,7 @@
 
         <!-- Venue + formats row -->
         <div class="px-4 py-4">
-          <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.format}</p>
-          <div class="mt-1 flex flex-wrap gap-1.5">
+          <div class="flex flex-wrap gap-1.5">
             {#if meeting.isInPerson}
               <span class="bmlt-badge-in-person inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-sm font-medium text-green-700">{$t.inPerson}</span>
             {/if}
@@ -163,7 +161,7 @@
             {/if}
           </div>
           {#if meeting.resolvedFormats.length > 0}
-            <div class="mt-2 flex flex-wrap gap-1">
+            <div class="mt-1.5 flex flex-wrap gap-1">
               {#each meeting.resolvedFormats as fmt (fmt.id)}
                 <button
                   class="cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2 py-0.5 text-sm text-gray-600 select-none"
@@ -187,14 +185,13 @@
         <!-- Address row (in-person) -->
         {#if meeting.isInPerson && meeting.formattedAddress}
           <div class="px-4 py-4">
-            <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.address}</p>
             <div class="mt-1">
               {#if meeting.location_text}
                 <p class="text-sm text-gray-500">{meeting.location_text}</p>
               {/if}
               <p class="text-base text-gray-700">{meeting.formattedAddress}</p>
               {#if meeting.location_info}
-                <p class="text-sm text-gray-500">{meeting.location_info}</p>
+                <p class="mt-2 text-sm text-gray-500">{meeting.location_info}</p>
               {/if}
             </div>
           </div>
@@ -203,13 +200,12 @@
         <!-- Online meeting row -->
         {#if meeting.isVirtual && (meeting.virtual_meeting_link || meeting.virtual_meeting_additional_info)}
           <div class="px-4 py-4">
-            <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.onlineMeetingSection}</p>
             {#if meeting.virtual_meeting_link}
               <a
                 href={meeting.virtual_meeting_link}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="bmlt-btn-primary mt-1.5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-base font-medium text-white transition-all hover:brightness-90"
+                class="bmlt-btn-primary flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-base font-medium text-white transition-all hover:brightness-90"
               >
                 <svg class="h-4 w-4" style="fill:none;stroke:currentColor" viewBox="0 0 24 24">
                   <path
