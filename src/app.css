@@ -247,6 +247,29 @@
   border: none !important;
 }
 
+/* ─── Mobile / touch UX ──────────────────────────────────────────────────────
+   touch-action: manipulation removes the 300ms tap delay on all interactive
+   elements without disabling pinch-zoom on the page.
+   overscroll-behavior: none on the map prevents pull-to-refresh when the user
+   drags the map or scrolls the meeting list.
+   scrollbar-width: none hides scrollbars on the meeting list for a cleaner look.
+   ─────────────────────────────────────────────────────────────────────────── */
+#crumb-widget button,
+#crumb-widget a {
+  touch-action: manipulation !important;
+}
+
+#crumb-widget .bmlt-map-container {
+  overscroll-behavior: none !important;
+}
+
+#crumb-widget .bmlt-meeting-list {
+  scrollbar-width: none !important;
+}
+#crumb-widget .bmlt-meeting-list::-webkit-scrollbar {
+  display: none !important;
+}
+
 /* ─── App shell ──────────────────────────────────────────────────────────────
    The inner .crumb-widget div and app header use hardcoded Tailwind colors.
    ─────────────────────────────────────────────────────────────────────────── */

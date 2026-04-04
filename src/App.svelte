@@ -134,7 +134,7 @@
           }}
         />
       {:else}
-        <div class={config.height ? 'h-full overflow-y-auto' : ''}>
+        <div class={config.height ? 'bmlt-meeting-list h-full overflow-y-auto' : 'bmlt-meeting-list'}>
           <MeetingList meetings={filteredMeetings} />
         </div>
       {/if}
