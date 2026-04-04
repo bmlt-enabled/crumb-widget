@@ -1,9 +1,9 @@
-import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
-import { dataState } from '@stores/data.svelte';
+import { dataState, loadDataByCoordinates } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import type { ProcessedMeeting } from '@/types/index';
 
@@ -12,7 +12,8 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@stores/data.svelte')>();
   return {
     ...actual,
-    loadData: vi.fn()
+    loadData: vi.fn(),
+    loadDataByCoordinates: vi.fn()
   };
 });
 
@@ -89,6 +90,7 @@ beforeEach(() => {
   dataState.error = null;
   resetFilters();
   uiState.view = 'list';
+  uiState.geoActive = false;
 });
 
 describe('App', () => {
@@ -459,5 +461,76 @@ describe('meeting detail', () => {
   test('hides address section for virtual-only meetings', async () => {
     await navigateToDetail(makeMeeting({ venue_type: 2, isInPerson: false, isVirtual: true, latitude: 0, longitude: 0 }));
     expect(screen.queryByText('123 Main St, Anytown, CA, 90210')).not.toBeInTheDocument();
+  });
+});
+
+describe('geolocation', () => {
+  const geoConfig: AppConfig = { ...baseConfig, geolocation: true };
+
+  afterEach(() => {
+    // Restore geolocation to undefined after each test
+    Object.defineProperty(navigator, 'geolocation', { value: undefined, configurable: true });
+  });
+
+  function mockGeo(impl: (success: PositionCallback, error: PositionErrorCallback) => void) {
+    Object.defineProperty(navigator, 'geolocation', {
+      value: { getCurrentPosition: vi.fn(impl) },
+      configurable: true
+    });
+  }
+
+  test('shows error when geolocation API is unavailable', async () => {
+    Object.defineProperty(navigator, 'geolocation', { value: undefined, configurable: true });
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(dataState.error).toBe('Unable to get location'));
+  });
+
+  test('calls loadDataByCoordinates with position coordinates on success', async () => {
+    mockGeo((success) => success({ coords: { latitude: 35.1, longitude: -80.2 } } as GeolocationPosition));
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(vi.mocked(loadDataByCoordinates)).toHaveBeenCalledWith(geoConfig.rootServerUrl, 35.1, -80.2, geoConfig.geolocationRadius));
+  });
+
+  test('sets geoActive and switches to map view on success', async () => {
+    mockGeo((success) => success({ coords: { latitude: 35.1, longitude: -80.2 } } as GeolocationPosition));
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => {
+      expect(uiState.geoActive).toBe(true);
+      expect(uiState.view).toBe('map');
+    });
+  });
+
+  test('does not set geoActive when loadDataByCoordinates sets an error', async () => {
+    mockGeo((success) => success({ coords: { latitude: 35.1, longitude: -80.2 } } as GeolocationPosition));
+    vi.mocked(loadDataByCoordinates).mockImplementationOnce(async () => {
+      dataState.error = 'Server error';
+    });
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(vi.mocked(loadDataByCoordinates)).toHaveBeenCalled());
+    expect(uiState.geoActive).toBe(false);
+  });
+
+  test('shows location denied message on permission error (code 1)', async () => {
+    mockGeo((_, error) => error({ code: 1 } as GeolocationPositionError));
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(dataState.error).toBe('Location access denied'));
+  });
+
+  test('shows location unavailable message on error code 2', async () => {
+    mockGeo((_, error) => error({ code: 2 } as GeolocationPositionError));
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(dataState.error).toBe('Location unavailable'));
+  });
+
+  test('shows timeout message on error code 3', async () => {
+    mockGeo((_, error) => error({ code: 3 } as GeolocationPositionError));
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(dataState.error).toBe('Location request timed out'));
+  });
+
+  test('sets loading false after geolocation error', async () => {
+    mockGeo((_, error) => error({ code: 1 } as GeolocationPositionError));
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(dataState.loading).toBe(false));
   });
 });
