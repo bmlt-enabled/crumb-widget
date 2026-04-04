@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatTime, formatEndTime, getTimezoneAbbr, getTimeOfDay, formatAddress, sortMeetings, getPlatform, getDirectionsUrl } from '@utils/format';
+import { formatTime, formatEndTime, getTimezoneAbbr, getTimeOfDay, formatAddress, sortMeetings, getPlatform, getDirectionsUrl, getGeoErrorMessage } from '@utils/format';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -168,6 +168,20 @@ describe('getPlatform', () => {
     setNav('mozilla/5.0 (windows nt 10.0; win64; x64)', 'Win32', 0);
     expect(getPlatform()).toBe('web');
   });
+});
+
+describe('getGeoErrorMessage', () => {
+  const t = {
+    locationDenied: 'Location access denied',
+    locationUnavailable: 'Location unavailable',
+    locationTimeout: 'Location request timed out',
+    locationError: 'Unable to get location'
+  };
+
+  test('code 1 returns permission denied', () => expect(getGeoErrorMessage(1, t)).toBe('Location access denied'));
+  test('code 2 returns unavailable', () => expect(getGeoErrorMessage(2, t)).toBe('Location unavailable'));
+  test('code 3 returns timeout', () => expect(getGeoErrorMessage(3, t)).toBe('Location request timed out'));
+  test('unknown code returns generic error', () => expect(getGeoErrorMessage(99, t)).toBe('Unable to get location'));
 });
 
 describe('getDirectionsUrl', () => {

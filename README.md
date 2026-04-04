@@ -1,5 +1,8 @@
 # Crumb Widget
 
+[![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
+
 An embeddable NA meeting finder widget. Drop a `<div>` and a `<script>` tag into any page and get a fully functional
 meeting finder - search, filters, list view, map, and meeting detail.
 
