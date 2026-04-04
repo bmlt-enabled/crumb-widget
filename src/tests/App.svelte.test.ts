@@ -303,14 +303,15 @@ describe('format filter', () => {
 });
 
 describe('meeting detail', () => {
-  test('clicking a meeting shows detail view', async () => {
-    dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting' })];
+  async function navigateToDetail(meeting: ProcessedMeeting) {
+    dataState.meetings = [meeting];
     render(App, { props: { config: baseConfig } });
-
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
-
+    await fireEvent.click(screen.getAllByText(meeting.meeting_name)[0]);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
-    // Time is embedded in "Monday at 7:00 PM" so match with regex
+  }
+
+  test('clicking a meeting shows detail view', async () => {
+    await navigateToDetail(makeMeeting({ meeting_name: 'Monday Night Meeting' }));
     expect(screen.getByText(/7:00 PM/)).toBeInTheDocument();
   });
 
@@ -323,5 +324,140 @@ describe('meeting detail', () => {
     await fireEvent.click(screen.getByText('Back to meetings'));
 
     await waitFor(() => expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument());
+  });
+
+  test('shows time range when duration is present', async () => {
+    await navigateToDetail(makeMeeting({ start_time: '19:00:00', duration_time: '01:30:00' }));
+    expect(screen.getByText(/7:00 PM/)).toBeInTheDocument();
+    expect(screen.getByText(/8:30 PM/)).toBeInTheDocument();
+  });
+
+  test('falls back to formattedTime when no duration', async () => {
+    await navigateToDetail(makeMeeting({ duration_time: '', formattedTime: '7:00 PM' }));
+    expect(screen.getByText(/7:00 PM/)).toBeInTheDocument();
+  });
+
+  test('shows timezone abbreviation when time_zone is set', async () => {
+    await navigateToDetail(makeMeeting({ time_zone: 'America/New_York' }));
+    expect(screen.getByText(/E[DS]T/)).toBeInTheDocument();
+  });
+
+  test('shows In-Person badge for in-person meetings', async () => {
+    await navigateToDetail(makeMeeting({ isInPerson: true, isVirtual: false }));
+    expect(screen.getByText('In-Person')).toBeInTheDocument();
+  });
+
+  test('shows Virtual badge for virtual meetings', async () => {
+    await navigateToDetail(makeMeeting({ venue_type: 2, isInPerson: false, isVirtual: true, latitude: 0, longitude: 0 }));
+    expect(screen.getByText('Virtual')).toBeInTheDocument();
+  });
+
+  test('shows both badges for hybrid meetings', async () => {
+    await navigateToDetail(makeMeeting({ venue_type: 3, isInPerson: true, isVirtual: true }));
+    expect(screen.getByText('In-Person')).toBeInTheDocument();
+    expect(screen.getByText('Virtual')).toBeInTheDocument();
+  });
+
+  test('shows format buttons when formats exist', async () => {
+    const fmt = makeFormat({ id: '1', name_string: 'Open', description_string: 'Open to all' });
+    await navigateToDetail(makeMeeting({ resolvedFormats: [fmt] }));
+    expect(screen.getByText('Open')).toBeInTheDocument();
+  });
+
+  test('shows address for in-person meetings', async () => {
+    await navigateToDetail(makeMeeting({ isInPerson: true, formattedAddress: '123 Main St, Anytown, CA, 90210' }));
+    expect(screen.getAllByText('123 Main St, Anytown, CA, 90210').length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('shows location_text when present', async () => {
+    await navigateToDetail(makeMeeting({ isInPerson: true, location_text: 'Community Center', formattedAddress: '123 Main St' }));
+    expect(screen.getByText('Community Center')).toBeInTheDocument();
+  });
+
+  test('shows location_info when present', async () => {
+    await navigateToDetail(makeMeeting({ isInPerson: true, location_info: 'Room 201', formattedAddress: '123 Main St' }));
+    expect(screen.getByText('Room 201')).toBeInTheDocument();
+  });
+
+  test('shows virtual meeting join link', async () => {
+    await navigateToDetail(
+      makeMeeting({
+        venue_type: 2,
+        isInPerson: false,
+        isVirtual: true,
+        latitude: 0,
+        longitude: 0,
+        virtual_meeting_link: 'https://zoom.us/j/123456'
+      })
+    );
+    expect(screen.getByText('Zoom')).toBeInTheDocument();
+  });
+
+  test('shows generic join label when provider is unknown', async () => {
+    await navigateToDetail(
+      makeMeeting({
+        venue_type: 2,
+        isInPerson: false,
+        isVirtual: true,
+        latitude: 0,
+        longitude: 0,
+        virtual_meeting_link: 'https://unknown-platform.example.com/room/42'
+      })
+    );
+    expect(screen.getByText('Join Meeting')).toBeInTheDocument();
+  });
+
+  test('shows virtual meeting additional info', async () => {
+    await navigateToDetail(
+      makeMeeting({
+        venue_type: 2,
+        isInPerson: false,
+        isVirtual: true,
+        latitude: 0,
+        longitude: 0,
+        virtual_meeting_link: 'https://zoom.us/j/123',
+        virtual_meeting_additional_info: 'Password: 1234'
+      })
+    );
+    expect(screen.getByText('Password: 1234')).toBeInTheDocument();
+  });
+
+  test('shows comments/notes when present', async () => {
+    await navigateToDetail(makeMeeting({ comments: 'Bring your own coffee' }));
+    expect(screen.getByText('Notes')).toBeInTheDocument();
+    expect(screen.getByText('Bring your own coffee')).toBeInTheDocument();
+  });
+
+  test('shows service body when present', async () => {
+    await navigateToDetail(makeMeeting({ service_body_name: 'Greater Metro ASC' }));
+    expect(screen.getByText('Service Body')).toBeInTheDocument();
+    expect(screen.getByText('Greater Metro ASC')).toBeInTheDocument();
+  });
+
+  test('shows email contact when present', async () => {
+    await navigateToDetail(makeMeeting({ email_contact: 'info@example.org' }));
+    expect(screen.getByText('Contact')).toBeInTheDocument();
+    expect(screen.getByText('info@example.org')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'info@example.org' })).toHaveAttribute('href', 'mailto:info@example.org');
+  });
+
+  test('hides notes section when comments is empty', async () => {
+    await navigateToDetail(makeMeeting({ comments: '' }));
+    expect(screen.queryByText('Notes')).not.toBeInTheDocument();
+  });
+
+  test('hides service body section when not present', async () => {
+    await navigateToDetail(makeMeeting({ service_body_name: undefined }));
+    expect(screen.queryByText('Service Body')).not.toBeInTheDocument();
+  });
+
+  test('hides contact section when email not present', async () => {
+    await navigateToDetail(makeMeeting({ email_contact: undefined }));
+    expect(screen.queryByText('Contact')).not.toBeInTheDocument();
+  });
+
+  test('hides address section for virtual-only meetings', async () => {
+    await navigateToDetail(makeMeeting({ venue_type: 2, isInPerson: false, isVirtual: true, latitude: 0, longitude: 0 }));
+    expect(screen.queryByText('123 Main St, Anytown, CA, 90210')).not.toBeInTheDocument();
   });
 });
