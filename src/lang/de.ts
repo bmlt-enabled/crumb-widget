@@ -42,12 +42,15 @@ export const deTranslations = {
   onlineMeetingSection: 'Online-Treffen',
   joinMeeting: 'Am Treffen teilnehmen',
   meetingFormats: 'Treffenformate',
+  meetingInformation: 'Informationen zum Treffen',
   notes: 'Notizen',
   contact: 'Kontakt',
   // Geolocation
   nearMe: 'In meiner Nähe',
   locating: 'Standort wird ermittelt\u2026',
   locationDenied: 'Standortzugriff verweigert',
+  locationUnavailable: 'Standort nicht verfügbar',
+  locationTimeout: 'Zeitüberschreitung bei Standortabfrage',
   locationError: 'Standort konnte nicht ermittelt werden',
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',

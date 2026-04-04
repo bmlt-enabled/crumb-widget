@@ -42,12 +42,15 @@ export const enTranslations = {
   onlineMeetingSection: 'Online Meeting',
   joinMeeting: 'Join Meeting',
   meetingFormats: 'Meeting Formats',
+  meetingInformation: 'Meeting Information',
   notes: 'Notes',
   contact: 'Contact',
   // Geolocation
   nearMe: 'Near Me',
   locating: 'Locating\u2026',
   locationDenied: 'Location access denied',
+  locationUnavailable: 'Location unavailable',
+  locationTimeout: 'Location request timed out',
   locationError: 'Unable to get location',
   // Loading
   loadingMeetings: 'Loading meetings\u2026',

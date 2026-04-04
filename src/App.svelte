@@ -4,8 +4,10 @@
   import type { AppConfig, ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
-  import { filterMeetings } from '@utils/format';
+  import { filterMeetings, getGeoErrorMessage } from '@utils/format';
   import { t } from '@stores/localization';
+
+  const GEOLOCATION_TIMEOUT_MS = 10000;
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
@@ -43,10 +45,10 @@
             }
           },
           (err) => {
-            dataState.error = err.code === 1 ? $t.locationDenied : $t.locationError;
+            dataState.error = getGeoErrorMessage(err.code, $t);
             dataState.loading = false;
           },
-          { timeout: 10000 }
+          { timeout: GEOLOCATION_TIMEOUT_MS }
         );
       }
     } else {

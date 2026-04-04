@@ -1,6 +1,7 @@
 import { SvelteMap } from 'svelte/reactivity';
 import { BmltClient } from 'bmlt-query-client';
 import type { Meeting, Format } from 'bmlt-query-client';
+import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
 
@@ -34,8 +35,8 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
       formattedAddress: formatAddress(m),
       timeOfDay: getTimeOfDay(m.start_time),
       resolvedFormats,
-      isInPerson: venueType === 1 || venueType === 3,
-      isVirtual: venueType === 2 || venueType === 3
+      isInPerson: venueType === VENUE_TYPE.IN_PERSON || venueType === VENUE_TYPE.HYBRID,
+      isVirtual: venueType === VENUE_TYPE.VIRTUAL || venueType === VENUE_TYPE.HYBRID
     };
   });
 }

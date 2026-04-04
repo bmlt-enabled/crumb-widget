@@ -3,12 +3,12 @@
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
   import type { Map as LeafletMap, TileLayer } from 'leaflet';
-  import type { ProcessedMeeting, TilesConfig } from '@/types';
+  import type { ProcessedMeeting } from '@/types';
 
   import { config } from '@stores/config.svelte';
   import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
-  import { DEFAULT_TILES, isDarkMode, observeMapResize, buildDirectionsLinkHtml } from '@utils/mapUtils';
+  import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
 
   interface Props {
@@ -28,15 +28,10 @@
   let bodyObserver: MutationObserver | null = null;
   let destroyResizeObserver: (() => void) | null = null;
 
-  function applyTileLayer(cfg: TilesConfig): void {
+  function updateTiles(): void {
     if (!leafletMap) return;
-    tileLayer?.remove();
-    tileLayer = L.tileLayer(cfg.url, { attribution: cfg.attribution, maxZoom: 19 });
-    tileLayer.addTo(leafletMap);
-  }
-
-  function onColorSchemeChange(): void {
-    applyTileLayer(isDarkMode(config.containerId) && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
+    const result = applyTileLayer(leafletMap, resolveTileConfig(config.containerId, config.tiles, config.tilesDark), tileLayer, null);
+    tileLayer = result.layer;
   }
 
   onMount(() => {
@@ -45,11 +40,11 @@
     leafletMap = L.map(mapEl).setView([meeting.latitude, meeting.longitude], 15);
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
-    applyTileLayer(isDarkMode(config.containerId) && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
+    updateTiles();
 
     if (config.tilesDark) {
-      darkMq.addEventListener('change', onColorSchemeChange);
-      bodyObserver = new MutationObserver(onColorSchemeChange);
+      darkMq.addEventListener('change', updateTiles);
+      bodyObserver = new MutationObserver(() => updateTiles());
       const containerEl = document.getElementById(config.containerId) ?? document.body;
       bodyObserver.observe(containerEl, { attributes: true, attributeFilter: ['class'] });
     }
@@ -72,7 +67,7 @@
   onDestroy(() => {
     destroyResizeObserver?.();
     bodyObserver?.disconnect();
-    darkMq?.removeEventListener('change', onColorSchemeChange);
+    darkMq?.removeEventListener('change', updateTiles);
     leafletMap?.remove();
   });
 </script>
@@ -113,7 +108,7 @@
       <div class="bmlt-card divide-y divide-gray-100 rounded-lg border border-gray-200">
         <!-- Card header -->
         <div class="bg-gray-50 px-4 py-2.5 first:rounded-t-lg">
-          <p class="text-base font-semibold text-gray-800">Meeting Information</p>
+          <p class="text-base font-semibold text-gray-800">{$t.meetingInformation}</p>
         </div>
 
         <!-- Schedule row -->

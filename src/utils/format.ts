@@ -1,3 +1,4 @@
+import { VENUE_TYPE } from '@/types/index';
 import type { Meeting, ProcessedMeeting, FilterState } from '@/types/index';
 
 export function is24HourTime(locale?: string): boolean {
@@ -149,7 +150,7 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
     result = result.filter((m) => weekdays.includes(m.weekday_tinyint));
   }
   if (venueTypes.length > 0) {
-    result = result.filter((m) => (venueTypes.includes(1) && m.isInPerson) || (venueTypes.includes(2) && m.isVirtual));
+    result = result.filter((m) => (venueTypes.includes(VENUE_TYPE.IN_PERSON) && m.isInPerson) || (venueTypes.includes(VENUE_TYPE.VIRTUAL) && m.isVirtual));
   }
   if (timeOfDay.length > 0) {
     result = result.filter((m) => timeOfDay.includes(m.timeOfDay));
@@ -170,6 +171,13 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
   }
 
   return result;
+}
+
+export function getGeoErrorMessage(code: number, t: { locationDenied: string; locationUnavailable: string; locationTimeout: string; locationError: string }): string {
+  if (code === 1) return t.locationDenied;
+  if (code === 2) return t.locationUnavailable;
+  if (code === 3) return t.locationTimeout;
+  return t.locationError;
 }
 
 export function getDirectionsUrl(meeting: Meeting): string {

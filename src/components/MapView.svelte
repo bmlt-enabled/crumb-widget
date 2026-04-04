@@ -8,7 +8,7 @@
   import { config } from '@stores/config.svelte';
   import { getDirectionsUrl } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
-  import { DEFAULT_TILES, isDarkMode, observeMapResize, buildDirectionsLinkHtml } from '@utils/mapUtils';
+  import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
 
   interface Props {
@@ -89,23 +89,11 @@
     skipNextFit = false;
   }
 
-  function applyTileLayer(cfg: TilesConfig): void {
+  function updateTiles(): void {
     if (!leafletMap) return;
-    // Bail out if the tile URL hasn't changed — prevents spurious iOS
-    // prefers-color-scheme / MutationObserver events from tearing down and
-    // rebuilding the tile layer mid-tap, which disrupts Leaflet's touch
-    // event processing and causes markers to miss their click.
-    if (currentTileUrl === cfg.url) return;
-    currentTileUrl = cfg.url;
-    if (tileLayer) {
-      tileLayer.remove();
-    }
-    tileLayer = L.tileLayer(cfg.url, { attribution: cfg.attribution, maxZoom: 19 });
-    tileLayer.addTo(leafletMap);
-  }
-
-  function onColorSchemeChange(): void {
-    applyTileLayer(isDarkMode(config.containerId) && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
+    const result = applyTileLayer(leafletMap, resolveTileConfig(config.containerId, tiles, tilesDark), tileLayer, currentTileUrl);
+    tileLayer = result.layer;
+    currentTileUrl = result.url;
   }
 
   function handleSearchArea(): void {
@@ -143,11 +131,11 @@
     });
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
-    applyTileLayer(isDarkMode(config.containerId) && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
+    updateTiles();
 
     if (tilesDark) {
-      darkMq.addEventListener('change', onColorSchemeChange);
-      bodyObserver = new MutationObserver(onColorSchemeChange);
+      darkMq.addEventListener('change', updateTiles);
+      bodyObserver = new MutationObserver(() => updateTiles());
       const containerEl = document.getElementById(config.containerId) ?? document.body;
       bodyObserver.observe(containerEl, { attributes: true, attributeFilter: ['class'] });
     }
@@ -164,7 +152,7 @@
   onDestroy(() => {
     destroyResizeObserver?.();
     bodyObserver?.disconnect();
-    darkMq?.removeEventListener('change', onColorSchemeChange);
+    darkMq?.removeEventListener('change', updateTiles);
     leafletMap?.remove();
   });
 

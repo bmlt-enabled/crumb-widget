@@ -2,12 +2,17 @@
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
   import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
+  import { VENUE_TYPE } from '@/types';
+  import { getGeoErrorMessage } from '@utils/format';
   import { t } from '@stores/localization';
   import FilterDropdown from '@components/FilterDropdown.svelte';
 
+  const GEOLOCATION_TIMEOUT_MS = 10000;
+  const GEO_ERROR_DISPLAY_MS = 4000;
+
   const VENUE_TYPE_VALUES = [
-    { value: 1, key: 'inPerson' as const },
-    { value: 2, key: 'virtual' as const }
+    { value: VENUE_TYPE.IN_PERSON, key: 'inPerson' as const },
+    { value: VENUE_TYPE.VIRTUAL, key: 'virtual' as const }
   ];
 
   const TIME_OF_DAY_VALUES = [
@@ -17,9 +22,12 @@
     { value: 'night', key: 'night' as const }
   ];
 
-  const hasMapMeetings = $derived(dataState.meetings.some((m) => m.venue_type === 1 || m.venue_type === 3));
+  const hasMapMeetings = $derived(dataState.meetings.some((m) => m.venue_type === VENUE_TYPE.IN_PERSON || m.venue_type === VENUE_TYPE.HYBRID));
   const activeFilterCount = $derived(uiState.filters.weekdays.length + uiState.filters.venueTypes.length + uiState.filters.timeOfDay.length + uiState.filters.formatIds.length);
-  const availableFormats = $derived([...new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f])).values()].sort((a, b) => a.name_string.localeCompare(b.name_string)));
+  const availableFormats = $derived.by(() => {
+    const uniqueById = new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f]));
+    return [...uniqueById.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
+  });
   const showViewToggle = $derived(hasMapMeetings || uiState.view === 'map' || uiState.geoActive);
 
   let showDayDropdown = $state(false);
@@ -53,19 +61,19 @@
           geoError = dataState.error;
           geoStatus = 'error';
           if (geoErrorTimer) clearTimeout(geoErrorTimer);
-          geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), 4000);
+          geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), GEO_ERROR_DISPLAY_MS);
         } else {
           uiState.geoActive = true;
           geoStatus = 'active';
         }
       },
       (err) => {
-        geoError = err.code === 1 ? $t.locationDenied : $t.locationError;
+        geoError = getGeoErrorMessage(err.code, $t);
         geoStatus = 'error';
         if (geoErrorTimer) clearTimeout(geoErrorTimer);
-        geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), 4000);
+        geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), GEO_ERROR_DISPLAY_MS);
       },
-      { timeout: 10000 }
+      { timeout: GEOLOCATION_TIMEOUT_MS }
     );
   }
 </script>
@@ -154,7 +162,7 @@
       buttonLabel={uiState.filters.timeOfDay.length === 0
         ? $t.anyTime
         : uiState.filters.timeOfDay.length === 1
-          ? $t[TIME_OF_DAY_VALUES.find((v) => v.value === uiState.filters.timeOfDay[0])!.key]
+          ? $t[TIME_OF_DAY_VALUES.find((v) => v.value === uiState.filters.timeOfDay[0])?.key ?? 'anyTime']
           : `${uiState.filters.timeOfDay.length} ${$t.timeOfDay}`}
       isActive={uiState.filters.timeOfDay.length > 0}
       selected={uiState.filters.timeOfDay}
@@ -185,7 +193,7 @@
           {#if uiState.filters.venueTypes.length === 0 && uiState.filters.formatIds.length === 0}
             {$t.anyType}
           {:else if uiState.filters.venueTypes.length === 1 && uiState.filters.formatIds.length === 0}
-            {$t[VENUE_TYPE_VALUES.find((v) => uiState.filters.venueTypes.includes(v.value))!.key]}
+            {$t[VENUE_TYPE_VALUES.find((v) => uiState.filters.venueTypes.includes(v.value))?.key ?? 'anyType']}
           {:else if uiState.filters.venueTypes.length === 0 && uiState.filters.formatIds.length === 1}
             {availableFormats.find((f) => f.id === uiState.filters.formatIds[0])?.name_string ?? '1 selected'}
           {:else}

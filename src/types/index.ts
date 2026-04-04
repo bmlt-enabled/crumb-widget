@@ -40,6 +40,12 @@ export interface FilterState {
   formatIds: string[];
 }
 
+export const VENUE_TYPE = {
+  IN_PERSON: 1,
+  VIRTUAL: 2,
+  HYBRID: 3
+} as const;
+
 export type ViewType = 'list' | 'map';
 
 export type Column = 'time' | 'name' | 'location' | 'address' | 'service_body';

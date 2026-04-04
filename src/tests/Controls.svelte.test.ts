@@ -236,7 +236,7 @@ describe('geolocation button', () => {
     });
     render(App, { props: { config: baseConfig } });
     await fireEvent.click(screen.getByText('Anywhere'));
-    await waitFor(() => expect(screen.getByText('Unable to get location')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Location unavailable')).toBeInTheDocument());
   });
 
   test('shows error when geolocation API is unavailable', async () => {

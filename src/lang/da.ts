@@ -42,12 +42,15 @@ export const daTranslations = {
   onlineMeetingSection: 'Online møde',
   joinMeeting: 'Deltag i mødet',
   meetingFormats: 'Mødeformater',
+  meetingInformation: 'Mødeinformation',
   notes: 'Noter',
   contact: 'Kontakt',
   // Geolocation
   nearMe: 'Nær mig',
   locating: 'Finder placering\u2026',
   locationDenied: 'Placeringsadgang nægtet',
+  locationUnavailable: 'Placering ikke tilgængelig',
+  locationTimeout: 'Placeringsanmodning udløb',
   locationError: 'Kunne ikke hente placering',
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',

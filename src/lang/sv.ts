@@ -42,12 +42,15 @@ export const svTranslations = {
   onlineMeetingSection: 'Online-möte',
   joinMeeting: 'Gå med i mötet',
   meetingFormats: 'Mötesformat',
+  meetingInformation: 'Mötesinformation',
   notes: 'Anteckningar',
   contact: 'Kontakt',
   // Geolocation
   nearMe: 'Nära mig',
   locating: 'Söker plats\u2026',
   locationDenied: 'Platsåtkomst nekad',
+  locationUnavailable: 'Plats ej tillgänglig',
+  locationTimeout: 'Tidsgräns för platsförfrågan överskriden',
   locationError: 'Kunde inte hämta plats',
   // Loading
   loadingMeetings: 'Laddar möten\u2026',

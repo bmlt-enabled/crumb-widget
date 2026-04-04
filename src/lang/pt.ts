@@ -42,12 +42,15 @@ export const ptTranslations = {
   onlineMeetingSection: 'Reunião online',
   joinMeeting: 'Entrar na reunião',
   meetingFormats: 'Formatos de reunião',
+  meetingInformation: 'Informações da reunião',
   notes: 'Notas',
   contact: 'Contato',
   // Geolocation
   nearMe: 'Perto de mim',
   locating: 'Localizando\u2026',
   locationDenied: 'Acesso à localização negado',
+  locationUnavailable: 'Localização indisponível',
+  locationTimeout: 'Tempo de localização esgotado',
   locationError: 'Não foi possível obter a localização',
   // Loading
   loadingMeetings: 'Carregando reuniões\u2026',
