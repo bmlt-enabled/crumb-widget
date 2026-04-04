@@ -1,7 +1,4 @@
-import type { Meeting } from '@/types/index';
-
-export const WEEKDAYS = ['', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-export const WEEKDAYS_SHORT = ['', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+import type { Meeting, ProcessedMeeting, FilterState } from '@/types/index';
 
 export function is24HourTime(locale?: string): boolean {
   return !new Intl.DateTimeFormat(locale, {
@@ -142,6 +139,37 @@ export function meetingSlug(meeting: { meeting_name: string; id_bigint: string }
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   return `${name || 'meeting'}-${meeting.id_bigint}`;
+}
+
+export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterState): ProcessedMeeting[] {
+  const { search, weekdays, venueTypes, timeOfDay, formatIds } = filters;
+  let result = meetings;
+
+  if (weekdays.length > 0) {
+    result = result.filter((m) => weekdays.includes(m.weekday_tinyint));
+  }
+  if (venueTypes.length > 0) {
+    result = result.filter((m) => (venueTypes.includes(1) && m.isInPerson) || (venueTypes.includes(2) && m.isVirtual));
+  }
+  if (timeOfDay.length > 0) {
+    result = result.filter((m) => timeOfDay.includes(m.timeOfDay));
+  }
+  if (formatIds.length > 0) {
+    result = result.filter((m) => m.resolvedFormats.some((f) => formatIds.includes(f.id)));
+  }
+  if (search.trim()) {
+    const q = search.toLowerCase().trim();
+    result = result.filter(
+      (m) =>
+        m.meeting_name.toLowerCase().includes(q) ||
+        m.formattedAddress.toLowerCase().includes(q) ||
+        m.location_municipality?.toLowerCase().includes(q) ||
+        m.location_text?.toLowerCase().includes(q) ||
+        m.comments?.toLowerCase().includes(q)
+    );
+  }
+
+  return result;
 }
 
 export function getDirectionsUrl(meeting: Meeting): string {

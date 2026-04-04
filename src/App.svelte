@@ -4,6 +4,7 @@
   import type { AppConfig, ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
+  import { filterMeetings } from '@utils/format';
   import { t } from '@stores/localization';
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
@@ -53,36 +54,7 @@
     }
   });
 
-  const filteredMeetings = $derived.by((): ProcessedMeeting[] => {
-    const { search, weekdays, venueTypes, timeOfDay, formatIds } = uiState.filters;
-    let result = dataState.meetings;
-
-    if (weekdays.length > 0) {
-      result = result.filter((m) => weekdays.includes(m.weekday_tinyint));
-    }
-    if (venueTypes.length > 0) {
-      result = result.filter((m) => (venueTypes.includes(1) && m.isInPerson) || (venueTypes.includes(2) && m.isVirtual));
-    }
-    if (timeOfDay.length > 0) {
-      result = result.filter((m) => timeOfDay.includes(m.timeOfDay));
-    }
-    if (formatIds.length > 0) {
-      result = result.filter((m) => m.resolvedFormats.some((f) => formatIds.includes(f.id)));
-    }
-    if (search.trim()) {
-      const q = search.toLowerCase().trim();
-      result = result.filter(
-        (m) =>
-          m.meeting_name.toLowerCase().includes(q) ||
-          m.formattedAddress.toLowerCase().includes(q) ||
-          m.location_municipality?.toLowerCase().includes(q) ||
-          m.location_text?.toLowerCase().includes(q) ||
-          m.comments?.toLowerCase().includes(q)
-      );
-    }
-
-    return result;
-  });
+  const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters));
 
   // Derive selected meeting from the current hash route: #/{slug}-{id}
   const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {

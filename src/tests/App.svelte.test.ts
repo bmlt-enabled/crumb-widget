@@ -76,8 +76,6 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
     formattedTime: '7:00 PM',
     formattedAddress: '123 Main St, Anytown, CA, 90210',
     timeOfDay: 'evening',
-    dayName: 'Monday',
-    dayShort: 'Mon',
     resolvedFormats: [],
     isVirtual: false,
     isInPerson: true,

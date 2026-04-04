@@ -53,5 +53,8 @@ export const ptTranslations = {
   loadingMeetings: 'Carregando reuniões\u2026',
   // Map
   noInPersonMeetings: 'Nenhuma reunião presencial para exibir no mapa com os filtros atuais',
-  searchThisArea: 'Pesquisar nesta área'
+  searchThisArea: 'Pesquisar nesta área',
+  // Weekdays (index 0 = Sunday … index 6 = Saturday)
+  weekdays: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
+  weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 };

@@ -53,5 +53,8 @@ export const svTranslations = {
   loadingMeetings: 'Laddar möten\u2026',
   // Map
   noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter',
-  searchThisArea: 'Sök i det här området'
+  searchThisArea: 'Sök i det här området',
+  // Weekdays (index 0 = Sunday … index 6 = Saturday)
+  weekdays: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
+  weekdaysShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör']
 };

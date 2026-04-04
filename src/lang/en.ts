@@ -53,5 +53,8 @@ export const enTranslations = {
   loadingMeetings: 'Loading meetings\u2026',
   // Map
   noInPersonMeetings: 'No in-person meetings to show on map with current filters',
-  searchThisArea: 'Search this area'
+  searchThisArea: 'Search this area',
+  // Weekdays (index 0 = Sunday … index 6 = Saturday)
+  weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 };

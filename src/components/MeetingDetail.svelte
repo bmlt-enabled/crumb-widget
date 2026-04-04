@@ -8,6 +8,7 @@
   import { config } from '@stores/config.svelte';
   import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
+  import { DEFAULT_TILES, isDarkMode, observeMapResize, buildDirectionsLinkHtml } from '@utils/mapUtils';
   import { t } from '@stores/localization';
 
   interface Props {
@@ -20,18 +21,12 @@
 
   let activeFmtId = $state<string | null>(null);
 
-  const DEFAULT_TILES: TilesConfig = {
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  };
-
   let mapEl = $state<HTMLDivElement | undefined>();
   let leafletMap: LeafletMap | null = null;
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
   let bodyObserver: MutationObserver | null = null;
-  let resizeObserver: ResizeObserver | null = null;
-  let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+  let destroyResizeObserver: (() => void) | null = null;
 
   function applyTileLayer(cfg: TilesConfig): void {
     if (!leafletMap) return;
@@ -40,15 +35,8 @@
     tileLayer.addTo(leafletMap);
   }
 
-  function isDarkMode(): boolean {
-    const el = document.getElementById(config.containerId);
-    if (el?.classList.contains('bmlt-dark-force')) return true;
-    if (el?.classList.contains('bmlt-dark-auto')) return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return false;
-  }
-
   function onColorSchemeChange(): void {
-    applyTileLayer(isDarkMode() && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
+    applyTileLayer(isDarkMode(config.containerId) && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
   }
 
   onMount(() => {
@@ -57,7 +45,7 @@
     leafletMap = L.map(mapEl).setView([meeting.latitude, meeting.longitude], 15);
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
-    applyTileLayer(isDarkMode() && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
+    applyTileLayer(isDarkMode(config.containerId) && config.tilesDark ? config.tilesDark : (config.tiles ?? DEFAULT_TILES));
 
     if (config.tilesDark) {
       darkMq.addEventListener('change', onColorSchemeChange);
@@ -68,7 +56,7 @@
 
     const popupHtml = `<div style="min-width:160px;max-width:220px;word-break:break-word;white-space:normal">
       <p style="font-size:13px;margin:0 0 8px">${meeting.formattedAddress}</p>
-      <a href="${getDirectionsUrl(meeting)}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:4px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;text-decoration:none;font-family:inherit">${$t.getDirections}</a>
+      ${buildDirectionsLinkHtml(getDirectionsUrl(meeting), $t.getDirections, '4px')}
     </div>`;
 
     L.marker([meeting.latitude, meeting.longitude], {
@@ -78,16 +66,11 @@
       .addTo(leafletMap!)
       .openPopup();
 
-    resizeObserver = new ResizeObserver(() => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => leafletMap?.invalidateSize(), 200);
-    });
-    resizeObserver.observe(mapEl);
+    destroyResizeObserver = observeMapResize(mapEl, () => leafletMap?.invalidateSize());
   });
 
   onDestroy(() => {
-    clearTimeout(resizeTimer);
-    resizeObserver?.disconnect();
+    destroyResizeObserver?.();
     bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
     leafletMap?.remove();
@@ -137,7 +120,7 @@
         <div class="px-4 py-4">
           <div>
             <p class="text-base font-medium text-gray-900">
-              {meeting.dayName},
+              {$t.weekdays[meeting.weekday_tinyint - 1]},
               {#if meeting.duration_time && formatEndTime(meeting.start_time, meeting.duration_time)}
                 {formatTime(meeting.start_time)} – {formatEndTime(meeting.start_time, meeting.duration_time)}
               {:else}

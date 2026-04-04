@@ -32,7 +32,7 @@
           <div class="w-20 shrink-0 text-gray-600">
             <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
             <br />
-            <span class="font-semibold text-gray-800">{meeting.dayShort}</span>
+            <span class="font-semibold text-gray-800">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
           </div>
         {/if}
         <!-- Right: name + location details -->
@@ -95,7 +95,7 @@
               <td class="px-4 py-4 whitespace-nowrap text-gray-600">
                 <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
                 <br />
-                <span class="font-medium text-gray-800">{meeting.dayShort}</span>
+                <span class="font-medium text-gray-800">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
               </td>
             {/if}
             {#if cols.has('name')}

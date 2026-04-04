@@ -53,5 +53,8 @@ export const frTranslations = {
   loadingMeetings: 'Chargement des réunions\u2026',
   // Map
   noInPersonMeetings: 'Aucune réunion en présentiel à afficher sur la carte avec les filtres actuels',
-  searchThisArea: 'Rechercher dans cette zone'
+  searchThisArea: 'Rechercher dans cette zone',
+  // Weekdays (index 0 = Sunday … index 6 = Saturday)
+  weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+  weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
 };

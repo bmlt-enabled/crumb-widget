@@ -53,5 +53,8 @@ export const deTranslations = {
   loadingMeetings: 'Treffen werden geladen\u2026',
   // Map
   noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen',
-  searchThisArea: 'Diesen Bereich durchsuchen'
+  searchThisArea: 'Diesen Bereich durchsuchen',
+  // Weekdays (index 0 = Sunday … index 6 = Saturday)
+  weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+  weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
 };

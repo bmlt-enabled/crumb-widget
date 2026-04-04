@@ -8,6 +8,7 @@
   import { config } from '@stores/config.svelte';
   import { getDirectionsUrl } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
+  import { DEFAULT_TILES, isDarkMode, observeMapResize, buildDirectionsLinkHtml } from '@utils/mapUtils';
   import { t } from '@stores/localization';
 
   interface Props {
@@ -27,13 +28,12 @@
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
   let bodyObserver: MutationObserver | null = null;
-  let resizeObserver: ResizeObserver | null = null;
+  let destroyResizeObserver: (() => void) | null = null;
   let showSearchArea = $state(false);
   let skipNextFit = false;
   let suppressMoveEnd = false;
   let suppressPopupMoveEnd = false;
   let searchCenter: { lat: number; lng: number } | null = null;
-  let resizeTimer: ReturnType<typeof setTimeout> | undefined;
   let currentTileUrl: string | null = null;
   // Minimum displacement (degrees) before "Search this area" appears.
   // ~0.05° ≈ 5 km at the equator — small enough to feel responsive,
@@ -48,15 +48,12 @@
     for (const m of group) {
       const row = document.createElement('div');
       row.style.cssText = 'cursor:pointer;padding:4px 0;border-bottom:1px solid var(--bmlt-divider)';
-      row.innerHTML = `<strong style="display:block;font-size:13px;color:var(--bmlt-text)">${m.meeting_name}</strong><span style="font-size:12px;color:var(--bmlt-text-secondary)">${m.dayName} ${m.formattedTime}</span>`;
+      row.innerHTML = `<strong style="display:block;font-size:13px;color:var(--bmlt-text)">${m.meeting_name}</strong><span style="font-size:12px;color:var(--bmlt-text-secondary)">${$t.weekdays[m.weekday_tinyint - 1]} ${m.formattedTime}</span>`;
       row.addEventListener('click', () => selectMeeting(m));
       div.appendChild(row);
     }
 
-    div.insertAdjacentHTML(
-      'beforeend',
-      `<a href="${getDirectionsUrl(group[0])}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:8px;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;text-decoration:none;font-family:inherit">${$t.getDirections}</a>`
-    );
+    div.insertAdjacentHTML('beforeend', buildDirectionsLinkHtml(getDirectionsUrl(group[0]), $t.getDirections));
 
     return div;
   }
@@ -92,11 +89,6 @@
     skipNextFit = false;
   }
 
-  const DEFAULT_TILES: TilesConfig = {
-    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  };
-
   function applyTileLayer(cfg: TilesConfig): void {
     if (!leafletMap) return;
     // Bail out if the tile URL hasn't changed — prevents spurious iOS
@@ -112,15 +104,8 @@
     tileLayer.addTo(leafletMap);
   }
 
-  function isDarkMode(): boolean {
-    const el = document.getElementById(config.containerId);
-    if (el?.classList.contains('bmlt-dark-force')) return true;
-    if (el?.classList.contains('bmlt-dark-auto')) return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    return false;
-  }
-
   function onColorSchemeChange(): void {
-    applyTileLayer(isDarkMode() && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
+    applyTileLayer(isDarkMode(config.containerId) && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
   }
 
   function handleSearchArea(): void {
@@ -158,7 +143,7 @@
     });
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
-    applyTileLayer(isDarkMode() && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
+    applyTileLayer(isDarkMode(config.containerId) && tilesDark ? tilesDark : (tiles ?? DEFAULT_TILES));
 
     if (tilesDark) {
       darkMq.addEventListener('change', onColorSchemeChange);
@@ -173,25 +158,21 @@
     // Debounce invalidateSize to prevent iOS address-bar resize events from
     // firing mid-tap, which shifts map geometry and causes Leaflet's tap handler
     // to miss the marker and never open the popup.
-    resizeObserver = new ResizeObserver(() => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => leafletMap?.invalidateSize(), 200);
-    });
-    resizeObserver.observe(mapEl);
+    destroyResizeObserver = observeMapResize(mapEl, () => leafletMap?.invalidateSize());
   });
 
   onDestroy(() => {
-    clearTimeout(resizeTimer);
-    resizeObserver?.disconnect();
+    destroyResizeObserver?.();
     bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', onColorSchemeChange);
     leafletMap?.remove();
   });
 
   $effect(() => {
-    // Re-render when filtered meetings change; reading mappableMeetings tracks the dependency
+    // Reading mappableMeetings.length tracks it as a reactive dependency
     const _len = mappableMeetings.length;
-    if (_len >= 0 && leafletMap && markersLayer) {
+    void _len;
+    if (leafletMap && markersLayer) {
       renderMarkers();
     }
   });

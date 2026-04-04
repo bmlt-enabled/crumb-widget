@@ -53,5 +53,8 @@ export const daTranslations = {
   loadingMeetings: 'Indlæser møder\u2026',
   // Map
   noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre',
-  searchThisArea: 'Søg i dette område'
+  searchThisArea: 'Søg i dette område',
+  // Weekdays (index 0 = Sunday … index 6 = Saturday)
+  weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
+  weekdaysShort: ['Søn', 'Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør']
 };

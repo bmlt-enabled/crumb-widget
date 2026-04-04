@@ -2,8 +2,8 @@
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
   import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
-  import { WEEKDAYS } from '@utils/format';
   import { t } from '@stores/localization';
+  import FilterDropdown from '@components/FilterDropdown.svelte';
 
   const VENUE_TYPE_VALUES = [
     { value: 1, key: 'inPerson' as const },
@@ -25,13 +25,9 @@
   let showDayDropdown = $state(false);
   let showTimeDropdown = $state(false);
   let showTypeDropdown = $state(false);
-  let dayDropdownEl = $state<HTMLDivElement | undefined>();
-  let timeDropdownEl = $state<HTMLDivElement | undefined>();
   let typeDropdownEl = $state<HTMLDivElement | undefined>();
 
   function handleWindowClick(e: MouseEvent) {
-    if (dayDropdownEl && !dayDropdownEl.contains(e.target as Node)) showDayDropdown = false;
-    if (timeDropdownEl && !timeDropdownEl.contains(e.target as Node)) showTimeDropdown = false;
     if (typeDropdownEl && !typeDropdownEl.contains(e.target as Node)) showTypeDropdown = false;
   }
 
@@ -136,98 +132,40 @@
     {/if}
 
     <!-- Day dropdown -->
-    <div class="relative sm:flex-none" bind:this={dayDropdownEl}>
-      <button
-        onclick={(e) => {
-          e.stopPropagation();
-          showDayDropdown = !showDayDropdown;
-          showTimeDropdown = false;
-          showTypeDropdown = false;
-        }}
-        class="flex w-full items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors sm:w-auto {uiState.filters.weekdays.length > 0
-          ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
-          : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
-      >
-        <span>
-          {#if uiState.filters.weekdays.length === 0}
-            {$t.anyDay}
-          {:else if uiState.filters.weekdays.length === 1}
-            {WEEKDAYS[uiState.filters.weekdays[0]]}
-          {:else}
-            {uiState.filters.weekdays.length} {$t.day}s
-          {/if}
-        </span>
-        <svg class="h-3.5 w-3.5 shrink-0 transition-transform {showDayDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {#if showDayDropdown}
-        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[9rem] rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
-          {#each WEEKDAYS.slice(1) as day, i (i)}
-            <button
-              onclick={() => toggleArrayFilter('weekdays', i + 1)}
-              class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.weekdays.includes(i + 1) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
-            >
-              <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.weekdays.includes(i + 1) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
-                {#if uiState.filters.weekdays.includes(i + 1)}
-                  <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                  </svg>
-                {/if}
-              </span>
-              {day}
-            </button>
-          {/each}
-        </div>
-      {/if}
-    </div>
+    <FilterDropdown
+      buttonLabel={uiState.filters.weekdays.length === 0
+        ? $t.anyDay
+        : uiState.filters.weekdays.length === 1
+          ? $t.weekdays[uiState.filters.weekdays[0] - 1]
+          : `${uiState.filters.weekdays.length} ${$t.day}s`}
+      isActive={uiState.filters.weekdays.length > 0}
+      selected={uiState.filters.weekdays}
+      options={$t.weekdays.map((day, i) => ({ value: i + 1, label: day }))}
+      bind:isOpen={showDayDropdown}
+      onToggle={(v) => toggleArrayFilter('weekdays', v)}
+      onopen={() => {
+        showTimeDropdown = false;
+        showTypeDropdown = false;
+      }}
+    />
 
     <!-- Time of day dropdown -->
-    <div class="relative sm:flex-none" bind:this={timeDropdownEl}>
-      <button
-        onclick={(e) => {
-          e.stopPropagation();
-          showTimeDropdown = !showTimeDropdown;
-          showDayDropdown = false;
-          showTypeDropdown = false;
-        }}
-        class="flex w-full items-center justify-between rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.timeOfDay.length > 0
-          ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
-          : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
-      >
-        <span>
-          {#if uiState.filters.timeOfDay.length === 0}
-            {$t.anyTime}
-          {:else if uiState.filters.timeOfDay.length === 1}
-            {$t[TIME_OF_DAY_VALUES.find((v) => v.value === uiState.filters.timeOfDay[0])!.key]}
-          {:else}
-            {uiState.filters.timeOfDay.length} {$t.timeOfDay}
-          {/if}
-        </span>
-        <svg class="h-3.5 w-3.5 shrink-0 transition-transform {showTimeDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
-      {#if showTimeDropdown}
-        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[9rem] rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
-          {#each TIME_OF_DAY_VALUES as tod (tod.value)}
-            <button
-              onclick={() => toggleArrayFilter('timeOfDay', tod.value)}
-              class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.timeOfDay.includes(tod.value) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
-            >
-              <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.timeOfDay.includes(tod.value) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
-                {#if uiState.filters.timeOfDay.includes(tod.value)}
-                  <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                  </svg>
-                {/if}
-              </span>
-              {$t[tod.key]}
-            </button>
-          {/each}
-        </div>
-      {/if}
-    </div>
+    <FilterDropdown
+      buttonLabel={uiState.filters.timeOfDay.length === 0
+        ? $t.anyTime
+        : uiState.filters.timeOfDay.length === 1
+          ? $t[TIME_OF_DAY_VALUES.find((v) => v.value === uiState.filters.timeOfDay[0])!.key]
+          : `${uiState.filters.timeOfDay.length} ${$t.timeOfDay}`}
+      isActive={uiState.filters.timeOfDay.length > 0}
+      selected={uiState.filters.timeOfDay}
+      options={TIME_OF_DAY_VALUES.map((tod) => ({ value: tod.value, label: $t[tod.key] }))}
+      bind:isOpen={showTimeDropdown}
+      onToggle={(v) => toggleArrayFilter('timeOfDay', v)}
+      onopen={() => {
+        showDayDropdown = false;
+        showTypeDropdown = false;
+      }}
+    />
 
     <!-- Type dropdown (venue type + format) -->
     <div class="relative {showViewToggle ? '' : 'col-span-2'} sm:flex-none" bind:this={typeDropdownEl}>

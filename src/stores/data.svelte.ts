@@ -2,7 +2,9 @@ import { SvelteMap } from 'svelte/reactivity';
 import { BmltClient } from 'bmlt-query-client';
 import type { Meeting, Format } from 'bmlt-query-client';
 import type { ProcessedMeeting } from '@/types';
-import { formatTime, formatAddress, getTimeOfDay, WEEKDAYS, WEEKDAYS_SHORT, sortMeetings } from '@utils/format';
+import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
+
+const PAGE_SIZE = 5000;
 
 interface DataState {
   meetings: ProcessedMeeting[];
@@ -31,8 +33,6 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
       formattedTime: formatTime(m.start_time),
       formattedAddress: formatAddress(m),
       timeOfDay: getTimeOfDay(m.start_time),
-      dayName: WEEKDAYS[weekday] ?? '',
-      dayShort: WEEKDAYS_SHORT[weekday] ?? '',
       resolvedFormats,
       isInPerson: venueType === 1 || venueType === 3,
       isVirtual: venueType === 2 || venueType === 3
@@ -54,7 +54,7 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
 
     const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
       ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
-      page_size: 5000
+      page_size: PAGE_SIZE
     });
 
     const formatsMap = new SvelteMap<string, Format>();
@@ -88,7 +88,7 @@ export async function loadDataByCoordinates(rootServerUrl: string, latitude: num
       long_val: longitude,
       geo_width: radiusMiles,
       sort_results_by_distance: true,
-      page_size: 5000
+      page_size: PAGE_SIZE
     });
 
     const formatsMap = new SvelteMap<string, Format>();

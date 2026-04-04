@@ -27,8 +27,6 @@ export interface ProcessedMeeting extends Meeting {
   formattedTime: string;
   formattedAddress: string;
   timeOfDay: 'morning' | 'afternoon' | 'evening' | 'night';
-  dayName: string;
-  dayShort: string;
   resolvedFormats: Format[];
   isVirtual: boolean;
   isInPerson: boolean;
