@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crumb Widget E2E Fixture</title>
+  </head>
+  <body>
+    <div id="crumb-widget" data-root-server="https://bmlt.e2e.test/main_server/"></div>
+    <script>
+      window.CrumbWidgetConfig = { geolocation: false };
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
