@@ -9,6 +9,7 @@ export const daTranslations = {
   anyDay: 'Hvilken dag som helst',
   anyTime: 'Hvilken tid som helst',
   anyType: 'Ethvert format',
+  anyServiceBody: 'Ethvert servicekrop',
   anywhere: 'Hvor som helst',
   clearAllFilters: 'Ryd alle filtre',
   listView: 'Listevisning',

@@ -9,6 +9,7 @@ export const itTranslations = {
   anyDay: 'Qualsiasi giorno',
   anyTime: 'Qualsiasi ora',
   anyType: 'Qualsiasi formato',
+  anyServiceBody: 'Qualsiasi corpo di servizio',
   anywhere: 'Ovunque',
   clearAllFilters: 'Cancella tutti i filtri',
   listView: 'Vista elenco',

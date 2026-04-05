@@ -24,15 +24,23 @@
   ];
 
   const hasMapMeetings = $derived(dataState.meetings.some((m) => m.venue_type === VENUE_TYPE.IN_PERSON || m.venue_type === VENUE_TYPE.HYBRID));
-  const activeFilterCount = $derived(uiState.filters.weekdays.length + uiState.filters.venueTypes.length + uiState.filters.timeOfDay.length + uiState.filters.formatIds.length);
+  const activeFilterCount = $derived(
+    uiState.filters.weekdays.length + uiState.filters.venueTypes.length + uiState.filters.timeOfDay.length + uiState.filters.formatIds.length + uiState.filters.serviceBodyNames.length
+  );
   const availableFormats = $derived.by(() => {
     const uniqueById = new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f]));
     return [...uniqueById.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
   });
+  const availableServiceBodies = $derived.by(() => {
+    const names = new Set(dataState.meetings.map((m) => m.service_body_name).filter((n): n is string => !!n));
+    return [...names].sort((a, b) => a.localeCompare(b));
+  });
+  const showServiceBodyFilter = $derived(config.columns.includes('service_body') && availableServiceBodies.length > 1);
   const showViewToggle = $derived(hasMapMeetings || uiState.view === 'map' || uiState.geoActive);
 
   let showDayDropdown = $state(false);
   let showTimeDropdown = $state(false);
+  let showServiceBodyDropdown = $state(false);
   let showTypeDropdown = $state(false);
   let typeDropdownEl = $state<HTMLDivElement | undefined>();
 
@@ -159,6 +167,7 @@
       onopen={() => {
         showTimeDropdown = false;
         showTypeDropdown = false;
+        showServiceBodyDropdown = false;
       }}
     />
 
@@ -177,6 +186,7 @@
       onopen={() => {
         showDayDropdown = false;
         showTypeDropdown = false;
+        showServiceBodyDropdown = false;
       }}
     />
 
@@ -188,6 +198,7 @@
           showTypeDropdown = !showTypeDropdown;
           showDayDropdown = false;
           showTimeDropdown = false;
+          showServiceBodyDropdown = false;
         }}
         class="flex w-full items-center justify-between rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.venueTypes.length > 0 ||
         uiState.filters.formatIds.length > 0
@@ -252,6 +263,27 @@
         </div>
       {/if}
     </div>
+
+    <!-- Service body dropdown -->
+    {#if showServiceBodyFilter}
+      <FilterDropdown
+        buttonLabel={uiState.filters.serviceBodyNames.length === 0
+          ? $t.anyServiceBody
+          : uiState.filters.serviceBodyNames.length === 1
+            ? uiState.filters.serviceBodyNames[0]
+            : `${uiState.filters.serviceBodyNames.length} ${$t.serviceBody}`}
+        isActive={uiState.filters.serviceBodyNames.length > 0}
+        selected={uiState.filters.serviceBodyNames}
+        options={availableServiceBodies.map((name) => ({ value: name, label: name }))}
+        bind:isOpen={showServiceBodyDropdown}
+        onToggle={(v) => toggleArrayFilter('serviceBodyNames', v)}
+        onopen={() => {
+          showDayDropdown = false;
+          showTimeDropdown = false;
+          showTypeDropdown = false;
+        }}
+      />
+    {/if}
 
     <!-- Clear all filters — desktop only, inline so no layout shift -->
     {#if activeFilterCount > 0 || uiState.filters.search}

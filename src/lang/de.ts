@@ -9,6 +9,7 @@ export const deTranslations = {
   anyDay: 'Beliebiger Tag',
   anyTime: 'Beliebige Zeit',
   anyType: 'Beliebiges Format',
+  anyServiceBody: 'Beliebiger Dienstbereich',
   anywhere: 'Überall',
   clearAllFilters: 'Alle Filter löschen',
   listView: 'Listenansicht',

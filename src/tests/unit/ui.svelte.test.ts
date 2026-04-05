@@ -82,7 +82,8 @@ describe('resetFilters', () => {
       weekdays: [],
       venueTypes: [],
       timeOfDay: [],
-      formatIds: []
+      formatIds: [],
+      serviceBodyNames: []
     });
   });
 });

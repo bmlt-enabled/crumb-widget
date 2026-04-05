@@ -40,6 +40,7 @@ export interface FilterState {
   venueTypes: number[];
   timeOfDay: string[];
   formatIds: string[];
+  serviceBodyNames: string[];
 }
 
 export const VENUE_TYPE = {

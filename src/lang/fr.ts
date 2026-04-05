@@ -9,6 +9,7 @@ export const frTranslations = {
   anyDay: "N'importe quel jour",
   anyTime: "N'importe quelle heure",
   anyType: "N'importe quel format",
+  anyServiceBody: "N'importe quel corps de service",
   anywhere: "N'importe où",
   clearAllFilters: 'Effacer tous les filtres',
   listView: 'Vue liste',

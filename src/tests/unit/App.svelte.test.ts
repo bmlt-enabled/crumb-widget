@@ -5,6 +5,7 @@ import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
 import { dataState, loadDataByCoordinates } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
+import { config } from '@stores/config.svelte';
 import type { ProcessedMeeting } from '@/types/index';
 
 // Prevent real API calls in all tests
@@ -301,6 +302,76 @@ describe('format filter', () => {
     await fireEvent.click(screen.getByText('Clear all filters'));
 
     expect(screen.getByText('Any Format')).toBeInTheDocument();
+  });
+});
+
+describe('service body filter', () => {
+  beforeEach(() => {
+    config.columns = ['time', 'name', 'location', 'address', 'service_body'];
+  });
+
+  afterEach(() => {
+    config.columns = ['time', 'name', 'location', 'address'];
+  });
+
+  test('service body dropdown is shown when service_body column is configured and multiple bodies exist', async () => {
+    dataState.meetings = [makeMeeting({ id_bigint: '1', service_body_name: 'Area 1' }), makeMeeting({ id_bigint: '2', service_body_name: 'Area 2' })];
+    render(App, { props: { config: baseConfig } });
+    expect(screen.getByText('Any Service Body')).toBeInTheDocument();
+  });
+
+  test('service body dropdown is hidden when service_body column is not configured', async () => {
+    config.columns = ['time', 'name', 'location', 'address'];
+    dataState.meetings = [makeMeeting({ id_bigint: '1', service_body_name: 'Area 1' }), makeMeeting({ id_bigint: '2', service_body_name: 'Area 2' })];
+    render(App, { props: { config: baseConfig } });
+    expect(screen.queryByText('Any Service Body')).not.toBeInTheDocument();
+  });
+
+  test('service body dropdown is hidden when only one service body exists', async () => {
+    dataState.meetings = [makeMeeting({ id_bigint: '1', service_body_name: 'Area 1' }), makeMeeting({ id_bigint: '2', service_body_name: 'Area 1' })];
+    render(App, { props: { config: baseConfig } });
+    expect(screen.queryByText('Any Service Body')).not.toBeInTheDocument();
+  });
+
+  test('selecting a service body filters meetings', async () => {
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'Area 1 Meeting', service_body_name: 'Area 1' }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Area 2 Meeting', service_body_name: 'Area 2' })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Any Service Body'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Area 1' }));
+
+    expect(screen.getAllByText('Area 1 Meeting')[0]).toBeInTheDocument();
+    expect(screen.queryByText('Area 2 Meeting')).not.toBeInTheDocument();
+  });
+
+  test('service body filter is included in active filter count and shows clear button', async () => {
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'Area 1 Meeting', service_body_name: 'Area 1' }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Area 2 Meeting', service_body_name: 'Area 2' })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Any Service Body'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Area 1' }));
+
+    expect(screen.getByText('Clear all filters')).toBeInTheDocument();
+  });
+
+  test('clear all filters resets service body selection', async () => {
+    dataState.meetings = [
+      makeMeeting({ id_bigint: '1', meeting_name: 'Area 1 Meeting', service_body_name: 'Area 1' }),
+      makeMeeting({ id_bigint: '2', meeting_name: 'Area 2 Meeting', service_body_name: 'Area 2' })
+    ];
+    render(App, { props: { config: baseConfig } });
+
+    await fireEvent.click(screen.getByText('Any Service Body'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Area 1' }));
+    await fireEvent.click(screen.getByText('Clear all filters'));
+
+    expect(screen.getByText('Any Service Body')).toBeInTheDocument();
   });
 });
 

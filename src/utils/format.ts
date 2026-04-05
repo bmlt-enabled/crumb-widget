@@ -169,7 +169,7 @@ export function meetingSlug(meeting: { meeting_name: string; id_bigint: string }
 }
 
 export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterState): ProcessedMeeting[] {
-  const { search, weekdays, venueTypes, timeOfDay, formatIds } = filters;
+  const { search, weekdays, venueTypes, timeOfDay, formatIds, serviceBodyNames } = filters;
   let result = meetings;
 
   if (weekdays.length > 0) {
@@ -183,6 +183,9 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
   }
   if (formatIds.length > 0) {
     result = result.filter((m) => m.resolvedFormats.some((f) => formatIds.includes(f.id)));
+  }
+  if (serviceBodyNames.length > 0) {
+    result = result.filter((m) => m.service_body_name && serviceBodyNames.includes(m.service_body_name));
   }
   if (search.trim()) {
     const q = search.toLowerCase().trim();

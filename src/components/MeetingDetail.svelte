@@ -52,7 +52,7 @@
   onMount(() => {
     if (!showMap || !mapEl) return;
 
-    leafletMap = L.map(mapEl).setView([meeting.latitude, meeting.longitude], 15);
+    leafletMap = L.map(mapEl).setView([meeting.latitude, meeting.longitude], 17);
 
     darkMq = window.matchMedia('(prefers-color-scheme: dark)');
     updateTiles();
@@ -138,10 +138,10 @@
               {:else}
                 {meeting.formattedTime}
               {/if}
+              {#if meeting.time_zone}
+                <span class="text-base font-normal text-gray-500">{getTimezoneAbbr(meeting.time_zone)}</span>
+              {/if}
             </p>
-            {#if meeting.time_zone}
-              <p class="text-base text-gray-500">{getTimezoneAbbr(meeting.time_zone)}</p>
-            {/if}
           </div>
         </div>
 

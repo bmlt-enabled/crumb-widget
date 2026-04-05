@@ -9,6 +9,7 @@ export const enTranslations = {
   anyDay: 'Any Day',
   anyTime: 'Any Time',
   anyType: 'Any Format',
+  anyServiceBody: 'Any Service Body',
   anywhere: 'Anywhere',
   clearAllFilters: 'Clear all filters',
   listView: 'List view',

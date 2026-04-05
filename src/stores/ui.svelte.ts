@@ -13,7 +13,8 @@ export const uiState = $state<{
     weekdays: [],
     venueTypes: [],
     timeOfDay: [],
-    formatIds: []
+    formatIds: [],
+    serviceBodyNames: []
   },
   geoActive: false
 });
@@ -40,11 +41,12 @@ export function resetFilters(): void {
     weekdays: [],
     venueTypes: [],
     timeOfDay: [],
-    formatIds: []
+    formatIds: [],
+    serviceBodyNames: []
   };
 }
 
-export function toggleArrayFilter(key: 'weekdays' | 'venueTypes' | 'timeOfDay' | 'formatIds', value: number | string): void {
+export function toggleArrayFilter(key: 'weekdays' | 'venueTypes' | 'timeOfDay' | 'formatIds' | 'serviceBodyNames', value: number | string): void {
   const arr = uiState.filters[key] as (number | string)[];
   const idx = arr.indexOf(value);
   if (idx === -1) {
