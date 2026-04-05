@@ -8,12 +8,6 @@ meeting finder - search, filters, list view, map, and meeting detail.
 
 Built with Svelte 5, compiled to a **single self-contained JavaScript file** with no host-page dependencies.
 
-## Philosophy
-
-This project aims to cover the needs of most NA service bodies well - not every possible use case. It is intentionally
-kept simple and focused. New features are weighed against the cost to the codebase; niche requests that bloat the project
-for everyone are generally out of scope. If you need deep customization, this may not be the right tool.
-
 ## Features
 
 - List and map views with real-time search and filters
@@ -46,3 +40,9 @@ for everyone are generally out of scope. If you need deep customization, this ma
 **Important:** Be sure your page includes `<meta name="viewport" content="width=device-width, initial-scale=1.0" />` in the `<head>`. This is important for proper rendering on mobile devices and small screens.
 
 Full documentation at **[crumb.bmlt.app](https://crumb.bmlt.app/)**.
+
+## Philosophy
+
+This project aims to cover the needs of most NA service bodies well - not every possible use case. It is intentionally
+kept simple and focused. New features are weighed against the cost to the codebase; niche requests that bloat the project
+for everyone are generally out of scope. If you need deep customization, this may not be the right tool.
