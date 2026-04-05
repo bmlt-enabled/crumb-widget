@@ -1,17 +1,7 @@
-name: Deploy to Pages
+name: test
 
 on:
-  push:
-    branches: ['main']
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: false
+  pull_request:
 
 jobs:
   test-ts:
@@ -38,7 +28,6 @@ jobs:
       - name: unit tests 🧪
         run: npm run coverage
       - name: upload coverage to Codecov 📊
-        if: github.event_name == 'push' || github.event_name == 'pull_request'
         uses: codecov/codecov-action@v5
         with:
           files: coverage/cobertura-coverage.xml
@@ -74,48 +63,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
-
-  deploy:
-    needs: [test-ts, test-e2e]
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-24.04
-    steps:
-      - name: checkout 🛒
-        uses: actions/checkout@v6
-      - name: Setup Pages
-        uses: actions/configure-pages@v6
-      - name: node 24 ❇️
-        uses: actions/setup-node@v6
-        with:
-          node-version: 24
-          cache: 'npm'
-      - name: cache dependencies 💾
-        uses: actions/cache@v5
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-      - name: install dependencies 📦
-        run: npm ci
-      - name: build 🏗️
-        run: npm run build
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: 'dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
-      - name: Configure S3 AWS Credentials 🪪
-        uses: aws-actions/configure-aws-credentials@v6
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/github-actions/gh-ci-tf-bmlt-cdn
-          role-session-name: gh-actions
-          aws-region: us-east-1
-      - name: Copy Build to S3 🪣
-        run: |
-          aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/crumb-widget.js
