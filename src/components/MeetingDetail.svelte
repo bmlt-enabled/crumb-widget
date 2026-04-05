@@ -79,19 +79,19 @@
 <div class="bmlt-detail flex h-full flex-col">
   <!-- Header -->
   <div class="bmlt-detail-header shrink-0 border-b border-gray-200 bg-white px-4 py-3">
-    <a href="#/" class="bmlt-link mb-1.5 flex items-center gap-1 text-base text-blue-600 hover:text-blue-800">
+    <h2 class="text-3xl font-bold text-gray-900">{meeting.meeting_name}</h2>
+    <a href="#/" class="bmlt-link mt-1.5 flex items-center gap-1 text-base text-blue-600 hover:text-blue-800">
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
       {$t.backToMeetings}
     </a>
-    <h2 class="text-3xl font-bold text-gray-900">{meeting.meeting_name}</h2>
   </div>
 
   <!-- Body: two columns -->
   <div class="flex min-h-0 flex-1 flex-col sm:flex-row">
     <!-- Left: scrollable info panel -->
-    <div class="overflow-y-auto py-4 {showMap ? 'shrink-0 sm:w-72 sm:border-r sm:border-gray-200 lg:w-80' : 'mx-auto w-full max-w-lg'}">
+    <div class="overflow-y-auto py-4 {showMap ? 'shrink-0 sm:w-[28rem] sm:border-r sm:border-gray-200 lg:w-[32rem]' : 'mx-auto w-full max-w-lg'}">
       <!-- Get Directions (in-person) -->
       {#if meeting.isInPerson && meeting.formattedAddress}
         <a
@@ -169,7 +169,7 @@
           <div class="px-4 py-4">
             <div class="mt-1">
               {#if meeting.location_text}
-                <p class="text-base text-gray-500">{meeting.location_text}</p>
+                <p class="text-base font-semibold text-gray-700">{meeting.location_text}</p>
               {/if}
               <p class="text-base text-gray-700">{meeting.formattedAddress}</p>
               {#if meeting.location_info}
@@ -236,8 +236,8 @@
 
     <!-- Right: map (in-person with coords only) -->
     {#if showMap}
-      <div class="min-h-64 flex-1 sm:min-h-0">
-        <div bind:this={mapEl} class="h-full min-h-64 w-full"></div>
+      <div class="min-h-[28rem] flex-1 sm:min-h-0">
+        <div bind:this={mapEl} class="h-full min-h-[28rem] w-full"></div>
       </div>
     {/if}
   </div>

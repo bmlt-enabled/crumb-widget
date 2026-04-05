@@ -22,6 +22,7 @@ export interface AppConfig {
   height?: number;
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
+  hideHeader?: boolean;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -65,6 +66,7 @@ export interface CrumbWidgetConfig {
   height?: number;
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
+  hideHeader?: boolean;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

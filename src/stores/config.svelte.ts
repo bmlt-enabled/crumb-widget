@@ -42,6 +42,7 @@ export function initConfig(el: HTMLElement): void {
   config.height = globalCfg.height ?? undefined;
   config.darkMode = globalCfg.darkMode ?? false;
   config.nowOffset = globalCfg.nowOffset ?? 10;
+  config.hideHeader = globalCfg.hideHeader ?? false;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

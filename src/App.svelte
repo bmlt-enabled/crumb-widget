@@ -69,12 +69,14 @@
 
 <div class="crumb-widget flex flex-col rounded-lg border border-gray-200 font-sans text-base {config.height ? 'overflow-hidden' : ''}" style={config.height ? `height: ${config.height}px` : ''}>
   <!-- Header -->
-  <div class="bmlt-app-header flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
-    <h1 class="text-lg font-bold text-gray-800">Meeting Finder</h1>
-    {#if !dataState.loading && !dataState.error}
-      <span class="text-xs text-gray-500">{dataState.meetings.length} meetings</span>
-    {/if}
-  </div>
+  {#if !config.hideHeader}
+    <div class="bmlt-app-header flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
+      <h1 class="text-lg font-bold text-gray-800">Meeting Finder</h1>
+      {#if !dataState.loading && !dataState.error}
+        <span class="text-xs text-gray-500">{dataState.meetings.length} meetings</span>
+      {/if}
+    </div>
+  {/if}
 
   {#if dataState.error}
     <!-- Error state -->

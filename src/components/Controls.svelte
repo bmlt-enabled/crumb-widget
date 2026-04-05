@@ -181,7 +181,7 @@
     />
 
     <!-- Type dropdown (venue type + format) -->
-    <div class="relative {showViewToggle ? '' : 'col-span-2'} sm:flex-none" bind:this={typeDropdownEl}>
+    <div class="relative sm:max-w-[13rem] sm:min-w-[8rem] sm:flex-1 {showViewToggle ? '' : 'col-span-2'}" bind:this={typeDropdownEl}>
       <button
         onclick={(e) => {
           e.stopPropagation();
@@ -189,7 +189,7 @@
           showDayDropdown = false;
           showTimeDropdown = false;
         }}
-        class="flex w-full items-center justify-between rounded-lg border px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.venueTypes.length > 0 ||
+        class="flex w-full items-center justify-between rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.venueTypes.length > 0 ||
         uiState.filters.formatIds.length > 0
           ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
           : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
@@ -214,7 +214,9 @@
           {#each VENUE_TYPE_VALUES as vt (vt.value)}
             <button
               onclick={() => toggleArrayFilter('venueTypes', vt.value)}
-              class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.venueTypes.includes(vt.value) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+              class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.venueTypes.includes(vt.value)
+                ? 'font-semibold text-blue-700'
+                : 'text-gray-700'}"
             >
               <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.venueTypes.includes(vt.value) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
                 {#if uiState.filters.venueTypes.includes(vt.value)}
@@ -231,7 +233,9 @@
             {#each availableFormats as fmt (fmt.id)}
               <button
                 onclick={() => toggleArrayFilter('formatIds', fmt.id)}
-                class="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id)
+                  ? 'font-semibold text-blue-700'
+                  : 'text-gray-700'}"
                 title={fmt.description_string}
               >
                 <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.formatIds.includes(fmt.id) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
@@ -251,7 +255,11 @@
 
     <!-- Clear all filters — desktop only, inline so no layout shift -->
     {#if activeFilterCount > 0 || uiState.filters.search}
-      <button onclick={resetFilters} class="hidden text-xs whitespace-nowrap text-red-600 underline hover:text-red-800 sm:ml-auto sm:block">{$t.clearAllFilters}</button>
+      <button
+        onclick={resetFilters}
+        class="hidden items-center gap-1 rounded-lg border-2 border-red-300 bg-red-50 px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-red-600 shadow-sm transition-colors hover:border-red-400 hover:bg-red-100 hover:shadow sm:ml-auto sm:flex"
+        >{$t.clearAllFilters}</button
+      >
     {/if}
 
     <!-- List / Map view toggle -->

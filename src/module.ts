@@ -45,6 +45,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.height = options.height;
   config.darkMode = options.darkMode ?? false;
   config.nowOffset = options.nowOffset ?? 10;
+  config.hideHeader = options.hideHeader ?? false;
 
   const language = options.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

@@ -49,9 +49,9 @@
           <button type="button" class="bmlt-row bmlt-in-progress-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
               <div class="w-20 shrink-0 text-gray-600">
-                <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
+                <span class="text-sm text-gray-600">{meeting.formattedTime}</span>
                 <br />
-                <span class="font-semibold text-gray-800">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                <span class="text-sm text-gray-600">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
               </div>
             {/if}
             <div class="min-w-0 flex-1">
@@ -181,9 +181,8 @@
               <tr class="bmlt-row bmlt-in-progress-row cursor-pointer" onclick={() => selectMeeting(meeting)}>
                 {#if cols.has('time')}
                   <td class="px-4 py-4 whitespace-nowrap text-gray-600">
-                    <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
-                    <br />
-                    <span class="font-medium text-gray-800">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                    <span class="text-sm text-gray-600">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                    <span class="text-sm text-gray-600">{meeting.formattedTime}</span>
                   </td>
                 {/if}
                 {#if cols.has('name')}
@@ -240,9 +239,8 @@
           <tr class="bmlt-row cursor-pointer transition-colors" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
               <td class="px-4 py-4 whitespace-nowrap text-gray-600">
-                <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
-                <br />
-                <span class="font-medium text-gray-800">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                <span class="text-sm text-gray-600">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                <span class="text-sm text-gray-600">{meeting.formattedTime}</span>
               </td>
             {/if}
             {#if cols.has('name')}
