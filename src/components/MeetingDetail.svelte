@@ -54,12 +54,13 @@
       ${buildDirectionsLinkHtml(getDirectionsUrl(meeting), $t.getDirections, '4px')}
     </div>`;
 
-    L.marker([meeting.latitude, meeting.longitude], {
+    const marker = L.marker([meeting.latitude, meeting.longitude], {
       icon: buildMarkerIcon(config.locationMarker ?? DEFAULT_LOCATION_MARKER)
-    })
-      .bindPopup(popupHtml, { maxWidth: 220 })
-      .addTo(leafletMap!)
-      .openPopup();
+    });
+    marker.bindPopup(popupHtml, { maxWidth: 220 }).addTo(leafletMap!).openPopup();
+    const markerEl = marker.getElement();
+    markerEl?.setAttribute('aria-label', meeting.meeting_name);
+    markerEl?.querySelector('img')?.setAttribute('alt', meeting.meeting_name);
 
     destroyResizeObserver = observeMapResize(mapEl, () => leafletMap?.invalidateSize());
   });
@@ -205,7 +206,7 @@
         <!-- Notes row -->
         {#if meeting.comments}
           <div class="px-4 py-4">
-            <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.notes}</p>
+            <p class="text-sm font-semibold tracking-wide text-gray-500 uppercase">{$t.notes}</p>
             <p class="mt-1 text-base text-gray-600">{meeting.comments}</p>
           </div>
         {/if}
@@ -213,7 +214,7 @@
         <!-- Service body row -->
         {#if meeting.service_body_name}
           <div class="px-4 py-4">
-            <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.serviceBody}</p>
+            <p class="text-sm font-semibold tracking-wide text-gray-500 uppercase">{$t.serviceBody}</p>
             <p class="mt-1 text-base text-gray-700">{meeting.service_body_name}</p>
           </div>
         {/if}
@@ -221,7 +222,7 @@
         <!-- Contact row -->
         {#if meeting.email_contact}
           <div class="px-4 py-4">
-            <p class="text-sm font-semibold tracking-wide text-gray-400 uppercase">{$t.contact}</p>
+            <p class="text-sm font-semibold tracking-wide text-gray-500 uppercase">{$t.contact}</p>
             <a href="mailto:{meeting.email_contact}" class="bmlt-link mt-1 block text-base text-blue-600 hover:text-blue-800">
               {meeting.email_contact}
             </a>

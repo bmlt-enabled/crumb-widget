@@ -75,9 +75,16 @@
     const markers: Marker[] = [];
     for (const [key, group] of Object.entries(groups)) {
       const [lat, lng] = key.split(',').map(Number);
-      const marker = L.marker([lat, lng], { icon: buildMarkerIcon(locationMarker ?? DEFAULT_LOCATION_MARKER) });
+      const label = group.map((m) => m.meeting_name).join(', ');
+      const marker = L.marker([lat, lng], {
+        icon: buildMarkerIcon(locationMarker ?? DEFAULT_LOCATION_MARKER),
+        alt: label
+      });
       marker.bindPopup(buildPopupContent(group), { maxWidth: 240 });
       marker.addTo(markersLayer!);
+      const markerEl = marker.getElement();
+      markerEl?.setAttribute('aria-label', label);
+      markerEl?.querySelector('img')?.setAttribute('alt', label);
       markers.push(marker);
     }
 

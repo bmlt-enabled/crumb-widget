@@ -296,7 +296,7 @@
     </table>
   </div>
 
-  <div class="border-t border-gray-100 px-4 py-2 text-xs text-gray-400">
+  <div class="border-t border-gray-100 px-4 py-2 text-xs text-gray-500">
     {$t.showing}
     {meetings.length}
     {meetings.length !== 1 ? $t.meetings : $t.meeting}
