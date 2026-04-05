@@ -24,14 +24,16 @@
   let mapEl = $state<HTMLDivElement | undefined>();
   let leafletMap: LeafletMap | null = null;
   let tileLayer: TileLayer | null = null;
+  let currentTileUrl: string | null = null;
   let darkMq: MediaQueryList | null = null;
   let bodyObserver: MutationObserver | null = null;
   let destroyResizeObserver: (() => void) | null = null;
 
   function updateTiles(): void {
     if (!leafletMap) return;
-    const result = applyTileLayer(leafletMap, resolveTileConfig(config.containerId, config.tiles, config.tilesDark), tileLayer, null);
+    const result = applyTileLayer(leafletMap, resolveTileConfig(config.containerId, config.tiles, config.tilesDark), tileLayer, currentTileUrl);
     tileLayer = result.layer;
+    currentTileUrl = result.url;
   }
 
   onMount(() => {

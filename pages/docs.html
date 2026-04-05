@@ -1261,7 +1261,7 @@
 
         <h3 id="npm-install">Installation</h3>
         <div class="demo">
-          <div class="demo-hdr"><span>bash</span></div>
+          <div class="demo-header"><span>bash</span></div>
           <pre><code>npm install crumb-widget</code></pre>
         </div>
 
@@ -1269,7 +1269,7 @@
         <p>Import <code>mountCrumbWidget</code> and call it with a DOM element and your configuration. The widget mounts itself and injects its own CSS — no separate stylesheet import needed.</p>
 
         <div class="demo">
-          <div class="demo-hdr"><span>TypeScript / ESM</span></div>
+          <div class="demo-header"><span>TypeScript / ESM</span></div>
           <pre><code>import { mountCrumbWidget } from 'crumb-widget';
 
 mountCrumbWidget(document.getElementById('my-widget'), {
@@ -1281,7 +1281,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         <p>In a Svelte component, use <code>onMount</code> to ensure the element exists before mounting:</p>
 
         <div class="demo">
-          <div class="demo-hdr"><span>Svelte</span></div>
+          <div class="demo-header"><span>Svelte</span></div>
           <pre><code>&lt;script lang="ts"&gt;
   import { onMount } from 'svelte';
   import { mountCrumbWidget } from 'crumb-widget';
