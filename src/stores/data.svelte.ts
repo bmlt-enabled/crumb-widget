@@ -42,9 +42,9 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
   });
 }
 
-export async function loadData(rootServerUrl: string, serviceBodyIds: number[] = []): Promise<void> {
-  if (!rootServerUrl) {
-    dataState.error = 'No root server URL configured. Add data-root-server to your embed element.';
+export async function loadData(serverUrl: string, serviceBodyIds: number[] = []): Promise<void> {
+  if (!serverUrl) {
+    dataState.error = 'No server URL configured. Add data-server to your embed element.';
     return;
   }
 
@@ -52,7 +52,7 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
   dataState.error = null;
 
   try {
-    const client = new BmltClient({ rootServerURL: rootServerUrl });
+    const client = new BmltClient({ serverURL: serverUrl });
 
     const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
       ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
@@ -73,9 +73,9 @@ export async function loadData(rootServerUrl: string, serviceBodyIds: number[] =
   }
 }
 
-export async function loadDataByCoordinates(rootServerUrl: string, latitude: number, longitude: number, radiusMiles: number = 10): Promise<void> {
-  if (!rootServerUrl) {
-    dataState.error = 'No root server URL configured. Add data-root-server to your embed element.';
+export async function loadDataByCoordinates(serverUrl: string, latitude: number, longitude: number, radiusMiles: number = 10): Promise<void> {
+  if (!serverUrl) {
+    dataState.error = 'No server URL configured. Add data-server to your embed element.';
     return;
   }
 
@@ -83,7 +83,7 @@ export async function loadDataByCoordinates(rootServerUrl: string, latitude: num
   dataState.error = null;
 
   try {
-    const client = new BmltClient({ rootServerURL: rootServerUrl });
+    const client = new BmltClient({ serverURL: serverUrl });
 
     const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
       lat_val: latitude,

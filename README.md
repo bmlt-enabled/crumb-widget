@@ -29,7 +29,7 @@ Built with Svelte 5, distributed as a **single self-contained JavaScript file** 
 <body>
 <div
     id="crumb-widget"
-    data-root-server="https://myserver.com/main_server/"
+    data-server="https://myserver.com/main_server/"
     data-service-body="3"
 ></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>

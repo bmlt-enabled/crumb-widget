@@ -4,7 +4,7 @@ import { initLocalization } from './localization';
 const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
 
 const defaultConfig: AppConfig = {
-  rootServerUrl: '',
+  serverUrl: '',
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'crumb-widget',
@@ -18,13 +18,13 @@ const defaultConfig: AppConfig = {
 export const config = $state<AppConfig>({ ...defaultConfig });
 
 export function initConfig(el: HTMLElement): void {
-  const rootServer = el.getAttribute('data-root-server') ?? '';
+  const server = el.getAttribute('data-server') ?? '';
   const serviceBody = el.getAttribute('data-service-body') ?? '';
   const defaultView = (el.getAttribute('data-view') as 'list' | 'map') ?? 'list';
 
   const globalCfg = window.CrumbWidgetConfig ?? {};
 
-  config.rootServerUrl = rootServer;
+  config.serverUrl = server;
   config.serviceBodyIds = serviceBody
     ? serviceBody
         .split(',')

@@ -17,9 +17,9 @@ afterEach(() => {
 });
 
 describe('initConfig', () => {
-  test('reads root server from data attribute', () => {
-    initConfig(makeElement({ 'data-root-server': 'https://example.com/main_server/' }));
-    expect(config.rootServerUrl).toBe('https://example.com/main_server/');
+  test('reads server url from data attribute', () => {
+    initConfig(makeElement({ 'data-server': 'https://example.com/main_server/' }));
+    expect(config.serverUrl).toBe('https://example.com/main_server/');
   });
 
   test('parses single service body id', () => {

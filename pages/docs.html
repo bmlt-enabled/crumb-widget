@@ -469,7 +469,7 @@
         <h2 id="overview">Overview</h2>
         <p>
           Crumb Widget is a self-contained JavaScript widget that queries a
-          <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT root server</a> and renders
+          <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT server</a> and renders
           a fully featured meeting finder — search, filters, list view, and an interactive map.
         </p>
         <p>
@@ -477,7 +477,7 @@
           No stylesheets, no build steps, no framework required on the host page.
         </p>
         <h2 id="quick-start">Quick Start</h2>
-        <p>To get started, add a container element to your page, point it at your BMLT root server, and load the widget script. Here is a complete example:</p>
+        <p>To get started, add a container element to your page, point it at your BMLT server, and load the widget script. Here is a complete example:</p>
 
         <div class="demo">
           <div class="demo-header">
@@ -500,7 +500,7 @@
   &lt;body&gt;
     &lt;div
       id="crumb-widget"
-      data-root-server="https://myserver.com/main_server/"
+      data-server="https://myserver.com/main_server/"
       data-service-body="3"
     &gt;&lt;/div&gt;
     &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;
@@ -525,10 +525,10 @@
           </thead>
           <tbody>
             <tr>
-              <td>data-root-server</td>
+              <td>data-server</td>
               <td><span class="badge badge-required">Required</span></td>
               <td>
-                Full URL to your BMLT root server.
+                Full URL to your BMLT server.
                 <br><em>Example:</em> <code>https://example.org/main_server</code>
               </td>
             </tr>
@@ -1078,7 +1078,7 @@
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://latest.aws.bmlt.app/main_server"
+  data-server="https://latest.aws.bmlt.app/main_server"
 &gt;&lt;/div&gt;
 &lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
@@ -1089,7 +1089,7 @@
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://bmlt.sezf.org/main_server"
+  data-server="https://bmlt.sezf.org/main_server"
   data-service-body="42"
 &gt;&lt;/div&gt;
 &lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
@@ -1101,7 +1101,7 @@
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://bmlt.sezf.org/main_server"
+  data-server="https://bmlt.sezf.org/main_server"
   data-service-body="42,57,103"
 &gt;&lt;/div&gt;
 &lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
@@ -1112,7 +1112,7 @@
           <div class="demo-header">HTML</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://bmlt.sezf.org/main_server"
+  data-server="https://bmlt.sezf.org/main_server"
   data-service-body="42"
   data-view="map"
 &gt;&lt;/div&gt;
@@ -1131,7 +1131,7 @@
         <ol>
           <li>Search for <strong>Crumb</strong> in the WordPress plugin directory, or upload the plugin ZIP manually.</li>
           <li>Activate the plugin.</li>
-          <li>Go to <strong>Settings → Crumb</strong> and enter your root server URL.</li>
+          <li>Go to <strong>Settings → Crumb</strong> and enter your BMLT server URL.</li>
           <li>Add the shortcode to any page or post.</li>
         </ol>
 
@@ -1140,10 +1140,10 @@
           <div class="demo-header">WordPress shortcode</div>
           <pre><code>[bmlt_client]</code></pre>
         </div>
-        <p>The root server URL set in the plugin settings is used by default. You can override it — or filter by service body — directly in the shortcode:</p>
+        <p>The BMLT server URL set in the plugin settings is used by default. You can override it — or filter by service body — directly in the shortcode:</p>
         <div class="demo">
           <div class="demo-header">WordPress shortcode — with overrides</div>
-          <pre><code>[bmlt_client root_server="https://your-server/main_server" service_body="42"]</code></pre>
+          <pre><code>[bmlt_client server="https://your-server/main_server" service_body="42"]</code></pre>
         </div>
 
         <h3>Advanced configuration</h3>
@@ -1198,7 +1198,7 @@
           <div class="demo-header">Google Sites embed</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://myserver.com/main_server/"
+  data-server="https://myserver.com/main_server/"
   data-service-body="3"
 &gt;&lt;/div&gt;
 &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
@@ -1220,7 +1220,7 @@
           <div class="demo-header">Squarespace code block</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://myserver.com/main_server/"
+  data-server="https://myserver.com/main_server/"
   data-service-body="3"
 &gt;&lt;/div&gt;
 &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
@@ -1243,7 +1243,7 @@
           <div class="demo-header">Wix container</div>
           <pre><code>&lt;div
   id="crumb-widget"
-  data-root-server="https://myserver.com/main_server/"
+  data-server="https://myserver.com/main_server/"
   data-service-body="3"
 &gt;&lt;/div&gt;</code></pre>
         </div>
@@ -1281,7 +1281,7 @@
           <pre><code>import { mountCrumbWidget } from 'crumb-widget';
 
 mountCrumbWidget(document.getElementById('my-widget'), {
-  rootServerUrl: 'https://bmlt.example.org/main_server/',
+  serverUrl: 'https://bmlt.example.org/main_server/',
   serviceBodyIds: [1, 2, 3],
 });</code></pre>
         </div>
@@ -1298,7 +1298,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
 
   onMount(() => {
     mountCrumbWidget(widgetEl, {
-      rootServerUrl: 'https://bmlt.example.org/main_server/',
+      serverUrl: 'https://bmlt.example.org/main_server/',
       serviceBodyIds: [1, 2, 3],
     });
   });
@@ -1314,7 +1314,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
             <tr><th>Option</th><th>Type</th><th>Required</th><th>Description</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>rootServerUrl</code></td><td><code>string</code></td><td>Yes</td><td>URL of the BMLT root server.</td></tr>
+            <tr><td><code>serverUrl</code></td><td><code>string</code></td><td>Yes</td><td>URL of the BMLT server.</td></tr>
             <tr><td><code>serviceBodyIds</code></td><td><code>number[]</code></td><td>No</td><td>Service body IDs to filter by. Omit or pass <code>[]</code> to show all.</td></tr>
             <tr><td><code>defaultView</code></td><td><code>'list' | 'map'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>.</td></tr>
             <tr><td><code>geolocation</code></td><td><code>boolean</code></td><td>No</td><td>Enable the Near Me button. Defaults to <code>false</code>.</td></tr>

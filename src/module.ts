@@ -12,8 +12,8 @@ declare const __APP_VERSION__: string;
 const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
 
 export interface MountOptions extends CrumbWidgetConfig {
-  /** URL of the BMLT root server (required) */
-  rootServerUrl: string;
+  /** URL of the BMLT server (required) */
+  serverUrl: string;
   /** Service body IDs to filter by (defaults to all) */
   serviceBodyIds?: number[];
 }
@@ -26,13 +26,13 @@ export interface MountOptions extends CrumbWidgetConfig {
  * import { mountCrumbWidget } from 'crumb-widget';
  *
  * mountCrumbWidget(document.getElementById('my-widget'), {
- *   rootServerUrl: 'https://bmlt.example.org/main_server/',
+ *   serverUrl: 'https://bmlt.example.org/main_server/',
  *   serviceBodyIds: [1, 2, 3],
  * });
  * ```
  */
 export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
-  config.rootServerUrl = options.rootServerUrl;
+  config.serverUrl = options.serverUrl;
   config.serviceBodyIds = options.serviceBodyIds ?? [];
   config.containerId = el.id || 'crumb-widget';
   config.defaultView = options.defaultView ?? 'list';

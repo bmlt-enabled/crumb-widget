@@ -31,7 +31,7 @@ vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
 // App props — geolocation: false keeps App.svelte from auto-geolocating on mount.
 // The geolocation button in Controls is controlled separately via the config store.
 const baseConfig: AppConfig = {
-  rootServerUrl: 'https://test.example.org/main_server',
+  serverUrl: 'https://test.example.org/main_server',
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'crumb-widget',
@@ -78,7 +78,7 @@ beforeEach(() => {
   uiState.geoActive = false;
   config.geolocation = false;
   config.serviceBodyIds = [];
-  config.rootServerUrl = 'https://test.example.org/main_server';
+  config.serverUrl = 'https://test.example.org/main_server';
   config.geolocationRadius = 10;
 });
 

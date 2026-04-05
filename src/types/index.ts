@@ -9,7 +9,7 @@ export interface MarkerConfig {
 }
 
 export interface AppConfig {
-  rootServerUrl: string;
+  serverUrl: string;
   serviceBodyIds: number[];
   defaultView: 'list' | 'map';
   containerId: string;

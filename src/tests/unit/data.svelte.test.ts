@@ -65,9 +65,9 @@ describe('loadData', () => {
     expect(dataState.meetings[0].meeting_name).toBe('Test Meeting');
   });
 
-  test('sets error and skips fetch when rootServerUrl is empty', async () => {
+  test('sets error and skips fetch when serverUrl is empty', async () => {
     await loadData('');
-    expect(dataState.error).toMatch(/no root server/i);
+    expect(dataState.error).toMatch(/no server/i);
     expect(mockSearch).not.toHaveBeenCalled();
   });
 
@@ -201,9 +201,9 @@ describe('loadDataByCoordinates', () => {
     expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ sort_results_by_distance: true }));
   });
 
-  test('sets error and skips fetch when rootServerUrl is empty', async () => {
+  test('sets error and skips fetch when serverUrl is empty', async () => {
     await loadDataByCoordinates('', 34.05, -118.24);
-    expect(dataState.error).toMatch(/no root server/i);
+    expect(dataState.error).toMatch(/no server/i);
     expect(mockSearch).not.toHaveBeenCalled();
   });
 

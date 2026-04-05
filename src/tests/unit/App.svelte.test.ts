@@ -36,7 +36,7 @@ vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
 });
 
 const baseConfig: AppConfig = {
-  rootServerUrl: 'https://test.example.org/main_server',
+  serverUrl: 'https://test.example.org/main_server',
   serviceBodyIds: [],
   defaultView: 'list',
   containerId: 'crumb-widget',
@@ -649,7 +649,7 @@ describe('geolocation', () => {
   test('calls loadDataByCoordinates with position coordinates on success', async () => {
     mockGeo((success) => success({ coords: { latitude: 35.1, longitude: -80.2 } } as GeolocationPosition));
     render(App, { props: { config: geoConfig } });
-    await waitFor(() => expect(vi.mocked(loadDataByCoordinates)).toHaveBeenCalledWith(geoConfig.rootServerUrl, 35.1, -80.2, geoConfig.geolocationRadius));
+    await waitFor(() => expect(vi.mocked(loadDataByCoordinates)).toHaveBeenCalledWith(geoConfig.serverUrl, 35.1, -80.2, geoConfig.geolocationRadius));
   });
 
   test('sets geoActive and switches to map view on success', async () => {

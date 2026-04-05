@@ -4,7 +4,7 @@ Guidelines for AI agents working in this repository.
 
 ## Project Overview
 
-**BMLT Meeting List** is an embeddable NA meeting finder widget built with Svelte 5, Vite, TypeScript, and Tailwind CSS. It queries a [BMLT root server](https://bmlt.app) via the `bmlt-query-client` library and compiles to a single self-contained `public/app.js` file (CSS injected into JS) that can be dropped into any WordPress site or plain HTML page.
+**BMLT Meeting List** is an embeddable NA meeting finder widget built with Svelte 5, Vite, TypeScript, and Tailwind CSS. It queries a [BMLT server](https://bmlt.app) via the `bmlt-query-client` library and compiles to a single self-contained `public/app.js` file (CSS injected into JS) that can be dropped into any WordPress site or plain HTML page.
 
 ## Tech Stack
 
@@ -12,7 +12,7 @@ Guidelines for AI agents working in this repository.
 - **Build Tool**: Vite 8
 - **Styling**: Tailwind CSS 4 (injected into the JS bundle — no separate CSS file)
 - **Language**: TypeScript 5 (strict mode)
-- **Data**: `bmlt-query-client` (local path dep from `../bmlt-query-client`)
+- **Data**: `bmlt-query-client`
 - **Maps**: Leaflet 1.9
 - **Testing**: Vitest + @testing-library/svelte (jsdom)
 - **Linting**: ESLint 10 (flat config) + Prettier 3 + svelte-check
@@ -40,7 +40,7 @@ The widget is embedded by adding a div with data attributes and loading `app.js`
 ```html
 <div
   id="crumb-widget"
-  data-root-server="https://your-server/main_server"
+  data-server="https://your-server/main_server"
   data-service-body="123"
   data-service-body="1,2,3"
   data-view="list"
@@ -117,7 +117,7 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 ## Data Flow
 
 1. `main.ts` reads `data-*` attributes from `#crumb-widget`, calls `initConfig()`, mounts `App.svelte`.
-2. `App.svelte` calls `loadData(rootServerUrl, serviceBodyId)` on mount.
+2. `App.svelte` calls `loadData(serverUrl, serviceBodyId)` on mount.
 3. `loadData` uses `BmltClient` from `bmlt-query-client` to fetch meetings and formats in parallel. Meetings are processed into `ProcessedMeeting` (adds `formattedTime`, `formattedAddress`, `timeOfDay`, `dayName`, etc.) and stored in `dataState.meetings`.
 4. `App.svelte` computes `filteredMeetings` via `$derived.by` — applies weekday, venue type, time-of-day, and text search filters from `uiState.filters`.
 5. Components read from `dataState` and `uiState` directly.
@@ -129,7 +129,7 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 - `format_shared_id_list`: comma-separated string of format IDs. Split and look up in `dataState.formats` (a `SvelteMap`) to resolve names.
 - `data-service-body` accepts a single ID or a comma-separated list (`"1,2,3"`). Parsed into `AppConfig.serviceBodyIds: number[]`. Empty = fetch all.
 - Service body searches use `recursive: true` by default to include child service bodies.
-- The `bmlt-query-client` local dep lives at `../bmlt-query-client` (sibling repo). If it changes, run `npm install` to refresh.
+- The `bmlt-query-client` dep is from npmjs
 
 ## Testing
 

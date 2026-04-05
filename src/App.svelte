@@ -38,7 +38,7 @@
         dataState.loading = true;
         navigator.geolocation.getCurrentPosition(
           async (pos) => {
-            await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
+            await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
             if (!dataState.error) {
               uiState.geoActive = true;
               uiState.view = 'map';
@@ -52,7 +52,7 @@
         );
       }
     } else {
-      await loadData(config.rootServerUrl, config.serviceBodyIds);
+      await loadData(config.serverUrl, config.serviceBodyIds);
     }
   });
 
@@ -106,7 +106,7 @@
           tilesDark={config.tilesDark}
           geoActive={uiState.geoActive}
           onsearcharea={async (lat, lng) => {
-            await loadDataByCoordinates(config.rootServerUrl, lat, lng, config.geolocationRadius);
+            await loadDataByCoordinates(config.serverUrl, lat, lng, config.geolocationRadius);
           }}
         />
       {:else}

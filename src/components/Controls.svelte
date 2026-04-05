@@ -61,7 +61,7 @@
     if (uiState.geoActive) {
       uiState.geoActive = false;
       geoStatus = 'idle';
-      await loadData(config.rootServerUrl, config.serviceBodyIds);
+      await loadData(config.serverUrl, config.serviceBodyIds);
       return;
     }
     if (geoStatus === 'locating') return;
@@ -69,7 +69,7 @@
     geoStatus = 'locating';
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        await loadDataByCoordinates(config.rootServerUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
+        await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
         if (dataState.error) {
           geoError = dataState.error;
           geoStatus = 'error';
