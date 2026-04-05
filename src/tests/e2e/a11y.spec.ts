@@ -47,15 +47,11 @@ const MEETINGS = [
   }
 ];
 
-const FORMATS = [
-  { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en' }
-];
+const FORMATS = [{ id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en' }];
 
 async function loadWidget(page: Page) {
-  await page.route('https://bmlt.e2e.test/**', (route) =>
-    route.fulfill({ json: { meetings: MEETINGS, formats: FORMATS } })
-  );
-  await page.goto('/e2e/fixture.html');
+  await page.route('https://bmlt.e2e.test/**', (route) => route.fulfill({ json: { meetings: MEETINGS, formats: FORMATS } }));
+  await page.goto('/src/tests/e2e/fixture.html');
   await expect(page.getByRole('cell', { name: 'Monday Serenity Group', exact: true })).toBeVisible({
     timeout: 15000
   });
@@ -93,10 +89,8 @@ test.describe('Accessibility', () => {
   test('in-progress banner has no violations', async ({ page }) => {
     // Mon Jan 8 2024 at 7:05pm — Monday meeting is in progress
     await page.clock.setFixedTime(new Date('2024-01-08T19:05:00'));
-    await page.route('https://bmlt.e2e.test/**', (route) =>
-      route.fulfill({ json: { meetings: MEETINGS, formats: FORMATS } })
-    );
-    await page.goto('/e2e/fixture.html');
+    await page.route('https://bmlt.e2e.test/**', (route) => route.fulfill({ json: { meetings: MEETINGS, formats: FORMATS } }));
+    await page.goto('/src/tests/e2e/fixture.html');
     await expect(page.locator('table .bmlt-in-progress-banner')).toBeVisible({ timeout: 15000 });
     await injectAxe(page);
     await checkA11y(page, '#crumb-widget');

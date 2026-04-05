@@ -68,9 +68,7 @@ const MEETINGS = [
   }
 ];
 
-const FORMATS = [
-  { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en' }
-];
+const FORMATS = [{ id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en' }];
 
 async function mockBmltApi(page: Page) {
   // The client calls GetSearchResults with get_used_formats=1 in a single request,
@@ -87,7 +85,7 @@ function meetingCell(page: Page, name: string) {
 
 async function loadWidget(page: Page) {
   await mockBmltApi(page);
-  await page.goto('/e2e/fixture.html');
+  await page.goto('/src/tests/e2e/fixture.html');
   // Wait for the table to show a meeting row
   await expect(meetingCell(page, 'Monday Serenity Group')).toBeVisible({ timeout: 15000 });
 }
@@ -161,7 +159,7 @@ test.describe('Widget — in-progress banner', () => {
 
   async function loadWidgetInProgress(page: Page) {
     await mockBmltApi(page);
-    await page.goto('/e2e/fixture.html');
+    await page.goto('/src/tests/e2e/fixture.html');
     // When a meeting is in-progress the banner appears instead of the meeting cell,
     // so wait for the desktop table banner (the mobile duplicate is CSS-hidden).
     await expect(tableBanner(page)).toBeVisible({ timeout: 15000 });
