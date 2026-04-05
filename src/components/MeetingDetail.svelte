@@ -6,16 +6,29 @@
   import type { ProcessedMeeting } from '@/types';
 
   import { config } from '@stores/config.svelte';
-  import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
+  import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr, meetingSlug } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
 
   interface Props {
     meeting: ProcessedMeeting;
+    allMeetings?: ProcessedMeeting[];
   }
 
-  const { meeting }: Props = $props();
+  const { meeting, allMeetings = [] }: Props = $props();
+
+  const siblingMeetings = $derived(
+    allMeetings.filter(
+      (m) =>
+        m.id_bigint !== meeting.id_bigint &&
+        m.isInPerson &&
+        meeting.isInPerson &&
+        m.location_street &&
+        m.location_street === meeting.location_street &&
+        m.location_municipality === meeting.location_municipality
+    )
+  );
 
   const showMap = $derived(meeting.isInPerson && !!meeting.latitude && !!meeting.longitude);
 
@@ -229,6 +242,24 @@
             <a href="mailto:{meeting.email_contact}" class="bmlt-link mt-1 block text-base text-blue-600 hover:text-blue-800">
               {meeting.email_contact}
             </a>
+          </div>
+        {/if}
+
+        <!-- Other meetings at this location -->
+        {#if siblingMeetings.length > 0}
+          <div class="px-4 py-4">
+            <p class="text-sm font-semibold tracking-wide text-gray-500 uppercase">{$t.alsoAtThisLocation}</p>
+            <div class="mt-2 divide-y divide-gray-100">
+              {#each siblingMeetings as sibling (sibling.id_bigint)}
+                <div class="flex items-center justify-between py-2">
+                  <div>
+                    <p class="text-sm font-semibold text-gray-800">{$t.weekdays[sibling.weekday_tinyint - 1]}</p>
+                    <p class="text-sm text-gray-500">{sibling.formattedTime}</p>
+                  </div>
+                  <a href="#/{meetingSlug(sibling)}" class="bmlt-link text-sm text-blue-600 hover:text-blue-800">{sibling.meeting_name}</a>
+                </div>
+              {/each}
+            </div>
           </div>
         {/if}
       </div>

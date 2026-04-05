@@ -46,6 +46,7 @@ export const deTranslations = {
   meetingInformation: 'Informationen zum Treffen',
   notes: 'Notizen',
   contact: 'Kontakt',
+  alsoAtThisLocation: 'Auch an diesem Ort',
   // Geolocation
   nearMe: 'In meiner Nähe',
   locating: 'Standort wird ermittelt\u2026',

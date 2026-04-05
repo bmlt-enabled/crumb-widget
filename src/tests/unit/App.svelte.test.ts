@@ -462,6 +462,96 @@ describe('meeting detail', () => {
     await navigateToDetail(makeMeeting({ venue_type: 2, isInPerson: false, isVirtual: true, latitude: 0, longitude: 0 }));
     expect(screen.queryByText('123 Main St, Anytown, CA, 90210')).not.toBeInTheDocument();
   });
+
+  test('shows "Also at this location" section when other meetings share the same address', async () => {
+    const primary = makeMeeting({ id_bigint: '1', meeting_name: 'Monday Night Meeting', location_street: '123 Main St', location_municipality: 'Anytown' });
+    const sibling = makeMeeting({
+      id_bigint: '2',
+      meeting_name: 'Thursday Noon Group',
+      weekday_tinyint: 5,
+      formattedTime: '12:00 PM',
+      location_street: '123 Main St',
+      location_municipality: 'Anytown'
+    });
+    dataState.meetings = [primary, sibling];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
+
+    expect(screen.getByText('Also at this location')).toBeInTheDocument();
+    expect(screen.getByText('Thursday Noon Group')).toBeInTheDocument();
+  });
+
+  test('"Also at this location" link points to the sibling meeting detail route', async () => {
+    const primary = makeMeeting({ id_bigint: '1', meeting_name: 'Monday Night Meeting', location_street: '123 Main St', location_municipality: 'Anytown' });
+    const sibling = makeMeeting({
+      id_bigint: '2',
+      meeting_name: 'Thursday Noon Group',
+      weekday_tinyint: 5,
+      formattedTime: '12:00 PM',
+      location_street: '123 Main St',
+      location_municipality: 'Anytown'
+    });
+    dataState.meetings = [primary, sibling];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
+
+    const link = screen.getByRole('link', { name: 'Thursday Noon Group' });
+    expect(link.getAttribute('href')).toMatch(/^#\/thursday-noon-group-2$/);
+  });
+
+  test('does not show "Also at this location" when no other meetings share the address', async () => {
+    const primary = makeMeeting({ id_bigint: '1', meeting_name: 'Monday Night Meeting', location_street: '123 Main St', location_municipality: 'Anytown' });
+    const other = makeMeeting({ id_bigint: '2', meeting_name: 'Different Location Group', location_street: '456 Oak Ave', location_municipality: 'Anytown' });
+    dataState.meetings = [primary, other];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
+
+    expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
+  });
+
+  test('does not show "Also at this location" for virtual meetings', async () => {
+    const primary = makeMeeting({
+      id_bigint: '1',
+      meeting_name: 'Monday Night Meeting',
+      venue_type: 2,
+      isInPerson: false,
+      isVirtual: true,
+      latitude: 0,
+      longitude: 0,
+      location_street: '123 Main St',
+      location_municipality: 'Anytown'
+    });
+    const sibling = makeMeeting({
+      id_bigint: '2',
+      meeting_name: 'Thursday Noon Group',
+      venue_type: 2,
+      isInPerson: false,
+      isVirtual: true,
+      latitude: 0,
+      longitude: 0,
+      location_street: '123 Main St',
+      location_municipality: 'Anytown'
+    });
+    dataState.meetings = [primary, sibling];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
+
+    expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
+  });
+
+  test('does not include the current meeting in "Also at this location"', async () => {
+    const primary = makeMeeting({ id_bigint: '1', meeting_name: 'Monday Night Meeting', location_street: '123 Main St', location_municipality: 'Anytown' });
+    dataState.meetings = [primary];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
+
+    expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
+  });
 });
 
 describe('geolocation', () => {

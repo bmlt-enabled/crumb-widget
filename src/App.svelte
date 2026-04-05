@@ -92,7 +92,7 @@
   {:else if selectedMeeting}
     <!-- Detail view (no Controls) -->
     <div class={config.height ? 'min-h-0 flex-1 overflow-y-auto' : ''}>
-      <MeetingDetail meeting={selectedMeeting} />
+      <MeetingDetail meeting={selectedMeeting} allMeetings={dataState.meetings} />
     </div>
   {:else}
     <!-- Controls + list/map -->

@@ -46,6 +46,7 @@ export const svTranslations = {
   meetingInformation: 'Mötesinformation',
   notes: 'Anteckningar',
   contact: 'Kontakt',
+  alsoAtThisLocation: 'Också på denna plats',
   // Geolocation
   nearMe: 'Nära mig',
   locating: 'Söker plats\u2026',

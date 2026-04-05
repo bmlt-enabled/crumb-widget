@@ -46,6 +46,7 @@ export const daTranslations = {
   meetingInformation: 'Mødeinformation',
   notes: 'Noter',
   contact: 'Kontakt',
+  alsoAtThisLocation: 'Også på dette sted',
   // Geolocation
   nearMe: 'Nær mig',
   locating: 'Finder placering\u2026',
