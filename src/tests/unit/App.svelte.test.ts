@@ -42,7 +42,7 @@ const baseConfig: AppConfig = {
   containerId: 'crumb-widget',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
-  geolocationRadius: 10,
+  geolocationRadius: 75,
   height: 600
 };
 

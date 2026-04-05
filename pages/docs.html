@@ -614,7 +614,7 @@
               <td>geolocationRadius</td>
               <td><code>number</code></td>
               <td>
-                Search radius in miles when using geolocation. Default: <code>10</code>.
+                Search radius in miles when using geolocation. Default: <code>75</code>.
               </td>
             </tr>
             <tr>
@@ -679,7 +679,7 @@
     language: 'en',            // override UI language; defaults to navigator.language
     columns: ['time', 'name', 'location', 'address', 'service_body'],
     geolocation: false,        // show Near Me button
-    geolocationRadius: 10,     // search radius in miles
+    geolocationRadius: 75,     // search radius in miles
     nowOffset: 10,             // minutes before a meeting is considered past and rolls to end
     hideHeader: false,         // hide the "Meeting Finder" title bar
     darkMode: 'auto',          // 'auto' | true | false
@@ -760,7 +760,7 @@
         <pre><code>&lt;script&gt;
   var CrumbWidgetConfig = {
     geolocation: true,
-    geolocationRadius: 25  // miles, default 10
+    geolocationRadius: 25  // miles, default 75
   };
 &lt;/script&gt;
 &lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>

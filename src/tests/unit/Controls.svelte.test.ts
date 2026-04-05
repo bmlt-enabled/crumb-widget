@@ -37,7 +37,7 @@ const baseConfig: AppConfig = {
   containerId: 'crumb-widget',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
-  geolocationRadius: 10,
+  geolocationRadius: 75,
   height: 600
 };
 
@@ -79,7 +79,7 @@ beforeEach(() => {
   config.geolocation = false;
   config.serviceBodyIds = [];
   config.serverUrl = 'https://test.example.org/main_server';
-  config.geolocationRadius = 10;
+  config.geolocationRadius = 75;
 });
 
 afterEach(() => {

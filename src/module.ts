@@ -41,7 +41,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.tilesDark = options.map?.tiles_dark;
   config.columns = options.columns ?? ALL_COLUMNS;
   config.geolocation = options.geolocation ?? false;
-  config.geolocationRadius = options.geolocationRadius ?? 10;
+  config.geolocationRadius = options.geolocationRadius ?? 75;
   config.height = options.height;
   config.darkMode = options.darkMode ?? false;
   config.nowOffset = options.nowOffset ?? 10;

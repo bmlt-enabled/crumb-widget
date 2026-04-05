@@ -68,9 +68,9 @@ describe('initConfig', () => {
     expect(config.geolocation).toBe(false);
   });
 
-  test('defaults geolocationRadius to 10', () => {
+  test('defaults geolocationRadius to 75', () => {
     initConfig(makeElement());
-    expect(config.geolocationRadius).toBe(10);
+    expect(config.geolocationRadius).toBe(75);
   });
 
   test('defaults height to undefined', () => {

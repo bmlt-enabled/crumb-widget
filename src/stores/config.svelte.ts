@@ -10,7 +10,7 @@ const defaultConfig: AppConfig = {
   containerId: 'crumb-widget',
   columns: ALL_COLUMNS,
   geolocation: false,
-  geolocationRadius: 10,
+  geolocationRadius: 75,
   height: undefined,
   nowOffset: 10
 };
@@ -38,7 +38,7 @@ export function initConfig(el: HTMLElement): void {
   config.tilesDark = globalCfg.map?.tiles_dark;
   config.columns = globalCfg.columns ?? ALL_COLUMNS;
   config.geolocation = globalCfg.geolocation ?? false;
-  config.geolocationRadius = globalCfg.geolocationRadius ?? 10;
+  config.geolocationRadius = globalCfg.geolocationRadius ?? 75;
   config.height = globalCfg.height ?? undefined;
   config.darkMode = globalCfg.darkMode ?? false;
   config.nowOffset = globalCfg.nowOffset ?? 10;
