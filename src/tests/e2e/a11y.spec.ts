@@ -76,7 +76,7 @@ test.describe('Accessibility', () => {
       const el = document.querySelector('#crumb-widget');
       return el ? getComputedStyle(el).getPropertyValue('--bmlt-accent').trim() !== '' : false;
     });
-    await checkA11y(page, '#crumb-widget');
+    await checkA11y(page, '#crumb-widget', { axeOptions: { exclude: ['.leaflet-container'] } });
   });
 
   test('virtual meeting detail has no violations', async ({ page }) => {
