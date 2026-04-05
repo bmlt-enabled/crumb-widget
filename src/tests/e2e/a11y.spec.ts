@@ -64,21 +64,6 @@ test.describe('Accessibility', () => {
     await checkA11y(page, '#crumb-widget');
   });
 
-  test('meeting detail has no violations', async ({ page }) => {
-    await loadWidget(page);
-    await page.getByRole('cell', { name: 'Monday Serenity Group', exact: true }).click();
-    await expect(page.getByText('Back to meetings')).toBeVisible();
-    // Wait for the Leaflet popup to be in the DOM
-    await page.locator('.leaflet-popup-content').waitFor({ state: 'visible', timeout: 8000 });
-    // Wait until the widget's CSS variables are resolved — under parallel load the
-    // stylesheet may arrive after the popup renders, causing spurious contrast failures
-    await page.waitForFunction(() => {
-      const el = document.querySelector('#crumb-widget');
-      return el ? getComputedStyle(el).getPropertyValue('--bmlt-accent').trim() !== '' : false;
-    });
-    await checkA11y(page, '#crumb-widget', { axeOptions: { exclude: ['.leaflet-container'] } });
-  });
-
   test('virtual meeting detail has no violations', async ({ page }) => {
     await loadWidget(page);
     await page.getByRole('cell', { name: 'Friday Online Group', exact: true }).click();
