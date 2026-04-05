@@ -451,6 +451,10 @@
           <li class="section-label">Reference</li>
           <li><a href="#features">Features</a></li>
           <li><a href="#browser-support">Browser Support</a></li>
+          <li class="section-label">npm Package</li>
+          <li><a href="#npm-install">Installation</a></li>
+          <li><a href="#npm-usage">Usage</a></li>
+          <li><a href="#npm-options">Options</a></li>
         </ul>
       </nav>
 
@@ -1250,6 +1254,72 @@
           <li>Firefox 90+</li>
           <li>Safari 14+</li>
         </ul>
+
+        <!-- ── npm Package ─────────────────────────────────────────── -->
+        <h2 id="npm-package">npm Package</h2>
+        <p>In addition to the CDN script-tag embed, Crumb Widget is available as an npm package for use in JavaScript/TypeScript projects (React, Svelte, Vue, plain Vite, etc.).</p>
+
+        <h3 id="npm-install">Installation</h3>
+        <div class="demo">
+          <div class="demo-hdr"><span>bash</span></div>
+          <pre><code>npm install crumb-widget</code></pre>
+        </div>
+
+        <h3 id="npm-usage">Usage</h3>
+        <p>Import <code>mountCrumbWidget</code> and call it with a DOM element and your configuration. The widget mounts itself and injects its own CSS — no separate stylesheet import needed.</p>
+
+        <div class="demo">
+          <div class="demo-hdr"><span>TypeScript / ESM</span></div>
+          <pre><code>import { mountCrumbWidget } from 'crumb-widget';
+
+mountCrumbWidget(document.getElementById('my-widget'), {
+  rootServerUrl: 'https://bmlt.example.org/main_server/',
+  serviceBodyIds: [1, 2, 3],
+});</code></pre>
+        </div>
+
+        <p>In a Svelte component, use <code>onMount</code> to ensure the element exists before mounting:</p>
+
+        <div class="demo">
+          <div class="demo-hdr"><span>Svelte</span></div>
+          <pre><code>&lt;script lang="ts"&gt;
+  import { onMount } from 'svelte';
+  import { mountCrumbWidget } from 'crumb-widget';
+
+  let widgetEl: HTMLDivElement;
+
+  onMount(() => {
+    mountCrumbWidget(widgetEl, {
+      rootServerUrl: 'https://bmlt.example.org/main_server/',
+      serviceBodyIds: [1, 2, 3],
+    });
+  });
+&lt;/script&gt;
+
+&lt;div bind:this={widgetEl} id="crumb-widget" style="height:600px"&gt;&lt;/div&gt;</code></pre>
+        </div>
+
+        <h3 id="npm-options">Options</h3>
+        <p>All options from <a href="#global-config">Global Config</a> are available, plus two additional required fields:</p>
+        <table>
+          <thead>
+            <tr><th>Option</th><th>Type</th><th>Required</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>rootServerUrl</code></td><td><code>string</code></td><td>Yes</td><td>URL of the BMLT root server.</td></tr>
+            <tr><td><code>serviceBodyIds</code></td><td><code>number[]</code></td><td>No</td><td>Service body IDs to filter by. Omit or pass <code>[]</code> to show all.</td></tr>
+            <tr><td><code>defaultView</code></td><td><code>'list' | 'map'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>.</td></tr>
+            <tr><td><code>geolocation</code></td><td><code>boolean</code></td><td>No</td><td>Enable the Near Me button. Defaults to <code>false</code>.</td></tr>
+            <tr><td><code>darkMode</code></td><td><code>false | true | 'auto'</code></td><td>No</td><td>Dark mode setting. Defaults to <code>false</code>.</td></tr>
+            <tr><td><code>language</code></td><td><code>string</code></td><td>No</td><td>BCP-47 language tag (e.g. <code>'es'</code>). Defaults to browser locale.</td></tr>
+            <tr><td><code>columns</code></td><td><code>Column[]</code></td><td>No</td><td>Table columns to display. See <a href="#global-config">Global Config</a>.</td></tr>
+            <tr><td><code>map</code></td><td><code>object</code></td><td>No</td><td>Tile provider and marker config. See <a href="#tile-config">Tile Provider</a>.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout">
+          <strong>Note:</strong> The npm package bundles Svelte, Leaflet, and all styles into a single JS file. No peer dependencies are required. Each call to <code>mountCrumbWidget</code> is independent, but multiple widgets on the same page are not currently supported.
+        </div>
       </main>
     </div>
     <script>
