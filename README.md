@@ -4,7 +4,7 @@
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
 [![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
 
-An embeddable NA meeting finder widget. Drop a `<div>` and a `<script>` tag into any page — or install from npm for use in JavaScript/TypeScript projects — and get a fully functional meeting finder with search, filters, list view, map, and meeting detail.
+An embeddable NA meeting finder widget with search, filters, list view, map, and meeting detail. Drop a `<div>` and a `<script>` tag into any page, or install from npm for use in JavaScript and TypeScript projects.
 
 Built with Svelte 5, distributed as a **single self-contained JavaScript file** with no host-page dependencies. Available as a CDN script or as an [npm package](https://www.npmjs.com/package/crumb-widget).
 
