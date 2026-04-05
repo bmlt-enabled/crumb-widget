@@ -34,7 +34,13 @@
    ─────────────────────────────────────────────────────────────────────────── */
 :where(#crumb-widget) {
   --bmlt-font-family: system-ui, -apple-system, sans-serif;
-  --bmlt-font-size: 16px;
+  --bmlt-font-size: 17px;
+  /* Bump Tailwind's font-size scale up ~1px across the board */
+  --text-xs: 0.8125rem; /* 13px (was 12px) */
+  --text-sm: 0.9375rem; /* 15px (was 14px) */
+  --text-base: 1.0625rem; /* 17px (was 16px) */
+  --text-lg: 1.1875rem; /* 19px (was 18px) */
+  --text-xl: 1.3125rem; /* 21px (was 20px) */
   --bmlt-background: #ffffff;
   --bmlt-text: #111827;
   --bmlt-border: #e5e7eb;
@@ -148,18 +154,18 @@
   outline: none !important;
 }
 
-/* Outlined secondary button (e.g. Get Directions) */
+/* Filled secondary button (e.g. Get Directions) */
 #crumb-widget .bmlt-btn-secondary {
   color: var(--bmlt-accent) !important;
   border: 1px solid var(--bmlt-accent) !important;
-  background-color: transparent !important;
+  background-color: var(--bmlt-accent-light) !important;
   background-image: none !important;
   cursor: pointer !important;
   text-decoration: none !important;
   box-shadow: none !important;
 }
 #crumb-widget .bmlt-btn-secondary:hover {
-  background-color: var(--bmlt-accent-light) !important;
+  filter: brightness(0.95) !important;
   background-image: none !important;
 }
 

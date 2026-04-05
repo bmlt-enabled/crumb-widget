@@ -58,5 +58,5 @@ export function applyTileLayer(map: LeafletMap, cfg: TilesConfig, existingLayer:
 }
 
 export function buildDirectionsLinkHtml(url: string, label: string, marginTop = '8px'): string {
-  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:${marginTop};display:inline-flex;align-items:center;gap:4px;padding:4px 10px;font-size:12px;border-radius:6px;border:1px solid;text-decoration:none;font-family:inherit">${label}</a>`;
+  return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="bmlt-btn-secondary" style="margin-top:${marginTop};display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;font-size:14px;border-radius:8px;border:1px solid;text-decoration:none;font-family:inherit;width:100%;box-sizing:border-box;font-weight:500">${label}</a>`;
 }

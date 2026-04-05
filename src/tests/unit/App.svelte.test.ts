@@ -373,7 +373,7 @@ describe('meeting detail', () => {
 
   test('shows location_text when present', async () => {
     await navigateToDetail(makeMeeting({ isInPerson: true, location_text: 'Community Center', formattedAddress: '123 Main St' }));
-    expect(screen.getByText('Community Center')).toBeInTheDocument();
+    expect(screen.getAllByText('Community Center').length).toBeGreaterThan(0);
   });
 
   test('shows location_info when present', async () => {

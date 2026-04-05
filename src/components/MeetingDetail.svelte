@@ -49,15 +49,16 @@
       bodyObserver.observe(containerEl, { attributes: true, attributeFilter: ['class'] });
     }
 
-    const popupHtml = `<div style="min-width:160px;max-width:220px;word-break:break-word;white-space:normal">
-      <p style="font-size:13px;margin:0 0 8px">${meeting.formattedAddress}</p>
+    const popupHtml = `<div style="min-width:180px;max-width:240px;word-break:break-word;white-space:normal">
+      ${meeting.location_text ? `<strong style="display:block;font-size:16px;color:var(--bmlt-text);margin:0 0 6px">${meeting.location_text}</strong>` : ''}
+      <p style="font-size:14px;color:var(--bmlt-text-secondary);margin:0 0 8px">${meeting.formattedAddress}</p>
       ${buildDirectionsLinkHtml(getDirectionsUrl(meeting), $t.getDirections, '4px')}
     </div>`;
 
     const marker = L.marker([meeting.latitude, meeting.longitude], {
       icon: buildMarkerIcon(config.locationMarker ?? DEFAULT_LOCATION_MARKER)
     });
-    marker.bindPopup(popupHtml, { maxWidth: 220 }).addTo(leafletMap!).openPopup();
+    marker.bindPopup(popupHtml, { maxWidth: 260 }).addTo(leafletMap!).openPopup();
     const markerEl = marker.getElement();
     markerEl?.setAttribute('aria-label', meeting.meeting_name);
     markerEl?.querySelector('img')?.setAttribute('alt', meeting.meeting_name);
@@ -82,7 +83,7 @@
       </svg>
       {$t.backToMeetings}
     </a>
-    <h2 class="text-2xl font-bold text-gray-900">{meeting.meeting_name}</h2>
+    <h2 class="text-3xl font-bold text-gray-900">{meeting.meeting_name}</h2>
   </div>
 
   <!-- Body: two columns -->
@@ -95,7 +96,7 @@
           href={getDirectionsUrl(meeting)}
           target="_blank"
           rel="noopener noreferrer"
-          class="bmlt-btn-secondary mx-4 mb-4 flex items-center justify-center gap-2 rounded-lg border border-gray-300 px-3 py-2.5 text-base font-medium text-gray-700 no-underline transition-colors hover:bg-gray-50"
+          class="bmlt-btn-secondary mx-4 mb-4 flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-base font-medium no-underline transition-colors"
         >
           <svg class="h-4 w-4" style="fill:none;stroke:currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -115,7 +116,7 @@
         <!-- Schedule row -->
         <div class="px-4 py-4">
           <div>
-            <p class="text-base font-medium text-gray-900">
+            <p class="text-lg font-medium text-gray-900">
               {$t.weekdays[meeting.weekday_tinyint - 1]},
               {#if meeting.duration_time && formatEndTime(meeting.start_time, meeting.duration_time)}
                 {formatTime(meeting.start_time)} – {formatEndTime(meeting.start_time, meeting.duration_time)}
@@ -124,7 +125,7 @@
               {/if}
             </p>
             {#if meeting.time_zone}
-              <p class="text-sm text-gray-500">{getTimezoneAbbr(meeting.time_zone)}</p>
+              <p class="text-base text-gray-500">{getTimezoneAbbr(meeting.time_zone)}</p>
             {/if}
           </div>
         </div>
@@ -133,17 +134,17 @@
         <div class="px-4 py-4">
           <div class="flex flex-wrap gap-1.5">
             {#if meeting.isInPerson}
-              <span class="bmlt-badge-in-person inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-sm font-medium text-green-700">{$t.inPerson}</span>
+              <span class="bmlt-badge-in-person inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-sm font-medium text-green-700">{$t.inPerson}</span>
             {/if}
             {#if meeting.isVirtual}
-              <span class="bmlt-badge-virtual inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-sm font-medium text-blue-700">{$t.virtual}</span>
+              <span class="bmlt-badge-virtual inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-sm font-medium text-blue-700">{$t.virtual}</span>
             {/if}
           </div>
           {#if meeting.resolvedFormats.length > 0}
             <div class="mt-1.5 flex flex-wrap gap-1">
               {#each meeting.resolvedFormats as fmt (fmt.id)}
                 <button
-                  class="cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2 py-0.5 text-sm text-gray-600 select-none"
+                  class="cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2.5 py-1 text-base text-gray-600 select-none"
                   style="font-family:inherit"
                   title={fmt.description_string}
                   onclick={() => {
@@ -166,7 +167,7 @@
           <div class="px-4 py-4">
             <div class="mt-1">
               {#if meeting.location_text}
-                <p class="text-sm text-gray-500">{meeting.location_text}</p>
+                <p class="text-base text-gray-500">{meeting.location_text}</p>
               {/if}
               <p class="text-base text-gray-700">{meeting.formattedAddress}</p>
               {#if meeting.location_info}

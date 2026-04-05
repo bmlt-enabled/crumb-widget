@@ -160,6 +160,8 @@
     destroyResizeObserver?.();
     bodyObserver?.disconnect();
     darkMq?.removeEventListener('change', updateTiles);
+    leafletMap?.off('popupopen');
+    leafletMap?.off('moveend');
     leafletMap?.remove();
   });
 

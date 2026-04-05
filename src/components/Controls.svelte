@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte';
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
   import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
@@ -43,6 +44,10 @@
   let geoStatus = $state<GeoStatus>('idle');
   let geoError = $state('');
   let geoErrorTimer: ReturnType<typeof setTimeout> | null = null;
+
+  onDestroy(() => {
+    if (geoErrorTimer) clearTimeout(geoErrorTimer);
+  });
 
   async function handleNearMe() {
     if (uiState.geoActive) {
