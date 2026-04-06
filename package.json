@@ -74,6 +74,6 @@
     "localized-strings": "^2.0.3"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=22"
   }
 }

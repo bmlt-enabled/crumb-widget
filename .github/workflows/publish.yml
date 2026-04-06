@@ -4,12 +4,15 @@ on:
   push:
     tags: [ 'v*' ]
 
-permissions:
-  contents: read
-
 jobs:
+  tests:
+    uses: ./.github/workflows/reusable-test.yml
+
   publish:
-    runs-on: ubuntu-latest
+    needs: [tests]
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
