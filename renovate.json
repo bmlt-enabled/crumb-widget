@@ -7,9 +7,17 @@
       "schedule": ["after 9am on Monday"]
     },
     {
-      "matchUpdateTypes": ["patch", "minor"],
-      "groupName": "non-major-updates",
+      "matchUpdateTypes": ["minor"],
+      "groupName": "minor-updates",
       "schedule": ["after 8am on Monday"]
+    },
+    {
+      "matchUpdateTypes": ["patch"],
+      "groupName": "patch-updates",
+      "schedule": ["after 8am on Monday"],
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "14 days"
     }
   ]
 }
