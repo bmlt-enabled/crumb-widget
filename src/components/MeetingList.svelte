@@ -48,10 +48,8 @@
         {#each inProgressMeetings as meeting (meeting.id_bigint)}
           <button type="button" class="bmlt-row bmlt-in-progress-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
-              <div class="w-20 shrink-0 text-gray-600">
-                <span class="text-sm text-gray-600">{meeting.formattedTime}</span>
-                <br />
-                <span class="text-sm text-gray-600">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+              <div class="w-20 shrink-0 text-sm text-gray-600">
+                {meeting.formattedTime + ' ' + $t.weekdaysShort[meeting.weekday_tinyint - 1]}
               </div>
             {/if}
             <div class="min-w-0 flex-1">
@@ -99,10 +97,8 @@
       <button type="button" class="bmlt-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left transition-colors" onclick={() => selectMeeting(meeting)}>
         <!-- Left: time -->
         {#if cols.has('time')}
-          <div class="w-20 shrink-0 text-gray-600">
-            <span class="text-sm text-gray-500">{meeting.formattedTime}</span>
-            <br />
-            <span class="font-semibold text-gray-800">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+          <div class="w-20 shrink-0 text-sm text-gray-600">
+            {meeting.formattedTime + ' ' + $t.weekdaysShort[meeting.weekday_tinyint - 1]}
           </div>
         {/if}
         <!-- Right: name + location details -->
@@ -151,7 +147,7 @@
     <table class="w-full table-fixed border-collapse text-base">
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
-          {#if cols.has('time')}<th class="bmlt-time-col w-32 px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
+          {#if cols.has('time')}<th class="bmlt-time-col w-24 px-4 py-2 text-left lg:w-40">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
           {#if cols.has('location')}<th class="px-4 py-2 text-left">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-left">{$t.address}</th>{/if}
@@ -181,8 +177,10 @@
               <tr class="bmlt-row bmlt-in-progress-row cursor-pointer" onclick={() => selectMeeting(meeting)}>
                 {#if cols.has('time')}
                   <td class="bmlt-time-col px-4 py-4 text-sm text-gray-600">
-                    {meeting.formattedTime}
-                    {$t.weekdaysShort[meeting.weekday_tinyint - 1]}
+                    <time class="flex flex-col lg:flex-row lg:gap-2">
+                      <span class="whitespace-nowrap">{meeting.formattedTime}</span>
+                      <span class="whitespace-nowrap">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                    </time>
                   </td>
                 {/if}
                 {#if cols.has('name')}
@@ -239,8 +237,10 @@
           <tr class="bmlt-row cursor-pointer transition-colors" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
               <td class="bmlt-time-col px-4 py-4 text-sm text-gray-600">
-                {meeting.formattedTime}
-                {$t.weekdaysShort[meeting.weekday_tinyint - 1]}
+                <time class="flex flex-col lg:flex-row lg:gap-2">
+                  <span class="whitespace-nowrap">{meeting.formattedTime}</span>
+                  <span class="whitespace-nowrap">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                </time>
               </td>
             {/if}
             {#if cols.has('name')}

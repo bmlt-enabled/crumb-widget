@@ -421,7 +421,12 @@
   width: 100% !important;
 }
 #crumb-widget .bmlt-time-col {
-  width: 8rem !important;
+  width: 6rem !important;
+}
+@media (min-width: 1024px) {
+  #crumb-widget .bmlt-time-col {
+    width: 10rem !important;
+  }
 }
 
 /* ─── Leaflet popup ──────────────────────────────────────────────────────── */
