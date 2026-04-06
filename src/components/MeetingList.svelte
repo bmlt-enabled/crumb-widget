@@ -300,3 +300,11 @@
     {meetings.length !== 1 ? $t.meetings : $t.meeting}
   </div>
 {/if}
+
+<style>
+  table,
+  th,
+  td {
+    border: none !important;
+  }
+</style>
