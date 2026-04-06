@@ -151,7 +151,7 @@
     <table class="w-full table-fixed border-collapse text-base">
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
-          {#if cols.has('time')}<th class="w-16 px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
+          {#if cols.has('time')}<th class="w-24 px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
           {#if cols.has('location')}<th class="px-4 py-2 text-left">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-left">{$t.address}</th>{/if}
