@@ -67,7 +67,10 @@
   });
 </script>
 
-<div class="crumb-widget isolate flex flex-col rounded-lg border border-gray-200 font-sans text-base {config.height ? 'overflow-hidden' : ''}" style={config.height ? `height: ${config.height}px` : ''}>
+<div
+  class="crumb-widget isolate flex flex-col rounded-lg border border-gray-200 font-sans text-base {config.height ? 'overflow-hidden' : ''}"
+  style={config.height ? `height: ${config.height}px` : ''}
+>
   <!-- Header -->
   {#if !config.hideHeader}
     <div class="bmlt-app-header flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
