@@ -149,7 +149,7 @@
   <!-- Desktop table (sm+) -->
   <div class="hidden overflow-x-auto sm:block">
     <table class="w-full border-collapse text-base">
-      <thead class="sticky top-0 bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
+      <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
           {#if cols.has('time')}<th class="px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
