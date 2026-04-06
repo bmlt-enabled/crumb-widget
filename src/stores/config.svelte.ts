@@ -37,7 +37,7 @@ export function initConfig(el: HTMLElement): void {
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
   config.columns = globalCfg.columns ?? ALL_COLUMNS;
-  const isAggregator = server.includes('aggregator.bmltenabled.org');
+  const isAggregator = server.includes('https://aggregator.bmltenabled.org');
   config.geolocation = globalCfg.geolocation ?? isAggregator;
   config.geolocationRadius = globalCfg.geolocationRadius ?? 75;
   config.height = globalCfg.height ?? undefined;
