@@ -93,7 +93,7 @@
 
 <svelte:window onclick={handleWindowClick} />
 
-<div class="bmlt-controls relative z-[1001] border-b border-gray-200 bg-white px-3 py-3">
+<div class="bmlt-controls relative border-b border-gray-200 bg-white px-3 py-3">
   <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-nowrap sm:items-center">
     <!-- Search -->
     <div class="relative {config.geolocation ? '' : 'col-span-2'} sm:max-w-48 sm:min-w-0 sm:flex-1">
