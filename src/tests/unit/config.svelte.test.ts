@@ -63,7 +63,17 @@ describe('initConfig', () => {
     expect(config.containerId).toBe('crumb-widget');
   });
 
-  test('defaults geolocation to false', () => {
+  test('defaults geolocation to false for non-aggregator server', () => {
+    initConfig(makeElement({ 'data-server': 'https://example.com/main_server/' }));
+    expect(config.geolocation).toBe(false);
+  });
+
+  test('defaults geolocation to true for aggregator.bmltenabled.org server', () => {
+    initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));
+    expect(config.geolocation).toBe(true);
+  });
+
+  test('defaults geolocation to false when no server set', () => {
     initConfig(makeElement());
     expect(config.geolocation).toBe(false);
   });
@@ -85,10 +95,16 @@ describe('initConfig', () => {
       expect(config.defaultView).toBe('map');
     });
 
-    test('overrides geolocation', () => {
+    test('overrides geolocation to true', () => {
       window.CrumbWidgetConfig = { geolocation: true };
       initConfig(makeElement());
       expect(config.geolocation).toBe(true);
+    });
+
+    test('overrides aggregator default geolocation to false', () => {
+      window.CrumbWidgetConfig = { geolocation: false };
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));
+      expect(config.geolocation).toBe(false);
     });
 
     test('overrides geolocationRadius', () => {
