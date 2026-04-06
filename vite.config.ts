@@ -67,10 +67,9 @@ export default defineConfig({
       include: ['src/**/*.{ts,svelte}'],
       exclude: ['src/tests/**', 'src/main.ts'],
       thresholds: {
-        lines: 70,
-        functions: 70,
-        branches: 70,
-        statements: 70
+        lines: 80,
+        functions: 80,
+        statements: 80
       }
     }
   }
