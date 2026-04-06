@@ -420,6 +420,7 @@
   white-space: normal !important;
   word-break: break-word !important;
   max-width: 220px !important;
+  margin: 13px 19px 13px 19px !important;
 }
 
 #crumb-widget .leaflet-popup-content-wrapper {
