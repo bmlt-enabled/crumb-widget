@@ -147,11 +147,11 @@
   </div>
 
   <!-- Desktop table (sm+) -->
-  <div class="hidden overflow-x-auto sm:block">
+  <div class="hidden sm:block">
     <table class="w-full border-collapse text-base">
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
-          {#if cols.has('time')}<th class="px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
+          {#if cols.has('time')}<th class="w-16 px-4 py-2 text-left">{$t.dayAndTime}</th>{/if}
           {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
           {#if cols.has('location')}<th class="px-4 py-2 text-left">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-left">{$t.address}</th>{/if}
@@ -180,9 +180,8 @@
             {#each inProgressMeetings as meeting (meeting.id_bigint)}
               <tr class="bmlt-row bmlt-in-progress-row cursor-pointer" onclick={() => selectMeeting(meeting)}>
                 {#if cols.has('time')}
-                  <td class="px-4 py-4 whitespace-nowrap text-gray-600">
-                    <span class="text-sm text-gray-600">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
-                    <span class="text-sm text-gray-600">{meeting.formattedTime}</span>
+                  <td class="px-4 py-4 text-sm text-gray-600">
+                    <span>{meeting.formattedTime}</span><br /><span>{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
                   </td>
                 {/if}
                 {#if cols.has('name')}
@@ -206,7 +205,7 @@
                           <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           </svg>
-                          <span class="max-w-[16rem] truncate">{formatShortAddress(meeting) || meeting.location_text}</span>
+                          <span class="break-words">{formatShortAddress(meeting) || meeting.location_text}</span>
                         </span>
                       {/if}
                       {#if meeting.isVirtual}
@@ -264,7 +263,7 @@
                       <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
-                      <span class="max-w-[16rem] truncate">{formatShortAddress(meeting) || meeting.location_text}</span>
+                      <span class="break-words">{formatShortAddress(meeting) || meeting.location_text}</span>
                     </span>
                   {/if}
                   {#if meeting.isVirtual}
