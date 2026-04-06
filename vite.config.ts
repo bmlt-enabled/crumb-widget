@@ -65,7 +65,13 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'cobertura'],
       include: ['src/**/*.{ts,svelte}'],
-      exclude: ['src/tests/**', 'src/main.ts']
+      exclude: ['src/tests/**', 'src/main.ts'],
+      thresholds: {
+        lines: 70,
+        functions: 70,
+        branches: 70,
+        statements: 70
+      }
     }
   }
 });
