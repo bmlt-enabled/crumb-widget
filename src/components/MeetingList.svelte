@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { ProcessedMeeting } from '@/types/index';
   import { selectMeeting } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
@@ -18,6 +19,21 @@
   const otherMeetings = $derived(meetings.filter((m) => !isInProgress(m, nowOffset)));
 
   let inProgressOpen = $state(false);
+
+  // When the user prints, force the in-progress group open so collapsed rows
+  // don't silently vanish from the printout. Restore after printing.
+  onMount(() => {
+    const before = () => {
+      inProgressOpen = true;
+    };
+    window.addEventListener('beforeprint', before);
+    return () => window.removeEventListener('beforeprint', before);
+  });
+
+  // Column span for print-only day-group header rows.
+  const printHeaderColSpan = $derived(
+    (cols.has('time') ? 1 : 0) + (cols.has('name') ? 1 : 0) + (cols.has('location') ? 1 : 0) + (cols.has('address') ? 1 : 0) + (cols.has('service_body') ? 1 : 0) || 1
+  );
 </script>
 
 {#if meetings.length === 0}
@@ -233,7 +249,12 @@
           {/if}
         {/if}
 
-        {#each otherMeetings as meeting (meeting.id_bigint)}
+        {#each otherMeetings as meeting, i (meeting.id_bigint)}
+          {#if i === 0 || otherMeetings[i - 1]?.weekday_tinyint !== meeting.weekday_tinyint}
+            <tr class="bmlt-print-day-row">
+              <td colspan={printHeaderColSpan}>{$t.weekdays?.[meeting.weekday_tinyint - 1] ?? $t.weekdaysShort[meeting.weekday_tinyint - 1]}</td>
+            </tr>
+          {/if}
           <tr class="bmlt-row cursor-pointer transition-colors" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
               <td class="bmlt-time-col px-4 py-4 text-sm text-gray-600">
@@ -279,6 +300,9 @@
                       </svg>
                       {$t.onlineMeeting}
                     </span>
+                  {/if}
+                  {#if meeting.isVirtual && meeting.virtual_meeting_link}
+                    <span class="bmlt-print-url">{meeting.virtual_meeting_link}</span>
                   {/if}
                 </div>
               </td>

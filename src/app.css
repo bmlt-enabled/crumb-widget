@@ -182,8 +182,10 @@
   color: var(--bmlt-accent) !important;
 }
 
-/* Table row alternating background */
-#crumb-widget .bmlt-row:nth-child(even) {
+/* Table row alternating background.
+   Use `of .bmlt-row` so print-only day header rows (also <tr>) don't
+   throw off the odd/even count on screen. */
+#crumb-widget .bmlt-row:nth-child(even of .bmlt-row) {
   background-color: var(--bmlt-row-alt) !important;
 }
 
@@ -429,11 +431,22 @@
   }
 }
 
+/* Print-only elements: hidden on screen, shown only when printing. */
+#crumb-widget .bmlt-print-header,
+#crumb-widget .bmlt-print-day-row,
+#crumb-widget .bmlt-print-url {
+  display: none;
+}
+
 /* ─── Print styles ───────────────────────────────────────────────────────────
    When printing, collapse the widget down to just the meeting list. Hide
    chrome (controls, header, map, detail view), drop backgrounds/colors so
    ink is cheap, and let the table flow naturally across pages.
    ─────────────────────────────────────────────────────────────────────────── */
+@page {
+  margin: 0.5in;
+}
+
 @media print {
   /* Hide host page chrome is up to the host; we just hide our own non-list bits. */
   #crumb-widget .bmlt-app-header,
@@ -473,12 +486,55 @@
        separate borders and draw them only on top of each cell. */
     border-collapse: separate !important;
     border-spacing: 0 !important;
-    font-size: 11pt !important;
+    font-size: 10pt !important;
     color: #000000 !important;
   }
   #crumb-widget thead {
     background: #ffffff !important;
     display: table-header-group !important; /* repeat header on each page */
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Print-only day group header rows. */
+  #crumb-widget .bmlt-print-day-row {
+    display: table-row !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  #crumb-widget .bmlt-print-day-row td {
+    background: #eeeeee !important;
+    font-weight: bold !important;
+    font-size: 11pt !important;
+    padding: 8px 8px 6px !important;
+    border: 1px solid #999999 !important;
+  }
+
+  /* Print-only URL next to virtual badge. */
+  #crumb-widget .bmlt-print-url {
+    display: block !important;
+    font-size: 9pt !important;
+    color: #000000 !important;
+    word-break: break-all !important;
+    margin-top: 2px !important;
+  }
+
+  /* Print-only title above the table. */
+  #crumb-widget .bmlt-print-header {
+    display: block !important;
+    margin-bottom: 12px !important;
+    color: #000000 !important;
+  }
+  #crumb-widget .bmlt-print-header h1 {
+    font-size: 18pt !important;
+    font-weight: bold !important;
+    margin: 0 0 2px 0 !important;
+    color: #000000 !important;
+  }
+  #crumb-widget .bmlt-print-header p {
+    font-size: 10pt !important;
+    margin: 0 !important;
+    color: #000000 !important;
   }
   #crumb-widget th,
   #crumb-widget td {

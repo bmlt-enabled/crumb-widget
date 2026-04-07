@@ -113,6 +113,15 @@
         />
       {:else}
         <div class={config.height ? 'bmlt-meeting-list h-full overflow-y-auto' : 'bmlt-meeting-list'}>
+          <!-- Print-only header: shows when paper prints but not on screen. -->
+          <div class="bmlt-print-header">
+            <h1>{$t.meetings ?? 'Meetings'}</h1>
+            <p>
+              {filteredMeetings.length}
+              {filteredMeetings.length === 1 ? ($t.meeting ?? 'meeting') : ($t.meetings ?? 'meetings')}
+              — {new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+            </p>
+          </div>
           <MeetingList meetings={filteredMeetings} />
         </div>
       {/if}

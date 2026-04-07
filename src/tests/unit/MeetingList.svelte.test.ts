@@ -188,3 +188,60 @@ describe('MeetingList — in-progress banner', () => {
     expect(screen.queryByText(/in progress/i)).not.toBeInTheDocument();
   });
 });
+
+describe('MeetingList — print helpers', () => {
+  test('renders a print-only day header row when weekday changes', () => {
+    const tue = makeMeeting({ id_bigint: '1', weekday_tinyint: 3, meeting_name: 'Tue Group' });
+    const wed1 = makeMeeting({ id_bigint: '2', weekday_tinyint: 4, meeting_name: 'Wed Group A' });
+    const wed2 = makeMeeting({ id_bigint: '3', weekday_tinyint: 4, meeting_name: 'Wed Group B' });
+    const { container } = render(MeetingList, { props: { meetings: [tue, wed1, wed2] } });
+
+    const dayRows = container.querySelectorAll('tr.bmlt-print-day-row');
+    // One header for Tuesday, one for Wednesday — no duplicate for wed2
+    expect(dayRows).toHaveLength(2);
+    expect(dayRows[0]?.textContent?.trim()).toBe('Tuesday');
+    expect(dayRows[1]?.textContent?.trim()).toBe('Wednesday');
+  });
+
+  test('day header colspan matches the number of configured columns', () => {
+    config.columns = ['time', 'name', 'address']; // 3 cols
+    const meeting = makeMeeting();
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    const td = container.querySelector('tr.bmlt-print-day-row td');
+    expect(td?.getAttribute('colspan')).toBe('3');
+  });
+
+  test('renders print-only URL span for virtual meetings with a link', () => {
+    const meeting = makeMeeting({
+      isVirtual: true,
+      isInPerson: false,
+      venue_type: 2,
+      virtual_meeting_link: 'https://zoom.us/j/12345'
+    } as Partial<ProcessedMeeting>);
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    const urlSpans = container.querySelectorAll('.bmlt-print-url');
+    expect(urlSpans.length).toBeGreaterThan(0);
+    expect(urlSpans[0]?.textContent).toContain('https://zoom.us/j/12345');
+  });
+
+  test('does not render print-url span when no virtual_meeting_link', () => {
+    const meeting = makeMeeting({ isVirtual: true, isInPerson: false, venue_type: 2 });
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    expect(container.querySelectorAll('.bmlt-print-url')).toHaveLength(0);
+  });
+
+  test('beforeprint event forces in-progress group open', async () => {
+    vi.setSystemTime(new Date(2024, 0, 8, 19, 5));
+    const meeting = makeMeeting({ weekday_tinyint: 2, start_time: '19:00:00', meeting_name: 'Hidden Group' });
+    render(MeetingList, { props: { meetings: [meeting] } });
+
+    // Collapsed by default
+    expect(screen.queryAllByText('Hidden Group')).toHaveLength(0);
+
+    window.dispatchEvent(new Event('beforeprint'));
+    // Let Svelte flush reactive updates
+    await Promise.resolve();
+
+    expect(screen.getAllByText('Hidden Group').length).toBeGreaterThan(0);
+  });
+});
