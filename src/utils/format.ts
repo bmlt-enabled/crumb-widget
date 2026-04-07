@@ -14,7 +14,7 @@ export function formatTime(
     force24Hour?: boolean;
   }
 ): string {
-  const [hStr, mStr] = timeStr.split(':');
+  const [hStr = '', mStr = ''] = timeStr.split(':');
   const hours = parseInt(hStr, 10);
   const minutes = parseInt(mStr, 10);
 
@@ -35,8 +35,8 @@ export function formatTime(
 }
 
 export function formatEndTime(startTimeStr: string, durationStr: string, options?: { locale?: string; force24Hour?: boolean }): string | null {
-  const [sh, sm] = startTimeStr.split(':').map(Number);
-  const [dh, dm] = durationStr.split(':').map(Number);
+  const [sh = NaN, sm = NaN] = startTimeStr.split(':').map(Number);
+  const [dh = NaN, dm = NaN] = durationStr.split(':').map(Number);
   if ([sh, sm, dh, dm].some(Number.isNaN)) return null;
   const totalMins = sh * 60 + sm + dh * 60 + dm;
   if (totalMins === sh * 60 + sm) return null; // zero duration
@@ -56,7 +56,7 @@ export function getTimezoneAbbr(timezone: string): string {
 }
 
 export function getTimeOfDay(timeStr: string): 'morning' | 'afternoon' | 'evening' | 'night' {
-  const h = parseInt(timeStr.split(':')[0], 10);
+  const h = parseInt(timeStr.split(':')[0] ?? '', 10);
   if (h >= 4 && h < 12) return 'morning';
   if (h >= 12 && h < 17) return 'afternoon';
   if (h >= 17 && h < 21) return 'evening';
@@ -83,7 +83,7 @@ export function isInProgress(meeting: { weekday_tinyint: number; start_time: str
   const now = new Date();
   const today = now.getDay() + 1; // BMLT: 1=Sun…7=Sat
   if (meeting.weekday_tinyint !== today) return false;
-  const [hStr, mStr] = meeting.start_time.split(':');
+  const [hStr = '', mStr = ''] = meeting.start_time.split(':');
   const meetingMinutes = parseInt(hStr, 10) * 60 + parseInt(mStr, 10);
   const nowMinutes = now.getHours() * 60 + now.getMinutes();
   return meetingMinutes < nowMinutes && meetingMinutes >= nowMinutes - nowOffsetMinutes;
@@ -99,7 +99,7 @@ export function sortMeetings<T extends { weekday_tinyint: number; start_time: st
   const effectiveOffset = (day: number, startTime: string) => {
     const dayOffset = (day - today + 7) % 7;
     if (dayOffset === 0) {
-      const [hStr, mStr] = startTime.split(':');
+      const [hStr = '', mStr = ''] = startTime.split(':');
       const meetingMinutes = parseInt(hStr, 10) * 60 + parseInt(mStr, 10);
       if (meetingMinutes < cutoffMinutes) {
         return 7; // push past meetings to end of the week cycle

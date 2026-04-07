@@ -379,7 +379,7 @@ describe('meeting detail', () => {
   async function navigateToDetail(meeting: ProcessedMeeting) {
     dataState.meetings = [meeting];
     render(App, { props: { config: baseConfig } });
-    await fireEvent.click(screen.getAllByText(meeting.meeting_name)[0]);
+    await fireEvent.click(screen.getAllByText(meeting.meeting_name)[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
   }
 
@@ -392,7 +392,7 @@ describe('meeting detail', () => {
     dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting' })];
     render(App, { props: { config: baseConfig } });
 
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => screen.getByText('Back to meetings'));
     await fireEvent.click(screen.getByText('Back to meetings'));
 
@@ -546,7 +546,7 @@ describe('meeting detail', () => {
     });
     dataState.meetings = [primary, sibling];
     render(App, { props: { config: baseConfig } });
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
     expect(screen.getByText('Also at this location')).toBeInTheDocument();
@@ -565,7 +565,7 @@ describe('meeting detail', () => {
     });
     dataState.meetings = [primary, sibling];
     render(App, { props: { config: baseConfig } });
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: 'Thursday Noon Group' });
@@ -577,7 +577,7 @@ describe('meeting detail', () => {
     const other = makeMeeting({ id_bigint: '2', meeting_name: 'Different Location Group', location_street: '456 Oak Ave', location_municipality: 'Anytown' });
     dataState.meetings = [primary, other];
     render(App, { props: { config: baseConfig } });
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
     expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
@@ -608,7 +608,7 @@ describe('meeting detail', () => {
     });
     dataState.meetings = [primary, sibling];
     render(App, { props: { config: baseConfig } });
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
     expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
@@ -618,7 +618,7 @@ describe('meeting detail', () => {
     const primary = makeMeeting({ id_bigint: '1', meeting_name: 'Monday Night Meeting', location_street: '123 Main St', location_municipality: 'Anytown' });
     dataState.meetings = [primary];
     render(App, { props: { config: baseConfig } });
-    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]);
+    await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
     expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();

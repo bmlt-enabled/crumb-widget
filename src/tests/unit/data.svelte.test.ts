@@ -62,7 +62,7 @@ describe('loadData', () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting()], formats: [] });
     await loadData('https://example.org/main_server');
     expect(dataState.meetings).toHaveLength(1);
-    expect(dataState.meetings[0].meeting_name).toBe('Test Meeting');
+    expect(dataState.meetings[0]!.meeting_name).toBe('Test Meeting');
   });
 
   test('sets error and skips fetch when serverUrl is empty', async () => {
@@ -101,63 +101,63 @@ describe('loadData', () => {
     const fmt = rawFormat({ id: '42', name_string: 'Beginners' });
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '42' })], formats: [fmt] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].resolvedFormats).toHaveLength(1);
-    expect(dataState.meetings[0].resolvedFormats[0].name_string).toBe('Beginners');
+    expect(dataState.meetings[0]!.resolvedFormats).toHaveLength(1);
+    expect(dataState.meetings[0]!.resolvedFormats[0]!.name_string).toBe('Beginners');
   });
 
   test('resolves multiple formats from comma-separated list', async () => {
     const fmts = [rawFormat({ id: '1', name_string: 'Open' }), rawFormat({ id: '2', name_string: 'Closed' })];
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '1,2' })], formats: fmts });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].resolvedFormats).toHaveLength(2);
+    expect(dataState.meetings[0]!.resolvedFormats).toHaveLength(2);
   });
 
   test('sets isInPerson=true, isVirtual=false for venue_type 1', async () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 1 })], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].isInPerson).toBe(true);
-    expect(dataState.meetings[0].isVirtual).toBe(false);
+    expect(dataState.meetings[0]!.isInPerson).toBe(true);
+    expect(dataState.meetings[0]!.isVirtual).toBe(false);
   });
 
   test('sets isInPerson=false, isVirtual=true for venue_type 2', async () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 2 })], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].isInPerson).toBe(false);
-    expect(dataState.meetings[0].isVirtual).toBe(true);
+    expect(dataState.meetings[0]!.isInPerson).toBe(false);
+    expect(dataState.meetings[0]!.isVirtual).toBe(true);
   });
 
   test('sets both isInPerson and isVirtual for venue_type 3 (hybrid)', async () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 3 })], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].isInPerson).toBe(true);
-    expect(dataState.meetings[0].isVirtual).toBe(true);
+    expect(dataState.meetings[0]!.isInPerson).toBe(true);
+    expect(dataState.meetings[0]!.isVirtual).toBe(true);
   });
 
   test('computes formattedTime from start_time', async () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ start_time: '09:30:00' })], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].formattedTime).toMatch(/9:30/);
+    expect(dataState.meetings[0]!.formattedTime).toMatch(/9:30/);
   });
 
   test('computes formattedAddress from location parts', async () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting()], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].formattedAddress).toContain('123 Main St');
-    expect(dataState.meetings[0].formattedAddress).toContain('Anytown');
+    expect(dataState.meetings[0]!.formattedAddress).toContain('123 Main St');
+    expect(dataState.meetings[0]!.formattedAddress).toContain('Anytown');
   });
 
   test('computes timeOfDay from start_time', async () => {
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ start_time: '09:00:00' })], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].timeOfDay).toBe('morning');
+    expect(dataState.meetings[0]!.timeOfDay).toBe('morning');
   });
 
   test('converts weekday_tinyint to number', async () => {
     // API may return string values; processing should coerce to number
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ weekday_tinyint: '3' as unknown as number })], formats: [] });
     await loadData('https://example.org/main_server');
-    expect(dataState.meetings[0].weekday_tinyint).toBe(3);
-    expect(typeof dataState.meetings[0].weekday_tinyint).toBe('number');
+    expect(dataState.meetings[0]!.weekday_tinyint).toBe(3);
+    expect(typeof dataState.meetings[0]!.weekday_tinyint).toBe('number');
   });
 
   test('sorts meetings by day and time', async () => {

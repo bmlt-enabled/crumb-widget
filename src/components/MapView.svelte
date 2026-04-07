@@ -53,7 +53,7 @@
       div.appendChild(row);
     }
 
-    div.insertAdjacentHTML('beforeend', buildDirectionsLinkHtml(getDirectionsUrl(group[0]), $t.getDirections));
+    div.insertAdjacentHTML('beforeend', buildDirectionsLinkHtml(getDirectionsUrl(group[0]!), $t.getDirections));
 
     return div;
   }
@@ -74,7 +74,7 @@
 
     const markers: Marker[] = [];
     for (const [key, group] of Object.entries(groups)) {
-      const [lat, lng] = key.split(',').map(Number);
+      const [lat, lng] = key.split(',').map(Number) as [number, number];
       const label = group.map((m) => m.meeting_name).join(', ');
       const marker = L.marker([lat, lng], {
         icon: buildMarkerIcon(locationMarker ?? DEFAULT_LOCATION_MARKER),

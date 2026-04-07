@@ -157,7 +157,7 @@
       buttonLabel={uiState.filters.weekdays.length === 0
         ? $t.anyDay
         : uiState.filters.weekdays.length === 1
-          ? $t.weekdays[uiState.filters.weekdays[0] - 1]
+          ? ($t.weekdays[uiState.filters.weekdays[0]! - 1] ?? '')
           : `${uiState.filters.weekdays.length} ${$t.day}s`}
       isActive={uiState.filters.weekdays.length > 0}
       selected={uiState.filters.weekdays}
@@ -270,7 +270,7 @@
         buttonLabel={uiState.filters.serviceBodyNames.length === 0
           ? $t.anyServiceBody
           : uiState.filters.serviceBodyNames.length === 1
-            ? uiState.filters.serviceBodyNames[0]
+            ? (uiState.filters.serviceBodyNames[0] ?? '')
             : `${uiState.filters.serviceBodyNames.length} ${$t.serviceBody}`}
         isActive={uiState.filters.serviceBodyNames.length > 0}
         selected={uiState.filters.serviceBodyNames}

@@ -135,7 +135,7 @@ describe('MeetingList — in-progress banner', () => {
 
     // Click the first banner (mobile)
     const banners = screen.getAllByText(/in progress/i).map((el) => el.closest('button')!);
-    await fireEvent.click(banners[0]);
+    await fireEvent.click(banners[0]!);
 
     expect(screen.getAllByText('Hidden Group')[0]).toBeInTheDocument();
   });
@@ -146,10 +146,10 @@ describe('MeetingList — in-progress banner', () => {
     render(MeetingList, { props: { meetings: [meeting] } });
 
     const banners = screen.getAllByText(/in progress/i).map((el) => el.closest('button')!);
-    await fireEvent.click(banners[0]);
+    await fireEvent.click(banners[0]!);
     expect(screen.getAllByText('Hidden Group')[0]).toBeInTheDocument();
 
-    await fireEvent.click(banners[0]);
+    await fireEvent.click(banners[0]!);
     expect(screen.queryAllByText('Hidden Group')).toHaveLength(0);
   });
 

@@ -21,7 +21,7 @@ const { subscribe, set } = writable<Translations>(ls as unknown as Translations)
 export const t = { subscribe };
 
 export function initLocalization(language: string): void {
-  const base = language.split('-')[0].toLowerCase();
+  const base = (language.split('-')[0] ?? '').toLowerCase();
   const available = ls.getAvailableLanguages() as string[];
   ls.setLanguage(available.includes(base) ? base : 'en');
   set(ls as unknown as Translations);

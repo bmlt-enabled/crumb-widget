@@ -111,7 +111,7 @@ describe('translation completeness', () => {
 
     test(`${lang}: weekdaysShort entries are shorter than or equal to weekdays entries`, () => {
       for (let i = 0; i < 7; i++) {
-        expect(translations.weekdaysShort[i].length).toBeLessThanOrEqual(translations.weekdays[i].length);
+        expect(translations.weekdaysShort[i]!.length).toBeLessThanOrEqual(translations.weekdays[i]!.length);
       }
     });
   }
