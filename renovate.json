@@ -7,13 +7,24 @@
       "schedule": ["after 9am on Monday"]
     },
     {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "devDependencies (non-major)",
+      "schedule": ["after 8am on Monday"],
+      "automerge": true,
+      "automergeType": "pr",
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "matchDepTypes": ["dependencies"],
       "matchUpdateTypes": ["minor"],
-      "groupName": "minor-updates",
+      "groupName": "dependencies minor",
       "schedule": ["after 8am on Monday"]
     },
     {
+      "matchDepTypes": ["dependencies"],
       "matchUpdateTypes": ["patch"],
-      "groupName": "patch-updates",
+      "groupName": "dependencies patch",
       "schedule": ["after 8am on Monday"],
       "automerge": true,
       "automergeType": "pr",

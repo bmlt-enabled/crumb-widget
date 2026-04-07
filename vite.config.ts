@@ -10,7 +10,14 @@ import { copyFileSync, readFileSync } from 'fs';
 import { execSync } from 'child_process';
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
-const shortSha = execSync('git rev-parse --short HEAD').toString().trim();
+let shortSha = 'unknown';
+try {
+  shortSha = execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
+    .toString()
+    .trim();
+} catch {
+  // not a git checkout (e.g. tarball, Docker without .git) — fall back
+}
 
 export default defineConfig({
   base: './',

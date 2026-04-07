@@ -1270,7 +1270,8 @@
         <h3 id="npm-install">Installation</h3>
         <div class="demo">
           <div class="demo-header"><span>bash</span></div>
-          <pre><code>npm install crumb-widget</code></pre>
+          <pre><code>npm install crumb-widget leaflet</code></pre>
+          <p><code>leaflet</code> is a peer dependency — install it alongside <code>crumb-widget</code> so consumers can dedupe and pin their preferred version.</p>
         </div>
 
         <h3 id="npm-usage">Usage</h3>
@@ -1326,7 +1327,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         </table>
 
         <div class="callout">
-          <strong>Note:</strong> The npm package bundles Svelte, Leaflet, and all styles into a single JS file. No peer dependencies are required. Each call to <code>mountCrumbWidget</code> is independent, but multiple widgets on the same page are not currently supported.
+          <strong>Note:</strong> The npm package bundles Svelte and all styles into a single JS file. <code>leaflet</code> is a peer dependency (install it alongside <code>crumb-widget</code>) so you can dedupe with any other Leaflet-using code in your app. Each call to <code>mountCrumbWidget</code> is independent, but multiple widgets on the same page are not currently supported.
         </div>
       </main>
     </div>
