@@ -652,12 +652,12 @@ describe('geolocation', () => {
     await waitFor(() => expect(vi.mocked(loadDataByCoordinates)).toHaveBeenCalledWith(geoConfig.serverUrl, 35.1, -80.2, geoConfig.geolocationRadius));
   });
 
-  test('sets geoActive and switches to map view on success', async () => {
+  test('sets geoActive on success', async () => {
     mockGeo((success) => success({ coords: { latitude: 35.1, longitude: -80.2 } } as GeolocationPosition));
     render(App, { props: { config: geoConfig } });
     await waitFor(() => {
       expect(uiState.geoActive).toBe(true);
-      expect(uiState.view).toBe('map');
+      expect(uiState.view).toBe('list');
     });
   });
 

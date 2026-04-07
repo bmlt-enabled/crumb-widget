@@ -41,7 +41,6 @@
             await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
             if (!dataState.error) {
               uiState.geoActive = true;
-              uiState.view = 'map';
             }
           },
           (err) => {
