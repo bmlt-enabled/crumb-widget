@@ -429,6 +429,132 @@
   }
 }
 
+/* ─── Print styles ───────────────────────────────────────────────────────────
+   When printing, collapse the widget down to just the meeting list. Hide
+   chrome (controls, header, map, detail view), drop backgrounds/colors so
+   ink is cheap, and let the table flow naturally across pages.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media print {
+  /* Hide host page chrome is up to the host; we just hide our own non-list bits. */
+  #crumb-widget .bmlt-app-header,
+  #crumb-widget .bmlt-controls,
+  #crumb-widget .bmlt-map-container,
+  #crumb-widget .bmlt-detail {
+    display: none !important;
+  }
+
+  /* Let the widget expand to full page height — no fixed height / scroll. */
+  #crumb-widget,
+  #crumb-widget .crumb-widget,
+  #crumb-widget .bmlt-meeting-list {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Force the desktop table to show even on narrow "print" widths, and hide
+     the mobile card stack so we don't print both. */
+  #crumb-widget .bmlt-meeting-list > .sm\:hidden {
+    display: none !important;
+  }
+  #crumb-widget .bmlt-meeting-list > .hidden.sm\:block {
+    display: block !important;
+  }
+
+  /* Clean table: visible borders, no row alternation, no hover tints. */
+  #crumb-widget table {
+    width: 100% !important;
+    /* border-collapse: collapse + page-break-inside: avoid on <tr> causes
+       browsers to drop row dividers between "kept together" rows. Use
+       separate borders and draw them only on top of each cell. */
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    font-size: 11pt !important;
+    color: #000000 !important;
+  }
+  #crumb-widget thead {
+    background: #ffffff !important;
+    display: table-header-group !important; /* repeat header on each page */
+  }
+  #crumb-widget th,
+  #crumb-widget td {
+    border: none !important;
+    border-top: 1px solid #999999 !important;
+    padding: 6px 8px !important;
+    color: #000000 !important;
+    background: #ffffff !important;
+    vertical-align: top !important;
+  }
+  /* Left/right outer frame and bottom edge. */
+  #crumb-widget th:first-child,
+  #crumb-widget td:first-child {
+    border-left: 1px solid #999999 !important;
+  }
+  #crumb-widget th:last-child,
+  #crumb-widget td:last-child {
+    border-right: 1px solid #999999 !important;
+  }
+  #crumb-widget tbody tr:last-child td {
+    border-bottom: 1px solid #999999 !important;
+  }
+  #crumb-widget .bmlt-row,
+  #crumb-widget .bmlt-row:nth-child(even),
+  #crumb-widget .bmlt-row:hover {
+    background: #ffffff !important;
+  }
+
+  /* Avoid splitting a meeting row across pages. */
+  #crumb-widget tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  /* Show ALL lg-only columns (e.g. service body) when printing. */
+  #crumb-widget .hidden.lg\:table-cell {
+    display: table-cell !important;
+  }
+
+  /* Meeting name links — print as plain black text. */
+  #crumb-widget .bmlt-link {
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
+
+  /* Strip badge backgrounds and borders — just show plain text. */
+  #crumb-widget .bmlt-badge-in-person,
+  #crumb-widget .bmlt-badge-virtual {
+    background: transparent !important;
+    color: #000000 !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  /* Expand any collapsed in-progress rows so nothing is hidden on paper. */
+  #crumb-widget .bmlt-in-progress-banner {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000 !important;
+  }
+
+  /* Hide decorative SVGs (icons) to keep the page clean. */
+  #crumb-widget svg {
+    display: none !important;
+  }
+
+  /* content-visibility: auto can cause rows to skip rendering during print,
+     which visually drops the borders between adjacent rows. Force it off. */
+  #crumb-widget .bmlt-row,
+  #crumb-widget tr {
+    content-visibility: visible !important;
+    contain: none !important;
+    contain-intrinsic-size: auto !important;
+  }
+}
+
 /* ─── Leaflet popup ──────────────────────────────────────────────────────── */
 #crumb-widget .leaflet-popup-content {
   white-space: normal !important;
