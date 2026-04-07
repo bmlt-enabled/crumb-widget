@@ -24,8 +24,8 @@
     "build": "vite build",
     "build:lib": "vite build --config vite.lib.config.ts",
     "preview": "vite preview",
-    "lint": "prettier --check vite.config.ts tsconfig.json src && eslint vite.config.ts src && svelte-check --tsconfig ./tsconfig.json",
-    "format": "prettier --write vite.config.ts src",
+    "lint": "prettier --check vite.config.ts vite.lib.config.ts tsconfig.json src && eslint vite.config.ts vite.lib.config.ts src && svelte-check --tsconfig ./tsconfig.json",
+    "format": "prettier --write vite.config.ts vite.lib.config.ts tsconfig.json src",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
@@ -74,6 +74,6 @@
     "localized-strings": "^2.0.3"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   }
 }

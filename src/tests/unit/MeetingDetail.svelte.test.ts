@@ -30,7 +30,7 @@ vi.mock('leaflet', () => {
       tileLayer: vi.fn(() => ({ addTo: vi.fn().mockReturnThis(), remove: vi.fn() })),
       divIcon: vi.fn(() => ({})),
       DivIcon: vi.fn(),
-      Point: vi.fn(function (this: any, x: number, y: number) {
+      Point: vi.fn(function (this: { x: number; y: number }, x: number, y: number) {
         this.x = x;
         this.y = y;
       })

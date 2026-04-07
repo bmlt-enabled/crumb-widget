@@ -20,10 +20,10 @@ const mockMarker = {
   })
 };
 
-const eventHandlers: Record<string, (...args: any[]) => void> = {};
+const eventHandlers: Record<string, (...args: unknown[]) => void> = {};
 
 const mockMap = {
-  on: vi.fn((event: string, handler: (...args: any[]) => void) => {
+  on: vi.fn((event: string, handler: (...args: unknown[]) => void) => {
     eventHandlers[event] = handler;
     return mockMap;
   }),
@@ -47,7 +47,7 @@ vi.mock('leaflet', () => ({
     tileLayer: vi.fn(() => ({ addTo: vi.fn().mockReturnThis(), remove: vi.fn() })),
     divIcon: vi.fn(() => ({})),
     DivIcon: vi.fn(),
-    Point: vi.fn(function (this: any, x: number, y: number) {
+    Point: vi.fn(function (this: { x: number; y: number }, x: number, y: number) {
       this.x = x;
       this.y = y;
     })

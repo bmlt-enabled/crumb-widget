@@ -20,19 +20,14 @@ jobs:
         with:
           node-version: 24
           cache: 'npm'
-      - name: cache dependencies 💾
-        uses: actions/cache@v5
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: install dependencies 📦
         run: npm ci
       - name: lint 🧹
         run: npm run lint
       - name: unit tests 🧪
         run: npm run coverage
+      - name: build library 📦
+        run: npm run build:lib
       - name: upload coverage to Codecov 📊
         if: always()
         uses: codecov/codecov-action@v5
@@ -50,13 +45,6 @@ jobs:
         with:
           node-version: 24
           cache: 'npm'
-      - name: cache dependencies 💾
-        uses: actions/cache@v5
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
       - name: install dependencies 📦
         run: npm ci
       - name: install Playwright browsers 🎭

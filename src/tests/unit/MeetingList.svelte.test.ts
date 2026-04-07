@@ -98,7 +98,7 @@ describe('MeetingList — regular meetings', () => {
 
   test('shows service_body column when configured', () => {
     config.columns = ['time', 'name', 'location', 'address', 'service_body'];
-    const meeting = makeMeeting({ service_body_name: 'Capital Area' } as any);
+    const meeting = makeMeeting({ service_body_name: 'Capital Area' } as Partial<ProcessedMeeting>);
     render(MeetingList, { props: { meetings: [meeting] } });
     expect(screen.getAllByText('Capital Area')[0]).toBeInTheDocument();
   });

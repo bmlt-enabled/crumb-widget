@@ -26,12 +26,7 @@ export default defineConfig({
       '@assets': resolve(__dirname, 'src/assets')
     }
   },
-  plugins: [
-    tailwindcss(),
-    svelte(),
-    cssInjectedByJsPlugin(),
-    dts({ include: ['src/module.ts', 'src/types/index.ts'], outDir: 'dist', rollupTypes: true })
-  ],
+  plugins: [tailwindcss(), svelte(), cssInjectedByJsPlugin(), dts({ include: ['src/module.ts', 'src/types/index.ts'], outDir: 'dist', rollupTypes: true })],
   build: {
     lib: {
       entry: resolve(__dirname, 'src/module.ts'),

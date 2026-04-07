@@ -45,7 +45,7 @@ beforeEach(() => {
   vi.mocked(BmltClient).mockImplementation(
     class {
       searchMeetingsWithFormats = mockSearch;
-    } as any
+    } as unknown as typeof BmltClient
   );
 });
 
