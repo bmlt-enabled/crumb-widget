@@ -4,7 +4,10 @@ Guidelines for AI agents working in this repository.
 
 ## Project Overview
 
-**BMLT Meeting List** is an embeddable NA meeting finder widget built with Svelte 5, Vite, TypeScript, and Tailwind CSS. It queries a [BMLT server](https://bmlt.app) via the `bmlt-query-client` library and compiles to a single self-contained `public/app.js` file (CSS injected into JS) that can be dropped into any WordPress site or plain HTML page.
+**Crumb Widget** is an embeddable NA meeting finder widget built with Svelte 5, Vite, TypeScript, and Tailwind CSS. It queries a [BMLT server](https://bmlt.app) via the `bmlt-query-client` library and ships in two forms:
+
+1. **`dist/app.js`** — a single self-contained IIFE bundle (CSS injected into JS), distributed via CDN. Entry: `src/main.ts`. Built with `npm run build`.
+2. **`dist/module.js`** — an ESM library entry for npm consumers (`import { mountCrumbWidget } from 'crumb-widget'`). Entry: `src/module.ts`. Built with `npm run build:lib`. `leaflet` is a peer dependency in this build.
 
 ## Tech Stack
 
@@ -14,21 +17,25 @@ Guidelines for AI agents working in this repository.
 - **Language**: TypeScript 5 (strict mode)
 - **Data**: `bmlt-query-client`
 - **Maps**: Leaflet 1.9
-- **Testing**: Vitest + @testing-library/svelte (jsdom)
+- **Testing**: Vitest + @testing-library/svelte (jsdom) for unit tests; Playwright for e2e
 - **Linting**: ESLint 10 (flat config) + Prettier 3 + svelte-check
+- **Bundle size**: Enforced via `size-limit` (`npm run size`)
 
 ## Commands
 
 ```bash
 npm install        # Install dependencies
 npm run dev        # Start dev server with HMR (test page at localhost:5173)
-npm run build      # Production build → public/app.js
+npm run build      # Production IIFE build → dist/app.js (+ docs HTML pages)
+npm run build:lib  # ESM library build → dist/module.js (+ dist/module.d.ts)
 npm run preview    # Preview production build
 npm run lint       # Run prettier + eslint + svelte-check
 npm run format     # Auto-format code with Prettier
-npm run test       # Run tests once
-npm run test:watch # Run tests in watch mode
-npm run coverage   # Generate test coverage report
+npm run test       # Run unit tests once
+npm run test:watch # Run unit tests in watch mode
+npm run test:e2e   # Run Playwright e2e tests
+npm run coverage   # Generate unit test coverage report
+npm run size       # Check dist/module.js bundle size against the limit
 ```
 
 Always run `npm run lint` before finishing a task. Fix all lint errors before considering work complete.
@@ -60,30 +67,38 @@ Optional global config object (must be defined before `app.js` loads):
 
 ```
 src/
-  main.ts                    # Entry point — reads data-* attrs, mounts app
+  main.ts                    # IIFE entry — reads data-* attrs, mounts app
+  module.ts                  # npm/ESM entry — exports mountCrumbWidget
   app.css                    # Tailwind import + .crumb-widget reset
   App.svelte                 # Root component — filtering, view routing
   types/
-    index.ts                 # Shared types: AppConfig, ProcessedMeeting, FilterState, ViewType
+    index.ts                 # Shared types: CrumbWidgetConfig, ProcessedMeeting, FilterState, ViewType
   stores/
-    config.svelte.ts         # App config ($state rune, initialized from DOM attrs)
+    config.svelte.ts         # App config ($state rune)
     data.svelte.ts           # Meeting data loading via BmltClient ($state rune)
     ui.svelte.ts             # UI state: view, selected meeting, filter values ($state rune)
+    localization.ts          # i18n via localized-strings + svelte writable store
   components/
     Controls.svelte          # Search input + filter chips + list/map toggle
     MeetingList.svelte       # Meeting table (click row → detail view)
     MeetingDetail.svelte     # Full meeting detail (schedule, location, virtual link, formats)
     MapView.svelte           # Leaflet map for in-person/hybrid meetings
+    FilterDropdown.svelte    # Reusable multi-select filter dropdown
     Loading.svelte           # Loading spinner
   utils/
     format.ts                # formatTime, formatAddress, getTimeOfDay, sortMeetings, etc.
+    markers.ts               # Leaflet marker icon helpers
+    mapUtils.ts              # Map bounds, geolocation helpers
+  lang/                      # Translation tables (en, es, fr, de, pt, it, sv, da)
   tests/
-    setup.ts                 # Mocks window.matchMedia, imports jest-dom
-    App.svelte.test.ts       # Component integration tests (mocks loadData)
-    format.test.ts           # Unit tests for format utilities
-public/
-  app.js                     # Built output (single IIFE bundle, CSS injected)
-  index.html                 # Production test page
+    unit/                    # Vitest unit + component tests
+    e2e/                     # Playwright e2e tests
+pages/
+  docs.html                  # Documentation page (copied to dist/index.html on build)
+  meetings.html              # Demo page (copied to dist/meetings.html on build)
+dist/
+  app.js                     # IIFE build output (CSS injected)
+  module.js, module.d.ts     # npm/ESM build output
 index.html                   # Dev test page (loads src/main.ts via Vite)
 ```
 
@@ -110,9 +125,9 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 - **`$derived` vs `$derived.by`**: Use `$derived(expr)` for simple expressions. Use `$derived.by(() => { ... })` when the computation has a function body — wrapping a function in `$derived(fn)` makes `fn` the derived value, not its result.
 - **Each blocks**: Always provide a key: `{#each items as item (item.id)}`.
 - **Styling**: Tailwind utility classes only. The widget uses CSS isolation via `.crumb-widget { all: initial; }` — all styles must be scoped inside that class.
-- **TypeScript**: Strict mode is on. Do not use `any`. BMLT API returns numeric fields as strings — always coerce with `Number()` before comparison.
-- **Formatting**: Prettier is the source of truth. Line width 200, single quotes, no trailing commas.
-- **ESLint**: `@typescript-eslint/no-explicit-any` and `no-undef` are disabled. `svelte-eslint-parser` is configured for `.svelte.ts` files.
+- **TypeScript**: Strict mode is on, plus `noUncheckedIndexedAccess` and `noImplicitOverride`. Do not use `any` — `@typescript-eslint/no-explicit-any` is enforced. BMLT API returns numeric fields as strings — always coerce with `Number()` before comparison.
+- **Formatting**: Prettier is the source of truth (config in `.prettierrc.ts`). Line width 200, single quotes, no trailing commas.
+- **ESLint**: `no-undef` is disabled (TypeScript handles it). `svelte-eslint-parser` is configured for `.svelte.ts` files.
 
 ## Data Flow
 
@@ -133,23 +148,26 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 
 ## Testing
 
-- Tests live in `src/tests/`.
-- `App.svelte.test.ts`: Component tests mock `loadData` via `vi.mock('@stores/data.svelte', ...)` to avoid real API calls. Set `dataState.meetings` directly to inject test data. Call `resetFilters()` and reset `uiState` in `beforeEach`.
+- Unit/component tests live in `src/tests/unit/`. E2e tests live in `src/tests/e2e/`.
+- Component tests mock `loadData` via `vi.mock('@stores/data.svelte', ...)` to avoid real API calls. Set `dataState.meetings` directly to inject test data. Call `resetFilters()` and reset `uiState` in `beforeEach`.
 - Filter chip labels (e.g. "Mon", "Virtual") also appear in meeting rows — use `getByRole('button', { name: 'Mon' })` to target chips specifically.
 - Text split across elements (e.g. "Monday at 7:00 PM") requires regex: `getByText(/7:00 PM/)`.
+- Coverage thresholds (lines/functions/statements) are enforced at 80% in `vite.config.ts`.
 - Run `npm run test` to verify changes don't break existing tests. Add tests for new components/logic.
 
 ## Build Output
 
-The build produces a single IIFE at `public/app.js`. CSS (including Tailwind and Leaflet) is injected at runtime via `vite-plugin-css-injected-by-js`. Leaflet marker images are loaded from `unpkg.com` CDN (not bundled).
+- **IIFE build (`dist/app.js`)** — single self-contained bundle from `src/main.ts`. CSS (Tailwind and Leaflet) is injected at runtime via `vite-plugin-css-injected-by-js`. Leaflet is bundled. Leaflet marker images are loaded from `unpkg.com` CDN (not bundled).
+- **ESM lib build (`dist/module.js` + `dist/module.d.ts`)** — from `src/module.ts`. CSS is also injected. **`leaflet` is externalized as a peer dependency** so npm consumers can dedupe it. The `dts` plugin emits a single rolled-up `.d.ts`.
 
 ## CI/CD
 
-Three GitHub Actions workflows run automatically:
+GitHub Actions workflows:
 
-- **`test.yml`**: Runs lint + tests on all pushes except to `main`.
-- **`static.yml`**: Builds and deploys to GitHub Pages on push to `main`.
-- **`release.yml`**: Creates a GitHub release with build artifacts when a tag is pushed.
+- **`test.yml`**: Runs the reusable test workflow on pull requests. Uses concurrency cancellation.
+- **`static.yml`**: Builds and deploys to GitHub Pages on push to `main` (also pushes the IIFE bundle to S3/CloudFront).
+- **`publish.yml`**: Publishes to npm on `v*` tag push using OIDC trusted publishing (`--provenance`). No long-lived `NPM_TOKEN`.
+- **`reusable-test.yml`**: Shared job — lint, unit tests + coverage (Codecov), `build:lib`, `size-limit` check, e2e tests.
 
 Do not modify workflow files unless the task explicitly requires it.
 
@@ -161,7 +179,9 @@ Do not modify workflow files unless the task explicitly requires it.
 ## Dependency Updates
 
 Renovate is configured for automated dependency updates:
-- **Major** updates: Mondays after 9am
-- **Minor/patch** updates: Mondays after 8am (grouped)
+- **Major** updates: Mondays after 9am (manual review)
+- **devDependencies (minor + patch)**: grouped, automerged after 7-day release age
+- **Runtime dependencies — minor**: grouped, manual review
+- **Runtime dependencies — patch**: grouped, automerged after 14-day release age
 
 Do not manually bump dependencies unless the task requires it.
