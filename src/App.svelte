@@ -64,9 +64,25 @@
     const id = match[2];
     return dataState.meetings.find((m) => m.id_bigint === id);
   });
+
+  let widgetEl = $state<HTMLDivElement | undefined>();
+
+  $effect(() => {
+    if (selectedMeeting && widgetEl) {
+      const fixedHeaderHeight = Math.max(
+        0,
+        ...[...document.body.getElementsByTagName('*')]
+          .filter((x) => getComputedStyle(x).position === 'fixed' && (x as HTMLElement).offsetTop < 100)
+          .map((x) => (x as HTMLElement).offsetTop + (x as HTMLElement).offsetHeight)
+      );
+      widgetEl.style.scrollMarginTop = fixedHeaderHeight ? `${fixedHeaderHeight}px` : '';
+      widgetEl.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
+    }
+  });
 </script>
 
 <div
+  bind:this={widgetEl}
   class="crumb-widget isolate flex flex-col rounded-lg border border-gray-200 font-sans text-base {config.height ? 'overflow-hidden' : ''}"
   style={config.height ? `height: ${config.height}px` : ''}
 >
