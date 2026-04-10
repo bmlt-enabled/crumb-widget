@@ -15,8 +15,8 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 
 - List and map views with real-time search and filters
 - Meeting detail with directions, virtual join link, and formats
-- Shareable individual meeting links via built-in router
 - Geolocation-based nearby search
+- Individual meeting links via built-in router
 - Multi-language support
 - Configurable columns, map tiles, and custom markers
 
