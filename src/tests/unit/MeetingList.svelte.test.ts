@@ -44,7 +44,8 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
 }
 
 beforeEach(() => {
-  vi.useFakeTimers();
+  // Pin to a Wednesday so no meeting's weekday accidentally triggers "in progress"
+  vi.useFakeTimers({ now: new Date('2026-04-08T12:00:00') });
   config.columns = ['time', 'name', 'location', 'address'];
   config.nowOffset = 10;
 });
