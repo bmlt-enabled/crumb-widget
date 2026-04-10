@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BMLT Crumb Widget — Privacy Policy</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --doc-bg:        #f9fafb;
+        --doc-surface:   #ffffff;
+        --doc-text:      #111827;
+        --doc-text-muted:#374151;
+        --doc-text-dim:  #6b7280;
+        --doc-border:    #e5e7eb;
+        --doc-border-lt: #f3f4f6;
+        --doc-code-bg:   #f3f4f6;
+        --doc-nav-link:  #374151;
+        --doc-nav-hover: #f3f4f6;
+        --doc-th-bg:     #f3f4f6;
+        --doc-link:      #2563eb;
+        --doc-callout-bg:#eff6ff;
+        --doc-callout-tx:#1e40af;
+      }
+
+      .dark {
+        --doc-bg:        #0f172a;
+        --doc-surface:   #1e293b;
+        --doc-text:      #f1f5f9;
+        --doc-text-muted:#cbd5e1;
+        --doc-text-dim:  #94a3b8;
+        --doc-border:    #334155;
+        --doc-border-lt: #1e293b;
+        --doc-code-bg:   #1e293b;
+        --doc-nav-link:  #cbd5e1;
+        --doc-nav-hover: #334155;
+        --doc-th-bg:     #1e293b;
+        --doc-link:      #60a5fa;
+        --doc-callout-bg:#1e3a5f;
+        --doc-callout-tx:#93c5fd;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root:not(.light) {
+          --doc-bg:        #0f172a;
+          --doc-surface:   #1e293b;
+          --doc-text:      #f1f5f9;
+          --doc-text-muted:#cbd5e1;
+          --doc-text-dim:  #94a3b8;
+          --doc-border:    #334155;
+          --doc-border-lt: #1e293b;
+          --doc-code-bg:   #1e293b;
+          --doc-nav-link:  #cbd5e1;
+          --doc-nav-hover: #334155;
+          --doc-th-bg:     #1e293b;
+          --doc-link:      #60a5fa;
+          --doc-callout-bg:#1e3a5f;
+          --doc-callout-tx:#93c5fd;
+        }
+      }
+
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        color: var(--doc-text);
+        background: var(--doc-bg);
+        transition: background 0.2s, color 0.2s;
+      }
+
+      a { color: var(--doc-link); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+
+      .page { display: flex; min-height: 100vh; }
+
+      nav {
+        width: 240px;
+        flex-shrink: 0;
+        background: var(--doc-surface);
+        border-right: 1px solid var(--doc-border);
+        padding: 2rem 1.25rem;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+      }
+
+      nav .logo {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--doc-text);
+        margin-bottom: 2rem;
+        display: block;
+      }
+
+      nav ul { list-style: none; }
+      nav li { margin-bottom: 0.25rem; }
+      nav a {
+        display: block;
+        padding: 0.3rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        color: var(--doc-nav-link);
+        transition: background 0.1s;
+      }
+      nav a:hover { background: var(--doc-nav-hover); text-decoration: none; }
+      nav a.active { background: var(--doc-nav-hover); font-weight: 600; }
+      nav .section-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--doc-text-dim);
+        padding: 0.75rem 0.75rem 0.25rem;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        padding: 0.3rem 0.75rem;
+        border-radius: 6px;
+        border: 1px solid var(--doc-border);
+        background: none;
+        color: var(--doc-nav-link);
+        font-size: 0.875rem;
+        line-height: 1.5;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.1s, color 0.1s;
+      }
+      .theme-toggle:hover { background: var(--doc-nav-hover); }
+      .theme-toggle svg { flex-shrink: 0; display: block; }
+      .theme-toggle .toggle-label { flex: 1; text-align: left; }
+
+      main {
+        flex: 1;
+        max-width: 800px;
+        padding: 3rem 2.5rem;
+      }
+
+      h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--doc-text); }
+      h2 { font-size: 1.375rem; font-weight: 700; margin: 2.5rem 0 1rem; padding-top: 0.5rem; border-top: 1px solid var(--doc-border); color: var(--doc-text); }
+      h3 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--doc-text); }
+      p { margin-bottom: 1rem; color: var(--doc-text-muted); }
+      ul, ol { margin: 0 0 1rem 1.5rem; color: var(--doc-text-muted); }
+      li { margin-bottom: 0.25rem; }
+
+      .subtitle { font-size: 1.1rem; color: var(--doc-text-dim); margin-bottom: 2rem; }
+
+      .callout {
+        background: var(--doc-callout-bg);
+        color: var(--doc-callout-tx);
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin: 1.5rem 0;
+        font-size: 0.95rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0 1.5rem;
+        font-size: 0.9rem;
+      }
+      th {
+        text-align: left;
+        padding: 0.6rem 1rem;
+        background: var(--doc-th-bg);
+        border: 1px solid var(--doc-border);
+        font-weight: 600;
+        color: var(--doc-text);
+      }
+      td {
+        padding: 0.6rem 1rem;
+        border: 1px solid var(--doc-border);
+        vertical-align: top;
+        color: var(--doc-text-muted);
+      }
+
+      @media (max-width: 700px) {
+        .page { flex-direction: column; }
+        nav { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--doc-border); padding: 1.25rem; }
+        main { padding: 2rem 1.25rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <nav>
+        <a class="logo" href="/">Crumb Widget</a>
+        <ul>
+          <li class="section-label">Navigation</li>
+          <li><a href="/">Documentation</a></li>
+          <li><a href="/meetings.html">Live Demo</a></li>
+          <li><a href="/privacy.html" class="active">Privacy Policy</a></li>
+          <li><a href="https://github.com/bmlt-enabled/crumb-widget" target="_blank">GitHub</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <span class="toggle-label">Toggle theme</span>
+        </button>
+      </nav>
+
+      <main>
+        <h1>Privacy Policy</h1>
+        <p class="subtitle">How Crumb Widget handles data and which external services it uses.</p>
+
+        <div class="callout">
+          Crumb Widget and the Crumb WordPress plugin are part of the <a href="https://bmlt.app" target="_blank">BMLT (Basic Meeting List Toolkit)</a> ecosystem — free, open-source tools built for Narcotics Anonymous service bodies.
+        </div>
+
+        <h2>Overview</h2>
+        <p>
+          Crumb Widget is a client-side JavaScript widget that displays NA meeting information by querying a BMLT server. It does not set cookies, does not use analytics, and does not collect or store any personal data on behalf of the Crumb project.
+        </p>
+        <p>
+          This policy covers data flows that occur when Crumb Widget is loaded on a page — whether via the <a href="https://wordpress.org/plugins/crumb/" target="_blank">Crumb WordPress plugin</a> or by embedding the widget directly.
+        </p>
+
+        <h2>External Services</h2>
+        <p>Crumb Widget connects to two categories of external service:</p>
+
+        <h3>1. CDN — Widget Script Delivery</h3>
+        <p>
+          The widget JavaScript file is served from a content delivery network operated by the BMLT project:
+        </p>
+        <table>
+          <tr><th>Item</th><th>Detail</th></tr>
+          <tr><td>URL</td><td><code>https://cdn.aws.bmlt.app/crumb-widget.js</code></td></tr>
+          <tr><td>Operator</td><td>BMLT Enabled (<a href="https://bmlt.app" target="_blank">bmlt.app</a>)</td></tr>
+          <tr><td>Purpose</td><td>Deliver the widget JavaScript to end-users' browsers</td></tr>
+          <tr><td>Data sent</td><td>Standard HTTP request headers (IP address, browser user-agent, referring URL). No user-specific or meeting-search data is sent to the CDN.</td></tr>
+          <tr><td>When</td><td>Once per page load, on any page that includes the widget</td></tr>
+          <tr><td>Retention</td><td>Standard CDN access logs; not used for tracking or advertising</td></tr>
+        </table>
+        <p>
+          Source code for the widget is publicly available at <a href="https://github.com/bmlt-enabled/crumb-widget" target="_blank">github.com/bmlt-enabled/crumb-widget</a> under the MIT License.
+        </p>
+
+        <h3>2. BMLT Server — Meeting Data</h3>
+        <p>
+          All meeting data (meeting names, times, locations, formats) is fetched from a BMLT server. The BMLT server URL is configured by the site administrator — it is typically operated by a regional NA service body and is <strong>not</strong> a service operated by the Crumb project.
+        </p>
+        <table>
+          <tr><th>Item</th><th>Detail</th></tr>
+          <tr><td>Operator</td><td>The NA service body or organization that administers the configured BMLT server (varies per site)</td></tr>
+          <tr><td>Purpose</td><td>Retrieve meeting listings to display in the widget</td></tr>
+          <tr><td>Data sent</td><td>Search query parameters (filters, keyword, selected formats), and — only when geolocation is explicitly enabled and the user consents — the user's geographic coordinates</td></tr>
+          <tr><td>When</td><td>On each search or filter action within the widget</td></tr>
+          <tr><td>Retention</td><td>Determined by the operator of the configured BMLT server</td></tr>
+        </table>
+        <p>
+          BMLT is a free, open-source project. Learn more at <a href="https://bmlt.app" target="_blank">bmlt.app</a>.
+        </p>
+
+        <h2>Geolocation</h2>
+        <p>
+          The widget includes an optional geolocation feature that allows users to search for meetings near their current location. Geolocation is <strong>disabled by default</strong>. When enabled by the site administrator, the browser will prompt the user for permission before any location data is accessed. Location coordinates are sent only to the configured BMLT server and only when the user actively triggers a nearby search.
+        </p>
+
+        <h2>Cookies and Local Storage</h2>
+        <p>
+          Crumb Widget does not set cookies. It may use browser <code>sessionStorage</code> to preserve the current search state (selected filters, scroll position) within a single page session. This data is not transmitted to any server and is cleared when the browser tab is closed.
+        </p>
+
+        <h2>No Analytics or Tracking</h2>
+        <p>
+          Crumb Widget does not include any analytics, advertising, or user-tracking code. No data is sent to third-party analytics providers by this widget.
+        </p>
+
+        <h2>Children's Privacy</h2>
+        <p>
+          Crumb Widget does not knowingly collect any information from children. It displays publicly available meeting information only.
+        </p>
+
+        <h2>Changes to This Policy</h2>
+        <p>
+          This policy may be updated to reflect changes to the widget. The current version is always available at this URL. Significant changes will be noted in the <a href="https://github.com/bmlt-enabled/crumb-widget/blob/main/CHANGELOG.md" target="_blank">changelog</a>.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          Questions about this policy can be raised by opening an issue on <a href="https://github.com/bmlt-enabled/crumb-widget/issues" target="_blank">GitHub</a> or by contacting the BMLT project at <a href="https://bmlt.app" target="_blank">bmlt.app</a>.
+        </p>
+      </main>
+    </div>
+
+    <script>
+      (function () {
+        const root = document.documentElement;
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark') root.classList.add('dark');
+        else if (stored === 'light') root.classList.add('light');
+
+        document.getElementById('theme-toggle').addEventListener('click', function () {
+          const isDark = root.classList.contains('dark') ||
+            (!root.classList.contains('light') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            root.classList.remove('dark');
+            root.classList.add('light');
+            localStorage.setItem('theme', 'light');
+          } else {
+            root.classList.remove('light');
+            root.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

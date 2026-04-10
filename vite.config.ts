@@ -44,6 +44,7 @@ export default defineConfig({
       closeBundle() {
         copyFileSync('pages/docs.html', 'dist/index.html');
         copyFileSync('pages/meetings.html', 'dist/meetings.html');
+        copyFileSync('pages/privacy.html', 'dist/privacy.html');
       }
     }
   ],
