@@ -89,8 +89,11 @@
 
   const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters));
 
-  // Derive selected meeting from the current hash route: #/{slug}-{id}
+  // Derive selected meeting from state (iframe) or hash route (normal embed)
   const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {
+    if (uiState.selectedMeetingId) {
+      return dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId);
+    }
     const match = router.location.match(/^\/(.+)-(\d+)$/);
     if (!match) return undefined;
     const id = match[2];

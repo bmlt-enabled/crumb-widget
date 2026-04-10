@@ -2,10 +2,13 @@ import type { FilterState, ViewType } from '@/types';
 import { push } from '@bmlt-enabled/svelte-spa-router';
 import { meetingSlug } from '@utils/format';
 
+const inIframe = typeof window !== 'undefined' && window.self !== window.top;
+
 export const uiState = $state<{
   view: ViewType;
   filters: FilterState;
   geoActive: boolean;
+  selectedMeetingId: string | null;
 }>({
   view: 'list',
   filters: {
@@ -16,7 +19,8 @@ export const uiState = $state<{
     formatIds: [],
     serviceBodyNames: []
   },
-  geoActive: false
+  geoActive: false,
+  selectedMeetingId: null
 });
 
 export function setView(view: ViewType): void {
@@ -24,11 +28,17 @@ export function setView(view: ViewType): void {
 }
 
 export function selectMeeting(meeting: { meeting_name: string; id_bigint: string }): void {
-  push('/' + meetingSlug(meeting));
+  uiState.selectedMeetingId = meeting.id_bigint;
+  if (!inIframe) {
+    push('/' + meetingSlug(meeting));
+  }
 }
 
 export function clearSelectedMeeting(): void {
-  push('/');
+  uiState.selectedMeetingId = null;
+  if (!inIframe) {
+    push('/');
+  }
 }
 
 export function updateFilter<K extends keyof FilterState>(key: K, value: FilterState[K]): void {

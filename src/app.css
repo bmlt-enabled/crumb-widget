@@ -27,6 +27,14 @@
   color: #111827;
   box-sizing: border-box;
 }
+/* Reset button UA styles that all:initial doesn't cover */
+#crumb-widget button {
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+}
 
 /* ─── CSS custom properties ─────────────────────────────────────────────────
    Override any of these on #crumb-widget to theme the widget.
