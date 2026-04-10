@@ -7,6 +7,7 @@
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
 [![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
+[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/)
 
 An embeddable NA meeting finder widget with search, filters, list view, map, and meeting detail. Drop a `<div>` and a `<script>` tag into any page, or install from npm for use in JavaScript and TypeScript projects.
 
@@ -42,8 +43,6 @@ Built with Svelte 5, distributed as a **single self-contained JavaScript file** 
 ```
 
 **Important:** Be sure your page includes `<meta name="viewport" content="width=device-width, initial-scale=1.0" />` in the `<head>`. This is important for proper rendering on mobile devices and small screens.
-
-Full documentation at **[crumb.bmlt.app](https://crumb.bmlt.app/)**.
 
 ## Philosophy
 
