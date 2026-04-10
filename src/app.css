@@ -421,6 +421,7 @@
 #crumb-widget table {
   table-layout: fixed !important;
   width: 100% !important;
+  min-width: 600px !important;
 }
 #crumb-widget .bmlt-time-col {
   width: 6rem !important;
