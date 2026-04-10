@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="pages/crumb-logo.svg" alt="Crumb Widget logo" width="128" height="128">
+</p>
+
 # Crumb Widget
 
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
