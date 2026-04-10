@@ -506,6 +506,7 @@
           <li><a href="#npm-install">Installation</a></li>
           <li><a href="#npm-usage">Usage</a></li>
           <li><a href="#npm-options">Options</a></li>
+          <li><a href="#philosophy">Philosophy</a></li>
           <li class="section-label">Legal</li>
           <li><a href="privacy.html">Privacy Policy</a></li>
         </ul>
@@ -1433,6 +1434,9 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         <div class="callout">
           <strong>Note:</strong> The npm package bundles Svelte and all styles into a single JS file. <code>leaflet</code> is a peer dependency (install it alongside <code>crumb-widget</code>) so you can dedupe with any other Leaflet-using code in your app. Each call to <code>mountCrumbWidget</code> is independent, but multiple widgets on the same page are not currently supported.
         </div>
+
+        <h2 id="philosophy">Philosophy</h2>
+        <p>This project aims to cover the needs of most NA service bodies well — not every possible use case. It is intentionally kept simple and focused. New features are weighed against the cost to the codebase; niche requests that bloat the project for everyone are generally out of scope. If you need deep customization, this may not be the right tool.</p>
       </main>
     </div>
     <script>
