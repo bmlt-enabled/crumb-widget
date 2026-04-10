@@ -132,15 +132,7 @@
         gap: 0.5rem;
         letter-spacing: -0.01em;
       }
-      nav .logo::before {
-        content: '';
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        background: #FFF200;
-        border-radius: 2px;
-        flex-shrink: 0;
-      }
+      nav .logo svg { width: 28px; height: 28px; flex-shrink: 0; border-radius: 6px; }
 
       nav ul { list-style: none; }
       nav li { margin-bottom: 1px; }
@@ -474,7 +466,7 @@
         <div class="nav-close-row">
           <button class="nav-close-btn" onclick="document.getElementById('site-nav').classList.remove('open')" aria-label="Close navigation">✕</button>
         </div>
-        <a class="logo" href="#">BMLT Crumb Widget</a>
+        <a class="logo" href="#"><svg viewBox="0 0 256 256"><rect x="5" y="5" width="246" height="246" rx="40" ry="40" fill="#f0f1f3" stroke="#0A61AD" stroke-width="10"/><path d="M100 75 C118 65, 142 63, 162 72 C180 80, 192 96, 194 115 C196 134, 188 152, 176 165 C164 176, 148 182, 134 180 C120 182, 106 176, 96 165 C86 152, 82 134, 86 115 C88 98, 92 83, 100 75Z" fill="#9ca3af" stroke="#6b7280" stroke-width="3"/><path d="M106 83 C120 75, 140 73, 156 80 C170 87, 180 100, 182 115 C184 130, 178 145, 168 156 C158 164, 144 168, 132 166 C120 168, 108 162, 100 154 C92 144, 88 130, 92 115 C94 102, 98 90, 106 83Z" fill="#d1d5db"/><circle cx="122" cy="102" r="5" fill="#b0b5be"/><circle cx="150" cy="98" r="4" fill="#b0b5be"/><circle cx="138" cy="125" r="6.5" fill="#b0b5be"/><circle cx="112" cy="135" r="4.5" fill="#b0b5be"/><circle cx="158" cy="135" r="4.5" fill="#b0b5be"/><circle cx="128" cy="152" r="3.5" fill="#b0b5be"/><circle cx="162" cy="115" r="3.5" fill="#b0b5be"/><circle cx="76" cy="172" r="7" fill="#9ca3af"/><circle cx="76" cy="172" r="4.5" fill="#d1d5db"/><circle cx="90" cy="184" r="5" fill="#9ca3af"/><circle cx="90" cy="184" r="3.5" fill="#d1d5db"/><circle cx="65" cy="184" r="4" fill="#9ca3af"/><circle cx="65" cy="184" r="2.5" fill="#d1d5db"/><circle cx="80" cy="195" r="3" fill="#9ca3af"/><circle cx="80" cy="195" r="2" fill="#d1d5db"/><circle cx="62" cy="172" r="2.5" fill="#9ca3af"/><circle cx="72" cy="198" r="2" fill="#9ca3af"/><circle cx="56" cy="192" r="2" fill="#9ca3af"/></svg> Crumb Widget</a>
         <button class="theme-toggle" onclick="toggleTheme()" id="nav-theme-btn">
           <svg id="nav-theme-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <span class="toggle-label" id="nav-theme-label">Light mode</span>
@@ -520,7 +512,10 @@
       </nav>
 
       <main>
-        <h1>BMLT Crumb Widget</h1>
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.5rem;">
+          <svg viewBox="0 0 256 256" style="width:64px;height:64px;flex-shrink:0;border-radius:12px;"><rect x="5" y="5" width="246" height="246" rx="40" ry="40" fill="#f0f1f3" stroke="#0A61AD" stroke-width="10"/><path d="M100 75 C118 65, 142 63, 162 72 C180 80, 192 96, 194 115 C196 134, 188 152, 176 165 C164 176, 148 182, 134 180 C120 182, 106 176, 96 165 C86 152, 82 134, 86 115 C88 98, 92 83, 100 75Z" fill="#9ca3af" stroke="#6b7280" stroke-width="3"/><path d="M106 83 C120 75, 140 73, 156 80 C170 87, 180 100, 182 115 C184 130, 178 145, 168 156 C158 164, 144 168, 132 166 C120 168, 108 162, 100 154 C92 144, 88 130, 92 115 C94 102, 98 90, 106 83Z" fill="#d1d5db"/><circle cx="122" cy="102" r="5" fill="#b0b5be"/><circle cx="150" cy="98" r="4" fill="#b0b5be"/><circle cx="138" cy="125" r="6.5" fill="#b0b5be"/><circle cx="112" cy="135" r="4.5" fill="#b0b5be"/><circle cx="158" cy="135" r="4.5" fill="#b0b5be"/><circle cx="128" cy="152" r="3.5" fill="#b0b5be"/><circle cx="162" cy="115" r="3.5" fill="#b0b5be"/><circle cx="76" cy="172" r="7" fill="#9ca3af"/><circle cx="76" cy="172" r="4.5" fill="#d1d5db"/><circle cx="90" cy="184" r="5" fill="#9ca3af"/><circle cx="90" cy="184" r="3.5" fill="#d1d5db"/><circle cx="65" cy="184" r="4" fill="#9ca3af"/><circle cx="65" cy="184" r="2.5" fill="#d1d5db"/><circle cx="80" cy="195" r="3" fill="#9ca3af"/><circle cx="80" cy="195" r="2" fill="#d1d5db"/><circle cx="62" cy="172" r="2.5" fill="#9ca3af"/><circle cx="72" cy="198" r="2" fill="#9ca3af"/><circle cx="56" cy="192" r="2" fill="#9ca3af"/></svg>
+          <h1 style="margin:0;">Crumb Widget</h1>
+        </div>
         <p class="subtitle">An embeddable NA meeting finder widget for any website.</p>
         <a href="meetings.html" target="_blank" class="live-demo-btn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
