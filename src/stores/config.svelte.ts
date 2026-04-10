@@ -1,4 +1,5 @@
 import type { AppConfig, Column } from '@/types';
+import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization } from './localization';
 
 const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
@@ -12,7 +13,8 @@ const defaultConfig: AppConfig = {
   geolocation: false,
   geolocationRadius: 75,
   height: undefined,
-  nowOffset: 10
+  nowOffset: 10,
+  basePath: ''
 };
 
 export const config = $state<AppConfig>({ ...defaultConfig });
@@ -21,6 +23,13 @@ export function initConfig(el: HTMLElement): void {
   const server = el.getAttribute('data-server') ?? '';
   const serviceBody = el.getAttribute('data-service-body') ?? '';
   const defaultView = (el.getAttribute('data-view') as 'list' | 'map') ?? 'list';
+  const dataPath = el.getAttribute('data-path');
+
+  // data-path enables History API routing with a base path (e.g. "/meetings")
+  // Without it, hash-based routing is used (default)
+  if (dataPath) {
+    setHashMode(false);
+  }
 
   const globalCfg = window.CrumbWidgetConfig ?? {};
 
@@ -44,6 +53,7 @@ export function initConfig(el: HTMLElement): void {
   config.darkMode = globalCfg.darkMode ?? false;
   config.nowOffset = globalCfg.nowOffset ?? 10;
   config.hideHeader = globalCfg.hideHeader ?? false;
+  config.basePath = dataPath ?? '';
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

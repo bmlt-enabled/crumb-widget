@@ -38,7 +38,8 @@ const baseConfig: AppConfig = {
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
   geolocationRadius: 75,
-  height: 600
+  height: 600,
+  basePath: ''
 };
 
 function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeeting {

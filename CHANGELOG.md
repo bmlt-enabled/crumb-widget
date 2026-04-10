@@ -1,3 +1,9 @@
+## 1.2.0 (April 10, 2026)
+
+* **History API routing** — add `data-path` attribute to enable clean URLs without the `#` fragment (e.g. `/meetings/monday-night-meeting-42`). Defaults to hash-based routing for backwards compatibility.
+* **Iframe compatibility** — meeting detail navigation now works reliably inside iframe embeds (Google Sites, etc.) by using programmatic navigation instead of native anchor links
+* **Table min-width** — meeting list table no longer collapses columns in narrow containers; scrolls horizontally instead
+
 ## 1.1.0 (April 6, 2026)
 
 * **`leaflet` is now a peer dependency** — npm consumers must install `leaflet` alongside `crumb-widget` (`npm install crumb-widget leaflet`). This shrinks the published bundle by ~40% and lets your app dedupe a single Leaflet copy. The CDN/IIFE build (`crumb-widget.js`) is unaffected and still bundles Leaflet.

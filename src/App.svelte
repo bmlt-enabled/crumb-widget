@@ -89,9 +89,14 @@
 
   const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters));
 
-  // Derive selected meeting from the current hash route: #/{slug}-{id}
+  // Derive selected meeting from the current route: /{slug}-{id}
   const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {
-    const match = router.location.match(/^\/(.+)-(\d+)$/);
+    let loc = router.location;
+    const base = config.basePath.replace(/\/$/, '');
+    if (base && loc.startsWith(base)) {
+      loc = loc.slice(base.length);
+    }
+    const match = loc.match(/^\/(.+)-(\d+)$/);
     if (!match) return undefined;
     const id = match[2];
     return dataState.meetings.find((m) => m.id_bigint === id);
