@@ -44,7 +44,7 @@
     </svg>
   </button>
   {#if isOpen}
-    <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-full rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+    <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-full overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
       {#each options as opt (opt.value)}
         <button
           onclick={() => onToggle(opt.value)}
