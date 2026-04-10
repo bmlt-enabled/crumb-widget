@@ -7,6 +7,7 @@ export const uiState = $state<{
   view: ViewType;
   filters: FilterState;
   geoActive: boolean;
+  selectedMeetingId: string | null;
 }>({
   view: 'list',
   filters: {
@@ -17,7 +18,8 @@ export const uiState = $state<{
     formatIds: [],
     serviceBodyNames: []
   },
-  geoActive: false
+  geoActive: false,
+  selectedMeetingId: null
 });
 
 export function setView(view: ViewType): void {
@@ -30,10 +32,12 @@ function withBase(path: string): string {
 }
 
 export function selectMeeting(meeting: { meeting_name: string; id_bigint: string }): void {
+  uiState.selectedMeetingId = meeting.id_bigint;
   push(withBase('/' + meetingSlug(meeting)));
 }
 
 export function clearSelectedMeeting(): void {
+  uiState.selectedMeetingId = null;
   push(withBase('/'));
 }
 

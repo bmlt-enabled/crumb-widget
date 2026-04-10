@@ -89,17 +89,17 @@
 
   const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters));
 
-  // Derive selected meeting from the current route: /{slug}-{id}
+  // Selected meeting: state is primary (set by selectMeeting/clearSelectedMeeting),
+  // URL is fallback for deep-linking on initial load.
   const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {
-    let loc = router.location;
-    const base = config.basePath.replace(/\/$/, '');
-    if (base && loc.startsWith(base)) {
-      loc = loc.slice(base.length);
+    if (uiState.selectedMeetingId) {
+      return dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId);
     }
-    const match = loc.match(/^\/(.+)-(\d+)$/);
+    // Deep-link fallback: parse meeting ID from the last segment of the URL
+    const loc = router.location;
+    const match = loc.match(/-(\d+)$/);
     if (!match) return undefined;
-    const id = match[2];
-    return dataState.meetings.find((m) => m.id_bigint === id);
+    return dataState.meetings.find((m) => m.id_bigint === match[1]);
   });
 
   let widgetEl = $state<HTMLDivElement | undefined>();
