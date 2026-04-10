@@ -6,7 +6,7 @@
 
 An embeddable NA meeting finder widget with search, filters, list view, map, and meeting detail. Drop a `<div>` and a `<script>` tag into any page, or install from npm for use in JavaScript and TypeScript projects.
 
-Built with Svelte 5, distributed as a **single self-contained JavaScript file** with no host-page dependencies. Available as a CDN script, as an [npm package](https://www.npmjs.com/package/crumb-widget), or as a [WordPress plugin](https://wordpress.org/plugins/crumb/).
+Built with Svelte 5, distributed as a **single self-contained JavaScript file** with no host-page dependencies. Available as a [CDN script](https://cdn.aws.bmlt.app/crumb-widget.js), as an [npm package](https://www.npmjs.com/package/crumb-widget), or as a [WordPress plugin](https://wordpress.org/plugins/crumb/).
 
 ## Features
 

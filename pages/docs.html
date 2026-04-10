@@ -644,7 +644,7 @@
     defaultView: 'map'
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <div class="table-wrap"><table>
@@ -779,7 +779,7 @@
     }
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="language">Language</h2>
@@ -792,7 +792,7 @@
     language: 'es'
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         <p>
           Language codes are matched on the base tag, so <code>'fr-CA'</code> uses <code>fr</code>.
           Supported languages:
@@ -839,7 +839,7 @@
     geolocationRadius: 25  // miles, default 75
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
 
         <h2 id="query-params">URL Query Parameters</h2>
         <p>
@@ -917,7 +917,7 @@
     darkMode: 'auto'
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <div class="demo">
@@ -927,7 +927,7 @@
     darkMode: true
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <p>
@@ -1022,7 +1022,7 @@
     }
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="tile-dark-config">Dark Mode Tiles</h2>
@@ -1049,7 +1049,7 @@
     }
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <div class="demo">
@@ -1068,11 +1068,11 @@
     }
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <div class="callout">
-          <strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>CrumbWidgetConfig</code> is set, you need to load <code>app.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.
+          <strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>CrumbWidgetConfig</code> is set, you need to load <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.
           <pre><code>&lt;script&gt;
 (async () => {
   const key = 'YOUR_REFERER_RESTRICTED_GOOGLE_API_KEY';
@@ -1095,7 +1095,7 @@
   };
 
   const s = document.createElement('script');
-  s.src = 'app.js';
+  s.src = 'https://cdn.aws.bmlt.app/crumb-widget.js';
   document.body.appendChild(s);
 })();
 &lt;/script&gt;</code></pre>
@@ -1145,7 +1145,7 @@
     }
   };
 &lt;/script&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="example-basic">Example: Basic Embed</h2>
@@ -1168,7 +1168,7 @@
   data-server="https://bmlt.sezf.org/main_server"
   data-service-body="42"
 &gt;&lt;/div&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="example-multi">Example: Multiple Service Bodies</h2>
@@ -1180,7 +1180,7 @@
   data-server="https://bmlt.sezf.org/main_server"
   data-service-body="42,57,103"
 &gt;&lt;/div&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="example-map">Example: Default to Map View</h2>
@@ -1192,7 +1192,7 @@
   data-service-body="42"
   data-view="map"
 &gt;&lt;/div&gt;
-&lt;script src="app.js"&gt;&lt;/script&gt;</code></pre>
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
         <h2 id="example-wordpress">Example: WordPress</h2>

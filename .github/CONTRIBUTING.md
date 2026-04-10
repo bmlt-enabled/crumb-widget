@@ -13,7 +13,7 @@ cd crumb-widget
 npm install
 ```
 
-The widget depends on [bmlt-query-client](https://github.com/bmlt-enabled/bmlt-query-client) and [@bmlt-enabled/svelte-spa-router](https://github.com/bmlt-enabled/svelte-spa-router), which is installed from npm and maintained by BMLT.
+The widget depends on [bmlt-query-client](https://github.com/bmlt-enabled/bmlt-query-client) and [@bmlt-enabled/svelte-spa-router](https://github.com/bmlt-enabled/svelte-spa-router) (hash + History API routing with `basePath` support), both installed from npm and maintained by BMLT.
 
 ## Commands
 
@@ -41,9 +41,9 @@ src/
   App.svelte               # Root component — view routing, filtering
   types/index.ts           # Shared TypeScript types
   stores/
-    config.svelte.ts       # Config parsed from DOM attributes
+    config.svelte.ts       # Config parsed from DOM attributes, routing mode setup
     data.svelte.ts         # Meeting data loading (BmltClient)
-    ui.svelte.ts           # UI state: view, selected meeting, filters
+    ui.svelte.ts           # UI state: view, selected meeting (state + URL), filters
     localization.ts        # i18n store and language loading
   components/              # Svelte UI components
   lang/                    # i18n translations (en, es, fr, de, pt, it, sv, da)
