@@ -22,8 +22,23 @@
 
   const { config }: Props = $props();
 
+  function hasServiceBody(): boolean {
+    return config.serviceBodyIds.length > 0;
+  }
+
+  async function fallbackToList() {
+    config.geolocation = false;
+    uiState.view = 'list';
+    uiState.geoActive = false;
+    await loadData(config.serverUrl, config.serviceBodyIds);
+  }
+
   function attemptGeolocation() {
     if (!navigator.geolocation) {
+      if (hasServiceBody()) {
+        fallbackToList();
+        return;
+      }
       dataState.error = $t.locationError;
       geoErrorHint = $t.locationErrorHint;
       return;
@@ -40,6 +55,10 @@
         }
       },
       (err) => {
+        if (hasServiceBody()) {
+          fallbackToList();
+          return;
+        }
         const msg = getGeoErrorMessage(err.code, $t);
         dataState.error = msg.title;
         geoErrorHint = msg.hint;
