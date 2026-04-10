@@ -1227,17 +1227,8 @@
         </table></div>
 
         <h3>Embedding in iframes (Google Sites, etc.)</h3>
-        <p>When embedding in Google Sites or other iframe-based hosts, add <code>data-path=""</code> to enable History API routing. Hash-based routing can be unreliable inside proxied iframes because native anchor links (<code>&lt;a href="#/..."&gt;</code>) may not trigger navigation events properly.</p>
-
-        <div class="demo">
-          <div class="demo-header">Iframe embed</div>
-          <pre><code>&lt;div
-  id="crumb-widget"
-  data-server="https://myserver.com/main_server/"
-  data-service-body="3"
-  data-path=""
-&gt;&lt;/div&gt;</code></pre>
-        </div>
+        <p>When embedding in iframe-based hosts like Google Sites, all in-widget navigation (clicking meetings, back button, sibling links) works normally. However, deep-linking to a specific meeting via URL is not supported because the widget runs inside a proxied iframe and cannot control the parent page's URL.</p>
+        <p>No special configuration is needed — the default hash-based routing works inside iframes. The <code>data-path</code> attribute is not needed for iframe embeds.</p>
 
         <h2 id="site-builders">Website Builders</h2>
         <p>Crumb Widget can also be embedded on common website builders, but the setup varies by platform.</p>
@@ -1259,12 +1250,11 @@
   id="crumb-widget"
   data-server="https://myserver.com/main_server/"
   data-service-body="3"
-  data-path=""
 &gt;&lt;/div&gt;
 &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
-        <p><strong>Note:</strong> In Google Sites, JavaScript must be included inside <code>&lt;script&gt;</code> tags when using the embed code option. The <code>data-path=""</code> attribute is required for meeting detail navigation to work inside Google Sites iframes.</p>
+        <p><strong>Note:</strong> In Google Sites, JavaScript must be included inside <code>&lt;script&gt;</code> tags when using the embed code option. Because Google Sites runs the widget inside a proxied iframe, direct links to specific meetings (deep-linking) are not supported — but all in-widget navigation works normally.</p>
 
         <p><a href="https://sites.google.com/view/crumb-seattle/" target="_blank">See a live demo on Google Sites &rarr;</a></p>
 
