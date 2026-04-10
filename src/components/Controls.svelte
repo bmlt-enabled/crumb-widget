@@ -81,7 +81,7 @@
         }
       },
       (err) => {
-        geoError = getGeoErrorMessage(err.code, $t);
+        geoError = getGeoErrorMessage(err.code, $t).title;
         geoStatus = 'error';
         if (geoErrorTimer) clearTimeout(geoErrorTimer);
         geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), GEO_ERROR_DISPLAY_MS);

@@ -52,9 +52,14 @@ export const frTranslations = {
   nearMe: 'Près de moi',
   locating: 'Localisation\u2026',
   locationDenied: 'Accès à la localisation refusé',
+  locationDeniedHint: 'Veuillez activer le partage de localisation dans les paramètres de votre navigateur, puis rafraîchir la page.',
   locationUnavailable: 'Localisation indisponible',
+  locationUnavailableHint: "Votre position n'a pas pu être déterminée. Vérifiez les paramètres de votre appareil et réessayez.",
   locationTimeout: 'Délai de localisation dépassé',
+  locationTimeoutHint: 'La demande de localisation a pris trop de temps. Vérifiez votre connexion et réessayez.',
   locationError: "Impossible d'obtenir la localisation",
+  locationErrorHint: "Une erreur s'est produite lors de l'obtention de votre position. Veuillez réessayer.",
+  retry: 'Réessayer',
   // Loading
   loadingMeetings: 'Chargement des réunions\u2026',
   // Map

@@ -52,9 +52,14 @@ export const esTranslations = {
   nearMe: 'Cerca de mí',
   locating: 'Localizando\u2026',
   locationDenied: 'Acceso a ubicación denegado',
+  locationDeniedHint: 'Por favor, habilite el acceso a la ubicación en la configuración de su navegador y luego actualice la página.',
   locationUnavailable: 'Ubicación no disponible',
+  locationUnavailableHint: 'No se pudo determinar su ubicación. Verifique la configuración de su dispositivo e intente de nuevo.',
   locationTimeout: 'Tiempo de espera de ubicación agotado',
+  locationTimeoutHint: 'La solicitud de ubicación tardó demasiado. Verifique su conexión e intente de nuevo.',
   locationError: 'No se puede obtener la ubicación',
+  locationErrorHint: 'Algo salió mal al obtener su ubicación. Por favor, intente de nuevo.',
+  retry: 'Intentar de nuevo',
   // Loading
   loadingMeetings: 'Cargando reuniones\u2026',
   // Map

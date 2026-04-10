@@ -8,6 +8,8 @@
   import { t } from '@stores/localization';
 
   const GEOLOCATION_TIMEOUT_MS = 10000;
+  let geoErrorHint = $state('');
+  let geoDenied = $state(false);
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
@@ -19,6 +21,34 @@
   }
 
   const { config }: Props = $props();
+
+  function attemptGeolocation() {
+    if (!navigator.geolocation) {
+      dataState.error = $t.locationError;
+      geoErrorHint = $t.locationErrorHint;
+      return;
+    }
+    dataState.error = '';
+    geoErrorHint = '';
+    geoDenied = false;
+    dataState.loading = true;
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
+        if (!dataState.error) {
+          uiState.geoActive = true;
+        }
+      },
+      (err) => {
+        const msg = getGeoErrorMessage(err.code, $t);
+        dataState.error = msg.title;
+        geoErrorHint = msg.hint;
+        geoDenied = err.code === 1;
+        dataState.loading = false;
+      },
+      { timeout: GEOLOCATION_TIMEOUT_MS }
+    );
+  }
 
   onMount(async () => {
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
@@ -32,24 +62,7 @@
     }
 
     if (tryGeo) {
-      if (!navigator.geolocation) {
-        dataState.error = $t.locationError;
-      } else {
-        dataState.loading = true;
-        navigator.geolocation.getCurrentPosition(
-          async (pos) => {
-            await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
-            if (!dataState.error) {
-              uiState.geoActive = true;
-            }
-          },
-          (err) => {
-            dataState.error = getGeoErrorMessage(err.code, $t);
-            dataState.loading = false;
-          },
-          { timeout: GEOLOCATION_TIMEOUT_MS }
-        );
-      }
+      attemptGeolocation();
     } else {
       await loadData(config.serverUrl, config.serviceBodyIds);
     }
@@ -99,11 +112,19 @@
   {#if dataState.error}
     <!-- Error state -->
     <div class="flex flex-col items-center justify-center py-16 text-center">
-      <svg class="mb-3 h-10 w-10 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+      <svg class="mb-3 h-10 w-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
-      <p class="text-sm font-medium text-red-700">Error loading meetings</p>
-      <p class="mt-1 max-w-sm text-xs text-gray-500">{dataState.error}</p>
+      <p class="text-sm font-medium text-gray-800">{dataState.error}</p>
+      {#if geoErrorHint}
+        <p class="mt-1 max-w-sm text-xs text-gray-500">{geoErrorHint}</p>
+      {/if}
+      {#if config.geolocation && !geoDenied}
+        <button onclick={attemptGeolocation} class="mt-4 rounded-lg border border-blue-500 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100">
+          {$t.retry}
+        </button>
+      {/if}
     </div>
   {:else if dataState.loading}
     <Loading />

@@ -109,7 +109,6 @@ describe('App', () => {
   test('shows error message on failure', () => {
     dataState.error = 'Network error';
     render(App, { props: { config: baseConfig } });
-    expect(screen.getByText('Error loading meetings')).toBeInTheDocument();
     expect(screen.getByText('Network error')).toBeInTheDocument();
   });
 

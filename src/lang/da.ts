@@ -52,9 +52,14 @@ export const daTranslations = {
   nearMe: 'Nær mig',
   locating: 'Finder placering\u2026',
   locationDenied: 'Placeringsadgang nægtet',
+  locationDeniedHint: 'Aktivér venligst placeringstilladelse i din browsers indstillinger, og genindlæs derefter siden.',
   locationUnavailable: 'Placering ikke tilgængelig',
+  locationUnavailableHint: 'Din placering kunne ikke bestemmes. Kontrollér dine enhedsindstillinger og prøv igen.',
   locationTimeout: 'Placeringsanmodning udløb',
+  locationTimeoutHint: 'Placeringsanmodningen tog for lang tid. Kontrollér din forbindelse og prøv igen.',
   locationError: 'Kunne ikke hente placering',
+  locationErrorHint: 'Noget gik galt ved hentning af din placering. Prøv venligst igen.',
+  retry: 'Prøv igen',
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',
   // Map

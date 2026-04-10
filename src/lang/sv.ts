@@ -52,9 +52,14 @@ export const svTranslations = {
   nearMe: 'Nära mig',
   locating: 'Söker plats\u2026',
   locationDenied: 'Platsåtkomst nekad',
+  locationDeniedHint: 'Aktivera platsdelning i webbläsarens inställningar och ladda sedan om sidan.',
   locationUnavailable: 'Plats ej tillgänglig',
+  locationUnavailableHint: 'Din plats kunde inte fastställas. Kontrollera enhetens inställningar och försök igen.',
   locationTimeout: 'Tidsgräns för platsförfrågan överskriden',
+  locationTimeoutHint: 'Platsförfrågan tog för lång tid. Kontrollera din anslutning och försök igen.',
   locationError: 'Kunde inte hämta plats',
+  locationErrorHint: 'Något gick fel vid hämtning av din plats. Försök igen.',
+  retry: 'Försök igen',
   // Loading
   loadingMeetings: 'Laddar möten\u2026',
   // Map

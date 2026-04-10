@@ -265,15 +265,19 @@ describe('getPlatform', () => {
 describe('getGeoErrorMessage', () => {
   const t = {
     locationDenied: 'Location access denied',
+    locationDeniedHint: 'Please enable location sharing in your browser settings, then refresh the page.',
     locationUnavailable: 'Location unavailable',
+    locationUnavailableHint: 'Your location could not be determined. Please check your device settings and try again.',
     locationTimeout: 'Location request timed out',
-    locationError: 'Unable to get location'
+    locationTimeoutHint: 'The location request took too long. Please check your connection and try again.',
+    locationError: 'Unable to get location',
+    locationErrorHint: 'Something went wrong getting your location. Please try again.'
   };
 
-  test('code 1 returns permission denied', () => expect(getGeoErrorMessage(1, t)).toBe('Location access denied'));
-  test('code 2 returns unavailable', () => expect(getGeoErrorMessage(2, t)).toBe('Location unavailable'));
-  test('code 3 returns timeout', () => expect(getGeoErrorMessage(3, t)).toBe('Location request timed out'));
-  test('unknown code returns generic error', () => expect(getGeoErrorMessage(99, t)).toBe('Unable to get location'));
+  test('code 1 returns permission denied', () => expect(getGeoErrorMessage(1, t)).toEqual({ title: 'Location access denied', hint: t.locationDeniedHint }));
+  test('code 2 returns unavailable', () => expect(getGeoErrorMessage(2, t)).toEqual({ title: 'Location unavailable', hint: t.locationUnavailableHint }));
+  test('code 3 returns timeout', () => expect(getGeoErrorMessage(3, t)).toEqual({ title: 'Location request timed out', hint: t.locationTimeoutHint }));
+  test('unknown code returns generic error', () => expect(getGeoErrorMessage(99, t)).toEqual({ title: 'Unable to get location', hint: t.locationErrorHint }));
 });
 
 describe('getDirectionsUrl', () => {

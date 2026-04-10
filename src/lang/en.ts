@@ -52,9 +52,14 @@ export const enTranslations = {
   nearMe: 'Near Me',
   locating: 'Locating\u2026',
   locationDenied: 'Location access denied',
+  locationDeniedHint: 'Please enable location sharing in your browser settings, then refresh the page.',
   locationUnavailable: 'Location unavailable',
+  locationUnavailableHint: 'Your location could not be determined. Please check your device settings and try again.',
   locationTimeout: 'Location request timed out',
+  locationTimeoutHint: 'The location request took too long. Please check your connection and try again.',
   locationError: 'Unable to get location',
+  locationErrorHint: 'Something went wrong getting your location. Please try again.',
+  retry: 'Try Again',
   // Loading
   loadingMeetings: 'Loading meetings\u2026',
   // Map

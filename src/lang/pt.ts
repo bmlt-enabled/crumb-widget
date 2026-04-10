@@ -52,9 +52,14 @@ export const ptTranslations = {
   nearMe: 'Perto de mim',
   locating: 'Localizando\u2026',
   locationDenied: 'Acesso à localização negado',
+  locationDeniedHint: 'Por favor, ative o compartilhamento de localização nas configurações do seu navegador e atualize a página.',
   locationUnavailable: 'Localização indisponível',
+  locationUnavailableHint: 'Não foi possível determinar sua localização. Verifique as configurações do seu dispositivo e tente novamente.',
   locationTimeout: 'Tempo de localização esgotado',
+  locationTimeoutHint: 'A solicitação de localização demorou muito. Verifique sua conexão e tente novamente.',
   locationError: 'Não foi possível obter a localização',
+  locationErrorHint: 'Algo deu errado ao obter sua localização. Por favor, tente novamente.',
+  retry: 'Tentar novamente',
   // Loading
   loadingMeetings: 'Carregando reuniões\u2026',
   // Map

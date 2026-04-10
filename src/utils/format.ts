@@ -202,11 +202,23 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
   return result;
 }
 
-export function getGeoErrorMessage(code: number, t: { locationDenied: string; locationUnavailable: string; locationTimeout: string; locationError: string }): string {
-  if (code === 1) return t.locationDenied;
-  if (code === 2) return t.locationUnavailable;
-  if (code === 3) return t.locationTimeout;
-  return t.locationError;
+export function getGeoErrorMessage(
+  code: number,
+  t: {
+    locationDenied: string;
+    locationDeniedHint: string;
+    locationUnavailable: string;
+    locationUnavailableHint: string;
+    locationTimeout: string;
+    locationTimeoutHint: string;
+    locationError: string;
+    locationErrorHint: string;
+  }
+): { title: string; hint: string } {
+  if (code === 1) return { title: t.locationDenied, hint: t.locationDeniedHint };
+  if (code === 2) return { title: t.locationUnavailable, hint: t.locationUnavailableHint };
+  if (code === 3) return { title: t.locationTimeout, hint: t.locationTimeoutHint };
+  return { title: t.locationError, hint: t.locationErrorHint };
 }
 
 export function getDirectionsUrl(meeting: Meeting): string {

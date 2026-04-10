@@ -52,9 +52,14 @@ export const deTranslations = {
   nearMe: 'In meiner Nähe',
   locating: 'Standort wird ermittelt\u2026',
   locationDenied: 'Standortzugriff verweigert',
+  locationDeniedHint: 'Bitte aktivieren Sie die Standortfreigabe in Ihren Browsereinstellungen und laden Sie die Seite neu.',
   locationUnavailable: 'Standort nicht verfügbar',
+  locationUnavailableHint: 'Ihr Standort konnte nicht ermittelt werden. Überprüfen Sie Ihre Geräteeinstellungen und versuchen Sie es erneut.',
   locationTimeout: 'Zeitüberschreitung bei Standortabfrage',
+  locationTimeoutHint: 'Die Standortabfrage hat zu lange gedauert. Überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.',
   locationError: 'Standort konnte nicht ermittelt werden',
+  locationErrorHint: 'Beim Ermitteln Ihres Standorts ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
+  retry: 'Erneut versuchen',
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',
   // Map
