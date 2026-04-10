@@ -4,178 +4,223 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BMLT Crumb Widget — Privacy Policy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
       :root {
-        --doc-bg:        #f9fafb;
-        --doc-surface:   #ffffff;
-        --doc-text:      #111827;
-        --doc-text-muted:#374151;
-        --doc-text-dim:  #6b7280;
-        --doc-border:    #e5e7eb;
-        --doc-border-lt: #f3f4f6;
-        --doc-code-bg:   #f3f4f6;
-        --doc-nav-link:  #374151;
-        --doc-nav-hover: #f3f4f6;
-        --doc-th-bg:     #f3f4f6;
-        --doc-link:      #2563eb;
-        --doc-callout-bg:#eff6ff;
-        --doc-callout-tx:#1e40af;
+        --doc-bg:        #f4f6f9;
+        --doc-surface:   #2E3192;
+        --doc-text:      #1a1a2e;
+        --doc-text-muted:#3a3a52;
+        --doc-text-dim:  #6b6b80;
+        --doc-border:    #d8dce6;
+        --doc-border-lt: #ebeef3;
+        --doc-code-bg:   #ebeef3;
+        --doc-nav-link:  rgba(255,255,255,0.8);
+        --doc-nav-hover: rgba(255,255,255,0.1);
+        --doc-th-bg:     #ebeef3;
+        --doc-link:      #1E77BC;
+        --doc-link-hover:#155a91;
+        --doc-callout-bg:#e8f5ee;
+        --doc-callout-tx:#006b3f;
+        --doc-callout-border:#00A651;
+        --doc-accent:    #1E77BC;
       }
 
       .dark {
-        --doc-bg:        #0f172a;
-        --doc-surface:   #1e293b;
-        --doc-text:      #f1f5f9;
-        --doc-text-muted:#cbd5e1;
-        --doc-text-dim:  #94a3b8;
-        --doc-border:    #334155;
-        --doc-border-lt: #1e293b;
-        --doc-code-bg:   #1e293b;
-        --doc-nav-link:  #cbd5e1;
-        --doc-nav-hover: #334155;
-        --doc-th-bg:     #1e293b;
-        --doc-link:      #60a5fa;
-        --doc-callout-bg:#1e3a5f;
-        --doc-callout-tx:#93c5fd;
+        --doc-bg:        #0d0d1a;
+        --doc-surface:   #1a1a35;
+        --doc-text:      #f0f0f6;
+        --doc-text-muted:#cccce0;
+        --doc-text-dim:  #9a9ab4;
+        --doc-border:    #2a2a45;
+        --doc-border-lt: #1f1f38;
+        --doc-code-bg:   #1a1a30;
+        --doc-nav-link:  rgba(255,255,255,0.75);
+        --doc-nav-hover: rgba(255,255,255,0.08);
+        --doc-th-bg:     #1a1a30;
+        --doc-link:      #5ba3d9;
+        --doc-link-hover:#7dbde8;
+        --doc-callout-bg:#0d1f15;
+        --doc-callout-tx:#6dd89e;
+        --doc-callout-border:#00A651;
+        --doc-accent:    #5ba3d9;
       }
 
       @media (prefers-color-scheme: dark) {
         :root:not(.light) {
-          --doc-bg:        #0f172a;
-          --doc-surface:   #1e293b;
-          --doc-text:      #f1f5f9;
-          --doc-text-muted:#cbd5e1;
-          --doc-text-dim:  #94a3b8;
-          --doc-border:    #334155;
-          --doc-border-lt: #1e293b;
-          --doc-code-bg:   #1e293b;
-          --doc-nav-link:  #cbd5e1;
-          --doc-nav-hover: #334155;
-          --doc-th-bg:     #1e293b;
-          --doc-link:      #60a5fa;
-          --doc-callout-bg:#1e3a5f;
-          --doc-callout-tx:#93c5fd;
+          --doc-bg:        #0d0d1a;
+          --doc-surface:   #1a1a35;
+          --doc-text:      #f0f0f6;
+          --doc-text-muted:#cccce0;
+          --doc-text-dim:  #9a9ab4;
+          --doc-border:    #2a2a45;
+          --doc-border-lt: #1f1f38;
+          --doc-code-bg:   #1a1a30;
+          --doc-nav-link:  rgba(255,255,255,0.75);
+          --doc-nav-hover: rgba(255,255,255,0.08);
+          --doc-th-bg:     #1a1a30;
+          --doc-link:      #5ba3d9;
+          --doc-link-hover:#7dbde8;
+          --doc-callout-bg:#0d1f15;
+          --doc-callout-tx:#6dd89e;
+          --doc-callout-border:#00A651;
+          --doc-accent:    #5ba3d9;
         }
       }
 
       body {
-        font-family: system-ui, -apple-system, sans-serif;
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
         font-size: 16px;
-        line-height: 1.6;
+        line-height: 1.7;
         color: var(--doc-text);
         background: var(--doc-bg);
-        transition: background 0.2s, color 0.2s;
+        transition: background 0.3s ease, color 0.3s ease;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
-      a { color: var(--doc-link); text-decoration: none; }
-      a:hover { text-decoration: underline; }
+      a { color: var(--doc-link); text-decoration: none; transition: color 0.15s; }
+      a:hover { color: var(--doc-link-hover); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
 
       .page { display: flex; min-height: 100vh; }
 
       nav {
-        width: 240px;
+        width: 260px;
         flex-shrink: 0;
         background: var(--doc-surface);
-        border-right: 1px solid var(--doc-border);
-        padding: 2rem 1.25rem;
+        border-right: none;
+        padding: 2rem 1rem;
         position: sticky;
         top: 0;
         height: 100vh;
         overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(255,255,255,0.15) transparent;
       }
 
       nav .logo {
-        font-size: 1rem;
+        font-size: 0.95rem;
         font-weight: 700;
-        color: var(--doc-text);
-        margin-bottom: 2rem;
-        display: block;
+        color: #ffffff;
+        margin-bottom: 1.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        letter-spacing: -0.01em;
+      }
+      nav .logo::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #FFF200;
+        border-radius: 2px;
+        flex-shrink: 0;
       }
 
       nav ul { list-style: none; }
-      nav li { margin-bottom: 0.25rem; }
+      nav li { margin-bottom: 1px; }
       nav a {
         display: block;
-        padding: 0.3rem 0.75rem;
+        padding: 0.35rem 0.75rem;
         border-radius: 6px;
         font-size: 0.875rem;
         color: var(--doc-nav-link);
-        transition: background 0.1s;
+        transition: background 0.12s, color 0.12s;
+        font-weight: 450;
       }
-      nav a:hover { background: var(--doc-nav-hover); text-decoration: none; }
-      nav a.active { background: var(--doc-nav-hover); font-weight: 600; }
+      nav a:hover { background: var(--doc-nav-hover); text-decoration: none; color: #ffffff; }
+      nav a.active { background: rgba(255,255,255,0.15); font-weight: 600; }
       nav .section-label {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
         font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: var(--doc-text-dim);
-        padding: 0.75rem 0.75rem 0.25rem;
+        letter-spacing: 0.1em;
+        color: rgba(255,255,255,0.5);
+        padding: 1rem 0.75rem 0.35rem;
       }
 
       .theme-toggle {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        margin-top: 1.5rem;
-        padding: 0.3rem 0.75rem;
-        border-radius: 6px;
-        border: 1px solid var(--doc-border);
+        margin-top: 1.25rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
         background: none;
         color: var(--doc-nav-link);
-        font-size: 0.875rem;
+        font-family: inherit;
+        font-size: 0.8rem;
         line-height: 1.5;
         cursor: pointer;
         width: 100%;
-        transition: background 0.1s, color 0.1s;
+        transition: background 0.15s, color 0.15s, border-color 0.15s;
       }
-      .theme-toggle:hover { background: var(--doc-nav-hover); }
-      .theme-toggle svg { flex-shrink: 0; display: block; }
+      .theme-toggle:hover { background: var(--doc-nav-hover); border-color: rgba(255,255,255,0.25); }
+      .theme-toggle svg { flex-shrink: 0; display: block; opacity: 0.7; }
       .theme-toggle .toggle-label { flex: 1; text-align: left; }
 
       main {
         flex: 1;
-        max-width: 800px;
-        padding: 3rem 2.5rem;
+        max-width: 780px;
+        padding: 3.5rem 3rem;
       }
 
-      h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--doc-text); }
-      h2 { font-size: 1.375rem; font-weight: 700; margin: 2.5rem 0 1rem; padding-top: 0.5rem; border-top: 1px solid var(--doc-border); color: var(--doc-text); }
-      h3 { font-size: 1.05rem; font-weight: 600; margin: 1.5rem 0 0.5rem; color: var(--doc-text); }
-      p { margin-bottom: 1rem; color: var(--doc-text-muted); }
-      ul, ol { margin: 0 0 1rem 1.5rem; color: var(--doc-text-muted); }
-      li { margin-bottom: 0.25rem; }
+      h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--doc-text); letter-spacing: -0.03em; line-height: 1.2; }
+      h2 { font-size: 1.5rem; font-weight: 700; margin: 3rem 0 1rem; padding-top: 1.5rem; border-top: 1px solid var(--doc-border); color: var(--doc-text); letter-spacing: -0.02em; }
+      h3 { font-size: 1.125rem; font-weight: 600; margin: 2rem 0 0.5rem; color: var(--doc-text); letter-spacing: -0.01em; }
+      p { margin-bottom: 1rem; color: var(--doc-text-muted); font-size: 1rem; }
+      ul, ol { margin: 0 0 1rem 1.5rem; color: var(--doc-text-muted); font-size: 1rem; }
+      li { margin-bottom: 0.35rem; }
 
-      .subtitle { font-size: 1.1rem; color: var(--doc-text-dim); margin-bottom: 2rem; }
+      .subtitle { font-size: 1.15rem; color: var(--doc-text-dim); margin-bottom: 2rem; font-weight: 400; }
+
+      code {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.82em;
+        background: var(--doc-code-bg);
+        border: 1px solid var(--doc-border);
+        border-radius: 5px;
+        padding: 0.15em 0.45em;
+        color: var(--doc-text);
+        font-weight: 450;
+      }
 
       .callout {
         background: var(--doc-callout-bg);
+        border-left: 3px solid var(--doc-callout-border);
         color: var(--doc-callout-tx);
-        border-radius: 8px;
+        border-radius: 0 8px 8px 0;
         padding: 1rem 1.25rem;
-        margin: 1.5rem 0;
-        font-size: 0.95rem;
+        margin: 1.25rem 0 1.75rem;
+        font-size: 0.88rem;
       }
 
       table {
         width: 100%;
         border-collapse: collapse;
         margin: 1rem 0 1.5rem;
-        font-size: 0.9rem;
+        font-size: 0.925rem;
       }
       th {
         text-align: left;
         padding: 0.6rem 1rem;
         background: var(--doc-th-bg);
-        border: 1px solid var(--doc-border);
+        border-bottom: 2px solid var(--doc-border);
         font-weight: 600;
-        color: var(--doc-text);
+        font-size: 0.8rem;
+        color: var(--doc-text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
       }
       td {
-        padding: 0.6rem 1rem;
-        border: 1px solid var(--doc-border);
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--doc-border-lt);
         vertical-align: top;
         color: var(--doc-text-muted);
       }
@@ -184,13 +229,14 @@
         .page { flex-direction: column; }
         nav { width: 100%; height: auto; position: static; border-right: none; border-bottom: 1px solid var(--doc-border); padding: 1.25rem; }
         main { padding: 2rem 1.25rem; }
+        h1 { font-size: 1.85rem; }
       }
     </style>
   </head>
   <body>
     <div class="page">
       <nav>
-        <a class="logo" href="/">Crumb Widget</a>
+        <a class="logo" href="#">Crumb Widget</a>
         <ul>
           <li class="section-label">Navigation</li>
           <li><a href="/">Documentation</a></li>

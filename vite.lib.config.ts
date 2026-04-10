@@ -40,7 +40,7 @@ export default defineConfig({
       formats: ['es'],
       fileName: 'module'
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['leaflet']
     },
     cssCodeSplit: false,

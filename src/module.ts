@@ -2,6 +2,7 @@ import { mount } from 'svelte';
 import './app.css';
 import App from './App.svelte';
 import { config } from '@stores/config.svelte';
+import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization } from '@stores/localization';
 import type { CrumbWidgetConfig, Column } from '@/types';
 
@@ -46,6 +47,10 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.darkMode = options.darkMode ?? false;
   config.nowOffset = options.nowOffset ?? 10;
   config.hideHeader = options.hideHeader ?? false;
+
+  if (options.basePath != null) {
+    setHashMode(false, options.basePath);
+  }
 
   const language = options.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

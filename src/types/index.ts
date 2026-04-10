@@ -68,6 +68,8 @@ export interface CrumbWidgetConfig {
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
   hideHeader?: boolean;
+  /** Base path for History API routing (e.g. '/meetings'). Enables clean URLs without '#'. */
+  basePath?: string;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;
