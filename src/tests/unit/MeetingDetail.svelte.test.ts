@@ -99,10 +99,10 @@ describe('MeetingDetail — header', () => {
     expect(screen.getByText('Monday Night Meeting')).toBeInTheDocument();
   });
 
-  test('renders back to meetings button', () => {
+  test('renders back to meetings link', () => {
     render(MeetingDetail, { props: { meeting: makeMeeting() } });
     expect(screen.getByText('Back to meetings')).toBeInTheDocument();
-    expect(screen.getByText('Back to meetings').closest('button')).toBeInTheDocument();
+    expect(screen.getByText('Back to meetings').closest('a')).toHaveAttribute('href', '#/');
   });
 });
 

@@ -6,8 +6,7 @@
   import type { ProcessedMeeting } from '@/types';
 
   import { config } from '@stores/config.svelte';
-  import { clearSelectedMeeting, selectMeeting } from '@stores/ui.svelte';
-  import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
+  import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr, meetingSlug } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
@@ -94,12 +93,12 @@
   <!-- Header -->
   <div class="bmlt-detail-header shrink-0 border-b border-gray-200 bg-white px-4 py-3">
     <h2 class="text-3xl font-bold text-gray-900">{meeting.meeting_name}</h2>
-    <button type="button" onclick={clearSelectedMeeting} class="bmlt-link mt-1.5 flex items-center gap-1 text-base text-blue-600 hover:text-blue-800">
+    <a href="#/" class="bmlt-link mt-1.5 flex items-center gap-1 text-base text-blue-600 hover:text-blue-800">
       <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
       {$t.backToMeetings}
-    </button>
+    </a>
   </div>
 
   <!-- Body: two columns -->
@@ -257,7 +256,7 @@
                     <p class="text-sm font-semibold text-gray-800">{$t.weekdays[sibling.weekday_tinyint - 1]}</p>
                     <p class="text-sm text-gray-500">{sibling.formattedTime}</p>
                   </div>
-                  <button type="button" onclick={() => selectMeeting(sibling)} class="bmlt-link text-sm text-blue-600 hover:text-blue-800">{sibling.meeting_name}</button>
+                  <a href="#/{meetingSlug(sibling)}" class="bmlt-link text-sm text-blue-600 hover:text-blue-800">{sibling.meeting_name}</a>
                 </div>
               {/each}
             </div>

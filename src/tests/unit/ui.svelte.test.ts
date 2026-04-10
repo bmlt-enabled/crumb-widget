@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { uiState, setView, selectMeeting, clearSelectedMeeting, updateFilter, resetFilters, toggleArrayFilter } from '@stores/ui.svelte';
+import { uiState, setView, selectMeeting, updateFilter, resetFilters, toggleArrayFilter } from '@stores/ui.svelte';
 
 vi.mock('@bmlt-enabled/svelte-spa-router', () => ({ push: vi.fn() }));
 
@@ -8,7 +8,6 @@ import { push } from '@bmlt-enabled/svelte-spa-router';
 beforeEach(() => {
   uiState.view = 'list';
   uiState.geoActive = false;
-  uiState.selectedMeetingId = null;
   resetFilters();
   vi.mocked(push).mockClear();
 });
@@ -32,11 +31,6 @@ describe('selectMeeting', () => {
     expect(push).toHaveBeenCalledWith('/monday-night-meeting-42');
   });
 
-  test('sets selectedMeetingId in state', () => {
-    selectMeeting({ meeting_name: 'Monday Night Meeting', id_bigint: '42' });
-    expect(uiState.selectedMeetingId).toBe('42');
-  });
-
   test('slugifies special characters in meeting name', () => {
     selectMeeting({ meeting_name: "Bill's Place!", id_bigint: '7' });
     expect(push).toHaveBeenCalledWith('/bill-s-place-7');
@@ -45,16 +39,6 @@ describe('selectMeeting', () => {
   test('falls back to "meeting" slug for names with no alphanumeric chars', () => {
     selectMeeting({ meeting_name: '???', id_bigint: '99' });
     expect(push).toHaveBeenCalledWith('/meeting-99');
-  });
-});
-
-describe('clearSelectedMeeting', () => {
-  test('clears selectedMeetingId and pushes root route', () => {
-    selectMeeting({ meeting_name: 'Test', id_bigint: '1' });
-    expect(uiState.selectedMeetingId).toBe('1');
-    clearSelectedMeeting();
-    expect(uiState.selectedMeetingId).toBeNull();
-    expect(push).toHaveBeenCalledWith('/');
   });
 });
 

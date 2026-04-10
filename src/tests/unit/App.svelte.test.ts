@@ -567,8 +567,8 @@ describe('meeting detail', () => {
     await fireEvent.click(screen.getAllByText('Monday Night Meeting')[0]!);
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
-    const btn = screen.getByRole('button', { name: 'Thursday Noon Group' });
-    expect(btn).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: 'Thursday Noon Group' });
+    expect(link.getAttribute('href')).toMatch(/^#\/thursday-noon-group-2$/);
   });
 
   test('does not show "Also at this location" when no other meetings share the address', async () => {
