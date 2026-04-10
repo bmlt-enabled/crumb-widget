@@ -43,8 +43,7 @@ const baseConfig: AppConfig = {
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
   geolocationRadius: 75,
-  height: 600,
-  basePath: ''
+  height: 600
 };
 
 function makeFormat(overrides: Partial<Format> = {}): Format {

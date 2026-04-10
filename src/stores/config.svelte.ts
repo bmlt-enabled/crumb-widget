@@ -13,8 +13,7 @@ const defaultConfig: AppConfig = {
   geolocation: false,
   geolocationRadius: 75,
   height: undefined,
-  nowOffset: 10,
-  basePath: ''
+  nowOffset: 10
 };
 
 export const config = $state<AppConfig>({ ...defaultConfig });
@@ -27,8 +26,8 @@ export function initConfig(el: HTMLElement): void {
 
   // data-path enables History API routing with a base path (e.g. "/meetings")
   // Without it, hash-based routing is used (default)
-  if (dataPath) {
-    setHashMode(false);
+  if (dataPath != null) {
+    setHashMode(false, dataPath);
   }
 
   const globalCfg = window.CrumbWidgetConfig ?? {};
@@ -53,7 +52,6 @@ export function initConfig(el: HTMLElement): void {
   config.darkMode = globalCfg.darkMode ?? false;
   config.nowOffset = globalCfg.nowOffset ?? 10;
   config.hideHeader = globalCfg.hideHeader ?? false;
-  config.basePath = dataPath ?? '';
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

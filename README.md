@@ -39,29 +39,6 @@ Built with Svelte 5, distributed as a **single self-contained JavaScript file** 
 
 **Important:** Be sure your page includes `<meta name="viewport" content="width=device-width, initial-scale=1.0" />` in the `<head>`. This is important for proper rendering on mobile devices and small screens.
 
-## Routing
-
-By default the widget uses **hash-based routing** for meeting detail URLs (e.g. `example.com/#/monday-night-meeting-42`). This works out of the box on any hosting.
-
-### Pretty URLs (History API)
-
-For clean URLs without the `#` fragment, add a `data-path` attribute with your base path:
-
-```html
-<div
-    id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-    data-path="/meetings"
-></div>
-```
-
-This produces URLs like `example.com/meetings/monday-night-meeting-42`. Your server must be configured to serve the page for all sub-paths under the base path (e.g. a rewrite rule that directs `/meetings/*` back to the page containing the widget).
-
-### Embedding in iframes (Google Sites, etc.)
-
-When embedding in Google Sites or other iframe-based hosts, use `data-path=""` to enable History API routing with no prefix. Hash-based routing can be unreliable inside proxied iframes.
-
 Full documentation at **[crumb.bmlt.app](https://crumb.bmlt.app/)**.
 
 ## Philosophy

@@ -444,6 +444,8 @@
           <li><a href="#example-multi">Multiple service bodies</a></li>
           <li><a href="#example-map">Default to map</a></li>
           <li><a href="#example-wordpress">WordPress</a></li>
+          <li class="section-label">Routing</li>
+          <li><a href="#routing">Routing modes</a></li>
           <li class="section-label">Website Builders</li>
           <li><a href="#google-sites">Google Sites</a></li>
           <li><a href="#squarespace">Squarespace</a></li>
@@ -552,6 +554,17 @@
                 Default view when the widget loads.
                 <br><em>Values:</em> <code>list</code> (default) or <code>map</code>
                 <br>Can be overridden at runtime by the <code>?view=</code> query parameter (see <a href="#query-params">URL Query Parameters</a>).
+              </td>
+            </tr>
+            <tr>
+              <td>data-path</td>
+              <td><span class="badge badge-optional">Optional</span></td>
+              <td>
+                Enables History API routing (clean URLs without <code>#</code>) and sets the base path.
+                Without this attribute, hash-based routing is used (default).
+                <br><em>Example:</em> <code>data-path="/meetings"</code> produces URLs like <code>/meetings/monday-night-meeting-42</code>
+                <br>Use <code>data-path=""</code> for path routing with no prefix (e.g. in iframe embeds).
+                <br>See <a href="#routing">Routing</a> for details.
               </td>
             </tr>
           </tbody>
@@ -1182,6 +1195,46 @@
         </ul>
 
 
+        <h2 id="routing">Routing</h2>
+        <p>By default, the widget uses <strong>hash-based routing</strong> for meeting detail URLs (e.g. <code>example.com/#/monday-night-meeting-42</code>). This works out of the box on any hosting with no server configuration.</p>
+
+        <h3>Pretty URLs (History API)</h3>
+        <p>For clean URLs without the <code>#</code> fragment, add a <code>data-path</code> attribute with your base path:</p>
+
+        <div class="demo">
+          <div class="demo-header">HTML</div>
+          <pre><code>&lt;div
+  id="crumb-widget"
+  data-server="https://myserver.com/main_server/"
+  data-service-body="3"
+  data-path="/meetings"
+&gt;&lt;/div&gt;</code></pre>
+        </div>
+
+        <p>This produces URLs like <code>example.com/meetings/monday-night-meeting-42</code>. Your server must be configured to serve the page for all sub-paths under the base path so that direct visits and page refreshes work:</p>
+
+        <div class="table-wrap"><table>
+          <thead><tr><th>Server</th><th>Configuration</th></tr></thead>
+          <tbody>
+            <tr><td>WordPress</td><td><code>add_rewrite_rule('^meetings/(.*)?', 'index.php?pagename=meetings', 'top');</code></td></tr>
+            <tr><td>Nginx</td><td><code>location /meetings { try_files $uri /meetings/index.html; }</code></td></tr>
+            <tr><td>Apache</td><td><code>FallbackResource /meetings/index.html</code></td></tr>
+          </tbody>
+        </table></div>
+
+        <h3>Embedding in iframes (Google Sites, etc.)</h3>
+        <p>When embedding in Google Sites or other iframe-based hosts, add <code>data-path=""</code> to enable History API routing. Hash-based routing can be unreliable inside proxied iframes because native anchor links (<code>&lt;a href="#/..."&gt;</code>) may not trigger navigation events properly.</p>
+
+        <div class="demo">
+          <div class="demo-header">Iframe embed</div>
+          <pre><code>&lt;div
+  id="crumb-widget"
+  data-server="https://myserver.com/main_server/"
+  data-service-body="3"
+  data-path=""
+&gt;&lt;/div&gt;</code></pre>
+        </div>
+
         <h2 id="site-builders">Website Builders</h2>
         <p>Crumb Widget can also be embedded on common website builders, but the setup varies by platform.</p>
 
@@ -1202,6 +1255,7 @@
   id="crumb-widget"
   data-server="https://myserver.com/main_server/"
   data-service-body="3"
+  data-path=""
 &gt;&lt;/div&gt;
 &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>

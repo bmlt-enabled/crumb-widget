@@ -1,6 +1,5 @@
 import type { FilterState, ViewType } from '@/types';
 import { push } from '@bmlt-enabled/svelte-spa-router';
-import { config } from './config.svelte';
 import { meetingSlug } from '@utils/format';
 
 export const uiState = $state<{
@@ -26,19 +25,14 @@ export function setView(view: ViewType): void {
   uiState.view = view;
 }
 
-function withBase(path: string): string {
-  const base = config.basePath.replace(/\/$/, '');
-  return base + path;
-}
-
 export function selectMeeting(meeting: { meeting_name: string; id_bigint: string }): void {
   uiState.selectedMeetingId = meeting.id_bigint;
-  push(withBase('/' + meetingSlug(meeting)));
+  push('/' + meetingSlug(meeting));
 }
 
 export function clearSelectedMeeting(): void {
   uiState.selectedMeetingId = null;
-  push(withBase('/'));
+  push('/');
 }
 
 export function updateFilter<K extends keyof FilterState>(key: K, value: FilterState[K]): void {

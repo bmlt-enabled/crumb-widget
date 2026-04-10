@@ -23,7 +23,6 @@ export interface AppConfig {
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
   hideHeader?: boolean;
-  basePath: string;
 }
 
 export interface ProcessedMeeting extends Meeting {
