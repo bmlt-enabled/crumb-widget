@@ -45,8 +45,8 @@
     <p class="mt-1 text-xs">{$t.tryAdjustingFilters}</p>
   </div>
 {:else}
-  <!-- Mobile cards (below sm) -->
-  <div class="divide-y divide-gray-100 sm:hidden">
+  <!-- Mobile cards (below md) -->
+  <div class="divide-y divide-gray-100 md:hidden">
     {#if inProgressMeetings.length > 0}
       <!-- In-progress banner -->
       <button type="button" class="bmlt-in-progress-banner flex w-full items-center justify-between px-4 py-5 text-left text-sm font-semibold" onclick={() => (inProgressOpen = !inProgressOpen)}>
@@ -158,8 +158,8 @@
     {/each}
   </div>
 
-  <!-- Desktop table (sm+) -->
-  <div class="hidden sm:block">
+  <!-- Desktop table (md+) -->
+  <div class="hidden md:block">
     <table class="w-full table-fixed border-collapse text-base">
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
