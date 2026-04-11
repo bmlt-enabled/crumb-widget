@@ -293,6 +293,54 @@ describe('geolocation button', () => {
   });
 });
 
+describe('active filter chips', () => {
+  test('no chips row when no filters are active', () => {
+    dataState.meetings = [makeMeeting()];
+    render(App, { props: { config: baseConfig } });
+    expect(screen.queryByText('Clear all filters')).not.toBeInTheDocument();
+  });
+
+  test('shows a chip and clear all when a weekday filter is active', async () => {
+    dataState.meetings = [makeMeeting({ weekday_tinyint: 2 })];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Any Day'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
+    expect(screen.getByText('Monday', { selector: 'button *' })).toBeInTheDocument();
+    expect(screen.getByText('Clear all filters')).toBeInTheDocument();
+  });
+
+  test('clicking a chip removes that filter', async () => {
+    dataState.meetings = [makeMeeting({ weekday_tinyint: 2 })];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Any Day'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
+    expect(uiState.filters.weekdays).toContain(2);
+    // Close the dropdown by clicking outside, then click the chip
+    await fireEvent.click(document.body);
+    const chip = screen.getAllByRole('button').find((b) => b.classList.contains('rounded-full') && b.textContent?.includes('Monday'));
+    await fireEvent.click(chip!);
+    expect(uiState.filters.weekdays).not.toContain(2);
+  });
+
+  test('clicking Clear all filters removes all chips', async () => {
+    dataState.meetings = [makeMeeting({ weekday_tinyint: 2 })];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Any Day'));
+    await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
+    await fireEvent.click(screen.getByText('Clear all filters'));
+    expect(uiState.filters.weekdays).toHaveLength(0);
+    expect(screen.queryByText('Clear all filters')).not.toBeInTheDocument();
+  });
+
+  test('shows venue type chip when venue filter is active', async () => {
+    dataState.meetings = [makeMeeting({ venue_type: 1, isInPerson: true })];
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Any Format'));
+    await fireEvent.click(screen.getByRole('button', { name: 'In-Person' }));
+    expect(screen.getByText('In-Person', { selector: 'button *' })).toBeInTheDocument();
+  });
+});
+
 describe('format type dropdown grouping', () => {
   function makeFormat(id: string, name: string, type?: string) {
     return { id, key_string: id, name_string: name, description_string: '', lang: 'en', format_type_enum: type };
