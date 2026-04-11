@@ -154,6 +154,20 @@ describe('MeetingList — in-progress banner', () => {
     expect(screen.queryAllByText('Hidden Group')).toHaveLength(0);
   });
 
+  test('shows service_body column in in-progress rows when configured', async () => {
+    vi.setSystemTime(new Date(2024, 0, 8, 19, 5));
+    config.columns = ['time', 'name', 'location', 'address', 'service_body'];
+    const meeting = makeMeeting({ weekday_tinyint: 2, start_time: '19:00:00', service_body_name: 'Capital Area' } as Partial<ProcessedMeeting>);
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+
+    window.dispatchEvent(new Event('beforeprint'));
+    await Promise.resolve();
+
+    const cells = container.querySelectorAll('tr.bmlt-in-progress-row td');
+    const texts = Array.from(cells).map((c) => c.textContent?.trim());
+    expect(texts).toContain('Capital Area');
+  });
+
   test('banner shows correct count for multiple in-progress meetings', () => {
     vi.setSystemTime(new Date(2024, 0, 8, 19, 5));
     const m1 = makeMeeting({ id_bigint: '1', weekday_tinyint: 2, start_time: '19:00:00' });
@@ -229,6 +243,57 @@ describe('MeetingList — print helpers', () => {
     const meeting = makeMeeting({ isVirtual: true, isInPerson: false, venue_type: 2 });
     const { container } = render(MeetingList, { props: { meetings: [meeting] } });
     expect(container.querySelectorAll('.bmlt-print-url')).toHaveLength(0);
+  });
+
+  test('renders QR img with data-URL src for virtual meeting with link', () => {
+    const meeting = makeMeeting({
+      isVirtual: true,
+      isInPerson: false,
+      venue_type: 2,
+      virtual_meeting_link: 'https://zoom.us/j/12345'
+    } as Partial<ProcessedMeeting>);
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    const imgs = container.querySelectorAll('img.bmlt-print-qr');
+    expect(imgs.length).toBeGreaterThan(0);
+    expect(imgs[0]?.getAttribute('src')).toMatch(/^data:image\/svg\+xml/);
+  });
+
+  test('QR img has aria-hidden attribute', () => {
+    const meeting = makeMeeting({
+      isVirtual: true,
+      isInPerson: false,
+      venue_type: 2,
+      virtual_meeting_link: 'https://zoom.us/j/12345'
+    } as Partial<ProcessedMeeting>);
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    const imgs = container.querySelectorAll('img.bmlt-print-qr');
+    expect(imgs[0]?.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  test('does not render QR img when no virtual_meeting_link', () => {
+    const meeting = makeMeeting({ isVirtual: true, isInPerson: false, venue_type: 2 });
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    expect(container.querySelectorAll('img.bmlt-print-qr')).toHaveLength(0);
+  });
+
+  test('renders QR img in in-progress table section for virtual meeting with link', async () => {
+    vi.setSystemTime(new Date(2024, 0, 8, 19, 5));
+    const meeting = makeMeeting({
+      weekday_tinyint: 2,
+      start_time: '19:00:00',
+      isVirtual: true,
+      isInPerson: false,
+      venue_type: 2,
+      virtual_meeting_link: 'https://zoom.us/j/99999'
+    } as Partial<ProcessedMeeting>);
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+
+    window.dispatchEvent(new Event('beforeprint'));
+    await Promise.resolve();
+
+    const imgs = container.querySelectorAll('img.bmlt-print-qr');
+    expect(imgs.length).toBeGreaterThan(0);
+    expect(imgs[0]?.getAttribute('src')).toMatch(/^data:image\/svg\+xml/);
   });
 
   test('beforeprint event forces in-progress group open', async () => {

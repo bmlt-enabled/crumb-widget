@@ -1,10 +1,20 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import QRCode from '@bmlt-enabled/qrcode-svg';
   import type { ProcessedMeeting } from '@/types/index';
   import { selectMeeting } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
   import { formatShortAddress, isInProgress } from '@utils/format';
   import { t } from '@stores/localization';
+
+  function qrDataUrl(url: string): string {
+    try {
+      const svg = new QRCode({ content: url, padding: 0, width: 72, height: 72, color: '#000000', background: '#ffffff', ecl: 'M', join: true, xmlDeclaration: false }).svg();
+      return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+    } catch {
+      return '';
+    }
+  }
 
   interface Props {
     meetings: ProcessedMeeting[];
@@ -235,6 +245,10 @@
                           </svg>
                           {$t.onlineMeeting}
                         </span>
+                        {#if meeting.virtual_meeting_link}
+                          <img class="bmlt-print-qr" src={qrDataUrl(meeting.virtual_meeting_link)} alt="" aria-hidden="true" />
+                          <span class="bmlt-print-url">{meeting.virtual_meeting_link}</span>
+                        {/if}
                       {/if}
                     </div>
                   </td>
@@ -302,6 +316,7 @@
                     </span>
                   {/if}
                   {#if meeting.isVirtual && meeting.virtual_meeting_link}
+                    <img class="bmlt-print-qr" src={qrDataUrl(meeting.virtual_meeting_link)} alt="" aria-hidden="true" />
                     <span class="bmlt-print-url">{meeting.virtual_meeting_link}</span>
                   {/if}
                 </div>
