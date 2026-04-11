@@ -164,7 +164,7 @@
       options={$t.weekdays.map((day, i) => ({ value: i + 1, label: day }))}
       bind:isOpen={showDayDropdown}
       onToggle={(v) => toggleArrayFilter('weekdays', v)}
-      onopen={() => {
+      onOpen={() => {
         showTimeDropdown = false;
         showTypeDropdown = false;
         showServiceBodyDropdown = false;
@@ -183,7 +183,7 @@
       options={TIME_OF_DAY_VALUES.map((tod) => ({ value: tod.value, label: $t[tod.key] }))}
       bind:isOpen={showTimeDropdown}
       onToggle={(v) => toggleArrayFilter('timeOfDay', v)}
-      onopen={() => {
+      onOpen={() => {
         showDayDropdown = false;
         showTypeDropdown = false;
         showServiceBodyDropdown = false;
@@ -277,7 +277,7 @@
         options={availableServiceBodies.map((name) => ({ value: name, label: name }))}
         bind:isOpen={showServiceBodyDropdown}
         onToggle={(v) => toggleArrayFilter('serviceBodyNames', v)}
-        onopen={() => {
+        onOpen={() => {
           showDayDropdown = false;
           showTimeDropdown = false;
           showTypeDropdown = false;

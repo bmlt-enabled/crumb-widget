@@ -12,11 +12,11 @@
     options: Option[];
     isOpen?: boolean;
     onToggle: (value: T) => void;
-    onopen?: () => void;
+    onOpen?: () => void;
     containerClass?: string;
   }
 
-  let { buttonLabel, isActive, selected, options, isOpen = $bindable(false), onToggle, onopen, containerClass = '' }: Props = $props();
+  let { buttonLabel, isActive, selected, options, isOpen = $bindable(false), onToggle, onOpen, containerClass = '' }: Props = $props();
 
   let rootEl: HTMLDivElement | undefined = $state();
 </script>
@@ -32,7 +32,7 @@
     onclick={(e) => {
       e.stopPropagation();
       isOpen = !isOpen;
-      if (isOpen) onopen?.();
+      if (isOpen) onOpen?.();
     }}
     class="flex w-full items-center justify-between gap-2 rounded-lg border-2 px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors {isActive
       ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'

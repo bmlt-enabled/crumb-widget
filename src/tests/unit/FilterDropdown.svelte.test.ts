@@ -42,20 +42,20 @@ describe('FilterDropdown — opening and closing', () => {
     expect(screen.queryByText('Alpha')).not.toBeInTheDocument();
   });
 
-  test('calls onopen when dropdown opens', async () => {
-    const onopen = vi.fn();
-    render(FilterDropdown, { props: { buttonLabel: 'Pick one', isActive: false, selected: [], options, onToggle: vi.fn(), onopen } });
+  test('calls onOpen when dropdown opens', async () => {
+    const onOpen = vi.fn();
+    render(FilterDropdown, { props: { buttonLabel: 'Pick one', isActive: false, selected: [], options, onToggle: vi.fn(), onOpen } });
     await fireEvent.click(screen.getByText('Pick one'));
-    expect(onopen).toHaveBeenCalledOnce();
+    expect(onOpen).toHaveBeenCalledOnce();
   });
 
-  test('does not call onopen when dropdown closes', async () => {
-    const onopen = vi.fn();
-    render(FilterDropdown, { props: { buttonLabel: 'Pick one', isActive: false, selected: [], options, onToggle: vi.fn(), onopen } });
+  test('does not call onOpen when dropdown closes', async () => {
+    const onOpen = vi.fn();
+    render(FilterDropdown, { props: { buttonLabel: 'Pick one', isActive: false, selected: [], options, onToggle: vi.fn(), onOpen } });
     await fireEvent.click(screen.getByText('Pick one'));
-    onopen.mockClear();
+    onOpen.mockClear();
     await fireEvent.click(screen.getByText('Pick one'));
-    expect(onopen).not.toHaveBeenCalled();
+    expect(onOpen).not.toHaveBeenCalled();
   });
 
   test('clicking outside closes dropdown', async () => {
