@@ -292,3 +292,111 @@ describe('geolocation button', () => {
     await waitFor(() => expect(dataState.error).toBe('Unable to get location'));
   });
 });
+
+describe('format type dropdown grouping', () => {
+  function makeFormat(id: string, name: string, type?: string) {
+    return { id, key_string: id, name_string: name, description_string: '', lang: 'en', format_type_enum: type };
+  }
+
+  async function openTypeDropdown() {
+    await fireEvent.click(screen.getByText('Any Format'));
+  }
+
+  test('shows no group headers when all formats lack a type', async () => {
+    const fmt = makeFormat('1', 'Open');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [fmt] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    expect(screen.queryByText('Meeting Format')).not.toBeInTheDocument();
+    expect(screen.queryByText('Other')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open' })).toBeInTheDocument();
+  });
+
+  test('shows no group header when there is only one group', async () => {
+    // Legacy code 'O' = OPEN_OR_CLOSED
+    const fmt = makeFormat('1', 'Open', 'O');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [fmt] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    expect(screen.queryByText('Open or Closed')).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Open' })).toBeInTheDocument();
+  });
+
+  test('shows group headers when formats span multiple legacy type codes', async () => {
+    // FC1 = MEETING_FORMAT, O = OPEN_OR_CLOSED
+    const f1 = makeFormat('1', 'Open', 'O');
+    const f2 = makeFormat('2', 'Speaker', 'FC1');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [f1, f2] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    expect(screen.getByText('Meeting Format')).toBeInTheDocument();
+    expect(screen.getByText('Open or Closed')).toBeInTheDocument();
+  });
+
+  test('maps all legacy codes to canonical group names', async () => {
+    const f1 = makeFormat('1', 'Discussion', 'FC1'); // MEETING_FORMAT
+    const f2 = makeFormat('2', 'Wheelchair', 'FC2'); // LOCATION
+    const f3 = makeFormat('3', 'Men', 'FC3'); // COMMON_NEEDS_OR_RESTRICTION
+    const f4 = makeFormat('4', 'Open', 'O'); // OPEN_OR_CLOSED
+    const f5 = makeFormat('5', 'Spanish', 'LANG'); // LANGUAGE
+    dataState.meetings = [makeMeeting({ resolvedFormats: [f1, f2, f3, f4, f5] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    expect(screen.getByText('Meeting Format')).toBeInTheDocument();
+    expect(screen.getByText('Open or Closed')).toBeInTheDocument();
+    expect(screen.getByText('Common Needs or Restriction')).toBeInTheDocument();
+    expect(screen.getAllByText('Location').length).toBeGreaterThan(0);
+    expect(screen.getByText('Language')).toBeInTheDocument();
+  });
+
+  test('groups appear in canonical order (OPEN_OR_CLOSED before MEETING_FORMAT before LANGUAGE)', async () => {
+    const f1 = makeFormat('1', 'Spanish', 'LANG');
+    const f2 = makeFormat('2', 'Open', 'O');
+    const f3 = makeFormat('3', 'Speaker', 'FC1');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [f1, f2, f3] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    const headers = screen.getAllByText(/Open or Closed|Meeting Format|Language/);
+    expect(headers[0]).toHaveTextContent('Open or Closed');
+    expect(headers[1]).toHaveTextContent('Meeting Format');
+    expect(headers[2]).toHaveTextContent('Language');
+  });
+
+  test('shows Venue Type header above in-person/virtual options', async () => {
+    dataState.meetings = [makeMeeting()];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    expect(screen.getByText('Venue Type')).toBeInTheDocument();
+  });
+
+  test('formats within a group are sorted alphabetically', async () => {
+    const f1 = makeFormat('1', 'Zeta', 'FC1');
+    const f2 = makeFormat('2', 'Alpha', 'FC1');
+    const f3 = makeFormat('3', 'Open', 'O');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [f1, f2, f3] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    const buttons = screen.getAllByRole('button', { name: /Alpha|Zeta/ });
+    expect(buttons[0]).toHaveTextContent('Alpha');
+    expect(buttons[1]).toHaveTextContent('Zeta');
+  });
+
+  test('formats with unknown type land in Other group', async () => {
+    const f1 = makeFormat('1', 'Open', 'O');
+    const f2 = makeFormat('2', 'Weird', 'UNKNOWN_TYPE');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [f1, f2] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    expect(screen.getByText('Other')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Weird' })).toBeInTheDocument();
+  });
+
+  test('clicking a format in a group toggles the filter', async () => {
+    const fmt = makeFormat('5', 'Open', 'O');
+    dataState.meetings = [makeMeeting({ resolvedFormats: [fmt] })];
+    render(App, { props: { config: baseConfig } });
+    await openTypeDropdown();
+    await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
+    expect(uiState.filters.formatIds).toContain('5');
+  });
+});

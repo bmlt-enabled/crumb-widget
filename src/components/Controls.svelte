@@ -31,6 +31,65 @@
     const uniqueById = new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f]));
     return [...uniqueById.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
   });
+
+  const FORMAT_TYPE_GROUPS = [
+    { type: 'OPEN_OR_CLOSED', labelKey: 'formatTypeCode_OPEN_OR_CLOSED' as const },
+    { type: 'MEETING_FORMAT', labelKey: 'formatTypeCode_MEETING_FORMAT' as const },
+    { type: 'COMMON_NEEDS_OR_RESTRICTION', labelKey: 'formatTypeCode_COMMON_NEEDS_OR_RESTRICTION' as const },
+    { type: 'LOCATION', labelKey: 'formatTypeCode_LOCATION' as const },
+    { type: 'LANGUAGE', labelKey: 'formatTypeCode_LANGUAGE' as const },
+    { type: 'ALERT', labelKey: 'formatTypeCode_ALERT' as const }
+  ];
+
+  // The legacy BMLT API returns short codes (FC1, FC2, …) while the v3 REST API
+  // uses descriptive enums (MEETING_FORMAT, LOCATION, …). Normalize both to the
+  // canonical group type strings used by FORMAT_TYPE_GROUPS.
+  const LEGACY_TYPE_MAP: Record<string, string> = {
+    FC1: 'MEETING_FORMAT',
+    FC2: 'LOCATION',
+    FC3: 'COMMON_NEEDS_OR_RESTRICTION',
+    O: 'OPEN_OR_CLOSED',
+    LANG: 'LANGUAGE'
+  };
+
+  const groupedFormatSections = $derived.by(() => {
+    if (availableFormats.length === 0) return [];
+
+    const byType = availableFormats.reduce(
+      (acc, fmt) => {
+        const raw = fmt.format_type_enum || '';
+        const type = (LEGACY_TYPE_MAP[raw] ?? raw) || '_none';
+        (acc[type] ??= []).push(fmt);
+        return acc;
+      },
+      {} as Record<string, typeof availableFormats>
+    );
+
+    const knownTypes = new Set(FORMAT_TYPE_GROUPS.map((g) => g.type));
+    const sections: { label: string; formats: typeof availableFormats }[] = [];
+
+    for (const group of FORMAT_TYPE_GROUPS) {
+      const formats = byType[group.type];
+      if (formats?.length) {
+        sections.push({
+          label: $t[group.labelKey],
+          formats: [...formats].sort((a, b) => a.name_string.localeCompare(b.name_string))
+        });
+      }
+    }
+
+    const noneFormats = Object.entries(byType)
+      .filter(([type]) => !knownTypes.has(type))
+      .flatMap(([, fmts]) => fmts)
+      .sort((a, b) => a.name_string.localeCompare(b.name_string));
+
+    if (noneFormats.length) {
+      sections.push({ label: $t.formatTypeCode_NONE, formats: noneFormats });
+    }
+
+    return sections;
+  });
+
   const availableServiceBodies = $derived.by(() => {
     const names = new Set(dataState.meetings.map((m) => m.service_body_name).filter((n): n is string => !!n));
     return [...names].sort((a, b) => a.localeCompare(b));
@@ -222,6 +281,7 @@
       </button>
       {#if showTypeDropdown}
         <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
+          <div class="px-3 pt-2 pb-0.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">{$t.venueType}</div>
           {#each VENUE_TYPE_VALUES as vt (vt.value)}
             <button
               onclick={() => toggleArrayFilter('venueTypes', vt.value)}
@@ -239,25 +299,30 @@
               {$t[vt.key]}
             </button>
           {/each}
-          {#if availableFormats.length > 0}
+          {#if groupedFormatSections.length > 0}
             <div class="my-1 border-t border-gray-100"></div>
-            {#each availableFormats as fmt (fmt.id)}
-              <button
-                onclick={() => toggleArrayFilter('formatIds', fmt.id)}
-                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id)
-                  ? 'font-semibold text-blue-700'
-                  : 'text-gray-700'}"
-                title={fmt.description_string}
-              >
-                <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.formatIds.includes(fmt.id) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
-                  {#if uiState.filters.formatIds.includes(fmt.id)}
-                    <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                  {/if}
-                </span>
-                {fmt.name_string}
-              </button>
+            {#each groupedFormatSections as section (section.label)}
+              {#if groupedFormatSections.length > 1}
+                <div class="px-3 pt-2 pb-0.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">{section.label}</div>
+              {/if}
+              {#each section.formats as fmt (fmt.id)}
+                <button
+                  onclick={() => toggleArrayFilter('formatIds', fmt.id)}
+                  class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id)
+                    ? 'font-semibold text-blue-700'
+                    : 'text-gray-700'}"
+                  title={fmt.description_string}
+                >
+                  <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.formatIds.includes(fmt.id) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
+                    {#if uiState.filters.formatIds.includes(fmt.id)}
+                      <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                      </svg>
+                    {/if}
+                  </span>
+                  {fmt.name_string}
+                </button>
+              {/each}
             {/each}
           {/if}
         </div>

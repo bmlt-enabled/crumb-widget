@@ -65,6 +65,14 @@ export const daTranslations = {
   // Map
   noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre',
   searchThisArea: 'Søg i dette område',
+  // Format type group labels
+  formatTypeCode_MEETING_FORMAT: 'Mødeformat',
+  formatTypeCode_OPEN_OR_CLOSED: 'Åbent eller lukket',
+  formatTypeCode_COMMON_NEEDS_OR_RESTRICTION: 'Fælles behov eller begrænsning',
+  formatTypeCode_LOCATION: 'Sted',
+  formatTypeCode_LANGUAGE: 'Sprog',
+  formatTypeCode_ALERT: 'Advarsel',
+  formatTypeCode_NONE: 'Andet',
   // Weekdays (index 0 = Sunday … index 6 = Saturday)
   weekdays: ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag'],
   weekdaysShort: ['Søn', 'Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør']

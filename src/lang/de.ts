@@ -65,6 +65,14 @@ export const deTranslations = {
   // Map
   noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen',
   searchThisArea: 'Diesen Bereich durchsuchen',
+  // Format type group labels
+  formatTypeCode_MEETING_FORMAT: 'Treffenformat',
+  formatTypeCode_OPEN_OR_CLOSED: 'Offen oder geschlossen',
+  formatTypeCode_COMMON_NEEDS_OR_RESTRICTION: 'Gemeinsame Bedürfnisse oder Einschränkungen',
+  formatTypeCode_LOCATION: 'Ort',
+  formatTypeCode_LANGUAGE: 'Sprache',
+  formatTypeCode_ALERT: 'Hinweis',
+  formatTypeCode_NONE: 'Sonstiges',
   // Weekdays (index 0 = Sunday … index 6 = Saturday)
   weekdays: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
   weekdaysShort: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']

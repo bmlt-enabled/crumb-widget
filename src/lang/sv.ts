@@ -65,6 +65,14 @@ export const svTranslations = {
   // Map
   noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter',
   searchThisArea: 'Sök i det här området',
+  // Format type group labels
+  formatTypeCode_MEETING_FORMAT: 'Mötesformat',
+  formatTypeCode_OPEN_OR_CLOSED: 'Öppet eller slutet',
+  formatTypeCode_COMMON_NEEDS_OR_RESTRICTION: 'Gemensamma behov eller begränsning',
+  formatTypeCode_LOCATION: 'Plats',
+  formatTypeCode_LANGUAGE: 'Språk',
+  formatTypeCode_ALERT: 'Varning',
+  formatTypeCode_NONE: 'Övrigt',
   // Weekdays (index 0 = Sunday … index 6 = Saturday)
   weekdays: ['Söndag', 'Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag'],
   weekdaysShort: ['Sön', 'Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör']

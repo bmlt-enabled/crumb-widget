@@ -65,6 +65,14 @@ export const enTranslations = {
   // Map
   noInPersonMeetings: 'No in-person meetings to show on map with current filters',
   searchThisArea: 'Search this area',
+  // Format type group labels
+  formatTypeCode_MEETING_FORMAT: 'Meeting Format',
+  formatTypeCode_OPEN_OR_CLOSED: 'Open or Closed',
+  formatTypeCode_COMMON_NEEDS_OR_RESTRICTION: 'Common Needs or Restriction',
+  formatTypeCode_LOCATION: 'Location',
+  formatTypeCode_LANGUAGE: 'Language',
+  formatTypeCode_ALERT: 'Alert',
+  formatTypeCode_NONE: 'Other',
   // Weekdays (index 0 = Sunday … index 6 = Saturday)
   weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
   weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
