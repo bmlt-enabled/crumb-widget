@@ -78,7 +78,7 @@
     // Set initial view (before data loads so map renders immediately if needed)
     if (viewParam === 'map' || viewParam === 'both') {
       uiState.view = viewParam;
-    } else if (!viewParam && !config.geolocation && (config.defaultView === 'map' || config.defaultView === 'both')) {
+    } else if (!viewParam && (config.defaultView === 'map' || config.defaultView === 'both')) {
       uiState.view = config.defaultView;
     }
 

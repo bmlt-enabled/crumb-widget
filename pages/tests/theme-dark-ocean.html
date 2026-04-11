@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test: Theme — Ocean Dark — Crumb Widget</title>
+    <style>
+      body { margin: 0; font-family: system-ui, sans-serif; background: #0c1a2e; }
+      .test-bar { background: #0c1a2e; color: #e0f2fe; padding: 10px 16px; font-size: 13px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #164e63; }
+      .test-bar a { color: #7dd3fc; text-decoration: none; }
+      .test-bar a:hover { color: #e0f2fe; }
+      .test-bar strong { color: #e0f2fe; }
+      .test-bar code { background: #164e63; padding: 2px 7px; border-radius: 4px; font-size: 12px; }
+
+      #crumb-widget.bmlt-theme-ocean.bmlt-dark-force {
+        --bmlt-accent: #22d3ee; --bmlt-accent-light: #164e63;
+        --bmlt-in-person: #67e8f9; --bmlt-in-person-bg: #164e63;
+        --bmlt-virtual: #93c5fd; --bmlt-virtual-bg: #1e3a5f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-bar">
+      <a href="index.html">← Tests</a>
+      <strong>Theme: Ocean (dark)</strong>
+      <code>bmlt-theme-ocean</code> + <code>darkMode: true</code>
+    </div>
+
+    <div id="crumb-widget"
+      class="bmlt-theme-ocean"
+      data-service-body="95,173"
+      data-server="https://aggregator.bmltenabled.org/main_server/"
+      data-path="/tests/theme-dark-ocean.html"
+    ></div>
+
+    <script>
+      var CrumbWidgetConfig = {
+        darkMode: true
+      };
+    </script>
+    <script src="../app.js"></script>
+  </body>
+</html>

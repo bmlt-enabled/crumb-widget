@@ -6,7 +6,8 @@ import { svelteTesting } from '@testing-library/svelte/vite';
 import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import { resolve } from 'path';
-import { copyFileSync, readFileSync } from 'fs';
+import { copyFileSync, readFileSync, readdirSync, mkdirSync, existsSync } from 'fs';
+import { join } from 'path';
 import { execSync } from 'child_process';
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
@@ -45,6 +46,14 @@ export default defineConfig({
         copyFileSync('pages/docs.html', 'dist/index.html');
         copyFileSync('pages/meetings.html', 'dist/meetings.html');
         copyFileSync('pages/privacy.html', 'dist/privacy.html');
+        const testSrc = 'pages/tests';
+        const testDst = 'dist/tests';
+        if (existsSync(testSrc)) {
+          mkdirSync(testDst, { recursive: true });
+          for (const file of readdirSync(testSrc)) {
+            copyFileSync(join(testSrc, file), join(testDst, file));
+          }
+        }
       }
     }
   ],

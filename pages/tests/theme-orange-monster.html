@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test: Theme — Orange Monster — Crumb Widget</title>
+    <style>
+      body { margin: 0; font-family: system-ui, sans-serif; background: #fff0de; }
+      .test-bar { background: #d95117; color: #fff; padding: 10px 16px; font-size: 13px; display: flex; align-items: center; gap: 12px; }
+      .test-bar a { color: rgba(255,255,255,0.7); text-decoration: none; }
+      .test-bar a:hover { color: #fff; }
+      .test-bar strong { color: #fff; }
+      .test-bar code { background: rgba(0,0,0,0.2); padding: 2px 7px; border-radius: 4px; font-size: 12px; }
+
+      /* Orange Monster theme — inverted: orange backgrounds, silver accents */
+      #crumb-widget.bmlt-theme-orange-monster {
+        --bmlt-background: #fef3e0;
+        --bmlt-text: #111111;
+        --bmlt-border: #d95117;
+        --bmlt-accent: #4a5260;
+        --bmlt-accent-light: #d0d5db;
+        --bmlt-border-radius: 6px;
+        --bmlt-row-alt: #fde5bc;
+        --bmlt-in-person: #8a9099;
+        --bmlt-in-person-bg: #d0d5db;
+        --bmlt-virtual: #5a6070;
+        --bmlt-virtual-bg: #c8cdd4;
+        --bmlt-surface: #fff8ee;
+        --bmlt-hover: #fdd898;
+        --bmlt-divider: #ed921d;
+        --bmlt-text-secondary: #4a4a4a;
+        --bmlt-text-muted: #787878;
+        --bmlt-in-progress-bg: #d0d5db;
+        --bmlt-in-progress-text: #3a3a3a;
+      }
+      #crumb-widget.bmlt-dark-force.bmlt-theme-orange-monster {
+        --bmlt-background: #1e0900;
+        --bmlt-text: #f5f0ec;
+        --bmlt-border: #5c2000;
+        --bmlt-accent: #d0d5db;
+        --bmlt-accent-light: #2a2a2a;
+        --bmlt-border-radius: 6px;
+        --bmlt-row-alt: #2a1000;
+        --bmlt-in-person: #c8cdd4;
+        --bmlt-in-person-bg: #252525;
+        --bmlt-virtual: #a8adb5;
+        --bmlt-virtual-bg: #1e1e1e;
+        --bmlt-surface: #240c00;
+        --bmlt-hover: #321400;
+        --bmlt-divider: #3c1800;
+        --bmlt-text-secondary: #a0a5ab;
+        --bmlt-text-muted: #686d73;
+        --bmlt-in-progress-bg: #282828;
+        --bmlt-in-progress-text: #d0d5db;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-bar">
+      <a href="index.html">← Tests</a>
+      <strong>Theme: Orange Monster</strong>
+      <code>bmlt-theme-orange-monster</code> — orange backgrounds, silver accents
+      <button id="dark-btn" onclick="toggleDark()" style="margin-left:auto;background:rgba(0,0,0,.2);border:none;color:#fff;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:13px;">🌙 Dark</button>
+    </div>
+
+    <div id="crumb-widget"
+      class="bmlt-theme-orange-monster"
+      data-service-body="95,173"
+      data-server="https://aggregator.bmltenabled.org/main_server/"
+      data-path="/tests/theme-orange-monster.html"
+    ></div>
+
+    <script>
+      function toggleDark() {
+        var w = document.getElementById('crumb-widget');
+        var d = !w.classList.contains('bmlt-dark-force');
+        w.classList.toggle('bmlt-dark-force', d);
+        document.body.style.background = d ? '#180800' : '#fff0de';
+        document.getElementById('dark-btn').textContent = d ? '☀️ Light' : '🌙 Dark';
+      }
+    </script>
+    <script src="../app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crumb Widget — Test Pages</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      body { margin: 0; font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; }
+      header { background: #1e293b; color: #f1f5f9; padding: 20px 32px; }
+      header h1 { margin: 0; font-size: 1.25rem; }
+      header p { margin: 4px 0 0; font-size: 0.85rem; opacity: 0.6; }
+      main { max-width: 720px; margin: 40px auto; padding: 0 24px; }
+      table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+      th { background: #f1f5f9; text-align: left; padding: 10px 16px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: .05em; color: #64748b; }
+      td { padding: 12px 16px; border-top: 1px solid #f1f5f9; font-size: 0.9rem; vertical-align: top; }
+      td:first-child { white-space: nowrap; }
+      a { color: #2563eb; text-decoration: none; font-weight: 500; }
+      a:hover { text-decoration: underline; }
+      code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-size: 0.82rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Crumb Widget — Test Pages</h1>
+      <p>Configuration scenarios for manual QA and PR review.</p>
+    </header>
+    <main>
+      <table>
+        <thead>
+          <tr><th>Page</th><th>What it tests</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="default.html">Default</a></td>
+            <td>Baseline — list view, all defaults, no special config.</td>
+          </tr>
+          <tr>
+            <td><a href="map.html">Map view</a></td>
+            <td><code>defaultView: 'map'</code> — opens on the map tab.</td>
+          </tr>
+          <tr>
+            <td><a href="both.html">Both view</a></td>
+            <td><code>defaultView: 'both'</code> — map above meeting list, no list/map toggle.</td>
+          </tr>
+          <tr>
+            <td><a href="height.html">Fixed height</a></td>
+            <td><code>height: 600</code> — widget is constrained to 600 px with internal scroll.</td>
+          </tr>
+          <tr>
+            <td><a href="both-height.html">Both + fixed height</a></td>
+            <td><code>defaultView: 'both'</code> + <code>height: 700</code> — map above scrollable list in a fixed container.</td>
+          </tr>
+          <tr>
+            <td><a href="dark.html">Dark mode (forced)</a></td>
+            <td><code>darkMode: true</code> — always dark regardless of OS preference.</td>
+          </tr>
+          <tr>
+            <td><a href="dark-auto.html">Dark mode (auto)</a></td>
+            <td><code>darkMode: 'auto'</code> — follows OS preference.</td>
+          </tr>
+          <tr>
+            <td><a href="no-header.html">No header</a></td>
+            <td><code>hideHeader: true</code> — title bar is hidden.</td>
+          </tr>
+          <tr>
+            <td><a href="geolocation.html">Geolocation</a></td>
+            <td><code>geolocation: true</code> — Near Me button, geolocates on load.</td>
+          </tr>
+          <tr>
+            <td><a href="theme-orange-monster.html">Theme: Orange Monster</a></td>
+            <td>Custom CSS variable theme — orange + silver palette.</td>
+          </tr>
+          <tr>
+            <td><a href="theme-ocean.html">Theme: Ocean</a></td>
+            <td>Built-in ocean theme via class override.</td>
+          </tr>
+          <tr>
+            <td><a href="theme-dark-ocean.html">Theme: Ocean (dark)</a></td>
+            <td>Ocean theme with forced dark mode.</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </body>
+</html>
