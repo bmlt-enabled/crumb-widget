@@ -142,6 +142,7 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 - `weekday_tinyint`: 1=Sunday … 7=Saturday (PHP convention). Always coerce to `Number()` — the API returns strings.
 - `venue_type`: 1=In-Person, 2=Virtual, 3=Hybrid. Same string-coercion caveat.
 - `format_shared_id_list`: comma-separated string of format IDs. Split and look up in `dataState.formats` (a `SvelteMap`) to resolve names.
+- `format_type_enum`: the legacy BMLT API returns short codes (`FC1`, `FC2`, `FC3`, `O`, `LANG`) — **not** the descriptive enum names used by the v3 REST API (`MEETING_FORMAT`, `LOCATION`, `COMMON_NEEDS_OR_RESTRICTION`, `OPEN_OR_CLOSED`, `LANGUAGE`). `Controls.svelte` normalizes these via `LEGACY_TYPE_MAP` before grouping formats in the dropdown. If you add new format grouping logic, use the canonical group names and keep the map in sync.
 - `data-service-body` accepts a single ID or a comma-separated list (`"1,2,3"`). Parsed into `AppConfig.serviceBodyIds: number[]`. Empty = fetch all.
 - Service body searches use `recursive: true` by default to include child service bodies.
 - The `bmlt-query-client` dep is from npmjs
@@ -170,6 +171,10 @@ GitHub Actions workflows:
 - **`reusable-test.yml`**: Shared job — lint, unit tests + coverage (Codecov), `build:lib`, `size-limit` check, e2e tests.
 
 Do not modify workflow files unless the task explicitly requires it.
+
+## Controls Layout Breakpoint
+
+`Controls.svelte` and `FilterDropdown.svelte` use `md:` (768px) as the breakpoint that switches from the stacked 2-column grid to the single inline flex row. This matches the breakpoint where `MeetingList.svelte` switches from card view (`md:hidden`) to table view (`hidden md:block`). **Do not change these to `sm:` — the controls and list must switch at the same width.**
 
 ## Meeting Table Layout — Recurring Pitfall
 

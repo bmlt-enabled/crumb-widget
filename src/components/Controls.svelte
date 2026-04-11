@@ -24,9 +24,34 @@
   ];
 
   const hasMapMeetings = $derived(dataState.meetings.some((m) => m.venue_type === VENUE_TYPE.IN_PERSON || m.venue_type === VENUE_TYPE.HYBRID));
-  const activeFilterCount = $derived(
-    uiState.filters.weekdays.length + uiState.filters.venueTypes.length + uiState.filters.timeOfDay.length + uiState.filters.formatIds.length + uiState.filters.serviceBodyNames.length
-  );
+  const activeChips = $derived.by(() => {
+    const chips: { key: string; label: string; remove: () => void }[] = [];
+
+    if (uiState.filters.search) {
+      chips.push({ key: 'search', label: `"${uiState.filters.search}"`, remove: () => updateFilter('search', '') });
+    }
+    for (const v of uiState.filters.venueTypes) {
+      const entry = VENUE_TYPE_VALUES.find((vt) => vt.value === v);
+      if (entry) chips.push({ key: `venue-${v}`, label: $t[entry.key], remove: () => toggleArrayFilter('venueTypes', v) });
+    }
+    for (const v of uiState.filters.weekdays) {
+      const label = $t.weekdays[(v as number) - 1];
+      if (label) chips.push({ key: `day-${v}`, label, remove: () => toggleArrayFilter('weekdays', v) });
+    }
+    for (const v of uiState.filters.timeOfDay) {
+      const entry = TIME_OF_DAY_VALUES.find((tod) => tod.value === v);
+      if (entry) chips.push({ key: `time-${v}`, label: $t[entry.key], remove: () => toggleArrayFilter('timeOfDay', v) });
+    }
+    for (const id of uiState.filters.formatIds) {
+      const fmt = availableFormats.find((f) => f.id === id);
+      if (fmt) chips.push({ key: `fmt-${id}`, label: fmt.name_string, remove: () => toggleArrayFilter('formatIds', id) });
+    }
+    for (const name of uiState.filters.serviceBodyNames) {
+      chips.push({ key: `sb-${name}`, label: name, remove: () => toggleArrayFilter('serviceBodyNames', name) });
+    }
+
+    return chips;
+  });
   const availableFormats = $derived.by(() => {
     const uniqueById = new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f]));
     return [...uniqueById.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
@@ -153,9 +178,9 @@
 <svelte:window onclick={handleWindowClick} />
 
 <div class="bmlt-controls relative border-b border-gray-200 bg-white px-3 py-3">
-  <div class="grid grid-cols-2 gap-2 sm:flex sm:flex-nowrap sm:items-center">
+  <div class="grid grid-cols-2 gap-2 md:flex md:flex-nowrap md:items-center">
     <!-- Search -->
-    <div class="relative {config.geolocation ? '' : 'col-span-2'} sm:max-w-48 sm:min-w-0 sm:flex-1">
+    <div class="relative {config.geolocation ? '' : 'col-span-2'} md:max-w-48 md:min-w-0 md:flex-1">
       <svg class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
       </svg>
@@ -173,7 +198,7 @@
       <button
         onclick={handleNearMe}
         disabled={geoStatus === 'locating' || (uiState.geoActive && config.serviceBodyIds.length === 0)}
-        class="flex w-full items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors sm:w-auto {uiState.geoActive
+        class="col-span-2 flex w-full items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors md:col-span-1 md:w-auto {uiState.geoActive
           ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
           : geoStatus === 'error'
             ? 'border-red-300 bg-red-50 text-red-700'
@@ -250,7 +275,7 @@
     />
 
     <!-- Type dropdown (venue type + format) -->
-    <div class="relative sm:max-w-[13rem] sm:min-w-[8rem] sm:flex-1 {showViewToggle ? '' : 'col-span-2'}" bind:this={typeDropdownEl}>
+    <div class="relative md:max-w-[13rem] md:min-w-[8rem] md:flex-1 {showViewToggle ? '' : 'col-span-2'}" bind:this={typeDropdownEl}>
       <button
         onclick={(e) => {
           e.stopPropagation();
@@ -351,18 +376,9 @@
       />
     {/if}
 
-    <!-- Clear all filters — desktop only, inline so no layout shift -->
-    {#if activeFilterCount > 0 || uiState.filters.search}
-      <button
-        onclick={resetFilters}
-        class="hidden items-center gap-1 rounded-lg border-2 border-red-300 bg-red-50 px-3 py-2.5 text-sm font-semibold whitespace-nowrap text-red-600 shadow-sm transition-colors hover:border-red-400 hover:bg-red-100 hover:shadow sm:ml-auto sm:flex"
-        >{$t.clearAllFilters}</button
-      >
-    {/if}
-
     <!-- List / Map view toggle -->
     {#if showViewToggle}
-      <div class="flex rounded-lg border border-gray-300 bg-white sm:ml-auto sm:flex-none">
+      <div class="flex rounded-lg border border-gray-300 bg-white md:ml-auto md:flex-none">
         <button
           onclick={() => setView('list')}
           class="flex flex-1 items-center justify-center gap-1.5 rounded-l-lg px-3 py-2.5 text-sm font-medium transition-colors {uiState.view === 'list'
@@ -395,4 +411,23 @@
       </div>
     {/if}
   </div>
+
+  {#if activeChips.length > 0}
+    <div class="mt-2 flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-2">
+      {#each activeChips as chip (chip.key)}
+        <button
+          onclick={chip.remove}
+          class="flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 py-0.5 pr-2 pl-2.5 text-xs font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
+        >
+          {chip.label}
+          <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      {/each}
+      <button onclick={resetFilters} class="ml-1 text-xs text-gray-400 underline-offset-2 transition-colors hover:text-red-500 hover:underline">
+        {$t.clearAllFilters}
+      </button>
+    </div>
+  {/if}
 </div>

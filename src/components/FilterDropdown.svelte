@@ -27,7 +27,7 @@
   }}
 />
 
-<div class="relative sm:max-w-[13rem] sm:min-w-[8rem] sm:flex-1 {containerClass}" bind:this={rootEl}>
+<div class="relative md:max-w-[13rem] md:min-w-[8rem] md:flex-1 {containerClass}" bind:this={rootEl}>
   <button
     onclick={(e) => {
       e.stopPropagation();
