@@ -96,7 +96,7 @@
       return dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId);
     }
     // Deep-link fallback: parse meeting ID from the last segment of the URL
-    const loc = router.location;
+    const loc = router.location.replace(/\/$/, '');
     const match = loc.match(/-(\d+)$/);
     if (!match) return undefined;
     return dataState.meetings.find((m) => m.id_bigint === match[1]);

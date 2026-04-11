@@ -18,19 +18,37 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
   };
 });
 
+// Mutable object shared between the hoisted vi.mock factory and the tests.
+// Tests set .value before rendering to simulate direct (deep-link) navigation.
+const mockRouterLoc = vi.hoisted(() => ({ value: '/' }));
+
 // Make push/pop synchronous in tests — the real push() awaits tick() before
 // setting the hash, which breaks fireEvent-based assertions.
+// router.location is exposed as a plain getter so deep-link tests can prime it
+// before rendering without depending on Svelte reactivity propagation.
 vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@bmlt-enabled/svelte-spa-router')>();
   return {
     ...actual,
+    router: {
+      get location() {
+        return mockRouterLoc.value;
+      },
+      get querystring() {
+        return '';
+      },
+      get params() {
+        return undefined;
+      },
+      get loc() {
+        return { location: mockRouterLoc.value, querystring: '' };
+      }
+    },
     push: vi.fn((path: string) => {
-      window.location.hash = path.startsWith('#') ? path : '#' + path;
-      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      mockRouterLoc.value = path.startsWith('/') ? path : '/' + path;
     }),
     pop: vi.fn(() => {
-      window.location.hash = '#/';
-      window.dispatchEvent(new HashChangeEvent('hashchange'));
+      mockRouterLoc.value = '/';
     })
   };
 });
@@ -92,6 +110,8 @@ beforeEach(() => {
   resetFilters();
   uiState.view = 'list';
   uiState.geoActive = false;
+  uiState.selectedMeetingId = null;
+  mockRouterLoc.value = '/';
 });
 
 describe('App', () => {
@@ -621,6 +641,41 @@ describe('meeting detail', () => {
     await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
 
     expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
+  });
+});
+
+describe('deep-link', () => {
+  test('shows meeting detail when URL has trailing slash (direct navigation)', () => {
+    const meeting = makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' });
+    dataState.meetings = [meeting];
+    mockRouterLoc.value = '/90-90-group-6/';
+    render(App, { props: { config: baseConfig } });
+    expect(screen.getByText('Back to meetings')).toBeInTheDocument();
+  });
+
+  test('shows meeting detail when URL has no trailing slash', () => {
+    const meeting = makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' });
+    dataState.meetings = [meeting];
+    mockRouterLoc.value = '/90-90-group-6';
+    render(App, { props: { config: baseConfig } });
+    expect(screen.getByText('Back to meetings')).toBeInTheDocument();
+  });
+
+  test('shows meeting detail when URL has trailing slash and querystring', () => {
+    const meeting = makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' });
+    dataState.meetings = [meeting];
+    // router.location contains only the path; querystring is separated by the router
+    mockRouterLoc.value = '/90-90-group-6/';
+    render(App, { props: { config: baseConfig } });
+    expect(screen.getByText('Back to meetings')).toBeInTheDocument();
+  });
+
+  test('shows meeting list when URL path does not match any meeting', () => {
+    dataState.meetings = [makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' })];
+    mockRouterLoc.value = '/';
+    render(App, { props: { config: baseConfig } });
+    expect(screen.queryByText('Back to meetings')).not.toBeInTheDocument();
+    expect(screen.getAllByText('90-90 Group')[0]).toBeInTheDocument();
   });
 });
 
