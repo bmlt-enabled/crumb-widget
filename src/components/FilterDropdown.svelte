@@ -38,7 +38,7 @@
       ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
       : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
   >
-    <span>{buttonLabel}</span>
+    <span class="truncate">{buttonLabel}</span>
     <svg class="h-3.5 w-3.5 shrink-0 transition-transform {isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
     </svg>
