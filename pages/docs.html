@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" crossorigin="anonymous">
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -206,7 +207,7 @@
       }
 
       pre {
-        background: #18181b;
+        background: #18181b !important;
         color: #d4d4d8;
         border-radius: 10px;
         padding: 1.25rem 1.5rem;
@@ -214,7 +215,16 @@
         margin: 1rem 0 1.5rem;
         font-size: 0.82rem;
         line-height: 1.75;
-        border: 1px solid #27272a;
+        border: 1px solid #27272a !important;
+      }
+
+      /* Prism token colours — no background override needed here */
+      pre code[class*="language-"] {
+        background: transparent;
+        border: none;
+        padding: 0;
+        font-size: inherit;
+        font-weight: 400;
       }
 
       pre code {
@@ -789,12 +799,15 @@
           The widget automatically detects the visitor's language from <code>navigator.language</code> and falls back to English.
           Override it with the <code>language</code> config property:
         </p>
-        <pre><code class="language-html">&lt;script&gt;
+        <div class="demo">
+          <div class="demo-header">HTML</div>
+          <pre><code class="language-html">&lt;script&gt;
   var CrumbWidgetConfig = {
     language: 'es'
   };
 &lt;/script&gt;
 &lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
         <p>
           Language codes are matched on the base tag, so <code>'fr-CA'</code> uses <code>fr</code>.
           Supported languages:
@@ -835,13 +848,16 @@
           button at the top of the map. Clicking it reloads meetings centered on the current map viewport, using the
           same <code>geolocationRadius</code>. The map stays at the user's position — it does not jump to fit the new results.
         </p>
-        <pre><code>&lt;script&gt;
+        <div class="demo">
+          <div class="demo-header">HTML</div>
+          <pre><code class="language-html">&lt;script&gt;
   var CrumbWidgetConfig = {
     geolocation: true,
     geolocationRadius: 25  // miles, default 75
   };
 &lt;/script&gt;
 &lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
 
         <h2 id="query-params">URL Query Parameters</h2>
         <p>
@@ -1075,8 +1091,10 @@
         </div>
 
         <div class="callout">
-          <strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>CrumbWidgetConfig</code> is set, you need to load <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.
-          <pre><code>&lt;script&gt;
+          <p><strong>Google Maps tiles:</strong> Google's tile API requires a session token obtained server-side (or via a short-lived client-side fetch). Because the token must be fetched before <code>CrumbWidgetConfig</code> is set, you need to load <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> dynamically after the token is ready. The example below uses the <a href="https://developers.google.com/maps/documentation/tile/" target="_blank" rel="noopener">Google Map Tiles API</a> — you'll need a <strong>referer-restricted API key</strong> with the Map Tiles API enabled.</p>
+          <div class="demo">
+            <div class="demo-header">JavaScript</div>
+            <pre><code class="language-javascript">&lt;script&gt;
 (async () => {
   const key = 'YOUR_REFERER_RESTRICTED_GOOGLE_API_KEY';
   const { session } = await fetch(
@@ -1102,6 +1120,7 @@
   document.body.appendChild(s);
 })();
 &lt;/script&gt;</code></pre>
+          </div>
         </div>
 
         <h2 id="marker-config">Marker Config</h2>
@@ -1450,7 +1469,14 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         <p>This project aims to cover the needs of most NA service bodies well — not every possible use case. It is intentionally kept simple and focused. New features are weighed against the cost to the codebase; niche requests that bloat the project for everyone are generally out of scope. If you need deep customization, this may not be the right tool.</p>
       </main>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" data-manual crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-php.min.js" crossorigin="anonymous"></script>
     <script>
+      var COPY_ICON = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+
       async function copyCode(button) {
         const demo = button.closest('.demo');
         const codeEl = demo?.querySelector('pre code');
@@ -1490,8 +1516,40 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         }
       }
 
-      document.querySelectorAll('.copy-btn').forEach((button) => {
-        button.addEventListener('click', () => copyCode(button));
+      // ── Auto-inject language classes + copy buttons into all .demo blocks ──
+      document.querySelectorAll('.demo').forEach(function(demo) {
+        var header = demo.querySelector('.demo-header');
+        var codeEl = demo.querySelector('pre code');
+
+        // Inject language class if not already present
+        if (codeEl && !codeEl.className.includes('language-')) {
+          var hText = (header ? header.textContent : '').toLowerCase();
+          var lang = 'html';
+          if (/\bcss\b/.test(hText)) lang = 'css';
+          else if (/\bphp\b/.test(hText)) lang = 'php';
+          else if (/bash|shell/.test(hText) || /^npm\s/.test(codeEl.textContent.trim())) lang = 'bash';
+          else if (/typescript|\/\s*esm/.test(hText)) lang = 'typescript';
+          else if (/\bjavascript\b/.test(hText)) lang = 'javascript';
+          codeEl.className = 'language-' + lang;
+        }
+
+        // Inject copy button if not already present
+        if (header && !header.querySelector('.copy-btn')) {
+          var btn = document.createElement('button');
+          btn.className = 'copy-btn';
+          btn.type = 'button';
+          btn.setAttribute('aria-label', 'Copy code');
+          btn.innerHTML = COPY_ICON + '<span>Copy</span>';
+          header.appendChild(btn);
+        }
+      });
+
+      // Run syntax highlighting
+      if (window.Prism) Prism.highlightAll();
+
+      // Bind all copy buttons (including newly injected ones)
+      document.querySelectorAll('.copy-btn').forEach(function(button) {
+        button.addEventListener('click', function() { copyCode(button); });
       });
 
       document.getElementById('site-nav').addEventListener('click', function(e) {
