@@ -11,7 +11,7 @@ export interface MarkerConfig {
 export interface AppConfig {
   serverUrl: string;
   serviceBodyIds: number[];
-  defaultView: 'list' | 'map';
+  defaultView: 'list' | 'map' | 'both';
   containerId: string;
   locationMarker?: MarkerConfig;
   tiles?: TilesConfig;
@@ -49,7 +49,7 @@ export const VENUE_TYPE = {
   HYBRID: 3
 } as const;
 
-export type ViewType = 'list' | 'map';
+export type ViewType = 'list' | 'map' | 'both';
 
 export type Column = 'time' | 'name' | 'location' | 'address' | 'service_body';
 
@@ -60,7 +60,7 @@ export interface TilesConfig {
 
 export interface CrumbWidgetConfig {
   language?: string;
-  defaultView?: 'list' | 'map';
+  defaultView?: 'list' | 'map' | 'both';
   columns?: Column[];
   geolocation?: boolean;
   geolocationRadius?: number;

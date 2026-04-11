@@ -47,6 +47,11 @@ describe('initConfig', () => {
     expect(config.defaultView).toBe('map');
   });
 
+  test('reads both view from data attribute', () => {
+    initConfig(makeElement({ 'data-view': 'both' }));
+    expect(config.defaultView).toBe('both');
+  });
+
   test('defaults to list view', () => {
     initConfig(makeElement());
     expect(config.defaultView).toBe('list');
@@ -89,10 +94,16 @@ describe('initConfig', () => {
   });
 
   describe('CrumbWidgetConfig overrides', () => {
-    test('overrides defaultView', () => {
+    test('overrides defaultView to map', () => {
       window.CrumbWidgetConfig = { defaultView: 'map' };
       initConfig(makeElement());
       expect(config.defaultView).toBe('map');
+    });
+
+    test('overrides defaultView to both', () => {
+      window.CrumbWidgetConfig = { defaultView: 'both' };
+      initConfig(makeElement());
+      expect(config.defaultView).toBe('both');
     });
 
     test('overrides geolocation to true', () => {

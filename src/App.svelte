@@ -76,8 +76,10 @@
     const tryGeo = viewParam === 'auto' || (!viewParam && config.geolocation);
 
     // Set initial view (before data loads so map renders immediately if needed)
-    if (viewParam === 'map' || (!viewParam && !config.geolocation && config.defaultView === 'map')) {
-      uiState.view = 'map';
+    if (viewParam === 'map' || viewParam === 'both') {
+      uiState.view = viewParam;
+    } else if (!viewParam && !config.geolocation && (config.defaultView === 'map' || config.defaultView === 'both')) {
+      uiState.view = config.defaultView;
     }
 
     if (tryGeo) {
@@ -172,6 +174,24 @@
             await loadDataByCoordinates(config.serverUrl, lat, lng, config.geolocationRadius);
           }}
         />
+      {:else if uiState.view === 'both'}
+        <div class="flex flex-col {config.height ? 'h-full' : ''}">
+          <div class="relative flex-none overflow-hidden" style="height: 384px">
+            <MapView
+              meetings={filteredMeetings}
+              locationMarker={config.locationMarker}
+              tiles={config.tiles}
+              tilesDark={config.tilesDark}
+              geoActive={uiState.geoActive}
+              onsearcharea={async (lat, lng) => {
+                await loadDataByCoordinates(config.serverUrl, lat, lng, config.geolocationRadius);
+              }}
+            />
+          </div>
+          <div class={config.height ? 'bmlt-meeting-list min-h-0 flex-1 overflow-y-auto' : 'bmlt-meeting-list'}>
+            <MeetingList meetings={filteredMeetings} />
+          </div>
+        </div>
       {:else}
         <div class={config.height ? 'bmlt-meeting-list h-full overflow-y-auto' : 'bmlt-meeting-list'}>
           <!-- Print-only header: shows when paper prints but not on screen. -->

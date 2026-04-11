@@ -114,6 +114,52 @@ describe('view toggle', () => {
     await fireEvent.click(screen.getByTitle('List view'));
     expect(uiState.view).toBe('list');
   });
+
+  test('hides view toggle when defaultView is both', () => {
+    dataState.meetings = [makeMeeting({ venue_type: 1, isInPerson: true })];
+    config.defaultView = 'both';
+    render(App, { props: { config: baseConfig } });
+    expect(screen.queryByTitle('List view')).not.toBeInTheDocument();
+    expect(screen.queryByTitle('Map view')).not.toBeInTheDocument();
+    config.defaultView = 'list';
+  });
+});
+
+describe('both view', () => {
+  beforeEach(() => {
+    config.defaultView = 'both';
+  });
+
+  afterEach(() => {
+    config.defaultView = 'list';
+  });
+
+  test('shows meeting list content in both view', () => {
+    dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting', venue_type: 1, isInPerson: true })];
+    uiState.view = 'both';
+    render(App, { props: { config: baseConfig } });
+    expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
+  });
+
+  test('shows map container in both view', () => {
+    dataState.meetings = [makeMeeting({ venue_type: 1, isInPerson: true })];
+    uiState.view = 'both';
+    render(App, { props: { config: baseConfig } });
+    expect(document.querySelector('.bmlt-map-container')).toBeInTheDocument();
+  });
+
+  test('shows both map and meeting list simultaneously', () => {
+    dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting', venue_type: 1, isInPerson: true })];
+    uiState.view = 'both';
+    render(App, { props: { config: baseConfig } });
+    expect(document.querySelector('.bmlt-map-container')).toBeInTheDocument();
+    expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
+  });
+
+  test('initializes to both view on mount when geolocation is disabled', async () => {
+    render(App, { props: { config: { ...baseConfig, defaultView: 'both', geolocation: false } } });
+    await waitFor(() => expect(uiState.view).toBe('both'));
+  });
 });
 
 describe('day dropdown', () => {

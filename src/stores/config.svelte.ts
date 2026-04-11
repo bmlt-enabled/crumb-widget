@@ -21,7 +21,7 @@ export const config = $state<AppConfig>({ ...defaultConfig });
 export function initConfig(el: HTMLElement): void {
   const server = el.getAttribute('data-server') ?? '';
   const serviceBody = el.getAttribute('data-service-body') ?? '';
-  const defaultView = (el.getAttribute('data-view') as 'list' | 'map') ?? 'list';
+  const defaultView = (el.getAttribute('data-view') as 'list' | 'map' | 'both') ?? 'list';
   const dataPath = el.getAttribute('data-path');
 
   // data-path enables History API routing with a base path (e.g. "/meetings")

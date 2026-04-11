@@ -609,7 +609,8 @@
               <td><span class="badge badge-optional">Optional</span></td>
               <td>
                 Default view when the widget loads.
-                <br><em>Values:</em> <code>list</code> (default) or <code>map</code>
+                <br><em>Values:</em> <code>list</code> (default), <code>map</code>, or <code>both</code>
+                <br><code>both</code> shows a fixed-height map above the full meeting list with no list/map toggle.
                 <br>Can be overridden at runtime by the <code>?view=</code> query parameter (see <a href="#query-params">URL Query Parameters</a>).
               </td>
             </tr>
@@ -650,8 +651,8 @@
           <tbody>
             <tr>
               <td>defaultView</td>
-              <td><code>'list' | 'map'</code></td>
-              <td>Override the default view. Takes precedence over <code>data-view</code>.</td>
+              <td><code>'list' | 'map' | 'both'</code></td>
+              <td>Override the default view. Takes precedence over <code>data-view</code>. <code>'both'</code> shows a fixed-height map above the full meeting list; the list/map toggle is hidden.</td>
             </tr>
             <tr>
               <td>language</td>
@@ -747,7 +748,7 @@
           <div class="demo-header">HTML — all options (kitchen sink)</div>
           <pre><code>&lt;script&gt;
   var CrumbWidgetConfig = {
-    defaultView: 'list',       // 'list' | 'map'
+    defaultView: 'list',       // 'list' | 'map' | 'both'
     language: 'en',            // override UI language; defaults to navigator.language
     columns: ['time', 'name', 'location', 'address', 'service_body'],
     geolocation: false,        // show Near Me button
@@ -847,6 +848,7 @@
           <tbody>
             <tr><td><code>list</code></td><td>Force list view on load</td></tr>
             <tr><td><code>map</code></td><td>Force map view on load</td></tr>
+            <tr><td><code>both</code></td><td>Show map above the full meeting list; list/map toggle is hidden</td></tr>
             <tr>
               <td><code>auto</code></td>
               <td>
@@ -1426,7 +1428,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
           <tbody>
             <tr><td><code>serverUrl</code></td><td><code>string</code></td><td>Yes</td><td>URL of the BMLT server.</td></tr>
             <tr><td><code>serviceBodyIds</code></td><td><code>number[]</code></td><td>No</td><td>Service body IDs to filter by. Omit or pass <code>[]</code> to show all.</td></tr>
-            <tr><td><code>defaultView</code></td><td><code>'list' | 'map'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>.</td></tr>
+            <tr><td><code>defaultView</code></td><td><code>'list' | 'map' | 'both'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>. <code>'both'</code> shows map above list with no toggle.</td></tr>
             <tr><td><code>geolocation</code></td><td><code>boolean</code></td><td>No</td><td>Enable the Near Me button. Defaults to <code>false</code>.</td></tr>
             <tr><td><code>darkMode</code></td><td><code>false | true | 'auto'</code></td><td>No</td><td>Dark mode setting. Defaults to <code>false</code>.</td></tr>
             <tr><td><code>language</code></td><td><code>string</code></td><td>No</td><td>BCP-47 language tag (e.g. <code>'es'</code>). Defaults to browser locale.</td></tr>

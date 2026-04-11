@@ -171,6 +171,36 @@ GitHub Actions workflows:
 
 Do not modify workflow files unless the task explicitly requires it.
 
+## Meeting Table Layout — Recurring Pitfall
+
+**The meeting table columns squashing/overlapping is a recurring bug.** It has been triggered multiple times by unrelated changes. Any layout work that touches the widget container, introduces new wrapper divs, or changes flex/grid structure must be checked against this.
+
+### Root cause
+
+`MeetingList` renders a `<table>` with:
+- `table-layout: fixed` — column widths are distributed from the table's own width
+- `min-width: 600px` — prevents collapse below 600px
+- `width: 100%` — fills its container
+
+If the table's **containing block** becomes narrower than the content, or if an element **overlaps** the table from outside the normal flow, columns appear squashed, truncated, or overlapping.
+
+### Known triggers (non-exhaustive)
+
+1. **Leaflet popup overflow** — Leaflet renders popups via absolute positioning relative to the map div. Without `overflow: hidden` on the map wrapper, popups bleed into adjacent content and visually corrupt the table. Fix: always add `overflow-hidden` to any fixed-height `<MapView>` wrapper.
+
+2. **New flex/grid wrapper divs** — Wrapping the meeting list in a new `flex` or `grid` container without explicit width (`w-full` / `width: 100%`) can cause the table's containing block to shrink. Fix: always add `w-full` to any new wrapper around `<MeetingList>`.
+
+3. **`overflow: hidden` on a too-narrow ancestor** — Clipping an ancestor at a width smaller than 600px causes the table to be clipped, making columns appear missing or truncated.
+
+4. **Absolutely/fixed-positioned elements with high z-index** — Elements rendered outside normal flow (dropdowns, tooltips, popups) with a high `z-index` can paint over table columns without affecting layout, making columns appear squashed.
+
+### Checklist before finishing any layout change
+
+- [ ] Does the `<MeetingList>` container have `w-full`?
+- [ ] Is any new flex/grid ancestor correctly sized?
+- [ ] Does any new fixed-height wrapper around `<MapView>` have `overflow-hidden`?
+- [ ] Are there any absolutely-positioned elements that could overlap the table?
+
 ## Reference Documentation
 
 - **Svelte 5**: https://svelte.dev/llms.txt
