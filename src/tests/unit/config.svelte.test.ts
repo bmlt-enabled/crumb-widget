@@ -88,6 +88,16 @@ describe('initConfig', () => {
     expect(config.geolocationRadius).toBe(75);
   });
 
+  test('defaults distanceOptions to [1,2,5,10,15,25,50,100]', () => {
+    initConfig(makeElement());
+    expect(config.distanceOptions).toEqual([5, 10, 15, 25, 50, 100]);
+  });
+
+  test('defaults distanceUnit to mi', () => {
+    initConfig(makeElement());
+    expect(config.distanceUnit).toBe('mi');
+  });
+
   test('defaults height to undefined', () => {
     initConfig(makeElement());
     expect(config.height).toBeUndefined();
@@ -122,6 +132,18 @@ describe('initConfig', () => {
       window.CrumbWidgetConfig = { geolocationRadius: 25 };
       initConfig(makeElement());
       expect(config.geolocationRadius).toBe(25);
+    });
+
+    test('overrides distanceOptions', () => {
+      window.CrumbWidgetConfig = { distanceOptions: [5, 10, 20] };
+      initConfig(makeElement());
+      expect(config.distanceOptions).toEqual([5, 10, 20]);
+    });
+
+    test('overrides distanceUnit to km', () => {
+      window.CrumbWidgetConfig = { distanceUnit: 'km' };
+      initConfig(makeElement());
+      expect(config.distanceUnit).toBe('km');
     });
 
     test('overrides height', () => {

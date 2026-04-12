@@ -30,6 +30,7 @@ export const daTranslations = {
   location: 'Sted',
   address: 'Adresse',
   serviceBody: 'Servicekrop',
+  distance: 'Distance',
   onlineMeeting: 'Online møde',
   showing: 'Viser',
   meeting: 'møde',
@@ -48,6 +49,8 @@ export const daTranslations = {
   notes: 'Noter',
   contact: 'Kontakt',
   alsoAtThisLocation: 'Også på dette sted',
+  milesAbbr: 'mi',
+  away: 'væk',
   // Geolocation
   nearMe: 'Nær mig',
   locating: 'Finder placering\u2026',
@@ -67,6 +70,7 @@ export const daTranslations = {
   searchThisArea: 'Søg i dette område',
   yourLocation: 'Din placering',
   mi: 'mi',
+  km: 'km',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Mødeformat',
   formatTypeCode_OPEN_OR_CLOSED: 'Åbent eller lukket',

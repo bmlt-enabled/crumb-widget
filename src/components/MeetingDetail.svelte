@@ -6,7 +6,7 @@
   import type { ProcessedMeeting } from '@/types';
 
   import { config } from '@stores/config.svelte';
-  import { clearSelectedMeeting, selectMeeting } from '@stores/ui.svelte';
+  import { clearSelectedMeeting, selectMeeting, uiState } from '@stores/ui.svelte';
   import { getDirectionsUrl, getConferenceProvider, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
@@ -186,6 +186,9 @@
                 <p class="text-base font-semibold text-gray-700">{meeting.location_text}</p>
               {/if}
               <p class="text-base text-gray-700">{meeting.formattedAddress}</p>
+              {#if uiState.geoActive && meeting.distance_in_miles != null && Number(meeting.distance_in_miles) > 0}
+                <p class="mt-1 text-sm text-gray-400">{Number(meeting.distance_in_miles).toFixed(1)} {$t.milesAbbr} {$t.away}</p>
+              {/if}
               {#if meeting.location_info}
                 <p class="mt-2 text-sm text-gray-500">{meeting.location_info}</p>
               {/if}

@@ -702,7 +702,21 @@
               <td>geolocationRadius</td>
               <td><code>number</code></td>
               <td>
-                Search radius in miles when using geolocation. Default: <code>75</code>.
+                Maximum search radius when using geolocation. Acts as the cap for the Near Me distance dropdown — options above this value are hidden. Default: <code>75</code>.
+              </td>
+            </tr>
+            <tr>
+              <td>distanceOptions</td>
+              <td><code>number[]</code></td>
+              <td>
+                Distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. Options above <code>geolocationRadius</code> are automatically hidden; if <code>geolocationRadius</code> is not in the list it is appended as the last option. Default: <code>[5, 10, 15, 25, 50, 100]</code>.
+              </td>
+            </tr>
+            <tr>
+              <td>distanceUnit</td>
+              <td><code>'mi' | 'km'</code></td>
+              <td>
+                Unit label shown next to distances in the Near Me dropdown. Default: <code>'mi'</code>.
               </td>
             </tr>
             <tr>
@@ -844,16 +858,25 @@
           only data source.
         </p>
         <p>
+          The Near Me button opens a distance dropdown so users can choose how far to search. Selecting a radius
+          applies a client-side distance filter on the already-loaded meetings — no new network request is made when
+          changing radius. The available distances come from <code>distanceOptions</code>, capped at
+          <code>geolocationRadius</code>; options with no meetings in range are hidden automatically. Use
+          <code>distanceUnit</code> to display kilometres instead of miles.
+        </p>
+        <p>
           While in map view with Near Me active, panning or zooming the map reveals a <strong>Search this area</strong>
           button at the top of the map. Clicking it reloads meetings centered on the current map viewport, using the
-          same <code>geolocationRadius</code>. The map stays at the user's position — it does not jump to fit the new results.
+          same selected radius. The map stays at the user's position — it does not jump to fit the new results.
         </p>
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code class="language-html">&lt;script&gt;
   var CrumbWidgetConfig = {
     geolocation: true,
-    geolocationRadius: 25  // miles, default 75
+    geolocationRadius: 25,         // miles, default 75
+    distanceOptions: [5, 10, 25, 50], // defaults to [5,10,15,25,50,100]
+    distanceUnit: 'mi'             // 'mi' or 'km', default 'mi'
   };
 &lt;/script&gt;
 &lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
@@ -1454,6 +1477,9 @@ mountCrumbWidget(document.getElementById('my-widget'), {
             <tr><td><code>serviceBodyIds</code></td><td><code>number[]</code></td><td>No</td><td>Service body IDs to filter by. Omit or pass <code>[]</code> to show all.</td></tr>
             <tr><td><code>view</code></td><td><code>'list' | 'map' | 'both'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>. <code>'both'</code> shows map above list with no toggle.</td></tr>
             <tr><td><code>geolocation</code></td><td><code>boolean</code></td><td>No</td><td>Enable the Near Me button. Defaults to <code>false</code>.</td></tr>
+            <tr><td><code>geolocationRadius</code></td><td><code>number</code></td><td>No</td><td>Maximum search radius (caps the distance dropdown). Defaults to <code>75</code>.</td></tr>
+            <tr><td><code>distanceOptions</code></td><td><code>number[]</code></td><td>No</td><td>Distance values shown in the Near Me dropdown. Defaults to <code>[5,10,15,25,50,100]</code>.</td></tr>
+            <tr><td><code>distanceUnit</code></td><td><code>'mi' | 'km'</code></td><td>No</td><td>Unit label for distances. Defaults to <code>'mi'</code>.</td></tr>
             <tr><td><code>darkMode</code></td><td><code>false | true | 'auto'</code></td><td>No</td><td>Dark mode setting. Defaults to <code>false</code>.</td></tr>
             <tr><td><code>language</code></td><td><code>string</code></td><td>No</td><td>BCP-47 language tag (e.g. <code>'es'</code>). Defaults to browser locale.</td></tr>
             <tr><td><code>columns</code></td><td><code>Column[]</code></td><td>No</td><td>Table columns to display. See <a href="#global-config">Global Config</a>.</td></tr>

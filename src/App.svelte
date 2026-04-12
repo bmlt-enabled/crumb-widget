@@ -90,7 +90,7 @@
     }
   });
 
-  const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters));
+  const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters, uiState.userLocation, uiState.geoRadius));
 
   // Selected meeting: state is primary (set by selectMeeting/clearSelectedMeeting),
   // URL is fallback for deep-linking on initial load.

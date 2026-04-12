@@ -1,24 +1,35 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
-  import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
+  import { dataState, loadData } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
   import { VENUE_TYPE } from '@/types';
-  import { getGeoErrorMessage } from '@utils/format';
+  import { getGeoErrorMessage, haversineDistanceMiles } from '@utils/format';
   import { t } from '@stores/localization';
   import FilterDropdown from '@components/FilterDropdown.svelte';
 
   const GEOLOCATION_TIMEOUT_MS = 10000;
   const GEO_ERROR_DISPLAY_MS = 4000;
-  const BASE_DISTANCES = [5, 10, 25, 50, 75];
-
-  // Cap at config.geolocationRadius, inserting it if it's not already a base option.
-  // e.g. radius=50 → [5,10,25,50]; radius=30 → [5,10,25,30]; radius=100 → [5,10,25,50,75,100]
+  // Build the dropdown list from config.distanceOptions, capped at config.geolocationRadius.
+  // If geolocationRadius isn't already in the list it is appended so the maximum is always reachable.
+  // When a user location is known, options with zero matching meetings are hidden.
   const distanceOptions = $derived.by(() => {
     const max = config.geolocationRadius;
-    const opts = BASE_DISTANCES.filter((d) => d < max);
+    const opts = config.distanceOptions.filter((d) => d < max);
     opts.push(max);
-    return opts;
+
+    if (!uiState.userLocation) return opts;
+
+    const loc = uiState.userLocation;
+    return opts.filter((dist) => {
+      const radiusMiles = config.distanceUnit === 'km' ? dist / 1.60934 : dist;
+      return dataState.meetings.some((m) => {
+        const lat = Number(m.latitude);
+        const lng = Number(m.longitude);
+        if (!lat || !lng) return false;
+        return haversineDistanceMiles(loc.lat, loc.lng, lat, lng) <= radiusMiles;
+      });
+    });
   });
 
   const VENUE_TYPE_VALUES = [
@@ -158,30 +169,35 @@
   async function clearGeo() {
     uiState.geoActive = false;
     uiState.userLocation = undefined;
+    uiState.geoRadius = 0;
     activeRadius = 0;
     geoStatus = 'idle';
     await loadData(config.serverUrl, config.serviceBodyIds);
   }
 
-  async function handleNearMe(radius: number) {
+  function applyGeoRadius(radius: number) {
+    const radiusMiles = config.distanceUnit === 'km' ? radius / 1.60934 : radius;
+    uiState.geoRadius = radiusMiles;
+    uiState.geoActive = true;
+    activeRadius = radius;
+    geoStatus = 'active';
+  }
+
+  function handleNearMe(radius: number) {
     if (geoStatus === 'locating') return;
     showGeoDropdown = false;
+
+    // Already have a location — just update the radius, no new geolocation needed
+    if (uiState.userLocation) {
+      applyGeoRadius(radius);
+      return;
+    }
+
     geoStatus = 'locating';
     navigator.geolocation.getCurrentPosition(
-      async (pos) => {
+      (pos) => {
         uiState.userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, radius);
-        if (dataState.error) {
-          geoError = dataState.error;
-          geoStatus = 'error';
-          uiState.userLocation = undefined;
-          if (geoErrorTimer) clearTimeout(geoErrorTimer);
-          geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), GEO_ERROR_DISPLAY_MS);
-        } else {
-          uiState.geoActive = true;
-          activeRadius = radius;
-          geoStatus = 'active';
-        }
+        applyGeoRadius(radius);
       },
       (err) => {
         geoError = getGeoErrorMessage(err.code, $t).title;
@@ -252,7 +268,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               {#if uiState.geoActive}
-                {$t.nearMe}{activeRadius ? ` · ${activeRadius} ${$t.mi}` : ''}
+                {$t.nearMe}{activeRadius ? ` · ${activeRadius} ${$t[config.distanceUnit]}` : ''}
               {:else}
                 {$t.anywhere}
               {/if}
@@ -297,7 +313,7 @@
                   {/if}
                 </span>
                 {dist}
-                {$t.mi}
+                {$t[config.distanceUnit]}
               </button>
             {/each}
           </div>

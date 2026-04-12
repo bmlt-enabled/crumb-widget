@@ -1,5 +1,19 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
-import { formatTime, formatEndTime, getTimezoneAbbr, getTimeOfDay, formatAddress, sortMeetings, isInProgress, getPlatform, getDirectionsUrl, getGeoErrorMessage } from '@utils/format';
+import {
+  formatTime,
+  formatEndTime,
+  getTimezoneAbbr,
+  getTimeOfDay,
+  formatAddress,
+  sortMeetings,
+  isInProgress,
+  getPlatform,
+  getDirectionsUrl,
+  getGeoErrorMessage,
+  haversineDistanceMiles,
+  filterMeetings
+} from '@utils/format';
+import type { ProcessedMeeting, FilterState } from '@/types/index';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -312,5 +326,82 @@ describe('getDirectionsUrl', () => {
   test('web: falls back to address when no coordinates', () => {
     setNav('mozilla/5.0 (windows nt 10.0)', 'Win32', 0);
     expect(getDirectionsUrl(makeMeeting({ latitude: 0, longitude: 0, location_street: '123 Main St', location_municipality: 'Springfield' }))).toContain('123%20Main%20St');
+  });
+});
+
+describe('haversineDistanceMiles', () => {
+  test('returns 0 for identical coordinates', () => {
+    expect(haversineDistanceMiles(34.05, -118.24, 34.05, -118.24)).toBeCloseTo(0);
+  });
+
+  test('calculates known distance between two cities', () => {
+    // NYC (40.7128, -74.0060) to LA (34.0522, -118.2437) ≈ 2451 miles
+    expect(haversineDistanceMiles(40.7128, -74.006, 34.0522, -118.2437)).toBeCloseTo(2451, -2);
+  });
+
+  test('is symmetric', () => {
+    const a = haversineDistanceMiles(34.05, -118.24, 40.71, -74.01);
+    const b = haversineDistanceMiles(40.71, -74.01, 34.05, -118.24);
+    expect(a).toBeCloseTo(b, 5);
+  });
+});
+
+describe('filterMeetings distance filter', () => {
+  const emptyFilters: FilterState = { search: '', weekdays: [], venueTypes: [], timeOfDay: [], formatIds: [], serviceBodyNames: [] };
+
+  function makeGeoMeeting(id: string, lat: number, lng: number): ProcessedMeeting {
+    return {
+      id_bigint: id,
+      weekday_tinyint: 2,
+      venue_type: 1,
+      start_time: '19:00:00',
+      duration_time: '01:00:00',
+      meeting_name: 'Test',
+      location_text: '',
+      location_street: '',
+      location_municipality: '',
+      location_province: '',
+      location_postal_code_1: '',
+      latitude: lat,
+      longitude: lng,
+      published: 1,
+      service_body_bigint: '1',
+      format_shared_id_list: '',
+      formattedTime: '7:00 PM',
+      formattedAddress: '',
+      timeOfDay: 'evening',
+      resolvedFormats: [],
+      isVirtual: false,
+      isInPerson: true
+    };
+  }
+
+  const userLocation = { lat: 34.05, lng: -118.24 }; // LA
+  const nearby = makeGeoMeeting('near', 34.1, -118.3); // ~6 miles away
+  const farAway = makeGeoMeeting('far', 40.71, -74.01); // ~2450 miles away
+
+  test('returns all meetings when no userLocation provided', () => {
+    expect(filterMeetings([nearby, farAway], emptyFilters)).toHaveLength(2);
+  });
+
+  test('returns all meetings when geoRadiusMiles is 0', () => {
+    expect(filterMeetings([nearby, farAway], emptyFilters, userLocation, 0)).toHaveLength(2);
+  });
+
+  test('filters out meetings beyond radius', () => {
+    const result = filterMeetings([nearby, farAway], emptyFilters, userLocation, 25);
+    expect(result.map((m) => m.id_bigint)).toEqual(['near']);
+  });
+
+  test('includes meetings exactly at the radius boundary', () => {
+    const dist = haversineDistanceMiles(userLocation.lat, userLocation.lng, nearby.latitude as number, nearby.longitude as number);
+    const result = filterMeetings([nearby], emptyFilters, userLocation, Math.ceil(dist));
+    expect(result).toHaveLength(1);
+  });
+
+  test('excludes meetings with no coordinates', () => {
+    const noCoords = makeGeoMeeting('nocoords', 0, 0);
+    const result = filterMeetings([noCoords], emptyFilters, userLocation, 25);
+    expect(result).toHaveLength(0);
   });
 });
