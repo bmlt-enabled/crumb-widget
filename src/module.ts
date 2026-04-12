@@ -36,7 +36,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.serverUrl = options.serverUrl;
   config.serviceBodyIds = options.serviceBodyIds ?? [];
   config.containerId = el.id || 'crumb-widget';
-  config.defaultView = options.defaultView ?? 'list';
+  config.view = options.view ?? 'list';
   config.locationMarker = options.map?.markers?.location;
   config.tiles = options.map?.tiles;
   config.tilesDark = options.map?.tiles_dark;

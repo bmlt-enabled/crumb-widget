@@ -59,7 +59,7 @@ Optional global config object (must be defined before `app.js` loads):
 
 ```html
 <script>
-  var CrumbWidgetConfig = { defaultView: 'map' };
+  var CrumbWidgetConfig = { view: 'map' };
 </script>
 ```
 

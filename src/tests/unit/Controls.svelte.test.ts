@@ -33,7 +33,7 @@ vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
 const baseConfig: AppConfig = {
   serverUrl: 'https://test.example.org/main_server',
   serviceBodyIds: [],
-  defaultView: 'list',
+  view: 'list',
   containerId: 'crumb-widget',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
@@ -115,23 +115,23 @@ describe('view toggle', () => {
     expect(uiState.view).toBe('list');
   });
 
-  test('hides view toggle when defaultView is both', () => {
+  test('hides view toggle when view is both', () => {
     dataState.meetings = [makeMeeting({ venue_type: 1, isInPerson: true })];
-    config.defaultView = 'both';
+    config.view = 'both';
     render(App, { props: { config: baseConfig } });
     expect(screen.queryByTitle('List view')).not.toBeInTheDocument();
     expect(screen.queryByTitle('Map view')).not.toBeInTheDocument();
-    config.defaultView = 'list';
+    config.view = 'list';
   });
 });
 
 describe('both view', () => {
   beforeEach(() => {
-    config.defaultView = 'both';
+    config.view = 'both';
   });
 
   afterEach(() => {
-    config.defaultView = 'list';
+    config.view = 'list';
   });
 
   test('shows meeting list content in both view', () => {
@@ -157,7 +157,7 @@ describe('both view', () => {
   });
 
   test('initializes to both view on mount when geolocation is disabled', async () => {
-    render(App, { props: { config: { ...baseConfig, defaultView: 'both', geolocation: false } } });
+    render(App, { props: { config: { ...baseConfig, view: 'both', geolocation: false } } });
     await waitFor(() => expect(uiState.view).toBe('both'));
   });
 });

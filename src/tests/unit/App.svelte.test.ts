@@ -56,7 +56,7 @@ vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
 const baseConfig: AppConfig = {
   serverUrl: 'https://test.example.org/main_server',
   serviceBodyIds: [],
-  defaultView: 'list',
+  view: 'list',
   containerId: 'crumb-widget',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,

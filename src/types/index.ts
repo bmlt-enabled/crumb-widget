@@ -11,7 +11,7 @@ export interface MarkerConfig {
 export interface AppConfig {
   serverUrl: string;
   serviceBodyIds: number[];
-  defaultView: 'list' | 'map' | 'both';
+  view: 'list' | 'map' | 'both';
   containerId: string;
   locationMarker?: MarkerConfig;
   tiles?: TilesConfig;
@@ -60,7 +60,7 @@ export interface TilesConfig {
 
 export interface CrumbWidgetConfig {
   language?: string;
-  defaultView?: 'list' | 'map' | 'both';
+  view?: 'list' | 'map' | 'both';
   columns?: Column[];
   geolocation?: boolean;
   geolocationRadius?: number;
