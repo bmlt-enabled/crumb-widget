@@ -8,6 +8,7 @@ export const uiState = $state<{
   geoActive: boolean;
   selectedMeetingId: string | null;
   userLocation: { lat: number; lng: number } | undefined;
+  geoRadius: number;
 }>({
   view: 'list',
   filters: {
@@ -20,7 +21,8 @@ export const uiState = $state<{
   },
   geoActive: false,
   selectedMeetingId: null,
-  userLocation: undefined
+  userLocation: undefined,
+  geoRadius: 0
 });
 
 export function setView(view: ViewType): void {

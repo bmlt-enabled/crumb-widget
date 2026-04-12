@@ -12,6 +12,8 @@ const defaultConfig: AppConfig = {
   columns: ALL_COLUMNS,
   geolocation: false,
   geolocationRadius: 75,
+  distanceOptions: [5, 10, 15, 25, 50, 100],
+  distanceUnit: 'mi' as const,
   height: undefined,
   nowOffset: 10
 };
@@ -48,6 +50,8 @@ export function initConfig(el: HTMLElement): void {
   const isAggregator = server.includes('https://aggregator.bmltenabled.org');
   config.geolocation = globalCfg.geolocation ?? isAggregator;
   config.geolocationRadius = globalCfg.geolocationRadius ?? 75;
+  config.distanceOptions = globalCfg.distanceOptions ?? [5, 10, 15, 25, 50, 100];
+  config.distanceUnit = globalCfg.distanceUnit ?? 'mi';
   config.height = globalCfg.height ?? undefined;
   config.darkMode = globalCfg.darkMode ?? false;
   config.nowOffset = globalCfg.nowOffset ?? 10;

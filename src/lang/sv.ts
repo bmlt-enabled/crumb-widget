@@ -30,6 +30,7 @@ export const svTranslations = {
   location: 'Plats',
   address: 'Adress',
   serviceBody: 'Servicekropp',
+  distance: 'Distance',
   onlineMeeting: 'Online-möte',
   showing: 'Visar',
   meeting: 'möte',
@@ -48,6 +49,8 @@ export const svTranslations = {
   notes: 'Anteckningar',
   contact: 'Kontakt',
   alsoAtThisLocation: 'Också på denna plats',
+  milesAbbr: 'mi',
+  away: 'bort',
   // Geolocation
   nearMe: 'Nära mig',
   locating: 'Söker plats\u2026',
@@ -67,6 +70,7 @@ export const svTranslations = {
   searchThisArea: 'Sök i det här området',
   yourLocation: 'Din plats',
   mi: 'mi',
+  km: 'km',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Mötesformat',
   formatTypeCode_OPEN_OR_CLOSED: 'Öppet eller slutet',

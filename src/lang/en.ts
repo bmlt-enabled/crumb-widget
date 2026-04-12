@@ -30,6 +30,7 @@ export const enTranslations = {
   location: 'Location',
   address: 'Address',
   serviceBody: 'Service Body',
+  distance: 'Distance',
   onlineMeeting: 'Online meeting',
   showing: 'Showing',
   meeting: 'meeting',
@@ -48,6 +49,8 @@ export const enTranslations = {
   notes: 'Notes',
   contact: 'Contact',
   alsoAtThisLocation: 'Also at this location',
+  milesAbbr: 'mi',
+  away: 'away',
   // Geolocation
   nearMe: 'Near Me',
   locating: 'Locating\u2026',
@@ -67,6 +70,7 @@ export const enTranslations = {
   searchThisArea: 'Search this area',
   yourLocation: 'Your location',
   mi: 'mi',
+  km: 'km',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Meeting Format',
   formatTypeCode_OPEN_OR_CLOSED: 'Open or Closed',

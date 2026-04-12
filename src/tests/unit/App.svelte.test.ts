@@ -61,6 +61,8 @@ const baseConfig: AppConfig = {
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
   geolocationRadius: 75,
+  distanceOptions: [5, 10, 15, 25, 50, 100],
+  distanceUnit: 'mi',
   height: 600
 };
 
@@ -110,6 +112,8 @@ beforeEach(() => {
   resetFilters();
   uiState.view = 'list';
   uiState.geoActive = false;
+  uiState.userLocation = undefined;
+  uiState.geoRadius = 0;
   uiState.selectedMeetingId = null;
   mockRouterLoc.value = '/';
 });

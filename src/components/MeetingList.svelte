@@ -2,9 +2,9 @@
   import { onMount } from 'svelte';
   import QRCode from '@bmlt-enabled/qrcode-svg';
   import type { ProcessedMeeting } from '@/types/index';
-  import { selectMeeting } from '@stores/ui.svelte';
+  import { selectMeeting, uiState } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
-  import { formatShortAddress, isInProgress } from '@utils/format';
+  import { formatShortAddress, isInProgress, haversineDistanceMiles } from '@utils/format';
   import { t } from '@stores/localization';
 
   function qrDataUrl(url: string): string {
@@ -23,6 +23,13 @@
   const { meetings }: Props = $props();
 
   const cols = $derived(new Set(config.columns));
+
+  function meetingDistanceLabel(meeting: ProcessedMeeting): string {
+    if (!uiState.userLocation || !meeting.latitude || !meeting.longitude) return '';
+    const distMiles = haversineDistanceMiles(uiState.userLocation.lat, uiState.userLocation.lng, Number(meeting.latitude), Number(meeting.longitude));
+    const dist = config.distanceUnit === 'km' ? distMiles * 1.60934 : distMiles;
+    return `${dist.toFixed(1)} ${$t[config.distanceUnit]}`;
+  }
   const nowOffset = $derived(config.nowOffset ?? 10);
 
   const inProgressMeetings = $derived(meetings.filter((m) => isInProgress(m, nowOffset)));
@@ -75,7 +82,8 @@
           <button type="button" class="bmlt-row bmlt-in-progress-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
               <div class="w-20 shrink-0 text-sm text-gray-600">
-                {meeting.formattedTime + ' ' + $t.weekdaysShort[meeting.weekday_tinyint - 1]}
+                <div class="whitespace-nowrap">{meeting.formattedTime} {$t.weekdaysShort[meeting.weekday_tinyint - 1]}</div>
+                {#if uiState.geoActive}{@const d = meetingDistanceLabel(meeting)}{#if d}<div class="text-xs text-gray-400">{d}</div>{/if}{/if}
               </div>
             {/if}
             <div class="min-w-0 flex-1">
@@ -124,7 +132,8 @@
         <!-- Left: time -->
         {#if cols.has('time')}
           <div class="w-20 shrink-0 text-sm text-gray-600">
-            {meeting.formattedTime + ' ' + $t.weekdaysShort[meeting.weekday_tinyint - 1]}
+            <div class="whitespace-nowrap">{meeting.formattedTime} {$t.weekdaysShort[meeting.weekday_tinyint - 1]}</div>
+            {#if uiState.geoActive}{@const d = meetingDistanceLabel(meeting)}{#if d}<div class="text-xs text-gray-400">{d}</div>{/if}{/if}
           </div>
         {/if}
         <!-- Right: name + location details -->
@@ -174,8 +183,9 @@
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
           {#if cols.has('time')}<th class="bmlt-time-col w-24 px-4 py-2 text-left lg:w-40">{$t.dayAndTime}</th>{/if}
-          {#if cols.has('name')}<th class="px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
-          {#if cols.has('location')}<th class="px-4 py-2 text-left">{$t.location}</th>{/if}
+          {#if uiState.geoActive}<th class="w-24 px-3 py-2 text-left">{$t.distance}</th>{/if}
+          {#if cols.has('name')}<th class="min-w-[8rem] px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
+          {#if cols.has('location')}<th class="min-w-[7rem] px-4 py-2 text-left">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-left">{$t.address}</th>{/if}
           {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-left lg:table-cell">{$t.serviceBody}</th>{/if}
         </tr>
@@ -209,6 +219,9 @@
                     </time>
                   </td>
                 {/if}
+                {#if uiState.geoActive}
+                  <td class="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{meetingDistanceLabel(meeting)}</td>
+                {/if}
                 {#if cols.has('name')}
                   <td class="px-4 py-4">
                     <span class="bmlt-link font-medium">{meeting.meeting_name}</span>
@@ -218,7 +231,7 @@
                   </td>
                 {/if}
                 {#if cols.has('location')}
-                  <td class="px-4 py-4 text-base text-gray-600">
+                  <td class="px-4 py-4 text-base break-words text-gray-600">
                     {meeting.location_text ?? ''}
                   </td>
                 {/if}
@@ -277,6 +290,9 @@
                   <span class="whitespace-nowrap">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
                 </time>
               </td>
+            {/if}
+            {#if uiState.geoActive}
+              <td class="px-4 py-4 text-sm text-gray-500">{meetingDistanceLabel(meeting)}</td>
             {/if}
             {#if cols.has('name')}
               <td class="px-4 py-4">

@@ -168,7 +168,15 @@ export function meetingSlug(meeting: { meeting_name: string; id_bigint: string }
   return `${name || 'meeting'}-${meeting.id_bigint}`;
 }
 
-export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterState): ProcessedMeeting[] {
+export function haversineDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 3958.8;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterState, userLocation?: { lat: number; lng: number }, geoRadiusMiles?: number): ProcessedMeeting[] {
   const { search, weekdays, venueTypes, timeOfDay, formatIds, serviceBodyNames } = filters;
   let result = meetings;
 
@@ -197,6 +205,14 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
         m.location_text?.toLowerCase().includes(q) ||
         m.comments?.toLowerCase().includes(q)
     );
+  }
+  if (userLocation && geoRadiusMiles && geoRadiusMiles > 0) {
+    result = result.filter((m) => {
+      const lat = Number(m.latitude);
+      const lng = Number(m.longitude);
+      if (!lat || !lng) return false;
+      return haversineDistanceMiles(userLocation.lat, userLocation.lng, lat, lng) <= geoRadiusMiles;
+    });
   }
 
   return result;

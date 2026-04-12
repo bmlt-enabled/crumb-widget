@@ -30,6 +30,7 @@ export const deTranslations = {
   location: 'Ort',
   address: 'Adresse',
   serviceBody: 'Dienstbereich',
+  distance: 'Distance',
   onlineMeeting: 'Online-Treffen',
   showing: 'Angezeigt',
   meeting: 'Treffen',
@@ -48,6 +49,8 @@ export const deTranslations = {
   notes: 'Notizen',
   contact: 'Kontakt',
   alsoAtThisLocation: 'Auch an diesem Ort',
+  milesAbbr: 'mi',
+  away: 'entfernt',
   // Geolocation
   nearMe: 'In meiner Nähe',
   locating: 'Standort wird ermittelt\u2026',
@@ -67,6 +70,7 @@ export const deTranslations = {
   searchThisArea: 'Diesen Bereich durchsuchen',
   yourLocation: 'Mein Standort',
   mi: 'mi',
+  km: 'km',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Treffenformat',
   formatTypeCode_OPEN_OR_CLOSED: 'Offen oder geschlossen',

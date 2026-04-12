@@ -4,6 +4,7 @@ import { render, screen, fireEvent } from '@testing-library/svelte';
 import MeetingList from '@components/MeetingList.svelte';
 import type { ProcessedMeeting } from '@/types/index';
 import { config } from '@stores/config.svelte';
+import { uiState } from '@stores/ui.svelte';
 
 vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@bmlt-enabled/svelte-spa-router')>();
@@ -48,6 +49,10 @@ beforeEach(() => {
   vi.useFakeTimers({ now: new Date('2026-04-08T12:00:00') });
   config.columns = ['time', 'name', 'location', 'address'];
   config.nowOffset = 10;
+  config.distanceUnit = 'mi';
+  uiState.userLocation = undefined;
+  uiState.geoActive = false;
+  uiState.geoRadius = 0;
 });
 
 afterEach(() => {
@@ -309,5 +314,57 @@ describe('MeetingList — print helpers', () => {
     await Promise.resolve();
 
     expect(screen.getAllByText('Hidden Group').length).toBeGreaterThan(0);
+  });
+
+  test('shows comments in in-progress rows when expanded', async () => {
+    vi.setSystemTime(new Date(2024, 0, 8, 19, 5));
+    const meeting = makeMeeting({ weekday_tinyint: 2, start_time: '19:00:00', meeting_name: 'Live Group', comments: 'Bring coffee' });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    window.dispatchEvent(new Event('beforeprint'));
+    await Promise.resolve();
+    expect(screen.getAllByText(/Bring coffee/).length).toBeGreaterThan(0);
+  });
+});
+
+describe('MeetingList — distance display', () => {
+  beforeEach(() => {
+    uiState.userLocation = { lat: 34.05, lng: -118.24 };
+    uiState.geoActive = true;
+    uiState.geoRadius = 50;
+  });
+
+  test('shows Distance column header when geoActive', () => {
+    const meeting = makeMeeting();
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Distance').length).toBeGreaterThan(0);
+  });
+
+  test('shows distance value in miles for regular meetings', () => {
+    const meeting = makeMeeting({ latitude: 34.05, longitude: -118.24 });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText(/0\.0 mi/).length).toBeGreaterThan(0);
+  });
+
+  test('shows distance in km when distanceUnit is km', () => {
+    config.distanceUnit = 'km';
+    const meeting = makeMeeting({ latitude: 34.05, longitude: -118.24 });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText(/0\.0 km/).length).toBeGreaterThan(0);
+  });
+
+  test('shows distance in in-progress rows when expanded', async () => {
+    vi.setSystemTime(new Date(2024, 0, 8, 19, 5));
+    const meeting = makeMeeting({ weekday_tinyint: 2, start_time: '19:00:00', latitude: 34.05, longitude: -118.24 });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    window.dispatchEvent(new Event('beforeprint'));
+    await Promise.resolve();
+    expect(screen.getAllByText(/0\.0 mi/).length).toBeGreaterThan(0);
+  });
+
+  test('shows no distance when meeting has no coordinates', () => {
+    const meeting = makeMeeting({ latitude: undefined as unknown as number, longitude: undefined as unknown as number });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    // Distance td renders empty string — no "mi" text
+    expect(screen.queryByText(/\d+\.\d+ mi/)).not.toBeInTheDocument();
   });
 });

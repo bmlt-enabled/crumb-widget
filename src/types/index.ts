@@ -19,6 +19,8 @@ export interface AppConfig {
   columns: Column[];
   geolocation: boolean;
   geolocationRadius: number;
+  distanceOptions: number[];
+  distanceUnit: 'mi' | 'km';
   height?: number;
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
@@ -64,6 +66,8 @@ export interface CrumbWidgetConfig {
   columns?: Column[];
   geolocation?: boolean;
   geolocationRadius?: number;
+  distanceOptions?: number[];
+  distanceUnit?: 'mi' | 'km';
   height?: number;
   darkMode?: 'auto' | true | false;
   nowOffset?: number;

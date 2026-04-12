@@ -38,6 +38,8 @@ const baseConfig: AppConfig = {
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
   geolocationRadius: 75,
+  distanceOptions: [5, 10, 15, 25, 50, 100],
+  distanceUnit: 'mi',
   height: 600
 };
 
@@ -76,10 +78,14 @@ beforeEach(() => {
   resetFilters();
   uiState.view = 'list';
   uiState.geoActive = false;
+  uiState.userLocation = undefined;
+  uiState.geoRadius = 0;
   config.geolocation = false;
   config.serviceBodyIds = [];
   config.serverUrl = 'https://test.example.org/main_server';
   config.geolocationRadius = 75;
+  config.distanceOptions = [5, 10, 15, 25, 50, 100];
+  config.distanceUnit = 'mi';
 });
 
 afterEach(() => {
@@ -294,6 +300,84 @@ describe('geolocation button', () => {
     Object.defineProperty(navigator, 'geolocation', { value: undefined, configurable: true });
     render(App, { props: { config: { ...baseConfig, geolocation: true } } });
     await waitFor(() => expect(dataState.error).toBe('Unable to get location'));
+  });
+
+  test('shows custom distanceOptions in dropdown', async () => {
+    config.distanceOptions = [5, 10, 20];
+    config.geolocationRadius = 20;
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Anywhere'));
+    expect(screen.getByText('5 mi')).toBeInTheDocument();
+    expect(screen.getByText('10 mi')).toBeInTheDocument();
+    expect(screen.getByText('20 mi')).toBeInTheDocument();
+    expect(screen.queryByText('50 mi')).not.toBeInTheDocument();
+  });
+
+  test('caps dropdown at geolocationRadius', async () => {
+    config.distanceOptions = [5, 10, 15, 25, 50, 100];
+    config.geolocationRadius = 10;
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Anywhere'));
+    expect(screen.getByText('5 mi')).toBeInTheDocument();
+    expect(screen.getByText('10 mi')).toBeInTheDocument();
+    expect(screen.queryByText('25 mi')).not.toBeInTheDocument();
+  });
+
+  test('appends geolocationRadius when not in distanceOptions', async () => {
+    config.distanceOptions = [5, 10, 25];
+    config.geolocationRadius = 30;
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Anywhere'));
+    expect(screen.getByText('25 mi')).toBeInTheDocument();
+    expect(screen.getByText('30 mi')).toBeInTheDocument();
+    expect(screen.queryByText('50 mi')).not.toBeInTheDocument();
+  });
+
+  test('shows km unit when distanceUnit is km', async () => {
+    config.distanceUnit = 'km';
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Anywhere'));
+    expect(screen.getAllByText(/\d+ km/).length).toBeGreaterThan(0);
+  });
+
+  test('shows checkmark next to the active radius in dropdown', async () => {
+    mockGetCurrentPosition.mockImplementation((success: PositionCallback) => {
+      success({ coords: { latitude: 34.05, longitude: -118.24, accuracy: 10 } } as GeolocationPosition);
+    });
+    dataState.meetings = [makeMeeting()];
+    const { container } = render(App, { props: { config: baseConfig } });
+    // Select 5 mi
+    await fireEvent.click(screen.getByText('Anywhere'));
+    await fireEvent.click(screen.getByText('5 mi'));
+    // Wait for "Near Me · 5 mi" label to appear (geoStatus transitions to 'active')
+    const nearMeBtn = await waitFor(() => screen.getByText(/Near Me/));
+    // Re-open the dropdown — the active option should show the checkmark SVG (d="M5 13l4 4L19 7")
+    await fireEvent.click(nearMeBtn);
+    expect(container.querySelector('path[d="M5 13l4 4L19 7"]')).toBeInTheDocument();
+  });
+
+  test('shows X clear button when geoActive and serviceBodyIds is set', async () => {
+    config.serviceBodyIds = [1];
+    mockGetCurrentPosition.mockImplementation((success: PositionCallback) => {
+      success({ coords: { latitude: 34.05, longitude: -118.24, accuracy: 10 } } as GeolocationPosition);
+    });
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Anywhere'));
+    await fireEvent.click(screen.getByText('75 mi'));
+    await waitFor(() => expect(screen.getByLabelText('Clear location filter')).toBeInTheDocument());
+  });
+
+  test('clicking X clear button deactivates geo', async () => {
+    config.serviceBodyIds = [1];
+    mockGetCurrentPosition.mockImplementation((success: PositionCallback) => {
+      success({ coords: { latitude: 34.05, longitude: -118.24, accuracy: 10 } } as GeolocationPosition);
+    });
+    render(App, { props: { config: baseConfig } });
+    await fireEvent.click(screen.getByText('Anywhere'));
+    await fireEvent.click(screen.getByText('75 mi'));
+    await waitFor(() => expect(uiState.geoActive).toBe(true));
+    await fireEvent.click(screen.getByLabelText('Clear location filter'));
+    expect(uiState.geoActive).toBe(false);
   });
 });
 
