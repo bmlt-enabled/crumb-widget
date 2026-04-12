@@ -254,6 +254,7 @@ describe('geolocation button', () => {
     mockGetCurrentPosition.mockImplementation(() => {});
     render(App, { props: { config: baseConfig } });
     await fireEvent.click(screen.getByText('Anywhere'));
+    await fireEvent.click(screen.getByText('75 mi'));
     await waitFor(() => expect(screen.getByText('Locating…')).toBeInTheDocument());
   });
 
@@ -263,7 +264,8 @@ describe('geolocation button', () => {
     });
     render(App, { props: { config: baseConfig } });
     await fireEvent.click(screen.getByText('Anywhere'));
-    await waitFor(() => expect(screen.getByText('Near Me')).toBeInTheDocument());
+    await fireEvent.click(screen.getByText('75 mi'));
+    await waitFor(() => expect(screen.getByText(/Near Me/)).toBeInTheDocument());
     expect(uiState.geoActive).toBe(true);
   });
 
@@ -273,6 +275,7 @@ describe('geolocation button', () => {
     });
     render(App, { props: { config: baseConfig } });
     await fireEvent.click(screen.getByText('Anywhere'));
+    await fireEvent.click(screen.getByText('75 mi'));
     await waitFor(() => expect(screen.getByText('Location access denied')).toBeInTheDocument());
   });
 
@@ -282,6 +285,7 @@ describe('geolocation button', () => {
     });
     render(App, { props: { config: baseConfig } });
     await fireEvent.click(screen.getByText('Anywhere'));
+    await fireEvent.click(screen.getByText('75 mi'));
     await waitFor(() => expect(screen.getByText('Location unavailable')).toBeInTheDocument());
   });
 
