@@ -10,6 +10,16 @@
 
   const GEOLOCATION_TIMEOUT_MS = 10000;
   const GEO_ERROR_DISPLAY_MS = 4000;
+  const BASE_DISTANCES = [5, 10, 25, 50, 75];
+
+  // Cap at config.geolocationRadius, inserting it if it's not already a base option.
+  // e.g. radius=50 → [5,10,25,50]; radius=30 → [5,10,25,30]; radius=100 → [5,10,25,50,75,100]
+  const distanceOptions = $derived.by(() => {
+    const max = config.geolocationRadius;
+    const opts = BASE_DISTANCES.filter((d) => d < max);
+    opts.push(max);
+    return opts;
+  });
 
   const VENUE_TYPE_VALUES = [
     { value: VENUE_TYPE.IN_PERSON, key: 'inPerson' as const },
@@ -126,41 +136,50 @@
   let showTimeDropdown = $state(false);
   let showServiceBodyDropdown = $state(false);
   let showTypeDropdown = $state(false);
+  let showGeoDropdown = $state(false);
   let typeDropdownEl = $state<HTMLDivElement | undefined>();
+  let geoDropdownEl = $state<HTMLDivElement | undefined>();
 
   function handleWindowClick(e: MouseEvent) {
     if (typeDropdownEl && !typeDropdownEl.contains(e.target as Node)) showTypeDropdown = false;
+    if (geoDropdownEl && !geoDropdownEl.contains(e.target as Node)) showGeoDropdown = false;
   }
 
   type GeoStatus = 'idle' | 'locating' | 'active' | 'error';
   let geoStatus = $state<GeoStatus>('idle');
   let geoError = $state('');
   let geoErrorTimer: ReturnType<typeof setTimeout> | null = null;
+  let activeRadius = $state(0);
 
   onDestroy(() => {
     if (geoErrorTimer) clearTimeout(geoErrorTimer);
   });
 
-  async function handleNearMe() {
-    if (uiState.geoActive) {
-      uiState.geoActive = false;
-      geoStatus = 'idle';
-      await loadData(config.serverUrl, config.serviceBodyIds);
-      return;
-    }
-    if (geoStatus === 'locating') return;
+  async function clearGeo() {
+    uiState.geoActive = false;
+    uiState.userLocation = undefined;
+    activeRadius = 0;
+    geoStatus = 'idle';
+    await loadData(config.serverUrl, config.serviceBodyIds);
+  }
 
+  async function handleNearMe(radius: number) {
+    if (geoStatus === 'locating') return;
+    showGeoDropdown = false;
     geoStatus = 'locating';
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
-        await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
+        uiState.userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, radius);
         if (dataState.error) {
           geoError = dataState.error;
           geoStatus = 'error';
+          uiState.userLocation = undefined;
           if (geoErrorTimer) clearTimeout(geoErrorTimer);
           geoErrorTimer = setTimeout(() => (geoStatus = 'idle'), GEO_ERROR_DISPLAY_MS);
         } else {
           uiState.geoActive = true;
+          activeRadius = radius;
           geoStatus = 'active';
         }
       },
@@ -193,47 +212,97 @@
       />
     </div>
 
-    <!-- Anywhere / Near Me -->
+    <!-- Anywhere / Near Me (distance dropdown) -->
     {#if config.geolocation}
-      <button
-        onclick={handleNearMe}
-        disabled={geoStatus === 'locating' || (uiState.geoActive && config.serviceBodyIds.length === 0)}
-        class="col-span-2 flex w-full items-center justify-between gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors md:col-span-1 md:w-auto {uiState.geoActive
-          ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
-          : geoStatus === 'error'
-            ? 'border-red-300 bg-red-50 text-red-700'
-            : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:cursor-wait disabled:opacity-60'}"
-      >
-        <span class="flex items-center gap-1.5 truncate">
-          {#if geoStatus === 'locating'}
-            <svg class="h-4 w-4 shrink-0 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-            </svg>
-            {$t.locating}
-          {:else if geoStatus === 'error'}
-            <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-            </svg>
-            <span class="truncate">{geoError}</span>
-          {:else}
-            <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            {uiState.geoActive ? $t.nearMe : $t.anywhere}
+      <div class="relative col-span-2 md:col-span-1" bind:this={geoDropdownEl}>
+        <div
+          class="flex w-full overflow-hidden rounded-lg border text-sm font-medium whitespace-nowrap transition-colors {uiState.geoActive
+            ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
+            : geoStatus === 'error'
+              ? 'border-red-300 bg-red-50 text-red-700'
+              : 'border-gray-300 bg-white text-gray-700'}"
+        >
+          <!-- Main button: opens dropdown -->
+          <button
+            onclick={(e) => {
+              e.stopPropagation();
+              showGeoDropdown = !showGeoDropdown;
+              showDayDropdown = false;
+              showTimeDropdown = false;
+              showTypeDropdown = false;
+              showServiceBodyDropdown = false;
+            }}
+            disabled={geoStatus === 'locating'}
+            class="flex flex-1 items-center gap-1.5 px-3 py-2.5 disabled:cursor-wait disabled:opacity-60 {uiState.geoActive ? 'hover:bg-blue-100' : geoStatus === 'error' ? '' : 'hover:bg-gray-50'}"
+          >
+            {#if geoStatus === 'locating'}
+              <svg class="h-4 w-4 shrink-0 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              {$t.locating}
+            {:else if geoStatus === 'error'}
+              <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+              <span class="truncate">{geoError}</span>
+            {:else}
+              <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              {#if uiState.geoActive}
+                {$t.nearMe}{activeRadius ? ` · ${activeRadius} ${$t.mi}` : ''}
+              {:else}
+                {$t.anywhere}
+              {/if}
+              <svg class="ml-auto h-3.5 w-3.5 shrink-0 transition-transform {showGeoDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            {/if}
+          </button>
+          <!-- X to clear (only when active and can deactivate) -->
+          {#if uiState.geoActive && config.serviceBodyIds.length > 0}
+            <button
+              onclick={(e) => {
+                e.stopPropagation();
+                clearGeo();
+              }}
+              class="flex items-center border-l border-blue-300 px-2 hover:bg-blue-100"
+              aria-label="Clear location filter"
+            >
+              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           {/if}
-        </span>
-        {#if uiState.geoActive && config.serviceBodyIds.length > 0}
-          <svg class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        {:else if geoStatus === 'idle' && config.serviceBodyIds.length > 0}
-          <svg class="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
+        </div>
+
+        <!-- Distance dropdown -->
+        {#if showGeoDropdown}
+          <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[9rem] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+            <div class="px-3 pt-2 pb-0.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">{$t.nearMe}</div>
+            {#each distanceOptions as dist (dist)}
+              <button
+                onclick={() => handleNearMe(dist)}
+                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.geoActive && activeRadius === dist
+                  ? 'font-semibold text-blue-700'
+                  : 'text-gray-700'}"
+              >
+                <span class="flex h-4 w-4 shrink-0 items-center justify-center">
+                  {#if uiState.geoActive && activeRadius === dist}
+                    <svg class="h-3.5 w-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  {/if}
+                </span>
+                {dist}
+                {$t.mi}
+              </button>
+            {/each}
+          </div>
         {/if}
-      </button>
+      </div>
     {/if}
 
     <!-- Day dropdown -->
@@ -252,6 +321,7 @@
         showTimeDropdown = false;
         showTypeDropdown = false;
         showServiceBodyDropdown = false;
+        showGeoDropdown = false;
       }}
     />
 
@@ -271,6 +341,7 @@
         showDayDropdown = false;
         showTypeDropdown = false;
         showServiceBodyDropdown = false;
+        showGeoDropdown = false;
       }}
     />
 
@@ -283,6 +354,7 @@
           showDayDropdown = false;
           showTimeDropdown = false;
           showServiceBodyDropdown = false;
+          showGeoDropdown = false;
         }}
         class="flex w-full items-center justify-between rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.venueTypes.length > 0 ||
         uiState.filters.formatIds.length > 0
@@ -371,6 +443,7 @@
           showDayDropdown = false;
           showTimeDropdown = false;
           showTypeDropdown = false;
+          showGeoDropdown = false;
         }}
         containerClass={!showViewToggle ? 'col-span-2' : ''}
       />
