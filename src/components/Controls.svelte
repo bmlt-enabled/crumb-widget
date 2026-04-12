@@ -120,7 +120,7 @@
     return [...names].sort((a, b) => a.localeCompare(b));
   });
   const showServiceBodyFilter = $derived(config.columns.includes('service_body') && availableServiceBodies.length > 1);
-  const showViewToggle = $derived(config.defaultView !== 'both' && (hasMapMeetings || uiState.view === 'map' || uiState.geoActive));
+  const showViewToggle = $derived(config.view !== 'both' && (hasMapMeetings || uiState.view === 'map' || uiState.geoActive));
 
   let showDayDropdown = $state(false);
   let showTimeDropdown = $state(false);

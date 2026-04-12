@@ -44,17 +44,17 @@ describe('initConfig', () => {
 
   test('reads view from data attribute', () => {
     initConfig(makeElement({ 'data-view': 'map' }));
-    expect(config.defaultView).toBe('map');
+    expect(config.view).toBe('map');
   });
 
   test('reads both view from data attribute', () => {
     initConfig(makeElement({ 'data-view': 'both' }));
-    expect(config.defaultView).toBe('both');
+    expect(config.view).toBe('both');
   });
 
   test('defaults to list view', () => {
     initConfig(makeElement());
-    expect(config.defaultView).toBe('list');
+    expect(config.view).toBe('list');
   });
 
   test('uses element id as containerId', () => {
@@ -94,16 +94,16 @@ describe('initConfig', () => {
   });
 
   describe('CrumbWidgetConfig overrides', () => {
-    test('overrides defaultView to map', () => {
-      window.CrumbWidgetConfig = { defaultView: 'map' };
+    test('overrides view to map', () => {
+      window.CrumbWidgetConfig = { view: 'map' };
       initConfig(makeElement());
-      expect(config.defaultView).toBe('map');
+      expect(config.view).toBe('map');
     });
 
-    test('overrides defaultView to both', () => {
-      window.CrumbWidgetConfig = { defaultView: 'both' };
+    test('overrides view to both', () => {
+      window.CrumbWidgetConfig = { view: 'both' };
       initConfig(makeElement());
-      expect(config.defaultView).toBe('both');
+      expect(config.view).toBe('both');
     });
 
     test('overrides geolocation to true', () => {
@@ -157,10 +157,10 @@ describe('initConfig', () => {
       expect(config.locationMarker).toEqual(marker);
     });
 
-    test('global config defaultView takes precedence over data-view attribute', () => {
-      window.CrumbWidgetConfig = { defaultView: 'list' };
+    test('global config view takes precedence over data-view attribute', () => {
+      window.CrumbWidgetConfig = { view: 'list' };
       initConfig(makeElement({ 'data-view': 'map' }));
-      expect(config.defaultView).toBe('list');
+      expect(config.view).toBe('list');
     });
   });
 });

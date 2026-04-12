@@ -653,7 +653,7 @@
           <div class="demo-header">HTML</div>
           <pre><code>&lt;script&gt;
   var CrumbWidgetConfig = {
-    defaultView: 'map'
+    view: 'map'
   };
 &lt;/script&gt;
 &lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
@@ -665,7 +665,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>defaultView</td>
+              <td>view</td>
               <td><code>'list' | 'map' | 'both'</code></td>
               <td>Override the default view. Takes precedence over <code>data-view</code>. <code>'both'</code> shows a fixed-height map above the full meeting list; the list/map toggle is hidden.</td>
             </tr>
@@ -763,7 +763,7 @@
           <div class="demo-header">HTML — all options (kitchen sink)</div>
           <pre><code>&lt;script&gt;
   var CrumbWidgetConfig = {
-    defaultView: 'list',       // 'list' | 'map' | 'both'
+    view: 'list',       // 'list' | 'map' | 'both'
     language: 'en',            // override UI language; defaults to navigator.language
     columns: ['time', 'name', 'location', 'address', 'service_body'],
     geolocation: false,        // show Near Me button
@@ -862,7 +862,7 @@
         <h2 id="query-params">URL Query Parameters</h2>
         <p>
           The <code>?view=</code> query parameter sets the initial view and overrides <code>data-view</code>
-          and <code>defaultView</code>:
+          and <code>view</code>:
         </p>
         <div class="table-wrap"><table>
           <thead><tr><th>Value</th><th>Behaviour</th></tr></thead>
@@ -1452,7 +1452,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
           <tbody>
             <tr><td><code>serverUrl</code></td><td><code>string</code></td><td>Yes</td><td>URL of the BMLT server.</td></tr>
             <tr><td><code>serviceBodyIds</code></td><td><code>number[]</code></td><td>No</td><td>Service body IDs to filter by. Omit or pass <code>[]</code> to show all.</td></tr>
-            <tr><td><code>defaultView</code></td><td><code>'list' | 'map' | 'both'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>. <code>'both'</code> shows map above list with no toggle.</td></tr>
+            <tr><td><code>view</code></td><td><code>'list' | 'map' | 'both'</code></td><td>No</td><td>Initial view. Defaults to <code>'list'</code>. <code>'both'</code> shows map above list with no toggle.</td></tr>
             <tr><td><code>geolocation</code></td><td><code>boolean</code></td><td>No</td><td>Enable the Near Me button. Defaults to <code>false</code>.</td></tr>
             <tr><td><code>darkMode</code></td><td><code>false | true | 'auto'</code></td><td>No</td><td>Dark mode setting. Defaults to <code>false</code>.</td></tr>
             <tr><td><code>language</code></td><td><code>string</code></td><td>No</td><td>BCP-47 language tag (e.g. <code>'es'</code>). Defaults to browser locale.</td></tr>

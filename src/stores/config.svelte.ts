@@ -7,7 +7,7 @@ const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
 const defaultConfig: AppConfig = {
   serverUrl: '',
   serviceBodyIds: [],
-  defaultView: 'list',
+  view: 'list',
   containerId: 'crumb-widget',
   columns: ALL_COLUMNS,
   geolocation: false,
@@ -21,7 +21,7 @@ export const config = $state<AppConfig>({ ...defaultConfig });
 export function initConfig(el: HTMLElement): void {
   const server = el.getAttribute('data-server') ?? '';
   const serviceBody = el.getAttribute('data-service-body') ?? '';
-  const defaultView = (el.getAttribute('data-view') as 'list' | 'map' | 'both') ?? 'list';
+  const view = (el.getAttribute('data-view') as 'list' | 'map' | 'both') ?? 'list';
   const dataPath = el.getAttribute('data-path');
 
   // data-path enables History API routing with a base path (e.g. "/meetings")
@@ -39,7 +39,7 @@ export function initConfig(el: HTMLElement): void {
         .map((s) => parseInt(s.trim(), 10))
         .filter((n) => !isNaN(n))
     : [];
-  config.defaultView = globalCfg.defaultView ?? defaultView;
+  config.view = globalCfg.view ?? view;
   config.containerId = el.id || 'crumb-widget';
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
