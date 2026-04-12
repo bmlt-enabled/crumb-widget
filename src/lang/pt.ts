@@ -65,6 +65,7 @@ export const ptTranslations = {
   // Map
   noInPersonMeetings: 'Nenhuma reunião presencial para exibir no mapa com os filtros atuais',
   searchThisArea: 'Pesquisar nesta área',
+  yourLocation: 'Sua localização',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Formato de reunião',
   formatTypeCode_OPEN_OR_CLOSED: 'Aberta ou fechada',

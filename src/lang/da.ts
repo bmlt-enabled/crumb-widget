@@ -65,6 +65,7 @@ export const daTranslations = {
   // Map
   noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre',
   searchThisArea: 'Søg i dette område',
+  yourLocation: 'Din placering',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Mødeformat',
   formatTypeCode_OPEN_OR_CLOSED: 'Åbent eller lukket',

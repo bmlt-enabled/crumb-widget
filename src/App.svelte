@@ -10,6 +10,7 @@
   const GEOLOCATION_TIMEOUT_MS = 10000;
   let geoErrorHint = $state('');
   let geoDenied = $state(false);
+  let userLocation = $state<{ lat: number; lng: number } | undefined>(undefined);
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
@@ -49,6 +50,7 @@
     dataState.loading = true;
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
+        userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
         if (!dataState.error) {
           uiState.geoActive = true;
@@ -170,6 +172,7 @@
           tiles={config.tiles}
           tilesDark={config.tilesDark}
           geoActive={uiState.geoActive}
+          {userLocation}
           onsearcharea={async (lat, lng) => {
             await loadDataByCoordinates(config.serverUrl, lat, lng, config.geolocationRadius);
           }}
@@ -183,6 +186,7 @@
               tiles={config.tiles}
               tilesDark={config.tilesDark}
               geoActive={uiState.geoActive}
+              {userLocation}
               onsearcharea={async (lat, lng) => {
                 await loadDataByCoordinates(config.serverUrl, lat, lng, config.geolocationRadius);
               }}
