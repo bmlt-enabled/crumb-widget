@@ -65,6 +65,7 @@ export const svTranslations = {
   // Map
   noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter',
   searchThisArea: 'Sök i det här området',
+  yourLocation: 'Din plats',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'Mötesformat',
   formatTypeCode_OPEN_OR_CLOSED: 'Öppet eller slutet',

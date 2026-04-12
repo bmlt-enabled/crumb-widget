@@ -31,13 +31,19 @@ const mockMap = {
   remove: vi.fn(),
   invalidateSize: vi.fn(),
   getCenter: vi.fn(() => ({ lat: 34.05, lng: -118.24 })),
-  fitBounds: vi.fn()
+  fitBounds: vi.fn(),
+  createPane: vi.fn(() => ({ style: {} }))
 };
 
 vi.mock('leaflet', () => ({
   default: {
     map: vi.fn(() => mockMap),
     marker: vi.fn(() => mockMarker),
+    circleMarker: vi.fn(() => ({
+      bindTooltip: vi.fn().mockReturnThis(),
+      addTo: vi.fn().mockReturnThis(),
+      remove: vi.fn()
+    })),
     layerGroup: vi.fn(() => mockMarkersLayer),
     featureGroup: vi.fn(() => ({
       getBounds: vi.fn(() => ({

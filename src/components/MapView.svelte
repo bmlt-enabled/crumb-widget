@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import L from 'leaflet';
   import 'leaflet/dist/leaflet.css';
-  import type { Map as LeafletMap, Marker, LayerGroup, TileLayer } from 'leaflet';
+  import type { Map as LeafletMap, Marker, LayerGroup, TileLayer, CircleMarker } from 'leaflet';
   import type { ProcessedMeeting, MarkerConfig, TilesConfig } from '@/types';
   import { selectMeeting } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
@@ -17,14 +17,16 @@
     tiles?: TilesConfig;
     tilesDark?: TilesConfig;
     geoActive?: boolean;
+    userLocation?: { lat: number; lng: number };
     onsearcharea?: (lat: number, lng: number) => void;
   }
 
-  const { meetings, locationMarker, tiles, tilesDark, geoActive = false, onsearcharea }: Props = $props();
+  const { meetings, locationMarker, tiles, tilesDark, geoActive = false, userLocation, onsearcharea }: Props = $props();
 
   let mapEl: HTMLDivElement;
   let leafletMap: LeafletMap | null = null;
   let markersLayer: LayerGroup | null = null;
+  let userLocationMarker: CircleMarker | null = null;
   let tileLayer: TileLayer | null = null;
   let darkMq: MediaQueryList | null = null;
   let bodyObserver: MutationObserver | null = null;
@@ -96,6 +98,23 @@
     skipNextFit = false;
   }
 
+  function renderUserLocation(): void {
+    if (!leafletMap) return;
+    userLocationMarker?.remove();
+    userLocationMarker = null;
+    if (!userLocation) return;
+    userLocationMarker = L.circleMarker([userLocation.lat, userLocation.lng], {
+      radius: 8,
+      color: '#ffffff',
+      weight: 2,
+      fillColor: '#2563eb',
+      fillOpacity: 1,
+      pane: 'userLocationPane'
+    });
+    userLocationMarker.bindTooltip($t.yourLocation, { permanent: false, direction: 'top' });
+    userLocationMarker.addTo(leafletMap);
+  }
+
   function updateTiles(): void {
     if (!leafletMap) return;
     const result = applyTileLayer(leafletMap, resolveTileConfig(config.containerId, tiles, tilesDark), tileLayer, currentTileUrl);
@@ -114,6 +133,7 @@
 
   onMount(() => {
     leafletMap = L.map(mapEl);
+    leafletMap.createPane('userLocationPane').style.zIndex = '650';
     leafletMap.on('popupopen', () => {
       suppressPopupMoveEnd = true;
     });
@@ -149,6 +169,7 @@
 
     markersLayer = L.layerGroup().addTo(leafletMap);
     renderMarkers();
+    renderUserLocation();
 
     // Debounce invalidateSize to prevent iOS address-bar resize events from
     // firing mid-tap, which shifts map geometry and causes Leaflet's tap handler
@@ -171,6 +192,16 @@
     void _len;
     if (leafletMap && markersLayer) {
       renderMarkers();
+    }
+  });
+
+  $effect(() => {
+    // Read userLocation at top level so it's always tracked as a dependency,
+    // even if leafletMap isn't set yet on the first run.
+    const _loc = userLocation;
+    void _loc;
+    if (leafletMap) {
+      renderUserLocation();
     }
   });
 </script>
