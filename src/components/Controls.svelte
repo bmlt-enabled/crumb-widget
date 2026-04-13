@@ -297,6 +297,25 @@
         <!-- Distance dropdown -->
         {#if showGeoDropdown}
           <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[9rem] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+            {#if config.serviceBodyIds.length > 0}
+              <button
+                onclick={() => {
+                  showGeoDropdown = false;
+                  clearGeo();
+                }}
+                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {!uiState.geoActive ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+              >
+                <span class="flex h-4 w-4 shrink-0 items-center justify-center">
+                  {#if !uiState.geoActive}
+                    <svg class="h-3.5 w-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                  {/if}
+                </span>
+                {$t.anywhere}
+              </button>
+              <div class="my-1 border-t border-gray-100"></div>
+            {/if}
             <div class="px-3 pt-2 pb-0.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">{$t.nearMe}</div>
             {#each distanceOptions as dist (dist)}
               <button

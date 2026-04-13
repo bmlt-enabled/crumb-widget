@@ -17,11 +17,11 @@
     <div class="test-bar">
       <a href="index.html">← Tests</a>
       <strong>Geolocation</strong>
-      <code>geolocation: true</code> — Near Me button, geolocates on load
+      <code>geolocation: true + service bodies</code> — Near Me button with Anywhere option, geolocates on load
     </div>
 
     <!-- Uses aggregator which supports geo search -->
-    <div id="crumb-widget" data-server="https://aggregator.bmltenabled.org/main_server/" data-path="/tests/geolocation.html"></div>
+    <div id="crumb-widget" data-server="https://aggregator.bmltenabled.org/main_server/" data-service-body="1215" data-path="/tests/geolocation-service-bodies.html"></div>
 
     <script>
       var CrumbWidgetConfig = {
