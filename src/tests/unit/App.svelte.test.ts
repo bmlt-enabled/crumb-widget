@@ -140,7 +140,7 @@ describe('App', () => {
     dataState.meetings = [makeMeeting()];
     render(App, { props: { config: baseConfig } });
     expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
-    expect(screen.getAllByText('Mon')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Monday')[0]).toBeInTheDocument();
     expect(screen.getAllByText('7:00 PM')[0]).toBeInTheDocument();
   });
 

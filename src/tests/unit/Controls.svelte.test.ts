@@ -393,7 +393,7 @@ describe('active filter chips', () => {
     render(App, { props: { config: baseConfig } });
     await fireEvent.click(screen.getByText('Any Day'));
     await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
-    expect(screen.getByText('Monday', { selector: 'button *' })).toBeInTheDocument();
+    expect(screen.getByText('Monday', { selector: '[class*="rounded-full"]' })).toBeInTheDocument();
     expect(screen.getByText('Clear all filters')).toBeInTheDocument();
   });
 
