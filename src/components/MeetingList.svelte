@@ -81,8 +81,9 @@
         {#each inProgressMeetings as meeting (meeting.id_bigint)}
           <button type="button" class="bmlt-row bmlt-in-progress-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left" onclick={() => selectMeeting(meeting)}>
             {#if cols.has('time')}
-              <div class="w-20 shrink-0 text-sm text-gray-600">
-                <div class="whitespace-nowrap">{meeting.formattedTime} {$t.weekdaysShort[meeting.weekday_tinyint - 1]}</div>
+              <div class="w-24 shrink-0 overflow-hidden text-sm text-gray-600">
+                <div class="whitespace-nowrap">{meeting.formattedTime}</div>
+                <div>{$t.weekdays[meeting.weekday_tinyint - 1]}</div>
                 {#if uiState.geoActive}{@const d = meetingDistanceLabel(meeting)}{#if d}<div class="text-xs text-gray-400">{d}</div>{/if}{/if}
               </div>
             {/if}
@@ -131,8 +132,9 @@
       <button type="button" class="bmlt-row flex w-full cursor-pointer gap-4 px-4 py-4 text-left transition-colors" onclick={() => selectMeeting(meeting)}>
         <!-- Left: time -->
         {#if cols.has('time')}
-          <div class="w-20 shrink-0 text-sm text-gray-600">
-            <div class="whitespace-nowrap">{meeting.formattedTime} {$t.weekdaysShort[meeting.weekday_tinyint - 1]}</div>
+          <div class="w-24 shrink-0 overflow-hidden text-sm text-gray-600">
+            <div class="whitespace-nowrap">{meeting.formattedTime}</div>
+            <div>{$t.weekdays[meeting.weekday_tinyint - 1]}</div>
             {#if uiState.geoActive}{@const d = meetingDistanceLabel(meeting)}{#if d}<div class="text-xs text-gray-400">{d}</div>{/if}{/if}
           </div>
         {/if}
@@ -215,7 +217,7 @@
                   <td class="bmlt-time-col px-4 py-4 text-sm text-gray-600">
                     <time class="flex flex-col lg:flex-row lg:gap-2">
                       <span class="whitespace-nowrap">{meeting.formattedTime}</span>
-                      <span class="whitespace-nowrap">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                      <span class="whitespace-nowrap">{$t.weekdays[meeting.weekday_tinyint - 1]}</span>
                     </time>
                   </td>
                 {/if}
@@ -287,7 +289,7 @@
               <td class="bmlt-time-col px-4 py-4 text-sm text-gray-600">
                 <time class="flex flex-col lg:flex-row lg:gap-2">
                   <span class="whitespace-nowrap">{meeting.formattedTime}</span>
-                  <span class="whitespace-nowrap">{$t.weekdaysShort[meeting.weekday_tinyint - 1]}</span>
+                  <span class="whitespace-nowrap">{$t.weekdays[meeting.weekday_tinyint - 1]}</span>
                 </time>
               </td>
             {/if}
