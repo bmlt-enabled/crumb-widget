@@ -46,6 +46,10 @@ export default defineConfig({
         copyFileSync('pages/docs.html', 'dist/index.html');
         copyFileSync('pages/meetings.html', 'dist/meetings.html');
         copyFileSync('pages/privacy.html', 'dist/privacy.html');
+        copyFileSync('pages/crumb-logo.svg', 'dist/crumb-logo.svg');
+        copyFileSync('pages/favicon-32x32.png', 'dist/favicon-32x32.png');
+        copyFileSync('pages/apple-touch-icon.png', 'dist/apple-touch-icon.png');
+        copyFileSync('pages/og-image.png', 'dist/og-image.png');
         const testSrc = 'pages/tests';
         const testDst = 'dist/tests';
         if (existsSync(testSrc)) {
