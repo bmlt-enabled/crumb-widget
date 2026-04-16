@@ -191,7 +191,7 @@ describe('day dropdown', () => {
     await fireEvent.click(screen.getByText('Any Day'));
     await fireEvent.click(screen.getByRole('button', { name: 'Monday' }));
     await fireEvent.click(screen.getByRole('button', { name: 'Wednesday' }));
-    expect(screen.getByText(/2 Day/)).toBeInTheDocument();
+    expect(screen.getByText(/2 selected/)).toBeInTheDocument();
   });
 
   test('opening day dropdown closes time dropdown', async () => {

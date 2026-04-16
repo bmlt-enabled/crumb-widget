@@ -196,7 +196,7 @@
         {#if inProgressMeetings.length > 0}
           <!-- In-progress banner row -->
           <tr>
-            <td colspan="99" class="p-0">
+            <td colspan={printHeaderColSpan + (uiState.geoActive ? 1 : 0)} class="p-0">
               <button type="button" class="bmlt-in-progress-banner flex w-full items-center justify-center gap-2 px-4 py-5 text-sm font-semibold" onclick={() => (inProgressOpen = !inProgressOpen)}>
                 <span>
                   {inProgressMeetings.length}
