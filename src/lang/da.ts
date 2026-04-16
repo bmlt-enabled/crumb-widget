@@ -3,6 +3,7 @@ export const daTranslations = {
   searchMeetings: 'Søg møder...',
   filters: 'Filtre',
   day: 'Dag',
+  selected: 'valgte',
   venueType: 'Mødetype',
   timeOfDay: 'Tid på dagen',
   format: 'Format',

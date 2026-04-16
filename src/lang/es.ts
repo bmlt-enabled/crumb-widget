@@ -3,6 +3,7 @@ export const esTranslations = {
   searchMeetings: 'Buscar reuniones...',
   filters: 'Filtros',
   day: 'Día',
+  selected: 'seleccionados',
   venueType: 'Tipo de lugar',
   timeOfDay: 'Hora del día',
   format: 'Formato',

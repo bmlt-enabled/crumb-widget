@@ -210,7 +210,7 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
     result = result.filter((m) => {
       const lat = Number(m.latitude);
       const lng = Number(m.longitude);
-      if (!lat || !lng) return false;
+      if (Number.isNaN(lat) || Number.isNaN(lng)) return false;
       return haversineDistanceMiles(userLocation.lat, userLocation.lng, lat, lng) <= geoRadiusMiles;
     });
   }

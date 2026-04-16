@@ -23,7 +23,7 @@ export function isDarkMode(containerId: string): boolean {
  */
 export function observeMapResize(element: Element, invalidateSize: () => void): () => void {
   let timer: ReturnType<typeof setTimeout> | undefined;
-  const observer = new ResizeObserver((_entries: ResizeObserverEntry[]) => {
+  const observer = new ResizeObserver(() => {
     clearTimeout(timer);
     timer = setTimeout(invalidateSize, RESIZE_DEBOUNCE_MS);
   });

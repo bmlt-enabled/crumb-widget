@@ -3,6 +3,7 @@ export const deTranslations = {
   searchMeetings: 'Treffen suchen...',
   filters: 'Filter',
   day: 'Tag',
+  selected: 'ausgewählt',
   venueType: 'Veranstaltungsart',
   timeOfDay: 'Tageszeit',
   format: 'Format',

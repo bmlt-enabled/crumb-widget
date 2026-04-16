@@ -26,7 +26,7 @@
       return dataState.meetings.some((m) => {
         const lat = Number(m.latitude);
         const lng = Number(m.longitude);
-        if (!lat || !lng) return false;
+        if (Number.isNaN(lat) || Number.isNaN(lng)) return false;
         return haversineDistanceMiles(loc.lat, loc.lng, lat, lng) <= radiusMiles;
       });
     });
@@ -346,7 +346,7 @@
         ? $t.anyDay
         : uiState.filters.weekdays.length === 1
           ? ($t.weekdays[uiState.filters.weekdays[0]! - 1] ?? '')
-          : `${uiState.filters.weekdays.length} ${$t.day}s`}
+          : `${uiState.filters.weekdays.length} ${$t.selected}`}
       isActive={uiState.filters.weekdays.length > 0}
       selected={uiState.filters.weekdays}
       options={$t.weekdays.map((day, i) => ({ value: i + 1, label: day }))}
@@ -366,7 +366,7 @@
         ? $t.anyTime
         : uiState.filters.timeOfDay.length === 1
           ? $t[TIME_OF_DAY_VALUES.find((v) => v.value === uiState.filters.timeOfDay[0])?.key ?? 'anyTime']
-          : `${uiState.filters.timeOfDay.length} ${$t.timeOfDay}`}
+          : `${uiState.filters.timeOfDay.length} ${$t.selected}`}
       isActive={uiState.filters.timeOfDay.length > 0}
       selected={uiState.filters.timeOfDay}
       options={TIME_OF_DAY_VALUES.map((tod) => ({ value: tod.value, label: $t[tod.key] }))}
@@ -468,7 +468,7 @@
           ? $t.anyServiceBody
           : uiState.filters.serviceBodyNames.length === 1
             ? (uiState.filters.serviceBodyNames[0] ?? '')
-            : `${uiState.filters.serviceBodyNames.length} ${$t.serviceBody}`}
+            : `${uiState.filters.serviceBodyNames.length} ${$t.selected}`}
         isActive={uiState.filters.serviceBodyNames.length > 0}
         selected={uiState.filters.serviceBodyNames}
         options={availableServiceBodies.map((name) => ({ value: name, label: name }))}
