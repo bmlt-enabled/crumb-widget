@@ -65,4 +65,4 @@ jobs:
           aws s3 cp dist/app.js s3://${{ secrets.CDN_S3_BUCKET }}/crumb-widget.js
       - name: Invalidate CloudFront Cache 🌐
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_ID }} --paths "/crumb-widget.js"
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CDN_CLOUDFRONT_ID }} --paths "/crumb-widget.js"
