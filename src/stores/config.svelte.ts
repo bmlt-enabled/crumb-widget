@@ -47,7 +47,8 @@ export function initConfig(el: HTMLElement): void {
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
   config.columns = globalCfg.columns ?? ALL_COLUMNS;
-  const isAggregator = server.includes('https://aggregator.bmltenabled.org');
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity
+  const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
   config.geolocation = globalCfg.geolocation ?? isAggregator;
   config.geolocationRadius = globalCfg.geolocationRadius ?? 75;
   config.distanceOptions = globalCfg.distanceOptions ?? [5, 10, 15, 25, 50, 100];
