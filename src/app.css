@@ -443,8 +443,7 @@
 /* Print-only elements: hidden on screen, shown only when printing. */
 #crumb-widget .bmlt-print-header,
 #crumb-widget .bmlt-print-day-row,
-#crumb-widget .bmlt-print-url,
-#crumb-widget .bmlt-print-qr {
+#crumb-widget .bmlt-print-url {
   display: none;
 }
 
@@ -527,14 +526,6 @@
     color: #000000 !important;
     word-break: break-all !important;
     margin-top: 2px !important;
-  }
-
-  /* Print-only QR code next to virtual badge. */
-  #crumb-widget .bmlt-print-qr {
-    display: block !important;
-    margin-top: 4px !important;
-    width: 72px !important;
-    height: 72px !important;
   }
 
   /* Print-only title above the table. */
