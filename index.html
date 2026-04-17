@@ -1,15 +1,56 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!--
+      **********************************************************
+      *                  Crumb Widget — Dev                   *
+      **********************************************************
+      Local dev entry point for the embeddable BMLT meeting finder
+      widget. Vite serves this page and loads the Svelte source from
+      `/src/main.ts`. For the production-bundled IIFE, swap that script
+      tag for the CDN build (see PRODUCTION USAGE below).
+
+      Crumb Widget is licensed under the MIT License — see LICENSE.
+    -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BMLT Meeting Finder - Dev</title>
     <style>
-      body { margin: 0; padding: 20px; background: #f3f4f6; font-family: system-ui, sans-serif; }
-      #crumb-widget { height: 80vh; max-width: 1000px; margin: 0 auto; }
+      body {
+        margin: 0;
+        padding: 20px;
+        background: #f3f4f6;
+        font-family: system-ui, sans-serif;
+      }
+      #crumb-widget {
+        height: 80vh;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
     </style>
   </head>
   <body>
+    <!--
+      **********************************************************
+      *                  WIDGET CONTAINER                       *
+      **********************************************************
+      The widget mounts inside this <div>. It MUST have id="crumb-widget"
+      (the IIFE entry in src/main.ts looks up that ID).
+
+      Configuration is supplied via `data-*` attributes:
+
+        data-server          (required)  BMLT root_server URL.
+        data-service-body    (optional)  A single service body ID, or a
+                                         comma-separated list ("1,2,3").
+                                         Omit / empty = fetch all meetings.
+        data-view            (optional)  Default view: "list" | "map" | "both"
+                                         (default: "list"). Can also be set
+                                         via CrumbWidgetConfig.view.
+        data-path            (optional)  Base path for History API routing
+                                         (e.g. "/meetings" produces clean
+                                         URLs like /meetings/123). Omit to
+                                         use hash-based routing (default).
+    -->
     <div
       id="crumb-widget"
       data-server="https://bmlt.sezf.org/main_server/"
@@ -17,12 +58,55 @@
       data-view="list"
       data-path="/"
     ></div>
+
+    <!--
+      **********************************************************
+      *               OPTIONAL GLOBAL CONFIG                    *
+      **********************************************************
+      `window.CrumbWidgetConfig` is read once at mount and overrides
+      any matching `data-*` attribute. It MUST be defined BEFORE the
+      widget script tag below, otherwise the values are ignored.
+
+      All fields are optional. Common ones shown below; see
+      src/types/index.ts (CrumbWidgetConfig) for the full surface.
+
+        language          ISO code, e.g. 'en', 'es', 'fr', 'de', 'pt',
+                          'it', 'sv', 'da'. Defaults to navigator.language.
+        view              'list' | 'map' | 'both' — overrides data-view.
+        columns           Array of column keys to show in the meeting list:
+                          'time' | 'name' | 'location' | 'address' | 'service_body'.
+        geolocation       Boolean — show "near me" search.
+        geolocationRadius Number — default radius (in distanceUnit).
+        distanceOptions   Number[] — radii offered in the dropdown.
+        distanceUnit      'mi' | 'km'.
+        height            Number (px) — fixed widget height.
+        darkMode          'auto' | true | false — auto follows the OS.
+        nowOffset         Number (minutes) — meetings starting within this
+                          window count as "happening now".
+        hideHeader        Boolean — suppress the widget header.
+        map.tiles         { url, attribution } — custom tile layer (light).
+        map.tiles_dark    { url, attribution } — custom tile layer (dark).
+        map.markers.location  Custom Leaflet marker { html, width, height }.
+    -->
     <script>
       var CrumbWidgetConfig = {
         language: 'en',
         columns: ['time', 'name', 'location', 'address', 'service_body']
       };
     </script>
+
+    <!--
+      **********************************************************
+      *                     WIDGET SCRIPT                       *
+      **********************************************************
+      DEV: this loads the Svelte source via Vite's module resolver.
+      PRODUCTION USAGE: replace the line below with the CDN build:
+
+          <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
+
+      Or use a self-hosted copy of `dist/app.js` (single self-contained
+      IIFE — CSS is injected at runtime, no separate stylesheet required).
+    -->
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
