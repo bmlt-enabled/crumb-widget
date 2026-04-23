@@ -206,7 +206,7 @@
   });
 </script>
 
-<div class="bmlt-map-container relative h-full w-full">
+<div class="bmlt-map-container relative h-full w-full overflow-hidden">
   <div bind:this={mapEl} class="h-full min-h-96 w-full"></div>
 
   {#if showSearchArea && geoActive && onsearcharea}
