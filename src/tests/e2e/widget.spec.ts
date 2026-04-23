@@ -78,16 +78,18 @@ async function mockBmltApi(page: Page) {
   });
 }
 
-// Helper: a cell in the desktop table containing the given meeting name
+// Helper: whichever rendering of the meeting name is currently visible.
+// Desktop renders a <table> with role="cell"; mobile renders stacked <button>
+// cards. The opposite layout is CSS-hidden, so filter to :visible.
 function meetingCell(page: Page, name: string) {
-  return page.getByRole('cell', { name, exact: true });
+  return page.locator(`:text-is("${name}")`).locator('visible=true').first();
 }
 
 async function loadWidget(page: Page) {
   await mockBmltApi(page);
   await page.goto('/src/tests/e2e/fixture.html');
-  // Wait for the table to show a meeting row
-  await expect(meetingCell(page, 'Monday Serenity Group')).toBeVisible({ timeout: 15000 });
+  // Meeting count footer is layout-agnostic.
+  await expect(page.getByText(/Showing\s+\d+\s+meeting/)).toBeVisible({ timeout: 15000 });
 }
 
 test.describe('Widget — meeting list', () => {
@@ -115,7 +117,7 @@ test.describe('Widget — meeting list', () => {
   test('day filter shows only meetings on selected day', async ({ page }) => {
     await loadWidget(page);
     await page.getByText('Any Day').click();
-    await page.getByRole('button', { name: 'Wednesday' }).click();
+    await page.getByRole('button', { name: 'Wednesday', exact: true }).click();
     await expect(meetingCell(page, 'Wednesday Morning Group')).toBeVisible();
     await expect(meetingCell(page, 'Monday Serenity Group')).not.toBeVisible();
   });
@@ -154,22 +156,20 @@ test.describe('Widget — meeting detail', () => {
 });
 
 test.describe('Widget — in-progress banner', () => {
-  // Target the banner inside the desktop table (avoids the hidden mobile duplicate)
-  const tableBanner = (page: Page) => page.locator('table .bmlt-in-progress-banner');
+  // Banner is rendered in both layouts; one is CSS-hidden. Pick whichever is visible.
+  const visibleBanner = (page: Page) => page.locator('.bmlt-in-progress-banner').locator('visible=true').first();
 
   async function loadWidgetInProgress(page: Page) {
     await mockBmltApi(page);
     await page.goto('/src/tests/e2e/fixture.html');
-    // When a meeting is in-progress the banner appears instead of the meeting cell,
-    // so wait for the desktop table banner (the mobile duplicate is CSS-hidden).
-    await expect(tableBanner(page)).toBeVisible({ timeout: 15000 });
+    await expect(visibleBanner(page)).toBeVisible({ timeout: 15000 });
   }
 
   test('shows in-progress banner for meetings that just started', async ({ page }) => {
     // Mon Jan 8 2024 at 7:05pm — the 7:00pm Monday meeting is 5min in (within 10min offset)
     await page.clock.setFixedTime(new Date('2024-01-08T19:05:00'));
     await loadWidgetInProgress(page);
-    await expect(tableBanner(page)).toContainText(/1\s+meeting\s+in progress/i);
+    await expect(visibleBanner(page)).toContainText(/1\s+meeting\s+in progress/i);
   });
 
   test('clicking the banner reveals the in-progress meeting', async ({ page }) => {
@@ -178,7 +178,7 @@ test.describe('Widget — in-progress banner', () => {
     // Meeting is hidden behind the collapsed banner
     await expect(meetingCell(page, 'Monday Serenity Group')).not.toBeVisible();
     // Expand the banner
-    await tableBanner(page).click();
+    await visibleBanner(page).click();
     await expect(meetingCell(page, 'Monday Serenity Group')).toBeVisible();
   });
 });

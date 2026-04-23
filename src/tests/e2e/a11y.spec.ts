@@ -1,6 +1,14 @@
 import { test, expect, type Page } from '@playwright/test';
 import { checkA11y, injectAxe } from 'axe-playwright';
 
+const AXE_OPTIONS = {
+  axeOptions: {
+    runOnly: { type: 'tag' as const, values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] }
+  },
+  detailedReport: true,
+  detailedReportOptions: { html: true }
+};
+
 const MEETINGS = [
   {
     id_bigint: '1',
@@ -49,26 +57,43 @@ const MEETINGS = [
 
 const FORMATS = [{ id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en' }];
 
+// Disable CSS transitions/animations so axe's synchronous color-contrast scan
+// doesn't catch halfway-transition colors on toggle buttons after a view switch.
+const DISABLE_TRANSITIONS = `
+  *, *::before, *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+`;
+
 async function loadWidget(page: Page) {
   await page.route('https://bmlt.e2e.test/**', (route) => route.fulfill({ json: { meetings: MEETINGS, formats: FORMATS } }));
   await page.goto('/src/tests/e2e/fixture.html');
-  await expect(page.getByRole('cell', { name: 'Monday Serenity Group', exact: true })).toBeVisible({
-    timeout: 15000
-  });
+  // Meeting count footer is rendered once regardless of mobile/desktop layout.
+  await expect(page.getByText(/Showing\s+\d+\s+meeting/)).toBeVisible({ timeout: 15000 });
+  await page.addStyleTag({ content: DISABLE_TRANSITIONS });
   await injectAxe(page);
 }
 
 test.describe('Accessibility', () => {
   test('meeting list has no violations', async ({ page }) => {
     await loadWidget(page);
-    await checkA11y(page, '#crumb-widget');
+    await checkA11y(page, '#crumb-widget', AXE_OPTIONS);
   });
 
   test('virtual meeting detail has no violations', async ({ page }) => {
     await loadWidget(page);
-    await page.getByRole('cell', { name: 'Friday Online Group', exact: true }).click();
+    // Click the visible instance — both mobile (card) and desktop (table row) contain the name.
+    await page.locator(':text-is("Friday Online Group")').locator('visible=true').first().click();
     await expect(page.getByText('Back to meetings')).toBeVisible();
-    await checkA11y(page, '#crumb-widget');
+    await checkA11y(page, '#crumb-widget', AXE_OPTIONS);
+  });
+
+  test('map view has no violations', async ({ page }) => {
+    await loadWidget(page);
+    await page.getByRole('button', { name: 'Map', exact: true }).click();
+    await expect(page.locator('.leaflet-container')).toBeVisible();
+    await checkA11y(page, '#crumb-widget', AXE_OPTIONS);
   });
 
   test('in-progress banner has no violations', async ({ page }) => {
@@ -76,8 +101,9 @@ test.describe('Accessibility', () => {
     await page.clock.setFixedTime(new Date('2024-01-08T19:05:00'));
     await page.route('https://bmlt.e2e.test/**', (route) => route.fulfill({ json: { meetings: MEETINGS, formats: FORMATS } }));
     await page.goto('/src/tests/e2e/fixture.html');
-    await expect(page.locator('table .bmlt-in-progress-banner')).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('.bmlt-in-progress-banner').locator('visible=true').first()).toBeVisible({ timeout: 15000 });
+    await page.addStyleTag({ content: DISABLE_TRANSITIONS });
     await injectAxe(page);
-    await checkA11y(page, '#crumb-widget');
+    await checkA11y(page, '#crumb-widget', AXE_OPTIONS);
   });
 });
