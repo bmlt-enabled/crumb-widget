@@ -560,6 +560,7 @@
           <li class="section-label">Routing</li>
           <li><a href="#routing">Routing modes</a></li>
           <li class="section-label">Website Builders</li>
+          <li><a href="#find-service-body">Finding your Service Body ID</a></li>
           <li><a href="#google-sites">Google Sites</a></li>
           <li><a href="#squarespace">Squarespace</a></li>
           <li><a href="#wix">Wix</a></li>
@@ -1392,6 +1393,44 @@
         <h2 id="site-builders">Website Builders</h2>
         <p>Crumb Widget can also be embedded on common website builders, but the setup varies by platform.</p>
 
+        <h3 id="find-service-body">Finding your Service Body ID</h3>
+        <p>Every embed below filters meetings to a specific <strong>service body</strong> (area, region, or zone) by passing its numeric ID in <code>data-service-body</code>. You can look this up from your BMLT server's <strong>semantic workshop</strong>, which is available at <code>&lt;your-server&gt;/main_server/semantic</code> on every BMLT server.</p>
+
+        <ol>
+          <li>Open the semantic workshop in your browser. For example, <a href="https://bmlt.sezf.org/main_server/semantic" target="_blank" rel="noopener">https://bmlt.sezf.org/main_server/semantic</a> — replace the domain with your own BMLT server.</li>
+          <li>Under <strong>Operation</strong>, choose the action that retrieves service bodies (labels vary slightly by version, but it is typically <em>Get Service Bodies</em> or <em>Retrieve information about Service Bodies</em>).</li>
+          <li>Leave the response format as JSON and click <strong>Execute JSON Request</strong>.</li>
+          <li>In the JSON response, find your area, region, or zone by <code>name</code>. The <code>id</code> field next to it is the number you pass to <code>data-service-body</code>.</li>
+        </ol>
+
+        <div class="demo">
+          <div class="demo-header">Example JSON response</div>
+          <pre><code class="language-json">[
+  {
+    "id": "42",
+    "name": "Greater Seattle Area",
+    "type": "AS",
+    "parent_id": "7"
+  },
+  {
+    "id": "57",
+    "name": "North Sound Area",
+    "type": "AS",
+    "parent_id": "7"
+  }
+]</code></pre>
+        </div>
+
+        <p>In this example you would pass <code>data-service-body="42"</code> for just Greater Seattle, or <code>data-service-body="42,57"</code> to combine both areas. You can also skip the semantic workshop and hit the JSON endpoint directly at <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.</p>
+
+        <div class="callout">
+          <strong>Don't know your server URL or service body ID?</strong> Browse <a href="https://tally.bmlt.app/" target="_blank" rel="noopener">tally.bmlt.app</a> — it lists known BMLT servers and the service bodies on each. Find your area, region, or zone to get both the <code>data-server</code> URL and the <code>data-service-body</code> ID in one place.
+        </div>
+
+        <div class="callout">
+          <strong>Tip:</strong> Child service bodies are always included automatically. If you pass a region's ID, meetings from every area under it are included — you do not need to list each child area.
+        </div>
+
         <h3 id="google-sites">Google Sites</h3>
         <p>Google Sites supports embedding HTML, CSS, and JavaScript code using <strong>Insert → Embed → Embed code</strong>. You can also use a full-page embed if you want the meeting finder to live on its own page.</p>
 
@@ -1418,17 +1457,25 @@
         <p><a href="https://sites.google.com/view/crumb-seattle/" target="_blank">See a live demo on Google Sites &rarr;</a></p>
 
         <h3 id="squarespace">Squarespace</h3>
-        <p>Squarespace supports custom code, but JavaScript support depends on your plan. Their documentation says advanced code blocks and code injection are available on <strong>Core, Plus, Advanced, Business, Commerce Basic, and Commerce Advanced</strong> plans.</p>
+        <p>Squarespace embeds use a <strong>Code Block</strong>, which accepts raw HTML and JavaScript. Per Squarespace's documentation, Code Blocks with JavaScript enabled are available on the <strong>Core, Plus, Advanced, Business, Commerce Basic, and Commerce Advanced</strong> plans. The free Personal plan does not support JavaScript in Code Blocks.</p>
+
+        <p>Before you start, you need two values:</p>
+        <ul>
+          <li><code>data-server</code> — your BMLT server's <code>/main_server/</code> URL</li>
+          <li><code>data-service-body</code> — the numeric ID for your area, region, or zone (see <a href="#find-service-body">Finding your Service Body ID</a>)</li>
+        </ul>
 
         <ol>
-          <li>Edit the page where you want the widget.</li>
-          <li>Add a <strong>Code Block</strong>.</li>
-          <li>Paste the widget container and script.</li>
-          <li>Save and publish.</li>
+          <li>Log in to Squarespace and open the page where you want the meeting finder.</li>
+          <li>Click <strong>Edit</strong>, then hover where you want the widget to go and click the <strong>+</strong> (Add Block) button.</li>
+          <li>Search for and insert a <strong>Code</strong> block.</li>
+          <li>In the Code block editor, make sure the <strong>Mode</strong> dropdown is set to <strong>HTML</strong> and that <strong>Display Source</strong> is <em>off</em> (otherwise Squarespace will show the raw tags instead of running the code).</li>
+          <li>Paste the snippet below, replacing <code>data-server</code> and <code>data-service-body</code> with your values.</li>
+          <li>Click outside the block to close it, then click <strong>Save</strong>. Publish the page if it is not already live.</li>
         </ol>
 
         <div class="demo">
-          <div class="demo-header">Squarespace code block</div>
+          <div class="demo-header">Squarespace Code block</div>
           <pre><code>&lt;div
   id="crumb-widget"
   data-server="https://myserver.com/main_server/"
@@ -1437,21 +1484,44 @@
 &lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 
-        <p><strong>Important:</strong> If JavaScript is disabled in your Squarespace code block or unavailable on your plan, the widget will not load. You may need a higher-tier Squarespace plan for JavaScript-based embeds.</p>
+        <p><strong>Note:</strong> Squarespace renders Code blocks inside the normal page flow, so the widget will take up as much vertical space as it needs. If the preview looks empty, re-open the block and confirm that <strong>Display Source</strong> is off and the <strong>Mode</strong> is set to <strong>HTML</strong>. If you are on a plan that does not allow JavaScript in Code blocks, you will need to upgrade before the widget will load.</p>
 
         <h3 id="wix">Wix</h3>
-        <p>Wix supports custom code through <strong>Settings → Custom Code</strong>. Wix says this requires your site to be <strong>published</strong> and to have a <strong>connected domain</strong>. Since connecting your own domain is a Premium or Studio feature, you may need a paid plan to use the JavaScript embed method.</p>
+        <p>Wix splits the embed across two places: the widget's HTML container lives inside your page as an <strong>Embed HTML</strong> element (Wix calls this "Custom Embeds → Embed HTML" or "Embed a Widget"), and the loader <code>&lt;script&gt;</code> goes in <strong>Settings → Custom Code</strong> so it only loads once per visit. Per Wix's documentation, Custom Code requires your site to be <strong>published</strong> on a <strong>paid plan with a connected domain</strong>.</p>
 
+        <p>Before you start, you need two values:</p>
+        <ul>
+          <li><code>data-server</code> — your BMLT server's <code>/main_server/</code> URL</li>
+          <li><code>data-service-body</code> — the numeric ID for your area, region, or zone (see <a href="#find-service-body">Finding your Service Body ID</a>)</li>
+        </ul>
+
+        <p><strong>Step 1 — Add the loader script (once per site):</strong></p>
         <ol>
-          <li>Publish your site.</li>
-          <li>Make sure the site has a connected domain.</li>
-          <li>Go to <strong>Settings</strong> → <strong>Custom Code</strong>.</li>
-          <li>Add the widget script to the page where you want it to load.</li>
-          <li>Add a container element in the page content where the widget should render.</li>
+          <li>In your Wix dashboard, go to <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong>.</li>
+          <li>Click <strong>+ Add Custom Code</strong>.</li>
+          <li>Paste the loader snippet below into the code box.</li>
+          <li>Under <strong>Add Code to Pages</strong>, choose either <em>All pages</em> or just the page that will show the widget (loading it only where needed is faster).</li>
+          <li>Set <strong>Place Code in</strong> to <strong>Body – end</strong>.</li>
+          <li>Name it something like <em>Crumb Widget loader</em> and click <strong>Apply</strong>.</li>
         </ol>
 
         <div class="demo">
-          <div class="demo-header">Wix container</div>
+          <div class="demo-header">Wix Custom Code — loader</div>
+          <pre><code>&lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <p><strong>Step 2 — Add the widget container on the page:</strong></p>
+        <ol>
+          <li>Open the page in the Wix Editor.</li>
+          <li>Click <strong>+ Add Elements</strong> → <strong>Embed Code</strong> → <strong>Embed HTML</strong> (in Wix Studio this is <strong>Embed &amp; Social</strong> → <strong>HTML iframe/Embed</strong>).</li>
+          <li>Drop the element where you want the widget to appear and click <strong>Enter Code</strong>.</li>
+          <li>Paste the container snippet below, replacing <code>data-server</code> and <code>data-service-body</code> with your values.</li>
+          <li>Click <strong>Update</strong>. Resize the element to roughly the height you want — Wix's Embed HTML has a fixed size, so give it enough room (e.g. <code>800px</code> tall) for the meeting list and map.</li>
+          <li>Click <strong>Publish</strong>.</li>
+        </ol>
+
+        <div class="demo">
+          <div class="demo-header">Wix Embed HTML — container</div>
           <pre><code>&lt;div
   id="crumb-widget"
   data-server="https://myserver.com/main_server/"
@@ -1459,12 +1529,9 @@
 &gt;&lt;/div&gt;</code></pre>
         </div>
 
-        <div class="demo">
-          <div class="demo-header">Wix custom code</div>
-          <pre><code>&lt;script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        <div class="callout">
+          <strong>Heads up:</strong> Wix's Embed HTML element renders inside an iframe, which means the widget cannot resize the surrounding page and deep-links to individual meetings will not update the browser URL. All in-widget navigation (list, map, meeting detail, filters) still works normally. If you do not see the Custom Code option in Settings, your plan likely does not include it — check that your site is published on a paid plan with a connected domain.
         </div>
-
-        <p><strong>Important:</strong> Wix’s custom code feature is intended for third-party snippets and depends on Wix platform restrictions. If you do not see the Custom Code option, check whether your site is published and whether it has a connected domain.</p>
 
         <h2 id="browser-support">Browser Support</h2>
         <p>All modern browsers. Internet Explorer is not supported.</p>
