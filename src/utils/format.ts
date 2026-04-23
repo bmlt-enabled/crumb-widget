@@ -150,6 +150,16 @@ const CONFERENCE_PROVIDERS: Record<string, string> = {
   'zoom.us': 'Zoom'
 };
 
+export function normalizeVirtualLink(url: string): string | undefined {
+  const normalized = url.includes('://') ? url : `https://${url}`;
+  try {
+    const { protocol } = new URL(normalized);
+    return protocol === 'http:' || protocol === 'https:' ? normalized : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 export function getConferenceProvider(url: string): string | undefined {
   try {
     const hostname = new URL(url).hostname;
