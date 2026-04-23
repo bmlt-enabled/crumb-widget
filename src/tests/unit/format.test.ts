@@ -11,7 +11,9 @@ import {
   getDirectionsUrl,
   getGeoErrorMessage,
   haversineDistanceMiles,
-  filterMeetings
+  filterMeetings,
+  normalizeVirtualLink,
+  getConferenceProvider
 } from '@utils/format';
 import type { ProcessedMeeting, FilterState } from '@/types/index';
 import type { Meeting } from 'bmlt-query-client';
@@ -343,6 +345,29 @@ describe('haversineDistanceMiles', () => {
     const a = haversineDistanceMiles(34.05, -118.24, 40.71, -74.01);
     const b = haversineDistanceMiles(40.71, -74.01, 34.05, -118.24);
     expect(a).toBeCloseTo(b, 5);
+  });
+});
+
+describe('normalizeVirtualLink', () => {
+  test('returns valid https URL unchanged', () => expect(normalizeVirtualLink('https://zoom.us/j/123')).toBe('https://zoom.us/j/123'));
+  test('returns valid http URL unchanged', () => expect(normalizeVirtualLink('http://zoom.us/j/123')).toBe('http://zoom.us/j/123'));
+  test('prepends https:// when scheme is missing', () => expect(normalizeVirtualLink('zoom.us/j/123')).toBe('https://zoom.us/j/123'));
+  test('prepends https:// for meet.google.com without scheme', () => expect(normalizeVirtualLink('meet.google.com/abc-defg-hij')).toBe('https://meet.google.com/abc-defg-hij'));
+  test('returns undefined for javascript: scheme', () => expect(normalizeVirtualLink('javascript:alert(1)')).toBeUndefined());
+  test('returns undefined for empty string', () => expect(normalizeVirtualLink('')).toBeUndefined());
+  test('returns undefined for garbage input', () => expect(normalizeVirtualLink('not a url at all!!!')).toBeUndefined());
+});
+
+describe('getConferenceProvider', () => {
+  test('detects Zoom', () => expect(getConferenceProvider('https://zoom.us/j/123')).toBe('Zoom'));
+  test('detects Google Meet', () => expect(getConferenceProvider('https://meet.google.com/abc')).toBe('Google Meet'));
+  test('detects Teams', () => expect(getConferenceProvider('https://teams.microsoft.com/l/meetup')).toBe('Teams'));
+  test('returns undefined for unknown provider', () => expect(getConferenceProvider('https://unknown-platform.example.com/room/42')).toBeUndefined());
+  test('returns undefined for malformed URL', () => expect(getConferenceProvider('zoom.us/j/123')).toBeUndefined());
+  test('normalizeVirtualLink + getConferenceProvider detects provider from schemeless URL', () => {
+    const safe = normalizeVirtualLink('zoom.us/j/123');
+    expect(safe).toBeDefined();
+    expect(getConferenceProvider(safe!)).toBe('Zoom');
   });
 });
 
