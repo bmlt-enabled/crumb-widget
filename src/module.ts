@@ -1,7 +1,7 @@
 import { mount } from 'svelte';
 import './app.css';
 import App from './App.svelte';
-import { config } from '@stores/config.svelte';
+import { config, CONFIG_DEFAULTS } from '@stores/config.svelte';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization } from '@stores/localization';
 import type { CrumbWidgetConfig, Column } from '@/types';
@@ -9,8 +9,6 @@ import type { CrumbWidgetConfig, Column } from '@/types';
 export type { CrumbWidgetConfig, Column };
 
 declare const __APP_VERSION__: string;
-
-const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
 
 export interface MountOptions extends CrumbWidgetConfig {
   /** URL of the BMLT server (required) */
@@ -36,17 +34,17 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.serverUrl = options.serverUrl;
   config.serviceBodyIds = options.serviceBodyIds ?? [];
   config.containerId = el.id || 'crumb-widget';
-  config.view = options.view ?? 'list';
+  config.view = options.view ?? CONFIG_DEFAULTS.view;
   config.locationMarker = options.map?.markers?.location;
   config.tiles = options.map?.tiles;
   config.tilesDark = options.map?.tiles_dark;
-  config.columns = options.columns ?? ALL_COLUMNS;
-  config.geolocation = options.geolocation ?? false;
-  config.geolocationRadius = options.geolocationRadius ?? 75;
+  config.columns = options.columns ?? [...CONFIG_DEFAULTS.columns];
+  config.geolocation = options.geolocation ?? CONFIG_DEFAULTS.geolocation;
+  config.geolocationRadius = options.geolocationRadius ?? CONFIG_DEFAULTS.geolocationRadius;
   config.height = options.height;
-  config.darkMode = options.darkMode ?? false;
-  config.nowOffset = options.nowOffset ?? 10;
-  config.hideHeader = options.hideHeader ?? false;
+  config.darkMode = options.darkMode ?? CONFIG_DEFAULTS.darkMode;
+  config.nowOffset = options.nowOffset ?? CONFIG_DEFAULTS.nowOffset;
+  config.hideHeader = options.hideHeader ?? CONFIG_DEFAULTS.hideHeader;
 
   if (options.basePath != null) {
     setHashMode(false, options.basePath);

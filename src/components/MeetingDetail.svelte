@@ -11,6 +11,7 @@
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
+  import Icon from '@components/Icon.svelte';
 
   interface Props {
     meeting: ProcessedMeeting;
@@ -95,9 +96,7 @@
   <div class="bmlt-detail-header shrink-0 border-b border-gray-200 bg-white px-4 py-3">
     <h2 class="text-3xl font-bold text-gray-900">{meeting.meeting_name}</h2>
     <button type="button" onclick={clearSelectedMeeting} class="bmlt-link mt-1.5 flex items-center gap-1 text-base text-blue-600 hover:text-blue-800">
-      <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
+      <Icon name="chevron-left" class="h-4 w-4" />
       {$t.backToMeetings}
     </button>
   </div>
@@ -114,10 +113,7 @@
           rel="noopener noreferrer"
           class="bmlt-btn-secondary mx-4 mb-4 flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-base font-medium no-underline transition-colors"
         >
-          <svg class="h-4 w-4" style="fill:none;stroke:currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+          <Icon name="map-pin" class="h-4 w-4" />
           {$t.getDirections}
         </a>
       {/if}
@@ -208,14 +204,7 @@
                   rel="noopener noreferrer"
                   class="bmlt-btn-primary flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-base font-medium text-white transition-all hover:brightness-90"
                 >
-                  <svg class="h-4 w-4" style="fill:none;stroke:currentColor" viewBox="0 0 24 24">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                    />
-                  </svg>
+                  <Icon name="video" class="h-4 w-4" />
                   {getConferenceProvider(safeLink) ?? $t.joinMeeting}
                 </a>
               {/if}

@@ -4,21 +4,27 @@ import { initLocalization } from './localization';
 
 const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
 
-const defaultConfig: AppConfig = {
-  serverUrl: '',
-  serviceBodyIds: [],
+export const CONFIG_DEFAULTS = {
   view: 'list',
-  containerId: 'crumb-widget',
   columns: ALL_COLUMNS,
   geolocation: false,
   geolocationRadius: 75,
   distanceOptions: [5, 10, 15, 25, 50, 100],
-  distanceUnit: 'mi' as const,
-  height: undefined,
-  nowOffset: 10
-};
+  distanceUnit: 'mi',
+  nowOffset: 10,
+  hideHeader: false,
+  darkMode: false as 'auto' | true | false
+} satisfies Partial<AppConfig>;
 
-export const config = $state<AppConfig>({ ...defaultConfig });
+export const config = $state<AppConfig>({
+  serverUrl: '',
+  serviceBodyIds: [],
+  containerId: 'crumb-widget',
+  height: undefined,
+  ...CONFIG_DEFAULTS,
+  columns: [...CONFIG_DEFAULTS.columns],
+  distanceOptions: [...CONFIG_DEFAULTS.distanceOptions]
+});
 
 export function initConfig(el: HTMLElement): void {
   const server = el.getAttribute('data-server') ?? '';
@@ -46,17 +52,17 @@ export function initConfig(el: HTMLElement): void {
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
-  config.columns = globalCfg.columns ?? ALL_COLUMNS;
+  config.columns = globalCfg.columns ?? [...CONFIG_DEFAULTS.columns];
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
   const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
   config.geolocation = globalCfg.geolocation ?? isAggregator;
-  config.geolocationRadius = globalCfg.geolocationRadius ?? 75;
-  config.distanceOptions = globalCfg.distanceOptions ?? [5, 10, 15, 25, 50, 100];
-  config.distanceUnit = globalCfg.distanceUnit ?? 'mi';
+  config.geolocationRadius = globalCfg.geolocationRadius ?? CONFIG_DEFAULTS.geolocationRadius;
+  config.distanceOptions = globalCfg.distanceOptions ?? [...CONFIG_DEFAULTS.distanceOptions];
+  config.distanceUnit = globalCfg.distanceUnit ?? CONFIG_DEFAULTS.distanceUnit;
   config.height = globalCfg.height ?? undefined;
-  config.darkMode = globalCfg.darkMode ?? false;
-  config.nowOffset = globalCfg.nowOffset ?? 10;
-  config.hideHeader = globalCfg.hideHeader ?? false;
+  config.darkMode = globalCfg.darkMode ?? CONFIG_DEFAULTS.darkMode;
+  config.nowOffset = globalCfg.nowOffset ?? CONFIG_DEFAULTS.nowOffset;
+  config.hideHeader = globalCfg.hideHeader ?? CONFIG_DEFAULTS.hideHeader;
 
   const language = globalCfg.language ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   initLocalization(language);

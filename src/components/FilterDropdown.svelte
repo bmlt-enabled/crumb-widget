@@ -1,4 +1,6 @@
 <script lang="ts" generics="T extends string | number">
+  import Icon from '@components/Icon.svelte';
+
   interface Option {
     value: T;
     label: string;
@@ -39,9 +41,7 @@
       : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
   >
     <span class="truncate">{buttonLabel}</span>
-    <svg class="h-3.5 w-3.5 shrink-0 transition-transform {isOpen ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-    </svg>
+    <Icon name="chevron-down" class="h-3.5 w-3.5 shrink-0 transition-transform {isOpen ? 'rotate-180' : ''}" />
   </button>
   {#if isOpen}
     <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-full overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
@@ -53,9 +53,7 @@
         >
           <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {selected.includes(opt.value) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
             {#if selected.includes(opt.value)}
-              <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-              </svg>
+              <Icon name="check" class="h-3 w-3 text-white" strokeWidth={3} />
             {/if}
           </span>
           {opt.label}

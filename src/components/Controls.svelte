@@ -5,10 +5,11 @@
   import { config } from '@stores/config.svelte';
   import { VENUE_TYPE } from '@/types';
   import { getGeoErrorMessage, haversineDistanceMiles } from '@utils/format';
+  import { GEOLOCATION_TIMEOUT_MS, kmToMiles } from '@utils/constants';
   import { t } from '@stores/localization';
   import FilterDropdown from '@components/FilterDropdown.svelte';
+  import Icon from '@components/Icon.svelte';
 
-  const GEOLOCATION_TIMEOUT_MS = 10000;
   const GEO_ERROR_DISPLAY_MS = 4000;
   // Build the dropdown list from config.distanceOptions, capped at config.geolocationRadius.
   // If geolocationRadius isn't already in the list it is appended so the maximum is always reachable.
@@ -22,7 +23,7 @@
 
     const loc = uiState.userLocation;
     return opts.filter((dist) => {
-      const radiusMiles = config.distanceUnit === 'km' ? dist / 1.60934 : dist;
+      const radiusMiles = config.distanceUnit === 'km' ? kmToMiles(dist) : dist;
       return dataState.meetings.some((m) => {
         const lat = Number(m.latitude);
         const lng = Number(m.longitude);
@@ -176,7 +177,7 @@
   }
 
   function applyGeoRadius(radius: number) {
-    const radiusMiles = config.distanceUnit === 'km' ? radius / 1.60934 : radius;
+    const radiusMiles = config.distanceUnit === 'km' ? kmToMiles(radius) : radius;
     uiState.geoRadius = radiusMiles;
     uiState.geoActive = true;
     activeRadius = radius;
@@ -216,9 +217,7 @@
   <div class="grid grid-cols-2 gap-2 md:flex md:flex-nowrap md:items-center">
     <!-- Search -->
     <div class="relative col-span-2 md:hidden lg:block lg:max-w-48 lg:min-w-0 lg:flex-1">
-      <svg class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-      </svg>
+      <Icon name="search" class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
       <input
         type="search"
         placeholder={$t.searchMeetings}
@@ -258,23 +257,16 @@
               </svg>
               {$t.locating}
             {:else if geoStatus === 'error'}
-              <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
-              </svg>
+              <Icon name="alert" class="h-4 w-4 shrink-0" />
               <span class="truncate">{geoError}</span>
             {:else}
-              <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+              <Icon name="map-pin" class="h-4 w-4 shrink-0" />
               {#if uiState.geoActive}
                 {$t.nearMe}{activeRadius ? ` · ${activeRadius} ${$t[config.distanceUnit]}` : ''}
               {:else}
                 {$t.anywhere}
               {/if}
-              <svg class="ml-auto h-3.5 w-3.5 shrink-0 transition-transform {showGeoDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
+              <Icon name="chevron-down" class="ml-auto h-3.5 w-3.5 shrink-0 transition-transform {showGeoDropdown ? 'rotate-180' : ''}" />
             {/if}
           </button>
           <!-- X to clear (only when active and can deactivate) -->
@@ -287,9 +279,7 @@
               class="flex items-center border-l border-blue-300 px-2 hover:bg-blue-100"
               aria-label="Clear location filter"
             >
-              <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <Icon name="x" class="h-3.5 w-3.5" strokeWidth={2.5} />
             </button>
           {/if}
         </div>
@@ -307,9 +297,7 @@
               >
                 <span class="flex h-4 w-4 shrink-0 items-center justify-center">
                   {#if !uiState.geoActive}
-                    <svg class="h-3.5 w-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                    </svg>
+                    <Icon name="check" class="h-3.5 w-3.5 text-blue-600" strokeWidth={3} />
                   {/if}
                 </span>
                 {$t.anywhere}
@@ -326,9 +314,7 @@
               >
                 <span class="flex h-4 w-4 shrink-0 items-center justify-center">
                   {#if uiState.geoActive && activeRadius === dist}
-                    <svg class="h-3.5 w-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                    </svg>
+                    <Icon name="check" class="h-3.5 w-3.5 text-blue-600" strokeWidth={3} />
                   {/if}
                 </span>
                 {dist}
@@ -407,9 +393,7 @@
             {uiState.filters.venueTypes.length + uiState.filters.formatIds.length} {$t.filters}
           {/if}
         </span>
-        <svg class="h-3.5 w-3.5 shrink-0 transition-transform {showTypeDropdown ? 'rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-        </svg>
+        <Icon name="chevron-down" class="h-3.5 w-3.5 shrink-0 transition-transform {showTypeDropdown ? 'rotate-180' : ''}" />
       </button>
       {#if showTypeDropdown}
         <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
@@ -423,9 +407,7 @@
             >
               <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.venueTypes.includes(vt.value) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
                 {#if uiState.filters.venueTypes.includes(vt.value)}
-                  <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                  </svg>
+                  <Icon name="check" class="h-3 w-3 text-white" strokeWidth={3} />
                 {/if}
               </span>
               {$t[vt.key]}
@@ -447,9 +429,7 @@
                 >
                   <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.formatIds.includes(fmt.id) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
                     {#if uiState.filters.formatIds.includes(fmt.id)}
-                      <svg class="h-3 w-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
-                      </svg>
+                      <Icon name="check" class="h-3 w-3 text-white" strokeWidth={3} />
                     {/if}
                   </span>
                   {fmt.name_string}
@@ -494,9 +474,7 @@
             : 'text-gray-700 hover:bg-gray-50'}"
           title={$t.listView}
         >
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-          </svg>
+          <Icon name="filter" class="h-4 w-4" />
           {$t.list}
         </button>
         <button
@@ -506,14 +484,7 @@
             : 'text-gray-700 hover:bg-gray-50'}"
           title={$t.mapView}
         >
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-            />
-          </svg>
+          <Icon name="map" class="h-4 w-4" />
           {$t.map}
         </button>
       </div>
@@ -528,9 +499,7 @@
           class="flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 py-0.5 pr-2 pl-2.5 text-xs font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
         >
           {chip.label}
-          <svg class="h-3 w-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
-          </svg>
+          <Icon name="x" class="h-3 w-3 shrink-0" strokeWidth={2.5} />
         </button>
       {/each}
       <button onclick={resetFilters} class="ml-1 text-xs text-gray-400 underline-offset-2 transition-colors hover:text-red-500 hover:underline">

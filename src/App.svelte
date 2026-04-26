@@ -5,9 +5,9 @@
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage } from '@utils/format';
+  import { GEOLOCATION_TIMEOUT_MS } from '@utils/constants';
   import { t } from '@stores/localization';
 
-  const GEOLOCATION_TIMEOUT_MS = 10000;
   let geoErrorHint = $state('');
   let geoDenied = $state(false);
   import Controls from '@components/Controls.svelte';
@@ -15,6 +15,7 @@
   import MeetingDetail from '@components/MeetingDetail.svelte';
   import MapView from '@components/MapView.svelte';
   import Loading from '@components/Loading.svelte';
+  import Icon from '@components/Icon.svelte';
 
   interface Props {
     config: AppConfig;
@@ -139,10 +140,7 @@
   {#if dataState.error}
     <!-- Error state -->
     <div class="flex flex-col items-center justify-center py-16 text-center">
-      <svg class="mb-3 h-10 w-10 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
+      <Icon name="map-pin" class="mb-3 h-10 w-10 text-amber-400" strokeWidth={1.5} />
       <p class="text-sm font-medium text-gray-800">{dataState.error}</p>
       {#if geoErrorHint}
         <p class="mt-1 max-w-sm text-xs text-gray-500">{geoErrorHint}</p>

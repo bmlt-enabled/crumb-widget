@@ -8,6 +8,8 @@ import { config } from '@stores/config.svelte';
 
 const PAGE_SIZE = 5000;
 
+type SearchParams = Parameters<BmltClient['searchMeetingsWithFormats']>[0];
+
 interface DataState {
   meetings: ProcessedMeeting[];
   formats: SvelteMap<string, Format>;
@@ -42,7 +44,7 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
   });
 }
 
-export async function loadData(serverUrl: string, serviceBodyIds: number[] = []): Promise<void> {
+async function load(serverUrl: string, params: SearchParams): Promise<void> {
   if (!serverUrl) {
     dataState.error = 'No server URL configured. Add data-server to your embed element.';
     return;
@@ -53,45 +55,7 @@ export async function loadData(serverUrl: string, serviceBodyIds: number[] = [])
 
   try {
     const client = new BmltClient({ serverURL: serverUrl });
-
-    const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
-      ...(serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {}),
-      page_size: PAGE_SIZE
-    });
-
-    const formatsMap = new SvelteMap<string, Format>();
-    for (const fmt of formatsResp) {
-      formatsMap.set(fmt.id, fmt);
-    }
-    dataState.formats = formatsMap;
-
-    dataState.meetings = sortMeetings(processMeetings(meetingsResp), config.nowOffset);
-  } catch (err) {
-    dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
-  } finally {
-    dataState.loading = false;
-  }
-}
-
-export async function loadDataByCoordinates(serverUrl: string, latitude: number, longitude: number, radiusMiles: number = 10): Promise<void> {
-  if (!serverUrl) {
-    dataState.error = 'No server URL configured. Add data-server to your embed element.';
-    return;
-  }
-
-  dataState.loading = true;
-  dataState.error = null;
-
-  try {
-    const client = new BmltClient({ serverURL: serverUrl });
-
-    const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({
-      lat_val: latitude,
-      long_val: longitude,
-      geo_width: radiusMiles,
-      sort_results_by_distance: true,
-      page_size: PAGE_SIZE
-    });
+    const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({ ...params, page_size: PAGE_SIZE });
 
     const formatsMap = new SvelteMap<string, Format>();
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
@@ -103,4 +67,17 @@ export async function loadDataByCoordinates(serverUrl: string, latitude: number,
   } finally {
     dataState.loading = false;
   }
+}
+
+export function loadData(serverUrl: string, serviceBodyIds: number[] = []): Promise<void> {
+  return load(serverUrl, serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {});
+}
+
+export function loadDataByCoordinates(serverUrl: string, latitude: number, longitude: number, radiusMiles: number = 10): Promise<void> {
+  return load(serverUrl, {
+    lat_val: latitude,
+    long_val: longitude,
+    geo_width: radiusMiles,
+    sort_results_by_distance: true
+  });
 }
