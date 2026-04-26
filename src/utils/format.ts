@@ -1,7 +1,7 @@
 import { VENUE_TYPE } from '@/types/index';
 import type { Meeting, ProcessedMeeting, FilterState } from '@/types/index';
 
-export function is24HourTime(locale?: string): boolean {
+function is24HourTime(locale?: string): boolean {
   return !new Intl.DateTimeFormat(locale, {
     hour: 'numeric'
   }).resolvedOptions().hour12;
@@ -116,7 +116,7 @@ export function sortMeetings<T extends { weekday_tinyint: number; start_time: st
   });
 }
 
-export type Platform = 'web' | 'ios' | 'android';
+type Platform = 'web' | 'ios' | 'android';
 
 export function getPlatform(): Platform {
   if (typeof window === 'undefined') return 'web';

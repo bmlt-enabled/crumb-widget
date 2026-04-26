@@ -2,14 +2,14 @@ import L from 'leaflet';
 import type { Map as LeafletMap, TileLayer } from 'leaflet';
 import type { TilesConfig } from '@/types';
 
-export const RESIZE_DEBOUNCE_MS = 200;
+const RESIZE_DEBOUNCE_MS = 200;
 
-export const DEFAULT_TILES: TilesConfig = {
+const DEFAULT_TILES: TilesConfig = {
   url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 };
 
-export function isDarkMode(containerId: string): boolean {
+function isDarkMode(containerId: string): boolean {
   const el = document.getElementById(containerId);
   if (el?.classList.contains('bmlt-dark-force')) return true;
   if (el?.classList.contains('bmlt-dark-auto')) return window.matchMedia('(prefers-color-scheme: dark)').matches;

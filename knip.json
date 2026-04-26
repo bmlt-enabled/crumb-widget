@@ -1,0 +1,5 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["src/module.ts!", "lighthouserc.cjs", "src/tests/lighthouse/server.mjs", "src/tests/e2e/**/*.spec.ts", "src/tests/unit/**/*.test.ts"],
+  "project": ["src/**/*.{ts,svelte}"]
+}
