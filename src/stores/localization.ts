@@ -7,7 +7,7 @@ type Translations = typeof enTranslations;
 // so we widen the instance type once here and stay strongly typed everywhere else.
 type LocalizedTranslations = LocalizedStrings & Translations;
 
-const ls = new LocalizedStrings({
+const TRANSLATIONS = {
   en: enTranslations,
   es: esTranslations,
   fr: frTranslations,
@@ -16,7 +16,11 @@ const ls = new LocalizedStrings({
   it: itTranslations,
   sv: svTranslations,
   da: daTranslations
-}) as LocalizedTranslations;
+};
+
+export const SUPPORTED_LANGUAGES: readonly string[] = Object.keys(TRANSLATIONS);
+
+const ls = new LocalizedStrings(TRANSLATIONS) as LocalizedTranslations;
 
 const { subscribe, set } = writable<LocalizedTranslations>(ls);
 
@@ -25,8 +29,7 @@ export const t = { subscribe };
 
 export function initLocalization(language: string): void {
   const base = (language.split('-')[0] ?? '').toLowerCase();
-  const available = ls.getAvailableLanguages();
-  ls.setLanguage(available.includes(base) ? base : 'en');
+  ls.setLanguage(SUPPORTED_LANGUAGES.includes(base) ? base : 'en');
   set(ls);
 }
 

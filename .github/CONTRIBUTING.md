@@ -54,6 +54,8 @@ src/
     format.ts              # Time, address, and sort helpers
     markers.ts             # Leaflet marker icon helpers
     mapUtils.ts            # Map tile and resize utilities
+    constants.ts           # Shared constants (geolocation timeout, unit conversions)
+    configValidation.ts    # Runtime validators for embed config + global config
   tests/
     unit/                  # Vitest unit + component tests
     e2e/                   # Playwright e2e + accessibility tests
