@@ -122,6 +122,18 @@ describe('initConfig', () => {
       expect(config.geolocation).toBe(true);
     });
 
+    test('accepts WordPress string "1" as geolocation true', () => {
+      window.CrumbWidgetConfig = { geolocation: '1' as unknown as boolean };
+      initConfig(makeElement());
+      expect(config.geolocation).toBe(true);
+    });
+
+    test('accepts WordPress string "0" as geolocation false', () => {
+      window.CrumbWidgetConfig = { geolocation: '0' as unknown as boolean };
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));
+      expect(config.geolocation).toBe(false);
+    });
+
     test('overrides aggregator default geolocation to false', () => {
       window.CrumbWidgetConfig = { geolocation: false };
       initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));

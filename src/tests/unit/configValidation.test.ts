@@ -164,9 +164,17 @@ describe('validBoolean', () => {
     expect(validBoolean('field', false, true)).toBe(false);
   });
 
+  test('accepts WordPress string "1"/"0" and "true"/"false"', () => {
+    expect(validBoolean('field', '1', false)).toBe(true);
+    expect(validBoolean('field', '0', true)).toBe(false);
+    expect(validBoolean('field', 'true', false)).toBe(true);
+    expect(validBoolean('field', 'false', true)).toBe(false);
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
   test('warns on non-boolean', () => {
-    expect(validBoolean('field', 'true', false)).toBe(false);
     expect(validBoolean('field', 1, false)).toBe(false);
+    expect(validBoolean('field', 'yes', false)).toBe(false);
     expect(warnSpy).toHaveBeenCalledTimes(2);
   });
 });

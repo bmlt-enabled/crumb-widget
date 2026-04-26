@@ -72,6 +72,9 @@ export function validDarkMode(value: unknown, fallback: 'auto' | true | false): 
 export function validBoolean(field: string, value: unknown, fallback: boolean): boolean {
   if (value == null) return fallback;
   if (typeof value === 'boolean') return value;
+  // WordPress serializes booleans as "1" / "0"
+  if (value === '1' || value === 'true') return true;
+  if (value === '0' || value === 'false') return false;
   warn(field, value, 'a boolean', fallback);
   return fallback;
 }
