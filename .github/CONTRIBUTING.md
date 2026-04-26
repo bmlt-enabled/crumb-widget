@@ -49,7 +49,7 @@ src/
     ui.svelte.ts           # UI state: view, selected meeting (state + URL), filters
     localization.ts        # i18n store and language loading
   components/              # Svelte UI components
-  lang/                    # i18n translations (en, es, fr, de, pt, it, sv, da)
+  lang/                    # i18n translations (da, de, el, en, es, fa, fr, it, pl, pt, ru, sv)
   utils/
     format.ts              # Time, address, and sort helpers
     markers.ts             # Leaflet marker icon helpers

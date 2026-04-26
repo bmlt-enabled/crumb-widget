@@ -557,11 +557,11 @@
   /* Left/right outer frame and bottom edge. */
   #crumb-widget th:first-child,
   #crumb-widget td:first-child {
-    border-left: 1px solid #999999 !important;
+    border-inline-start: 1px solid #999999 !important;
   }
   #crumb-widget th:last-child,
   #crumb-widget td:last-child {
-    border-right: 1px solid #999999 !important;
+    border-inline-end: 1px solid #999999 !important;
   }
   #crumb-widget tbody tr:last-child td {
     border-bottom: 1px solid #999999 !important;
@@ -668,7 +668,7 @@
 }
 
 /* Left info panel border (between panel and map) */
-#crumb-widget .bmlt-detail [class*='sm:border-r'] {
+#crumb-widget .bmlt-detail [class*='sm:border-e'] {
   border-color: var(--bmlt-border) !important;
 }
 

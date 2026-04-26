@@ -64,7 +64,7 @@
 {/snippet}
 
 {#snippet card(meeting: ProcessedMeeting, inProgress: boolean)}
-  <button type="button" class="bmlt-row {inProgress ? 'bmlt-in-progress-row' : 'transition-colors'} flex w-full cursor-pointer gap-4 px-4 py-4 text-left" onclick={() => selectMeeting(meeting)}>
+  <button type="button" class="bmlt-row {inProgress ? 'bmlt-in-progress-row' : 'transition-colors'} flex w-full cursor-pointer gap-4 px-4 py-4 text-start" onclick={() => selectMeeting(meeting)}>
     {#if cols.has('time')}
       <div class="w-24 shrink-0 overflow-hidden text-sm text-gray-600">
         <div class="whitespace-nowrap">{meeting.formattedTime}</div>
@@ -135,7 +135,7 @@
 {#snippet inProgressBanner(role: 'mobile' | 'desktop')}
   {@const label = `${inProgressMeetings.length} ${inProgressMeetings.length === 1 ? $t.meeting : $t.meetings} ${$t.inProgress}`}
   {#if role === 'mobile'}
-    <button type="button" class="bmlt-in-progress-banner flex w-full items-center justify-between px-4 py-5 text-left text-sm font-semibold" onclick={() => (inProgressOpen = !inProgressOpen)}>
+    <button type="button" class="bmlt-in-progress-banner flex w-full items-center justify-between px-4 py-5 text-start text-sm font-semibold" onclick={() => (inProgressOpen = !inProgressOpen)}>
       <span>{label}</span>
       <Icon name="chevron-down" class="h-4 w-4 shrink-0 transition-transform {inProgressOpen ? 'rotate-180' : ''}" />
     </button>
@@ -178,12 +178,12 @@
     <table class="w-full border-collapse text-base">
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
-          {#if cols.has('time')}<th class="bmlt-time-col w-24 px-4 py-2 text-left lg:w-40">{$t.dayAndTime}</th>{/if}
-          {#if uiState.geoActive}<th class="w-24 px-3 py-2 text-left">{$t.distance}</th>{/if}
-          {#if cols.has('name')}<th class="min-w-[8rem] px-4 py-2 text-left">{$t.meetingColumn}</th>{/if}
-          {#if cols.has('location')}<th class="min-w-[7rem] px-4 py-2 text-left">{$t.location}</th>{/if}
-          {#if cols.has('address')}<th class="px-4 py-2 text-left">{$t.address}</th>{/if}
-          {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-left lg:table-cell">{$t.serviceBody}</th>{/if}
+          {#if cols.has('time')}<th class="bmlt-time-col w-24 px-4 py-2 text-start lg:w-40">{$t.dayAndTime}</th>{/if}
+          {#if uiState.geoActive}<th class="w-24 px-3 py-2 text-start">{$t.distance}</th>{/if}
+          {#if cols.has('name')}<th class="min-w-[8rem] px-4 py-2 text-start">{$t.meetingColumn}</th>{/if}
+          {#if cols.has('location')}<th class="min-w-[7rem] px-4 py-2 text-start">{$t.location}</th>{/if}
+          {#if cols.has('address')}<th class="px-4 py-2 text-start">{$t.address}</th>{/if}
+          {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-start lg:table-cell">{$t.serviceBody}</th>{/if}
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100">

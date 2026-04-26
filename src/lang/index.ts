@@ -1,8 +1,12 @@
+export { daTranslations } from './da';
+export { deTranslations } from './de';
+export { elTranslations } from './el';
 export { enTranslations } from './en';
 export { esTranslations } from './es';
+export { faTranslations } from './fa';
 export { frTranslations } from './fr';
-export { deTranslations } from './de';
-export { ptTranslations } from './pt';
 export { itTranslations } from './it';
+export { plTranslations } from './pl';
+export { ptTranslations } from './pt';
+export { ruTranslations } from './ru';
 export { svTranslations } from './sv';
-export { daTranslations } from './da';

@@ -1,16 +1,33 @@
 import { describe, test, expect } from 'vitest';
-import { enTranslations, esTranslations, frTranslations, deTranslations, ptTranslations, itTranslations, svTranslations, daTranslations } from '@/lang';
+import {
+  daTranslations,
+  deTranslations,
+  elTranslations,
+  enTranslations,
+  esTranslations,
+  faTranslations,
+  frTranslations,
+  itTranslations,
+  plTranslations,
+  ptTranslations,
+  ruTranslations,
+  svTranslations
+} from '@/lang';
 
 const refKeys = Object.keys(enTranslations).sort();
 
 const others: Record<string, Record<string, unknown>> = {
-  es: esTranslations,
-  fr: frTranslations,
+  da: daTranslations,
   de: deTranslations,
-  pt: ptTranslations,
+  el: elTranslations,
+  es: esTranslations,
+  fa: faTranslations,
+  fr: frTranslations,
   it: itTranslations,
-  sv: svTranslations,
-  da: daTranslations
+  pl: plTranslations,
+  pt: ptTranslations,
+  ru: ruTranslations,
+  sv: svTranslations
 };
 
 describe('translation parity', () => {

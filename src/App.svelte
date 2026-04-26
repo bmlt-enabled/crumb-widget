@@ -6,7 +6,7 @@
   import { uiState } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage } from '@utils/format';
   import { GEOLOCATION_TIMEOUT_MS } from '@utils/constants';
-  import { t } from '@stores/localization';
+  import { t, direction } from '@stores/localization';
 
   let geoErrorHint = $state('');
   let geoDenied = $state(false);
@@ -126,6 +126,7 @@
   bind:this={widgetEl}
   class="crumb-widget isolate flex flex-col rounded-lg border border-gray-200 font-sans text-base {config.height ? 'overflow-hidden' : ''}"
   style={config.height ? `height: ${config.height}px` : ''}
+  dir={$direction}
 >
   <!-- Header -->
   {#if !config.hideHeader}

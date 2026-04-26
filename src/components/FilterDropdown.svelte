@@ -49,7 +49,7 @@
         <button
           onclick={() => onToggle(opt.value)}
           title={opt.title}
-          class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {selected.includes(opt.value) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+          class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {selected.includes(opt.value) ? 'font-semibold text-blue-700' : 'text-gray-700'}"
         >
           <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {selected.includes(opt.value) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
             {#if selected.includes(opt.value)}

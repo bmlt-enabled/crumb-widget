@@ -17,18 +17,14 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 - Meeting detail with directions, virtual join link, and formats
 - Geolocation-based nearby search
 - Individual meeting links via built-in router
-- Multi-language support
+- Multi-language support (12 languages, including RTL layout for Persian)
 - Configurable columns, map tiles, and custom markers
 - Printer-friendly list view
 
 ## Quick Start
 
 ```html
-<div
-    id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

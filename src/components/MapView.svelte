@@ -210,7 +210,7 @@
   <div bind:this={mapEl} class="h-full min-h-96 w-full"></div>
 
   {#if showSearchArea && geoActive && onsearcharea}
-    <div class="pointer-events-none absolute right-0 bottom-3 left-0 z-[1000] flex justify-center">
+    <div class="pointer-events-none absolute start-0 end-0 bottom-3 z-[1000] flex justify-center">
       <button onclick={handleSearchArea} class="bmlt-map-search-btn pointer-events-auto rounded-full border px-4 py-2 text-sm font-medium shadow-lg">
         {$t.searchThisArea}
       </button>

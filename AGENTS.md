@@ -45,13 +45,7 @@ Always run `npm run lint` before finishing a task. Fix all lint errors before co
 The widget is embedded by adding a div with data attributes and loading `app.js`:
 
 ```html
-<div
-  id="crumb-widget"
-  data-server="https://your-server/main_server"
-  data-service-body="123"
-  data-service-body="1,2,3"
-  data-view="list"
-></div>
+<div id="crumb-widget" data-server="https://your-server/main_server" data-service-body="123" data-service-body="1,2,3" data-view="list"></div>
 <script src="app.js"></script>
 ```
 
@@ -89,7 +83,7 @@ src/
     format.ts                # formatTime, formatAddress, getTimeOfDay, sortMeetings, etc.
     markers.ts               # Leaflet marker icon helpers
     mapUtils.ts              # Map bounds, geolocation helpers
-  lang/                      # Translation tables (en, es, fr, de, pt, it, sv, da)
+  lang/                      # Translation tables (da, de, el, en, es, fa, fr, it, pl, pt, ru, sv)
   tests/
     unit/                    # Vitest unit + component tests
     e2e/                     # Playwright e2e tests
@@ -107,7 +101,7 @@ index.html                   # Dev test page (loads src/main.ts via Vite)
 Use these aliases — do not use relative `../../` paths when an alias applies:
 
 | Alias          | Resolves to       |
-|----------------|-------------------|
+| -------------- | ----------------- |
 | `@/`           | `src/`            |
 | `@components/` | `src/components/` |
 | `@utils/`      | `src/utils/`      |
@@ -125,6 +119,7 @@ Note: `@types/` is intentionally absent — it conflicts with TypeScript's Defin
 - **`$derived` vs `$derived.by`**: Use `$derived(expr)` for simple expressions. Use `$derived.by(() => { ... })` when the computation has a function body — wrapping a function in `$derived(fn)` makes `fn` the derived value, not its result.
 - **Each blocks**: Always provide a key: `{#each items as item (item.id)}`.
 - **Styling**: Tailwind utility classes only. The widget uses CSS isolation via `.crumb-widget { all: initial; }` — all styles must be scoped inside that class.
+- **RTL**: The widget supports right-to-left languages (Persian/Farsi today). Use **logical** Tailwind utilities for direction-sensitive properties: `ps-/pe-` (not `pl-/pr-`), `ms-/me-` (not `ml-/mr-`), `start-/end-` (not `left-/right-`), `text-start/text-end` (not `text-left/text-right`), `rounded-s-/rounded-e-` and `border-s/border-e`. The `dir` attribute on `.crumb-widget` is bound to the localization `direction` store — adding a new RTL language only requires adding the code to `RTL_LANGUAGES` in `src/stores/localization.ts`.
 - **TypeScript**: Strict mode is on, plus `noUncheckedIndexedAccess` and `noImplicitOverride`. Do not use `any` — `@typescript-eslint/no-explicit-any` is enforced. BMLT API returns numeric fields as strings — always coerce with `Number()` before comparison.
 - **Formatting**: Prettier is the source of truth (config in `.prettierrc.ts`). Line width 200, single quotes, no trailing commas.
 - **ESLint**: `no-undef` is disabled (TypeScript handles it). `svelte-eslint-parser` is configured for `.svelte.ts` files.
@@ -183,6 +178,7 @@ Do not modify workflow files unless the task explicitly requires it.
 ### Root cause
 
 `MeetingList` renders a `<table>` with:
+
 - `table-layout: fixed` — column widths are distributed from the table's own width
 - `min-width: 600px` — prevents collapse below 600px
 - `width: 100%` — fills its container
@@ -214,6 +210,7 @@ If the table's **containing block** becomes narrower than the content, or if an 
 ## Dependency Updates
 
 Renovate is configured for automated dependency updates:
+
 - **Major** updates: Mondays after 9am (manual review)
 - **devDependencies (minor + patch)**: grouped, automerged after 7-day release age
 - **Runtime dependencies — minor**: grouped, manual review

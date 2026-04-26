@@ -104,7 +104,7 @@
   <!-- Body: two columns -->
   <div class="flex min-h-0 flex-1 flex-col sm:flex-row">
     <!-- Left: scrollable info panel -->
-    <div class="overflow-y-auto py-4 {showMap ? 'shrink-0 sm:w-[40%] sm:border-r sm:border-gray-200' : 'mx-auto w-full max-w-lg'}">
+    <div class="overflow-y-auto py-4 {showMap ? 'shrink-0 sm:w-[40%] sm:border-e sm:border-gray-200' : 'mx-auto w-full max-w-lg'}">
       <!-- Get Directions (in-person) -->
       {#if meeting.isInPerson && meeting.formattedAddress}
         <a

@@ -1,14 +1,18 @@
 import { describe, test, expect, afterEach } from 'vitest';
 import { get } from 'svelte/store';
-import { t, setLanguage } from '@stores/localization';
+import { t, direction, setLanguage } from '@stores/localization';
+import { daTranslations } from '@/lang/da';
+import { deTranslations } from '@/lang/de';
+import { elTranslations } from '@/lang/el';
 import { enTranslations } from '@/lang/en';
 import { esTranslations } from '@/lang/es';
+import { faTranslations } from '@/lang/fa';
 import { frTranslations } from '@/lang/fr';
-import { deTranslations } from '@/lang/de';
-import { ptTranslations } from '@/lang/pt';
 import { itTranslations } from '@/lang/it';
+import { plTranslations } from '@/lang/pl';
+import { ptTranslations } from '@/lang/pt';
+import { ruTranslations } from '@/lang/ru';
 import { svTranslations } from '@/lang/sv';
-import { daTranslations } from '@/lang/da';
 
 afterEach(() => {
   setLanguage('en');
@@ -54,6 +58,26 @@ describe('language switching', () => {
     expect(get(t).searchMeetings).toBe('Søg møder...');
   });
 
+  test('switches to Russian', () => {
+    setLanguage('ru');
+    expect(get(t).searchMeetings).toBe('Поиск собраний...');
+  });
+
+  test('switches to Persian', () => {
+    setLanguage('fa');
+    expect(get(t).searchMeetings).toBe('جستجوی جلسات...');
+  });
+
+  test('switches to Greek', () => {
+    setLanguage('el');
+    expect(get(t).searchMeetings).toBe('Αναζήτηση συναντήσεων...');
+  });
+
+  test('switches to Polish', () => {
+    setLanguage('pl');
+    expect(get(t).searchMeetings).toBe('Szukaj mityngów...');
+  });
+
   test('falls back to English for unknown language code', () => {
     setLanguage('xx');
     expect(get(t).searchMeetings).toBe('Search meetings...');
@@ -74,14 +98,18 @@ describe('language switching', () => {
 const stringKeys = (Object.keys(enTranslations) as (keyof typeof enTranslations)[]).filter((k) => typeof enTranslations[k] === 'string');
 
 const allLanguages = [
+  { lang: 'da', translations: daTranslations },
+  { lang: 'de', translations: deTranslations },
+  { lang: 'el', translations: elTranslations },
   { lang: 'en', translations: enTranslations },
   { lang: 'es', translations: esTranslations },
+  { lang: 'fa', translations: faTranslations },
   { lang: 'fr', translations: frTranslations },
-  { lang: 'de', translations: deTranslations },
-  { lang: 'pt', translations: ptTranslations },
   { lang: 'it', translations: itTranslations },
-  { lang: 'sv', translations: svTranslations },
-  { lang: 'da', translations: daTranslations }
+  { lang: 'pl', translations: plTranslations },
+  { lang: 'pt', translations: ptTranslations },
+  { lang: 'ru', translations: ruTranslations },
+  { lang: 'sv', translations: svTranslations }
 ];
 
 describe('translation completeness', () => {
@@ -115,4 +143,28 @@ describe('translation completeness', () => {
       }
     });
   }
+});
+
+describe('direction store', () => {
+  test('LTR languages report ltr', () => {
+    for (const lang of ['da', 'de', 'el', 'en', 'es', 'fr', 'it', 'pl', 'pt', 'ru', 'sv']) {
+      setLanguage(lang);
+      expect(get(direction), `${lang} should be ltr`).toBe('ltr');
+    }
+  });
+
+  test('Persian (fa) reports rtl', () => {
+    setLanguage('fa');
+    expect(get(direction)).toBe('rtl');
+  });
+
+  test('region-tagged RTL code (fa-IR) reports rtl', () => {
+    setLanguage('fa-IR');
+    expect(get(direction)).toBe('rtl');
+  });
+
+  test('falls back to ltr for unsupported language codes', () => {
+    setLanguage('xx');
+    expect(get(direction)).toBe('ltr');
+  });
 });

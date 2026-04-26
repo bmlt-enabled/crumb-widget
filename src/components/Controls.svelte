@@ -217,13 +217,13 @@
   <div class="grid grid-cols-2 gap-2 md:flex md:flex-nowrap md:items-center">
     <!-- Search -->
     <div class="relative col-span-2 md:hidden lg:block lg:max-w-48 lg:min-w-0 lg:flex-1">
-      <Icon name="search" class="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+      <Icon name="search" class="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
       <input
         type="search"
         placeholder={$t.searchMeetings}
         value={uiState.filters.search}
         oninput={(e) => updateFilter('search', (e.target as HTMLInputElement).value)}
-        class="w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-3 pl-9 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+        class="w-full rounded-lg border border-gray-300 bg-white py-2.5 ps-9 pe-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
       />
     </div>
 
@@ -266,7 +266,7 @@
               {:else}
                 {$t.anywhere}
               {/if}
-              <Icon name="chevron-down" class="ml-auto h-3.5 w-3.5 shrink-0 transition-transform {showGeoDropdown ? 'rotate-180' : ''}" />
+              <Icon name="chevron-down" class="ms-auto h-3.5 w-3.5 shrink-0 transition-transform {showGeoDropdown ? 'rotate-180' : ''}" />
             {/if}
           </button>
           <!-- X to clear (only when active and can deactivate) -->
@@ -276,7 +276,7 @@
                 e.stopPropagation();
                 clearGeo();
               }}
-              class="flex items-center border-l border-blue-300 px-2 hover:bg-blue-100"
+              class="flex items-center border-s border-blue-300 px-2 hover:bg-blue-100"
               aria-label="Clear location filter"
             >
               <Icon name="x" class="h-3.5 w-3.5" strokeWidth={2.5} />
@@ -293,7 +293,7 @@
                   showGeoDropdown = false;
                   clearGeo();
                 }}
-                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {!uiState.geoActive ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {!uiState.geoActive ? 'font-semibold text-blue-700' : 'text-gray-700'}"
               >
                 <span class="flex h-4 w-4 shrink-0 items-center justify-center">
                   {#if !uiState.geoActive}
@@ -308,7 +308,7 @@
             {#each distanceOptions as dist (dist)}
               <button
                 onclick={() => handleNearMe(dist)}
-                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.geoActive && activeRadius === dist
+                class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {uiState.geoActive && activeRadius === dist
                   ? 'font-semibold text-blue-700'
                   : 'text-gray-700'}"
               >
@@ -401,7 +401,7 @@
           {#each VENUE_TYPE_VALUES as vt (vt.value)}
             <button
               onclick={() => toggleArrayFilter('venueTypes', vt.value)}
-              class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.venueTypes.includes(vt.value)
+              class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {uiState.filters.venueTypes.includes(vt.value)
                 ? 'font-semibold text-blue-700'
                 : 'text-gray-700'}"
             >
@@ -422,7 +422,7 @@
               {#each section.formats as fmt (fmt.id)}
                 <button
                   onclick={() => toggleArrayFilter('formatIds', fmt.id)}
-                  class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-left text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id)
+                  class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id)
                     ? 'font-semibold text-blue-700'
                     : 'text-gray-700'}"
                   title={fmt.description_string}
@@ -469,7 +469,7 @@
       <div class="flex rounded-lg border border-gray-300 bg-white md:ml-auto md:flex-none">
         <button
           onclick={() => setView('list')}
-          class="flex flex-1 items-center justify-center gap-1.5 rounded-l-lg px-3 py-2.5 text-sm font-medium transition-colors {uiState.view === 'list'
+          class="flex flex-1 items-center justify-center gap-1.5 rounded-s-lg px-3 py-2.5 text-sm font-medium transition-colors {uiState.view === 'list'
             ? 'bmlt-btn-primary bg-blue-600 text-white'
             : 'text-gray-700 hover:bg-gray-50'}"
           title={$t.listView}
@@ -479,7 +479,7 @@
         </button>
         <button
           onclick={() => setView('map')}
-          class="flex flex-1 items-center justify-center gap-1.5 rounded-r-lg px-3 py-2.5 text-sm font-medium transition-colors {uiState.view === 'map'
+          class="flex flex-1 items-center justify-center gap-1.5 rounded-e-lg px-3 py-2.5 text-sm font-medium transition-colors {uiState.view === 'map'
             ? 'bmlt-btn-primary bg-blue-600 text-white'
             : 'text-gray-700 hover:bg-gray-50'}"
           title={$t.mapView}
@@ -496,13 +496,13 @@
       {#each activeChips as chip (chip.key)}
         <button
           onclick={chip.remove}
-          class="flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 py-0.5 pr-2 pl-2.5 text-xs font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
+          class="flex items-center gap-1 rounded-full border border-blue-200 bg-blue-50 py-0.5 ps-2.5 pe-2 text-xs font-medium text-blue-700 transition-colors hover:border-blue-300 hover:bg-blue-100"
         >
           {chip.label}
           <Icon name="x" class="h-3 w-3 shrink-0" strokeWidth={2.5} />
         </button>
       {/each}
-      <button onclick={resetFilters} class="ml-1 text-xs text-gray-400 underline-offset-2 transition-colors hover:text-red-500 hover:underline">
+      <button onclick={resetFilters} class="ms-1 text-xs text-gray-400 underline-offset-2 transition-colors hover:text-red-500 hover:underline">
         {$t.clearAllFilters}
       </button>
     </div>
