@@ -2,14 +2,18 @@
   <img src="../../pages/crumb-logo.svg" alt="Crumb Widget ロゴ" width="128" height="128">
 </p>
 
-# Crumb Widget
+<h1 align="center">Crumb Widget</h1>
 
-**他の言語で読む:** [English](../../README.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Svenska](README.sv.md) · [Dansk](README.da.md) · [Polski](README.pl.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [فارسی](README.fa.md)
+<p align="center">
+  <a href="https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml"><img src="https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg" alt="test"></a>
+  <a href="https://codecov.io/gh/bmlt-enabled/crumb-widget"><img src="https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg" alt="codecov"></a>
+  <a href="https://www.npmjs.com/package/crumb-widget"><img src="https://img.shields.io/npm/v/crumb-widget" alt="npm"></a>
+  <a href="https://crumb.bmlt.app/?lang=ja"><img src="https://img.shields.io/badge/docs-crumb.bmlt.app-blue" alt="docs"></a>
+</p>
 
-[![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
-[![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
-[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/?lang=ja)
+<p align="center">
+  🌐 <a href="../../README.md">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | 日本語 | <a href="README.fa.md">فارسی</a>
+</p>
 
 埋め込み可能な NA ミーティング検索ウィジェットです。Svelte 5 で構築されており、自己完結型の単一 JavaScript ファイルとして配布されます。[WordPress プラグイン](https://wordpress.org/plugins/crumb/)、[Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)、[CDN スクリプト](https://cdn.aws.bmlt.app/crumb-widget.js)、[npm パッケージ](https://www.npmjs.com/package/crumb-widget)として利用できます。
 
