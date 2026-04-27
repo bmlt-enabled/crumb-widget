@@ -1,0 +1,432 @@
+{
+  "page": {
+    "title": "BMLT Crumb Widget — Dokumentation"
+  },
+  "nav": {
+    "theme": {
+      "light": "Heller Modus",
+      "dark": "Dunkler Modus"
+    },
+    "liveDemo": "→ Live-Demo",
+    "qaTests": "→ QA-Testseiten",
+    "overview": "Überblick",
+    "quickStart": "Schnellstart",
+    "attributes": "Datenattribute",
+    "globalConfig": "Globale Konfiguration",
+    "language": "Sprache",
+    "geolocation": "Geolokation",
+    "queryParams": "URL-Abfrageparameter",
+    "cssVars": "CSS-Variablen",
+    "cssDarkMode": "Dunkler Modus",
+    "cssClasses": "CSS-Hilfsklassen",
+    "tileConfig": "Kachelanbieter",
+    "tileDarkConfig": "Kacheln dunkler Modus",
+    "markerConfig": "Marker-Konfiguration",
+    "exampleBasic": "Einfaches Einbetten",
+    "exampleServiceBody": "Service-Body-Filter",
+    "exampleMulti": "Mehrere Service Bodies",
+    "exampleMap": "Standardmäßig Karte",
+    "exampleWordpress": "WordPress",
+    "exampleDrupal": "Drupal",
+    "routingModes": "Routing-Modi",
+    "findServiceBody": "Service-Body-ID finden",
+    "googleSites": "Google Sites",
+    "squarespace": "Squarespace",
+    "wix": "Wix",
+    "features": "Funktionen",
+    "browserSupport": "Browser-Unterstützung",
+    "npmInstall": "Installation",
+    "npmUsage": "Verwendung",
+    "npmOptions": "Optionen",
+    "philosophy": "Philosophie",
+    "privacy": "Datenschutzerklärung",
+    "section": {
+      "configuration": "Konfiguration",
+      "examples": "Beispiele",
+      "routing": "Routing",
+      "siteBuilders": "Website-Baukästen",
+      "reference": "Referenz",
+      "npm": "npm-Paket",
+      "legal": "Rechtliches"
+    }
+  },
+  "header": {
+    "subtitle": "Ein einbettbares NA-Meeting-Finder-Widget für jede Website.",
+    "btn": {
+      "liveDemo": "Live-Demo",
+      "github": "GitHub",
+      "qaTests": "QA-Tests"
+    }
+  },
+  "th": {
+    "property": "Eigenschaft",
+    "type": "Typ",
+    "description": "Beschreibung"
+  },
+  "badge": {
+    "required": "Erforderlich",
+    "optional": "Optional"
+  },
+  "yesNo": {
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "overview": {
+    "title": "Überblick",
+    "p1": "Crumb Widget ist ein eigenständiges JavaScript-Widget, das einen <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-Server</a> abfragt und einen vollwertigen Meeting-Finder rendert — Suche, Filter, Listenansicht und eine interaktive Karte.",
+    "p2": "Es wird als <strong>einzelne JavaScript-Datei</strong> ausgeliefert, wobei das gesamte CSS zur Laufzeit injiziert wird. Keine Stylesheets, keine Build-Schritte, kein Framework auf der Hostseite erforderlich."
+  },
+  "quickStart": {
+    "title": "Schnellstart",
+    "intro": "Um zu beginnen, füge deiner Seite ein Container-Element hinzu, richte es auf deinen BMLT-Server aus und lade das Widget-Skript. Hier ist ein vollständiges Beispiel:",
+    "autoInit": "Das Widget initialisiert sich automatisch beim Laden des Skripts, sodass kein zusätzliches JavaScript erforderlich ist.",
+    "viewport": "<strong>Wichtig:</strong> Stelle sicher, dass deine Seite <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> im <code>&lt;head&gt;</code> enthält. Dies ist wichtig für die korrekte Darstellung auf Mobilgeräten und kleinen Bildschirmen."
+  },
+  "attributes": {
+    "title": "Datenattribute",
+    "intro": "Die gesamte Konfiguration wird als <code>data-*</code>-Attribute auf dem <code>#crumb-widget</code>-Div gesetzt.",
+    "th": {
+      "attribute": "Attribut",
+      "description": "Beschreibung"
+    },
+    "server": "Vollständige URL deines BMLT-Servers. <br /><em>Beispiel:</em> <code>https://example.org/main_server</code>",
+    "serviceBody": "Filtert Meetings nach einem oder mehreren Service Bodies. Akzeptiert eine einzelne numerische ID oder eine durch Kommas getrennte Liste. Lass es weg, um alle Meetings auf dem Server anzuzeigen. <br /><em>Einzeln:</em> <code>\"42\"</code> <br /><em>Mehrere:</em> <code>\"42,57,103\"</code> <br /><strong>Hinweis:</strong> Rekursive Suche ist immer aktiviert — untergeordnete Service Bodies werden automatisch eingeschlossen und können nicht deaktiviert werden.",
+    "view": "Standardansicht beim Laden des Widgets. <br /><em>Werte:</em> <code>list</code> (Standard), <code>map</code> oder <code>both</code> <br /><code>both</code> zeigt eine Karte mit fester Höhe über der vollständigen Meeting-Liste ohne Listen-/Karten-Umschalter an. <br />Kann zur Laufzeit durch den <code>?view=</code>-Abfrageparameter überschrieben werden (siehe <a href=\"#query-params\">URL-Abfrageparameter</a>).",
+    "path": "Aktiviert History-API-Routing (saubere URLs ohne <code>#</code>) und legt den Basispfad fest. Ohne dieses Attribut wird hash-basiertes Routing verwendet (Standard). <br /><em>Beispiel:</em> <code>data-path=\"/meetings\"</code> erzeugt URLs wie <code>/meetings/monday-night-meeting-42</code> <br />Verwende <code>data-path=\"\"</code> für Pfad-Routing ohne Präfix (z. B. in iframe-Einbettungen). <br />Siehe <a href=\"#routing\">Routing</a> für Details."
+  },
+  "globalConfig": {
+    "title": "Globales Konfigurationsobjekt",
+    "intro": "Für Optionen, die nicht als Datenattribute verfügbar sind, definiere <code>CrumbWidgetConfig</code> als globale Variable <strong>vor</strong> dem Laden des Skripts.",
+    "row": {
+      "view": "Überschreibt die Standardansicht. Hat Vorrang vor <code>data-view</code>. <code>'both'</code> zeigt eine Karte mit fester Höhe über der vollständigen Liste; der Listen-/Karten-Umschalter wird ausgeblendet.",
+      "language": "Überschreibt die UI-Sprache (z. B. <code>'es'</code>, <code>'fr'</code>). Standard: <code>navigator.language</code>, mit Fallback auf Englisch. Unterstützt: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "columns": "In der Listenansicht angezeigte Spalten. Standard: <code>['time', 'name', 'location', 'address']</code>. Lass einen Spaltennamen weg, um ihn auszublenden. Verfügbare Werte: <code>time</code>, <code>name</code>, <code>location</code> (Veranstaltungsort/Gebäudename), <code>address</code> (Straßenadresse mit Präsenz/Online-Badges), <code>service_body</code>. <code>service_body</code> ist standardmäßig ausgeblendet — füge es explizit hinzu, um den Service-Body-Namen anzuzeigen.",
+      "geolocation": "Zeigt eine <strong>In meiner Nähe</strong>-Schaltfläche an und führt beim Laden der Seite eine automatische Geolokation durch, um Meetings in der Nähe des Nutzers zu finden. Erfordert HTTPS. Standard: <code>false</code>. Wenn die Geolokation fehlschlägt oder verweigert wird, wird ein Fehler angezeigt — kein Fallback-Laden. <strong>Hinweis:</strong> <code>serviceBodyIds</code>-Filter haben keine Auswirkung auf Geolokationssuchen; die Ergebnisse werden ausschließlich durch die Nähe bestimmt.",
+      "geolocationRadius": "Maximaler Suchradius bei Geolokation. Wirkt als Obergrenze für das Distanz-Dropdown von In meiner Nähe — Optionen über diesem Wert werden ausgeblendet. Standard: <code>75</code>.",
+      "distanceOptions": "Im Distanz-Dropdown von In meiner Nähe angezeigte Distanzwerte (in <code>distanceUnit</code>). Optionen über <code>geolocationRadius</code> werden automatisch ausgeblendet; wenn <code>geolocationRadius</code> nicht in der Liste ist, wird er als letzte Option angefügt. Standard: <code>[5, 10, 15, 25, 50, 100]</code>.",
+      "distanceUnit": "Einheitenbezeichnung neben Distanzen im In-meiner-Nähe-Dropdown. Standard: <code>'mi'</code>.",
+      "nowOffset": "Toleranzminuten, bevor ein Meeting als vergangen gilt. Meetings, die in den letzten <code>nowOffset</code> Minuten begonnen haben, erscheinen weiterhin oben in der Liste; ältere Meetings des heutigen Wochentags wandern ans Ende der Liste (als ob sie nächste Woche stattfinden). Standard: <code>10</code>. Setze auf <code>0</code>, um sofort nach Ablauf der Startzeit umzuwälzen.",
+      "hideHeader": "Blendet die Titelleiste \"Meeting-Finder\" und die Meeting-Anzahl oben im Widget aus. Standard: <code>false</code>.",
+      "darkMode": "Eingebautes dunkles Farbschema. <code>'auto'</code> folgt der Betriebssystem-Präferenz des Besuchers (<code>prefers-color-scheme</code>); <code>true</code> erzwingt den dunklen Modus unabhängig vom Betriebssystem; <code>false</code> (Standard) deaktiviert ihn. Funktioniert zusammen mit <a href=\"#tile-dark-config\">Kacheln im dunklen Modus</a>.",
+      "mapTiles": "Benutzerdefinierter Kartenkachel-Anbieter. Ersetzt die Standard-OpenStreetMap-Kacheln. Siehe <a href=\"#tile-config\">Kachelanbieter</a> unten.",
+      "mapTilesDark": "Alternativer Kachelanbieter, der bei <code>prefers-color-scheme: dark</code> verwendet wird. Wechselt automatisch beim Wechsel des Betriebssystem-Themes. Siehe <a href=\"#tile-dark-config\">Kacheln dunkler Modus</a> unten.",
+      "mapMarkers": "Benutzerdefinierter Kartenmarker für Meeting-Standorte. Ersetzt den Standard-NA-Marker. Siehe <a href=\"#marker-config\">Marker-Konfiguration</a> unten."
+    }
+  },
+  "language": {
+    "title": "Sprache",
+    "intro": "Das Widget erkennt die Sprache des Besuchers automatisch über <code>navigator.language</code> und verwendet Englisch als Fallback. Überschreibe sie mit der Konfigurationseigenschaft <code>language</code>:",
+    "codes": "Sprachcodes werden anhand des Basis-Tags abgeglichen, sodass <code>'fr-CA'</code> <code>fr</code> verwendet. Unterstützte Sprachen:",
+    "th": {
+      "code": "Code",
+      "language": "Sprache"
+    },
+    "name": {
+      "en": "Englisch",
+      "es": "Spanisch",
+      "fr": "Französisch",
+      "de": "Deutsch",
+      "pt": "Portugiesisch",
+      "it": "Italienisch",
+      "sv": "Schwedisch",
+      "da": "Dänisch",
+      "el": "Griechisch",
+      "fa": "Persisch",
+      "pl": "Polnisch",
+      "ru": "Russisch",
+      "ja": "Japanisch"
+    }
+  },
+  "geolocation": {
+    "title": "Geolokation",
+    "p1": "Aktiviere die <strong>In meiner Nähe</strong>-Schaltfläche mit <code>geolocation: true</code>. Wenn aktiviert, versucht das Widget außerdem, den Nutzer beim Laden der Seite automatisch zu lokalisieren und Meetings in der Nähe anzuzeigen. Erfordert einen sicheren Kontext (HTTPS).",
+    "p2": "Wenn die Geolokation verweigert wird oder nicht verfügbar ist, wird eine Fehlermeldung angezeigt — es gibt kein stilles Fallback-Laden aller Meetings. Dies ist beabsichtigt: Auf großen Servern ohne Service-Body-Beschränkung könnte das Laden aller Meetings zehntausende Ergebnisse zurückgeben.",
+    "p3": "<strong>Service-Body-Filter haben keine Auswirkung auf Geolokationssuchen.</strong> Bei Verwendung von In meiner Nähe werden die Ergebnisse ausschließlich durch die Koordinaten des Nutzers und <code>geolocationRadius</code> bestimmt. Wenn keine <code>serviceBodyIds</code> konfiguriert sind, kann die In-meiner-Nähe-Schaltfläche nicht ausgeschaltet werden — Geolokation ist die einzige Datenquelle.",
+    "p4": "Die In-meiner-Nähe-Schaltfläche öffnet ein Distanz-Dropdown, sodass Nutzer wählen können, wie weit sie suchen möchten. Die Auswahl eines Radius wendet einen clientseitigen Distanzfilter auf die bereits geladenen Meetings an — bei Änderung des Radius wird keine neue Netzwerkanfrage gestellt. Die verfügbaren Distanzen stammen aus <code>distanceOptions</code>, begrenzt durch <code>geolocationRadius</code>; Optionen ohne Meetings im Bereich werden automatisch ausgeblendet. Verwende <code>distanceUnit</code>, um Kilometer statt Meilen anzuzeigen.",
+    "p5": "In der Kartenansicht mit aktivem In meiner Nähe erscheint beim Verschieben oder Zoomen der Karte oben eine <strong>In diesem Bereich suchen</strong>-Schaltfläche. Ein Klick darauf lädt Meetings zentriert auf den aktuellen Kartenausschnitt mit demselben gewählten Radius neu. Die Karte bleibt an der Position des Nutzers — sie springt nicht, um die neuen Ergebnisse einzupassen."
+  },
+  "queryParams": {
+    "title": "URL-Abfrageparameter",
+    "intro": "Der Abfrageparameter <code>?view=</code> legt die anfängliche Ansicht fest und überschreibt <code>data-view</code> und <code>view</code>:",
+    "th": {
+      "value": "Wert",
+      "behaviour": "Verhalten"
+    },
+    "row": {
+      "list": "Listenansicht beim Laden erzwingen",
+      "map": "Kartenansicht beim Laden erzwingen",
+      "both": "Karte über der vollständigen Meeting-Liste anzeigen; Listen-/Karten-Umschalter ausgeblendet",
+      "auto": "Geolokation beim Laden — Erfolg zeigt Karte mit Ergebnissen in der Nähe; Fehlschlag fällt auf Liste mit allen Meetings zurück"
+    },
+    "example": "Beispiel: <code>https://example.org/meetings/?view=auto</code>",
+    "disable": "<code>?view=list</code> und <code>?view=map</code> deaktivieren die automatische Geolokation, selbst wenn <code>geolocation: true</code> gesetzt ist."
+  },
+  "cssVars": {
+    "title": "CSS-Variablen",
+    "intro": "Das Widget stellt benutzerdefinierte CSS-Eigenschaften bereit, sodass du es ohne JavaScript-Eingriffe gestalten kannst. Setze beliebige davon auf das <code>#crumb-widget</code>-Element — gib nur die an, die du überschreiben möchtest.",
+    "th": {
+      "variable": "Variable",
+      "default": "Standard",
+      "controls": "Steuert"
+    },
+    "row": {
+      "fontFamily": "Schriftart-Stack des Widgets",
+      "fontSize": "Basis-Schriftgröße",
+      "background": "Widget- und Steuerleisten-Hintergrund",
+      "text": "Primäre Textfarbe",
+      "border": "Ränder und Trennlinien",
+      "accent": "Aktive Schaltflächen, Links, Fokus-Anzeigen",
+      "accentLight": "Zeilen-Hover, Hintergrund des aktiven Filterpanels",
+      "borderRadius": "Eckenradius von Karten und Schaltflächen",
+      "rowAlt": "Hintergrund alternierender (gerader) Zeilen",
+      "inPerson": "Text des Präsenz-Badges",
+      "inPersonBg": "Hintergrund des Präsenz-Badges",
+      "virtual": "Text des Online-Badges",
+      "virtualBg": "Hintergrund des Online-Badges",
+      "surface": "Hintergründe von Eingabefeldern, Schaltflächen und Dropdown-Panels",
+      "hover": "Neutraler Hover-Zustand (Schaltflächen und Zeilen ohne Akzent)",
+      "divider": "Interne Zeilen- und Listentrennlinien",
+      "textSecondary": "Sekundärer / abgedämpfter Text (Tabellenüberschriften, Zeit, Standort)",
+      "textMuted": "Sehr abgedämpfter Text (Fußzeilenanzahl, Leerzustandsmeldungen)"
+    }
+  },
+  "cssDarkMode": {
+    "title": "Dunkler Modus",
+    "intro": "Das Widget bringt eine eingebaute dunkle Palette mit. Aktiviere sie mit der <code>darkMode</code>-Konfigurationsoption — kein zusätzliches CSS erforderlich. Funktioniert zusammen mit der Option <a href=\"#tile-dark-config\">Kacheln dunkler Modus</a>.",
+    "custom": "Um stattdessen eine benutzerdefinierte dunkle Palette zu verwenden, überschreibe die CSS-Variablen direkt:"
+  },
+  "cssClasses": {
+    "title": "CSS-Hilfsklassen",
+    "intro": "Diese Klassen werden intern angewendet und können auch in deinem eigenen CSS für weitere Anpassungen angesprochen werden.",
+    "th": {
+      "class": "Klasse",
+      "usedOn": "Verwendet auf"
+    },
+    "row": {
+      "btnPrimary": "Gefüllte Akzent-Schaltflächen — aktive Filter-Chips, Ansichtsumschalter, Meeting beitreten",
+      "btnSecondary": "Umrandete Schaltflächen — Wegbeschreibung",
+      "link": "Link-artige Schaltflächen — Zurück, E-Mail-Kontakt",
+      "badgeInPerson": "Badge für Präsenzort",
+      "badgeVirtual": "Badge für Online-Ort",
+      "card": "Detailbereichs-Karten",
+      "row": "Zeilen der Meeting-Listen-Tabelle"
+    }
+  },
+  "tileConfig": {
+    "title": "Kachelanbieter",
+    "intro": "Standardmäßig verwendet die Karte Kacheln von <a href=\"https://www.openstreetmap.org/\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>. Wechsle zu einem beliebigen <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\" target=\"_blank\" rel=\"noopener\">Leaflet-kompatiblen Kachelanbieter</a>, indem du <code>map.tiles</code> setzt.",
+    "row": {
+      "url": "Kachel-URL-Vorlage. Verwende die Platzhalter <code>{z}</code>, <code>{x}</code>, <code>{y}</code> (und <code>{r}</code> für Retina, sofern unterstützt).",
+      "attribution": "Attribution-HTML, das im Attribution-Steuerelement der Karte angezeigt wird. Von den meisten Kachelanbietern in den Nutzungsbedingungen vorgeschrieben."
+    }
+  },
+  "tileDarkConfig": {
+    "title": "Kacheln dunkler Modus",
+    "intro": "Setze <code>map.tiles_dark</code>, um eine andere Kachelschicht für Besucher mit <code>prefers-color-scheme: dark</code> zu verwenden. Die Schicht wird automatisch beim Wechsel des Betriebssystem-Themes ausgetauscht — kein Neuladen der Seite erforderlich. Wenn weggelassen, werden in allen Farbschemata die gleichen Kacheln verwendet.",
+    "googleNote": "<strong>Google Maps-Kacheln:</strong> Die Kachel-API von Google erfordert ein serverseitig (oder über einen kurzlebigen clientseitigen Fetch) erhaltenes Sitzungstoken. Da das Token vor dem Setzen von <code>CrumbWidgetConfig</code> abgerufen werden muss, musst du <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> dynamisch laden, nachdem das Token bereit ist. Das folgende Beispiel verwendet die <a href=\"https://developers.google.com/maps/documentation/tile/\" target=\"_blank\" rel=\"noopener\">Google Map Tiles API</a> — du benötigst einen <strong>referer-eingeschränkten API-Schlüssel</strong> mit aktivierter Map Tiles API."
+  },
+  "markerConfig": {
+    "title": "Marker-Konfiguration",
+    "intro": "Mit dem Objekt <code>map.markers.location</code> kannst du den Standard-NA-Kartenpin durch ein beliebiges Bild oder Inline-SVG ersetzen.",
+    "row": {
+      "html": "HTML, das innerhalb des Marker-Elements gerendert wird. Typischerweise ein <code>&lt;img&gt;</code>-Tag oder Inline-SVG.",
+      "width": "Symbolbreite in Pixeln.",
+      "height": "Symbolhöhe in Pixeln. Der Ankerpunkt wird auf die untere Mitte des Symbols gesetzt."
+    }
+  },
+  "exampleBasic": {
+    "title": "Beispiel: Einfaches Einbetten",
+    "intro": "Alle Meetings auf einem öffentlichen BMLT-Server anzeigen:"
+  },
+  "exampleServiceBody": {
+    "title": "Beispiel: Nach Service Body filtern",
+    "intro": "Nur Meetings anzeigen, die zum Service Body 42 (und seinen Kindern) gehören:"
+  },
+  "exampleMulti": {
+    "title": "Beispiel: Mehrere Service Bodies",
+    "intro": "Übergib eine durch Kommas getrennte Liste, um Meetings aus mehreren Service Bodies einzuschließen:"
+  },
+  "exampleMap": {
+    "title": "Beispiel: Standardmäßig Kartenansicht"
+  },
+  "exampleWordpress": {
+    "title": "Beispiel: WordPress",
+    "intro": "Der einfachste Weg, Crumb Widget zu einer WordPress-Site hinzuzufügen, ist das offizielle Plugin <a href=\"https://wordpress.org/plugins/crumb/\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> (<a href=\"https://github.com/bmlt-enabled/crumb-widget\" target=\"_blank\" rel=\"noopener\">GitHub</a>). Es verpackt dieses Widget in einen Shortcode mit einer Einstellungsseite — kein Code erforderlich.",
+    "installation": "Installation",
+    "install": {
+      "1": "Suche nach <strong>Crumb</strong> im WordPress-Plugin-Verzeichnis oder lade das Plugin-ZIP manuell hoch.",
+      "2": "Aktiviere das Plugin.",
+      "3": "Gehe zu <strong>Einstellungen → Crumb</strong> und gib die URL deines BMLT-Servers ein.",
+      "4": "Füge den Shortcode auf einer beliebigen Seite oder einem Beitrag hinzu."
+    },
+    "shortcode": "Shortcode",
+    "serverNote": "Die in den Plugin-Einstellungen festgelegte BMLT-Server-URL wird standardmäßig verwendet. Du kannst sie überschreiben — oder nach Service Body filtern — direkt im Shortcode:",
+    "advanced": "Erweiterte Konfiguration",
+    "advancedIntro": "Alle <a href=\"#global-config\">globalen Konfigurationsoptionen</a> (Sprache, Geolokation, Spalten, Kartenkacheln usw.) können aus der <code>functions.php</code> deines Themes über den <code>bmltclient_config</code>-Filter gesetzt werden:"
+  },
+  "exampleDrupal": {
+    "title": "Beispiel: Drupal",
+    "intro": "Füge Crumb Widget einer Drupal 10.3+ oder 11-Site mit dem Modul <a href=\"https://github.com/bmlt-enabled/crumb-drupal\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> hinzu. Es verpackt dieses Widget in einen platzierbaren Block, einen <code>[crumb]</code>-Shortcode-Filter für Body-Felder und einen Render-Service für die programmatische Einbettung. Releases werden auf <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-drupal/releases</a> veröffentlicht.",
+    "installation": "Installation",
+    "install": {
+      "1": "Lade die neueste <code>crumb.zip</code> von der <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">Releases-Seite</a> herunter.",
+      "2": "Entpacke nach <code>web/modules/contrib/</code> (oder <code>web/modules/custom/</code>).",
+      "3": "Aktiviere: <code>drush en crumb</code> oder über <strong>Extend</strong> in der Admin-Oberfläche.",
+      "4": "Besuche <strong>Configuration → Web services → Crumb</strong> und gib die URL deines BMLT-Servers ein."
+    },
+    "embedBlock": "Einbetten über Block",
+    "embedBlockBody": "Der einfachste Weg: Platziere den <strong>Crumb meeting finder</strong>-Block (Kategorie: BMLT) in einer beliebigen Region über <strong>Structure → Block layout</strong>. Die Einstellungen pro Block ermöglichen das Überschreiben von Server, Service Body, Ansicht und Geolokation.",
+    "embedShortcode": "Einbetten über Shortcode in Body-Feldern",
+    "embedShortcodeBody": "Aktiviere den Filter <strong>Crumb meeting finder shortcode</strong> in einem Textformat (<strong>Configuration → Content authoring → Text formats and editors</strong>) und verwende dann:",
+    "serverNote": "Die in den Moduleinstellungen festgelegte BMLT-Server-URL wird standardmäßig verwendet. Du kannst sie überschreiben — oder nach Service Body filtern — direkt im Shortcode:",
+    "advanced": "Erweiterte Konfiguration",
+    "advancedIntro": "Alle <a href=\"#global-config\">globalen Konfigurationsoptionen</a> (Sprache, Geolokation, Spalten, Kartenkacheln usw.) können programmatisch über <code>hook_crumb_config_alter()</code> in einem benutzerdefinierten Modul gesetzt werden:"
+  },
+  "features": {
+    "title": "Funktionen",
+    "item": {
+      "listView": "<strong>Listenansicht</strong> — Meeting-Tabelle sortiert nach Tag und Uhrzeit, mit Veranstaltungstyp-Badges",
+      "mapView": "<strong>Kartenansicht</strong> — interaktive Leaflet-Karte für Präsenz-Meetings (einschließlich solcher mit Online-Komponente); klicke auf einen Marker, um Meetings an diesem Ort zu sehen; beim Verschieben oder Zoomen erscheint eine <em>In diesem Bereich suchen</em>-Schaltfläche, wenn In meiner Nähe aktiv ist",
+      "detailView": "<strong>Detailansicht</strong> — vollständige Meeting-Infos: Zeitplan, Adresse mit Google-Maps-Wegbeschreibung, Beitrittsschaltfläche für virtuelle Meetings, Formate und Notizen",
+      "textSearch": "<strong>Textsuche</strong> — Echtzeitfilter über Meeting-Name, Standort und Notizen",
+      "weekdayFilter": "<strong>Wochentagsfilter</strong> — einzelne Wochentage umschalten",
+      "venueFilter": "<strong>Veranstaltungsort-Typ-Filter</strong> — Präsenz oder online (Meetings mit sowohl einem Präsenzort als auch einem Online-Link erscheinen unter beiden)",
+      "timeFilter": "<strong>Tageszeit-Filter</strong> — Morgen, Nachmittag, Abend oder Nacht",
+      "formatFilter": "<strong>Formatfilter</strong> — Mehrfachauswahl-Dropdown zum Filtern nach Meeting-Format (z. B. Offen, Geschlossen, Sprecher); zeigt nur in den geladenen Meeting-Daten vorhandene Formate an",
+      "localeTime": "<strong>Locale-bewusste Zeitanzeige</strong> — Meeting-Zeiten werden basierend auf dem Browser-Locale des Nutzers automatisch im 12-Stunden- (AM/PM) oder 24-Stunden-Format angezeigt",
+      "recursive": "<strong>Rekursive Service-Body-Unterstützung</strong> — untergeordnete Service Bodies werden immer eingeschlossen",
+      "multiBody": "<strong>Mehrere Service Bodies</strong> — IDs durch Kommas trennen, um Regionen zu kombinieren",
+      "print": "<strong>Druckerfreundliche Listenansicht</strong> — wenn der Nutzer die Seite druckt, wechselt das Widget automatisch zu einem sauberen Schwarz-Weiß-Plan, gruppiert nach Wochentag, wiederholt Tabellenüberschriften über die Seiten und druckt die vollständige URL für Online-Meetings"
+    }
+  },
+  "routing": {
+    "title": "Routing",
+    "intro": "Standardmäßig verwendet das Widget <strong>hash-basiertes Routing</strong> für Meeting-Detail-URLs (z. B. <code>example.com/#/monday-night-meeting-42</code>). Das funktioniert sofort auf jedem Hosting ohne Server-Konfiguration.",
+    "prettyUrls": "Pretty URLs (History API)",
+    "prettyUrlsIntro": "Für saubere URLs ohne <code>#</code>-Fragment füge ein <code>data-path</code>-Attribut mit deinem Basispfad hinzu:",
+    "prettyUrlsBody": "Dies erzeugt URLs wie <code>example.com/meetings/monday-night-meeting-42</code>. Dein Server muss so konfiguriert sein, dass er die Seite für alle Unterpfade unter dem Basispfad ausliefert, damit direkte Besuche und Seiten-Reloads funktionieren:",
+    "th": {
+      "server": "Server",
+      "config": "Konfiguration"
+    },
+    "row": {
+      "drupal": "Setze <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; das Modul registriert die nötige Route automatisch."
+    },
+    "iframes": "Einbettung in iframes (Google Sites usw.)",
+    "iframesP1": "Beim Einbetten in iframe-basierte Hosts wie Google Sites funktioniert die gesamte Navigation innerhalb des Widgets (Klick auf Meetings, Zurück-Schaltfläche, Geschwister-Links) normal. Deep-Linking zu einem bestimmten Meeting per URL wird jedoch nicht unterstützt, da das Widget innerhalb eines proxierten iframes läuft und die URL der Elternseite nicht steuern kann.",
+    "iframesP2": "Es ist keine spezielle Konfiguration erforderlich — das standardmäßige hash-basierte Routing funktioniert innerhalb von iframes. Das <code>data-path</code>-Attribut wird für iframe-Einbettungen nicht benötigt."
+  },
+  "siteBuilders": {
+    "title": "Website-Baukästen",
+    "intro": "Crumb Widget kann auch in gängige Website-Baukästen eingebettet werden, aber die Einrichtung variiert je nach Plattform."
+  },
+  "findServiceBody": {
+    "title": "Service-Body-ID finden",
+    "intro": "Jede Einbettung unten filtert Meetings nach einem bestimmten <strong>Service Body</strong> (Bereich, Region oder Zone), indem dessen numerische ID in <code>data-service-body</code> übergeben wird. Du kannst diese im <strong>semantischen Workshop</strong> deines BMLT-Servers nachschlagen, der unter <code>&lt;your-server&gt;/main_server/semantic</code> auf jedem BMLT-Server verfügbar ist.",
+    "step": {
+      "1": "Öffne den semantischen Workshop in deinem Browser. Zum Beispiel <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — ersetze die Domain durch deinen eigenen BMLT-Server.",
+      "2": "Wähle unter <strong>Operation</strong> die Aktion, die Service Bodies abruft (die Bezeichnungen variieren leicht je nach Version, aber es ist typischerweise <em>Get Service Bodies</em> oder <em>Retrieve information about Service Bodies</em>).",
+      "3": "Lasse das Antwortformat auf JSON und klicke <strong>Execute JSON Request</strong>.",
+      "4": "Finde in der JSON-Antwort deinen Bereich, deine Region oder Zone anhand des <code>name</code>. Das daneben stehende <code>id</code>-Feld ist die Nummer, die du an <code>data-service-body</code> übergibst."
+    },
+    "outro": "In diesem Beispiel würdest du <code>data-service-body=\"42\"</code> nur für Greater Seattle übergeben oder <code>data-service-body=\"42,57\"</code>, um beide Bereiche zu kombinieren. Du kannst auch den semantischen Workshop überspringen und direkt den JSON-Endpunkt unter <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code> aufrufen.",
+    "callout1": "<strong>Du kennst deine Server-URL oder Service-Body-ID nicht?</strong> Stöbere auf <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — dort sind bekannte BMLT-Server und die Service Bodies auf jedem aufgelistet. Finde deinen Bereich, deine Region oder Zone, um sowohl die <code>data-server</code>-URL als auch die <code>data-service-body</code>-ID an einer Stelle zu erhalten.",
+    "callout2": "<strong>Tipp:</strong> Untergeordnete Service Bodies werden immer automatisch eingeschlossen. Wenn du die ID einer Region übergibst, sind Meetings aus jedem Bereich darunter enthalten — du musst nicht jeden untergeordneten Bereich auflisten."
+  },
+  "googleSites": {
+    "title": "Google Sites",
+    "intro": "Google Sites unterstützt das Einbetten von HTML-, CSS- und JavaScript-Code über <strong>Einfügen → Einbetten → Einbettungscode</strong>. Du kannst auch eine ganzseitige Einbettung verwenden, wenn der Meeting-Finder auf einer eigenen Seite leben soll.",
+    "step": {
+      "1": "Öffne deine Site in Google Sites.",
+      "2": "Klicke <strong>Einfügen</strong> → <strong>Einbetten</strong>.",
+      "3": "Wähle <strong>Einbettungscode</strong>.",
+      "4": "Füge dein Widget-Markup und -Skript ein.",
+      "5": "Klicke <strong>Einfügen</strong> und veröffentliche dann deine Site."
+    },
+    "note": "<strong>Hinweis:</strong> In Google Sites muss JavaScript bei Verwendung der Einbettungscode-Option innerhalb von <code>&lt;script&gt;</code>-Tags eingeschlossen werden. Da Google Sites das Widget innerhalb eines proxierten iframes ausführt, werden direkte Links zu bestimmten Meetings (Deep-Linking) nicht unterstützt — aber die gesamte Navigation innerhalb des Widgets funktioniert normal.",
+    "demoLink": "<a href=\"https://sites.google.com/view/crumb-seattle/\" target=\"_blank\">Live-Demo auf Google Sites ansehen &rarr;</a>"
+  },
+  "squarespace": {
+    "title": "Squarespace",
+    "intro": "Squarespace-Einbettungen verwenden einen <strong>Code Block</strong>, der rohes HTML und JavaScript akzeptiert. Laut Squarespace-Dokumentation sind Code Blocks mit aktiviertem JavaScript in den Plänen <strong>Core, Plus, Advanced, Business, Commerce Basic und Commerce Advanced</strong> verfügbar. Der kostenlose Personal-Plan unterstützt JavaScript in Code Blocks nicht.",
+    "before": "Bevor du beginnst, brauchst du zwei Werte:",
+    "value": {
+      "server": "<code>data-server</code> — die <code>/main_server/</code>-URL deines BMLT-Servers",
+      "body": "<code>data-service-body</code> — die numerische ID für deinen Bereich, deine Region oder Zone (siehe <a href=\"#find-service-body\">Service-Body-ID finden</a>)"
+    },
+    "step": {
+      "1": "Melde dich bei Squarespace an und öffne die Seite, auf der du den Meeting-Finder haben möchtest.",
+      "2": "Klicke <strong>Bearbeiten</strong>, fahre dann über die Stelle, an der das Widget hinkommen soll, und klicke die <strong>+</strong>-Schaltfläche (Block hinzufügen).",
+      "3": "Suche nach einem <strong>Code</strong>-Block und füge ihn ein.",
+      "4": "Stelle im Code-Block-Editor sicher, dass das Dropdown-Menü <strong>Mode</strong> auf <strong>HTML</strong> gesetzt ist und dass <strong>Display Source</strong> <em>aus</em> ist (sonst zeigt Squarespace die rohen Tags an, anstatt den Code auszuführen).",
+      "5": "Füge das untenstehende Snippet ein und ersetze <code>data-server</code> und <code>data-service-body</code> durch deine Werte.",
+      "6": "Klicke außerhalb des Blocks, um ihn zu schließen, und klicke dann <strong>Speichern</strong>. Veröffentliche die Seite, falls sie noch nicht live ist."
+    },
+    "note": "<strong>Hinweis:</strong> Squarespace rendert Code-Blocks im normalen Seitenfluss, sodass das Widget so viel vertikalen Platz einnimmt, wie es benötigt. Wenn die Vorschau leer aussieht, öffne den Block erneut und bestätige, dass <strong>Display Source</strong> aus ist und dass <strong>Mode</strong> auf <strong>HTML</strong> gesetzt ist. Wenn du auf einem Plan bist, der kein JavaScript in Code-Blocks erlaubt, musst du upgraden, bevor das Widget geladen wird."
+  },
+  "wix": {
+    "title": "Wix",
+    "intro": "Wix teilt das Einbetten auf zwei Stellen auf: Der HTML-Container des Widgets lebt in deiner Seite als <strong>Embed HTML</strong>-Element (Wix nennt das \"Custom Embeds → Embed HTML\" oder \"Embed a Widget\"), und der Loader-<code>&lt;script&gt;</code> kommt in <strong>Settings → Custom Code</strong>, sodass es nur einmal pro Besuch geladen wird. Laut Wix-Dokumentation erfordert Custom Code, dass deine Site auf einem <strong>kostenpflichtigen Plan mit verbundener Domain veröffentlicht</strong> ist.",
+    "before": "Bevor du beginnst, brauchst du zwei Werte:",
+    "value": {
+      "server": "<code>data-server</code> — die <code>/main_server/</code>-URL deines BMLT-Servers",
+      "body": "<code>data-service-body</code> — die numerische ID für deinen Bereich, deine Region oder Zone (siehe <a href=\"#find-service-body\">Service-Body-ID finden</a>)"
+    },
+    "step1Heading": "<strong>Schritt 1 — Loader-Skript hinzufügen (einmal pro Site):</strong>",
+    "step1": {
+      "1": "Gehe in deinem Wix-Dashboard zu <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong>.",
+      "2": "Klicke <strong>+ Add Custom Code</strong>.",
+      "3": "Füge das untenstehende Loader-Snippet in das Code-Feld ein.",
+      "4": "Wähle unter <strong>Add Code to Pages</strong> entweder <em>All pages</em> oder nur die Seite, auf der das Widget angezeigt wird (es nur dort zu laden, wo nötig, ist schneller).",
+      "5": "Setze <strong>Place Code in</strong> auf <strong>Body – end</strong>.",
+      "6": "Benenne es so etwas wie <em>Crumb Widget loader</em> und klicke <strong>Apply</strong>."
+    },
+    "step2Heading": "<strong>Schritt 2 — Widget-Container auf der Seite hinzufügen:</strong>",
+    "step2": {
+      "1": "Öffne die Seite im Wix-Editor.",
+      "2": "Klicke <strong>+ Add Elements</strong> → <strong>Embed Code</strong> → <strong>Embed HTML</strong> (in Wix Studio ist das <strong>Embed &amp; Social</strong> → <strong>HTML iframe/Embed</strong>).",
+      "3": "Lasse das Element an der Stelle fallen, an der das Widget erscheinen soll, und klicke <strong>Enter Code</strong>.",
+      "4": "Füge das untenstehende Container-Snippet ein und ersetze <code>data-server</code> und <code>data-service-body</code> durch deine Werte.",
+      "5": "Klicke <strong>Update</strong>. Passe die Größe des Elements ungefähr an die gewünschte Höhe an — Wix' Embed HTML hat eine feste Größe, gib also genug Raum (z. B. <code>800px</code> hoch) für die Meeting-Liste und die Karte.",
+      "6": "Klicke <strong>Publish</strong>."
+    },
+    "note": "<strong>Achtung:</strong> Das Embed-HTML-Element von Wix wird innerhalb eines iframes gerendert, was bedeutet, dass das Widget die umgebende Seite nicht in der Größe anpassen kann und Deep-Links zu einzelnen Meetings die Browser-URL nicht aktualisieren. Die gesamte Navigation innerhalb des Widgets (Liste, Karte, Meeting-Detail, Filter) funktioniert weiterhin normal. Wenn du die Custom-Code-Option in den Settings nicht siehst, enthält dein Plan sie wahrscheinlich nicht — überprüfe, dass deine Site auf einem kostenpflichtigen Plan mit verbundener Domain veröffentlicht ist."
+  },
+  "browserSupport": {
+    "title": "Browser-Unterstützung",
+    "intro": "Alle modernen Browser. Internet Explorer wird nicht unterstützt."
+  },
+  "npmPackage": {
+    "title": "npm-Paket",
+    "intro": "Zusätzlich zum CDN-Script-Tag-Einbetten ist Crumb Widget als npm-Paket für die Verwendung in JavaScript-/TypeScript-Projekten (React, Svelte, Vue, einfaches Vite usw.) verfügbar.",
+    "installation": "Installation",
+    "peerDep": "<code>leaflet</code> ist eine Peer-Abhängigkeit — installiere es zusammen mit <code>crumb-widget</code>, damit Verbraucher dedupen und ihre bevorzugte Version festlegen können.",
+    "usage": "Verwendung",
+    "usageIntro": "Importiere <code>mountCrumbWidget</code> und rufe es mit einem DOM-Element und deiner Konfiguration auf. Das Widget mountet sich selbst und injiziert sein eigenes CSS — kein separater Stylesheet-Import nötig.",
+    "svelteIntro": "In einer Svelte-Komponente verwende <code>onMount</code>, um sicherzustellen, dass das Element vor dem Mounten existiert:",
+    "options": "Optionen",
+    "optionsIntro": "Alle Optionen aus der <a href=\"#global-config\">globalen Konfiguration</a> sind verfügbar, plus zwei zusätzliche Pflichtfelder:",
+    "th": {
+      "option": "Option",
+      "required": "Erforderlich"
+    },
+    "row": {
+      "serverUrl": "URL des BMLT-Servers.",
+      "serviceBodyIds": "Service-Body-IDs zum Filtern. Lass weg oder übergib <code>[]</code>, um alle anzuzeigen.",
+      "view": "Anfangsansicht. Standard: <code>'list'</code>. <code>'both'</code> zeigt die Karte über der Liste ohne Umschalter.",
+      "geolocation": "Aktiviert die In-meiner-Nähe-Schaltfläche. Standard: <code>false</code>.",
+      "geolocationRadius": "Maximaler Suchradius (begrenzt das Distanz-Dropdown). Standard: <code>75</code>.",
+      "distanceOptions": "Im In-meiner-Nähe-Dropdown angezeigte Distanzwerte. Standard: <code>[5,10,15,25,50,100]</code>.",
+      "distanceUnit": "Einheitenbezeichnung für Distanzen. Standard: <code>'mi'</code>.",
+      "darkMode": "Einstellung für dunklen Modus. Standard: <code>false</code>.",
+      "language": "BCP-47-Sprach-Tag (z. B. <code>'es'</code>). Standard: Browser-Locale.",
+      "columns": "Anzuzeigende Tabellenspalten. Siehe <a href=\"#global-config\">Globale Konfiguration</a>.",
+      "map": "Kachelanbieter und Marker-Konfiguration. Siehe <a href=\"#tile-config\">Kachelanbieter</a>."
+    },
+    "note": "<strong>Hinweis:</strong> Das npm-Paket bündelt Svelte und alle Stile in eine einzige JS-Datei. <code>leaflet</code> ist eine Peer-Abhängigkeit (installiere es zusammen mit <code>crumb-widget</code>), sodass du mit anderem Leaflet-nutzenden Code in deiner App dedupen kannst. Jeder Aufruf von <code>mountCrumbWidget</code> ist unabhängig, aber mehrere Widgets auf derselben Seite werden derzeit nicht unterstützt."
+  },
+  "philosophy": {
+    "title": "Philosophie",
+    "body": "Dieses Projekt zielt darauf ab, die Bedürfnisse der meisten NA-Service-Bodies gut abzudecken — nicht jeden möglichen Anwendungsfall. Es wird absichtlich einfach und fokussiert gehalten. Neue Funktionen werden gegen die Kosten für die Codebasis abgewogen; Nischenanfragen, die das Projekt für alle aufblähen, sind in der Regel außerhalb des Umfangs. Wenn du tiefe Anpassungen brauchst, ist dies möglicherweise nicht das richtige Werkzeug."
+  }
+}

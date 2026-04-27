@@ -99,7 +99,7 @@
     "intro": "Para opciones que no están disponibles como atributos de datos, define <code>CrumbWidgetConfig</code> como variable global <strong>antes</strong> de cargar el script.",
     "row": {
       "view": "Sobrescribe la vista por defecto. Tiene precedencia sobre <code>data-view</code>. <code>'both'</code> muestra un mapa de altura fija sobre la lista completa de reuniones; el conmutador lista/mapa se oculta.",
-      "language": "Sobrescribe el idioma de la interfaz (p. ej. <code>'es'</code>, <code>'fr'</code>). Por defecto usa <code>navigator.language</code>, con inglés como respaldo. Idiomas admitidos: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>.",
+      "language": "Sobrescribe el idioma de la interfaz (p. ej. <code>'es'</code>, <code>'fr'</code>). Por defecto usa <code>navigator.language</code>, con inglés como respaldo. Idiomas admitidos: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
       "columns": "Columnas a mostrar en la vista de lista. Por defecto: <code>['time', 'name', 'location', 'address']</code>. Omite cualquier nombre de columna para ocultarla. Valores disponibles: <code>time</code>, <code>name</code>, <code>location</code> (nombre del local), <code>address</code> (dirección con etiquetas presencial/en línea), <code>service_body</code>. <code>service_body</code> está oculto por defecto — añádelo explícitamente para mostrar el nombre del cuerpo de servicio.",
       "geolocation": "Muestra un botón <strong>Cerca de mí</strong> y geolocaliza al usuario automáticamente al cargar la página para encontrar reuniones cercanas. Requiere HTTPS. Por defecto: <code>false</code>. Si la geolocalización falla o se deniega, se muestra un error — no hay carga alternativa. <strong>Nota:</strong> los filtros <code>serviceBodyIds</code> no afectan a las búsquedas por geolocalización; los resultados se determinan únicamente por proximidad.",
       "geolocationRadius": "Radio máximo de búsqueda al usar geolocalización. Actúa como tope para el desplegable de distancias de Cerca de mí — las opciones por encima de este valor se ocultan. Por defecto: <code>75</code>.",
@@ -129,7 +129,12 @@
       "pt": "Portugués",
       "it": "Italiano",
       "sv": "Sueco",
-      "da": "Danés"
+      "da": "Danés",
+      "el": "Griego",
+      "fa": "Persa",
+      "pl": "Polaco",
+      "ru": "Ruso",
+      "ja": "Japonés"
     }
   },
   "geolocation": {

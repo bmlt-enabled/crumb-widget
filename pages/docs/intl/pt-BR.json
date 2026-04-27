@@ -99,7 +99,7 @@
     "intro": "Para opções não disponíveis como atributos de dados, defina <code>CrumbWidgetConfig</code> como variável global <strong>antes</strong> de carregar o script.",
     "row": {
       "view": "Substitui a visão padrão. Tem precedência sobre <code>data-view</code>. <code>'both'</code> mostra um mapa de altura fixa acima da lista completa de reuniões; o alternador lista/mapa fica oculto.",
-      "language": "Substitui o idioma da interface (ex.: <code>'es'</code>, <code>'fr'</code>). Por padrão usa <code>navigator.language</code>, com inglês como fallback. Idiomas suportados: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>.",
+      "language": "Substitui o idioma da interface (ex.: <code>'es'</code>, <code>'fr'</code>). Por padrão usa <code>navigator.language</code>, com inglês como fallback. Idiomas suportados: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
       "columns": "Colunas a mostrar na visão de lista. Padrão: <code>['time', 'name', 'location', 'address']</code>. Omita qualquer nome de coluna para ocultá-la. Valores disponíveis: <code>time</code>, <code>name</code>, <code>location</code> (nome do local), <code>address</code> (endereço com etiquetas presencial/online), <code>service_body</code>. <code>service_body</code> está oculto por padrão — adicione-o explicitamente para mostrar o nome do corpo de serviço.",
       "geolocation": "Mostra um botão <strong>Perto de mim</strong> e geolocaliza automaticamente ao carregar a página para encontrar reuniões próximas. Requer HTTPS. Padrão: <code>false</code>. Se a geolocalização falhar ou for negada, um erro é exibido — não há carga de fallback. <strong>Observação:</strong> os filtros <code>serviceBodyIds</code> não afetam buscas por geolocalização; os resultados são determinados inteiramente pela proximidade.",
       "geolocationRadius": "Raio máximo de busca ao usar geolocalização. Atua como limite para o dropdown de distância de Perto de mim — opções acima deste valor são ocultadas. Padrão: <code>75</code>.",
@@ -129,7 +129,12 @@
       "pt": "Português",
       "it": "Italiano",
       "sv": "Sueco",
-      "da": "Dinamarquês"
+      "da": "Dinamarquês",
+      "el": "Grego",
+      "fa": "Persa",
+      "pl": "Polonês",
+      "ru": "Russo",
+      "ja": "Japonês"
     }
   },
   "geolocation": {

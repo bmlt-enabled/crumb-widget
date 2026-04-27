@@ -1,0 +1,432 @@
+{
+  "page": {
+    "title": "BMLT Crumb Widget — Documentazione"
+  },
+  "nav": {
+    "theme": {
+      "light": "Modalità chiara",
+      "dark": "Modalità scura"
+    },
+    "liveDemo": "→ Demo dal vivo",
+    "qaTests": "→ Pagine di test QA",
+    "overview": "Panoramica",
+    "quickStart": "Avvio rapido",
+    "attributes": "Attributi data",
+    "globalConfig": "Config globale",
+    "language": "Lingua",
+    "geolocation": "Geolocalizzazione",
+    "queryParams": "Parametri di query URL",
+    "cssVars": "Variabili CSS",
+    "cssDarkMode": "Modalità scura",
+    "cssClasses": "Classi CSS di supporto",
+    "tileConfig": "Provider tessere",
+    "tileDarkConfig": "Tessere modalità scura",
+    "markerConfig": "Config marker",
+    "exampleBasic": "Integrazione base",
+    "exampleServiceBody": "Filtro per service body",
+    "exampleMulti": "Più service body",
+    "exampleMap": "Mappa predefinita",
+    "exampleWordpress": "WordPress",
+    "exampleDrupal": "Drupal",
+    "routingModes": "Modalità di routing",
+    "findServiceBody": "Trova l'ID del tuo service body",
+    "googleSites": "Google Sites",
+    "squarespace": "Squarespace",
+    "wix": "Wix",
+    "features": "Funzionalità",
+    "browserSupport": "Compatibilità browser",
+    "npmInstall": "Installazione",
+    "npmUsage": "Utilizzo",
+    "npmOptions": "Opzioni",
+    "philosophy": "Filosofia",
+    "privacy": "Informativa sulla privacy",
+    "section": {
+      "configuration": "Configurazione",
+      "examples": "Esempi",
+      "routing": "Routing",
+      "siteBuilders": "Costruttori di siti",
+      "reference": "Riferimento",
+      "npm": "Pacchetto npm",
+      "legal": "Note legali"
+    }
+  },
+  "header": {
+    "subtitle": "Un widget integrabile per la ricerca di riunioni NA per qualsiasi sito web.",
+    "btn": {
+      "liveDemo": "Demo dal vivo",
+      "github": "GitHub",
+      "qaTests": "Test QA"
+    }
+  },
+  "th": {
+    "property": "Proprietà",
+    "type": "Tipo",
+    "description": "Descrizione"
+  },
+  "badge": {
+    "required": "Obbligatorio",
+    "optional": "Opzionale"
+  },
+  "yesNo": {
+    "yes": "Sì",
+    "no": "No"
+  },
+  "overview": {
+    "title": "Panoramica",
+    "p1": "Crumb Widget è un widget JavaScript autonomo che interroga un <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">server BMLT</a> e mostra uno strumento completo di ricerca riunioni — ricerca, filtri, vista elenco e mappa interattiva.",
+    "p2": "È distribuito come un <strong>singolo file JavaScript</strong> con tutto il CSS iniettato a runtime. Nessun foglio di stile, nessun passaggio di build, nessun framework richiesto sulla pagina ospite."
+  },
+  "quickStart": {
+    "title": "Avvio rapido",
+    "intro": "Per iniziare, aggiungi un elemento contenitore alla tua pagina, puntalo al tuo server BMLT e carica lo script del widget. Ecco un esempio completo:",
+    "autoInit": "Il widget si inizializza automaticamente al caricamento dello script, quindi non è necessario alcun JavaScript aggiuntivo.",
+    "viewport": "<strong>Importante:</strong> assicurati che la tua pagina includa <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> nell'<code>&lt;head&gt;</code>. È importante per un rendering corretto su dispositivi mobili e schermi piccoli."
+  },
+  "attributes": {
+    "title": "Attributi data",
+    "intro": "Tutta la configurazione viene impostata come attributi <code>data-*</code> sul div <code>#crumb-widget</code>.",
+    "th": {
+      "attribute": "Attributo",
+      "description": "Descrizione"
+    },
+    "server": "URL completo del tuo server BMLT. <br /><em>Esempio:</em> <code>https://example.org/main_server</code>",
+    "serviceBody": "Filtra le riunioni per uno o più service body. Accetta un singolo ID numerico o un elenco separato da virgole. Ometti per mostrare tutte le riunioni del server. <br /><em>Singolo:</em> <code>\"42\"</code> <br /><em>Multipli:</em> <code>\"42,57,103\"</code> <br /><strong>Nota:</strong> la ricerca ricorsiva è sempre attiva — i service body figli vengono inclusi automaticamente e non possono essere disattivati.",
+    "view": "Vista predefinita al caricamento del widget. <br /><em>Valori:</em> <code>list</code> (predefinito), <code>map</code> o <code>both</code> <br /><code>both</code> mostra una mappa ad altezza fissa sopra l'elenco completo delle riunioni senza il selettore lista/mappa. <br />Può essere sovrascritto a runtime dal parametro di query <code>?view=</code> (vedi <a href=\"#query-params\">Parametri di query URL</a>).",
+    "path": "Abilita il routing tramite History API (URL pulite senza <code>#</code>) e imposta il percorso base. Senza questo attributo viene utilizzato il routing basato su hash (predefinito). <br /><em>Esempio:</em> <code>data-path=\"/meetings\"</code> produce URL come <code>/meetings/monday-night-meeting-42</code> <br />Usa <code>data-path=\"\"</code> per il routing per percorso senza prefisso (es. negli iframe). <br />Vedi <a href=\"#routing\">Routing</a> per i dettagli."
+  },
+  "globalConfig": {
+    "title": "Oggetto di configurazione globale",
+    "intro": "Per le opzioni non disponibili come attributi data, definisci <code>CrumbWidgetConfig</code> come variabile globale <strong>prima</strong> di caricare lo script.",
+    "row": {
+      "view": "Sovrascrive la vista predefinita. Ha precedenza su <code>data-view</code>. <code>'both'</code> mostra una mappa ad altezza fissa sopra l'elenco completo; il selettore lista/mappa è nascosto.",
+      "language": "Sovrascrive la lingua dell'interfaccia (es. <code>'es'</code>, <code>'fr'</code>). Predefinito: <code>navigator.language</code>, con fallback all'inglese. Lingue supportate: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "columns": "Colonne mostrate nella vista elenco. Predefinito: <code>['time', 'name', 'location', 'address']</code>. Ometti un nome di colonna per nasconderla. Valori disponibili: <code>time</code>, <code>name</code>, <code>location</code> (nome del locale/edificio), <code>address</code> (indirizzo postale con badge in presenza/online), <code>service_body</code>. <code>service_body</code> è nascosto per impostazione predefinita — aggiungilo esplicitamente per mostrare il nome del service body.",
+      "geolocation": "Mostra un pulsante <strong>Vicino a me</strong> e geolocalizza automaticamente al caricamento della pagina per trovare riunioni vicine all'utente. Richiede HTTPS. Predefinito: <code>false</code>. Se la geolocalizzazione fallisce o viene negata, viene mostrato un errore — non viene effettuato alcun caricamento di fallback. <strong>Nota:</strong> i filtri <code>serviceBodyIds</code> non hanno effetto sulle ricerche tramite geolocalizzazione; i risultati sono determinati esclusivamente dalla prossimità.",
+      "geolocationRadius": "Raggio massimo di ricerca quando si usa la geolocalizzazione. Funge da limite per il menu a tendina delle distanze di Vicino a me — le opzioni sopra questo valore vengono nascoste. Predefinito: <code>75</code>.",
+      "distanceOptions": "Valori di distanza (in <code>distanceUnit</code>) mostrati nel menu a tendina di Vicino a me. Le opzioni sopra <code>geolocationRadius</code> vengono nascoste automaticamente; se <code>geolocationRadius</code> non è nell'elenco, viene aggiunto come ultima opzione. Predefinito: <code>[5, 10, 15, 25, 50, 100]</code>.",
+      "distanceUnit": "Etichetta di unità mostrata accanto alle distanze nel menu a tendina di Vicino a me. Predefinito: <code>'mi'</code>.",
+      "nowOffset": "Minuti di tolleranza prima che una riunione sia considerata passata. Le riunioni iniziate negli ultimi <code>nowOffset</code> minuti rimangono in cima all'elenco; le riunioni più vecchie del giorno della settimana corrente vengono spostate in fondo (come se si svolgessero la prossima settimana). Predefinito: <code>10</code>. Imposta <code>0</code> per spostarle subito una volta passato l'orario di inizio.",
+      "hideHeader": "Nasconde la barra del titolo \"Trova riunioni\" e il conteggio delle riunioni in cima al widget. Predefinito: <code>false</code>.",
+      "darkMode": "Schema colori scuro integrato. <code>'auto'</code> segue la preferenza del sistema operativo del visitatore (<code>prefers-color-scheme</code>); <code>true</code> forza la modalità scura indipendentemente dal sistema; <code>false</code> (predefinito) la disabilita. Funziona insieme alle <a href=\"#tile-dark-config\">tessere modalità scura</a>.",
+      "mapTiles": "Provider di tessere mappa personalizzato. Sostituisce le tessere OpenStreetMap predefinite. Vedi <a href=\"#tile-config\">Provider tessere</a> di seguito.",
+      "mapTilesDark": "Provider di tessere alternativo usato quando <code>prefers-color-scheme: dark</code>. Cambia automaticamente al cambio di tema del sistema. Vedi <a href=\"#tile-dark-config\">Tessere modalità scura</a> di seguito.",
+      "mapMarkers": "Marker personalizzato per le posizioni delle riunioni. Sostituisce il marker NA predefinito. Vedi <a href=\"#marker-config\">Config marker</a> di seguito."
+    }
+  },
+  "language": {
+    "title": "Lingua",
+    "intro": "Il widget rileva automaticamente la lingua del visitatore da <code>navigator.language</code> e ricade sull'inglese. Sovrascrivila con la proprietà di configurazione <code>language</code>:",
+    "codes": "I codici lingua sono confrontati sul tag base, quindi <code>'fr-CA'</code> usa <code>fr</code>. Lingue supportate:",
+    "th": {
+      "code": "Codice",
+      "language": "Lingua"
+    },
+    "name": {
+      "en": "Inglese",
+      "es": "Spagnolo",
+      "fr": "Francese",
+      "de": "Tedesco",
+      "pt": "Portoghese",
+      "it": "Italiano",
+      "sv": "Svedese",
+      "da": "Danese",
+      "el": "Greco",
+      "fa": "Persiano",
+      "pl": "Polacco",
+      "ru": "Russo",
+      "ja": "Giapponese"
+    }
+  },
+  "geolocation": {
+    "title": "Geolocalizzazione",
+    "p1": "Attiva il pulsante <strong>Vicino a me</strong> con <code>geolocation: true</code>. Quando è abilitato, il widget cerca anche di geolocalizzare l'utente automaticamente al caricamento della pagina e di mostrare le riunioni nelle vicinanze. Richiede un contesto sicuro (HTTPS).",
+    "p2": "Se la geolocalizzazione viene negata o non è disponibile, viene mostrato un messaggio di errore — non c'è alcun fallback silenzioso al caricamento di tutte le riunioni. È intenzionale: su server di grandi dimensioni senza filtro per service body, caricare tutte le riunioni potrebbe restituire decine di migliaia di risultati.",
+    "p3": "<strong>I filtri service body non hanno effetto sulle ricerche tramite geolocalizzazione.</strong> Quando si usa Vicino a me, i risultati sono determinati esclusivamente dalle coordinate dell'utente e da <code>geolocationRadius</code>. Se non è configurato alcun <code>serviceBodyIds</code>, il pulsante Vicino a me non può essere disattivato — la geolocalizzazione è l'unica fonte dati.",
+    "p4": "Il pulsante Vicino a me apre un menu a tendina di distanze in modo che gli utenti possano scegliere quanto cercare. Selezionare un raggio applica un filtro di distanza lato client sulle riunioni già caricate — non viene effettuata alcuna nuova richiesta di rete al cambio di raggio. Le distanze disponibili provengono da <code>distanceOptions</code>, limitate da <code>geolocationRadius</code>; le opzioni senza riunioni nel raggio vengono nascoste automaticamente. Usa <code>distanceUnit</code> per mostrare i chilometri invece delle miglia.",
+    "p5": "Mentre sei in vista mappa con Vicino a me attivo, spostando o zoomando la mappa appare un pulsante <strong>Cerca in quest'area</strong> in cima alla mappa. Cliccandolo si ricaricano le riunioni centrate sull'attuale viewport della mappa, usando lo stesso raggio selezionato. La mappa rimane sulla posizione dell'utente — non si sposta per adattarsi ai nuovi risultati."
+  },
+  "queryParams": {
+    "title": "Parametri di query URL",
+    "intro": "Il parametro di query <code>?view=</code> imposta la vista iniziale e sovrascrive <code>data-view</code> e <code>view</code>:",
+    "th": {
+      "value": "Valore",
+      "behaviour": "Comportamento"
+    },
+    "row": {
+      "list": "Forza la vista elenco al caricamento",
+      "map": "Forza la vista mappa al caricamento",
+      "both": "Mostra la mappa sopra l'elenco completo delle riunioni; il selettore lista/mappa è nascosto",
+      "auto": "Geolocalizza al caricamento — il successo mostra la mappa con i risultati vicini; il fallimento ricade sull'elenco con tutte le riunioni"
+    },
+    "example": "Esempio: <code>https://example.org/meetings/?view=auto</code>",
+    "disable": "<code>?view=list</code> e <code>?view=map</code> disabilitano la geolocalizzazione automatica anche se è impostato <code>geolocation: true</code>."
+  },
+  "cssVars": {
+    "title": "Variabili CSS",
+    "intro": "Il widget espone proprietà CSS personalizzate in modo da poterlo personalizzare senza toccare JavaScript. Imposta una qualsiasi di queste sull'elemento <code>#crumb-widget</code> — specifica solo quelle che vuoi sovrascrivere.",
+    "th": {
+      "variable": "Variabile",
+      "default": "Predefinito",
+      "controls": "Controlla"
+    },
+    "row": {
+      "fontFamily": "Famiglia di font del widget",
+      "fontSize": "Dimensione base del font",
+      "background": "Sfondo del widget e della barra dei controlli",
+      "text": "Colore principale del testo",
+      "border": "Bordi e divisori",
+      "accent": "Pulsanti attivi, link, indicatori di focus",
+      "accentLight": "Hover delle righe, sfondo del pannello filtri attivo",
+      "borderRadius": "Raggio degli angoli di card e pulsanti",
+      "rowAlt": "Sfondo delle righe alternate (pari)",
+      "inPerson": "Testo del badge in presenza",
+      "inPersonBg": "Sfondo del badge in presenza",
+      "virtual": "Testo del badge online",
+      "virtualBg": "Sfondo del badge online",
+      "surface": "Sfondi di input, pulsanti e pannelli a discesa",
+      "hover": "Stato hover neutro (pulsanti e righe che non usano l'accento)",
+      "divider": "Linee divisorie interne tra righe ed elementi",
+      "textSecondary": "Testo secondario / attenuato (intestazioni di tabella, ora, posizione)",
+      "textMuted": "Testo molto attenuato (conteggio piè di pagina, messaggi di stato vuoto)"
+    }
+  },
+  "cssDarkMode": {
+    "title": "Modalità scura",
+    "intro": "Il widget include una palette scura predefinita. Attivala con l'opzione <code>darkMode</code> — non serve CSS aggiuntivo. Funziona insieme all'opzione <a href=\"#tile-dark-config\">tessere modalità scura</a>.",
+    "custom": "Per usare invece una palette scura personalizzata, sovrascrivi direttamente le variabili CSS:"
+  },
+  "cssClasses": {
+    "title": "Classi CSS di supporto",
+    "intro": "Queste classi sono applicate internamente e possono essere usate anche nel tuo CSS per ulteriori personalizzazioni.",
+    "th": {
+      "class": "Classe",
+      "usedOn": "Usata su"
+    },
+    "row": {
+      "btnPrimary": "Pulsanti pieni con accento — chip dei filtri attivi, selettore vista, Partecipa alla riunione",
+      "btnSecondary": "Pulsanti contornati — Indicazioni",
+      "link": "Pulsanti in stile link — Indietro, contatto email",
+      "badgeInPerson": "Badge sede in presenza",
+      "badgeVirtual": "Badge sede online",
+      "card": "Card delle sezioni di dettaglio",
+      "row": "Righe della tabella elenco riunioni"
+    }
+  },
+  "tileConfig": {
+    "title": "Provider tessere",
+    "intro": "Per impostazione predefinita la mappa usa le tessere di <a href=\"https://www.openstreetmap.org/\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>. Passa a qualsiasi <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\" target=\"_blank\" rel=\"noopener\">provider di tessere compatibile con Leaflet</a> impostando <code>map.tiles</code>.",
+    "row": {
+      "url": "Modello di URL delle tessere. Usa i segnaposto <code>{z}</code>, <code>{x}</code>, <code>{y}</code> (e <code>{r}</code> per retina dove supportato).",
+      "attribution": "HTML di attribuzione mostrato nel controllo di attribuzione della mappa. Richiesto dai termini di servizio della maggior parte dei provider."
+    }
+  },
+  "tileDarkConfig": {
+    "title": "Tessere modalità scura",
+    "intro": "Imposta <code>map.tiles_dark</code> per usare un livello di tessere differente per i visitatori con <code>prefers-color-scheme: dark</code>. Il livello cambia automaticamente al cambio del tema del sistema — nessun ricaricamento di pagina necessario. Se omesso, vengono usate le stesse tessere in tutti gli schemi colori.",
+    "googleNote": "<strong>Tessere Google Maps:</strong> l'API tessere di Google richiede un token di sessione ottenuto lato server (o tramite un fetch breve lato client). Poiché il token deve essere ottenuto prima che <code>CrumbWidgetConfig</code> sia impostato, devi caricare <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> dinamicamente dopo che il token è pronto. L'esempio sotto usa la <a href=\"https://developers.google.com/maps/documentation/tile/\" target=\"_blank\" rel=\"noopener\">Google Map Tiles API</a> — avrai bisogno di una <strong>chiave API limitata per referer</strong> con la Map Tiles API abilitata."
+  },
+  "markerConfig": {
+    "title": "Config marker",
+    "intro": "L'oggetto <code>map.markers.location</code> ti permette di sostituire il marker mappa NA predefinito con qualsiasi immagine o SVG inline.",
+    "row": {
+      "html": "HTML renderizzato all'interno dell'elemento marker. Tipicamente un tag <code>&lt;img&gt;</code> o un SVG inline.",
+      "width": "Larghezza dell'icona in pixel.",
+      "height": "Altezza dell'icona in pixel. Il punto di ancoraggio è impostato in basso al centro dell'icona."
+    }
+  },
+  "exampleBasic": {
+    "title": "Esempio: integrazione base",
+    "intro": "Mostra tutte le riunioni di un server BMLT pubblico:"
+  },
+  "exampleServiceBody": {
+    "title": "Esempio: filtra per service body",
+    "intro": "Mostra solo le riunioni appartenenti al service body 42 (e ai suoi figli):"
+  },
+  "exampleMulti": {
+    "title": "Esempio: più service body",
+    "intro": "Passa un elenco separato da virgole per includere riunioni di più service body:"
+  },
+  "exampleMap": {
+    "title": "Esempio: vista mappa predefinita"
+  },
+  "exampleWordpress": {
+    "title": "Esempio: WordPress",
+    "intro": "Il modo più semplice di aggiungere Crumb Widget a un sito WordPress è il plugin ufficiale <a href=\"https://wordpress.org/plugins/crumb/\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> (<a href=\"https://github.com/bmlt-enabled/crumb-widget\" target=\"_blank\" rel=\"noopener\">GitHub</a>). Avvolge questo widget in uno shortcode con una schermata di impostazioni — non richiede codice.",
+    "installation": "Installazione",
+    "install": {
+      "1": "Cerca <strong>Crumb</strong> nella directory dei plugin WordPress, oppure carica manualmente lo ZIP del plugin.",
+      "2": "Attiva il plugin.",
+      "3": "Vai a <strong>Impostazioni → Crumb</strong> e inserisci l'URL del tuo server BMLT.",
+      "4": "Aggiungi lo shortcode a qualsiasi pagina o articolo."
+    },
+    "shortcode": "Shortcode",
+    "serverNote": "L'URL del server BMLT impostato nelle opzioni del plugin viene usato per impostazione predefinita. Puoi sovrascriverlo — o filtrare per service body — direttamente nello shortcode:",
+    "advanced": "Configurazione avanzata",
+    "advancedIntro": "Tutte le <a href=\"#global-config\">opzioni di configurazione globale</a> (lingua, geolocalizzazione, colonne, tessere mappa, ecc.) possono essere impostate dal <code>functions.php</code> del tuo tema tramite il filtro <code>bmltclient_config</code>:"
+  },
+  "exampleDrupal": {
+    "title": "Esempio: Drupal",
+    "intro": "Aggiungi Crumb Widget a un sito Drupal 10.3+ o 11 con il modulo <a href=\"https://github.com/bmlt-enabled/crumb-drupal\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Avvolge questo widget in un blocco posizionabile, un filtro shortcode <code>[crumb]</code> per i campi body e un servizio di rendering per l'integrazione programmatica. Le release sono pubblicate su <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-drupal/releases</a>.",
+    "installation": "Installazione",
+    "install": {
+      "1": "Scarica l'ultima <code>crumb.zip</code> dalla <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">pagina delle release</a>.",
+      "2": "Estrai in <code>web/modules/contrib/</code> (oppure <code>web/modules/custom/</code>).",
+      "3": "Abilita: <code>drush en crumb</code>, oppure tramite <strong>Extend</strong> nell'interfaccia di amministrazione.",
+      "4": "Visita <strong>Configuration → Web services → Crumb</strong> e inserisci l'URL del tuo server BMLT."
+    },
+    "embedBlock": "Inserimento tramite Block",
+    "embedBlockBody": "Il percorso più semplice: posiziona il blocco <strong>Crumb meeting finder</strong> (categoria: BMLT) in qualsiasi regione tramite <strong>Structure → Block layout</strong>. Le impostazioni per blocco permettono di sovrascrivere server, service body, vista e geolocalizzazione.",
+    "embedShortcode": "Inserimento tramite shortcode nei campi body",
+    "embedShortcodeBody": "Abilita il filtro <strong>Crumb meeting finder shortcode</strong> su un formato di testo (<strong>Configuration → Content authoring → Text formats and editors</strong>), poi usa:",
+    "serverNote": "L'URL del server BMLT impostato nella configurazione del modulo viene usato per impostazione predefinita. Puoi sovrascriverlo — o filtrare per service body — direttamente nello shortcode:",
+    "advanced": "Configurazione avanzata",
+    "advancedIntro": "Tutte le <a href=\"#global-config\">opzioni di configurazione globale</a> (lingua, geolocalizzazione, colonne, tessere mappa, ecc.) possono essere impostate programmaticamente tramite <code>hook_crumb_config_alter()</code> in qualsiasi modulo personalizzato:"
+  },
+  "features": {
+    "title": "Funzionalità",
+    "item": {
+      "listView": "<strong>Vista elenco</strong> — tabella delle riunioni ordinata per giorno e ora, con badge del tipo di sede",
+      "mapView": "<strong>Vista mappa</strong> — mappa Leaflet interattiva per le riunioni in presenza (incluse quelle con componente online); clicca un marker per vedere le riunioni in quella posizione; spostando o zoomando appare un pulsante <em>Cerca in quest'area</em> quando Vicino a me è attivo",
+      "detailView": "<strong>Vista dettaglio</strong> — informazioni complete sulla riunione: orario, indirizzo con indicazioni Google Maps, pulsante per partecipare alla riunione virtuale, formati e note",
+      "textSearch": "<strong>Ricerca testuale</strong> — filtro in tempo reale su nome riunione, posizione e note",
+      "weekdayFilter": "<strong>Filtro giorni della settimana</strong> — attiva/disattiva singoli giorni della settimana",
+      "venueFilter": "<strong>Filtro tipo di sede</strong> — in presenza o online (le riunioni con sia una sede in presenza sia un link online appaiono in entrambe)",
+      "timeFilter": "<strong>Filtro ora del giorno</strong> — mattino, pomeriggio, sera o notte",
+      "formatFilter": "<strong>Filtro formato</strong> — menu a discesa multi-selezione per filtrare per formato di riunione (es. Aperta, Chiusa, Speaker); mostra solo i formati presenti nei dati delle riunioni caricati",
+      "localeTime": "<strong>Visualizzazione orario sensibile alla localizzazione</strong> — gli orari delle riunioni vengono mostrati in formato 12 ore (AM/PM) o 24 ore in base al locale del browser dell'utente automaticamente",
+      "recursive": "<strong>Supporto ricorsivo dei service body</strong> — i service body figli vengono sempre inclusi",
+      "multiBody": "<strong>Più service body</strong> — separa gli ID con virgole per combinare regioni",
+      "print": "<strong>Vista elenco ottimizzata per la stampa</strong> — quando l'utente stampa la pagina, il widget passa automaticamente a un programma pulito in bianco e nero raggruppato per giorno della settimana, ripete le intestazioni della tabella sulle pagine e stampa l'URL completo per le riunioni online"
+    }
+  },
+  "routing": {
+    "title": "Routing",
+    "intro": "Per impostazione predefinita, il widget usa il <strong>routing basato su hash</strong> per gli URL di dettaglio delle riunioni (es. <code>example.com/#/monday-night-meeting-42</code>). Funziona subito su qualsiasi hosting senza configurazione del server.",
+    "prettyUrls": "URL puliti (History API)",
+    "prettyUrlsIntro": "Per URL puliti senza il frammento <code>#</code>, aggiungi un attributo <code>data-path</code> con il tuo percorso base:",
+    "prettyUrlsBody": "Questo produce URL come <code>example.com/meetings/monday-night-meeting-42</code>. Il tuo server deve essere configurato per servire la pagina per tutti i sotto-percorsi sotto il percorso base in modo che le visite dirette e i ricaricamenti di pagina funzionino:",
+    "th": {
+      "server": "Server",
+      "config": "Configurazione"
+    },
+    "row": {
+      "drupal": "Imposta <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; il modulo registra automaticamente la rotta necessaria."
+    },
+    "iframes": "Inserimento in iframe (Google Sites, ecc.)",
+    "iframesP1": "Quando si esegue l'inserimento in host basati su iframe come Google Sites, tutta la navigazione interna al widget (clic sulle riunioni, pulsante indietro, link fratelli) funziona normalmente. Tuttavia, il deep-link a una riunione specifica via URL non è supportato perché il widget viene eseguito all'interno di un iframe proxato e non può controllare l'URL della pagina genitore.",
+    "iframesP2": "Non è necessaria alcuna configurazione speciale — il routing basato su hash predefinito funziona all'interno degli iframe. L'attributo <code>data-path</code> non è necessario per gli embed in iframe."
+  },
+  "siteBuilders": {
+    "title": "Costruttori di siti",
+    "intro": "Crumb Widget può anche essere integrato sui costruttori di siti più comuni, ma la configurazione varia in base alla piattaforma."
+  },
+  "findServiceBody": {
+    "title": "Trova l'ID del tuo service body",
+    "intro": "Ogni esempio sotto filtra le riunioni per uno specifico <strong>service body</strong> (area, regione o zona) passando il suo ID numerico in <code>data-service-body</code>. Puoi cercarlo nel <strong>laboratorio semantico</strong> del tuo server BMLT, disponibile su <code>&lt;your-server&gt;/main_server/semantic</code> in ogni server BMLT.",
+    "step": {
+      "1": "Apri il laboratorio semantico nel tuo browser. Ad esempio, <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — sostituisci il dominio con il tuo server BMLT.",
+      "2": "Sotto <strong>Operation</strong>, scegli l'azione che recupera i service body (le etichette variano leggermente in base alla versione, ma in genere è <em>Get Service Bodies</em> o <em>Retrieve information about Service Bodies</em>).",
+      "3": "Lascia il formato di risposta su JSON e clicca <strong>Execute JSON Request</strong>.",
+      "4": "Nella risposta JSON, trova la tua area, regione o zona per <code>name</code>. Il campo <code>id</code> accanto è il numero che passi a <code>data-service-body</code>."
+    },
+    "outro": "In questo esempio passeresti <code>data-service-body=\"42\"</code> solo per Greater Seattle, oppure <code>data-service-body=\"42,57\"</code> per combinare entrambe le aree. Puoi anche saltare il laboratorio semantico e accedere direttamente all'endpoint JSON su <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "callout1": "<strong>Non conosci l'URL del server o l'ID del service body?</strong> Sfoglia <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — elenca i server BMLT noti e i service body su ciascuno. Trova la tua area, regione o zona per ottenere sia l'URL <code>data-server</code> sia l'ID <code>data-service-body</code> in un unico posto.",
+    "callout2": "<strong>Suggerimento:</strong> i service body figli vengono sempre inclusi automaticamente. Se passi l'ID di una regione, vengono incluse le riunioni di ogni area sotto di essa — non è necessario elencare ogni area figlia."
+  },
+  "googleSites": {
+    "title": "Google Sites",
+    "intro": "Google Sites supporta l'inserimento di codice HTML, CSS e JavaScript usando <strong>Inserisci → Incorpora → Codice di incorporamento</strong>. Puoi anche usare un'incorporazione a tutta pagina se vuoi che il finder di riunioni viva su una pagina propria.",
+    "step": {
+      "1": "Apri il tuo sito in Google Sites.",
+      "2": "Clicca <strong>Inserisci</strong> → <strong>Incorpora</strong>.",
+      "3": "Scegli <strong>Codice di incorporamento</strong>.",
+      "4": "Incolla il markup e lo script del tuo widget.",
+      "5": "Clicca <strong>Inserisci</strong>, poi pubblica il tuo sito."
+    },
+    "note": "<strong>Nota:</strong> in Google Sites, JavaScript deve essere incluso all'interno di tag <code>&lt;script&gt;</code> quando si usa l'opzione di codice di incorporamento. Poiché Google Sites esegue il widget all'interno di un iframe proxato, i link diretti a riunioni specifiche (deep-linking) non sono supportati — ma tutta la navigazione interna al widget funziona normalmente.",
+    "demoLink": "<a href=\"https://sites.google.com/view/crumb-seattle/\" target=\"_blank\">Guarda una demo dal vivo su Google Sites &rarr;</a>"
+  },
+  "squarespace": {
+    "title": "Squarespace",
+    "intro": "Gli embed di Squarespace usano un <strong>Code Block</strong>, che accetta HTML e JavaScript grezzi. Secondo la documentazione di Squarespace, i Code Block con JavaScript abilitato sono disponibili sui piani <strong>Core, Plus, Advanced, Business, Commerce Basic e Commerce Advanced</strong>. Il piano Personal gratuito non supporta JavaScript nei Code Block.",
+    "before": "Prima di iniziare, ti servono due valori:",
+    "value": {
+      "server": "<code>data-server</code> — l'URL <code>/main_server/</code> del tuo server BMLT",
+      "body": "<code>data-service-body</code> — l'ID numerico per la tua area, regione o zona (vedi <a href=\"#find-service-body\">Trova l'ID del tuo service body</a>)"
+    },
+    "step": {
+      "1": "Accedi a Squarespace e apri la pagina dove vuoi il finder di riunioni.",
+      "2": "Clicca <strong>Modifica</strong>, poi passa il mouse dove vuoi che vada il widget e clicca il pulsante <strong>+</strong> (Aggiungi blocco).",
+      "3": "Cerca e inserisci un blocco <strong>Codice</strong>.",
+      "4": "Nell'editor del blocco Codice, assicurati che il menu a discesa <strong>Mode</strong> sia impostato su <strong>HTML</strong> e che <strong>Display Source</strong> sia <em>off</em> (altrimenti Squarespace mostrerà i tag grezzi invece di eseguire il codice).",
+      "5": "Incolla lo snippet sotto, sostituendo <code>data-server</code> e <code>data-service-body</code> con i tuoi valori.",
+      "6": "Clicca fuori dal blocco per chiuderlo, poi clicca <strong>Salva</strong>. Pubblica la pagina se non è già attiva."
+    },
+    "note": "<strong>Nota:</strong> Squarespace renderizza i blocchi Codice nel normale flusso di pagina, quindi il widget occuperà tanto spazio verticale quanto serve. Se l'anteprima sembra vuota, riapri il blocco e conferma che <strong>Display Source</strong> sia off e che <strong>Mode</strong> sia impostato su <strong>HTML</strong>. Se sei su un piano che non consente JavaScript nei blocchi Codice, dovrai aggiornare prima che il widget si carichi."
+  },
+  "wix": {
+    "title": "Wix",
+    "intro": "Wix divide l'incorporazione in due posti: il contenitore HTML del widget vive all'interno della tua pagina come elemento <strong>Embed HTML</strong> (Wix la chiama \"Custom Embeds → Embed HTML\" o \"Embed a Widget\"), e il <code>&lt;script&gt;</code> di caricamento va in <strong>Settings → Custom Code</strong> in modo che si carichi solo una volta per visita. Secondo la documentazione di Wix, Custom Code richiede che il tuo sito sia <strong>pubblicato</strong> su un <strong>piano a pagamento con un dominio collegato</strong>.",
+    "before": "Prima di iniziare, ti servono due valori:",
+    "value": {
+      "server": "<code>data-server</code> — l'URL <code>/main_server/</code> del tuo server BMLT",
+      "body": "<code>data-service-body</code> — l'ID numerico per la tua area, regione o zona (vedi <a href=\"#find-service-body\">Trova l'ID del tuo service body</a>)"
+    },
+    "step1Heading": "<strong>Passo 1 — Aggiungi lo script di caricamento (una volta per sito):</strong>",
+    "step1": {
+      "1": "Nella tua dashboard Wix, vai a <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong>.",
+      "2": "Clicca <strong>+ Add Custom Code</strong>.",
+      "3": "Incolla lo snippet di caricamento sotto nella casella di codice.",
+      "4": "Sotto <strong>Add Code to Pages</strong>, scegli <em>All pages</em> oppure solo la pagina che mostrerà il widget (caricarlo solo dove serve è più veloce).",
+      "5": "Imposta <strong>Place Code in</strong> su <strong>Body – end</strong>.",
+      "6": "Dagli un nome come <em>Crumb Widget loader</em> e clicca <strong>Apply</strong>."
+    },
+    "step2Heading": "<strong>Passo 2 — Aggiungi il contenitore del widget sulla pagina:</strong>",
+    "step2": {
+      "1": "Apri la pagina nell'editor Wix.",
+      "2": "Clicca <strong>+ Add Elements</strong> → <strong>Embed Code</strong> → <strong>Embed HTML</strong> (in Wix Studio è <strong>Embed &amp; Social</strong> → <strong>HTML iframe/Embed</strong>).",
+      "3": "Trascina l'elemento dove vuoi che appaia il widget e clicca <strong>Enter Code</strong>.",
+      "4": "Incolla lo snippet del contenitore sotto, sostituendo <code>data-server</code> e <code>data-service-body</code> con i tuoi valori.",
+      "5": "Clicca <strong>Update</strong>. Ridimensiona l'elemento all'incirca all'altezza che desideri — Embed HTML di Wix ha dimensione fissa, quindi dagli abbastanza spazio (es. <code>800px</code> di altezza) per l'elenco riunioni e la mappa.",
+      "6": "Clicca <strong>Publish</strong>."
+    },
+    "note": "<strong>Attenzione:</strong> l'elemento Embed HTML di Wix viene renderizzato all'interno di un iframe, il che significa che il widget non può ridimensionare la pagina circostante e i deep-link a singole riunioni non aggiorneranno l'URL del browser. Tutta la navigazione interna al widget (elenco, mappa, dettaglio riunione, filtri) funziona ancora normalmente. Se non vedi l'opzione Custom Code in Settings, probabilmente il tuo piano non la include — verifica che il tuo sito sia pubblicato su un piano a pagamento con un dominio collegato."
+  },
+  "browserSupport": {
+    "title": "Compatibilità browser",
+    "intro": "Tutti i browser moderni. Internet Explorer non è supportato."
+  },
+  "npmPackage": {
+    "title": "Pacchetto npm",
+    "intro": "Oltre all'integrazione tramite tag script CDN, Crumb Widget è disponibile come pacchetto npm per l'uso in progetti JavaScript/TypeScript (React, Svelte, Vue, Vite semplice, ecc.).",
+    "installation": "Installazione",
+    "peerDep": "<code>leaflet</code> è una peer dependency — installalo accanto a <code>crumb-widget</code> in modo che i consumer possano deduplicare e fissare la versione preferita.",
+    "usage": "Utilizzo",
+    "usageIntro": "Importa <code>mountCrumbWidget</code> e chiamalo con un elemento DOM e la tua configurazione. Il widget si monta da solo e inietta il proprio CSS — non serve importare un foglio di stile separato.",
+    "svelteIntro": "In un componente Svelte, usa <code>onMount</code> per assicurarti che l'elemento esista prima del montaggio:",
+    "options": "Opzioni",
+    "optionsIntro": "Tutte le opzioni della <a href=\"#global-config\">configurazione globale</a> sono disponibili, più due campi obbligatori aggiuntivi:",
+    "th": {
+      "option": "Opzione",
+      "required": "Obbligatorio"
+    },
+    "row": {
+      "serverUrl": "URL del server BMLT.",
+      "serviceBodyIds": "ID dei service body per filtrare. Ometti o passa <code>[]</code> per mostrare tutti.",
+      "view": "Vista iniziale. Predefinito: <code>'list'</code>. <code>'both'</code> mostra la mappa sopra l'elenco senza selettore.",
+      "geolocation": "Abilita il pulsante Vicino a me. Predefinito: <code>false</code>.",
+      "geolocationRadius": "Raggio massimo di ricerca (limita il menu a discesa delle distanze). Predefinito: <code>75</code>.",
+      "distanceOptions": "Valori di distanza mostrati nel menu a discesa di Vicino a me. Predefinito: <code>[5,10,15,25,50,100]</code>.",
+      "distanceUnit": "Etichetta di unità per le distanze. Predefinito: <code>'mi'</code>.",
+      "darkMode": "Impostazione modalità scura. Predefinito: <code>false</code>.",
+      "language": "Tag lingua BCP-47 (es. <code>'es'</code>). Predefinito: locale del browser.",
+      "columns": "Colonne della tabella da mostrare. Vedi <a href=\"#global-config\">Configurazione globale</a>.",
+      "map": "Provider tessere e configurazione marker. Vedi <a href=\"#tile-config\">Provider tessere</a>."
+    },
+    "note": "<strong>Nota:</strong> il pacchetto npm impacchetta Svelte e tutti gli stili in un singolo file JS. <code>leaflet</code> è una peer dependency (installalo accanto a <code>crumb-widget</code>) così puoi deduplicare con qualsiasi altro codice che usa Leaflet nella tua app. Ogni chiamata a <code>mountCrumbWidget</code> è indipendente, ma più widget sulla stessa pagina non sono attualmente supportati."
+  },
+  "philosophy": {
+    "title": "Filosofia",
+    "body": "Questo progetto mira a coprire bene le esigenze della maggior parte dei service body NA — non ogni possibile caso d'uso. È mantenuto intenzionalmente semplice e focalizzato. Le nuove funzionalità sono valutate rispetto al costo per il codice; le richieste di nicchia che gonfiano il progetto per tutti generalmente sono fuori scopo. Se hai bisogno di personalizzazioni profonde, questo potrebbe non essere lo strumento giusto."
+  }
+}

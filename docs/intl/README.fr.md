@@ -4,7 +4,7 @@
 
 # Crumb Widget
 
-**Lire dans une autre langue :** [English](../../README.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md)
+**Lire dans une autre langue :** [English](../../README.md) · [Español](README.es.md) · [Português (Brasil)](README.pt-BR.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Svenska](README.sv.md) · [Dansk](README.da.md) · [Polski](README.pl.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [فارسی](README.fa.md)
 
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
@@ -19,7 +19,7 @@ Un widget intégrable de recherche de réunions NA. Construit avec Svelte 5 et d
 - Détail de réunion avec itinéraire, lien pour rejoindre en virtuel et formats
 - Recherche par proximité basée sur la géolocalisation
 - Liens vers des réunions individuelles via le routeur intégré
-- Prise en charge multilingue (12 langues, y compris la disposition RTL pour le persan)
+- Prise en charge multilingue (13 langues, y compris la disposition RTL pour le persan)
 - Colonnes, tuiles de carte et marqueurs personnalisables
 - Vue liste adaptée à l'impression
 

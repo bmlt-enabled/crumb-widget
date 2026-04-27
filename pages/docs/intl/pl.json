@@ -1,0 +1,432 @@
+{
+  "page": {
+    "title": "BMLT Crumb Widget — Dokumentacja"
+  },
+  "nav": {
+    "theme": {
+      "light": "Tryb jasny",
+      "dark": "Tryb ciemny"
+    },
+    "liveDemo": "→ Demo na żywo",
+    "qaTests": "→ Strony testów QA",
+    "overview": "Przegląd",
+    "quickStart": "Szybki start",
+    "attributes": "Atrybuty data",
+    "globalConfig": "Konfiguracja globalna",
+    "language": "Język",
+    "geolocation": "Geolokalizacja",
+    "queryParams": "Parametry zapytania URL",
+    "cssVars": "Zmienne CSS",
+    "cssDarkMode": "Tryb ciemny",
+    "cssClasses": "Klasy pomocnicze CSS",
+    "tileConfig": "Dostawca kafelków",
+    "tileDarkConfig": "Kafelki w trybie ciemnym",
+    "markerConfig": "Konfiguracja znaczników",
+    "exampleBasic": "Podstawowe osadzenie",
+    "exampleServiceBody": "Filtr service body",
+    "exampleMulti": "Wiele service body",
+    "exampleMap": "Domyślnie mapa",
+    "exampleWordpress": "WordPress",
+    "exampleDrupal": "Drupal",
+    "routingModes": "Tryby routingu",
+    "findServiceBody": "Znajdź ID swojego service body",
+    "googleSites": "Google Sites",
+    "squarespace": "Squarespace",
+    "wix": "Wix",
+    "features": "Funkcje",
+    "browserSupport": "Wsparcie przeglądarek",
+    "npmInstall": "Instalacja",
+    "npmUsage": "Użycie",
+    "npmOptions": "Opcje",
+    "philosophy": "Filozofia",
+    "privacy": "Polityka prywatności",
+    "section": {
+      "configuration": "Konfiguracja",
+      "examples": "Przykłady",
+      "routing": "Routing",
+      "siteBuilders": "Kreatory stron",
+      "reference": "Dokumentacja",
+      "npm": "Pakiet npm",
+      "legal": "Informacje prawne"
+    }
+  },
+  "header": {
+    "subtitle": "Osadzalny widżet wyszukiwarki spotkań NA dla dowolnej strony internetowej.",
+    "btn": {
+      "liveDemo": "Demo na żywo",
+      "github": "GitHub",
+      "qaTests": "Testy QA"
+    }
+  },
+  "th": {
+    "property": "Właściwość",
+    "type": "Typ",
+    "description": "Opis"
+  },
+  "badge": {
+    "required": "Wymagane",
+    "optional": "Opcjonalne"
+  },
+  "yesNo": {
+    "yes": "Tak",
+    "no": "Nie"
+  },
+  "overview": {
+    "title": "Przegląd",
+    "p1": "Crumb Widget to samodzielny widżet JavaScript, który odpytuje <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">serwer BMLT</a> i renderuje w pełni funkcjonalną wyszukiwarkę spotkań — wyszukiwanie, filtry, widok listy oraz interaktywną mapę.",
+    "p2": "Dostarczany jest jako <strong>pojedynczy plik JavaScript</strong>, w którym cały CSS jest wstrzykiwany w czasie wykonania. Bez arkuszy stylów, bez kroków budowania, bez frameworka wymaganego po stronie hosta."
+  },
+  "quickStart": {
+    "title": "Szybki start",
+    "intro": "Aby zacząć, dodaj element kontenera do swojej strony, wskaż go na swój serwer BMLT i załaduj skrypt widżetu. Oto kompletny przykład:",
+    "autoInit": "Widżet inicjalizuje się automatycznie po załadowaniu skryptu, więc dodatkowy JavaScript nie jest potrzebny.",
+    "viewport": "<strong>Ważne:</strong> upewnij się, że Twoja strona zawiera <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> w sekcji <code>&lt;head&gt;</code>. Jest to istotne dla poprawnego renderowania na urządzeniach mobilnych i małych ekranach."
+  },
+  "attributes": {
+    "title": "Atrybuty data",
+    "intro": "Cała konfiguracja jest ustawiana jako atrybuty <code>data-*</code> na elemencie div <code>#crumb-widget</code>.",
+    "th": {
+      "attribute": "Atrybut",
+      "description": "Opis"
+    },
+    "server": "Pełny URL Twojego serwera BMLT. <br /><em>Przykład:</em> <code>https://example.org/main_server</code>",
+    "serviceBody": "Filtruje spotkania do jednego lub wielu service body. Akceptuje pojedyncze ID liczbowe lub listę oddzieloną przecinkami. Pomiń, aby pokazać wszystkie spotkania na serwerze. <br /><em>Pojedyncze:</em> <code>\"42\"</code> <br /><em>Wielokrotne:</em> <code>\"42,57,103\"</code> <br /><strong>Uwaga:</strong> wyszukiwanie rekursywne jest zawsze aktywne — podrzędne service body są automatycznie uwzględniane i nie można ich wyłączyć.",
+    "view": "Domyślny widok przy ładowaniu widżetu. <br /><em>Wartości:</em> <code>list</code> (domyślny), <code>map</code> lub <code>both</code> <br /><code>both</code> pokazuje mapę o stałej wysokości nad pełną listą spotkań bez przełącznika lista/mapa. <br />Może zostać nadpisany w czasie wykonywania przez parametr zapytania <code>?view=</code> (zobacz <a href=\"#query-params\">Parametry zapytania URL</a>).",
+    "path": "Włącza routing History API (czyste URL bez <code>#</code>) i ustawia ścieżkę bazową. Bez tego atrybutu używany jest routing oparty na hash (domyślny). <br /><em>Przykład:</em> <code>data-path=\"/meetings\"</code> tworzy URL-e jak <code>/meetings/monday-night-meeting-42</code> <br />Użyj <code>data-path=\"\"</code> dla routingu po ścieżce bez prefiksu (np. w osadzeniach iframe). <br />Zobacz <a href=\"#routing\">Routing</a> po szczegóły."
+  },
+  "globalConfig": {
+    "title": "Globalny obiekt konfiguracji",
+    "intro": "Dla opcji niedostępnych jako atrybuty data zdefiniuj <code>CrumbWidgetConfig</code> jako zmienną globalną <strong>przed</strong> załadowaniem skryptu.",
+    "row": {
+      "view": "Nadpisuje domyślny widok. Ma pierwszeństwo nad <code>data-view</code>. <code>'both'</code> pokazuje mapę o stałej wysokości nad pełną listą; przełącznik lista/mapa jest ukryty.",
+      "language": "Nadpisuje język interfejsu (np. <code>'es'</code>, <code>'fr'</code>). Domyślnie: <code>navigator.language</code>, z fallbackiem na angielski. Obsługiwane: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "columns": "Kolumny pokazywane w widoku listy. Domyślnie: <code>['time', 'name', 'location', 'address']</code>. Pomiń nazwę kolumny, aby ją ukryć. Dostępne wartości: <code>time</code>, <code>name</code>, <code>location</code> (nazwa lokalu/budynku), <code>address</code> (adres ulicy z odznakami stacjonarne/online), <code>service_body</code>. <code>service_body</code> jest domyślnie ukryta — dodaj ją jawnie, aby pokazać nazwę service body.",
+      "geolocation": "Pokazuje przycisk <strong>W pobliżu</strong> i auto-geolokalizuje przy ładowaniu strony, aby znaleźć spotkania w pobliżu użytkownika. Wymaga HTTPS. Domyślnie: <code>false</code>. Jeśli geolokalizacja zawiedzie lub zostanie odrzucona, wyświetlany jest błąd — bez ładowania awaryjnego. <strong>Uwaga:</strong> filtry <code>serviceBodyIds</code> nie wpływają na wyszukiwanie geolokalizacyjne; wyniki są ustalane wyłącznie na podstawie odległości.",
+      "geolocationRadius": "Maksymalny promień wyszukiwania przy geolokalizacji. Działa jako limit dla rozwijanej listy odległości W pobliżu — opcje powyżej tej wartości są ukryte. Domyślnie: <code>75</code>.",
+      "distanceOptions": "Wartości odległości (w jednostce <code>distanceUnit</code>) pokazywane w rozwijanej liście W pobliżu. Opcje powyżej <code>geolocationRadius</code> są automatycznie ukryte; jeśli <code>geolocationRadius</code> nie ma na liście, jest dodawana jako ostatnia opcja. Domyślnie: <code>[5, 10, 15, 25, 50, 100]</code>.",
+      "distanceUnit": "Etykieta jednostki wyświetlana obok odległości w rozwijanej liście W pobliżu. Domyślnie: <code>'mi'</code>.",
+      "nowOffset": "Minuty tolerancji, zanim spotkanie zostanie uznane za zakończone. Spotkania, które rozpoczęły się w ciągu ostatnich <code>nowOffset</code> minut, nadal pojawiają się na górze listy; starsze spotkania w bieżącym dniu tygodnia są przenoszone na koniec listy (jakby odbywały się w przyszłym tygodniu). Domyślnie: <code>10</code>. Ustaw <code>0</code>, aby przenieść natychmiast po przekroczeniu czasu rozpoczęcia.",
+      "hideHeader": "Ukrywa pasek tytułu \"Wyszukiwarka spotkań\" i licznik spotkań na górze widżetu. Domyślnie: <code>false</code>.",
+      "darkMode": "Wbudowany ciemny schemat kolorów. <code>'auto'</code> podąża za preferencją systemu operacyjnego (<code>prefers-color-scheme</code>); <code>true</code> wymusza tryb ciemny niezależnie od ustawień systemu; <code>false</code> (domyślnie) go wyłącza. Działa razem z <a href=\"#tile-dark-config\">kafelkami w trybie ciemnym</a>.",
+      "mapTiles": "Niestandardowy dostawca kafelków mapy. Zastępuje domyślne kafelki OpenStreetMap. Zobacz <a href=\"#tile-config\">Dostawca kafelków</a> poniżej.",
+      "mapTilesDark": "Alternatywny dostawca kafelków używany przy <code>prefers-color-scheme: dark</code>. Przełącza się automatycznie przy zmianie motywu systemu. Zobacz <a href=\"#tile-dark-config\">Kafelki w trybie ciemnym</a> poniżej.",
+      "mapMarkers": "Niestandardowy znacznik mapy dla lokalizacji spotkań. Zastępuje domyślny znacznik NA. Zobacz <a href=\"#marker-config\">Konfigurację znaczników</a> poniżej."
+    }
+  },
+  "language": {
+    "title": "Język",
+    "intro": "Widżet automatycznie wykrywa język odwiedzającego z <code>navigator.language</code> i wraca do angielskiego. Nadpisz go właściwością konfiguracji <code>language</code>:",
+    "codes": "Kody języków są dopasowywane na bazowym tagu, więc <code>'fr-CA'</code> używa <code>fr</code>. Obsługiwane języki:",
+    "th": {
+      "code": "Kod",
+      "language": "Język"
+    },
+    "name": {
+      "en": "Angielski",
+      "es": "Hiszpański",
+      "fr": "Francuski",
+      "de": "Niemiecki",
+      "pt": "Portugalski",
+      "it": "Włoski",
+      "sv": "Szwedzki",
+      "da": "Duński",
+      "el": "Grecki",
+      "fa": "Perski",
+      "pl": "Polski",
+      "ru": "Rosyjski",
+      "ja": "Japoński"
+    }
+  },
+  "geolocation": {
+    "title": "Geolokalizacja",
+    "p1": "Włącz przycisk <strong>W pobliżu</strong> z <code>geolocation: true</code>. Po włączeniu widżet próbuje także automatycznie zlokalizować użytkownika przy ładowaniu strony i pokazać spotkania w pobliżu. Wymaga bezpiecznego kontekstu (HTTPS).",
+    "p2": "Jeśli geolokalizacja zostanie odrzucona lub jest niedostępna, wyświetlany jest komunikat o błędzie — nie ma cichego fallbacku ładującego wszystkie spotkania. Jest to celowe: na dużych serwerach bez ograniczenia service body załadowanie wszystkich spotkań mogłoby zwrócić dziesiątki tysięcy wyników.",
+    "p3": "<strong>Filtry service body nie mają wpływu na wyszukiwanie geolokalizacyjne.</strong> Przy użyciu W pobliżu wyniki są ustalane wyłącznie na podstawie współrzędnych użytkownika i <code>geolocationRadius</code>. Jeśli żadne <code>serviceBodyIds</code> nie są skonfigurowane, przycisku W pobliżu nie można wyłączyć — geolokalizacja jest jedynym źródłem danych.",
+    "p4": "Przycisk W pobliżu otwiera rozwijaną listę odległości, aby użytkownik mógł wybrać, jak daleko szukać. Wybranie promienia stosuje filtr odległości po stronie klienta na już załadowanych spotkaniach — przy zmianie promienia nie jest wykonywane żadne nowe żądanie sieciowe. Dostępne odległości pochodzą z <code>distanceOptions</code>, ograniczone przez <code>geolocationRadius</code>; opcje bez spotkań w zasięgu są automatycznie ukrywane. Użyj <code>distanceUnit</code>, aby wyświetlać kilometry zamiast mil.",
+    "p5": "W widoku mapy z aktywnym W pobliżu, przesuwanie lub powiększanie mapy ujawnia przycisk <strong>Szukaj w tym obszarze</strong> u góry mapy. Kliknięcie go ponownie ładuje spotkania wyśrodkowane na bieżącym widocznym fragmencie mapy, z tym samym wybranym promieniem. Mapa pozostaje na pozycji użytkownika — nie przeskakuje, aby dopasować nowe wyniki."
+  },
+  "queryParams": {
+    "title": "Parametry zapytania URL",
+    "intro": "Parametr zapytania <code>?view=</code> ustawia początkowy widok i nadpisuje <code>data-view</code> oraz <code>view</code>:",
+    "th": {
+      "value": "Wartość",
+      "behaviour": "Zachowanie"
+    },
+    "row": {
+      "list": "Wymuś widok listy przy ładowaniu",
+      "map": "Wymuś widok mapy przy ładowaniu",
+      "both": "Pokaż mapę nad pełną listą spotkań; przełącznik lista/mapa ukryty",
+      "auto": "Geolokalizuj przy ładowaniu — sukces pokazuje mapę z pobliskimi wynikami; niepowodzenie wraca do listy ze wszystkimi spotkaniami"
+    },
+    "example": "Przykład: <code>https://example.org/meetings/?view=auto</code>",
+    "disable": "<code>?view=list</code> i <code>?view=map</code> wyłączają auto-geolokalizację, nawet jeśli ustawiono <code>geolocation: true</code>."
+  },
+  "cssVars": {
+    "title": "Zmienne CSS",
+    "intro": "Widżet udostępnia niestandardowe właściwości CSS, dzięki czemu możesz nadać mu motyw bez dotykania JavaScript. Ustaw dowolną z nich na elemencie <code>#crumb-widget</code> — podaj tylko te, które chcesz nadpisać.",
+    "th": {
+      "variable": "Zmienna",
+      "default": "Domyślnie",
+      "controls": "Kontroluje"
+    },
+    "row": {
+      "fontFamily": "Stos czcionek widżetu",
+      "fontSize": "Bazowy rozmiar czcionki",
+      "background": "Tło widżetu i paska kontrolek",
+      "text": "Główny kolor tekstu",
+      "border": "Obramowania i separatory",
+      "accent": "Aktywne przyciski, linki, wskaźniki fokusu",
+      "accentLight": "Najechanie wiersza, tło panelu aktywnych filtrów",
+      "borderRadius": "Promień zaokrąglenia rogów kart i przycisków",
+      "rowAlt": "Tło naprzemiennych (parzystych) wierszy",
+      "inPerson": "Tekst odznaki stacjonarnej",
+      "inPersonBg": "Tło odznaki stacjonarnej",
+      "virtual": "Tekst odznaki online",
+      "virtualBg": "Tło odznaki online",
+      "surface": "Tło pól wprowadzania, przycisków i paneli rozwijanych",
+      "hover": "Neutralny stan najechania (przyciski i wiersze nieużywające akcentu)",
+      "divider": "Wewnętrzne linie oddzielające wiersze i listy",
+      "textSecondary": "Drugorzędny / przyciemniony tekst (nagłówki tabel, czas, lokalizacja)",
+      "textMuted": "Bardzo przyciemniony tekst (licznik w stopce, komunikaty pustego stanu)"
+    }
+  },
+  "cssDarkMode": {
+    "title": "Tryb ciemny",
+    "intro": "Widżet jest dostarczany z wbudowaną ciemną paletą. Włącz ją opcją konfiguracji <code>darkMode</code> — dodatkowy CSS nie jest wymagany. Działa razem z opcją <a href=\"#tile-dark-config\">kafelków w trybie ciemnym</a>.",
+    "custom": "Aby zamiast tego użyć niestandardowej ciemnej palety, nadpisz zmienne CSS bezpośrednio:"
+  },
+  "cssClasses": {
+    "title": "Klasy pomocnicze CSS",
+    "intro": "Te klasy są stosowane wewnętrznie i mogą być również wykorzystane w Twoim CSS w celu dalszej personalizacji.",
+    "th": {
+      "class": "Klasa",
+      "usedOn": "Używana na"
+    },
+    "row": {
+      "btnPrimary": "Wypełnione przyciski akcentu — chipy aktywnych filtrów, przełącznik widoku, Dołącz do spotkania",
+      "btnSecondary": "Przyciski z konturem — Pobierz wskazówki",
+      "link": "Przyciski w stylu linku — Wstecz, kontakt e-mail",
+      "badgeInPerson": "Odznaka miejsca stacjonarnego",
+      "badgeVirtual": "Odznaka miejsca online",
+      "card": "Karty sekcji szczegółów",
+      "row": "Wiersze tabeli listy spotkań"
+    }
+  },
+  "tileConfig": {
+    "title": "Dostawca kafelków",
+    "intro": "Domyślnie mapa używa kafelków <a href=\"https://www.openstreetmap.org/\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>. Przełącz się na dowolnego <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\" target=\"_blank\" rel=\"noopener\">dostawcę kafelków zgodnego z Leaflet</a>, ustawiając <code>map.tiles</code>.",
+    "row": {
+      "url": "Szablon URL kafelka. Użyj symboli zastępczych <code>{z}</code>, <code>{x}</code>, <code>{y}</code> (oraz <code>{r}</code> dla retina, gdzie wspierane).",
+      "attribution": "HTML atrybucji wyświetlany w kontrolce atrybucji mapy. Wymagany przez warunki świadczenia usług większości dostawców kafelków."
+    }
+  },
+  "tileDarkConfig": {
+    "title": "Kafelki w trybie ciemnym",
+    "intro": "Ustaw <code>map.tiles_dark</code>, aby użyć innej warstwy kafelków dla odwiedzających z <code>prefers-color-scheme: dark</code>. Warstwa zmienia się automatycznie przy zmianie motywu systemu — bez przeładowania strony. Jeśli pominięto, te same kafelki są używane we wszystkich schematach kolorów.",
+    "googleNote": "<strong>Kafelki Google Maps:</strong> API kafelków Google wymaga tokenu sesji uzyskanego po stronie serwera (lub krótkotrwałego pobrania po stronie klienta). Ponieważ token musi zostać pobrany przed ustawieniem <code>CrumbWidgetConfig</code>, musisz dynamicznie ładować <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> po przygotowaniu tokenu. Poniższy przykład używa <a href=\"https://developers.google.com/maps/documentation/tile/\" target=\"_blank\" rel=\"noopener\">Google Map Tiles API</a> — będziesz potrzebować <strong>klucza API ograniczonego do referera</strong> z włączonym Map Tiles API."
+  },
+  "markerConfig": {
+    "title": "Konfiguracja znaczników",
+    "intro": "Obiekt <code>map.markers.location</code> pozwala zastąpić domyślną pinezkę mapy NA dowolnym obrazem lub wbudowanym SVG.",
+    "row": {
+      "html": "HTML renderowany wewnątrz elementu znacznika. Zwykle tag <code>&lt;img&gt;</code> lub wbudowany SVG.",
+      "width": "Szerokość ikony w pikselach.",
+      "height": "Wysokość ikony w pikselach. Punkt zakotwiczenia jest ustawiony na środku dolnej krawędzi ikony."
+    }
+  },
+  "exampleBasic": {
+    "title": "Przykład: Podstawowe osadzenie",
+    "intro": "Pokaż wszystkie spotkania na publicznym serwerze BMLT:"
+  },
+  "exampleServiceBody": {
+    "title": "Przykład: Filtruj według service body",
+    "intro": "Pokaż tylko spotkania należące do service body 42 (i jego dzieci):"
+  },
+  "exampleMulti": {
+    "title": "Przykład: Wiele service body",
+    "intro": "Przekaż listę oddzieloną przecinkami, aby uwzględnić spotkania z kilku service body:"
+  },
+  "exampleMap": {
+    "title": "Przykład: Domyślny widok mapy"
+  },
+  "exampleWordpress": {
+    "title": "Przykład: WordPress",
+    "intro": "Najprostszym sposobem dodania Crumb Widget do witryny WordPress jest oficjalna wtyczka <a href=\"https://wordpress.org/plugins/crumb/\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> (<a href=\"https://github.com/bmlt-enabled/crumb-widget\" target=\"_blank\" rel=\"noopener\">GitHub</a>). Owija ten widżet w shortcode z ekranem ustawień — żaden kod nie jest wymagany.",
+    "installation": "Instalacja",
+    "install": {
+      "1": "Wyszukaj <strong>Crumb</strong> w katalogu wtyczek WordPress lub prześlij plik ZIP wtyczki ręcznie.",
+      "2": "Aktywuj wtyczkę.",
+      "3": "Przejdź do <strong>Ustawienia → Crumb</strong> i wprowadź adres URL swojego serwera BMLT.",
+      "4": "Dodaj shortcode do dowolnej strony lub wpisu."
+    },
+    "shortcode": "Shortcode",
+    "serverNote": "Adres URL serwera BMLT ustawiony w ustawieniach wtyczki jest używany domyślnie. Możesz go nadpisać — lub filtrować według service body — bezpośrednio w shortcode:",
+    "advanced": "Zaawansowana konfiguracja",
+    "advancedIntro": "Wszystkie <a href=\"#global-config\">opcje konfiguracji globalnej</a> (język, geolokalizacja, kolumny, kafelki mapy itp.) można ustawić z <code>functions.php</code> motywu za pomocą filtra <code>bmltclient_config</code>:"
+  },
+  "exampleDrupal": {
+    "title": "Przykład: Drupal",
+    "intro": "Dodaj Crumb Widget do witryny Drupal 10.3+ lub 11 za pomocą modułu <a href=\"https://github.com/bmlt-enabled/crumb-drupal\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Owija ten widżet w blok do umieszczenia, filtr shortcode <code>[crumb]</code> dla pól body i usługę renderowania do programatycznego osadzania. Wydania publikowane są na <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-drupal/releases</a>.",
+    "installation": "Instalacja",
+    "install": {
+      "1": "Pobierz najnowszy <code>crumb.zip</code> ze <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">strony wydań</a>.",
+      "2": "Wypakuj do <code>web/modules/contrib/</code> (lub <code>web/modules/custom/</code>).",
+      "3": "Włącz: <code>drush en crumb</code> lub przez <strong>Extend</strong> w interfejsie administratora.",
+      "4": "Odwiedź <strong>Configuration → Web services → Crumb</strong> i wprowadź adres URL swojego serwera BMLT."
+    },
+    "embedBlock": "Osadź przez blok",
+    "embedBlockBody": "Najprostsza droga: umieść blok <strong>Crumb meeting finder</strong> (kategoria: BMLT) w dowolnym regionie poprzez <strong>Structure → Block layout</strong>. Ustawienia per-blok pozwalają nadpisać serwer, service body, widok i geolokalizację.",
+    "embedShortcode": "Osadź przez shortcode w polach body",
+    "embedShortcodeBody": "Włącz filtr <strong>Crumb meeting finder shortcode</strong> w formacie tekstu (<strong>Configuration → Content authoring → Text formats and editors</strong>), a następnie użyj:",
+    "serverNote": "Adres URL serwera BMLT ustawiony w ustawieniach modułu jest używany domyślnie. Możesz go nadpisać — lub filtrować według service body — bezpośrednio w shortcode:",
+    "advanced": "Zaawansowana konfiguracja",
+    "advancedIntro": "Wszystkie <a href=\"#global-config\">opcje konfiguracji globalnej</a> (język, geolokalizacja, kolumny, kafelki mapy itp.) można ustawić programatycznie poprzez <code>hook_crumb_config_alter()</code> w dowolnym module niestandardowym:"
+  },
+  "features": {
+    "title": "Funkcje",
+    "item": {
+      "listView": "<strong>Widok listy</strong> — tabela spotkań posortowana po dniu i godzinie, z odznakami typu lokalu",
+      "mapView": "<strong>Widok mapy</strong> — interaktywna mapa Leaflet dla spotkań stacjonarnych (włącznie z tymi z komponentem online); kliknij znacznik, aby zobaczyć spotkania w tej lokalizacji; przesuwanie lub powiększanie odsłania przycisk <em>Szukaj w tym obszarze</em>, gdy aktywne jest W pobliżu",
+      "detailView": "<strong>Widok szczegółów</strong> — pełne informacje o spotkaniu: harmonogram, adres ze wskazówkami Google Maps, przycisk dołączenia do spotkania wirtualnego, formaty i notatki",
+      "textSearch": "<strong>Wyszukiwanie tekstowe</strong> — filtr w czasie rzeczywistym przez nazwę spotkania, lokalizację i notatki",
+      "weekdayFilter": "<strong>Filtr dni tygodnia</strong> — przełącz pojedyncze dni tygodnia",
+      "venueFilter": "<strong>Filtr typu lokalu</strong> — stacjonarnie lub online (spotkania z lokalem stacjonarnym i linkiem online pojawiają się w obu)",
+      "timeFilter": "<strong>Filtr pory dnia</strong> — rano, popołudnie, wieczór lub noc",
+      "formatFilter": "<strong>Filtr formatu</strong> — rozwijana lista wielokrotnego wyboru do filtrowania według formatu spotkania (np. Otwarte, Zamknięte, Mówca); pokazuje tylko formaty obecne w załadowanych danych spotkań",
+      "localeTime": "<strong>Wyświetlanie czasu zgodnie z lokalizacją</strong> — godziny spotkań są pokazywane w formacie 12-godzinnym (AM/PM) lub 24-godzinnym automatycznie na podstawie lokalizacji przeglądarki użytkownika",
+      "recursive": "<strong>Rekursywne wsparcie service body</strong> — podrzędne service body są zawsze uwzględniane",
+      "multiBody": "<strong>Wiele service body</strong> — oddziel ID przecinkami, aby połączyć regiony",
+      "print": "<strong>Widok listy przyjazny dla drukarki</strong> — gdy użytkownik drukuje stronę, widżet automatycznie przełącza się na czysty czarno-biały plan pogrupowany według dnia tygodnia, powtarza nagłówki tabeli na stronach i drukuje pełny URL dla spotkań online"
+    }
+  },
+  "routing": {
+    "title": "Routing",
+    "intro": "Domyślnie widżet używa <strong>routingu opartego na hash</strong> dla URL-i szczegółów spotkań (np. <code>example.com/#/monday-night-meeting-42</code>). Działa od razu na dowolnym hostingu bez konfiguracji serwera.",
+    "prettyUrls": "Ładne URL-e (History API)",
+    "prettyUrlsIntro": "Aby uzyskać czyste URL-e bez fragmentu <code>#</code>, dodaj atrybut <code>data-path</code> ze swoją ścieżką bazową:",
+    "prettyUrlsBody": "Tworzy to URL-e jak <code>example.com/meetings/monday-night-meeting-42</code>. Twój serwer musi być skonfigurowany tak, aby serwować stronę dla wszystkich pod-ścieżek pod ścieżką bazową, aby bezpośrednie wizyty i odświeżenia strony działały:",
+    "th": {
+      "server": "Serwer",
+      "config": "Konfiguracja"
+    },
+    "row": {
+      "drupal": "Ustaw <strong>Base Path for Pretty URLs</strong> w <em>Configuration → Web services → Crumb</em>; moduł rejestruje niezbędną trasę automatycznie."
+    },
+    "iframes": "Osadzanie w iframe (Google Sites itp.)",
+    "iframesP1": "Podczas osadzania w hostach opartych na iframe, takich jak Google Sites, cała nawigacja wewnątrz widżetu (klikanie spotkań, przycisk wstecz, linki sąsiadów) działa normalnie. Jednak głębokie linkowanie do konkretnego spotkania przez URL nie jest obsługiwane, ponieważ widżet działa wewnątrz proxowanego iframe i nie może kontrolować URL-a strony nadrzędnej.",
+    "iframesP2": "Nie jest potrzebna żadna specjalna konfiguracja — domyślny routing oparty na hash działa wewnątrz iframe. Atrybut <code>data-path</code> nie jest potrzebny do osadzeń iframe."
+  },
+  "siteBuilders": {
+    "title": "Kreatory stron",
+    "intro": "Crumb Widget można również osadzić w popularnych kreatorach stron, ale konfiguracja różni się w zależności od platformy."
+  },
+  "findServiceBody": {
+    "title": "Znajdź ID swojego service body",
+    "intro": "Każde poniższe osadzenie filtruje spotkania do konkretnego <strong>service body</strong> (obszar, region lub strefa) poprzez przekazanie jego numerycznego ID w <code>data-service-body</code>. Możesz to znaleźć w <strong>warsztacie semantycznym</strong> swojego serwera BMLT, dostępnym pod adresem <code>&lt;your-server&gt;/main_server/semantic</code> na każdym serwerze BMLT.",
+    "step": {
+      "1": "Otwórz warsztat semantyczny w przeglądarce. Na przykład <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — zastąp domenę swoim własnym serwerem BMLT.",
+      "2": "W <strong>Operation</strong> wybierz akcję pobierającą service body (etykiety nieco się różnią w zależności od wersji, ale zwykle jest to <em>Get Service Bodies</em> lub <em>Retrieve information about Service Bodies</em>).",
+      "3": "Pozostaw format odpowiedzi jako JSON i kliknij <strong>Execute JSON Request</strong>.",
+      "4": "W odpowiedzi JSON znajdź swój obszar, region lub strefę po <code>name</code>. Pole <code>id</code> obok to liczba, którą przekazujesz do <code>data-service-body</code>."
+    },
+    "outro": "W tym przykładzie przekazałbyś <code>data-service-body=\"42\"</code> tylko dla Greater Seattle, lub <code>data-service-body=\"42,57\"</code>, aby połączyć oba obszary. Możesz również pominąć warsztat semantyczny i uderzyć bezpośrednio w endpoint JSON pod <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "callout1": "<strong>Nie znasz swojego URL-a serwera lub ID service body?</strong> Przeglądaj <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — wymienia znane serwery BMLT i service body na każdym z nich. Znajdź swój obszar, region lub strefę, aby uzyskać zarówno URL <code>data-server</code>, jak i ID <code>data-service-body</code> w jednym miejscu.",
+    "callout2": "<strong>Wskazówka:</strong> Podrzędne service body są zawsze uwzględniane automatycznie. Jeśli przekażesz ID regionu, uwzględniane są spotkania ze wszystkich obszarów pod nim — nie musisz wymieniać każdego podrzędnego obszaru."
+  },
+  "googleSites": {
+    "title": "Google Sites",
+    "intro": "Google Sites obsługuje osadzanie kodu HTML, CSS i JavaScript za pomocą <strong>Wstaw → Osadź → Kod osadzania</strong>. Możesz również użyć osadzenia pełnostronicowego, jeśli chcesz, aby wyszukiwarka spotkań żyła na własnej stronie.",
+    "step": {
+      "1": "Otwórz swoją witrynę w Google Sites.",
+      "2": "Kliknij <strong>Wstaw</strong> → <strong>Osadź</strong>.",
+      "3": "Wybierz <strong>Kod osadzania</strong>.",
+      "4": "Wklej znaczniki widżetu i skrypt.",
+      "5": "Kliknij <strong>Wstaw</strong>, a następnie opublikuj swoją witrynę."
+    },
+    "note": "<strong>Uwaga:</strong> w Google Sites JavaScript musi być umieszczony wewnątrz tagów <code>&lt;script&gt;</code> przy korzystaniu z opcji kodu osadzania. Ponieważ Google Sites uruchamia widżet wewnątrz proxowanego iframe, bezpośrednie linki do konkretnych spotkań (głębokie linkowanie) nie są obsługiwane — ale cała nawigacja wewnątrz widżetu działa normalnie.",
+    "demoLink": "<a href=\"https://sites.google.com/view/crumb-seattle/\" target=\"_blank\">Zobacz działające demo na Google Sites &rarr;</a>"
+  },
+  "squarespace": {
+    "title": "Squarespace",
+    "intro": "Osadzenia w Squarespace używają <strong>Bloku kodu</strong>, który akceptuje surowy HTML i JavaScript. Zgodnie z dokumentacją Squarespace bloki kodu z włączonym JavaScript są dostępne w planach <strong>Core, Plus, Advanced, Business, Commerce Basic i Commerce Advanced</strong>. Bezpłatny plan Personal nie obsługuje JavaScript w blokach kodu.",
+    "before": "Zanim zaczniesz, potrzebujesz dwóch wartości:",
+    "value": {
+      "server": "<code>data-server</code> — URL <code>/main_server/</code> Twojego serwera BMLT",
+      "body": "<code>data-service-body</code> — numeryczne ID Twojego obszaru, regionu lub strefy (zobacz <a href=\"#find-service-body\">Znajdź ID swojego service body</a>)"
+    },
+    "step": {
+      "1": "Zaloguj się do Squarespace i otwórz stronę, na której chcesz mieć wyszukiwarkę spotkań.",
+      "2": "Kliknij <strong>Edytuj</strong>, a następnie najedź tam, gdzie chcesz umieścić widżet, i kliknij przycisk <strong>+</strong> (Dodaj blok).",
+      "3": "Wyszukaj i wstaw blok <strong>Code</strong>.",
+      "4": "W edytorze bloku kodu upewnij się, że rozwijana lista <strong>Mode</strong> jest ustawiona na <strong>HTML</strong>, a <strong>Display Source</strong> jest <em>wyłączone</em> (w przeciwnym razie Squarespace pokaże surowe tagi zamiast uruchomić kod).",
+      "5": "Wklej fragment poniżej, zastępując <code>data-server</code> i <code>data-service-body</code> swoimi wartościami.",
+      "6": "Kliknij poza blokiem, aby go zamknąć, a następnie kliknij <strong>Zapisz</strong>. Opublikuj stronę, jeśli nie jest jeszcze opublikowana."
+    },
+    "note": "<strong>Uwaga:</strong> Squarespace renderuje bloki kodu w normalnym przepływie strony, więc widżet zajmie tyle miejsca pionowego, ile potrzebuje. Jeśli podgląd wygląda pusto, otwórz blok ponownie i potwierdź, że <strong>Display Source</strong> jest wyłączone, a <strong>Mode</strong> jest ustawione na <strong>HTML</strong>. Jeśli masz plan, który nie pozwala na JavaScript w blokach kodu, musisz dokonać uaktualnienia, zanim widżet się załaduje."
+  },
+  "wix": {
+    "title": "Wix",
+    "intro": "Wix dzieli osadzenie na dwa miejsca: kontener HTML widżetu znajduje się wewnątrz Twojej strony jako element <strong>Embed HTML</strong> (Wix nazywa to \"Custom Embeds → Embed HTML\" lub \"Embed a Widget\"), a ładujący <code>&lt;script&gt;</code> znajduje się w <strong>Settings → Custom Code</strong>, dzięki czemu ładuje się tylko raz na wizytę. Zgodnie z dokumentacją Wix Custom Code wymaga, aby Twoja witryna była <strong>opublikowana</strong> w <strong>płatnym planie z podłączoną domeną</strong>.",
+    "before": "Zanim zaczniesz, potrzebujesz dwóch wartości:",
+    "value": {
+      "server": "<code>data-server</code> — URL <code>/main_server/</code> Twojego serwera BMLT",
+      "body": "<code>data-service-body</code> — numeryczne ID Twojego obszaru, regionu lub strefy (zobacz <a href=\"#find-service-body\">Znajdź ID swojego service body</a>)"
+    },
+    "step1Heading": "<strong>Krok 1 — Dodaj skrypt ładujący (raz na witrynę):</strong>",
+    "step1": {
+      "1": "W panelu Wix przejdź do <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong>.",
+      "2": "Kliknij <strong>+ Add Custom Code</strong>.",
+      "3": "Wklej fragment ładujący poniżej do pola kodu.",
+      "4": "W <strong>Add Code to Pages</strong> wybierz <em>All pages</em> lub tylko stronę, która pokaże widżet (ładowanie tylko tam, gdzie jest potrzebne, jest szybsze).",
+      "5": "Ustaw <strong>Place Code in</strong> na <strong>Body – end</strong>.",
+      "6": "Nazwij to czymś w stylu <em>Crumb Widget loader</em> i kliknij <strong>Apply</strong>."
+    },
+    "step2Heading": "<strong>Krok 2 — Dodaj kontener widżetu na stronie:</strong>",
+    "step2": {
+      "1": "Otwórz stronę w edytorze Wix.",
+      "2": "Kliknij <strong>+ Add Elements</strong> → <strong>Embed Code</strong> → <strong>Embed HTML</strong> (w Wix Studio jest to <strong>Embed &amp; Social</strong> → <strong>HTML iframe/Embed</strong>).",
+      "3": "Upuść element tam, gdzie chcesz, aby widżet się pojawił, i kliknij <strong>Enter Code</strong>.",
+      "4": "Wklej fragment kontenera poniżej, zastępując <code>data-server</code> i <code>data-service-body</code> swoimi wartościami.",
+      "5": "Kliknij <strong>Update</strong>. Zmień rozmiar elementu mniej więcej do żądanej wysokości — Embed HTML w Wix ma stały rozmiar, więc daj mu wystarczająco dużo miejsca (np. <code>800px</code> wysokości) na listę spotkań i mapę.",
+      "6": "Kliknij <strong>Publish</strong>."
+    },
+    "note": "<strong>Uwaga:</strong> element Embed HTML w Wix renderowany jest wewnątrz iframe, co oznacza, że widżet nie może zmieniać rozmiaru otaczającej strony, a głębokie linki do poszczególnych spotkań nie zaktualizują URL-a przeglądarki. Cała nawigacja wewnątrz widżetu (lista, mapa, szczegóły spotkania, filtry) nadal działa normalnie. Jeśli nie widzisz opcji Custom Code w Settings, Twój plan prawdopodobnie jej nie zawiera — sprawdź, czy Twoja witryna jest opublikowana w płatnym planie z podłączoną domeną."
+  },
+  "browserSupport": {
+    "title": "Wsparcie przeglądarek",
+    "intro": "Wszystkie nowoczesne przeglądarki. Internet Explorer nie jest obsługiwany."
+  },
+  "npmPackage": {
+    "title": "Pakiet npm",
+    "intro": "Oprócz osadzenia za pomocą tagu skryptu CDN Crumb Widget jest dostępny jako pakiet npm do użytku w projektach JavaScript/TypeScript (React, Svelte, Vue, zwykły Vite itp.).",
+    "installation": "Instalacja",
+    "peerDep": "<code>leaflet</code> jest zależnością peer — zainstaluj go obok <code>crumb-widget</code>, aby konsumenci mogli deduplikować i przypiąć preferowaną wersję.",
+    "usage": "Użycie",
+    "usageIntro": "Zaimportuj <code>mountCrumbWidget</code> i wywołaj go z elementem DOM oraz swoją konfiguracją. Widżet montuje się sam i wstrzykuje swój CSS — nie jest potrzebny osobny import arkusza stylów.",
+    "svelteIntro": "W komponencie Svelte użyj <code>onMount</code>, aby upewnić się, że element istnieje przed montażem:",
+    "options": "Opcje",
+    "optionsIntro": "Wszystkie opcje z <a href=\"#global-config\">Konfiguracji globalnej</a> są dostępne plus dwa dodatkowe wymagane pola:",
+    "th": {
+      "option": "Opcja",
+      "required": "Wymagane"
+    },
+    "row": {
+      "serverUrl": "URL serwera BMLT.",
+      "serviceBodyIds": "ID service body do filtrowania. Pomiń lub przekaż <code>[]</code>, aby pokazać wszystkie.",
+      "view": "Początkowy widok. Domyślnie <code>'list'</code>. <code>'both'</code> pokazuje mapę nad listą bez przełącznika.",
+      "geolocation": "Włącza przycisk W pobliżu. Domyślnie <code>false</code>.",
+      "geolocationRadius": "Maksymalny promień wyszukiwania (ogranicza listę odległości). Domyślnie <code>75</code>.",
+      "distanceOptions": "Wartości odległości pokazane na liście W pobliżu. Domyślnie <code>[5,10,15,25,50,100]</code>.",
+      "distanceUnit": "Etykieta jednostki dla odległości. Domyślnie <code>'mi'</code>.",
+      "darkMode": "Ustawienie trybu ciemnego. Domyślnie <code>false</code>.",
+      "language": "Tag językowy BCP-47 (np. <code>'es'</code>). Domyślnie locale przeglądarki.",
+      "columns": "Kolumny tabeli do wyświetlenia. Zobacz <a href=\"#global-config\">Konfigurację globalną</a>.",
+      "map": "Dostawca kafelków i konfiguracja znaczników. Zobacz <a href=\"#tile-config\">Dostawca kafelków</a>."
+    },
+    "note": "<strong>Uwaga:</strong> pakiet npm pakuje Svelte i wszystkie style w jeden plik JS. <code>leaflet</code> jest zależnością peer (zainstaluj go obok <code>crumb-widget</code>), abyś mógł deduplikować z innym kodem używającym Leaflet w aplikacji. Każde wywołanie <code>mountCrumbWidget</code> jest niezależne, ale wiele widżetów na tej samej stronie nie jest obecnie obsługiwane."
+  },
+  "philosophy": {
+    "title": "Filozofia",
+    "body": "Ten projekt ma na celu dobre pokrycie potrzeb większości service body NA — nie każdego możliwego przypadku użycia. Jest celowo utrzymany prosto i koncentruje się na sednie. Nowe funkcje są ważone w stosunku do kosztu dla bazy kodu; niszowe prośby, które zawyżają projekt dla wszystkich, są zwykle poza zakresem. Jeśli potrzebujesz głębokiej personalizacji, to może nie być właściwe narzędzie."
+  }
+}

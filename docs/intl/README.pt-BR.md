@@ -4,7 +4,7 @@
 
 # Crumb Widget
 
-**Leia em outros idiomas:** [English](../../README.md) · [Español](README.es.md) · [Français](README.fr.md)
+**Leia em outros idiomas:** [English](../../README.md) · [Español](README.es.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Italiano](README.it.md) · [Svenska](README.sv.md) · [Dansk](README.da.md) · [Polski](README.pl.md) · [Ελληνικά](README.el.md) · [Русский](README.ru.md) · [日本語](README.ja.md) · [فارسی](README.fa.md)
 
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
@@ -19,7 +19,7 @@ Um widget incorporável para buscar reuniões de NA. Construído com Svelte 5 e 
 - Detalhe da reunião com rotas, link para entrar virtualmente e formatos
 - Busca por proximidade baseada em geolocalização
 - Links para reuniões individuais via roteador embutido
-- Suporte multilíngue (12 idiomas, incluindo layout RTL para persa)
+- Suporte multilíngue (13 idiomas, incluindo layout RTL para persa)
 - Colunas, tiles de mapa e marcadores personalizáveis
 - Visão de lista pronta para impressão
 

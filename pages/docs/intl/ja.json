@@ -1,0 +1,432 @@
+{
+  "page": {
+    "title": "BMLT Crumb Widget — ドキュメント"
+  },
+  "nav": {
+    "theme": {
+      "light": "ライトモード",
+      "dark": "ダークモード"
+    },
+    "liveDemo": "→ ライブデモ",
+    "qaTests": "→ QA テストページ",
+    "overview": "概要",
+    "quickStart": "クイックスタート",
+    "attributes": "Data 属性",
+    "globalConfig": "グローバル設定",
+    "language": "言語",
+    "geolocation": "位置情報",
+    "queryParams": "URL クエリパラメータ",
+    "cssVars": "CSS 変数",
+    "cssDarkMode": "ダークモード",
+    "cssClasses": "CSS ヘルパークラス",
+    "tileConfig": "タイルプロバイダ",
+    "tileDarkConfig": "ダークモード用タイル",
+    "markerConfig": "マーカー設定",
+    "exampleBasic": "基本的な埋め込み",
+    "exampleServiceBody": "サービスボディフィルター",
+    "exampleMulti": "複数のサービスボディ",
+    "exampleMap": "デフォルトで地図",
+    "exampleWordpress": "WordPress",
+    "exampleDrupal": "Drupal",
+    "routingModes": "ルーティングモード",
+    "findServiceBody": "サービスボディ ID の確認方法",
+    "googleSites": "Google Sites",
+    "squarespace": "Squarespace",
+    "wix": "Wix",
+    "features": "機能",
+    "browserSupport": "ブラウザ対応",
+    "npmInstall": "インストール",
+    "npmUsage": "使い方",
+    "npmOptions": "オプション",
+    "philosophy": "理念",
+    "privacy": "プライバシーポリシー",
+    "section": {
+      "configuration": "設定",
+      "examples": "例",
+      "routing": "ルーティング",
+      "siteBuilders": "サイトビルダー",
+      "reference": "リファレンス",
+      "npm": "npm パッケージ",
+      "legal": "法務情報"
+    }
+  },
+  "header": {
+    "subtitle": "あらゆるウェブサイト向けの、埋め込み可能な NA ミーティング検索ウィジェット。",
+    "btn": {
+      "liveDemo": "ライブデモ",
+      "github": "GitHub",
+      "qaTests": "QA テスト"
+    }
+  },
+  "th": {
+    "property": "プロパティ",
+    "type": "タイプ",
+    "description": "説明"
+  },
+  "badge": {
+    "required": "必須",
+    "optional": "任意"
+  },
+  "yesNo": {
+    "yes": "はい",
+    "no": "いいえ"
+  },
+  "overview": {
+    "title": "概要",
+    "p1": "Crumb Widget は <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT サーバ</a>に問い合わせを行い、検索・フィルター・リスト表示・インタラクティブな地図を備えた本格的なミーティング検索ツールを描画する、自己完結型の JavaScript ウィジェットです。",
+    "p2": "<strong>1 つの JavaScript ファイル</strong>として配布され、CSS はすべて実行時に注入されます。スタイルシートもビルドステップも、ホストページ側のフレームワークも不要です。"
+  },
+  "quickStart": {
+    "title": "クイックスタート",
+    "intro": "始めるには、ページにコンテナ要素を追加し、それを BMLT サーバに紐付けて、ウィジェットスクリプトを読み込みます。完全な例は次のとおりです：",
+    "autoInit": "ウィジェットはスクリプト読み込み時に自動で初期化されるため、追加の JavaScript は必要ありません。",
+    "viewport": "<strong>重要:</strong> ページの <code>&lt;head&gt;</code> に <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> を必ず含めてください。モバイル端末や小さな画面で正しく表示するために重要です。"
+  },
+  "attributes": {
+    "title": "Data 属性",
+    "intro": "すべての設定は <code>#crumb-widget</code> div の <code>data-*</code> 属性として指定します。",
+    "th": {
+      "attribute": "属性",
+      "description": "説明"
+    },
+    "server": "BMLT サーバの完全な URL。<br /><em>例:</em> <code>https://example.org/main_server</code>",
+    "serviceBody": "ミーティングを 1 つ以上のサービスボディで絞り込みます。1 つの数値 ID、またはカンマ区切りのリストを指定できます。サーバ上のすべてのミーティングを表示するには省略します。<br /><em>単一:</em> <code>\"42\"</code> <br /><em>複数:</em> <code>\"42,57,103\"</code> <br /><strong>注意:</strong> 再帰的な検索が常に有効です。子のサービスボディは自動的に含まれ、無効化することはできません。",
+    "view": "ウィジェット読み込み時の既定ビューです。<br /><em>値:</em> <code>list</code>（既定）, <code>map</code>, <code>both</code> <br /><code>both</code> は、リスト／地図切替なしで、固定高の地図を完全なミーティング一覧の上に表示します。<br />実行時には <code>?view=</code> クエリパラメータで上書き可能です（<a href=\"#query-params\">URL クエリパラメータ</a>を参照）。",
+    "path": "History API ルーティング（<code>#</code> のないクリーン URL）を有効にし、ベースパスを設定します。この属性がない場合はハッシュベースのルーティングが使われます（既定）。<br /><em>例:</em> <code>data-path=\"/meetings\"</code> は <code>/meetings/monday-night-meeting-42</code> のような URL を生成します。<br />接頭辞なしのパスルーティング（iframe 埋め込みなど）には <code>data-path=\"\"</code> を使用します。<br />詳細は<a href=\"#routing\">ルーティング</a>を参照してください。"
+  },
+  "globalConfig": {
+    "title": "グローバル設定オブジェクト",
+    "intro": "data 属性として用意されていないオプションについては、スクリプトを読み込む<strong>前に</strong>グローバル変数として <code>CrumbWidgetConfig</code> を定義してください。",
+    "row": {
+      "view": "既定のビューを上書きします。<code>data-view</code> よりも優先されます。<code>'both'</code> は、固定高の地図を完全なリストの上に表示し、リスト／地図切替は非表示になります。",
+      "language": "UI 言語を上書きします（例: <code>'es'</code>, <code>'fr'</code>）。既定では <code>navigator.language</code> を使用し、フォールバックは英語です。対応: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>。",
+      "columns": "リスト表示で表示する列です。既定: <code>['time', 'name', 'location', 'address']</code>。非表示にしたい列名は省略します。利用可能な値: <code>time</code>, <code>name</code>, <code>location</code>（会場／建物名）、<code>address</code>（住所と対面／オンラインのバッジ）、<code>service_body</code>。<code>service_body</code> は既定で非表示です。サービスボディ名を表示するには明示的に追加してください。",
+      "geolocation": "<strong>現在地周辺</strong>ボタンを表示し、ページ読み込み時に自動的に位置情報を取得して、ユーザー近くのミーティングを探します。HTTPS が必要です。既定: <code>false</code>。位置情報の取得に失敗または拒否された場合はエラーが表示され、フォールバックの読み込みは行われません。<strong>注意:</strong> <code>serviceBodyIds</code> フィルターは位置情報による検索には影響しません。結果は近接性のみで決定されます。",
+      "geolocationRadius": "位置情報を使用する際の最大検索半径です。現在地周辺の距離プルダウンの上限として機能し、この値を超えるオプションは非表示になります。既定: <code>75</code>。",
+      "distanceOptions": "現在地周辺のプルダウンに表示する距離（<code>distanceUnit</code> 単位）の値です。<code>geolocationRadius</code> を超えるオプションは自動的に非表示になります。<code>geolocationRadius</code> がリストにない場合は、最後のオプションとして追加されます。既定: <code>[5, 10, 15, 25, 50, 100]</code>。",
+      "distanceUnit": "現在地周辺のプルダウンで距離の横に表示される単位ラベル。既定: <code>'mi'</code>。",
+      "nowOffset": "ミーティングが「終了済み」と見なされるまでの猶予分数です。直近 <code>nowOffset</code> 分以内に始まったミーティングはリストの上部に残り、それより古い当日の曜日のミーティングはリストの末尾に移動します（翌週開催のように扱われます）。既定: <code>10</code>。開始時刻を過ぎたら直ちに末尾へ移すには <code>0</code> を指定します。",
+      "hideHeader": "ウィジェット上部の「ミーティング検索」タイトルバーとミーティング数を非表示にします。既定: <code>false</code>。",
+      "darkMode": "組み込みのダーク配色です。<code>'auto'</code> は訪問者の OS の設定（<code>prefers-color-scheme</code>）に従い、<code>true</code> は OS 設定に関係なくダークモードを強制し、<code>false</code>（既定）は無効化します。<a href=\"#tile-dark-config\">ダークモード用タイル</a>と併用できます。",
+      "mapTiles": "カスタム地図タイルプロバイダ。既定の OpenStreetMap タイルを置き換えます。下の<a href=\"#tile-config\">タイルプロバイダ</a>を参照してください。",
+      "mapTilesDark": "<code>prefers-color-scheme: dark</code> 時に使用される代替タイルプロバイダ。OS のテーマ変更時に自動的に切り替わります。下の<a href=\"#tile-dark-config\">ダークモード用タイル</a>を参照してください。",
+      "mapMarkers": "ミーティング場所用のカスタム地図マーカー。既定の NA マーカーを置き換えます。下の<a href=\"#marker-config\">マーカー設定</a>を参照してください。"
+    }
+  },
+  "language": {
+    "title": "言語",
+    "intro": "ウィジェットは <code>navigator.language</code> から訪問者の言語を自動検出し、英語にフォールバックします。設定プロパティ <code>language</code> で上書きできます：",
+    "codes": "言語コードはベースタグでマッチされます。たとえば <code>'fr-CA'</code> は <code>fr</code> を使用します。対応言語：",
+    "th": {
+      "code": "コード",
+      "language": "言語"
+    },
+    "name": {
+      "en": "英語",
+      "es": "スペイン語",
+      "fr": "フランス語",
+      "de": "ドイツ語",
+      "pt": "ポルトガル語",
+      "it": "イタリア語",
+      "sv": "スウェーデン語",
+      "da": "デンマーク語",
+      "el": "ギリシャ語",
+      "fa": "ペルシア語",
+      "pl": "ポーランド語",
+      "ru": "ロシア語",
+      "ja": "日本語"
+    }
+  },
+  "geolocation": {
+    "title": "位置情報",
+    "p1": "<code>geolocation: true</code> で<strong>現在地周辺</strong>ボタンを有効化します。有効な場合、ウィジェットはページ読み込み時にも自動的にユーザーの位置情報を取得し、近くのミーティングを表示しようとします。安全なコンテキスト（HTTPS）が必要です。",
+    "p2": "位置情報が拒否されたり利用できなかったりした場合はエラーメッセージが表示され、すべてのミーティングを読み込む静かなフォールバックは行いません。これは意図的なものです：サービスボディの絞り込みがない大規模サーバですべてのミーティングを読み込むと、数万件の結果が返ってくる可能性があるためです。",
+    "p3": "<strong>サービスボディフィルターは位置情報検索には影響しません。</strong>現在地周辺を使用する場合、結果はユーザーの座標と <code>geolocationRadius</code> のみで決まります。<code>serviceBodyIds</code> が設定されていない場合、現在地周辺ボタンはオフにできません — 位置情報が唯一のデータソースとなります。",
+    "p4": "現在地周辺ボタンを押すと距離プルダウンが開き、ユーザーは検索範囲を選べます。半径を選ぶと、すでに読み込まれているミーティングに対してクライアント側の距離フィルターが適用されます — 半径を変更しても新しいネットワークリクエストは発生しません。利用可能な距離は <code>distanceOptions</code> から取得され、<code>geolocationRadius</code> を上限とします。範囲内にミーティングがないオプションは自動的に非表示になります。マイルではなくキロメートルで表示するには <code>distanceUnit</code> を使ってください。",
+    "p5": "現在地周辺が有効な地図表示中に地図をパンまたはズームすると、地図上部に<strong>このエリアを検索</strong>ボタンが現れます。クリックすると、現在の地図ビューポートを中心に同じ選択中の半径でミーティングを再読み込みします。地図はユーザーの位置にとどまり、新しい結果に合わせて移動することはありません。"
+  },
+  "queryParams": {
+    "title": "URL クエリパラメータ",
+    "intro": "クエリパラメータ <code>?view=</code> は初期ビューを設定し、<code>data-view</code> と <code>view</code> を上書きします：",
+    "th": {
+      "value": "値",
+      "behaviour": "動作"
+    },
+    "row": {
+      "list": "読み込み時にリスト表示を強制",
+      "map": "読み込み時に地図表示を強制",
+      "both": "完全なミーティング一覧の上に地図を表示。リスト／地図切替は非表示",
+      "auto": "読み込み時に位置情報を取得 — 成功時は近隣の結果を伴う地図を表示、失敗時はすべてのミーティングを伴うリストにフォールバック"
+    },
+    "example": "例: <code>https://example.org/meetings/?view=auto</code>",
+    "disable": "<code>?view=list</code> および <code>?view=map</code> は、たとえ <code>geolocation: true</code> が設定されていても自動位置情報取得を無効化します。"
+  },
+  "cssVars": {
+    "title": "CSS 変数",
+    "intro": "ウィジェットは CSS カスタムプロパティを公開しているため、JavaScript に手を入れずにテーマを変更できます。<code>#crumb-widget</code> 要素にこれらを任意で設定してください — 上書きしたいものだけを指定すれば十分です。",
+    "th": {
+      "variable": "変数",
+      "default": "既定値",
+      "controls": "制御内容"
+    },
+    "row": {
+      "fontFamily": "ウィジェットのフォントスタック",
+      "fontSize": "ベースフォントサイズ",
+      "background": "ウィジェットおよびコントロールバーの背景",
+      "text": "メインのテキスト色",
+      "border": "ボーダーと区切り線",
+      "accent": "アクティブなボタン、リンク、フォーカスインジケータ",
+      "accentLight": "行のホバー、アクティブなフィルターパネルの背景",
+      "borderRadius": "カードとボタンの角の半径",
+      "rowAlt": "交互（偶数）行の背景",
+      "inPerson": "対面バッジのテキスト",
+      "inPersonBg": "対面バッジの背景",
+      "virtual": "オンラインバッジのテキスト",
+      "virtualBg": "オンラインバッジの背景",
+      "surface": "入力欄、ボタン、ドロップダウンパネルの背景",
+      "hover": "ニュートラルなホバー状態（アクセントを使わないボタンや行）",
+      "divider": "行と一覧の内部区切り線",
+      "textSecondary": "サブ／弱めのテキスト（テーブルヘッダー、時間、場所）",
+      "textMuted": "とても弱めのテキスト（フッターのカウント、空状態のメッセージ）"
+    }
+  },
+  "cssDarkMode": {
+    "title": "ダークモード",
+    "intro": "ウィジェットには組み込みのダークパレットがあります。設定オプション <code>darkMode</code> で有効化できます — 追加の CSS は不要です。<a href=\"#tile-dark-config\">ダークモード用タイル</a>オプションと併用できます。",
+    "custom": "代わりにカスタムのダークパレットを使うには、CSS 変数を直接上書きしてください："
+  },
+  "cssClasses": {
+    "title": "CSS ヘルパークラス",
+    "intro": "これらのクラスは内部的に適用されており、独自の CSS でも対象にしてさらにカスタマイズできます。",
+    "th": {
+      "class": "クラス",
+      "usedOn": "使用箇所"
+    },
+    "row": {
+      "btnPrimary": "アクセント塗りつぶしのボタン — アクティブなフィルターチップ、ビュー切替、ミーティングに参加",
+      "btnSecondary": "アウトラインのボタン — 道順を取得",
+      "link": "リンクスタイルのボタン — 戻る、メール連絡先",
+      "badgeInPerson": "対面会場バッジ",
+      "badgeVirtual": "オンライン会場バッジ",
+      "card": "詳細セクションのカード",
+      "row": "ミーティング一覧テーブルの行"
+    }
+  },
+  "tileConfig": {
+    "title": "タイルプロバイダ",
+    "intro": "既定では地図は <a href=\"https://www.openstreetmap.org/\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a> のタイルを使用します。<code>map.tiles</code> を設定すれば、任意の <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\" target=\"_blank\" rel=\"noopener\">Leaflet 互換のタイルプロバイダ</a>に切り替えられます。",
+    "row": {
+      "url": "タイル URL のテンプレート。プレースホルダ <code>{z}</code>, <code>{x}</code>, <code>{y}</code>（およびサポートされる場合は <code>{r}</code>）を使用します。",
+      "attribution": "地図のクレジットコントロールに表示されるクレジット HTML。ほとんどのタイルプロバイダの利用規約で必須です。"
+    }
+  },
+  "tileDarkConfig": {
+    "title": "ダークモード用タイル",
+    "intro": "<code>map.tiles_dark</code> を設定すると、<code>prefers-color-scheme: dark</code> の訪問者に対して別のタイルレイヤーを使えます。OS のテーマ変更時にレイヤーが自動的に切り替わるため、ページの再読み込みは不要です。省略した場合は、すべての配色で同じタイルが使われます。",
+    "googleNote": "<strong>Google Maps タイル:</strong> Google のタイル API はサーバ側（または短命のクライアント側 fetch）で取得したセッショントークンを必要とします。トークンは <code>CrumbWidgetConfig</code> を設定する前に取得する必要があるため、トークンが用意できた後で <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> を動的に読み込む必要があります。下の例では <a href=\"https://developers.google.com/maps/documentation/tile/\" target=\"_blank\" rel=\"noopener\">Google Map Tiles API</a> を使用しています — Map Tiles API を有効にした<strong>リファラ制限付き API キー</strong>が必要です。"
+  },
+  "markerConfig": {
+    "title": "マーカー設定",
+    "intro": "<code>map.markers.location</code> オブジェクトを使うと、既定の NA 地図ピンを任意の画像やインライン SVG に置き換えられます。",
+    "row": {
+      "html": "マーカー要素内に描画される HTML。通常は <code>&lt;img&gt;</code> タグまたはインライン SVG です。",
+      "width": "アイコンの幅（ピクセル）。",
+      "height": "アイコンの高さ（ピクセル）。アンカー位置はアイコン下端の中央に設定されます。"
+    }
+  },
+  "exampleBasic": {
+    "title": "例: 基本的な埋め込み",
+    "intro": "公開されている BMLT サーバのすべてのミーティングを表示します："
+  },
+  "exampleServiceBody": {
+    "title": "例: サービスボディで絞り込み",
+    "intro": "サービスボディ 42（とその子）に属するミーティングだけを表示します："
+  },
+  "exampleMulti": {
+    "title": "例: 複数のサービスボディ",
+    "intro": "複数のサービスボディのミーティングをまとめて表示するには、カンマ区切りのリストを渡します："
+  },
+  "exampleMap": {
+    "title": "例: 地図表示をデフォルトにする"
+  },
+  "exampleWordpress": {
+    "title": "例: WordPress",
+    "intro": "Crumb Widget を WordPress サイトに追加する一番簡単な方法は、公式の <a href=\"https://wordpress.org/plugins/crumb/\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> プラグイン（<a href=\"https://github.com/bmlt-enabled/crumb-widget\" target=\"_blank\" rel=\"noopener\">GitHub</a>）です。設定画面付きのショートコードでこのウィジェットをラップしており、コードは不要です。",
+    "installation": "インストール",
+    "install": {
+      "1": "WordPress のプラグインディレクトリで <strong>Crumb</strong> を検索するか、プラグインの ZIP を手動でアップロードします。",
+      "2": "プラグインを有効化します。",
+      "3": "<strong>設定 → Crumb</strong> に移動し、BMLT サーバの URL を入力します。",
+      "4": "任意のページや投稿にショートコードを追加します。"
+    },
+    "shortcode": "ショートコード",
+    "serverNote": "プラグイン設定の BMLT サーバ URL が既定で使用されます。サーバを上書きしたり、サービスボディで絞り込んだりするには、ショートコードに直接指定できます：",
+    "advanced": "高度な設定",
+    "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、テーマの <code>functions.php</code> からフィルター <code>bmltclient_config</code> 経由で設定できます："
+  },
+  "exampleDrupal": {
+    "title": "例: Drupal",
+    "intro": "<a href=\"https://github.com/bmlt-enabled/crumb-drupal\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> モジュールで、Drupal 10.3+ または 11 のサイトに Crumb Widget を追加できます。配置可能なブロック、本文フィールド用の <code>[crumb]</code> ショートコードフィルター、プログラムから埋め込むためのレンダリングサービスとしてこのウィジェットをラップします。リリースは <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-drupal/releases</a> で公開されています。",
+    "installation": "インストール",
+    "install": {
+      "1": "<a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">リリースページ</a>から最新の <code>crumb.zip</code> をダウンロードします。",
+      "2": "<code>web/modules/contrib/</code>（または <code>web/modules/custom/</code>）に展開します。",
+      "3": "有効化: <code>drush en crumb</code>、または管理画面の <strong>Extend</strong> から。",
+      "4": "<strong>Configuration → Web services → Crumb</strong> を開き、BMLT サーバの URL を入力します。"
+    },
+    "embedBlock": "ブロックで埋め込み",
+    "embedBlockBody": "最も簡単な方法: <strong>Crumb meeting finder</strong> ブロック（カテゴリ: BMLT）を <strong>Structure → Block layout</strong> から任意のリージョンに配置します。ブロックごとの設定でサーバ、サービスボディ、ビュー、位置情報を上書きできます。",
+    "embedShortcode": "本文フィールドのショートコードで埋め込み",
+    "embedShortcodeBody": "テキストフォーマットで <strong>Crumb meeting finder shortcode</strong> フィルターを有効化（<strong>Configuration → Content authoring → Text formats and editors</strong>）し、次のように使います：",
+    "serverNote": "モジュール設定の BMLT サーバ URL が既定で使用されます。サーバを上書きしたり、サービスボディで絞り込んだりするには、ショートコードに直接指定できます：",
+    "advanced": "高度な設定",
+    "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、任意のカスタムモジュールの <code>hook_crumb_config_alter()</code> からプログラム的に設定できます："
+  },
+  "features": {
+    "title": "機能",
+    "item": {
+      "listView": "<strong>リスト表示</strong> — 曜日と時間で並べ替えたミーティング表。会場タイプのバッジ付き",
+      "mapView": "<strong>地図表示</strong> — 対面ミーティング（オンライン要素を含むものも含む）向けのインタラクティブな Leaflet 地図。マーカーをクリックするとその場所のミーティングが表示され、現在地周辺がアクティブなときに地図をパン／ズームすると <em>このエリアを検索</em> ボタンが現れます",
+      "detailView": "<strong>詳細表示</strong> — ミーティングの全情報：スケジュール、Google Maps の道順を伴う住所、オンラインミーティングへの参加ボタン、形式、メモ",
+      "textSearch": "<strong>テキスト検索</strong> — ミーティング名、場所、メモを横断するリアルタイムフィルター",
+      "weekdayFilter": "<strong>曜日フィルター</strong> — 曜日ごとに個別に切り替え",
+      "venueFilter": "<strong>会場タイプフィルター</strong> — 対面またはオンライン（対面会場とオンラインリンクの両方を持つミーティングは両方に表示されます）",
+      "timeFilter": "<strong>時間帯フィルター</strong> — 午前、午後、夕方、夜",
+      "formatFilter": "<strong>形式フィルター</strong> — ミーティング形式（例: オープン、クローズド、スピーカー）で絞り込む複数選択ドロップダウン。読み込み済みのミーティングデータに存在する形式のみが表示されます",
+      "localeTime": "<strong>ロケール対応の時刻表示</strong> — ミーティングの時刻は、ユーザーのブラウザロケールに基づいて自動的に 12 時間制（AM/PM）または 24 時間制で表示されます",
+      "recursive": "<strong>サービスボディの再帰サポート</strong> — 子のサービスボディは常に含まれます",
+      "multiBody": "<strong>複数のサービスボディ</strong> — ID をカンマ区切りでつないで地域を組み合わせ",
+      "print": "<strong>印刷向きのリスト表示</strong> — ユーザーがページを印刷すると、ウィジェットは曜日でグループ化された白黒のすっきりしたスケジュールに自動で切り替わり、ページごとに表のヘッダーを繰り返し、オンラインミーティングの完全な URL を印刷します"
+    }
+  },
+  "routing": {
+    "title": "ルーティング",
+    "intro": "既定では、ウィジェットはミーティング詳細 URL に<strong>ハッシュベースのルーティング</strong>を使用します（例: <code>example.com/#/monday-night-meeting-42</code>）。サーバ設定なしで、あらゆるホスティングですぐに動作します。",
+    "prettyUrls": "クリーン URL（History API）",
+    "prettyUrlsIntro": "<code>#</code> フラグメントのないクリーン URL を使うには、ベースパスを指定する <code>data-path</code> 属性を追加します：",
+    "prettyUrlsBody": "これにより <code>example.com/meetings/monday-night-meeting-42</code> のような URL が生成されます。直接アクセスやページ更新が動作するように、サーバはベースパス以下のすべてのサブパスでこのページを返すように設定する必要があります：",
+    "th": {
+      "server": "サーバ",
+      "config": "設定"
+    },
+    "row": {
+      "drupal": "<em>Configuration → Web services → Crumb</em> で <strong>Base Path for Pretty URLs</strong> を設定します。モジュールが必要なルートを自動的に登録します。"
+    },
+    "iframes": "iframe への埋め込み（Google Sites など）",
+    "iframesP1": "Google Sites のような iframe ベースのホストに埋め込んだ場合、ウィジェット内のすべてのナビゲーション（ミーティングのクリック、戻るボタン、関連リンク）は通常どおり動作します。ただし、ウィジェットがプロキシされた iframe 内で動作するため URL から特定のミーティングへのディープリンクはサポートされません — 親ページの URL を制御できないためです。",
+    "iframesP2": "特別な設定は不要です — 既定のハッシュベースルーティングは iframe 内でも動作します。iframe 埋め込みでは <code>data-path</code> 属性は不要です。"
+  },
+  "siteBuilders": {
+    "title": "サイトビルダー",
+    "intro": "Crumb Widget は一般的なサイトビルダーにも埋め込めますが、設定方法はプラットフォームごとに異なります。"
+  },
+  "findServiceBody": {
+    "title": "サービスボディ ID の確認方法",
+    "intro": "以下の各埋め込みは、<code>data-service-body</code> に数値 ID を渡すことで特定の<strong>サービスボディ</strong>（エリア、リージョン、ゾーン）にミーティングを絞り込みます。これは BMLT サーバの<strong>セマンティックワークショップ</strong>から確認できます。すべての BMLT サーバで <code>&lt;your-server&gt;/main_server/semantic</code> から利用できます。",
+    "step": {
+      "1": "ブラウザでセマンティックワークショップを開きます。例: <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — ドメインはご自身の BMLT サーバに置き換えてください。",
+      "2": "<strong>Operation</strong> で、サービスボディを取得するアクションを選択します（バージョンによりラベルは多少異なりますが、通常は <em>Get Service Bodies</em> または <em>Retrieve information about Service Bodies</em>）。",
+      "3": "レスポンス形式は JSON のままにし、<strong>Execute JSON Request</strong> をクリックします。",
+      "4": "JSON レスポンスから、<code>name</code> でエリア、リージョン、またはゾーンを探します。隣の <code>id</code> フィールドが <code>data-service-body</code> に渡す数値です。"
+    },
+    "outro": "この例では、Greater Seattle のみであれば <code>data-service-body=\"42\"</code>、両方のエリアをまとめるなら <code>data-service-body=\"42,57\"</code> を渡します。セマンティックワークショップを使わず、<code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code> の JSON エンドポイントを直接叩くこともできます。",
+    "callout1": "<strong>サーバ URL やサービスボディ ID が分からない？</strong> <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> を見てみてください。既知の BMLT サーバとそれぞれのサービスボディが一覧されています。エリア、リージョン、またはゾーンを見つければ、<code>data-server</code> URL と <code>data-service-body</code> ID を 1 か所で取得できます。",
+    "callout2": "<strong>ヒント:</strong> 子のサービスボディは常に自動的に含まれます。リージョン ID を渡せば、その配下のすべてのエリアのミーティングが含まれるため、子のエリアを個別に列挙する必要はありません。"
+  },
+  "googleSites": {
+    "title": "Google Sites",
+    "intro": "Google Sites は <strong>挿入 → 埋め込み → 埋め込みコード</strong> で HTML、CSS、JavaScript の埋め込みをサポートしています。ミーティング検索を独自のページに置きたい場合は、ページ全体の埋め込みも使用できます。",
+    "step": {
+      "1": "Google Sites でサイトを開きます。",
+      "2": "<strong>挿入</strong> → <strong>埋め込み</strong> をクリックします。",
+      "3": "<strong>埋め込みコード</strong> を選択します。",
+      "4": "ウィジェットのマークアップとスクリプトを貼り付けます。",
+      "5": "<strong>挿入</strong> をクリックし、サイトを公開します。"
+    },
+    "note": "<strong>注意:</strong> Google Sites では、埋め込みコードオプションを使用する際 JavaScript は <code>&lt;script&gt;</code> タグの中に含める必要があります。Google Sites はウィジェットをプロキシされた iframe 内で実行するため、特定のミーティングへの直接リンク（ディープリンク）はサポートされません — ただしウィジェット内のナビゲーションはすべて通常どおり動作します。",
+    "demoLink": "<a href=\"https://sites.google.com/view/crumb-seattle/\" target=\"_blank\">Google Sites のライブデモを見る &rarr;</a>"
+  },
+  "squarespace": {
+    "title": "Squarespace",
+    "intro": "Squarespace の埋め込みでは <strong>Code Block</strong> を使い、生の HTML と JavaScript を扱えます。Squarespace のドキュメントによると、JavaScript を有効にした Code Block は <strong>Core、Plus、Advanced、Business、Commerce Basic、Commerce Advanced</strong> の各プランで利用可能です。無料の Personal プランでは Code Block での JavaScript はサポートされません。",
+    "before": "始める前に、2 つの値が必要です：",
+    "value": {
+      "server": "<code>data-server</code> — BMLT サーバの <code>/main_server/</code> URL",
+      "body": "<code>data-service-body</code> — エリア、リージョン、またはゾーンの数値 ID（<a href=\"#find-service-body\">サービスボディ ID の確認方法</a>を参照）"
+    },
+    "step": {
+      "1": "Squarespace にログインし、ミーティング検索を表示したいページを開きます。",
+      "2": "<strong>Edit</strong> をクリックし、ウィジェットを置きたい位置にカーソルを合わせて <strong>+</strong>（Add Block）ボタンをクリックします。",
+      "3": "<strong>Code</strong> ブロックを検索して挿入します。",
+      "4": "Code ブロックエディタで、<strong>Mode</strong> ドロップダウンが <strong>HTML</strong> に設定され、<strong>Display Source</strong> が <em>off</em> になっていることを確認します（そうでないと Squarespace はコードを実行せず生のタグを表示します）。",
+      "5": "下のスニペットを貼り付け、<code>data-server</code> と <code>data-service-body</code> をご自身の値に置き換えます。",
+      "6": "ブロックの外側をクリックして閉じ、<strong>Save</strong> をクリックします。ページが未公開ならば公開してください。"
+    },
+    "note": "<strong>注意:</strong> Squarespace は Code ブロックを通常のページフロー内に描画するため、ウィジェットは必要なだけ縦方向のスペースを取ります。プレビューが空に見える場合は、ブロックを開き直して <strong>Display Source</strong> が off で <strong>Mode</strong> が <strong>HTML</strong> になっていることを確認してください。Code ブロックで JavaScript が許可されないプランの場合、ウィジェットを動かすにはアップグレードが必要です。"
+  },
+  "wix": {
+    "title": "Wix",
+    "intro": "Wix は埋め込みを 2 か所に分けます：ウィジェットの HTML コンテナはページ内に <strong>Embed HTML</strong> 要素として存在し（Wix では「Custom Embeds → Embed HTML」または「Embed a Widget」と呼ばれます）、ローダの <code>&lt;script&gt;</code> は <strong>Settings → Custom Code</strong> に置かれて訪問ごとに 1 度だけ読み込まれます。Wix のドキュメントによると、Custom Code を使うにはサイトが<strong>有料プラン＋接続済みドメインで公開</strong>されている必要があります。",
+    "before": "始める前に、2 つの値が必要です：",
+    "value": {
+      "server": "<code>data-server</code> — BMLT サーバの <code>/main_server/</code> URL",
+      "body": "<code>data-service-body</code> — エリア、リージョン、またはゾーンの数値 ID（<a href=\"#find-service-body\">サービスボディ ID の確認方法</a>を参照）"
+    },
+    "step1Heading": "<strong>ステップ 1 — ローダスクリプトを追加（サイトごとに 1 回）：</strong>",
+    "step1": {
+      "1": "Wix のダッシュボードで <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong> に移動します。",
+      "2": "<strong>+ Add Custom Code</strong> をクリックします。",
+      "3": "下のローダスニペットをコード欄に貼り付けます。",
+      "4": "<strong>Add Code to Pages</strong> で <em>All pages</em>、またはウィジェットを表示するページのみを選択します（必要なところだけ読み込む方が高速です）。",
+      "5": "<strong>Place Code in</strong> を <strong>Body – end</strong> に設定します。",
+      "6": "<em>Crumb Widget loader</em> のような名前を付け、<strong>Apply</strong> をクリックします。"
+    },
+    "step2Heading": "<strong>ステップ 2 — ページにウィジェットコンテナを追加：</strong>",
+    "step2": {
+      "1": "Wix エディタでページを開きます。",
+      "2": "<strong>+ Add Elements</strong> → <strong>Embed Code</strong> → <strong>Embed HTML</strong> をクリックします（Wix Studio では <strong>Embed &amp; Social</strong> → <strong>HTML iframe/Embed</strong>）。",
+      "3": "ウィジェットを表示したい位置に要素をドロップし、<strong>Enter Code</strong> をクリックします。",
+      "4": "下のコンテナスニペットを貼り付け、<code>data-server</code> と <code>data-service-body</code> をご自身の値に置き換えます。",
+      "5": "<strong>Update</strong> をクリックします。要素のサイズはおおよそ希望の高さに合わせて変更します — Wix の Embed HTML はサイズ固定なので、ミーティング一覧と地図のために十分な高さ（例: <code>800px</code>）を確保してください。",
+      "6": "<strong>Publish</strong> をクリックします。"
+    },
+    "note": "<strong>注意:</strong> Wix の Embed HTML 要素は iframe 内に描画されるため、ウィジェットは周囲のページのサイズを変更できず、個々のミーティングへのディープリンクではブラウザの URL は更新されません。ウィジェット内のナビゲーション（一覧、地図、ミーティング詳細、フィルター）はすべて通常どおり動作します。Settings に Custom Code オプションが見つからない場合、プランに含まれていない可能性があります — サイトが有料プラン＋接続済みドメインで公開されていることを確認してください。"
+  },
+  "browserSupport": {
+    "title": "ブラウザ対応",
+    "intro": "すべてのモダンブラウザに対応。Internet Explorer はサポートしていません。"
+  },
+  "npmPackage": {
+    "title": "npm パッケージ",
+    "intro": "CDN のスクリプトタグ埋め込みに加えて、Crumb Widget は JavaScript／TypeScript プロジェクト（React、Svelte、Vue、素の Vite など）で使える npm パッケージとしても提供されています。",
+    "installation": "インストール",
+    "peerDep": "<code>leaflet</code> はピア依存です — 利用者がお好みのバージョンを dedupe してピン留めできるよう、<code>crumb-widget</code> と一緒にインストールしてください。",
+    "usage": "使い方",
+    "usageIntro": "<code>mountCrumbWidget</code> をインポートし、DOM 要素と設定を渡して呼び出します。ウィジェットは自分自身をマウントし、CSS も自分で注入します — 別途スタイルシートをインポートする必要はありません。",
+    "svelteIntro": "Svelte コンポーネントでは、要素がマウントされる前に存在することを保証するために <code>onMount</code> を使ってください：",
+    "options": "オプション",
+    "optionsIntro": "<a href=\"#global-config\">グローバル設定</a>のすべてのオプションが使え、加えて 2 つの必須フィールドが追加されます：",
+    "th": {
+      "option": "オプション",
+      "required": "必須"
+    },
+    "row": {
+      "serverUrl": "BMLT サーバの URL。",
+      "serviceBodyIds": "絞り込み対象のサービスボディ ID。すべて表示するには省略するか <code>[]</code> を渡します。",
+      "view": "初期ビュー。既定: <code>'list'</code>。<code>'both'</code> は切替なしで地図をリストの上に表示します。",
+      "geolocation": "現在地周辺ボタンを有効化します。既定: <code>false</code>。",
+      "geolocationRadius": "最大検索半径（距離プルダウンの上限）。既定: <code>75</code>。",
+      "distanceOptions": "現在地周辺プルダウンに表示する距離の値。既定: <code>[5,10,15,25,50,100]</code>。",
+      "distanceUnit": "距離の単位ラベル。既定: <code>'mi'</code>。",
+      "darkMode": "ダークモード設定。既定: <code>false</code>。",
+      "language": "BCP-47 言語タグ（例: <code>'es'</code>）。既定はブラウザロケール。",
+      "columns": "表示するテーブル列。<a href=\"#global-config\">グローバル設定</a>を参照。",
+      "map": "タイルプロバイダとマーカー設定。<a href=\"#tile-config\">タイルプロバイダ</a>を参照。"
+    },
+    "note": "<strong>注意:</strong> npm パッケージは Svelte とすべてのスタイルを 1 つの JS ファイルにバンドルします。<code>leaflet</code> はピア依存なので（<code>crumb-widget</code> と一緒にインストール）、Leaflet を使う他のコードと dedupe できます。<code>mountCrumbWidget</code> の各呼び出しは独立していますが、同じページ上に複数のウィジェットを置くことは現在サポートされていません。"
+  },
+  "philosophy": {
+    "title": "理念",
+    "body": "このプロジェクトは、ほとんどの NA サービスボディのニーズをきちんとカバーすることを目的としており、あらゆるユースケースを対象にしているわけではありません。意図的にシンプルで焦点を絞った状態を保っています。新機能はコードベースへのコストと比較して評価されます。みんなにとってプロジェクトを肥大化させるニッチな要望は通常スコープ外です。深いカスタマイズが必要な場合、これは適したツールではないかもしれません。"
+  }
+}

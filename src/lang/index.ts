@@ -6,6 +6,7 @@ export { esTranslations } from './es';
 export { faTranslations } from './fa';
 export { frTranslations } from './fr';
 export { itTranslations } from './it';
+export { jaTranslations } from './ja';
 export { plTranslations } from './pl';
 export { ptTranslations } from './pt';
 export { ruTranslations } from './ru';

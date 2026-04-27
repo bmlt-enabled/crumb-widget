@@ -99,7 +99,7 @@
     "intro": "For options not available as data attributes, define <code>CrumbWidgetConfig</code> as a global variable <strong>before</strong> loading the script.",
     "row": {
       "view": "Override the default view. Takes precedence over <code>data-view</code>. <code>'both'</code> shows a fixed-height map above the full meeting list; the list/map toggle is hidden.",
-      "language": "Override the UI language (e.g. <code>'es'</code>, <code>'fr'</code>). Defaults to <code>navigator.language</code>, falling back to English. Supported: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>.",
+      "language": "Override the UI language (e.g. <code>'es'</code>, <code>'fr'</code>). Defaults to <code>navigator.language</code>, falling back to English. Supported: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
       "columns": "Columns to show in list view. Default: <code>['time', 'name', 'location', 'address']</code>. Omit any column name to hide it. Available values: <code>time</code>, <code>name</code>, <code>location</code> (venue/building name), <code>address</code> (street address with in-person/online badges), <code>service_body</code>. <code>service_body</code> is hidden by default — add it explicitly to show the service body name.",
       "geolocation": "Show a <strong>Near Me</strong> button and auto-geolocate on page load to find meetings near the user. Requires HTTPS. Default: <code>false</code>. If geolocation fails or is denied, an error is shown — no fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code> filters have no effect on geolocation searches; results are determined entirely by proximity.",
       "geolocationRadius": "Maximum search radius when using geolocation. Acts as the cap for the Near Me distance dropdown — options above this value are hidden. Default: <code>75</code>.",
@@ -129,7 +129,12 @@
       "pt": "Portuguese",
       "it": "Italian",
       "sv": "Swedish",
-      "da": "Danish"
+      "da": "Danish",
+      "el": "Greek",
+      "fa": "Persian",
+      "pl": "Polish",
+      "ru": "Russian",
+      "ja": "Japanese"
     }
   },
   "geolocation": {

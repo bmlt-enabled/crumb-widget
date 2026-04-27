@@ -99,7 +99,7 @@
     "intro": "Pour les options non disponibles via les attributs de données, définissez <code>CrumbWidgetConfig</code> comme variable globale <strong>avant</strong> de charger le script.",
     "row": {
       "view": "Remplace la vue par défaut. Prioritaire sur <code>data-view</code>. <code>'both'</code> affiche une carte de hauteur fixe au-dessus de la liste complète des réunions ; la bascule liste/carte est masquée.",
-      "language": "Remplace la langue de l'interface (ex. <code>'es'</code>, <code>'fr'</code>). Par défaut <code>navigator.language</code>, avec retour à l'anglais. Langues supportées : <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>.",
+      "language": "Remplace la langue de l'interface (ex. <code>'es'</code>, <code>'fr'</code>). Par défaut <code>navigator.language</code>, avec retour à l'anglais. Langues supportées : <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
       "columns": "Colonnes affichées en vue liste. Par défaut : <code>['time', 'name', 'location', 'address']</code>. Omettez un nom de colonne pour la masquer. Valeurs disponibles : <code>time</code>, <code>name</code>, <code>location</code> (nom du lieu/bâtiment), <code>address</code> (adresse postale avec étiquettes en présentiel/en ligne), <code>service_body</code>. <code>service_body</code> est masqué par défaut — ajoutez-le explicitement pour afficher le nom du corps de service.",
       "geolocation": "Affiche un bouton <strong>Près de moi</strong> et géolocalise automatiquement au chargement de la page pour trouver des réunions à proximité. Nécessite HTTPS. Par défaut : <code>false</code>. Si la géolocalisation échoue ou est refusée, une erreur s'affiche — aucun chargement de repli n'est effectué. <strong>Note :</strong> les filtres <code>serviceBodyIds</code> n'ont aucun effet sur les recherches par géolocalisation ; les résultats sont déterminés uniquement par la proximité.",
       "geolocationRadius": "Rayon de recherche maximal en géolocalisation. Sert de plafond pour la liste déroulante de distance Près de moi — les options au-dessus sont masquées. Par défaut : <code>75</code>.",
@@ -129,7 +129,12 @@
       "pt": "Portugais",
       "it": "Italien",
       "sv": "Suédois",
-      "da": "Danois"
+      "da": "Danois",
+      "el": "Grec",
+      "fa": "Persan",
+      "pl": "Polonais",
+      "ru": "Russe",
+      "ja": "Japonais"
     }
   },
   "geolocation": {

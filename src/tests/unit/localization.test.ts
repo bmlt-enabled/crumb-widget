@@ -9,6 +9,7 @@ import { esTranslations } from '@/lang/es';
 import { faTranslations } from '@/lang/fa';
 import { frTranslations } from '@/lang/fr';
 import { itTranslations } from '@/lang/it';
+import { jaTranslations } from '@/lang/ja';
 import { plTranslations } from '@/lang/pl';
 import { ptTranslations } from '@/lang/pt';
 import { ruTranslations } from '@/lang/ru';
@@ -78,6 +79,11 @@ describe('language switching', () => {
     expect(get(t).searchMeetings).toBe('Szukaj mityngów...');
   });
 
+  test('switches to Japanese', () => {
+    setLanguage('ja');
+    expect(get(t).searchMeetings).toBe('ミーティングを検索...');
+  });
+
   test('falls back to English for unknown language code', () => {
     setLanguage('xx');
     expect(get(t).searchMeetings).toBe('Search meetings...');
@@ -106,6 +112,7 @@ const allLanguages = [
   { lang: 'fa', translations: faTranslations },
   { lang: 'fr', translations: frTranslations },
   { lang: 'it', translations: itTranslations },
+  { lang: 'ja', translations: jaTranslations },
   { lang: 'pl', translations: plTranslations },
   { lang: 'pt', translations: ptTranslations },
   { lang: 'ru', translations: ruTranslations },
@@ -147,7 +154,7 @@ describe('translation completeness', () => {
 
 describe('direction store', () => {
   test('LTR languages report ltr', () => {
-    for (const lang of ['da', 'de', 'el', 'en', 'es', 'fr', 'it', 'pl', 'pt', 'ru', 'sv']) {
+    for (const lang of ['da', 'de', 'el', 'en', 'es', 'fr', 'it', 'ja', 'pl', 'pt', 'ru', 'sv']) {
       setLanguage(lang);
       expect(get(direction), `${lang} should be ltr`).toBe('ltr');
     }

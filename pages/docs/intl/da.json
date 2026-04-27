@@ -1,0 +1,432 @@
+{
+  "page": {
+    "title": "BMLT Crumb Widget — Dokumentation"
+  },
+  "nav": {
+    "theme": {
+      "light": "Lys tilstand",
+      "dark": "Mørk tilstand"
+    },
+    "liveDemo": "→ Live-demo",
+    "qaTests": "→ QA-testsider",
+    "overview": "Oversigt",
+    "quickStart": "Hurtig start",
+    "attributes": "Dataattributter",
+    "globalConfig": "Global konfiguration",
+    "language": "Sprog",
+    "geolocation": "Geolokation",
+    "queryParams": "URL-forespørgselsparametre",
+    "cssVars": "CSS-variabler",
+    "cssDarkMode": "Mørk tilstand",
+    "cssClasses": "CSS-hjælpeklasser",
+    "tileConfig": "Flise-udbyder",
+    "tileDarkConfig": "Fliser i mørk tilstand",
+    "markerConfig": "Markør-konfiguration",
+    "exampleBasic": "Grundlæggende indlejring",
+    "exampleServiceBody": "Filtrer efter service body",
+    "exampleMulti": "Flere service bodies",
+    "exampleMap": "Standard til kort",
+    "exampleWordpress": "WordPress",
+    "exampleDrupal": "Drupal",
+    "routingModes": "Routingtilstande",
+    "findServiceBody": "Find dit service body-ID",
+    "googleSites": "Google Sites",
+    "squarespace": "Squarespace",
+    "wix": "Wix",
+    "features": "Funktioner",
+    "browserSupport": "Browserunderstøttelse",
+    "npmInstall": "Installation",
+    "npmUsage": "Brug",
+    "npmOptions": "Indstillinger",
+    "philosophy": "Filosofi",
+    "privacy": "Privatlivspolitik",
+    "section": {
+      "configuration": "Konfiguration",
+      "examples": "Eksempler",
+      "routing": "Routing",
+      "siteBuilders": "Hjemmesidebyggere",
+      "reference": "Reference",
+      "npm": "npm-pakke",
+      "legal": "Juridisk"
+    }
+  },
+  "header": {
+    "subtitle": "En indlejrbar widget til at finde NA-møder, til ethvert websted.",
+    "btn": {
+      "liveDemo": "Live-demo",
+      "github": "GitHub",
+      "qaTests": "QA-tests"
+    }
+  },
+  "th": {
+    "property": "Egenskab",
+    "type": "Type",
+    "description": "Beskrivelse"
+  },
+  "badge": {
+    "required": "Påkrævet",
+    "optional": "Valgfri"
+  },
+  "yesNo": {
+    "yes": "Ja",
+    "no": "Nej"
+  },
+  "overview": {
+    "title": "Oversigt",
+    "p1": "Crumb Widget er en selvstændig JavaScript-widget, der spørger en <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-server</a> og viser en fuldt udstyret mødefinder — søgning, filtre, listevisning og et interaktivt kort.",
+    "p2": "Den leveres som en <strong>enkelt JavaScript-fil</strong>, hvor al CSS injiceres ved kørsel. Ingen stylesheets, ingen build-trin, intet framework krævet på værtssiden."
+  },
+  "quickStart": {
+    "title": "Hurtig start",
+    "intro": "For at komme i gang skal du tilføje et containerelement til din side, pege det mod din BMLT-server og indlæse widget-scriptet. Her er et komplet eksempel:",
+    "autoInit": "Widget'en initialiseres automatisk, når scriptet indlæses, så ingen yderligere JavaScript er nødvendig.",
+    "viewport": "<strong>Vigtigt:</strong> Sørg for, at din side indeholder <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> i <code>&lt;head&gt;</code>. Det er vigtigt for korrekt rendering på mobilenheder og små skærme."
+  },
+  "attributes": {
+    "title": "Dataattributter",
+    "intro": "Al konfiguration angives som <code>data-*</code>-attributter på <code>#crumb-widget</code>-divet.",
+    "th": {
+      "attribute": "Attribut",
+      "description": "Beskrivelse"
+    },
+    "server": "Fuld URL til din BMLT-server. <br /><em>Eksempel:</em> <code>https://example.org/main_server</code>",
+    "serviceBody": "Filtrér møder til ét eller flere service bodies. Accepterer et enkelt numerisk ID eller en kommasepareret liste. Udelad for at vise alle møder på serveren. <br /><em>Enkelt:</em> <code>\"42\"</code> <br /><em>Flere:</em> <code>\"42,57,103\"</code> <br /><strong>Bemærk:</strong> rekursiv opslag er altid aktiveret — underordnede service bodies inkluderes automatisk og kan ikke deaktiveres.",
+    "view": "Standardvisning ved widgetens indlæsning. <br /><em>Værdier:</em> <code>list</code> (standard), <code>map</code> eller <code>both</code> <br /><code>both</code> viser et kort med fast højde over den fulde mødeliste uden liste/kort-skift. <br />Kan tilsidesættes ved kørsel af forespørgselsparameteren <code>?view=</code> (se <a href=\"#query-params\">URL-forespørgselsparametre</a>).",
+    "path": "Aktiverer History API-routing (rene URL'er uden <code>#</code>) og angiver basisstien. Uden denne attribut bruges hash-baseret routing (standard). <br /><em>Eksempel:</em> <code>data-path=\"/meetings\"</code> producerer URL'er som <code>/meetings/monday-night-meeting-42</code> <br />Brug <code>data-path=\"\"</code> til sti-routing uden præfiks (f.eks. i iframe-indlejringer). <br />Se <a href=\"#routing\">Routing</a> for detaljer."
+  },
+  "globalConfig": {
+    "title": "Globalt konfigurationsobjekt",
+    "intro": "For indstillinger, der ikke er tilgængelige som dataattributter, definér <code>CrumbWidgetConfig</code> som en global variabel <strong>før</strong> indlæsning af scriptet.",
+    "row": {
+      "view": "Tilsidesætter standardvisningen. Har forrang for <code>data-view</code>. <code>'both'</code> viser et kort med fast højde over den fulde mødeliste; liste/kort-skifteren skjules.",
+      "language": "Tilsidesætter UI-sproget (f.eks. <code>'es'</code>, <code>'fr'</code>). Standard er <code>navigator.language</code> med fallback til engelsk. Understøttede: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "columns": "Kolonner, der vises i listevisning. Standard: <code>['time', 'name', 'location', 'address']</code>. Udelad et kolonnenavn for at skjule det. Tilgængelige værdier: <code>time</code>, <code>name</code>, <code>location</code> (sted/bygning), <code>address</code> (vejadresse med fysisk/online-mærker), <code>service_body</code>. <code>service_body</code> er skjult som standard — tilføj det eksplicit for at vise service body-navnet.",
+      "geolocation": "Vis en <strong>I nærheden</strong>-knap og auto-geolokér ved sideindlæsning for at finde møder nær brugeren. Kræver HTTPS. Standard: <code>false</code>. Hvis geolokation fejler eller nægtes, vises en fejl — ingen fallback-indlæsning. <strong>Bemærk:</strong> <code>serviceBodyIds</code>-filtre har ingen effekt på geolokationssøgninger; resultater bestemmes udelukkende af nærhed.",
+      "geolocationRadius": "Maksimal søgeradius ved brug af geolokation. Fungerer som loft for I-nærheden-distancedropdownen — indstillinger over denne værdi skjules. Standard: <code>75</code>.",
+      "distanceOptions": "Distanceværdier (i <code>distanceUnit</code>) vist i I-nærheden-dropdownen. Indstillinger over <code>geolocationRadius</code> skjules automatisk; hvis <code>geolocationRadius</code> ikke er på listen, tilføjes den som sidste valgmulighed. Standard: <code>[5, 10, 15, 25, 50, 100]</code>.",
+      "distanceUnit": "Enhedsmærke vist ved siden af distancer i I-nærheden-dropdownen. Standard: <code>'mi'</code>.",
+      "nowOffset": "Minutters frist, før et møde betragtes som forbi. Møder, der startede inden for de sidste <code>nowOffset</code> minutter, vises stadig øverst på listen; ældre møder på dagens ugedag flyttes til slutningen af listen (som om de finder sted næste uge). Standard: <code>10</code>. Sæt til <code>0</code> for at flytte med det samme, når mødets starttid er passeret.",
+      "hideHeader": "Skjuler titlen \"Mødefinder\" og mødetallet øverst på widget'en. Standard: <code>false</code>.",
+      "darkMode": "Indbygget mørkt farveskema. <code>'auto'</code> følger besøgendes OS-præference (<code>prefers-color-scheme</code>); <code>true</code> tvinger mørk tilstand uanset OS; <code>false</code> (standard) deaktiverer den. Fungerer sammen med <a href=\"#tile-dark-config\">fliser i mørk tilstand</a>.",
+      "mapTiles": "Brugerdefineret kortflise-udbyder. Erstatter standard OpenStreetMap-fliser. Se <a href=\"#tile-config\">Flise-udbyder</a> nedenfor.",
+      "mapTilesDark": "Alternativ flise-udbyder, der bruges, når <code>prefers-color-scheme: dark</code>. Skifter automatisk ved OS-temaskift. Se <a href=\"#tile-dark-config\">Fliser i mørk tilstand</a> nedenfor.",
+      "mapMarkers": "Brugerdefineret kortmarkør for mødesteder. Erstatter standard NA-markøren. Se <a href=\"#marker-config\">Markør-konfiguration</a> nedenfor."
+    }
+  },
+  "language": {
+    "title": "Sprog",
+    "intro": "Widget'en registrerer automatisk besøgendes sprog fra <code>navigator.language</code> og falder tilbage til engelsk. Tilsidesæt det med konfigurationsegenskaben <code>language</code>:",
+    "codes": "Sprogkoder matches på basis-tagget, så <code>'fr-CA'</code> bruger <code>fr</code>. Understøttede sprog:",
+    "th": {
+      "code": "Kode",
+      "language": "Sprog"
+    },
+    "name": {
+      "en": "Engelsk",
+      "es": "Spansk",
+      "fr": "Fransk",
+      "de": "Tysk",
+      "pt": "Portugisisk",
+      "it": "Italiensk",
+      "sv": "Svensk",
+      "da": "Dansk",
+      "el": "Græsk",
+      "fa": "Persisk",
+      "pl": "Polsk",
+      "ru": "Russisk",
+      "ja": "Japansk"
+    }
+  },
+  "geolocation": {
+    "title": "Geolokation",
+    "p1": "Aktivér <strong>I nærheden</strong>-knappen med <code>geolocation: true</code>. Når aktiveret, forsøger widget'en også at geolokere brugeren automatisk ved sideindlæsning og vise nærliggende møder. Kræver en sikker kontekst (HTTPS).",
+    "p2": "Hvis geolokation nægtes eller ikke er tilgængelig, vises en fejlmeddelelse — der er ingen tavs fallback til at indlæse alle møder. Det er bevidst: på store servere uden service body-afgrænsning kan indlæsning af alle møder returnere titusindvis af resultater.",
+    "p3": "<strong>Service body-filtre har ingen effekt på geolokationssøgninger.</strong> Når du bruger I nærheden, bestemmes resultater udelukkende af brugerens koordinater og <code>geolocationRadius</code>. Hvis ingen <code>serviceBodyIds</code> er konfigureret, kan I-nærheden-knappen ikke slås fra — geolokation er den eneste datakilde.",
+    "p4": "I-nærheden-knappen åbner en distancedropdown, så brugere kan vælge, hvor langt der skal søges. Valg af radius anvender et klientside-distancefilter på de allerede indlæste møder — der laves ingen ny netværksanmodning ved ændring af radius. De tilgængelige distancer kommer fra <code>distanceOptions</code>, begrænset af <code>geolocationRadius</code>; indstillinger uden møder i området skjules automatisk. Brug <code>distanceUnit</code> til at vise kilometer i stedet for miles.",
+    "p5": "Mens du er i kortvisning med I nærheden aktiv, dukker en <strong>Søg i dette område</strong>-knap op øverst på kortet, når du panorerer eller zoomer. Klik på den genindlæser møder centreret om det aktuelle kortvindue med samme valgte radius. Kortet bliver på brugerens position — det springer ikke for at tilpasse de nye resultater."
+  },
+  "queryParams": {
+    "title": "URL-forespørgselsparametre",
+    "intro": "Forespørgselsparameteren <code>?view=</code> sætter den indledende visning og tilsidesætter <code>data-view</code> og <code>view</code>:",
+    "th": {
+      "value": "Værdi",
+      "behaviour": "Adfærd"
+    },
+    "row": {
+      "list": "Tving listevisning ved indlæsning",
+      "map": "Tving kortvisning ved indlæsning",
+      "both": "Vis kort over den fulde mødeliste; liste/kort-skifter er skjult",
+      "auto": "Geolokér ved indlæsning — succes viser kort med nærliggende resultater; fejl falder tilbage til liste med alle møder"
+    },
+    "example": "Eksempel: <code>https://example.org/meetings/?view=auto</code>",
+    "disable": "<code>?view=list</code> og <code>?view=map</code> deaktiverer auto-geolokation, selv hvis <code>geolocation: true</code> er angivet."
+  },
+  "cssVars": {
+    "title": "CSS-variabler",
+    "intro": "Widget'en eksponerer brugerdefinerede CSS-egenskaber, så du kan tematisere den uden at røre JavaScript. Sæt en hvilken som helst af disse på <code>#crumb-widget</code>-elementet — angiv kun dem, du ønsker at tilsidesætte.",
+    "th": {
+      "variable": "Variabel",
+      "default": "Standard",
+      "controls": "Styrer"
+    },
+    "row": {
+      "fontFamily": "Widgetens skrifttypestak",
+      "fontSize": "Basis-skriftstørrelse",
+      "background": "Widget- og kontrollinjebaggrund",
+      "text": "Primær tekstfarve",
+      "border": "Kanter og skillelinjer",
+      "accent": "Aktive knapper, links, fokusindikatorer",
+      "accentLight": "Rækkehover, baggrund for aktivt filterpanel",
+      "borderRadius": "Hjørneradius for kort og knapper",
+      "rowAlt": "Skiftende (lige) rækkebaggrund",
+      "inPerson": "Tekst på fysisk-mærket",
+      "inPersonBg": "Baggrund for fysisk-mærket",
+      "virtual": "Tekst på online-mærket",
+      "virtualBg": "Baggrund for online-mærket",
+      "surface": "Baggrund for input, knapper og dropdown-paneler",
+      "hover": "Neutral hover-tilstand (knapper og rækker uden accent)",
+      "divider": "Interne række- og listeskillelinjer",
+      "textSecondary": "Sekundær / dæmpet tekst (tabeloverskrifter, tid, sted)",
+      "textMuted": "Meget dæmpet tekst (sidefod-tæller, beskeder ved tom tilstand)"
+    }
+  },
+  "cssDarkMode": {
+    "title": "Mørk tilstand",
+    "intro": "Widget'en kommer med en indbygget mørk palet. Aktivér den med konfigurationsindstillingen <code>darkMode</code> — ingen ekstra CSS nødvendig. Fungerer sammen med <a href=\"#tile-dark-config\">flise i mørk tilstand</a>-indstillingen.",
+    "custom": "For at bruge en brugerdefineret mørk palet i stedet, tilsidesæt CSS-variablerne direkte:"
+  },
+  "cssClasses": {
+    "title": "CSS-hjælpeklasser",
+    "intro": "Disse klasser anvendes internt og kan også målrettes i din egen CSS for yderligere tilpasning.",
+    "th": {
+      "class": "Klasse",
+      "usedOn": "Bruges på"
+    },
+    "row": {
+      "btnPrimary": "Udfyldte accentknapper — aktive filterchips, visningsskift, Deltag i møde",
+      "btnSecondary": "Knapper med kant — Få vejvisning",
+      "link": "Link-stilknapper — Tilbage, e-mailkontakt",
+      "badgeInPerson": "Mærke for fysisk sted",
+      "badgeVirtual": "Mærke for online sted",
+      "card": "Kort i detaljesektioner",
+      "row": "Rækker i mødelistens tabel"
+    }
+  },
+  "tileConfig": {
+    "title": "Flise-udbyder",
+    "intro": "Som standard bruger kortet <a href=\"https://www.openstreetmap.org/\" target=\"_blank\" rel=\"noopener\">OpenStreetMap</a>-fliser. Skift til en hvilken som helst <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\" target=\"_blank\" rel=\"noopener\">Leaflet-kompatibel flise-udbyder</a> ved at sætte <code>map.tiles</code>.",
+    "row": {
+      "url": "Flise-URL-skabelon. Brug pladsholderne <code>{z}</code>, <code>{x}</code>, <code>{y}</code> (og <code>{r}</code> for retina, hvor det understøttes).",
+      "attribution": "Krediteringshtml vist i kortets krediteringskontrol. Krævet af de fleste flise-udbyderes servicevilkår."
+    }
+  },
+  "tileDarkConfig": {
+    "title": "Fliser i mørk tilstand",
+    "intro": "Sæt <code>map.tiles_dark</code> for at bruge et andet flise-lag for besøgende med <code>prefers-color-scheme: dark</code>. Laget skifter automatisk, når OS-temaet ændres — ingen sidegenindlæsning nødvendig. Hvis udeladt, bruges de samme fliser i alle farveskemaer.",
+    "googleNote": "<strong>Google Maps-fliser:</strong> Googles flise-API kræver et sessionstoken hentet på serversiden (eller via en kortvarig hentning på klientsiden). Da tokenet skal hentes, før <code>CrumbWidgetConfig</code> sættes, skal du indlæse <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> dynamisk, efter at tokenet er klart. Eksemplet nedenfor bruger <a href=\"https://developers.google.com/maps/documentation/tile/\" target=\"_blank\" rel=\"noopener\">Google Map Tiles API</a> — du har brug for en <strong>referer-begrænset API-nøgle</strong> med Map Tiles API aktiveret."
+  },
+  "markerConfig": {
+    "title": "Markør-konfiguration",
+    "intro": "Objektet <code>map.markers.location</code> lader dig erstatte den standard NA-kortnål med ethvert billede eller inline-SVG.",
+    "row": {
+      "html": "HTML, der renderes inde i markørelementet. Typisk et <code>&lt;img&gt;</code>-tag eller inline-SVG.",
+      "width": "Ikonbredde i pixels.",
+      "height": "Ikonhøjde i pixels. Forankringspunktet er sat til ikonets bund-center."
+    }
+  },
+  "exampleBasic": {
+    "title": "Eksempel: Grundlæggende indlejring",
+    "intro": "Vis alle møder på en offentlig BMLT-server:"
+  },
+  "exampleServiceBody": {
+    "title": "Eksempel: Filtrér efter service body",
+    "intro": "Vis kun møder, der tilhører service body 42 (og dens børn):"
+  },
+  "exampleMulti": {
+    "title": "Eksempel: Flere service bodies",
+    "intro": "Send en kommasepareret liste for at inkludere møder fra flere service bodies:"
+  },
+  "exampleMap": {
+    "title": "Eksempel: Standard til kortvisning"
+  },
+  "exampleWordpress": {
+    "title": "Eksempel: WordPress",
+    "intro": "Den nemmeste måde at tilføje Crumb Widget til en WordPress-side er det officielle <a href=\"https://wordpress.org/plugins/crumb/\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>-plugin (<a href=\"https://github.com/bmlt-enabled/crumb-widget\" target=\"_blank\" rel=\"noopener\">GitHub</a>). Det indpakker denne widget i en shortcode med en indstillingsskærm — ingen kode kræves.",
+    "installation": "Installation",
+    "install": {
+      "1": "Søg efter <strong>Crumb</strong> i WordPress-pluginbiblioteket, eller upload plugin-ZIP'en manuelt.",
+      "2": "Aktivér plugin'et.",
+      "3": "Gå til <strong>Indstillinger → Crumb</strong> og indtast din BMLT-server-URL.",
+      "4": "Tilføj shortcoden til en hvilken som helst side eller indlæg."
+    },
+    "shortcode": "Shortcode",
+    "serverNote": "BMLT-server-URL'en angivet i plugin-indstillingerne bruges som standard. Du kan tilsidesætte den — eller filtrere efter service body — direkte i shortcoden:",
+    "advanced": "Avanceret konfiguration",
+    "advancedIntro": "Alle <a href=\"#global-config\">globale konfigurationsindstillinger</a> (sprog, geolokation, kolonner, kortfliser osv.) kan sættes fra dit temas <code>functions.php</code> via <code>bmltclient_config</code>-filteret:"
+  },
+  "exampleDrupal": {
+    "title": "Eksempel: Drupal",
+    "intro": "Tilføj Crumb Widget til en Drupal 10.3+ eller 11-side med modulet <a href=\"https://github.com/bmlt-enabled/crumb-drupal\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Det indpakker denne widget i en placerbar blok, et <code>[crumb]</code>-shortcode-filter til body-felter og en render-tjeneste til programmatisk indlejring. Udgivelser publiceres på <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-drupal/releases</a>.",
+    "installation": "Installation",
+    "install": {
+      "1": "Download den nyeste <code>crumb.zip</code> fra <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">udgivelsessiden</a>.",
+      "2": "Udpak til <code>web/modules/contrib/</code> (eller <code>web/modules/custom/</code>).",
+      "3": "Aktivér: <code>drush en crumb</code>, eller via <strong>Extend</strong> i admin-grænsefladen.",
+      "4": "Besøg <strong>Configuration → Web services → Crumb</strong> og indtast din BMLT-server-URL."
+    },
+    "embedBlock": "Indlejr via blok",
+    "embedBlockBody": "Den enkleste vej: placér <strong>Crumb meeting finder</strong>-blokken (kategori: BMLT) i en hvilken som helst region via <strong>Structure → Block layout</strong>. Indstillinger pr. blok tillader tilsidesættelse af server, service body, visning og geolokation.",
+    "embedShortcode": "Indlejr via shortcode i body-felter",
+    "embedShortcodeBody": "Aktivér filteret <strong>Crumb meeting finder shortcode</strong> på et tekstformat (<strong>Configuration → Content authoring → Text formats and editors</strong>), og brug derefter:",
+    "serverNote": "BMLT-server-URL'en angivet i modulindstillingerne bruges som standard. Du kan tilsidesætte den — eller filtrere efter service body — direkte i shortcoden:",
+    "advanced": "Avanceret konfiguration",
+    "advancedIntro": "Alle <a href=\"#global-config\">globale konfigurationsindstillinger</a> (sprog, geolokation, kolonner, kortfliser osv.) kan sættes programmatisk via <code>hook_crumb_config_alter()</code> i ethvert brugerdefineret modul:"
+  },
+  "features": {
+    "title": "Funktioner",
+    "item": {
+      "listView": "<strong>Listevisning</strong> — mødetabel sorteret efter dag og tid, med stedtype-mærker",
+      "mapView": "<strong>Kortvisning</strong> — interaktivt Leaflet-kort til fysiske møder (inklusive dem med en online-komponent); klik på en markør for at se møder på det sted; panorér eller zoom for at få en <em>Søg i dette område</em>-knap frem, når I nærheden er aktiv",
+      "detailView": "<strong>Detaljevisning</strong> — fulde mødeoplysninger: tidsplan, adresse med Google Maps-vejvisning, deltagelsesknap til virtuelle møder, formater og noter",
+      "textSearch": "<strong>Tekstsøgning</strong> — realtidsfilter på tværs af mødenavn, sted og noter",
+      "weekdayFilter": "<strong>Ugedagsfilter</strong> — tænd/sluk for individuelle ugedage",
+      "venueFilter": "<strong>Stedtypefilter</strong> — fysisk eller online (møder med både et fysisk sted og et online-link vises under begge)",
+      "timeFilter": "<strong>Tidspunktsfilter</strong> — morgen, eftermiddag, aften eller nat",
+      "formatFilter": "<strong>Formatfilter</strong> — multivalgs-dropdown til at filtrere efter mødeformat (f.eks. Åbent, Lukket, Speaker); viser kun formater, der findes i de indlæste mødedata",
+      "localeTime": "<strong>Locale-bevidst tidsvisning</strong> — mødetider vises i 12-timers (AM/PM) eller 24-timers format baseret på brugerens browsersprog automatisk",
+      "recursive": "<strong>Rekursiv service body-understøttelse</strong> — underordnede service bodies inkluderes altid",
+      "multiBody": "<strong>Flere service bodies</strong> — adskil ID'er med komma for at kombinere regioner",
+      "print": "<strong>Printvenlig listevisning</strong> — når brugeren printer siden, skifter widget'en automatisk til en ren sort-hvid plan grupperet efter ugedag, gentager tabeloverskrifter på tværs af sider og printer den fulde URL for online-møder"
+    }
+  },
+  "routing": {
+    "title": "Routing",
+    "intro": "Som standard bruger widget'en <strong>hash-baseret routing</strong> til mødedetalje-URL'er (f.eks. <code>example.com/#/monday-night-meeting-42</code>). Det fungerer ud af kassen på enhver hosting uden serverkonfiguration.",
+    "prettyUrls": "Pæne URL'er (History API)",
+    "prettyUrlsIntro": "For rene URL'er uden <code>#</code>-fragmentet, tilføj en <code>data-path</code>-attribut med din basissti:",
+    "prettyUrlsBody": "Dette producerer URL'er som <code>example.com/meetings/monday-night-meeting-42</code>. Din server skal være konfigureret til at servere siden for alle understier under basisstien, så direkte besøg og sidegenindlæsninger fungerer:",
+    "th": {
+      "server": "Server",
+      "config": "Konfiguration"
+    },
+    "row": {
+      "drupal": "Sæt <strong>Base Path for Pretty URLs</strong> i <em>Configuration → Web services → Crumb</em>; modulet registrerer den nødvendige rute automatisk."
+    },
+    "iframes": "Indlejring i iframes (Google Sites osv.)",
+    "iframesP1": "Ved indlejring i iframe-baserede værter som Google Sites fungerer al navigation inde i widget'en (klik på møder, tilbage-knap, søskendelinks) normalt. Dyb-linking til et bestemt møde via URL er dog ikke understøttet, fordi widget'en kører i en proxieret iframe og ikke kan kontrollere forældresidens URL.",
+    "iframesP2": "Ingen særlig konfiguration er nødvendig — den standard hash-baserede routing fungerer inde i iframes. <code>data-path</code>-attributten er ikke nødvendig for iframe-indlejringer."
+  },
+  "siteBuilders": {
+    "title": "Hjemmesidebyggere",
+    "intro": "Crumb Widget kan også indlejres på almindelige hjemmesidebyggere, men opsætningen varierer efter platform."
+  },
+  "findServiceBody": {
+    "title": "Find dit service body-ID",
+    "intro": "Hver indlejring nedenfor filtrerer møder til et specifikt <strong>service body</strong> (område, region eller zone) ved at sende dets numeriske ID i <code>data-service-body</code>. Du kan slå dette op fra din BMLT-servers <strong>semantiske workshop</strong>, som er tilgængelig på <code>&lt;your-server&gt;/main_server/semantic</code> på hver BMLT-server.",
+    "step": {
+      "1": "Åbn den semantiske workshop i din browser. For eksempel <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — udskift domænet med dit eget BMLT-server.",
+      "2": "Under <strong>Operation</strong> skal du vælge handlingen, der henter service bodies (etiketter varierer lidt efter version, men det er typisk <em>Get Service Bodies</em> eller <em>Retrieve information about Service Bodies</em>).",
+      "3": "Lad svarformatet stå på JSON og klik <strong>Execute JSON Request</strong>.",
+      "4": "I JSON-svaret skal du finde dit område, din region eller zone på <code>name</code>. Feltet <code>id</code> ved siden af er det tal, du sender til <code>data-service-body</code>."
+    },
+    "outro": "I dette eksempel ville du sende <code>data-service-body=\"42\"</code> for kun Greater Seattle, eller <code>data-service-body=\"42,57\"</code> for at kombinere begge områder. Du kan også springe den semantiske workshop over og ramme JSON-endpointet direkte på <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "callout1": "<strong>Kender du ikke din server-URL eller dit service body-ID?</strong> Browse <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — den lister kendte BMLT-servere og service bodies på hver. Find dit område, din region eller zone for at få både <code>data-server</code>-URL'en og <code>data-service-body</code>-ID'et på ét sted.",
+    "callout2": "<strong>Tip:</strong> Underordnede service bodies inkluderes altid automatisk. Hvis du sender en regions ID, inkluderes møder fra hvert område under den — du behøver ikke at liste hvert underordnet område."
+  },
+  "googleSites": {
+    "title": "Google Sites",
+    "intro": "Google Sites understøtter indlejring af HTML-, CSS- og JavaScript-kode med <strong>Indsæt → Indlejr → Indlejringskode</strong>. Du kan også bruge en fuldsides-indlejring, hvis du vil have, at mødefinderen lever på sin egen side.",
+    "step": {
+      "1": "Åbn dit websted i Google Sites.",
+      "2": "Klik <strong>Indsæt</strong> → <strong>Indlejr</strong>.",
+      "3": "Vælg <strong>Indlejringskode</strong>.",
+      "4": "Indsæt din widget-markup og dit script.",
+      "5": "Klik <strong>Indsæt</strong>, og udgiv derefter dit websted."
+    },
+    "note": "<strong>Bemærk:</strong> I Google Sites skal JavaScript inkluderes inde i <code>&lt;script&gt;</code>-tags, når du bruger indlejringskode-indstillingen. Fordi Google Sites kører widget'en inde i en proxieret iframe, er direkte links til specifikke møder (dyb-linking) ikke understøttet — men al navigation inde i widget'en fungerer normalt.",
+    "demoLink": "<a href=\"https://sites.google.com/view/crumb-seattle/\" target=\"_blank\">Se en live-demo på Google Sites &rarr;</a>"
+  },
+  "squarespace": {
+    "title": "Squarespace",
+    "intro": "Squarespace-indlejringer bruger en <strong>Code Block</strong>, som accepterer rå HTML og JavaScript. Ifølge Squarespaces dokumentation er Code Blocks med JavaScript aktiveret tilgængelige på planerne <strong>Core, Plus, Advanced, Business, Commerce Basic og Commerce Advanced</strong>. Den gratis Personal-plan understøtter ikke JavaScript i Code Blocks.",
+    "before": "Før du starter, skal du bruge to værdier:",
+    "value": {
+      "server": "<code>data-server</code> — din BMLT-servers <code>/main_server/</code>-URL",
+      "body": "<code>data-service-body</code> — det numeriske ID for dit område, din region eller zone (se <a href=\"#find-service-body\">Find dit service body-ID</a>)"
+    },
+    "step": {
+      "1": "Log ind på Squarespace og åbn siden, hvor du vil have mødefinderen.",
+      "2": "Klik <strong>Rediger</strong>, hold derefter musen over det sted, hvor widget'en skal være, og klik på <strong>+</strong>-knappen (Tilføj blok).",
+      "3": "Søg efter og indsæt en <strong>Code</strong>-blok.",
+      "4": "I Code-blokeditoren skal du sikre dig, at <strong>Mode</strong>-dropdownen er sat til <strong>HTML</strong>, og at <strong>Display Source</strong> er <em>slået fra</em> (ellers viser Squarespace de rå tags i stedet for at køre koden).",
+      "5": "Indsæt uddraget nedenfor og udskift <code>data-server</code> og <code>data-service-body</code> med dine værdier.",
+      "6": "Klik uden for blokken for at lukke den, og klik derefter <strong>Gem</strong>. Udgiv siden, hvis den ikke allerede er live."
+    },
+    "note": "<strong>Bemærk:</strong> Squarespace renderer Code-blokke i det normale sideflow, så widget'en optager så meget lodret plads, som den behøver. Hvis forhåndsvisningen ser tom ud, åbn blokken igen og bekræft, at <strong>Display Source</strong> er slået fra, og at <strong>Mode</strong> er sat til <strong>HTML</strong>. Hvis du er på en plan, der ikke tillader JavaScript i Code-blokke, skal du opgradere, før widget'en indlæses."
+  },
+  "wix": {
+    "title": "Wix",
+    "intro": "Wix opdeler indlejringen på to steder: widget'ens HTML-container lever inde i din side som et <strong>Embed HTML</strong>-element (Wix kalder dette \"Custom Embeds → Embed HTML\" eller \"Embed a Widget\"), og loaderens <code>&lt;script&gt;</code> kommer i <strong>Settings → Custom Code</strong>, så det kun indlæses én gang per besøg. Ifølge Wix' dokumentation kræver Custom Code, at dit websted er <strong>udgivet</strong> på en <strong>betalt plan med et tilsluttet domæne</strong>.",
+    "before": "Før du starter, skal du bruge to værdier:",
+    "value": {
+      "server": "<code>data-server</code> — din BMLT-servers <code>/main_server/</code>-URL",
+      "body": "<code>data-service-body</code> — det numeriske ID for dit område, din region eller zone (se <a href=\"#find-service-body\">Find dit service body-ID</a>)"
+    },
+    "step1Heading": "<strong>Trin 1 — Tilføj loader-scriptet (én gang per websted):</strong>",
+    "step1": {
+      "1": "I dit Wix-dashboard skal du gå til <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong>.",
+      "2": "Klik <strong>+ Add Custom Code</strong>.",
+      "3": "Indsæt loader-uddraget nedenfor i kodefeltet.",
+      "4": "Under <strong>Add Code to Pages</strong> skal du vælge enten <em>All pages</em> eller kun den side, der viser widget'en (det er hurtigere kun at indlæse den, hvor det er nødvendigt).",
+      "5": "Sæt <strong>Place Code in</strong> til <strong>Body – end</strong>.",
+      "6": "Navngiv det noget som <em>Crumb Widget loader</em> og klik <strong>Apply</strong>."
+    },
+    "step2Heading": "<strong>Trin 2 — Tilføj widget-containeren på siden:</strong>",
+    "step2": {
+      "1": "Åbn siden i Wix-editoren.",
+      "2": "Klik <strong>+ Add Elements</strong> → <strong>Embed Code</strong> → <strong>Embed HTML</strong> (i Wix Studio er dette <strong>Embed &amp; Social</strong> → <strong>HTML iframe/Embed</strong>).",
+      "3": "Slip elementet, hvor du vil have widget'en til at vises, og klik <strong>Enter Code</strong>.",
+      "4": "Indsæt container-uddraget nedenfor og udskift <code>data-server</code> og <code>data-service-body</code> med dine værdier.",
+      "5": "Klik <strong>Update</strong>. Tilpas elementet til omtrent den højde, du ønsker — Wix' Embed HTML har en fast størrelse, så giv det rigeligt plads (f.eks. <code>800px</code> højt) til mødelisten og kortet.",
+      "6": "Klik <strong>Publish</strong>."
+    },
+    "note": "<strong>Bemærk:</strong> Wix' Embed HTML-element renderes inde i en iframe, hvilket betyder, at widget'en ikke kan ændre størrelse på den omkringliggende side, og dyb-links til individuelle møder vil ikke opdatere browser-URL'en. Al navigation inde i widget'en (liste, kort, mødedetalje, filtre) fungerer stadig normalt. Hvis du ikke ser Custom Code-indstillingen i Settings, inkluderer din plan den sandsynligvis ikke — tjek, at dit websted er udgivet på en betalt plan med et tilsluttet domæne."
+  },
+  "browserSupport": {
+    "title": "Browserunderstøttelse",
+    "intro": "Alle moderne browsere. Internet Explorer er ikke understøttet."
+  },
+  "npmPackage": {
+    "title": "npm-pakke",
+    "intro": "Ud over CDN-script-tag-indlejringen er Crumb Widget tilgængelig som en npm-pakke til brug i JavaScript/TypeScript-projekter (React, Svelte, Vue, simpel Vite osv.).",
+    "installation": "Installation",
+    "peerDep": "<code>leaflet</code> er en peer-afhængighed — installér den ved siden af <code>crumb-widget</code>, så forbrugere kan dedupe og fastlåse deres foretrukne version.",
+    "usage": "Brug",
+    "usageIntro": "Importér <code>mountCrumbWidget</code> og kald den med et DOM-element og din konfiguration. Widget'en monterer sig selv og injicerer sin egen CSS — ingen separat stylesheet-import nødvendig.",
+    "svelteIntro": "I en Svelte-komponent skal du bruge <code>onMount</code> for at sikre, at elementet eksisterer før montering:",
+    "options": "Indstillinger",
+    "optionsIntro": "Alle indstillinger fra <a href=\"#global-config\">Global konfiguration</a> er tilgængelige plus to yderligere obligatoriske felter:",
+    "th": {
+      "option": "Indstilling",
+      "required": "Påkrævet"
+    },
+    "row": {
+      "serverUrl": "URL til BMLT-serveren.",
+      "serviceBodyIds": "Service body-ID'er at filtrere efter. Udelad eller send <code>[]</code> for at vise alle.",
+      "view": "Indledende visning. Standard: <code>'list'</code>. <code>'both'</code> viser kort over liste uden skifter.",
+      "geolocation": "Aktivér I-nærheden-knappen. Standard: <code>false</code>.",
+      "geolocationRadius": "Maksimal søgeradius (begrænser distancedropdownen). Standard: <code>75</code>.",
+      "distanceOptions": "Distanceværdier vist i I-nærheden-dropdownen. Standard: <code>[5,10,15,25,50,100]</code>.",
+      "distanceUnit": "Enhedsmærke for distancer. Standard: <code>'mi'</code>.",
+      "darkMode": "Indstilling for mørk tilstand. Standard: <code>false</code>.",
+      "language": "BCP-47-sprog-tag (f.eks. <code>'es'</code>). Standard: browser-locale.",
+      "columns": "Tabelkolonner at vise. Se <a href=\"#global-config\">Global konfiguration</a>.",
+      "map": "Flise-udbyder og markør-konfiguration. Se <a href=\"#tile-config\">Flise-udbyder</a>."
+    },
+    "note": "<strong>Bemærk:</strong> npm-pakken bundler Svelte og alle stilarter i en enkelt JS-fil. <code>leaflet</code> er en peer-afhængighed (installér det ved siden af <code>crumb-widget</code>), så du kan dedupe med enhver anden Leaflet-brugende kode i din app. Hvert kald til <code>mountCrumbWidget</code> er uafhængigt, men flere widgets på samme side er ikke i øjeblikket understøttet."
+  },
+  "philosophy": {
+    "title": "Filosofi",
+    "body": "Dette projekt sigter mod at dække behovene hos de fleste NA-service bodies godt — ikke ethvert tænkeligt brugsscenarie. Det holdes bevidst simpelt og fokuseret. Nye funktioner afvejes mod omkostningerne for kodebasen; nicheanmodninger, der oppuster projektet for alle, er generelt uden for omfang. Hvis du har brug for dyb tilpasning, er dette muligvis ikke det rigtige værktøj."
+  }
+}

@@ -4,7 +4,7 @@
 
 # Crumb Widget
 
-**Read this in other languages:** [Español](docs/intl/README.es.md) · [Português (Brasil)](docs/intl/README.pt-BR.md) · [Français](docs/intl/README.fr.md)
+**Read this in other languages:** [Español](docs/intl/README.es.md) · [Português (Brasil)](docs/intl/README.pt-BR.md) · [Français](docs/intl/README.fr.md) · [Deutsch](docs/intl/README.de.md) · [Italiano](docs/intl/README.it.md) · [Svenska](docs/intl/README.sv.md) · [Dansk](docs/intl/README.da.md) · [Polski](docs/intl/README.pl.md) · [Ελληνικά](docs/intl/README.el.md) · [Русский](docs/intl/README.ru.md) · [日本語](docs/intl/README.ja.md) · [فارسی](docs/intl/README.fa.md)
 
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
@@ -19,7 +19,7 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 - Meeting detail with directions, virtual join link, and formats
 - Geolocation-based nearby search
 - Individual meeting links via built-in router
-- Multi-language support (12 languages, including RTL layout for Persian)
+- Multi-language support (13 languages, including RTL layout for Persian)
 - Configurable columns, map tiles, and custom markers
 - Printer-friendly list view
 

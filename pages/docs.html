@@ -761,6 +761,40 @@
         color: #1a1a2e;
         background: #ffffff;
       }
+
+      /* RTL adjustments — flip directional pieces that don't auto-mirror via dir="rtl" */
+      [dir='rtl'] .theme-toggle .toggle-label {
+        text-align: right;
+      }
+      [dir='rtl'] th {
+        text-align: right;
+      }
+      [dir='rtl'] .callout {
+        border-left: none;
+        border-right: 3px solid var(--doc-callout-border);
+        border-radius: 8px 0 0 8px;
+      }
+      [dir='rtl'] .lang-switcher select {
+        padding: 0.4rem 0.75rem 0.4rem 2rem;
+      }
+      [dir='rtl'] .lang-switcher::after {
+        right: auto;
+        left: 0.75rem;
+      }
+      [dir='rtl'] .lang-switcher-mobile select {
+        padding: 0.35rem 0.6rem 0.35rem 1.6rem;
+      }
+      [dir='rtl'] .lang-switcher-mobile::after {
+        right: auto;
+        left: 0.55rem;
+      }
+      /* Keep code samples and inline code rendered LTR even on RTL pages */
+      [dir='rtl'] pre,
+      [dir='rtl'] code {
+        direction: ltr;
+        text-align: left;
+        unicode-bidi: isolate;
+      }
     </style>
   </head>
   <body>
@@ -975,7 +1009,9 @@
           Crumb Widget is a self-contained JavaScript widget that queries a
           <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT server</a> and renders a fully featured meeting finder — search, filters, list view, and an interactive map.
         </p>
-        <p data-i18n-html="overview.p2">It ships as a <strong>single JavaScript file</strong> with all CSS injected at runtime. No stylesheets, no build steps, no framework required on the host page.</p>
+        <p data-i18n-html="overview.p2">
+          It ships as a <strong>single JavaScript file</strong> with all CSS injected at runtime. No stylesheets, no build steps, no framework required on the host page.
+        </p>
         <h2 id="quick-start" data-i18n="quickStart.title">Quick Start</h2>
         <p data-i18n="quickStart.intro">To get started, add a container element to your page, point it at your BMLT server, and load the widget script. Here is a complete example:</p>
 
@@ -1126,7 +1162,9 @@
               <tr>
                 <td>geolocationRadius</td>
                 <td><code>number</code></td>
-                <td data-i18n-html="globalConfig.row.geolocationRadius">Maximum search radius when using geolocation. Acts as the cap for the Near Me distance dropdown — options above this value are hidden. Default: <code>75</code>.</td>
+                <td data-i18n-html="globalConfig.row.geolocationRadius">
+                  Maximum search radius when using geolocation. Acts as the cap for the Near Me distance dropdown — options above this value are hidden. Default: <code>75</code>.
+                </td>
               </tr>
               <tr>
                 <td>distanceOptions</td>
@@ -1171,7 +1209,9 @@
               <tr>
                 <td>map.tiles_dark</td>
                 <td><code>TilesConfig</code></td>
-                <td data-i18n-html="globalConfig.row.mapTilesDark">Alternate tile provider used when <code>prefers-color-scheme: dark</code>. Swaps automatically on OS theme change. See <a href="#tile-dark-config">Dark Mode Tiles</a> below.</td>
+                <td data-i18n-html="globalConfig.row.mapTilesDark">
+                  Alternate tile provider used when <code>prefers-color-scheme: dark</code>. Swaps automatically on OS theme change. See <a href="#tile-dark-config">Dark Mode Tiles</a> below.
+                </td>
               </tr>
               <tr>
                 <td>map.markers.location</td>
@@ -1218,7 +1258,9 @@
         </div>
 
         <h2 id="language" data-i18n="language.title">Language</h2>
-        <p data-i18n-html="language.intro">The widget automatically detects the visitor's language from <code>navigator.language</code> and falls back to English. Override it with the <code>language</code> config property:</p>
+        <p data-i18n-html="language.intro">
+          The widget automatically detects the visitor's language from <code>navigator.language</code> and falls back to English. Override it with the <code>language</code> config property:
+        </p>
         <div class="demo">
           <div class="demo-header">HTML</div>
           <pre><code class="language-html">&lt;script&gt;
@@ -1269,6 +1311,26 @@
               <tr>
                 <td><code>da</code></td>
                 <td data-i18n="language.name.da">Danish</td>
+              </tr>
+              <tr>
+                <td><code>el</code></td>
+                <td data-i18n="language.name.el">Greek</td>
+              </tr>
+              <tr>
+                <td><code>fa</code></td>
+                <td data-i18n="language.name.fa">Persian</td>
+              </tr>
+              <tr>
+                <td><code>pl</code></td>
+                <td data-i18n="language.name.pl">Polish</td>
+              </tr>
+              <tr>
+                <td><code>ru</code></td>
+                <td data-i18n="language.name.ru">Russian</td>
+              </tr>
+              <tr>
+                <td><code>ja</code></td>
+                <td data-i18n="language.name.ja">Japanese</td>
               </tr>
             </tbody>
           </table>
@@ -1843,7 +1905,9 @@
 
         <h3 data-i18n="exampleDrupal.installation">Installation</h3>
         <ol>
-          <li data-i18n-html="exampleDrupal.install.1">Download the latest <code>crumb.zip</code> from the <a href="https://github.com/bmlt-enabled/crumb-drupal/releases" target="_blank" rel="noopener">releases page</a>.</li>
+          <li data-i18n-html="exampleDrupal.install.1">
+            Download the latest <code>crumb.zip</code> from the <a href="https://github.com/bmlt-enabled/crumb-drupal/releases" target="_blank" rel="noopener">releases page</a>.
+          </li>
           <li data-i18n-html="exampleDrupal.install.2">Extract into <code>web/modules/contrib/</code> (or <code>web/modules/custom/</code>).</li>
           <li data-i18n-html="exampleDrupal.install.3">Enable: <code>drush en crumb</code>, or via <strong>Extend</strong> in the admin UI.</li>
           <li data-i18n-html="exampleDrupal.install.4">Visit <strong>Configuration → Web services → Crumb</strong> and enter your BMLT server URL.</li>
@@ -1856,7 +1920,9 @@
         </p>
 
         <h3 data-i18n="exampleDrupal.embedShortcode">Embed via shortcode in body fields</h3>
-        <p data-i18n-html="exampleDrupal.embedShortcodeBody">Enable the <strong>Crumb meeting finder shortcode</strong> filter on a text format (<strong>Configuration → Content authoring → Text formats and editors</strong>), then use:</p>
+        <p data-i18n-html="exampleDrupal.embedShortcodeBody">
+          Enable the <strong>Crumb meeting finder shortcode</strong> filter on a text format (<strong>Configuration → Content authoring → Text formats and editors</strong>), then use:
+        </p>
 
         <div class="demo">
           <div class="demo-header">Drupal shortcode</div>
@@ -1893,13 +1959,19 @@
             <strong>Map view</strong> — interactive Leaflet map for in-person meetings (including those with an online component); click a marker to see meetings at that location; pan or zoom to
             reveal a <em>Search this area</em> button when Near Me is active
           </li>
-          <li data-i18n-html="features.item.detailView"><strong>Detail view</strong> — full meeting info: schedule, address with Google Maps directions, virtual meeting join button, formats, and notes</li>
+          <li data-i18n-html="features.item.detailView">
+            <strong>Detail view</strong> — full meeting info: schedule, address with Google Maps directions, virtual meeting join button, formats, and notes
+          </li>
           <li data-i18n-html="features.item.textSearch"><strong>Text search</strong> — real-time filter across meeting name, location, and notes</li>
           <li data-i18n-html="features.item.weekdayFilter"><strong>Weekday filter</strong> — toggle individual days of the week</li>
           <li data-i18n-html="features.item.venueFilter"><strong>Venue type filter</strong> — in-person or virtual (meetings with both an in-person location and an online link appear under both)</li>
           <li data-i18n-html="features.item.timeFilter"><strong>Time of day filter</strong> — morning, afternoon, evening, or night</li>
-          <li data-i18n-html="features.item.formatFilter"><strong>Format filter</strong> — multi-select dropdown to filter by meeting format (e.g. Open, Closed, Speaker); shows only formats present in the loaded meeting data</li>
-          <li data-i18n-html="features.item.localeTime"><strong>Locale-aware time display</strong> — meeting times are shown in 12-hour (AM/PM) or 24-hour format based on the user's browser locale automatically</li>
+          <li data-i18n-html="features.item.formatFilter">
+            <strong>Format filter</strong> — multi-select dropdown to filter by meeting format (e.g. Open, Closed, Speaker); shows only formats present in the loaded meeting data
+          </li>
+          <li data-i18n-html="features.item.localeTime">
+            <strong>Locale-aware time display</strong> — meeting times are shown in 12-hour (AM/PM) or 24-hour format based on the user's browser locale automatically
+          </li>
           <li data-i18n-html="features.item.recursive"><strong>Recursive service body support</strong> — child service bodies are always included</li>
           <li data-i18n-html="features.item.multiBody"><strong>Multiple service bodies</strong> — comma-separate IDs to combine regions</li>
           <li data-i18n-html="features.item.print">
@@ -1947,7 +2019,9 @@
               </tr>
               <tr>
                 <td>Drupal</td>
-                <td data-i18n-html="routing.row.drupal">Set <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; the module registers the necessary route automatically.</td>
+                <td data-i18n-html="routing.row.drupal">
+                  Set <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; the module registers the necessary route automatically.
+                </td>
               </tr>
               <tr>
                 <td>Nginx</td>
@@ -1966,7 +2040,9 @@
           When embedding in iframe-based hosts like Google Sites, all in-widget navigation (clicking meetings, back button, sibling links) works normally. However, deep-linking to a specific meeting
           via URL is not supported because the widget runs inside a proxied iframe and cannot control the parent page's URL.
         </p>
-        <p data-i18n-html="routing.iframesP2">No special configuration is needed — the default hash-based routing works inside iframes. The <code>data-path</code> attribute is not needed for iframe embeds.</p>
+        <p data-i18n-html="routing.iframesP2">
+          No special configuration is needed — the default hash-based routing works inside iframes. The <code>data-path</code> attribute is not needed for iframe embeds.
+        </p>
 
         <h2 id="site-builders" data-i18n="siteBuilders.title">Website Builders</h2>
         <p data-i18n="siteBuilders.intro">Crumb Widget can also be embedded on common website builders, but the setup varies by platform.</p>
@@ -1987,7 +2063,9 @@
             <em>Retrieve information about Service Bodies</em>).
           </li>
           <li data-i18n-html="findServiceBody.step.3">Leave the response format as JSON and click <strong>Execute JSON Request</strong>.</li>
-          <li data-i18n-html="findServiceBody.step.4">In the JSON response, find your area, region, or zone by <code>name</code>. The <code>id</code> field next to it is the number you pass to <code>data-service-body</code>.</li>
+          <li data-i18n-html="findServiceBody.step.4">
+            In the JSON response, find your area, region, or zone by <code>name</code>. The <code>id</code> field next to it is the number you pass to <code>data-service-body</code>.
+          </li>
         </ol>
 
         <div class="demo">
@@ -2063,7 +2141,9 @@
         <p data-i18n="squarespace.before">Before you start, you need two values:</p>
         <ul>
           <li data-i18n-html="squarespace.value.server"><code>data-server</code> — your BMLT server's <code>/main_server/</code> URL</li>
-          <li data-i18n-html="squarespace.value.body"><code>data-service-body</code> — the numeric ID for your area, region, or zone (see <a href="#find-service-body">Finding your Service Body ID</a>)</li>
+          <li data-i18n-html="squarespace.value.body">
+            <code>data-service-body</code> — the numeric ID for your area, region, or zone (see <a href="#find-service-body">Finding your Service Body ID</a>)
+          </li>
         </ul>
 
         <ol>
@@ -2112,7 +2192,9 @@
           <li data-i18n-html="wix.step1.1">In your Wix dashboard, go to <strong>Settings</strong> → <strong>Advanced</strong> → <strong>Custom Code</strong>.</li>
           <li data-i18n-html="wix.step1.2">Click <strong>+ Add Custom Code</strong>.</li>
           <li data-i18n="wix.step1.3">Paste the loader snippet below into the code box.</li>
-          <li data-i18n-html="wix.step1.4">Under <strong>Add Code to Pages</strong>, choose either <em>All pages</em> or just the page that will show the widget (loading it only where needed is faster).</li>
+          <li data-i18n-html="wix.step1.4">
+            Under <strong>Add Code to Pages</strong>, choose either <em>All pages</em> or just the page that will show the widget (loading it only where needed is faster).
+          </li>
           <li data-i18n-html="wix.step1.5">Set <strong>Place Code in</strong> to <strong>Body – end</strong>.</li>
           <li data-i18n-html="wix.step1.6">Name it something like <em>Crumb Widget loader</em> and click <strong>Apply</strong>.</li>
         </ol>
@@ -2163,7 +2245,9 @@
 
         <!-- ── npm Package ─────────────────────────────────────────── -->
         <h2 id="npm-package" data-i18n="npmPackage.title">npm Package</h2>
-        <p data-i18n="npmPackage.intro">In addition to the CDN script-tag embed, Crumb Widget is available as an npm package for use in JavaScript/TypeScript projects (React, Svelte, Vue, plain Vite, etc.).</p>
+        <p data-i18n="npmPackage.intro">
+          In addition to the CDN script-tag embed, Crumb Widget is available as an npm package for use in JavaScript/TypeScript projects (React, Svelte, Vue, plain Vite, etc.).
+        </p>
 
         <h3 id="npm-install" data-i18n="npmPackage.installation">Installation</h3>
         <div class="demo">
@@ -2173,7 +2257,9 @@
         <p data-i18n-html="npmPackage.peerDep"><code>leaflet</code> is a peer dependency — install it alongside <code>crumb-widget</code> so consumers can dedupe and pin their preferred version.</p>
 
         <h3 id="npm-usage" data-i18n="npmPackage.usage">Usage</h3>
-        <p data-i18n-html="npmPackage.usageIntro">Import <code>mountCrumbWidget</code> and call it with a DOM element and your configuration. The widget mounts itself and injects its own CSS — no separate stylesheet import needed.</p>
+        <p data-i18n-html="npmPackage.usageIntro">
+          Import <code>mountCrumbWidget</code> and call it with a DOM element and your configuration. The widget mounts itself and injects its own CSS — no separate stylesheet import needed.
+        </p>
 
         <div class="demo">
           <div class="demo-header"><span>TypeScript / ESM</span></div>
@@ -2435,8 +2521,18 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         { code: 'en', label: 'English' },
         { code: 'es', label: 'Español' },
         { code: 'pt-BR', label: 'Português (Brasil)' },
-        { code: 'fr', label: 'Français' }
+        { code: 'fr', label: 'Français' },
+        { code: 'de', label: 'Deutsch' },
+        { code: 'it', label: 'Italiano' },
+        { code: 'sv', label: 'Svenska' },
+        { code: 'da', label: 'Dansk' },
+        { code: 'pl', label: 'Polski' },
+        { code: 'el', label: 'Ελληνικά' },
+        { code: 'ru', label: 'Русский' },
+        { code: 'ja', label: '日本語' },
+        { code: 'fa', label: 'فارسی' }
       ];
+      var RTL_LANGS = ['fa', 'ar', 'he', 'ur'];
       var DEFAULT_LANG = 'en';
       var i18nCache = {};
 
@@ -2444,13 +2540,19 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         var qs = new URLSearchParams(location.search).get('lang');
         var saved = localStorage.getItem('bmlt-docs-lang');
         var nav = (navigator.language || '').toLowerCase();
-        var codes = SUPPORTED_LANGS.map(function (l) { return l.code; });
+        var codes = SUPPORTED_LANGS.map(function (l) {
+          return l.code;
+        });
         if (qs && codes.indexOf(qs) !== -1) return qs;
         if (saved && codes.indexOf(saved) !== -1) return saved;
-        var navMatch = codes.find(function (c) { return c.toLowerCase() === nav; });
+        var navMatch = codes.find(function (c) {
+          return c.toLowerCase() === nav;
+        });
         if (navMatch) return navMatch;
         var base = nav.split('-')[0];
-        var baseMatch = codes.find(function (c) { return c.toLowerCase().split('-')[0] === base; });
+        var baseMatch = codes.find(function (c) {
+          return c.toLowerCase().split('-')[0] === base;
+        });
         return baseMatch || DEFAULT_LANG;
       }
 
@@ -2494,7 +2596,9 @@ mountCrumbWidget(document.getElementById('my-widget'), {
       }
 
       async function setLanguage(lang) {
-        var codes = SUPPORTED_LANGS.map(function (l) { return l.code; });
+        var codes = SUPPORTED_LANGS.map(function (l) {
+          return l.code;
+        });
         if (codes.indexOf(lang) === -1) lang = DEFAULT_LANG;
         var dict = await loadDictionary(lang);
         if (lang !== DEFAULT_LANG && !dict) {
@@ -2510,9 +2614,12 @@ mountCrumbWidget(document.getElementById('my-widget'), {
           applyThemeIcons();
         }
         document.documentElement.setAttribute('lang', lang);
+        document.documentElement.setAttribute('dir', RTL_LANGS.indexOf(lang) !== -1 ? 'rtl' : 'ltr');
         localStorage.setItem('bmlt-docs-lang', lang);
         var sels = document.querySelectorAll('#lang-select, #lang-select-mobile');
-        sels.forEach(function (sel) { sel.value = lang; });
+        sels.forEach(function (sel) {
+          sel.value = lang;
+        });
         updateDemoLinks(lang);
       }
 
