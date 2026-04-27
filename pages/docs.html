@@ -689,11 +689,21 @@
         margin-top: 0.5rem;
         position: relative;
       }
+      .lang-switcher::before {
+        content: '🌐';
+        position: absolute;
+        left: 0.55rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.75rem;
+        line-height: 1;
+        pointer-events: none;
+      }
       .lang-switcher select {
         appearance: none;
         -webkit-appearance: none;
         width: 100%;
-        padding: 0.4rem 2rem 0.4rem 0.75rem;
+        padding: 0.4rem 2rem 0.4rem 1.75rem;
         border-radius: 8px;
         border: 1px solid var(--doc-nav-border);
         background: transparent;
@@ -733,7 +743,7 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 8px;
         color: rgba(255, 255, 255, 0.8);
-        padding: 0.35rem 1.6rem 0.35rem 0.6rem;
+        padding: 0.35rem 1.6rem 0.35rem 1.5rem;
         font-family: inherit;
         font-size: 0.8rem;
         line-height: 1;
@@ -743,6 +753,16 @@
       }
       .lang-switcher-mobile {
         position: relative;
+      }
+      .lang-switcher-mobile::before {
+        content: '🌐';
+        position: absolute;
+        left: 0.45rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 0.7rem;
+        line-height: 1;
+        pointer-events: none;
       }
       .lang-switcher-mobile::after {
         content: '';
@@ -775,14 +795,22 @@
         border-radius: 8px 0 0 8px;
       }
       [dir='rtl'] .lang-switcher select {
-        padding: 0.4rem 0.75rem 0.4rem 2rem;
+        padding: 0.4rem 1.75rem 0.4rem 2rem;
+      }
+      [dir='rtl'] .lang-switcher::before {
+        left: auto;
+        right: 0.55rem;
       }
       [dir='rtl'] .lang-switcher::after {
         right: auto;
         left: 0.75rem;
       }
       [dir='rtl'] .lang-switcher-mobile select {
-        padding: 0.35rem 0.6rem 0.35rem 1.6rem;
+        padding: 0.35rem 1.5rem 0.35rem 1.6rem;
+      }
+      [dir='rtl'] .lang-switcher-mobile::before {
+        left: auto;
+        right: 0.45rem;
       }
       [dir='rtl'] .lang-switcher-mobile::after {
         right: auto;
