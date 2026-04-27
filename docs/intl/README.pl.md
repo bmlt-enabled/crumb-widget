@@ -9,7 +9,7 @@
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
 [![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
-[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/)
+[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/?lang=pl)
 
 Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dystrybuowany jako pojedynczy, samowystarczalny plik JavaScript. Dostępny jako [wtyczka WordPress](https://wordpress.org/plugins/crumb/), [moduł Drupal](https://github.com/bmlt-enabled/crumb-drupal), [skrypt CDN](https://cdn.aws.bmlt.app/crumb-widget.js) lub [pakiet npm](https://www.npmjs.com/package/crumb-widget).
 

@@ -9,7 +9,7 @@
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
 [![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
-[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/)
+[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/?lang=ru)
 
 Встраиваемый виджет поиска встреч NA. Построен на Svelte 5 и поставляется как единый автономный JavaScript-файл. Доступен в виде [плагина WordPress](https://wordpress.org/plugins/crumb/), [модуля Drupal](https://github.com/bmlt-enabled/crumb-drupal), [CDN-скрипта](https://cdn.aws.bmlt.app/crumb-widget.js) или [npm-пакета](https://www.npmjs.com/package/crumb-widget).
 

@@ -11,7 +11,7 @@
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
 [![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
-[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/)
+[![docs](https://img.shields.io/badge/docs-crumb.bmlt.app-blue)](https://crumb.bmlt.app/?lang=fa)
 
 یک ویجت قابل جاسازی برای یافتن جلسات NA. با Svelte 5 ساخته شده و به‌صورت یک فایل جاوااسکریپت واحد و مستقل توزیع می‌شود. به‌صورت [افزونهٔ وردپرس](https://wordpress.org/plugins/crumb/)، [ماژول دروپال](https://github.com/bmlt-enabled/crumb-drupal)، [اسکریپت CDN](https://cdn.aws.bmlt.app/crumb-widget.js) یا [بستهٔ npm](https://www.npmjs.com/package/crumb-widget) در دسترس است.
 
