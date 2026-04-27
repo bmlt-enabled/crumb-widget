@@ -44,6 +44,7 @@ const ls = new LocalizedStrings(TRANSLATIONS) as LocalizedTranslations;
 
 const { subscribe, set } = writable<LocalizedTranslations>(ls);
 const dirStore = writable<'ltr' | 'rtl'>('ltr');
+let resolvedLanguage = 'en';
 
 // Store: use $t.someKey in components
 export const t = { subscribe };
@@ -55,9 +56,14 @@ export const direction = { subscribe: dirStore.subscribe };
 export function initLocalization(language: string): void {
   const base = (language.split('-')[0] ?? '').toLowerCase();
   const resolved = SUPPORTED_LANGUAGES.includes(base) ? base : 'en';
+  resolvedLanguage = resolved;
   ls.setLanguage(resolved);
   dirStore.set(RTL_LANGUAGES.includes(resolved) ? 'rtl' : 'ltr');
   set(ls);
+}
+
+export function getLanguage(): string {
+  return resolvedLanguage;
 }
 
 export function setLanguage(language: string): void {

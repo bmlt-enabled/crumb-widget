@@ -3,10 +3,25 @@ import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte'
 import type { Meeting, Format } from '@/types';
 
 vi.mock('bmlt-query-client', () => ({
-  BmltClient: vi.fn()
+  BmltClient: vi.fn(),
+  Language: {
+    DANISH: 'da',
+    GERMAN: 'de',
+    GREEK: 'el',
+    ENGLISH: 'en',
+    SPANISH: 'es',
+    PERSIAN: 'fa',
+    FRENCH: 'fr',
+    ITALIAN: 'it',
+    POLISH: 'pl',
+    PORTUGUESE: 'pt',
+    RUSSIAN: 'ru',
+    SWEDISH: 'sv'
+  }
 }));
 
 import { BmltClient } from 'bmlt-query-client';
+import { setLanguage } from '@stores/localization';
 
 function rawMeeting(overrides: Partial<Meeting> = {}): Meeting {
   return {
@@ -39,6 +54,7 @@ beforeEach(() => {
   dataState.meetings = [];
   dataState.loading = false;
   dataState.error = null;
+  setLanguage('en');
 
   mockSearch = vi.fn();
   // Vitest requires `class` keyword when mocking a constructor with `new`
@@ -171,6 +187,72 @@ describe('loadData', () => {
     const names = dataState.meetings.map((m) => m.meeting_name);
     expect(names).toContain('Wednesday AM');
     expect(names).toContain('Monday PM');
+  });
+});
+
+describe('lang_enum handling', () => {
+  test('passes lang_enum matching current widget language', async () => {
+    setLanguage('es');
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ lang_enum: 'es' }));
+  });
+
+  test('passes lang_enum for Greek (newly supported in BMLT 1.1)', async () => {
+    setLanguage('el');
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ lang_enum: 'el' }));
+  });
+
+  test('omits lang_enum for Japanese (not supported by BMLT)', async () => {
+    setLanguage('ja');
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.not.objectContaining({ lang_enum: expect.anything() }));
+  });
+
+  test('strips region tag before mapping (es-MX → es)', async () => {
+    setLanguage('es-MX');
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ lang_enum: 'es' }));
+  });
+
+  test('retries without lang_enum when formats empty and meetings reference formats', async () => {
+    setLanguage('fa');
+    const fmt = rawFormat({ id: '7', name_string: 'Open' });
+    mockSearch
+      .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [] })
+      .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [fmt] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledTimes(2);
+    expect(mockSearch).toHaveBeenNthCalledWith(1, expect.objectContaining({ lang_enum: 'fa' }));
+    expect(mockSearch).toHaveBeenNthCalledWith(2, expect.not.objectContaining({ lang_enum: expect.anything() }));
+    expect(dataState.meetings[0]!.resolvedFormats[0]!.name_string).toBe('Open');
+  });
+
+  test('does not retry when meetings have no format references', async () => {
+    setLanguage('fa');
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '' })], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledTimes(1);
+  });
+
+  test('does not retry when no lang_enum was passed', async () => {
+    setLanguage('ja');
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledTimes(1);
+  });
+
+  test('does not retry when first response already has formats', async () => {
+    setLanguage('es');
+    const fmt = rawFormat({ id: '7', name_string: 'Abierto' });
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [fmt] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledTimes(1);
+    expect(dataState.meetings[0]!.resolvedFormats[0]!.name_string).toBe('Abierto');
   });
 });
 

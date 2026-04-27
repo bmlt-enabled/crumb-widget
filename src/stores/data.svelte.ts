@@ -1,14 +1,22 @@
 import { SvelteMap } from 'svelte/reactivity';
-import { BmltClient } from 'bmlt-query-client';
+import { BmltClient, Language } from 'bmlt-query-client';
 import type { Meeting, Format } from 'bmlt-query-client';
 import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
 import { config } from '@stores/config.svelte';
+import { getLanguage } from '@stores/localization';
 
 const PAGE_SIZE = 5000;
 
 type SearchParams = Parameters<BmltClient['searchMeetingsWithFormats']>[0];
+
+const BMLT_LANGS = new Set<string>(Object.values(Language));
+
+function bmltLanguageFor(widgetLang: string): Language | undefined {
+  const base = (widgetLang.split('-')[0] ?? '').toLowerCase();
+  return BMLT_LANGS.has(base) ? (base as Language) : undefined;
+}
 
 interface DataState {
   meetings: ProcessedMeeting[];
@@ -55,7 +63,16 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
 
   try {
     const client = new BmltClient({ serverURL: serverUrl });
-    const { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats({ ...params, page_size: PAGE_SIZE });
+    const lang_enum = bmltLanguageFor(getLanguage());
+    const baseParams = { ...params, page_size: PAGE_SIZE };
+    let { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(lang_enum ? { ...baseParams, lang_enum } : baseParams);
+
+    // If the server has no translations for the requested language it returns an
+    // empty formats list. Retry once without lang_enum so meetings still render
+    // with English format names instead of blank chips.
+    if (lang_enum && formatsResp.length === 0 && meetingsResp.some((m) => m.format_shared_id_list)) {
+      ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(baseParams));
+    }
 
     const formatsMap = new SvelteMap<string, Format>();
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
