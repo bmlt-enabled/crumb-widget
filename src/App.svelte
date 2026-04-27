@@ -131,7 +131,7 @@
   <!-- Header -->
   {#if !config.hideHeader}
     <div class="bmlt-app-header flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
-      <h1 class="text-lg font-bold text-gray-800">Meeting Finder</h1>
+      <h1 class="text-lg font-bold text-gray-800">{$t.meetingFinder}</h1>
       {#if !dataState.loading && !dataState.error}
         <span class="text-xs text-gray-500">{dataState.meetings.length} meetings</span>
       {/if}

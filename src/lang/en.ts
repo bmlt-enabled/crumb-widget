@@ -1,4 +1,6 @@
 export const enTranslations = {
+  // Header
+  meetingFinder: 'Meeting Finder',
   // Controls
   searchMeetings: 'Search meetings...',
   filters: 'Filters',

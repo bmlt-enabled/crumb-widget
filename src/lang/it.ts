@@ -1,4 +1,6 @@
 export const itTranslations = {
+  // Header
+  meetingFinder: 'Trova Riunioni',
   // Controls
   searchMeetings: 'Cerca riunioni...',
   filters: 'Filtri',

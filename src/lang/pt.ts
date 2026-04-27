@@ -1,4 +1,6 @@
 export const ptTranslations = {
+  // Header
+  meetingFinder: 'Buscador de Reuniões',
   // Controls
   searchMeetings: 'Pesquisar reuniões...',
   filters: 'Filtros',

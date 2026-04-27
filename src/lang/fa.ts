@@ -1,4 +1,6 @@
 export const faTranslations = {
+  // Header
+  meetingFinder: 'جستجوی جلسات',
   // Controls
   searchMeetings: 'جستجوی جلسات...',
   filters: 'فیلترها',

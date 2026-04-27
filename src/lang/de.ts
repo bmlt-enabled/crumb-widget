@@ -1,4 +1,6 @@
 export const deTranslations = {
+  // Header
+  meetingFinder: 'Meetings-Suche',
   // Controls
   searchMeetings: 'Treffen suchen...',
   filters: 'Filter',

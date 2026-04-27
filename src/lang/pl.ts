@@ -1,4 +1,6 @@
 export const plTranslations = {
+  // Header
+  meetingFinder: 'Wyszukiwarka Mityngów',
   // Controls
   searchMeetings: 'Szukaj mityngów...',
   filters: 'Filtry',

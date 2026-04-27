@@ -1,4 +1,6 @@
 export const elTranslations = {
+  // Header
+  meetingFinder: 'Εύρεση Συναντήσεων',
   // Controls
   searchMeetings: 'Αναζήτηση συναντήσεων...',
   filters: 'Φίλτρα',

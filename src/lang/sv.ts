@@ -1,4 +1,6 @@
 export const svTranslations = {
+  // Header
+  meetingFinder: 'Mötesfinnare',
   // Controls
   searchMeetings: 'Sök möten...',
   filters: 'Filter',

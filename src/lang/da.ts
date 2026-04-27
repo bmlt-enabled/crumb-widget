@@ -1,4 +1,6 @@
 export const daTranslations = {
+  // Header
+  meetingFinder: 'Mødefinder',
   // Controls
   searchMeetings: 'Søg møder...',
   filters: 'Filtre',

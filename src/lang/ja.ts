@@ -1,4 +1,6 @@
 export const jaTranslations = {
+  // Header
+  meetingFinder: 'ミーティング検索',
   // Controls
   searchMeetings: 'ミーティングを検索...',
   filters: 'フィルター',

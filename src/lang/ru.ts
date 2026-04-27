@@ -1,4 +1,6 @@
 export const ruTranslations = {
+  // Header
+  meetingFinder: 'Поиск Собраний',
   // Controls
   searchMeetings: 'Поиск собраний...',
   filters: 'Фильтры',
