@@ -219,29 +219,38 @@ describe('lang_enum handling', () => {
     expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ lang_enum: 'es' }));
   });
 
-  test('retries without lang_enum when formats empty and meetings reference formats', async () => {
-    setLanguage('fa');
+  test('retries without lang_enum when formats empty (server strips format_shared_id_list)', async () => {
+    setLanguage('el');
     const fmt = rawFormat({ id: '7', name_string: 'Open' });
+    // Mirrors real BMLT behavior: when language has no translations, formats=[]
+    // AND every meeting comes back with empty format_shared_id_list.
     mockSearch
-      .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [] })
+      .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '' })], formats: [] })
       .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [fmt] });
     await loadData('https://example.org/main_server');
     expect(mockSearch).toHaveBeenCalledTimes(2);
-    expect(mockSearch).toHaveBeenNthCalledWith(1, expect.objectContaining({ lang_enum: 'fa' }));
+    expect(mockSearch).toHaveBeenNthCalledWith(1, expect.objectContaining({ lang_enum: 'el' }));
     expect(mockSearch).toHaveBeenNthCalledWith(2, expect.not.objectContaining({ lang_enum: expect.anything() }));
     expect(dataState.meetings[0]!.resolvedFormats[0]!.name_string).toBe('Open');
   });
 
-  test('does not retry when meetings have no format references', async () => {
-    setLanguage('fa');
-    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '' })], formats: [] });
+  test('does not retry when no lang_enum was passed (ja)', async () => {
+    setLanguage('ja');
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [] });
     await loadData('https://example.org/main_server');
     expect(mockSearch).toHaveBeenCalledTimes(1);
   });
 
-  test('does not retry when no lang_enum was passed', async () => {
-    setLanguage('ja');
+  test('does not retry when lang_enum is English (already the server default)', async () => {
+    setLanguage('en');
     mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledTimes(1);
+  });
+
+  test('does not retry when meetings is empty', async () => {
+    setLanguage('fa');
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
     await loadData('https://example.org/main_server');
     expect(mockSearch).toHaveBeenCalledTimes(1);
   });

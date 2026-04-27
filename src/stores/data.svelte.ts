@@ -67,10 +67,11 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     const baseParams = { ...params, page_size: PAGE_SIZE };
     let { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(lang_enum ? { ...baseParams, lang_enum } : baseParams);
 
-    // If the server has no translations for the requested language it returns an
-    // empty formats list. Retry once without lang_enum so meetings still render
-    // with English format names instead of blank chips.
-    if (lang_enum && formatsResp.length === 0 && meetingsResp.some((m) => m.format_shared_id_list)) {
+    // If the server has no translations for the requested language it returns
+    // an empty formats array AND strips format_shared_id_list from every
+    // meeting. Retry once without lang_enum so meetings come back with format
+    // references and English format names.
+    if (lang_enum && lang_enum !== Language.ENGLISH && formatsResp.length === 0 && meetingsResp.length > 0) {
       ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(baseParams));
     }
 
