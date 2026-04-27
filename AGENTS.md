@@ -89,7 +89,10 @@ src/
     e2e/                     # Playwright e2e tests
 pages/
   docs.html                  # Documentation page (copied to dist/index.html on build)
-  meetings.html              # Demo page (copied to dist/meetings.html on build)
+  meetings.html              # Demo page (copied to dist/meetings.html on build) — reads ?lang= and forwards to widget
+  docs/intl/                 # Per-language docs translations (en, es, pt-BR, fr) — copied to dist/docs/intl/
+docs/
+  intl/                      # Translated READMEs for GitHub (README.es.md, README.pt-BR.md, README.fr.md)
 dist/
   app.js                     # IIFE build output (CSS injected)
   module.js, module.d.ts     # npm/ESM build output
@@ -201,6 +204,18 @@ If the table's **containing block** becomes narrower than the content, or if an 
 - [ ] Is any new flex/grid ancestor correctly sized?
 - [ ] Does any new fixed-height wrapper around `<MapView>` have `overflow-hidden`?
 - [ ] Are there any absolutely-positioned elements that could overlap the table?
+
+## Documentation Page i18n
+
+`pages/docs.html` is a single template tagged with `data-i18n="key.path"` (textContent) and `data-i18n-html="key.path"` (innerHTML, used for strings containing `<a>`, `<code>`, `<strong>`, etc.). Translation dictionaries live in `pages/docs/intl/{lang}.json`.
+
+- Inline loader in `docs.html` resolves the language as `?lang=` → `localStorage('bmlt-docs-lang')` → `navigator.language` → `en`.
+- Sidebar + mobile bar both have a `<select>` switcher (`#lang-select`, `#lang-select-mobile`). Adding language #N: drop in `pages/docs/intl/{code}.json` and add `{ code, label }` to `SUPPORTED_LANGS` in `docs.html`. The `vite.config.ts` `copy-docs` plugin already mirrors the whole `intl/` directory into `dist/docs/intl/`.
+- All `<a href="meetings.html">` links inside `docs.html` get rewritten on language change to append `?lang={code}`. `meetings.html` reads that param and merges `language: <code>` into `CrumbWidgetConfig` so the embedded widget matches the docs language.
+- Code blocks inside `<pre><code>` are intentionally **not** translated (they are example snippets with English identifiers that work in every locale).
+- Run `node -e "..."` key-parity check (compare flattened keys between `en.json` and the other dictionaries) when editing translations — JSON files must keep identical key sets, otherwise live switching shows untranslated English fallbacks.
+
+The README has separate translations under `docs/intl/README.{lang}.md` (these are GitHub-rendered Markdown, unrelated to the docs-page JSON dictionaries). Keep both sets in sync when adding a new language: README translation in `docs/intl/`, docs-page dictionary in `pages/docs/intl/`.
 
 ## Reference Documentation
 

@@ -58,6 +58,14 @@ export default defineConfig({
             copyFileSync(join(testSrc, file), join(testDst, file));
           }
         }
+        const intlSrc = 'pages/docs/intl';
+        const intlDst = 'dist/docs/intl';
+        if (existsSync(intlSrc)) {
+          mkdirSync(intlDst, { recursive: true });
+          for (const file of readdirSync(intlSrc)) {
+            copyFileSync(join(intlSrc, file), join(intlDst, file));
+          }
+        }
       }
     }
   ],

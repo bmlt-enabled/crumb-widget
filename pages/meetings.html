@@ -197,9 +197,11 @@
 
     <script>
       var _t = atob('cGsuZXlKMUlqb2ljR3BoZFdScGIyMTJJaXdpWVNJNkltTnJOSGczTjJwdmVqQjNOWGd6YW04NU5UWTBkbWh6WlRNaWZRLmRpaC1XTDJEbm1odDdmalZWUlBwMWc=');
+      var _lang = new URLSearchParams(location.search).get('lang');
       var CrumbWidgetConfig = {
         geolocation: true,
         geolocationRadius: 75,
+        ...(_lang ? { language: _lang } : {}),
         // map: {
         //   tiles: {
         //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',

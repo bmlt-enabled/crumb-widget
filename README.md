@@ -4,6 +4,8 @@
 
 # Crumb Widget
 
+**Read this in other languages:** [Español](docs/intl/README.es.md) · [Português (Brasil)](docs/intl/README.pt-BR.md) · [Français](docs/intl/README.fr.md)
+
 [![test](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml/badge.svg)](https://github.com/bmlt-enabled/crumb-widget/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/bmlt-enabled/crumb-widget/graph/badge.svg)](https://codecov.io/gh/bmlt-enabled/crumb-widget)
 [![npm](https://img.shields.io/npm/v/crumb-widget)](https://www.npmjs.com/package/crumb-widget)
