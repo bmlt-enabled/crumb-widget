@@ -34,6 +34,10 @@
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## ドキュメント
+
+設定オプション、サンプル、はじめにガイドを含む Crumb の完全なドキュメントは **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=ja)** でご覧いただけます。
+
 ## ライセンス
 
 MIT

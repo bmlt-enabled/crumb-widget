@@ -34,6 +34,10 @@ Un widget incrustable para encontrar reuniones de NA. Construido con Svelte 5 y 
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## Documentación
+
+Consulta la documentación completa de Crumb — incluyendo opciones de configuración, ejemplos y una guía de inicio en **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=es)**.
+
 ## Licencia
 
 MIT

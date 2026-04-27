@@ -34,6 +34,10 @@
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## Τεκμηρίωση
+
+Δείτε την πλήρη τεκμηρίωση του Crumb — συμπεριλαμβανομένων επιλογών διαμόρφωσης, παραδειγμάτων και οδηγού για αρχάριους στο **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=el)**.
+
 ## Άδεια χρήσης
 
 MIT

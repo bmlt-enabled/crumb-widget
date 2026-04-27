@@ -34,6 +34,10 @@ Ein einbettbares NA-Meeting-Finder-Widget. Erstellt mit Svelte 5 und als einzeln
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## Dokumentation
+
+Sieh dir die vollständige Crumb-Dokumentation an — einschließlich Konfigurationsoptionen, Beispielen und einer Anleitung für den Einstieg unter **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=de)**.
+
 ## Lizenz
 
 MIT

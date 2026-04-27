@@ -34,6 +34,10 @@ Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dy
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## Dokumentacja
+
+Zapoznaj się z pełną dokumentacją Crumb — w tym opcjami konfiguracji, przykładami i przewodnikiem wprowadzającym na **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=pl)**.
+
 ## Licencja
 
 MIT

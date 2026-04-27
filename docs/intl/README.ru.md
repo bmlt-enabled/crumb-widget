@@ -34,6 +34,10 @@
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## Документация
+
+Ознакомьтесь с полной документацией Crumb — включая параметры конфигурации, примеры и руководство по началу работы — на **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=ru)**.
+
 ## Лицензия
 
 MIT

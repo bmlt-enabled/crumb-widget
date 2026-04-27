@@ -36,6 +36,10 @@
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## مستندات
+
+مستندات کامل Crumb — شامل گزینه‌های پیکربندی، نمونه‌ها و راهنمای شروع — را در **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=fa)** ببینید.
+
 ## مجوز
 
 MIT

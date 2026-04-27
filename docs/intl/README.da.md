@@ -34,6 +34,10 @@ En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
+## Dokumentation
+
+Se den fulde Crumb-dokumentation — inklusive konfigurationsmuligheder, eksempler og en guide til at komme i gang på **[crumb.bmlt.app](https://crumb.bmlt.app/?lang=da)**.
+
 ## Licens
 
 MIT
