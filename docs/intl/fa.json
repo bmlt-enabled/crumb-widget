@@ -160,7 +160,7 @@
       "auto": "موقعیت‌یابی هنگام بارگذاری — موفقیت نقشه را با نتایج نزدیک نمایش می‌دهد؛ شکست به فهرست با تمام جلسات بازمی‌گردد"
     },
     "example": "مثال: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> و <code>?view=map</code> موقعیت‌یابی خودکار را غیرفعال می‌کنند، حتی اگر <code>geolocation: true</code> تنظیم شده باشد."
+    "disable": "وقتی <code>geolocation: true</code> تنظیم شده باشد، ویجت هنگام بارگذاری به‌طور خودکار درخواست موقعیت‌یابی می‌دهد — از جمله برای <code>?view=map</code> و <code>?view=both</code>. <code>?view=list</code> انصراف صریح است: درخواست خودکار را حذف می‌کند تا کاربر همچنان بتواند آن را به‌صورت دستی از طریق دکمهٔ نزدیک من فعال کند."
   },
   "cssVars": {
     "title": "متغیرهای CSS",

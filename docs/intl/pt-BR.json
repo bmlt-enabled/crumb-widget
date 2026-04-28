@@ -160,7 +160,7 @@
       "auto": "Geolocalizar no carregamento — sucesso mostra mapa com resultados próximos; falha cai para lista com todas as reuniões"
     },
     "example": "Exemplo: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> e <code>?view=map</code> desativam a geolocalização automática mesmo se <code>geolocation: true</code> estiver definido."
+    "disable": "Quando <code>geolocation: true</code> está definido, o widget solicita a geolocalização automaticamente ao carregar — incluindo para <code>?view=map</code> e <code>?view=both</code>. <code>?view=list</code> é a exceção explícita: ele suprime a solicitação automática para que o usuário ainda possa acioná-la manualmente pelo botão Perto de mim."
   },
   "cssVars": {
     "title": "Variáveis CSS",

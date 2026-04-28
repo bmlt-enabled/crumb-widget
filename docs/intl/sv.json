@@ -160,7 +160,7 @@
       "auto": "Geolokalisera vid laddning — framgång visar kartan med närliggande resultat; misslyckande faller tillbaka till lista med alla möten"
     },
     "example": "Exempel: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> och <code>?view=map</code> inaktiverar autogeolokalisering även om <code>geolocation: true</code> är inställt."
+    "disable": "När <code>geolocation: true</code> är inställt frågar widgeten automatiskt om geolokalisering vid laddning — även för <code>?view=map</code> och <code>?view=both</code>. <code>?view=list</code> är det uttryckliga undantaget: det undertrycker den automatiska frågan så att användaren fortfarande kan utlösa den manuellt via Nära mig-knappen."
   },
   "cssVars": {
     "title": "CSS-variabler",

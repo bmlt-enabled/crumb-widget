@@ -160,7 +160,7 @@
       "auto": "Geolokér ved indlæsning — succes viser kort med nærliggende resultater; fejl falder tilbage til liste med alle møder"
     },
     "example": "Eksempel: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> og <code>?view=map</code> deaktiverer auto-geolokation, selv hvis <code>geolocation: true</code> er angivet."
+    "disable": "Når <code>geolocation: true</code> er angivet, beder widget'en automatisk om geolokation ved indlæsning — også for <code>?view=map</code> og <code>?view=both</code>. <code>?view=list</code> er det eksplicitte fravalg: det undertrykker den automatiske forespørgsel, så brugeren stadig kan udløse den manuelt via I nærheden-knappen."
   },
   "cssVars": {
     "title": "CSS-variabler",

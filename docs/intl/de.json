@@ -160,7 +160,7 @@
       "auto": "Geolokation beim Laden — Erfolg zeigt Karte mit Ergebnissen in der Nähe; Fehlschlag fällt auf Liste mit allen Meetings zurück"
     },
     "example": "Beispiel: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> und <code>?view=map</code> deaktivieren die automatische Geolokation, selbst wenn <code>geolocation: true</code> gesetzt ist."
+    "disable": "Wenn <code>geolocation: true</code> gesetzt ist, fragt das Widget die Geolokation beim Laden automatisch ab — einschließlich für <code>?view=map</code> und <code>?view=both</code>. <code>?view=list</code> ist der explizite Opt-out: Es unterdrückt die automatische Abfrage, sodass der Nutzer sie weiterhin manuell über die In-meiner-Nähe-Schaltfläche auslösen kann."
   },
   "cssVars": {
     "title": "CSS-Variablen",

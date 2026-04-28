@@ -160,7 +160,7 @@
       "auto": "読み込み時に位置情報を取得 — 成功時は近隣の結果を伴う地図を表示、失敗時はすべてのミーティングを伴うリストにフォールバック"
     },
     "example": "例: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> および <code>?view=map</code> は、たとえ <code>geolocation: true</code> が設定されていても自動位置情報取得を無効化します。"
+    "disable": "<code>geolocation: true</code> が設定されている場合、ウィジェットは <code>?view=map</code> および <code>?view=both</code> を含め、読み込み時に自動的に位置情報を要求します。<code>?view=list</code> は明示的なオプトアウトです：自動要求を抑制し、ユーザーが現在地周辺ボタンから手動で発動できるようにします。"
   },
   "cssVars": {
     "title": "CSS 変数",

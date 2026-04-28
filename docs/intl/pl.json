@@ -160,7 +160,7 @@
       "auto": "Geolokalizuj przy ładowaniu — sukces pokazuje mapę z pobliskimi wynikami; niepowodzenie wraca do listy ze wszystkimi spotkaniami"
     },
     "example": "Przykład: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> i <code>?view=map</code> wyłączają auto-geolokalizację, nawet jeśli ustawiono <code>geolocation: true</code>."
+    "disable": "Gdy ustawiono <code>geolocation: true</code>, widżet automatycznie pyta o geolokalizację przy ładowaniu — w tym dla <code>?view=map</code> i <code>?view=both</code>. <code>?view=list</code> jest jawnym wyłączeniem: tłumi automatyczne pytanie, dzięki czemu użytkownik nadal może uruchomić je ręcznie za pomocą przycisku W pobliżu."
   },
   "cssVars": {
     "title": "Zmienne CSS",

@@ -160,7 +160,7 @@
       "auto": "Géolocalise au chargement — succès affiche la carte avec les résultats à proximité ; échec bascule en liste avec toutes les réunions"
     },
     "example": "Exemple : <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> et <code>?view=map</code> désactivent la géolocalisation automatique même si <code>geolocation: true</code> est défini."
+    "disable": "Lorsque <code>geolocation: true</code> est défini, le widget déclenche automatiquement l'invite de géolocalisation au chargement — y compris pour <code>?view=map</code> et <code>?view=both</code>. <code>?view=list</code> est le retrait explicite : il supprime l'invite automatique afin que l'utilisateur puisse encore la déclencher manuellement via le bouton Près de moi."
   },
   "cssVars": {
     "title": "Variables CSS",
