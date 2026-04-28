@@ -6,8 +6,8 @@ import { svelteTesting } from '@testing-library/svelte/vite';
 import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import { resolve } from 'path';
-import { copyFileSync, readFileSync, readdirSync, mkdirSync, existsSync, statSync } from 'fs';
-import { dirname, extname, join } from 'path';
+import { cpSync, readFileSync } from 'fs';
+import { extname } from 'path';
 import { execSync } from 'child_process';
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
@@ -43,31 +43,10 @@ export default defineConfig({
     {
       name: 'copy-docs',
       closeBundle() {
-        const copy = (src: string, dst: string, filter?: (name: string) => boolean) => {
-          if (!existsSync(src)) return;
-          if (statSync(src).isDirectory()) {
-            mkdirSync(dst, { recursive: true });
-            for (const entry of readdirSync(src)) {
-              if (filter && !filter(entry)) continue;
-              copy(join(src, entry), join(dst, entry), filter);
-            }
-          } else {
-            mkdirSync(dirname(dst), { recursive: true });
-            copyFileSync(src, dst);
-          }
-        };
-        const assets: Array<[string, string, ((name: string) => boolean)?]> = [
-          ['docs/index.html', 'dist/index.html'],
-          ['docs/meetings.html', 'dist/meetings.html'],
-          ['docs/privacy.html', 'dist/privacy.html'],
-          ['docs/crumb-logo.svg', 'dist/crumb-logo.svg'],
-          ['docs/favicon-32x32.png', 'dist/favicon-32x32.png'],
-          ['docs/apple-touch-icon.png', 'dist/apple-touch-icon.png'],
-          ['docs/og-image.png', 'dist/og-image.png'],
-          ['docs/tests', 'dist/tests'],
-          ['docs/intl', 'dist/intl', (name) => extname(name) !== '.md']
-        ];
-        for (const [src, dst, filter] of assets) copy(src, dst, filter);
+        cpSync('docs', 'dist', {
+          recursive: true,
+          filter: (src) => extname(src) !== '.md'
+        });
       }
     }
   ],
