@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "Funkcje",
     "browserSupport": "Wsparcie przeglądarek",
+    "faq": "FAQ i rozwiązywanie problemów",
     "npmInstall": "Instalacja",
     "npmUsage": "Użycie",
     "npmOptions": "Opcje",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "Wsparcie przeglądarek",
     "intro": "Wszystkie nowoczesne przeglądarki. Internet Explorer nie jest obsługiwany."
+  },
+  "faq": {
+    "title": "FAQ i rozwiązywanie problemów",
+    "nothing": {
+      "title": "Nic się nie wyświetla — obszar widżetu jest pusty",
+      "body": "Dwie najczęstsze przyczyny:",
+      "li1": "<strong>Błędny URL serwera.</strong> Otwórz <code>data-server</code> w przeglądarce. Powinien załadować stronę administracyjną BMLT (lub przynajmniej odpowiedzieć). Sprawdź dwukrotnie końcową ścieżkę — większość serwerów oczekuje <code>/main_server/</code> na końcu.",
+      "li2": "<strong>Brak kontenera.</strong> Widżet montuje się w elemencie z <code>id=\"crumb-widget\"</code>. Jeśli ID jest błędnie wpisane lub brakuje <code>&lt;div&gt;</code>, nic się nie renderuje.",
+      "li3": "<strong>Błędy CORS.</strong> Otwórz konsolę dewelopera w przeglądarce (F12). Jeśli widzisz błąd CORS, Twój serwer BMLT nie zezwala na żądania z domeny Twojej witryny — skontaktuj się z administratorem serwera.",
+      "li4": "<strong>Kontener nie ma wysokości.</strong> Jeśli ustawisz <code>data-view=\"map\"</code> lub <code>data-view=\"both\"</code>, kontener nadrzędny musi mieć wysokość. Dodaj <code>style=\"height:600px\"</code> do <code>&lt;div&gt;</code>."
+    },
+    "map": {
+      "title": "Mapa jest pusta lub się nie ładuje",
+      "li1": "<strong>Żadne spotkania nie mają współrzędnych.</strong> Mapa pokazuje tylko spotkania z prawidłową szerokością/długością geograficzną na Twoim serwerze BMLT. Sprawdź spotkania w panelu administracyjnym BMLT.",
+      "li2": "<strong>Dostawca kafelków zablokowany.</strong> Jeśli Twoja witryna ma rygorystyczną Content-Security-Policy, upewnij się, że adresy URL kafelków (domyślnie: <code>tile.openstreetmap.org</code>) są dozwolone w <code>img-src</code> i <code>connect-src</code>.",
+      "li3": "<strong>Geolokalizacja odrzucona.</strong> Wyszukiwanie \"W pobliżu\" wymaga, aby użytkownik udzielił uprawnień do lokalizacji w przeglądarce. W przypadku odrzucenia wyszukiwanie wraca do wyszukiwania tekstowego/po kodzie pocztowym."
+    },
+    "colors": {
+      "title": "Jak zmienić kolory, aby pasowały do mojej witryny?",
+      "body": "Nadpisz niestandardowe właściwości CSS widżetu — zobacz <a href=\"#css-vars\">Zmienne CSS</a>. Dla trybu ciemnego zobacz <a href=\"#css-dark-mode\">Tryb ciemny</a>. Możesz również użyć jednego z wbudowanych pomocniczych motywów — zobacz <a href=\"#css-classes\">Klasy pomocnicze CSS</a>."
+    },
+    "serviceBody": {
+      "title": "Mój filtr service body nie pokazuje żadnych spotkań — dlaczego?",
+      "li1": "<strong>Błędne ID service body.</strong> ID musi być numerycznym ID z Twojego serwera BMLT, a nie nazwą. Zobacz <a href=\"#find-service-body\">Znajdź ID swojego service body</a>.",
+      "li2": "<strong>Brak opublikowanych spotkań.</strong> Service body może istnieć, ale nie mieć aktywnych/opublikowanych spotkań na serwerze.",
+      "li3": "<strong>Rekursja jest zawsze włączona.</strong> Podrzędne service body są automatycznie uwzględniane — nie można tego wyłączyć. Jeśli chcesz tylko jednego konkretnego service body, musi on być liściem (bez dzieci) na serwerze."
+    },
+    "iframe": {
+      "title": "Czy mogę osadzić to wewnątrz iframe (Google Sites itp.)?",
+      "body": "Tak. Ustaw <code>data-router=\"hash\"</code>, aby linki do poszczególnych spotkań używały adresów URL w stylu <code>#</code>, które działają wewnątrz iframe, gdzie strona nadrzędna kontroluje pasek adresu. Zobacz <a href=\"#routing\">Routing</a> oraz <a href=\"#google-sites\">przykład Google Sites</a>."
+    },
+    "help": {
+      "title": "Nadal utknąłem — gdzie mogę uzyskać pomoc?",
+      "li1": "<strong>Błąd lub propozycja funkcji:</strong> otwórz zgłoszenie na <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+      "li2": "<strong>E-mail:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Społeczność:</strong> <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">grupa BMLT na Facebooku</a>."
+    }
   },
   "npmPackage": {
     "title": "Pakiet npm",

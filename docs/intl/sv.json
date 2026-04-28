@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "Funktioner",
     "browserSupport": "Webbläsarstöd",
+    "faq": "FAQ och felsökning",
     "npmInstall": "Installation",
     "npmUsage": "Användning",
     "npmOptions": "Alternativ",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "Webbläsarstöd",
     "intro": "Alla moderna webbläsare. Internet Explorer stöds inte."
+  },
+  "faq": {
+    "title": "FAQ och felsökning",
+    "nothing": {
+      "title": "Inget visas — widgetområdet är tomt",
+      "body": "De två vanligaste orsakerna:",
+      "li1": "<strong>Fel server-URL.</strong> Öppna <code>data-server</code> i en webbläsare. Den ska ladda en BMLT-administrationssida (eller åtminstone svara). Dubbelkolla den avslutande sökvägen — de flesta servrar förväntar sig <code>/main_server/</code> i slutet.",
+      "li2": "<strong>Saknad container.</strong> Widgeten monteras i ett element med <code>id=\"crumb-widget\"</code>. Om ID:t är felstavat eller <code>&lt;div&gt;</code> saknas renderas ingenting.",
+      "li3": "<strong>CORS-fel.</strong> Öppna webbläsarens utvecklarkonsol (F12). Om du ser ett CORS-fel tillåter inte din BMLT-server förfrågningar från din webbplats domän — kontakta din serveradministratör.",
+      "li4": "<strong>Containern har ingen höjd.</strong> Om du ställer in <code>data-view=\"map\"</code> eller <code>data-view=\"both\"</code> behöver föräldracontainern en höjd. Lägg till <code>style=\"height:600px\"</code> på <code>&lt;div&gt;</code>:en."
+    },
+    "map": {
+      "title": "Kartan är tom eller laddas inte",
+      "li1": "<strong>Inga möten har koordinater.</strong> Kartan visar endast möten med giltig latitud/longitud på din BMLT-server. Kontrollera mötena i din BMLT-administration.",
+      "li2": "<strong>Kartrutleverantör blockerad.</strong> Om din webbplats har en strikt Content-Security-Policy, se till att kartruts-URL:er (standard: <code>tile.openstreetmap.org</code>) är tillåtna i <code>img-src</code> och <code>connect-src</code>.",
+      "li3": "<strong>Geolokalisering nekad.</strong> Sökningen \"Nära mig\" kräver att användaren beviljar platstillstånd i sin webbläsare. Om det nekas faller sökningen tillbaka till text-/postnummersökning."
+    },
+    "colors": {
+      "title": "Hur ändrar jag färgerna så de matchar min webbplats?",
+      "body": "Åsidosätt widgetens anpassade CSS-egenskaper — se <a href=\"#css-vars\">CSS-variabler</a>. För mörkt läge, se <a href=\"#css-dark-mode\">Mörkt läge</a>. Du kan också använda ett av de inbyggda hjälptemana — se <a href=\"#css-classes\">CSS-hjälpklasser</a>."
+    },
+    "serviceBody": {
+      "title": "Mitt service body-filter visar inga möten — varför?",
+      "li1": "<strong>Fel service body-ID.</strong> ID:t måste vara det numeriska ID:t från din BMLT-server, inte namnet. Se <a href=\"#find-service-body\">Hitta ditt service body-ID</a>.",
+      "li2": "<strong>Inga publicerade möten.</strong> Service bodyn kan finnas men sakna aktiva/publicerade möten på servern.",
+      "li3": "<strong>Rekursion är alltid på.</strong> Underordnade service bodies inkluderas automatiskt — detta kan inte inaktiveras. Om du bara vill ha en specifik body måste den vara ett löv (utan barn) på servern."
+    },
+    "iframe": {
+      "title": "Kan jag bädda in detta i en iframe (Google Sites osv.)?",
+      "body": "Ja. Sätt <code>data-router=\"hash\"</code> så att enskilda möteslänkar använder URL:er i <code>#</code>-stil, vilka fungerar inuti iframes där föräldrasidan styr adressfältet. Se <a href=\"#routing\">Routing</a> och <a href=\"#google-sites\">Google Sites-exemplet</a>."
+    },
+    "help": {
+      "title": "Jag har fortfarande fastnat — var kan jag få hjälp?",
+      "li1": "<strong>Bugg eller funktionsförfrågan:</strong> öppna ett ärende på <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+      "li2": "<strong>E-post:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Community:</strong> <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">BMLT Facebook-grupp</a>."
+    }
   },
   "npmPackage": {
     "title": "npm-paket",

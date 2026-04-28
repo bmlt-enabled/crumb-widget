@@ -74,8 +74,11 @@
   onMount(async () => {
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
 
-    // Determine whether to attempt geolocation on load
-    const tryGeo = viewParam === 'auto' || (!viewParam && config.geolocation);
+    // Determine whether to attempt geolocation on load.
+    // If config.geolocation is true, always try — that's the embedder's stated intent.
+    // ?view=auto forces a prompt even when config.geolocation is false.
+    // ?view=list explicitly opts out, since the user has asked for "just the list".
+    const tryGeo = viewParam !== 'list' && (config.geolocation || viewParam === 'auto');
 
     // Set initial view (before data loads so map renders immediately if needed)
     if (viewParam === 'map' || viewParam === 'both') {

@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "Funzionalità",
     "browserSupport": "Compatibilità browser",
+    "faq": "FAQ e risoluzione dei problemi",
     "npmInstall": "Installazione",
     "npmUsage": "Utilizzo",
     "npmOptions": "Opzioni",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "Compatibilità browser",
     "intro": "Tutti i browser moderni. Internet Explorer non è supportato."
+  },
+  "faq": {
+    "title": "FAQ e risoluzione dei problemi",
+    "nothing": {
+      "title": "Non viene mostrato nulla — l'area del widget è vuota",
+      "body": "Le due cause più comuni:",
+      "li1": "<strong>URL del server errato.</strong> Apri <code>data-server</code> in un browser. Dovrebbe caricare una pagina di amministrazione BMLT (o almeno rispondere). Ricontrolla il percorso finale — la maggior parte dei server si aspetta <code>/main_server/</code> alla fine.",
+      "li2": "<strong>Contenitore mancante.</strong> Il widget viene montato in un elemento con <code>id=\"crumb-widget\"</code>. Se l'ID è scritto male o il <code>&lt;div&gt;</code> manca, non viene mostrato nulla.",
+      "li3": "<strong>Errori CORS.</strong> Apri la console di sviluppo del browser (F12). Se vedi un errore CORS, il tuo server BMLT non sta consentendo richieste dal dominio del tuo sito — contatta l'amministratore del server.",
+      "li4": "<strong>Il contenitore non ha altezza.</strong> Se imposti <code>data-view=\"map\"</code> o <code>data-view=\"both\"</code>, il contenitore genitore deve avere un'altezza. Aggiungi <code>style=\"height:600px\"</code> al <code>&lt;div&gt;</code>."
+    },
+    "map": {
+      "title": "La mappa è vuota o non si carica",
+      "li1": "<strong>Nessuna riunione ha coordinate.</strong> La mappa mostra solo le riunioni con latitudine/longitudine valide sul tuo server BMLT. Verifica le riunioni nell'amministrazione BMLT.",
+      "li2": "<strong>Provider tessere bloccato.</strong> Se il tuo sito ha una Content-Security-Policy rigorosa, assicurati che gli URL delle tessere (predefinito: <code>tile.openstreetmap.org</code>) siano consentiti in <code>img-src</code> e <code>connect-src</code>.",
+      "li3": "<strong>Geolocalizzazione negata.</strong> La ricerca \"Vicino a me\" richiede che l'utente conceda l'autorizzazione di posizione nel browser. In caso di rifiuto, la ricerca ricade sulla ricerca per testo/codice postale."
+    },
+    "colors": {
+      "title": "Come cambio i colori per abbinarli al mio sito?",
+      "body": "Sovrascrivi le proprietà CSS personalizzate del widget — vedi <a href=\"#css-vars\">Variabili CSS</a>. Per la modalità scura, vedi <a href=\"#css-dark-mode\">Modalità scura</a>. Puoi anche usare uno dei temi di supporto integrati — vedi <a href=\"#css-classes\">Classi CSS di supporto</a>."
+    },
+    "serviceBody": {
+      "title": "Il mio filtro per service body non mostra riunioni — perché?",
+      "li1": "<strong>ID del service body errato.</strong> L'ID deve essere l'ID numerico del tuo server BMLT, non il nome. Vedi <a href=\"#find-service-body\">Trova l'ID del tuo service body</a>.",
+      "li2": "<strong>Nessuna riunione pubblicata.</strong> Il service body può esistere ma non avere riunioni attive/pubblicate sul server.",
+      "li3": "<strong>La ricorsione è sempre attiva.</strong> I service body figli vengono inclusi automaticamente — non può essere disattivata. Se vuoi solo un service body specifico, quel body deve essere una foglia (senza figli) sul server."
+    },
+    "iframe": {
+      "title": "Posso integrarlo all'interno di un iframe (Google Sites, ecc.)?",
+      "body": "Sì. Imposta <code>data-router=\"hash\"</code> in modo che i link delle singole riunioni usino URL in stile <code>#</code>, che funzionano all'interno degli iframe dove la pagina genitore controlla la barra degli indirizzi. Vedi <a href=\"#routing\">Routing</a> e l'<a href=\"#google-sites\">esempio Google Sites</a>."
+    },
+    "help": {
+      "title": "Sono ancora bloccato — dove posso ottenere aiuto?",
+      "li1": "<strong>Bug o richiesta di funzionalità:</strong> apri una issue su <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+      "li2": "<strong>Email:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Community:</strong> il <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">gruppo Facebook BMLT</a>."
+    }
   },
   "npmPackage": {
     "title": "Pacchetto npm",

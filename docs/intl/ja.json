@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "機能",
     "browserSupport": "ブラウザ対応",
+    "faq": "FAQ・トラブルシューティング",
     "npmInstall": "インストール",
     "npmUsage": "使い方",
     "npmOptions": "オプション",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "ブラウザ対応",
     "intro": "すべてのモダンブラウザに対応。Internet Explorer はサポートしていません。"
+  },
+  "faq": {
+    "title": "FAQ・トラブルシューティング",
+    "nothing": {
+      "title": "何も表示されません — ウィジェットの領域が空白です",
+      "body": "最も一般的な原因は次の 2 つです：",
+      "li1": "<strong>サーバ URL が誤っている。</strong> <code>data-server</code> をブラウザで開いてみてください。BMLT の管理ページが読み込まれる（または少なくとも応答する）はずです。末尾のパスをよく確認してください — 多くのサーバでは末尾に <code>/main_server/</code> が必要です。",
+      "li2": "<strong>コンテナがない。</strong> ウィジェットは <code>id=\"crumb-widget\"</code> を持つ要素にマウントされます。ID の綴り間違いや <code>&lt;div&gt;</code> の欠落があると、何も描画されません。",
+      "li3": "<strong>CORS エラー。</strong> ブラウザの開発者コンソール（F12）を開いてください。CORS エラーが表示されている場合、BMLT サーバがあなたのサイトのドメインからのリクエストを許可していません — サーバ管理者にお問い合わせください。",
+      "li4": "<strong>コンテナに高さがない。</strong> <code>data-view=\"map\"</code> または <code>data-view=\"both\"</code> を設定する場合、親コンテナに高さが必要です。<code>&lt;div&gt;</code> に <code>style=\"height:600px\"</code> を追加してください。"
+    },
+    "map": {
+      "title": "地図が空白か読み込まれません",
+      "li1": "<strong>座標を持つミーティングがない。</strong> 地図には、有効な緯度／経度を持つミーティングだけが表示されます。BMLT 管理画面でミーティングを確認してください。",
+      "li2": "<strong>タイルプロバイダがブロックされている。</strong> サイトに厳格な Content-Security-Policy がある場合、タイル URL（既定: <code>tile.openstreetmap.org</code>）が <code>img-src</code> および <code>connect-src</code> で許可されていることを確認してください。",
+      "li3": "<strong>位置情報が拒否された。</strong>「現在地周辺」検索には、ユーザーがブラウザで位置情報の許可を与える必要があります。拒否された場合、検索はテキスト／郵便番号検索にフォールバックします。"
+    },
+    "colors": {
+      "title": "サイトに合わせて色を変更するには？",
+      "body": "ウィジェットの CSS カスタムプロパティを上書きしてください — <a href=\"#css-vars\">CSS 変数</a>を参照。ダークモードについては <a href=\"#css-dark-mode\">ダークモード</a>を参照。組み込みのヘルパーテーマも利用できます — <a href=\"#css-classes\">CSS ヘルパークラス</a>を参照してください。"
+    },
+    "serviceBody": {
+      "title": "サービスボディフィルターでミーティングが表示されません — なぜ？",
+      "li1": "<strong>サービスボディ ID が誤っている。</strong> ID は名前ではなく、BMLT サーバの数値 ID である必要があります。<a href=\"#find-service-body\">サービスボディ ID の確認方法</a>を参照してください。",
+      "li2": "<strong>公開されたミーティングがない。</strong> サービスボディは存在するが、サーバ上に有効／公開状態のミーティングが 1 件もない可能性があります。",
+      "li3": "<strong>再帰は常に有効。</strong> 子のサービスボディは自動的に含まれます — これは無効化できません。1 つの特定のボディだけを表示したい場合、そのボディはサーバ上で末端（子を持たない）である必要があります。"
+    },
+    "iframe": {
+      "title": "iframe（Google Sites など）の中に埋め込めますか？",
+      "body": "はい。<code>data-router=\"hash\"</code> を設定すると、個別のミーティングリンクは <code>#</code> 形式の URL となり、親ページがアドレスバーを制御する iframe 内でも動作します。<a href=\"#routing\">ルーティング</a>と <a href=\"#google-sites\">Google Sites の例</a>を参照してください。"
+    },
+    "help": {
+      "title": "それでも解決しない — どこで助けを得られますか？",
+      "li1": "<strong>バグや機能のリクエスト:</strong> <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a> でイシューを開いてください。",
+      "li2": "<strong>メール:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>。",
+      "li3": "<strong>コミュニティ:</strong> <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">BMLT Facebook グループ</a>。"
+    }
   },
   "npmPackage": {
     "title": "npm パッケージ",

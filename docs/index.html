@@ -1033,6 +1033,15 @@
           <span data-i18n="header.btn.qaTests">QA Tests</span>
         </a>
 
+        <div class="header-screenshots" style="display: flex; gap: 0.75rem; margin: 1.5rem 0 0; flex-wrap: wrap;">
+          <a href="meetings.html" target="_blank" style="flex: 1 1 320px; min-width: 0; display: block;">
+            <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width: 100%; height: auto; display: block; border: 1px solid var(--doc-border); border-radius: 8px;" />
+          </a>
+          <a href="meetings.html?view=map" target="_blank" style="flex: 1 1 320px; min-width: 0; display: block;">
+            <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width: 100%; height: auto; display: block; border: 1px solid var(--doc-border); border-radius: 8px;" />
+          </a>
+        </div>
+
         <h2 id="overview" data-i18n="overview.title">Overview</h2>
         <p data-i18n-html="overview.p1">
           Crumb Widget is a self-contained JavaScript widget that queries a
@@ -1432,7 +1441,7 @@
           </table>
         </div>
         <p data-i18n-html="queryParams.example">Example: <code>https://example.org/meetings/?view=auto</code></p>
-        <p data-i18n-html="queryParams.disable"><code>?view=list</code> and <code>?view=map</code> disable auto-geolocation even if <code>geolocation: true</code> is set.</p>
+        <p data-i18n-html="queryParams.disable">When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button.</p>
 
         <h2 id="css-vars" data-i18n="cssVars.title">CSS Variables</h2>
         <p data-i18n-html="cssVars.intro">

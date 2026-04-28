@@ -160,7 +160,7 @@
       "auto": "Geolocate on load — success shows map with nearby results; failure falls back to list with all meetings"
     },
     "example": "Example: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>?view=list</code> and <code>?view=map</code> disable auto-geolocation even if <code>geolocation: true</code> is set."
+    "disable": "When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button."
   },
   "cssVars": {
     "title": "CSS Variables",

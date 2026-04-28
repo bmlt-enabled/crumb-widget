@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "Funktioner",
     "browserSupport": "Browserunderstøttelse",
+    "faq": "FAQ & fejlfinding",
     "npmInstall": "Installation",
     "npmUsage": "Brug",
     "npmOptions": "Indstillinger",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "Browserunderstøttelse",
     "intro": "Alle moderne browsere. Internet Explorer er ikke understøttet."
+  },
+  "faq": {
+    "title": "FAQ & fejlfinding",
+    "nothing": {
+      "title": "Der vises ingenting — widget-området er tomt",
+      "body": "De to mest almindelige årsager:",
+      "li1": "<strong>Forkert server-URL.</strong> Åbn <code>data-server</code> i en browser. Den bør indlæse en BMLT-admin-side (eller i det mindste svare). Tjek den afsluttende sti — de fleste servere forventer <code>/main_server/</code> til sidst.",
+      "li2": "<strong>Manglende container.</strong> Widget'en monteres i et element med <code>id=\"crumb-widget\"</code>. Hvis ID'et er stavet forkert, eller <code>&lt;div&gt;</code>'en mangler, renderes intet.",
+      "li3": "<strong>CORS-fejl.</strong> Åbn din browsers udviklerkonsol (F12). Hvis du ser en CORS-fejl, tillader din BMLT-server ikke anmodninger fra dit websteds domæne — kontakt din serveradministrator.",
+      "li4": "<strong>Containeren har ingen højde.</strong> Hvis du sætter <code>data-view=\"map\"</code> eller <code>data-view=\"both\"</code>, skal forældrecontaineren have en højde. Tilføj <code>style=\"height:600px\"</code> til <code>&lt;div&gt;</code>'en."
+    },
+    "map": {
+      "title": "Kortet er tomt eller indlæses ikke",
+      "li1": "<strong>Ingen møder har koordinater.</strong> Kortet viser kun møder med gyldig breddegrad/længdegrad på din BMLT-server. Tjek møderne i din BMLT-admin.",
+      "li2": "<strong>Flise-udbyder blokeret.</strong> Hvis dit websted har en streng Content-Security-Policy, skal du sikre dig, at flise-URL'er (standard: <code>tile.openstreetmap.org</code>) er tilladt i <code>img-src</code> og <code>connect-src</code>.",
+      "li3": "<strong>Geolokation nægtet.</strong> \"I nærheden\"-søgning kræver, at brugeren giver placeringstilladelse i sin browser. Hvis det nægtes, falder søgningen tilbage til tekst-/postnummer-søgning."
+    },
+    "colors": {
+      "title": "Hvordan ændrer jeg farverne, så de matcher mit websted?",
+      "body": "Tilsidesæt widget'ens brugerdefinerede CSS-egenskaber — se <a href=\"#css-vars\">CSS-variabler</a>. For mørk tilstand, se <a href=\"#css-dark-mode\">Mørk tilstand</a>. Du kan også bruge et af de indbyggede hjælpetemaer — se <a href=\"#css-classes\">CSS-hjælpeklasser</a>."
+    },
+    "serviceBody": {
+      "title": "Mit service body-filter viser ingen møder — hvorfor?",
+      "li1": "<strong>Forkert service body-ID.</strong> ID'et skal være det numeriske ID fra din BMLT-server, ikke navnet. Se <a href=\"#find-service-body\">Find dit service body-ID</a>.",
+      "li2": "<strong>Ingen publicerede møder.</strong> Service body'et findes muligvis, men har ingen aktive/publicerede møder på serveren.",
+      "li3": "<strong>Rekursion er altid slået til.</strong> Underordnede service bodies inkluderes automatisk — det kan ikke deaktiveres. Hvis du kun vil have ét bestemt body, skal det være et bladknudepunkt (uden børn) på serveren."
+    },
+    "iframe": {
+      "title": "Kan jeg indlejre dette inde i en iframe (Google Sites osv.)?",
+      "body": "Ja. Sæt <code>data-router=\"hash\"</code>, så individuelle mødelinks bruger <code>#</code>-style URL'er, som fungerer inde i iframes, hvor forældresiden styrer adresselinjen. Se <a href=\"#routing\">Routing</a> og <a href=\"#google-sites\">Google Sites-eksemplet</a>."
+    },
+    "help": {
+      "title": "Jeg sidder stadig fast — hvor kan jeg få hjælp?",
+      "li1": "<strong>Fejl eller funktionsønske:</strong> opret et issue på <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+      "li2": "<strong>E-mail:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Fællesskab:</strong> <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">BMLT Facebook-gruppen</a>."
+    }
   },
   "npmPackage": {
     "title": "npm-pakke",

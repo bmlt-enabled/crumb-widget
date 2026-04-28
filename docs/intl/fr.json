@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "Fonctionnalités",
     "browserSupport": "Compatibilité navigateurs",
+    "faq": "FAQ et dépannage",
     "npmInstall": "Installation",
     "npmUsage": "Utilisation",
     "npmOptions": "Options",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "Compatibilité navigateurs",
     "intro": "Tous les navigateurs modernes. Internet Explorer n'est pas pris en charge."
+  },
+  "faq": {
+    "title": "FAQ et dépannage",
+    "nothing": {
+      "title": "Rien ne s'affiche — la zone du widget est vide",
+      "body": "Les deux causes les plus fréquentes :",
+      "li1": "<strong>Mauvaise URL de serveur.</strong> Ouvrez <code>data-server</code> dans un navigateur. Cela devrait charger une page d'administration BMLT (ou au moins répondre). Vérifiez bien le chemin final — la plupart des serveurs attendent <code>/main_server/</code> à la fin.",
+      "li2": "<strong>Conteneur manquant.</strong> Le widget se monte dans un élément avec <code>id=\"crumb-widget\"</code>. Si l'ID est mal orthographié ou si le <code>&lt;div&gt;</code> est manquant, rien ne s'affiche.",
+      "li3": "<strong>Erreurs CORS.</strong> Ouvrez la console développeur de votre navigateur (F12). Si vous voyez une erreur CORS, votre serveur BMLT n'autorise pas les requêtes depuis le domaine de votre site — contactez l'administrateur du serveur.",
+      "li4": "<strong>Le conteneur n'a pas de hauteur.</strong> Si vous définissez <code>data-view=\"map\"</code> ou <code>data-view=\"both\"</code>, le conteneur parent doit avoir une hauteur. Ajoutez <code>style=\"height:600px\"</code> au <code>&lt;div&gt;</code>."
+    },
+    "map": {
+      "title": "La carte est vide ou ne se charge pas",
+      "li1": "<strong>Aucune réunion n'a de coordonnées.</strong> La carte n'affiche que les réunions disposant d'une latitude/longitude valides sur votre serveur BMLT. Vérifiez les réunions dans votre interface d'administration BMLT.",
+      "li2": "<strong>Fournisseur de tuiles bloqué.</strong> Si votre site applique une Content-Security-Policy stricte, assurez-vous que les URL de tuiles (par défaut : <code>tile.openstreetmap.org</code>) sont autorisées dans <code>img-src</code> et <code>connect-src</code>.",
+      "li3": "<strong>Géolocalisation refusée.</strong> La recherche « Près de moi » nécessite que l'utilisateur accorde la permission de localisation dans son navigateur. En cas de refus, la recherche bascule vers la recherche par texte/code postal."
+    },
+    "colors": {
+      "title": "Comment changer les couleurs pour qu'elles correspondent à mon site ?",
+      "body": "Remplacez les propriétés CSS personnalisées du widget — voir <a href=\"#css-vars\">Variables CSS</a>. Pour le mode sombre, voir <a href=\"#css-dark-mode\">Mode sombre</a>. Vous pouvez aussi utiliser l'un des thèmes utilitaires intégrés — voir <a href=\"#css-classes\">Classes CSS utilitaires</a>."
+    },
+    "serviceBody": {
+      "title": "Mon filtre de corps de service n'affiche aucune réunion — pourquoi ?",
+      "li1": "<strong>Mauvais ID de corps de service.</strong> L'ID doit être l'identifiant numérique de votre serveur BMLT, pas le nom. Voir <a href=\"#find-service-body\">Trouver l'ID de votre corps de service</a>.",
+      "li2": "<strong>Aucune réunion publiée.</strong> Le corps de service peut exister mais ne contenir aucune réunion active/publiée sur le serveur.",
+      "li3": "<strong>La récursivité est toujours active.</strong> Les corps de service enfants sont automatiquement inclus — cela ne peut pas être désactivé. Si vous voulez un seul corps spécifique, ce corps doit être une feuille (sans enfants) sur le serveur."
+    },
+    "iframe": {
+      "title": "Puis-je intégrer ceci dans un iframe (Google Sites, etc.) ?",
+      "body": "Oui. Définissez <code>data-router=\"hash\"</code> pour que les liens de réunion individuels utilisent des URLs avec <code>#</code>, qui fonctionnent dans des iframes où la page parente contrôle la barre d'adresse. Voir <a href=\"#routing\">Routage</a> et l'<a href=\"#google-sites\">exemple Google Sites</a>."
+    },
+    "help": {
+      "title": "Je suis toujours bloqué — où puis-je obtenir de l'aide ?",
+      "li1": "<strong>Bug ou demande de fonctionnalité :</strong> ouvrez un ticket sur <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+      "li2": "<strong>E-mail :</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Communauté :</strong> le <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">groupe Facebook BMLT</a>."
+    }
   },
   "npmPackage": {
     "title": "Paquet npm",
