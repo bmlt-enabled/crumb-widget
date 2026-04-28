@@ -13,9 +13,9 @@ cd crumb-widget
 npm install
 ```
 
-`npm install` runs the `prepare` script, which initializes the [husky](https://typicode.github.io/husky/) git hooks. From that point on, every commit triggers [lint-staged](https://github.com/lint-staged/lint-staged) — `eslint --fix` and `prettier --write` run on staged `.ts`/`.svelte` files (and prettier on `.json`/`.md`/`.html`/`.css`). `svelte-check` is intentionally not in the pre-commit hook (too slow); CI runs it.
-
 The widget depends on [bmlt-query-client](https://github.com/bmlt-enabled/bmlt-query-client) and [@bmlt-enabled/svelte-spa-router](https://github.com/bmlt-enabled/svelte-spa-router) (hash + History API routing with `basePath` support), both installed from npm and maintained by BMLT.
+
+Run `npm run lint` and `npm run test` before pushing — CI enforces both.
 
 ## Commands
 
@@ -26,7 +26,6 @@ npm run build:lib  # Library build → dist/module.js + dist/module.d.ts
 npm run preview    # Serve dist/ to test the built bundle
 npm run lint       # Prettier + ESLint + svelte-check
 npm run format     # Auto-format all source files
-npm run knip       # Find unused files, exports, and dependencies
 npm run test       # Run unit tests once
 npm run test:watch # Run tests in watch mode
 npm run coverage   # Generate coverage report (80% threshold enforced)
@@ -62,7 +61,7 @@ src/
 dist/
   app.js                   # Built IIFE bundle (CSS injected)
 index.html                 # Dev test page
-pages/                     # Static docs and demo pages
+docs/                      # Static docs and demo pages (index.html, meetings.html, intl/)
 ```
 
 ## Build Output
@@ -83,8 +82,7 @@ pages/                     # Static docs and demo pages
 | Routing   | [svelte-spa-router](https://github.com/bmlt-enabled/svelte-spa-router) |
 | Language  | TypeScript 5 (strict)                                                  |
 | Testing   | Vitest + @testing-library/svelte + Playwright                          |
-| Linting   | ESLint 10 + Prettier 3 + svelte-check + knip                           |
-| Hooks     | husky + lint-staged (pre-commit)                                       |
+| Linting   | ESLint 10 + Prettier 3 + svelte-check                                  |
 
 ## CI/CD
 

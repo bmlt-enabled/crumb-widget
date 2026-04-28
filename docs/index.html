@@ -2612,7 +2612,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
       async function loadDictionary(lang) {
         if (i18nCache[lang]) return i18nCache[lang];
         try {
-          var res = await fetch('docs/intl/' + lang + '.json', { cache: 'no-cache' });
+          var res = await fetch('intl/' + lang + '.json', { cache: 'no-cache' });
           if (!res.ok) throw new Error('HTTP ' + res.status);
           var dict = await res.json();
           i18nCache[lang] = dict;

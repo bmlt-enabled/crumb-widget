@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="../../pages/crumb-logo.svg" alt="Crumb Widget Logo" width="128" height="128">
+  <img src="../crumb-logo.svg" alt="Crumb Widget Logo" width="128" height="128">
 </p>
 
 <h1 align="center">Crumb Widget</h1>

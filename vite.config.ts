@@ -6,8 +6,8 @@ import { svelteTesting } from '@testing-library/svelte/vite';
 import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import { resolve } from 'path';
-import { copyFileSync, readFileSync, readdirSync, mkdirSync, existsSync } from 'fs';
-import { join } from 'path';
+import { copyFileSync, readFileSync, readdirSync, mkdirSync, existsSync, statSync } from 'fs';
+import { dirname, extname, join } from 'path';
 import { execSync } from 'child_process';
 
 const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
@@ -43,29 +43,31 @@ export default defineConfig({
     {
       name: 'copy-docs',
       closeBundle() {
-        copyFileSync('pages/docs.html', 'dist/index.html');
-        copyFileSync('pages/meetings.html', 'dist/meetings.html');
-        copyFileSync('pages/privacy.html', 'dist/privacy.html');
-        copyFileSync('pages/crumb-logo.svg', 'dist/crumb-logo.svg');
-        copyFileSync('pages/favicon-32x32.png', 'dist/favicon-32x32.png');
-        copyFileSync('pages/apple-touch-icon.png', 'dist/apple-touch-icon.png');
-        copyFileSync('pages/og-image.png', 'dist/og-image.png');
-        const testSrc = 'pages/tests';
-        const testDst = 'dist/tests';
-        if (existsSync(testSrc)) {
-          mkdirSync(testDst, { recursive: true });
-          for (const file of readdirSync(testSrc)) {
-            copyFileSync(join(testSrc, file), join(testDst, file));
+        const copy = (src: string, dst: string, filter?: (name: string) => boolean) => {
+          if (!existsSync(src)) return;
+          if (statSync(src).isDirectory()) {
+            mkdirSync(dst, { recursive: true });
+            for (const entry of readdirSync(src)) {
+              if (filter && !filter(entry)) continue;
+              copy(join(src, entry), join(dst, entry), filter);
+            }
+          } else {
+            mkdirSync(dirname(dst), { recursive: true });
+            copyFileSync(src, dst);
           }
-        }
-        const intlSrc = 'pages/docs/intl';
-        const intlDst = 'dist/docs/intl';
-        if (existsSync(intlSrc)) {
-          mkdirSync(intlDst, { recursive: true });
-          for (const file of readdirSync(intlSrc)) {
-            copyFileSync(join(intlSrc, file), join(intlDst, file));
-          }
-        }
+        };
+        const assets: Array<[string, string, ((name: string) => boolean)?]> = [
+          ['docs/index.html', 'dist/index.html'],
+          ['docs/meetings.html', 'dist/meetings.html'],
+          ['docs/privacy.html', 'dist/privacy.html'],
+          ['docs/crumb-logo.svg', 'dist/crumb-logo.svg'],
+          ['docs/favicon-32x32.png', 'dist/favicon-32x32.png'],
+          ['docs/apple-touch-icon.png', 'dist/apple-touch-icon.png'],
+          ['docs/og-image.png', 'dist/og-image.png'],
+          ['docs/tests', 'dist/tests'],
+          ['docs/intl', 'dist/intl', (name) => extname(name) !== '.md']
+        ];
+        for (const [src, dst, filter] of assets) copy(src, dst, filter);
       }
     }
   ],
