@@ -73,7 +73,7 @@ export const faTranslations = {
   searchThisArea: 'جستجو در این محدوده',
   yourLocation: 'موقعیت شما',
   mi: 'مایل',
-  km: 'کم',
+  km: 'کم.',
   // Format type group labels
   formatTypeCode_MEETING_FORMAT: 'قالب جلسه',
   formatTypeCode_OPEN_OR_CLOSED: 'باز یا بسته',

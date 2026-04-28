@@ -33,7 +33,7 @@ export const ptTranslations = {
   location: 'Local',
   address: 'Endereço',
   serviceBody: 'Corpo de serviço',
-  distance: 'Distance',
+  distance: 'Distância',
   onlineMeeting: 'Reunião online',
   showing: 'Exibindo',
   meeting: 'reunião',

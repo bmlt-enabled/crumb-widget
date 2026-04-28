@@ -12,7 +12,7 @@ export const svTranslations = {
   anyDay: 'Vilken dag som helst',
   anyTime: 'Vilken tid som helst',
   anyType: 'Vilket format som helst',
-  anyServiceBody: 'Vilket servicekropp som helst',
+  anyServiceBody: 'Vilken servicekropp som helst',
   anywhere: 'Var som helst',
   clearAllFilters: 'Rensa alla filter',
   listView: 'Listvy',
