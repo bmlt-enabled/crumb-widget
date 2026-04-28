@@ -3,3 +3,6 @@ contact_links:
   - name: Documentation
     url: https://crumb.bmlt.app
     about: Check the docs before opening an issue - your question may already be answered.
+  - name: Translation contribution guide
+    url: https://github.com/bmlt-enabled/crumb-widget/blob/main/.github/CONTRIBUTING.md#translations
+    about: How to fix or add translations for the widget, docs site, and README.
