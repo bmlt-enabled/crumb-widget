@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="../../README.md">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | 日本語 | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="README.en.md">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | 日本語 | <a href="README.fa.md">فارسی</a>
 </p>
 
 埋め込み可能な NA ミーティング検索ウィジェットです。Svelte 5 で構築されており、自己完結型の単一 JavaScript ファイルとして配布されます。[WordPress プラグイン](https://wordpress.org/plugins/crumb/)、[Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)、[CDN スクリプト](https://cdn.aws.bmlt.app/crumb-widget.js)、[npm パッケージ](https://www.npmjs.com/package/crumb-widget)として利用できます。

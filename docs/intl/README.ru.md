@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="../../README.md">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | Русский | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="README.en.md">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | Русский | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 Встраиваемый виджет поиска встреч NA. Построен на Svelte 5 и поставляется как единый автономный JavaScript-файл. Доступен в виде [плагина WordPress](https://wordpress.org/plugins/crumb/), [модуля Drupal](https://github.com/bmlt-enabled/crumb-drupal), [CDN-скрипта](https://cdn.aws.bmlt.app/crumb-widget.js) или [npm-пакета](https://www.npmjs.com/package/crumb-widget).
