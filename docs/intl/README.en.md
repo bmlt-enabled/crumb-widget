@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/crumb-logo.svg" alt="Crumb Widget logo" width="128" height="128">
+  <img src="../crumb-logo.svg" alt="Crumb Widget logo" width="128" height="128">
 </p>
 
 <h1 align="center">Crumb Widget</h1>
@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 English | <a href="docs/intl/README.es.md">Español</a> | <a href="docs/intl/README.pt-BR.md">Português (Brasil)</a> | <a href="docs/intl/README.fr.md">Français</a> | <a href="docs/intl/README.de.md">Deutsch</a> | <a href="docs/intl/README.it.md">Italiano</a> | <a href="docs/intl/README.sv.md">Svenska</a> | <a href="docs/intl/README.da.md">Dansk</a> | <a href="docs/intl/README.pl.md">Polski</a> | <a href="docs/intl/README.el.md">Ελληνικά</a> | <a href="docs/intl/README.ru.md">Русский</a> | <a href="docs/intl/README.ja.md">日本語</a> | <a href="docs/intl/README.fa.md">فارسی</a>
+  🌐 English | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a single self-contained JavaScript file. Available as a [WordPress plugin](https://wordpress.org/plugins/crumb/), [Drupal module](https://github.com/bmlt-enabled/crumb-drupal), [CDN script](https://cdn.aws.bmlt.app/crumb-widget.js), or [npm package](https://www.npmjs.com/package/crumb-widget).
