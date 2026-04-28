@@ -35,6 +35,7 @@
     "wix": "Wix",
     "features": "Features",
     "browserSupport": "Browser Support",
+    "faq": "FAQ & Troubleshooting",
     "npmInstall": "Installation",
     "npmUsage": "Usage",
     "npmOptions": "Options",
@@ -395,6 +396,43 @@
   "browserSupport": {
     "title": "Browser Support",
     "intro": "All modern browsers. Internet Explorer is not supported."
+  },
+  "faq": {
+    "title": "FAQ & Troubleshooting",
+    "nothing": {
+      "title": "Nothing is showing up — the widget area is blank",
+      "body": "The two most common causes:",
+      "li1": "<strong>Wrong server URL.</strong> Open <code>data-server</code> in a browser. It should load a BMLT admin page (or at least respond). Double-check the trailing path — most servers expect <code>/main_server/</code> at the end.",
+      "li2": "<strong>Missing container.</strong> The widget mounts into an element with <code>id=\"crumb-widget\"</code>. If the ID is misspelled or the <code>&lt;div&gt;</code> is missing, nothing renders.",
+      "li3": "<strong>CORS errors.</strong> Open your browser's developer console (F12). If you see a CORS error, your BMLT server is not allowing requests from your site's domain — contact your server admin.",
+      "li4": "<strong>Container has no height.</strong> If you set <code>data-view=\"map\"</code> or <code>data-view=\"both\"</code>, the parent container needs a height. Add <code>style=\"height:600px\"</code> to the <code>&lt;div&gt;</code>."
+    },
+    "map": {
+      "title": "The map is blank or won't load",
+      "li1": "<strong>No meetings have coordinates.</strong> The map only shows meetings with valid latitude/longitude on your BMLT server. Check the meetings in your BMLT admin.",
+      "li2": "<strong>Tile provider blocked.</strong> If your site has a strict Content-Security-Policy, make sure tile URLs (default: <code>tile.openstreetmap.org</code>) are allowed in <code>img-src</code> and <code>connect-src</code>.",
+      "li3": "<strong>Geolocation denied.</strong> \"Near me\" search requires the user to grant location permission in their browser. If denied, the search falls back to text/postal-code search."
+    },
+    "colors": {
+      "title": "How do I change the colors to match my site?",
+      "body": "Override the widget's CSS custom properties — see <a href=\"#css-vars\">CSS Variables</a>. For dark mode, see <a href=\"#css-dark-mode\">Dark Mode</a>. You can also use one of the built-in helper themes — see <a href=\"#css-classes\">CSS Helper Classes</a>."
+    },
+    "serviceBody": {
+      "title": "My service body filter shows no meetings — why?",
+      "li1": "<strong>Wrong service body ID.</strong> The ID must be the numeric ID from your BMLT server, not the name. See <a href=\"#find-service-body\">Finding your Service Body ID</a>.",
+      "li2": "<strong>No published meetings.</strong> The service body may exist but have no active/published meetings on the server.",
+      "li3": "<strong>Recursion is always on.</strong> Child service bodies are automatically included — this cannot be disabled. If you want only one specific body, that body must be a leaf (no children) on the server."
+    },
+    "iframe": {
+      "title": "Can I embed this inside an iframe (Google Sites, etc.)?",
+      "body": "Yes. Set <code>data-router=\"hash\"</code> so individual meeting links use <code>#</code>-style URLs, which work inside iframes where the parent page controls the address bar. See <a href=\"#routing\">Routing</a> and the <a href=\"#google-sites\">Google Sites example</a>."
+    },
+    "help": {
+      "title": "I'm still stuck — where can I get help?",
+      "li1": "<strong>Bug or feature request:</strong> open an issue on <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHub</a>.",
+      "li2": "<strong>Email:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Community:</strong> the <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">BMLT Facebook group</a>."
+    }
   },
   "npmPackage": {
     "title": "npm Package",
