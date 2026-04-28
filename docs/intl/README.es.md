@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="README.en.md">English</a> | Español | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | Español | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 Un widget incrustable para encontrar reuniones de NA. Construido con Svelte 5 y distribuido como un único archivo JavaScript autónomo. Disponible como [plugin de WordPress](https://wordpress.org/plugins/crumb/), [módulo de Drupal](https://github.com/bmlt-enabled/crumb-drupal), [script desde CDN](https://cdn.aws.bmlt.app/crumb-widget.js) o [paquete npm](https://www.npmjs.com/package/crumb-widget).
