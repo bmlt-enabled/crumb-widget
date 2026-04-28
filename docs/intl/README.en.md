@@ -30,7 +30,10 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 ## Quick Start
 
 ```html
-<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
+<div id="crumb-widget"
+    data-server="https://myserver.com/main_server/"
+    data-service-body="3"
+></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

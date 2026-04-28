@@ -11,7 +11,7 @@ const config: Config = {
   bracketSameLine: false,
   useTabs: false,
   arrowParens: 'always',
-  endOfLine: 'auto',
+  endOfLine: 'lf',
   trailingComma: 'none',
   printWidth: 200,
   plugins: ['prettier-plugin-svelte', 'prettier-plugin-tailwindcss'],
