@@ -1594,6 +1594,20 @@
                 </td>
               </tr>
               <tr>
+                <td>height</td>
+                <td><code>number</code></td>
+                <td data-i18n-html="globalConfig.row.height">
+                  Widget height in pixels. Equivalent to the <code>data-height</code> attribute. Omit to let the widget grow to its natural content height.
+                </td>
+              </tr>
+              <tr>
+                <td>basePath</td>
+                <td><code>string</code></td>
+                <td data-i18n-html="globalConfig.row.basePath">
+                  Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See <a href="#routing">Routing</a> for details.
+                </td>
+              </tr>
+              <tr>
                 <td>map.tiles</td>
                 <td><code>TilesConfig</code></td>
                 <td data-i18n-html="globalConfig.row.mapTiles">Custom map tile provider. Replaces the default OpenStreetMap tiles. See <a href="#tile-config">Tile Provider</a> below.</td>
@@ -1627,6 +1641,7 @@
     hideHeader: false,         // hide the "Meeting Finder" title bar
     darkMode: 'auto',          // 'auto' | true | false
     height: 600,               // widget height in pixels
+    basePath: '/meetings',     // History API base path; equivalent to data-path
     map: {
       tiles: {
         url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -1877,6 +1892,16 @@
                 <td>--bmlt-virtual-bg</td>
                 <td><code>#dbeafe</code></td>
                 <td data-i18n="cssVars.row.virtualBg">Virtual badge background</td>
+              </tr>
+              <tr>
+                <td>--bmlt-in-progress-bg</td>
+                <td><code>#e0e7ff</code></td>
+                <td data-i18n="cssVars.row.inProgressBg">In-progress banner and row background</td>
+              </tr>
+              <tr>
+                <td>--bmlt-in-progress-text</td>
+                <td><code>#3730a3</code></td>
+                <td data-i18n="cssVars.row.inProgressText">In-progress banner text</td>
               </tr>
               <tr>
                 <td>--bmlt-surface</td>
