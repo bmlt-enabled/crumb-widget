@@ -20,8 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="../screenshot-list.png" alt="Crumb Widget — προβολή λίστας" width="49%">
-  <img src="../screenshot-map.png" alt="Crumb Widget — προβολή χάρτη" width="49%">
+  <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
 Ένα ενσωματώσιμο widget για την εύρεση συναντήσεων NA. Κατασκευασμένο με Svelte 5 και διανέμεται ως ένα αυτόνομο αρχείο JavaScript. Διαθέσιμο ως [πρόσθετο WordPress](https://wordpress.org/plugins/crumb/), [ενότητα Drupal](https://github.com/bmlt-enabled/crumb-drupal), [σενάριο CDN](https://cdn.aws.bmlt.app/crumb-widget.js) ή [πακέτο npm](https://www.npmjs.com/package/crumb-widget).

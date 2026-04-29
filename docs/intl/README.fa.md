@@ -20,8 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="../screenshot-list.png" alt="Crumb Widget — نمای فهرست" width="49%">
-  <img src="../screenshot-map.png" alt="Crumb Widget — نمای نقشه" width="49%">
+  <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
 <div dir="rtl">

@@ -20,8 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="../screenshot-list.png" alt="Crumb Widget — リスト表示" width="49%">
-  <img src="../screenshot-map.png" alt="Crumb Widget — 地図表示" width="49%">
+  <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
 埋め込み可能な NA ミーティング検索ウィジェットです。Svelte 5 で構築されており、自己完結型の単一 JavaScript ファイルとして配布されます。[WordPress プラグイン](https://wordpress.org/plugins/crumb/)、[Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)、[CDN スクリプト](https://cdn.aws.bmlt.app/crumb-widget.js)、[npm パッケージ](https://www.npmjs.com/package/crumb-widget)として利用できます。

@@ -20,8 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="../screenshot-list.png" alt="Crumb Widget — vista de lista" width="49%">
-  <img src="../screenshot-map.png" alt="Crumb Widget — vista de mapa" width="49%">
+  <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
 Un widget incrustable para encontrar reuniones de NA. Construido con Svelte 5 y distribuido como un único archivo JavaScript autónomo. Disponible como [plugin de WordPress](https://wordpress.org/plugins/crumb/), [módulo de Drupal](https://github.com/bmlt-enabled/crumb-drupal), [script desde CDN](https://cdn.aws.bmlt.app/crumb-widget.js) o [paquete npm](https://www.npmjs.com/package/crumb-widget).
