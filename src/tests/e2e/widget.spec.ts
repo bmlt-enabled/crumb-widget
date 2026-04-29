@@ -181,4 +181,47 @@ test.describe('Widget — in-progress banner', () => {
     await visibleBanner(page).click();
     await expect(meetingCell(page, 'Monday Serenity Group')).toBeVisible();
   });
+
+  // Regression: the alternating-row selector `.bmlt-row:nth-child(even of .bmlt-row)`
+  // has specificity (1,3,0) because :nth-child(of S) adds the inner selector list.
+  // The in-progress rule must match that or higher, otherwise every 2nd in-progress
+  // row loses its highlight to the alt-row gray.
+  test('every in-progress row gets the highlight background', async ({ page }) => {
+    await page.clock.setFixedTime(new Date('2024-01-08T19:05:00'));
+    await page.route('https://bmlt.e2e.test/**', (route) => {
+      const twoInProgress = [
+        { ...MEETINGS[0]!, id_bigint: '101', meeting_name: 'Live Group A', start_time: '19:00:00' },
+        { ...MEETINGS[0]!, id_bigint: '102', meeting_name: 'Live Group B', start_time: '19:00:00' },
+        // A non-in-progress meeting so the alt-row CSS is in play below the banner
+        { ...MEETINGS[0]!, id_bigint: '103', meeting_name: 'Later Group', start_time: '21:00:00' }
+      ];
+      return route.fulfill({ json: { meetings: twoInProgress, formats: FORMATS } });
+    });
+    await page.goto('/src/tests/e2e/fixture.html');
+    await expect(visibleBanner(page)).toContainText(/2\s+meetings\s+in progress/i);
+    await visibleBanner(page).click();
+
+    const rows = page.locator('.bmlt-in-progress-row').locator('visible=true');
+    await expect(rows).toHaveCount(2);
+
+    const bg = (i: number) => rows.nth(i).evaluate((el) => getComputedStyle(el).backgroundColor);
+    const [bg0, bg1] = await Promise.all([bg(0), bg(1)]);
+    expect(bg0).toBe(bg1);
+
+    // And it must actually match the in-progress token, not the alt-row gray.
+    const expected = await page.evaluate(() => {
+      const root = document.getElementById('crumb-widget')!;
+      return getComputedStyle(root).getPropertyValue('--bmlt-in-progress-bg').trim();
+    });
+    expect(expected).not.toBe('');
+    const normalized = await page.evaluate((color) => {
+      const probe = document.createElement('div');
+      probe.style.color = color;
+      document.body.appendChild(probe);
+      const c = getComputedStyle(probe).color;
+      probe.remove();
+      return c;
+    }, expected);
+    expect(bg0).toBe(normalized);
+  });
 });

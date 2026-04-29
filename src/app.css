@@ -406,11 +406,13 @@
   text-align: inherit !important;
 }
 
-/* In-progress expanded rows — double-class beats .bmlt-row and :nth-child specificity */
-#crumb-widget .bmlt-in-progress-row.bmlt-in-progress-row {
+/* In-progress expanded rows — triple-class needed because
+   `.bmlt-row:nth-child(even of .bmlt-row)` has specificity (1,3,0):
+   `:nth-child(of S)` adds the specificity of the inner selector list. */
+#crumb-widget .bmlt-in-progress-row.bmlt-in-progress-row.bmlt-in-progress-row {
   background-color: var(--bmlt-in-progress-bg) !important;
 }
-#crumb-widget .bmlt-in-progress-row.bmlt-in-progress-row:hover {
+#crumb-widget .bmlt-in-progress-row.bmlt-in-progress-row.bmlt-in-progress-row:hover {
   background-color: var(--bmlt-in-progress-bg) !important;
   filter: none !important;
 }
