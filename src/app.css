@@ -134,6 +134,18 @@
   background-color: var(--bmlt-background) !important;
 }
 
+/* Host-CSS interop: some CMS templates (e.g. Joomla's Cassiopeia) define a
+   global `.hidden { visibility: hidden }` rule. The widget uses Tailwind's
+   `.hidden` (display:none) on responsive wrappers like the desktop table
+   (`<div class="hidden overflow-x-auto md:block">`). On desktop, Tailwind's
+   `md:block` overrides `display`, but Cassiopeia's `visibility: hidden`
+   sticks — and inheritance hides every descendant (table → tbody → tr → td).
+   Force visibility back to visible inside the widget. Tailwind's
+   display-based hiding still works, so this doesn't break anything. */
+#crumb-widget .hidden {
+  visibility: visible !important;
+}
+
 /* Controls bar */
 #crumb-widget .bmlt-controls {
   background-color: var(--bmlt-background) !important;
