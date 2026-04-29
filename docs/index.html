@@ -1037,8 +1037,8 @@
         </a>
 
         <div id="ss-carousel" style="position:relative;margin:1.5rem 0 0;user-select:none;">
-          <div style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);">
-            <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;touch-action:pan-y;">
+          <div id="ss-wrapper" style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);touch-action:pan-y;">
+            <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;">
               <a href="meetings.html" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
                 <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
               </a>
@@ -1067,8 +1067,9 @@
         <script>
           (function(){
             var track=document.getElementById('ss-track');
+            var wrapper=document.getElementById('ss-wrapper');
             var dots=[].slice.call(document.getElementById('ss-dots').children);
-            var total=3,cur=0,startX=0,dragging=false,dragDx=0;
+            var total=3,cur=0,startX=0,dragging=false,dragDx=0,didSwipe=false;
             function go(n){
               cur=(n+total)%total;
               track.style.transform='translateX(-'+cur*100+'%)';
@@ -1077,26 +1078,28 @@
             document.getElementById('ss-prev').addEventListener('click',function(e){e.preventDefault();go(cur-1);});
             document.getElementById('ss-next').addEventListener('click',function(e){e.preventDefault();go(cur+1);});
             dots.forEach(function(d,i){d.addEventListener('click',function(){go(i);});});
-            /* touch/mouse swipe */
-            track.addEventListener('mousedown',function(e){dragging=true;dragDx=0;startX=e.clientX;track.style.transition='none';});
+            /* mouse swipe */
+            track.addEventListener('mousedown',function(e){dragging=true;dragDx=0;didSwipe=false;startX=e.clientX;track.style.transition='none';});
             track.addEventListener('mousemove',function(e){if(!dragging)return;dragDx=e.clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';});
             track.addEventListener('mouseup',function(){finish();});
             track.addEventListener('mouseleave',function(){if(dragging)finish();});
-            track.addEventListener('touchstart',function(e){dragDx=0;startX=e.touches[0].clientX;track.style.transition='none';},{ passive:true });
-            track.addEventListener('touchmove',function(e){dragDx=e.touches[0].clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';},{ passive:true });
-            track.addEventListener('touchend',function(){finish();});
-            track.addEventListener('touchcancel',function(){finish();});
+            /* touch swipe — listeners on wrapper (plain div) so iOS tap-detection on <a> children doesn't interfere */
+            wrapper.addEventListener('touchstart',function(e){dragDx=0;didSwipe=false;startX=e.touches[0].clientX;track.style.transition='none';},{passive:true});
+            wrapper.addEventListener('touchmove',function(e){dragDx=e.touches[0].clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';},{passive:true});
+            wrapper.addEventListener('touchend',function(){finish();});
+            wrapper.addEventListener('touchcancel',function(){finish();});
             function finish(){
               dragging=false;
+              if(Math.abs(dragDx)>5)didSwipe=true;
               track.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
               if(dragDx<-50)go(cur+1);
               else if(dragDx>50)go(cur-1);
               else go(cur);
               dragDx=0;
             }
-            /* prevent link navigation on drag */
+            /* prevent link navigation when the gesture was a swipe */
             track.querySelectorAll('a').forEach(function(a){
-              a.addEventListener('click',function(e){if(Math.abs(dragDx)>5)e.preventDefault();});
+              a.addEventListener('click',function(e){if(didSwipe){e.preventDefault();didSwipe=false;}});
             });
           })();
         </script>
