@@ -1033,14 +1033,69 @@
           <span data-i18n="header.btn.qaTests">QA Tests</span>
         </a>
 
-        <div class="header-screenshots" style="display: flex; gap: 0.75rem; margin: 1.5rem 0 0; flex-wrap: wrap;">
-          <a href="meetings.html" target="_blank" style="flex: 1 1 320px; min-width: 0; display: block;">
-            <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width: 100%; height: auto; display: block; border: 1px solid var(--doc-border); border-radius: 8px;" />
-          </a>
-          <a href="meetings.html?view=map" target="_blank" style="flex: 1 1 320px; min-width: 0; display: block;">
-            <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width: 100%; height: auto; display: block; border: 1px solid var(--doc-border); border-radius: 8px;" />
-          </a>
+        <div id="ss-carousel" style="position:relative;margin:1.5rem 0 0;user-select:none;">
+          <div style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);">
+            <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;">
+              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;">
+                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;" />
+              </a>
+              <a href="meetings.html?view=map" target="_blank" style="min-width:100%;display:block;">
+                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width:100%;height:auto;display:block;" />
+              </a>
+              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;">
+                <img src="screenshot-meeting.png" alt="Crumb Widget — meeting detail" style="width:100%;height:auto;display:block;" />
+              </a>
+            </div>
+          </div>
+          <!-- arrows -->
+          <button id="ss-prev" aria-label="Previous screenshot" style="position:absolute;top:50%;left:-18px;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid var(--doc-border);background:var(--doc-bg,#fff);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.15);color:inherit;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <button id="ss-next" aria-label="Next screenshot" style="position:absolute;top:50%;right:-18px;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid var(--doc-border);background:var(--doc-bg,#fff);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.15);color:inherit;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <!-- dots -->
+          <div id="ss-dots" style="display:flex;justify-content:center;gap:6px;margin-top:10px;">
+            <button aria-label="Slide 1" style="width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--doc-link,#3b82f6);"></button>
+            <button aria-label="Slide 2" style="width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--doc-border,#ccc);"></button>
+            <button aria-label="Slide 3" style="width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--doc-border,#ccc);"></button>
+          </div>
         </div>
+        <script>
+          (function(){
+            var track=document.getElementById('ss-track');
+            var dots=[].slice.call(document.getElementById('ss-dots').children);
+            var total=3,cur=0,startX=0,dragging=false,dragDx=0;
+            function go(n){
+              cur=(n+total)%total;
+              track.style.transform='translateX(-'+cur*100+'%)';
+              dots.forEach(function(d,i){d.style.background=i===cur?'var(--doc-link,#3b82f6)':'var(--doc-border,#ccc)';});
+            }
+            document.getElementById('ss-prev').addEventListener('click',function(e){e.preventDefault();go(cur-1);});
+            document.getElementById('ss-next').addEventListener('click',function(e){e.preventDefault();go(cur+1);});
+            dots.forEach(function(d,i){d.addEventListener('click',function(){go(i);});});
+            /* touch/mouse swipe */
+            track.addEventListener('mousedown',function(e){dragging=true;startX=e.clientX;track.style.transition='none';});
+            track.addEventListener('mousemove',function(e){if(!dragging)return;dragDx=e.clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';});
+            track.addEventListener('mouseup',function(){finish();});
+            track.addEventListener('mouseleave',function(){if(dragging)finish();});
+            track.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;track.style.transition='none';},{ passive:true });
+            track.addEventListener('touchmove',function(e){dragDx=e.touches[0].clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';},{ passive:true });
+            track.addEventListener('touchend',function(){finish();});
+            function finish(){
+              dragging=false;
+              track.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
+              if(dragDx<-50)go(cur+1);
+              else if(dragDx>50)go(cur-1);
+              else go(cur);
+              dragDx=0;
+            }
+            /* prevent link navigation on drag */
+            track.querySelectorAll('a').forEach(function(a){
+              a.addEventListener('click',function(e){if(Math.abs(dragDx)>5)e.preventDefault();});
+            });
+          })();
+        </script>
 
         <h2 id="overview" data-i18n="overview.title">Overview</h2>
         <p data-i18n-html="overview.p1">
