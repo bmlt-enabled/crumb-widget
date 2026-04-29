@@ -640,6 +640,8 @@
         td:first-child {
           white-space: normal;
         }
+        #ss-prev, #ss-next { display: none !important; }
+        #ss-dots button { width: 12px; height: 12px; }
       }
       .demo-header {
         display: flex;
@@ -1034,16 +1036,16 @@
         </a>
 
         <div id="ss-carousel" style="position:relative;margin:1.5rem 0 0;user-select:none;">
-          <div style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);">
+          <div style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);touch-action:pan-y;">
             <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;">
               <a href="meetings.html" target="_blank" style="min-width:100%;display:block;">
-                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;" />
+                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;" draggable="false" />
               </a>
               <a href="meetings.html?view=map" target="_blank" style="min-width:100%;display:block;">
-                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width:100%;height:auto;display:block;" />
+                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;" draggable="false" />
               </a>
               <a href="meetings.html" target="_blank" style="min-width:100%;display:block;">
-                <img src="screenshot-meeting.png" alt="Crumb Widget — meeting detail" style="width:100%;height:auto;display:block;" />
+                <img src="screenshot-meeting.png" alt="Crumb Widget — meeting detail" style="width:100%;height:auto;display:block;-webkit-user-drag:none;" draggable="false" />
               </a>
             </div>
           </div>
@@ -1075,13 +1077,14 @@
             document.getElementById('ss-next').addEventListener('click',function(e){e.preventDefault();go(cur+1);});
             dots.forEach(function(d,i){d.addEventListener('click',function(){go(i);});});
             /* touch/mouse swipe */
-            track.addEventListener('mousedown',function(e){dragging=true;startX=e.clientX;track.style.transition='none';});
+            track.addEventListener('mousedown',function(e){dragging=true;dragDx=0;startX=e.clientX;track.style.transition='none';});
             track.addEventListener('mousemove',function(e){if(!dragging)return;dragDx=e.clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';});
             track.addEventListener('mouseup',function(){finish();});
             track.addEventListener('mouseleave',function(){if(dragging)finish();});
-            track.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;track.style.transition='none';},{ passive:true });
+            track.addEventListener('touchstart',function(e){dragDx=0;startX=e.touches[0].clientX;track.style.transition='none';},{ passive:true });
             track.addEventListener('touchmove',function(e){dragDx=e.touches[0].clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';},{ passive:true });
             track.addEventListener('touchend',function(){finish();});
+            track.addEventListener('touchcancel',function(){dragDx=0;finish();});
             function finish(){
               dragging=false;
               track.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
