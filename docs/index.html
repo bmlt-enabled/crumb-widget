@@ -938,6 +938,7 @@
           <li class="section-label" data-i18n="nav.section.platforms">Platforms</li>
           <li><a href="#example-wordpress" data-i18n="nav.exampleWordpress">WordPress</a></li>
           <li><a href="#example-drupal" data-i18n="nav.exampleDrupal">Drupal</a></li>
+          <li><a href="#example-joomla" data-i18n="nav.exampleJoomla">Joomla</a></li>
           <li class="section-label" data-i18n="nav.section.siteBuilders">Website Builders</li>
           <li><a href="#find-service-body" data-i18n="nav.findServiceBody">Finding your Service Body ID</a></li>
           <li><a href="#google-sites" data-i18n="nav.googleSites">Google Sites</a></li>
@@ -1249,6 +1250,57 @@
     'height'            =&gt; 800,
     'columns'           =&gt; [ 'time', 'name', 'location', 'address', 'service_body' ],
   ]);
+}</code></pre>
+        </div>
+
+        <h2 id="example-joomla" data-i18n="exampleJoomla.title">Example: Joomla</h2>
+        <p data-i18n-html="exampleJoomla.intro">
+          Add Crumb Widget to a Joomla 4, 5, or 6 site with the
+          <a href="https://github.com/bmlt-enabled/crumb-joomla" target="_blank" rel="noopener"><strong>Crumb</strong></a>
+          extension. The package bundles a content plugin (<code>{crumb}</code> shortcode in articles) and a site module (for module positions), sharing one configuration. Releases are published at
+          <a href="https://github.com/bmlt-enabled/crumb-joomla/releases" target="_blank" rel="noopener">github.com/bmlt-enabled/crumb-joomla/releases</a>.
+        </p>
+
+        <h3 data-i18n="exampleJoomla.installation">Installation</h3>
+        <ol>
+          <li data-i18n-html="exampleJoomla.install.1">
+            Download the latest <code>pkg_crumb.zip</code> from the <a href="https://github.com/bmlt-enabled/crumb-joomla/releases" target="_blank" rel="noopener">releases page</a>.
+          </li>
+          <li data-i18n-html="exampleJoomla.install.2">In Joomla admin, go to <strong>System → Install → Extensions</strong> and upload the package zip.</li>
+          <li data-i18n-html="exampleJoomla.install.3">Enable the plugin: <strong>System → Plugins</strong>, search "Crumb", open <strong>Content - Crumb</strong>, set the BMLT server URL, save, and toggle status to <strong>Enabled</strong>. (Joomla ships content plugins disabled by default.)</li>
+        </ol>
+
+        <h3 data-i18n="exampleJoomla.embedShortcode">Embed via shortcode in articles</h3>
+        <p data-i18n="exampleJoomla.embedShortcodeBody">With the content plugin enabled, drop the shortcode into any article body:</p>
+
+        <div class="demo">
+          <div class="demo-header">Joomla shortcode</div>
+          <pre><code>{crumb}</code></pre>
+        </div>
+        <p data-i18n="exampleJoomla.serverNote">The BMLT server URL set in the plugin options is used by default. You can override it — or filter by service body — directly in the shortcode:</p>
+        <div class="demo">
+          <div class="demo-header">Joomla shortcode — with overrides</div>
+          <pre><code>{crumb server="https://your-server/main_server" service_body="42" view="map" geolocation="true"}</code></pre>
+        </div>
+
+        <h3 data-i18n="exampleJoomla.embedModule">Embed via Module</h3>
+        <p data-i18n-html="exampleJoomla.embedModuleBody">
+          Publish the <strong>Crumb</strong> module to any module position via <strong>Content → Site Modules → New → Crumb</strong>. Per-module settings cover server URL, service body filter, default view, and CSS template.
+        </p>
+
+        <h3 data-i18n="exampleJoomla.advanced">Advanced configuration</h3>
+        <p data-i18n-html="exampleJoomla.advancedIntro">
+          For options that aren't surfaced as form fields (language, dark mode, custom map tiles, etc.), use the <strong>Widget Configuration (JSON)</strong> field on the plugin or module options panel. The JSON is parsed and emitted as <code>window.CrumbWidgetConfig</code> alongside the widget.
+        </p>
+        <div class="demo">
+          <div class="demo-header">Widget Configuration (JSON)</div>
+          <pre><code>{
+  "language": "en",
+  "geolocation": true,
+  "geolocationRadius": 20,
+  "height": 800,
+  "darkMode": "auto",
+  "columns": ["time", "name", "location", "address", "service_body"]
 }</code></pre>
         </div>
 
@@ -2309,6 +2361,12 @@
                 <td>Drupal</td>
                 <td data-i18n-html="routing.row.drupal">
                   Set <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; the module registers the necessary route automatically.
+                </td>
+              </tr>
+              <tr>
+                <td>Joomla</td>
+                <td data-i18n-html="routing.row.joomla">
+                  Set <strong>Base Path for Pretty URLs</strong> on the <em>Content - Crumb</em> plugin's options (or on the module). Combine with Joomla's <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> options under <em>System → Global Configuration → Site</em>.
                 </td>
               </tr>
               <tr>
