@@ -1037,16 +1037,16 @@
         </a>
 
         <div id="ss-carousel" style="position:relative;margin:1.5rem 0 0;user-select:none;">
-          <div style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);touch-action:pan-y;">
-            <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;">
-              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;">
-                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;" draggable="false" />
+          <div style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);">
+            <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;touch-action:pan-y;">
+              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
+                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
               </a>
-              <a href="meetings.html?view=map" target="_blank" style="min-width:100%;display:block;">
-                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;" draggable="false" />
+              <a href="meetings.html?view=map" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
+                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
               </a>
-              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;">
-                <img src="screenshot-meeting.png" alt="Crumb Widget — meeting detail" style="width:100%;height:auto;display:block;-webkit-user-drag:none;" draggable="false" />
+              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
+                <img src="screenshot-meeting.png" alt="Crumb Widget — meeting detail" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
               </a>
             </div>
           </div>
@@ -1085,7 +1085,7 @@
             track.addEventListener('touchstart',function(e){dragDx=0;startX=e.touches[0].clientX;track.style.transition='none';},{ passive:true });
             track.addEventListener('touchmove',function(e){dragDx=e.touches[0].clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';},{ passive:true });
             track.addEventListener('touchend',function(){finish();});
-            track.addEventListener('touchcancel',function(){dragDx=0;finish();});
+            track.addEventListener('touchcancel',function(){finish();});
             function finish(){
               dragging=false;
               track.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
