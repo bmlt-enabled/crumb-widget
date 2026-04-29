@@ -28,6 +28,7 @@
     "exampleMap": "Standard til kort",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Routingtilstande",
     "findServiceBody": "Find dit service body-ID",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Indbygget mørkt farveskema. <code>'auto'</code> følger besøgendes OS-præference (<code>prefers-color-scheme</code>); <code>true</code> tvinger mørk tilstand uanset OS; <code>false</code> (standard) deaktiverer den. Fungerer sammen med <a href=\"#tile-dark-config\">fliser i mørk tilstand</a>.",
       "mapTiles": "Brugerdefineret kortflise-udbyder. Erstatter standard OpenStreetMap-fliser. Se <a href=\"#tile-config\">Flise-udbyder</a> nedenfor.",
       "mapTilesDark": "Alternativ flise-udbyder, der bruges, når <code>prefers-color-scheme: dark</code>. Skifter automatisk ved OS-temaskift. Se <a href=\"#tile-dark-config\">Fliser i mørk tilstand</a> nedenfor.",
-      "mapMarkers": "Brugerdefineret kortmarkør for mødesteder. Erstatter standard NA-markøren. Se <a href=\"#marker-config\">Markør-konfiguration</a> nedenfor."
+      "mapMarkers": "Brugerdefineret kortmarkør for mødesteder. Erstatter standard NA-markøren. Se <a href=\"#marker-config\">Markør-konfiguration</a> nedenfor.",
+      "height": "Widgetens højde i pixels. Svarer til attributten <code>data-height</code>. Udelad for at lade widget'en vokse til sin naturlige indholdshøjde.",
+      "basePath": "Basissti for History API-routing (f.eks. <code>'/meetings'</code>). Svarer til attributten <code>data-path</code> — giver pæne URL'er uden <code>#</code>-fragmentet. Se <a href=\"#routing\">Routing</a> for detaljer."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Neutral hover-tilstand (knapper og rækker uden accent)",
       "divider": "Interne række- og listeskillelinjer",
       "textSecondary": "Sekundær / dæmpet tekst (tabeloverskrifter, tid, sted)",
-      "textMuted": "Meget dæmpet tekst (sidefod-tæller, beskeder ved tom tilstand)"
+      "textMuted": "Meget dæmpet tekst (sidefod-tæller, beskeder ved tom tilstand)",
+      "inProgressBg": "Baggrund for igangværende-banner og -række",
+      "inProgressText": "Tekst i igangværende-banneret"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Avanceret konfiguration",
     "advancedIntro": "Alle <a href=\"#global-config\">globale konfigurationsindstillinger</a> (sprog, geolokation, kolonner, kortfliser osv.) kan sættes programmatisk via <code>hook_crumb_config_alter()</code> i ethvert brugerdefineret modul:"
   },
+  "exampleJoomla": {
+    "title": "Eksempel: Joomla",
+    "intro": "Tilføj Crumb Widget til en Joomla 4-, 5- eller 6-side med udvidelsen <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Pakken indeholder et content-plugin (<code>{crumb}</code>-shortcode i artikler) og et site-modul (til modulpositioner), der deler én konfiguration. Udgivelser publiceres på <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Installation",
+    "install": {
+      "1": "Download den nyeste <code>pkg_crumb.zip</code> fra <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">udgivelsessiden</a>.",
+      "2": "I Joomla-administrationen skal du gå til <strong>System → Install → Extensions</strong> og uploade pakkens zip-fil.",
+      "3": "Aktivér plugin'et: <strong>System → Plugins</strong>, søg efter \"Crumb\", åbn <strong>Content - Crumb</strong>, angiv BMLT-server-URL'en, gem og slå status til <strong>Enabled</strong>. (Joomla leverer content-plugins deaktiveret som standard.)"
+    },
+    "embedShortcode": "Indlejr via shortcode i artikler",
+    "embedShortcodeBody": "Når content-plugin'et er aktiveret, kan du indsætte shortcoden i en hvilken som helst artikeltekst:",
+    "serverNote": "BMLT-server-URL'en angivet i plugin-indstillingerne bruges som standard. Du kan tilsidesætte den — eller filtrere efter service body — direkte i shortcoden:",
+    "embedModule": "Indlejr via modul",
+    "embedModuleBody": "Publicér <strong>Crumb</strong>-modulet i en hvilken som helst modulposition via <strong>Content → Site Modules → New → Crumb</strong>. Indstillinger pr. modul dækker server-URL, service body-filter, standardvisning og CSS-skabelon.",
+    "advanced": "Avanceret konfiguration",
+    "advancedIntro": "For indstillinger, der ikke er tilgængelige som formularfelter (sprog, mørk tilstand, brugerdefinerede kortfliser osv.), brug feltet <strong>Widget Configuration (JSON)</strong> i plugin- eller modul-indstillingspanelet. JSON'en parses og udsendes som <code>window.CrumbWidgetConfig</code> sammen med widget'en."
+  },
   "features": {
     "title": "Funktioner",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Konfiguration"
     },
     "row": {
-      "drupal": "Sæt <strong>Base Path for Pretty URLs</strong> i <em>Configuration → Web services → Crumb</em>; modulet registrerer den nødvendige rute automatisk."
+      "drupal": "Sæt <strong>Base Path for Pretty URLs</strong> i <em>Configuration → Web services → Crumb</em>; modulet registrerer den nødvendige rute automatisk.",
+      "joomla": "Sæt <strong>Base Path for Pretty URLs</strong> i indstillingerne for plugin'et <em>Content - Crumb</em> (eller på modulet). Kombinér med Joomlas indstillinger <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> under <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Indlejring i iframes (Google Sites osv.)",
     "iframesP1": "Ved indlejring i iframe-baserede værter som Google Sites fungerer al navigation inde i widget'en (klik på møder, tilbage-knap, søskendelinks) normalt. Dyb-linking til et bestemt møde via URL er dog ikke understøttet, fordi widget'en kører i en proxieret iframe og ikke kan kontrollere forældresidens URL.",

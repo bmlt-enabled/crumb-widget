@@ -28,6 +28,7 @@
     "exampleMap": "پیش‌فرض روی نقشه",
     "exampleWordpress": "وردپرس",
     "exampleDrupal": "دروپال",
+    "exampleJoomla": "جوملا",
     "routingModes": "حالت‌های مسیریابی",
     "findServiceBody": "یافتن شناسهٔ کمیتهٔ خدماتی",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "طرح رنگ تیرهٔ توکار. <code>'auto'</code> از تنظیمات سیستم‌عامل بازدیدکننده پیروی می‌کند (<code>prefers-color-scheme</code>)؛ <code>true</code> صرف‌نظر از تنظیمات سیستم‌عامل، حالت تیره را اعمال می‌کند؛ <code>false</code> (پیش‌فرض) آن را غیرفعال می‌کند. در کنار <a href=\"#tile-dark-config\">کاشی‌های حالت تیره</a> کار می‌کند.",
       "mapTiles": "ارائه‌دهندهٔ کاشی نقشهٔ سفارشی. کاشی‌های پیش‌فرض OpenStreetMap را جایگزین می‌کند. به <a href=\"#tile-config\">ارائه‌دهندهٔ کاشی</a> در ادامه مراجعه کنید.",
       "mapTilesDark": "ارائه‌دهندهٔ کاشی جایگزین که هنگام <code>prefers-color-scheme: dark</code> استفاده می‌شود. هنگام تغییر تم سیستم‌عامل به‌طور خودکار جایگزین می‌شود. به <a href=\"#tile-dark-config\">کاشی‌های حالت تیره</a> مراجعه کنید.",
-      "mapMarkers": "نشانگر سفارشی برای محل‌های جلسات. نشانگر پیش‌فرض NA را جایگزین می‌کند. به <a href=\"#marker-config\">پیکربندی نشانگر</a> در ادامه مراجعه کنید."
+      "mapMarkers": "نشانگر سفارشی برای محل‌های جلسات. نشانگر پیش‌فرض NA را جایگزین می‌کند. به <a href=\"#marker-config\">پیکربندی نشانگر</a> در ادامه مراجعه کنید.",
+      "height": "ارتفاع ویجت بر حسب پیکسل. معادل ویژگی <code>data-height</code>. اگر آن را نگذارید، ویجت تا ارتفاع طبیعی محتوای خود رشد می‌کند.",
+      "basePath": "مسیر پایه برای مسیریابی History API (مثلاً <code>'/meetings'</code>). معادل ویژگی <code>data-path</code> — URLهای تمیز بدون قطعهٔ <code>#</code> تولید می‌کند. برای جزئیات به <a href=\"#routing\">مسیریابی</a> مراجعه کنید."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "حالت هاور خنثی (دکمه‌ها و ردیف‌هایی که از رنگ شاخص استفاده نمی‌کنند)",
       "divider": "خطوط جداکنندهٔ ردیف داخلی و فهرست",
       "textSecondary": "متن ثانویه/کم‌رنگ (سرستون جدول، زمان، مکان)",
-      "textMuted": "متن بسیار کم‌رنگ (شمارش پاورقی، پیام‌های حالت خالی)"
+      "textMuted": "متن بسیار کم‌رنگ (شمارش پاورقی، پیام‌های حالت خالی)",
+      "inProgressBg": "پس‌زمینهٔ بنر و ردیف جلسهٔ در حال برگزاری",
+      "inProgressText": "متن بنر جلسهٔ در حال برگزاری"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "پیکربندی پیشرفته",
     "advancedIntro": "همهٔ <a href=\"#global-config\">گزینه‌های پیکربندی سراسری</a> (زبان، موقعیت‌یابی، ستون‌ها، کاشی‌های نقشه و غیره) را می‌توان به‌صورت برنامه‌نویسی از طریق <code>hook_crumb_config_alter()</code> در هر ماژول سفارشی تنظیم کرد:"
   },
+  "exampleJoomla": {
+    "title": "مثال: جوملا",
+    "intro": "Crumb Widget را با افزونهٔ <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> به یک سایت جوملا ۴، ۵ یا ۶ اضافه کنید. این بسته شامل یک پلاگین محتوا (شورت‌کد <code>{crumb}</code> در مقاله‌ها) و یک ماژول سایت (برای موقعیت‌های ماژول) است که یک پیکربندی مشترک دارند. نسخه‌ها در <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a> منتشر می‌شوند.",
+    "installation": "نصب",
+    "install": {
+      "1": "آخرین نسخهٔ <code>pkg_crumb.zip</code> را از <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">صفحهٔ نسخه‌ها</a> دانلود کنید.",
+      "2": "در مدیریت جوملا، به <strong>System ← Install ← Extensions</strong> بروید و فایل zip بسته را بارگذاری کنید.",
+      "3": "پلاگین را فعال کنید: <strong>System ← Plugins</strong>، عبارت \"Crumb\" را جستجو کنید، <strong>Content - Crumb</strong> را باز کنید، آدرس سرور BMLT را تنظیم کنید، ذخیره کنید و وضعیت را به <strong>Enabled</strong> تغییر دهید. (جوملا پلاگین‌های محتوا را به‌طور پیش‌فرض غیرفعال ارائه می‌کند.)"
+    },
+    "embedShortcode": "جاسازی از طریق شورت‌کد در مقاله‌ها",
+    "embedShortcodeBody": "با فعال بودن پلاگین محتوا، شورت‌کد را در متن هر مقاله قرار دهید:",
+    "serverNote": "آدرس سرور BMLT تنظیم‌شده در گزینه‌های پلاگین به‌طور پیش‌فرض استفاده می‌شود. می‌توانید آن را — یا فیلتر بر اساس کمیتهٔ خدماتی — مستقیماً در شورت‌کد بازنویسی کنید:",
+    "embedModule": "جاسازی از طریق ماژول",
+    "embedModuleBody": "ماژول <strong>Crumb</strong> را در هر موقعیت ماژول از طریق <strong>Content ← Site Modules ← New ← Crumb</strong> منتشر کنید. تنظیمات هر ماژول شامل آدرس سرور، فیلتر کمیتهٔ خدماتی، نمای پیش‌فرض و قالب CSS است.",
+    "advanced": "پیکربندی پیشرفته",
+    "advancedIntro": "برای گزینه‌هایی که به‌عنوان فیلدهای فرم در دسترس نیستند (زبان، حالت تیره، کاشی‌های نقشهٔ سفارشی و غیره)، از فیلد <strong>Widget Configuration (JSON)</strong> در پنل گزینه‌های پلاگین یا ماژول استفاده کنید. JSON تجزیه شده و به‌صورت <code>window.CrumbWidgetConfig</code> در کنار ویجت منتشر می‌شود."
+  },
   "features": {
     "title": "امکانات",
     "item": {
@@ -311,7 +333,8 @@
       "config": "پیکربندی"
     },
     "row": {
-      "drupal": "<strong>مسیر پایه برای آدرس‌های زیبا</strong> را در <em>Configuration ← Web services ← Crumb</em> تنظیم کنید؛ ماژول مسیر لازم را به‌طور خودکار ثبت می‌کند."
+      "drupal": "<strong>مسیر پایه برای آدرس‌های زیبا</strong> را در <em>Configuration ← Web services ← Crumb</em> تنظیم کنید؛ ماژول مسیر لازم را به‌طور خودکار ثبت می‌کند.",
+      "joomla": "<strong>Base Path for Pretty URLs</strong> را در گزینه‌های پلاگین <em>Content - Crumb</em> (یا روی ماژول) تنظیم کنید. آن را با گزینه‌های <em>Search Engine Friendly URLs</em> و <em>URL Rewriting</em> جوملا در <em>System ← Global Configuration ← Site</em> ترکیب کنید."
     },
     "iframes": "جاسازی در iframe (Google Sites و غیره)",
     "iframesP1": "هنگام جاسازی در میزبان‌های مبتنی بر iframe مانند Google Sites، تمام پیمایش داخل ویجت (کلیک روی جلسات، دکمهٔ بازگشت، پیوندهای خواهرانه) به‌طور عادی کار می‌کند. اما پیوند مستقیم به یک جلسهٔ خاص از طریق URL پشتیبانی نمی‌شود زیرا ویجت داخل یک iframe پروکسی‌شده اجرا می‌شود و نمی‌تواند URL صفحهٔ والد را کنترل کند.",

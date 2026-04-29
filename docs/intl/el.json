@@ -28,6 +28,7 @@
     "exampleMap": "Προεπιλογή χάρτη",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Λειτουργίες δρομολόγησης",
     "findServiceBody": "Βρείτε το ID του service body σας",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Ενσωματωμένο σκούρο χρωματικό σχήμα. <code>'auto'</code> ακολουθεί την προτίμηση του λειτουργικού του επισκέπτη (<code>prefers-color-scheme</code>)· <code>true</code> επιβάλλει τη σκοτεινή λειτουργία ανεξάρτητα από τη ρύθμιση του λειτουργικού· <code>false</code> (προεπιλογή) την απενεργοποιεί. Λειτουργεί μαζί με <a href=\"#tile-dark-config\">πλακίδια σκοτεινής λειτουργίας</a>.",
       "mapTiles": "Προσαρμοσμένος πάροχος πλακιδίων χάρτη. Αντικαθιστά τα προεπιλεγμένα πλακίδια OpenStreetMap. Δείτε <a href=\"#tile-config\">Πάροχος πλακιδίων</a> παρακάτω.",
       "mapTilesDark": "Εναλλακτικός πάροχος πλακιδίων που χρησιμοποιείται όταν <code>prefers-color-scheme: dark</code>. Εναλλάσσεται αυτόματα κατά την αλλαγή θέματος του λειτουργικού. Δείτε <a href=\"#tile-dark-config\">Πλακίδια σκοτεινής λειτουργίας</a> παρακάτω.",
-      "mapMarkers": "Προσαρμοσμένος δείκτης χάρτη για τις τοποθεσίες συναντήσεων. Αντικαθιστά τον προεπιλεγμένο δείκτη NA. Δείτε <a href=\"#marker-config\">Διαμόρφωση δείκτη</a> παρακάτω."
+      "mapMarkers": "Προσαρμοσμένος δείκτης χάρτη για τις τοποθεσίες συναντήσεων. Αντικαθιστά τον προεπιλεγμένο δείκτη NA. Δείτε <a href=\"#marker-config\">Διαμόρφωση δείκτη</a> παρακάτω.",
+      "height": "Ύψος widget σε pixels. Ισοδύναμο με το χαρακτηριστικό <code>data-height</code>. Παραλείψτε το για να αφήσετε το widget να επεκταθεί στο φυσικό ύψος του περιεχομένου.",
+      "basePath": "Βάση διαδρομής για δρομολόγηση History API (π.χ. <code>'/meetings'</code>). Ισοδύναμο με το χαρακτηριστικό <code>data-path</code> — παράγει καθαρά URLs χωρίς το τμήμα <code>#</code>. Δείτε τη <a href=\"#routing\">Δρομολόγηση</a> για λεπτομέρειες."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Ουδέτερη κατάσταση hover (κουμπιά και σειρές που δεν χρησιμοποιούν χρώμα-τονισμό)",
       "divider": "Εσωτερικές γραμμές διαχωρισμού σειρών και λιστών",
       "textSecondary": "Δευτερεύον / αμβλυμένο κείμενο (κεφαλίδες πινάκων, ώρα, τοποθεσία)",
-      "textMuted": "Πολύ αμβλυμένο κείμενο (μετρητής υποσέλιδου, μηνύματα κενής κατάστασης)"
+      "textMuted": "Πολύ αμβλυμένο κείμενο (μετρητής υποσέλιδου, μηνύματα κενής κατάστασης)",
+      "inProgressBg": "Φόντο banner και γραμμής συνεχιζόμενης συνάντησης",
+      "inProgressText": "Κείμενο banner συνεχιζόμενης συνάντησης"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Προηγμένη διαμόρφωση",
     "advancedIntro": "Όλες οι <a href=\"#global-config\">επιλογές καθολικής διαμόρφωσης</a> (γλώσσα, γεωτοποθέτηση, στήλες, πλακίδια χάρτη κ.λπ.) μπορούν να οριστούν προγραμματιστικά μέσω του <code>hook_crumb_config_alter()</code> σε οποιοδήποτε προσαρμοσμένο άρθρωμα:"
   },
+  "exampleJoomla": {
+    "title": "Παράδειγμα: Joomla",
+    "intro": "Προσθέστε το Crumb Widget σε ιστότοπο Joomla 4, 5 ή 6 με την επέκταση <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Το πακέτο περιλαμβάνει ένα content plugin (shortcode <code>{crumb}</code> σε άρθρα) και ένα site module (για θέσεις modules), τα οποία μοιράζονται μία διαμόρφωση. Οι εκδόσεις δημοσιεύονται στο <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Εγκατάσταση",
+    "install": {
+      "1": "Κατεβάστε το πιο πρόσφατο <code>pkg_crumb.zip</code> από τη <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">σελίδα εκδόσεων</a>.",
+      "2": "Στη διαχείριση του Joomla, πηγαίνετε στο <strong>System → Install → Extensions</strong> και ανεβάστε το zip του πακέτου.",
+      "3": "Ενεργοποιήστε το plugin: <strong>System → Plugins</strong>, αναζητήστε \"Crumb\", ανοίξτε το <strong>Content - Crumb</strong>, ορίστε το URL του διακομιστή BMLT, αποθηκεύστε και αλλάξτε την κατάσταση σε <strong>Enabled</strong>. (Το Joomla παρέχει τα content plugins απενεργοποιημένα από προεπιλογή.)"
+    },
+    "embedShortcode": "Ενσωμάτωση μέσω shortcode σε άρθρα",
+    "embedShortcodeBody": "Με το content plugin ενεργοποιημένο, εισαγάγετε το shortcode στο σώμα οποιουδήποτε άρθρου:",
+    "serverNote": "Το URL διακομιστή BMLT που έχει οριστεί στις επιλογές του plugin χρησιμοποιείται από προεπιλογή. Μπορείτε να το παρακάμψετε — ή να φιλτράρετε κατά service body — απευθείας στο shortcode:",
+    "embedModule": "Ενσωμάτωση μέσω Module",
+    "embedModuleBody": "Δημοσιεύστε το module <strong>Crumb</strong> σε οποιαδήποτε θέση module μέσω <strong>Content → Site Modules → New → Crumb</strong>. Οι ρυθμίσεις ανά module καλύπτουν URL διακομιστή, φίλτρο service body, προεπιλεγμένη προβολή και πρότυπο CSS.",
+    "advanced": "Προηγμένη διαμόρφωση",
+    "advancedIntro": "Για επιλογές που δεν εμφανίζονται ως πεδία φόρμας (γλώσσα, σκοτεινή λειτουργία, προσαρμοσμένα πλακίδια χάρτη κ.λπ.), χρησιμοποιήστε το πεδίο <strong>Widget Configuration (JSON)</strong> στον πίνακα επιλογών του plugin ή του module. Το JSON αναλύεται και εκπέμπεται ως <code>window.CrumbWidgetConfig</code> μαζί με το widget."
+  },
   "features": {
     "title": "Χαρακτηριστικά",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Διαμόρφωση"
     },
     "row": {
-      "drupal": "Ορίστε <strong>Base Path for Pretty URLs</strong> στο <em>Configuration → Web services → Crumb</em>· το άρθρωμα καταχωρεί την απαραίτητη διαδρομή αυτόματα."
+      "drupal": "Ορίστε <strong>Base Path for Pretty URLs</strong> στο <em>Configuration → Web services → Crumb</em>· το άρθρωμα καταχωρεί την απαραίτητη διαδρομή αυτόματα.",
+      "joomla": "Ορίστε το <strong>Base Path for Pretty URLs</strong> στις επιλογές του plugin <em>Content - Crumb</em> (ή στο module). Συνδυάστε το με τις επιλογές <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> του Joomla στο <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Ενσωμάτωση σε iframes (Google Sites κ.λπ.)",
     "iframesP1": "Κατά την ενσωμάτωση σε hosts βασισμένα σε iframe όπως το Google Sites, όλη η εσωτερική πλοήγηση widget (κλικ σε συναντήσεις, κουμπί πίσω, σύνδεσμοι αδελφών) λειτουργεί κανονικά. Ωστόσο, η deep-link σε συγκεκριμένη συνάντηση μέσω URL δεν υποστηρίζεται επειδή το widget εκτελείται μέσα σε proxied iframe και δεν μπορεί να ελέγξει το URL της γονικής σελίδας.",

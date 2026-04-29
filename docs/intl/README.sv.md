@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-En inbäddningsbar widget för att hitta NA-möten. Byggd med Svelte 5 och distribuerad som en fristående JavaScript-fil. Tillgänglig som [WordPress-plugin](https://wordpress.org/plugins/crumb/), [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal), [CDN-skript](https://cdn.aws.bmlt.app/crumb-widget.js) eller [npm-paket](https://www.npmjs.com/package/crumb-widget).
+En inbäddningsbar widget för att hitta NA-möten. Byggd med Svelte 5 och distribuerad som en fristående JavaScript-fil. Tillgänglig som [WordPress-plugin](https://wordpress.org/plugins/crumb/), [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal), [Joomla-tillägg](https://github.com/bmlt-enabled/crumb-joomla), [CDN-skript](https://cdn.aws.bmlt.app/crumb-widget.js) eller [npm-paket](https://www.npmjs.com/package/crumb-widget).
 
 ## Vilken version ska jag använda?
 
@@ -31,6 +31,7 @@ En inbäddningsbar widget för att hitta NA-möten. Byggd med Svelte 5 och distr
 |---------------------------------------------------------|--------------------------------------------------------------------------|
 | **WordPress**                                           | [WordPress-plugin](https://wordpress.org/plugins/crumb/)                 |
 | **Drupal** 10.3+ eller 11                               | [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal)             |
+| **Joomla** 4, 5 eller 6                                 | [Joomla-tillägg](https://github.com/bmlt-enabled/crumb-joomla)           |
 | **Wix, Squarespace, Google Sites eller ren HTML**       | Klistra in [CDN-snutten](#snabbstart) i ett kodblock                     |
 | **En JS/TS-app** (React, Svelte, Vue, Vite osv.)        | `npm install crumb-widget` ([dokumentation](https://crumb.bmlt.app/?lang=sv#npm-package)) |
 

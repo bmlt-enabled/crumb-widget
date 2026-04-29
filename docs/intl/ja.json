@@ -28,6 +28,7 @@
     "exampleMap": "デフォルトで地図",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "ルーティングモード",
     "findServiceBody": "サービスボディ ID の確認方法",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "組み込みのダーク配色です。<code>'auto'</code> は訪問者の OS の設定（<code>prefers-color-scheme</code>）に従い、<code>true</code> は OS 設定に関係なくダークモードを強制し、<code>false</code>（既定）は無効化します。<a href=\"#tile-dark-config\">ダークモード用タイル</a>と併用できます。",
       "mapTiles": "カスタム地図タイルプロバイダ。既定の OpenStreetMap タイルを置き換えます。下の<a href=\"#tile-config\">タイルプロバイダ</a>を参照してください。",
       "mapTilesDark": "<code>prefers-color-scheme: dark</code> 時に使用される代替タイルプロバイダ。OS のテーマ変更時に自動的に切り替わります。下の<a href=\"#tile-dark-config\">ダークモード用タイル</a>を参照してください。",
-      "mapMarkers": "ミーティング場所用のカスタム地図マーカー。既定の NA マーカーを置き換えます。下の<a href=\"#marker-config\">マーカー設定</a>を参照してください。"
+      "mapMarkers": "ミーティング場所用のカスタム地図マーカー。既定の NA マーカーを置き換えます。下の<a href=\"#marker-config\">マーカー設定</a>を参照してください。",
+      "height": "ウィジェットの高さ（ピクセル）。<code>data-height</code> 属性と同等です。省略するとコンテンツに合わせた自然な高さになります。",
+      "basePath": "History API ルーティング用のベースパス（例: <code>'/meetings'</code>）。<code>data-path</code> 属性と同等で、<code>#</code> フラグメントのない綺麗な URL を生成します。詳しくは <a href=\"#routing\">ルーティング</a>を参照してください。"
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "ニュートラルなホバー状態（アクセントを使わないボタンや行）",
       "divider": "行と一覧の内部区切り線",
       "textSecondary": "サブ／弱めのテキスト（テーブルヘッダー、時間、場所）",
-      "textMuted": "とても弱めのテキスト（フッターのカウント、空状態のメッセージ）"
+      "textMuted": "とても弱めのテキスト（フッターのカウント、空状態のメッセージ）",
+      "inProgressBg": "進行中バナーと行の背景",
+      "inProgressText": "進行中バナーのテキスト"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "高度な設定",
     "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、任意のカスタムモジュールの <code>hook_crumb_config_alter()</code> からプログラム的に設定できます："
   },
+  "exampleJoomla": {
+    "title": "例: Joomla",
+    "intro": "<a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> 拡張を使えば、Joomla 4、5、6 のサイトに Crumb Widget を追加できます。このパッケージには、コンテンツプラグイン（記事内の <code>{crumb}</code> ショートコード）とサイトモジュール（モジュールポジション用）が含まれており、設定を共有します。リリースは <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a> で公開されています。",
+    "installation": "インストール",
+    "install": {
+      "1": "<a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">リリースページ</a>から最新の <code>pkg_crumb.zip</code> をダウンロードします。",
+      "2": "Joomla 管理画面で <strong>System → Install → Extensions</strong> を開き、パッケージの zip をアップロードします。",
+      "3": "プラグインを有効化します: <strong>System → Plugins</strong> で \"Crumb\" を検索し、<strong>Content - Crumb</strong> を開いて BMLT サーバの URL を設定し、保存して状態を <strong>Enabled</strong> に切り替えます。（Joomla はコンテンツプラグインを既定で無効状態で同梱します。）"
+    },
+    "embedShortcode": "記事のショートコードで埋め込み",
+    "embedShortcodeBody": "コンテンツプラグインを有効化したら、任意の記事本文にショートコードを差し込みます：",
+    "serverNote": "プラグイン設定の BMLT サーバ URL が既定で使用されます。サーバを上書きしたり、サービスボディで絞り込んだりするには、ショートコードに直接指定できます：",
+    "embedModule": "モジュールで埋め込み",
+    "embedModuleBody": "<strong>Content → Site Modules → New → Crumb</strong> から、<strong>Crumb</strong> モジュールを任意のモジュールポジションに公開します。モジュールごとの設定では、サーバ URL、サービスボディフィルター、デフォルトビュー、CSS テンプレートを指定できます。",
+    "advanced": "高度な設定",
+    "advancedIntro": "フォーム項目として用意されていない設定（言語、ダークモード、カスタム地図タイルなど）には、プラグインまたはモジュールのオプションパネルの <strong>Widget Configuration (JSON)</strong> フィールドを使います。JSON は解析され、ウィジェットと一緒に <code>window.CrumbWidgetConfig</code> として出力されます。"
+  },
   "features": {
     "title": "機能",
     "item": {
@@ -311,7 +333,8 @@
       "config": "設定"
     },
     "row": {
-      "drupal": "<em>Configuration → Web services → Crumb</em> で <strong>Base Path for Pretty URLs</strong> を設定します。モジュールが必要なルートを自動的に登録します。"
+      "drupal": "<em>Configuration → Web services → Crumb</em> で <strong>Base Path for Pretty URLs</strong> を設定します。モジュールが必要なルートを自動的に登録します。",
+      "joomla": "<em>Content - Crumb</em> プラグインのオプション（またはモジュール側）で <strong>Base Path for Pretty URLs</strong> を設定します。さらに <em>System → Global Configuration → Site</em> にある Joomla の <em>Search Engine Friendly URLs</em> ＋ <em>URL Rewriting</em> オプションと組み合わせてください。"
     },
     "iframes": "iframe への埋め込み（Google Sites など）",
     "iframesP1": "Google Sites のような iframe ベースのホストに埋め込んだ場合、ウィジェット内のすべてのナビゲーション（ミーティングのクリック、戻るボタン、関連リンク）は通常どおり動作します。ただし、ウィジェットがプロキシされた iframe 内で動作するため URL から特定のミーティングへのディープリンクはサポートされません — 親ページの URL を制御できないためです。",

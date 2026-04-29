@@ -28,6 +28,7 @@
     "exampleMap": "Standard till karta",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Routinglägen",
     "findServiceBody": "Hitta ditt service body-ID",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Inbyggt mörkt färgschema. <code>'auto'</code> följer besökarens OS-inställning (<code>prefers-color-scheme</code>); <code>true</code> tvingar mörkt läge oavsett OS-inställning; <code>false</code> (standard) inaktiverar det. Fungerar tillsammans med <a href=\"#tile-dark-config\">kartrutor i mörkt läge</a>.",
       "mapTiles": "Anpassad kartrutleverantör. Ersätter standard OpenStreetMap-kartrutorna. Se <a href=\"#tile-config\">Kartrutleverantör</a> nedan.",
       "mapTilesDark": "Alternativ kartrutleverantör som används vid <code>prefers-color-scheme: dark</code>. Byter automatiskt vid OS-temabyte. Se <a href=\"#tile-dark-config\">Kartrutor i mörkt läge</a> nedan.",
-      "mapMarkers": "Anpassad kartmarkör för mötesplatser. Ersätter standard NA-markören. Se <a href=\"#marker-config\">Markörkonfiguration</a> nedan."
+      "mapMarkers": "Anpassad kartmarkör för mötesplatser. Ersätter standard NA-markören. Se <a href=\"#marker-config\">Markörkonfiguration</a> nedan.",
+      "height": "Widgetens höjd i pixlar. Motsvarar attributet <code>data-height</code>. Utelämna för att låta widgeten växa till sin naturliga innehållshöjd.",
+      "basePath": "Bassökväg för History API-routing (t.ex. <code>'/meetings'</code>). Motsvarar attributet <code>data-path</code> — producerar rena URL:er utan <code>#</code>-fragmentet. Se <a href=\"#routing\">Routing</a> för detaljer."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Neutralt hovertillstånd (knappar och rader som inte använder accent)",
       "divider": "Interna rad- och listavgränsare",
       "textSecondary": "Sekundär / dämpad text (tabellrubriker, tid, plats)",
-      "textMuted": "Mycket dämpad text (sidfotsräkning, tomma-tillstånd-meddelanden)"
+      "textMuted": "Mycket dämpad text (sidfotsräkning, tomma-tillstånd-meddelanden)",
+      "inProgressBg": "Bakgrund för pågående-banner och rad",
+      "inProgressText": "Text i pågående-bannern"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Avancerad konfiguration",
     "advancedIntro": "Alla <a href=\"#global-config\">globala konfigurationsalternativ</a> (språk, geolokalisering, kolumner, kartrutor osv.) kan ställas in programmatiskt via <code>hook_crumb_config_alter()</code> i valfri anpassad modul:"
   },
+  "exampleJoomla": {
+    "title": "Exempel: Joomla",
+    "intro": "Lägg till Crumb Widget på en Joomla 4-, 5- eller 6-webbplats med tillägget <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Paketet innehåller ett innehållstillägg (<code>{crumb}</code>-kortkod i artiklar) och en webbplatsmodul (för modulpositioner), som delar en gemensam konfiguration. Utgåvor publiceras på <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Installation",
+    "install": {
+      "1": "Ladda ner den senaste <code>pkg_crumb.zip</code> från <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">utgåvssidan</a>.",
+      "2": "Gå till <strong>System → Install → Extensions</strong> i Joomla-administrationen och ladda upp paketets zip-fil.",
+      "3": "Aktivera tillägget: <strong>System → Plugins</strong>, sök efter \"Crumb\", öppna <strong>Content - Crumb</strong>, ange BMLT-server-URL:en, spara och växla status till <strong>Enabled</strong>. (Joomla levererar innehållstillägg inaktiverade som standard.)"
+    },
+    "embedShortcode": "Inbädda via kortkod i artiklar",
+    "embedShortcodeBody": "När innehållstillägget är aktiverat, släpp kortkoden i valfri artikeltext:",
+    "serverNote": "BMLT-server-URL:en som anges i tilläggets alternativ används som standard. Du kan åsidosätta den — eller filtrera efter service body — direkt i kortkoden:",
+    "embedModule": "Inbädda via modul",
+    "embedModuleBody": "Publicera modulen <strong>Crumb</strong> på valfri modulposition via <strong>Content → Site Modules → New → Crumb</strong>. Inställningar per modul täcker server-URL, service body-filter, standardvy och CSS-mall.",
+    "advanced": "Avancerad konfiguration",
+    "advancedIntro": "För alternativ som inte visas som formulärfält (språk, mörkt läge, anpassade kartrutor osv.), använd fältet <strong>Widget Configuration (JSON)</strong> i tilläggets eller modulens alternativpanel. JSON:en parsas och skickas som <code>window.CrumbWidgetConfig</code> tillsammans med widgeten."
+  },
   "features": {
     "title": "Funktioner",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Konfiguration"
     },
     "row": {
-      "drupal": "Sätt <strong>Base Path for Pretty URLs</strong> i <em>Configuration → Web services → Crumb</em>; modulen registrerar den nödvändiga rutten automatiskt."
+      "drupal": "Sätt <strong>Base Path for Pretty URLs</strong> i <em>Configuration → Web services → Crumb</em>; modulen registrerar den nödvändiga rutten automatiskt.",
+      "joomla": "Ställ in <strong>Base Path for Pretty URLs</strong> i alternativen för <em>Content - Crumb</em>-tillägget (eller på modulen). Kombinera med Joomlas <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em>-alternativ under <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Inbäddning i iframes (Google Sites osv.)",
     "iframesP1": "Vid inbäddning i iframe-baserade värdar som Google Sites fungerar all navigering inom widgeten (klick på möten, tillbakaknapp, syskonlänkar) normalt. Djuplänkning till ett specifikt möte via URL stöds dock inte eftersom widgeten körs inuti en proxierad iframe och inte kan styra föräldrasidans URL.",

@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dystrybuowany jako pojedynczy, samowystarczalny plik JavaScript. Dostępny jako [wtyczka WordPress](https://wordpress.org/plugins/crumb/), [moduł Drupal](https://github.com/bmlt-enabled/crumb-drupal), [skrypt CDN](https://cdn.aws.bmlt.app/crumb-widget.js) lub [pakiet npm](https://www.npmjs.com/package/crumb-widget).
+Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dystrybuowany jako pojedynczy, samowystarczalny plik JavaScript. Dostępny jako [wtyczka WordPress](https://wordpress.org/plugins/crumb/), [moduł Drupal](https://github.com/bmlt-enabled/crumb-drupal), [rozszerzenie Joomla](https://github.com/bmlt-enabled/crumb-joomla), [skrypt CDN](https://cdn.aws.bmlt.app/crumb-widget.js) lub [pakiet npm](https://www.npmjs.com/package/crumb-widget).
 
 ## Której wersji powinienem użyć?
 
@@ -31,6 +31,7 @@ Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dy
 |-----------------------------------------------------------|--------------------------------------------------------------------------|
 | **WordPress**                                             | [wtyczka WordPress](https://wordpress.org/plugins/crumb/)                |
 | **Drupal** 10.3+ lub 11                                   | [moduł Drupal](https://github.com/bmlt-enabled/crumb-drupal)             |
+| **Joomla** 4, 5 lub 6                                     | [rozszerzenie Joomla](https://github.com/bmlt-enabled/crumb-joomla)      |
 | **Wix, Squarespace, Google Sites lub zwykły HTML**        | Wklej [fragment CDN](#szybki-start) do bloku kodu                        |
 | **Aplikacja JS/TS** (React, Svelte, Vue, Vite itp.)       | `npm install crumb-widget` ([dokumentacja](https://crumb.bmlt.app/?lang=pl#npm-package)) |
 

@@ -25,7 +25,7 @@
 
 <div dir="rtl">
 
-یک ویجت قابل جاسازی برای یافتن جلسات NA. با Svelte 5 ساخته شده و به‌صورت یک فایل جاوااسکریپت واحد و مستقل توزیع می‌شود. به‌صورت [افزونهٔ وردپرس](https://wordpress.org/plugins/crumb/)، [ماژول دروپال](https://github.com/bmlt-enabled/crumb-drupal)، [اسکریپت CDN](https://cdn.aws.bmlt.app/crumb-widget.js) یا [بستهٔ npm](https://www.npmjs.com/package/crumb-widget) در دسترس است.
+یک ویجت قابل جاسازی برای یافتن جلسات NA. با Svelte 5 ساخته شده و به‌صورت یک فایل جاوااسکریپت واحد و مستقل توزیع می‌شود. به‌صورت [افزونهٔ وردپرس](https://wordpress.org/plugins/crumb/)، [ماژول دروپال](https://github.com/bmlt-enabled/crumb-drupal)، [افزونهٔ جوملا](https://github.com/bmlt-enabled/crumb-joomla)، [اسکریپت CDN](https://cdn.aws.bmlt.app/crumb-widget.js) یا [بستهٔ npm](https://www.npmjs.com/package/crumb-widget) در دسترس است.
 
 ## از کدام نسخه استفاده کنم؟
 
@@ -33,6 +33,7 @@
 |---------------------------------------------------------|------------------------------------------------------------------------------|
 | **وردپرس**                                              | [افزونهٔ وردپرس](https://wordpress.org/plugins/crumb/)                       |
 | **دروپال** ۱۰٫۳+ یا ۱۱                                   | [ماژول دروپال](https://github.com/bmlt-enabled/crumb-drupal)                 |
+| **جوملا** ۴، ۵ یا ۶                                       | [افزونهٔ جوملا](https://github.com/bmlt-enabled/crumb-joomla)                  |
 | **Wix، Squarespace، Google Sites یا HTML ساده**         | قطعهٔ [CDN](#شروع-سریع) را در یک بلاک کد بچسبانید                              |
 | **یک برنامهٔ JS/TS** (React, Svelte, Vue, Vite و غیره) | `npm install crumb-widget` ([مستندات](https://crumb.bmlt.app/?lang=fa#npm-package)) |
 

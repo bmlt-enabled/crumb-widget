@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret som en enkelt selvstændig JavaScript-fil. Tilgængelig som [WordPress-plugin](https://wordpress.org/plugins/crumb/), [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal), [CDN-script](https://cdn.aws.bmlt.app/crumb-widget.js) eller [npm-pakke](https://www.npmjs.com/package/crumb-widget).
+En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret som en enkelt selvstændig JavaScript-fil. Tilgængelig som [WordPress-plugin](https://wordpress.org/plugins/crumb/), [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal), [Joomla-udvidelse](https://github.com/bmlt-enabled/crumb-joomla), [CDN-script](https://cdn.aws.bmlt.app/crumb-widget.js) eller [npm-pakke](https://www.npmjs.com/package/crumb-widget).
 
 ## Hvilken version skal jeg bruge?
 
@@ -31,6 +31,7 @@ En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret
 |--------------------------------------------------------|--------------------------------------------------------------------------|
 | **WordPress**                                          | [WordPress-plugin](https://wordpress.org/plugins/crumb/)                 |
 | **Drupal** 10.3+ eller 11                              | [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal)             |
+| **Joomla** 4, 5 eller 6                                | [Joomla-udvidelse](https://github.com/bmlt-enabled/crumb-joomla)         |
 | **Wix, Squarespace, Google Sites eller almindelig HTML** | Indsæt [CDN-uddraget](#hurtig-start) i en kodeblok                     |
 | **En JS/TS-app** (React, Svelte, Vue, Vite osv.)       | `npm install crumb-widget` ([dokumentation](https://crumb.bmlt.app/?lang=da#npm-package)) |
 

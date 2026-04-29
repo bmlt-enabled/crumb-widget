@@ -28,6 +28,7 @@
     "exampleMap": "Domyślnie mapa",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Tryby routingu",
     "findServiceBody": "Znajdź ID swojego service body",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Wbudowany ciemny schemat kolorów. <code>'auto'</code> podąża za preferencją systemu operacyjnego (<code>prefers-color-scheme</code>); <code>true</code> wymusza tryb ciemny niezależnie od ustawień systemu; <code>false</code> (domyślnie) go wyłącza. Działa razem z <a href=\"#tile-dark-config\">kafelkami w trybie ciemnym</a>.",
       "mapTiles": "Niestandardowy dostawca kafelków mapy. Zastępuje domyślne kafelki OpenStreetMap. Zobacz <a href=\"#tile-config\">Dostawca kafelków</a> poniżej.",
       "mapTilesDark": "Alternatywny dostawca kafelków używany przy <code>prefers-color-scheme: dark</code>. Przełącza się automatycznie przy zmianie motywu systemu. Zobacz <a href=\"#tile-dark-config\">Kafelki w trybie ciemnym</a> poniżej.",
-      "mapMarkers": "Niestandardowy znacznik mapy dla lokalizacji spotkań. Zastępuje domyślny znacznik NA. Zobacz <a href=\"#marker-config\">Konfigurację znaczników</a> poniżej."
+      "mapMarkers": "Niestandardowy znacznik mapy dla lokalizacji spotkań. Zastępuje domyślny znacznik NA. Zobacz <a href=\"#marker-config\">Konfigurację znaczników</a> poniżej.",
+      "height": "Wysokość widżetu w pikselach. Odpowiednik atrybutu <code>data-height</code>. Pomiń, aby pozwolić widżetowi rozrosnąć się do naturalnej wysokości zawartości.",
+      "basePath": "Ścieżka bazowa dla routingu History API (np. <code>'/meetings'</code>). Odpowiednik atrybutu <code>data-path</code> — generuje czyste adresy URL bez fragmentu <code>#</code>. Zobacz <a href=\"#routing\">Routing</a>, aby uzyskać szczegóły."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Neutralny stan najechania (przyciski i wiersze nieużywające akcentu)",
       "divider": "Wewnętrzne linie oddzielające wiersze i listy",
       "textSecondary": "Drugorzędny / przyciemniony tekst (nagłówki tabel, czas, lokalizacja)",
-      "textMuted": "Bardzo przyciemniony tekst (licznik w stopce, komunikaty pustego stanu)"
+      "textMuted": "Bardzo przyciemniony tekst (licznik w stopce, komunikaty pustego stanu)",
+      "inProgressBg": "Tło banera i wiersza spotkania w trakcie",
+      "inProgressText": "Tekst banera spotkania w trakcie"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Zaawansowana konfiguracja",
     "advancedIntro": "Wszystkie <a href=\"#global-config\">opcje konfiguracji globalnej</a> (język, geolokalizacja, kolumny, kafelki mapy itp.) można ustawić programatycznie poprzez <code>hook_crumb_config_alter()</code> w dowolnym module niestandardowym:"
   },
+  "exampleJoomla": {
+    "title": "Przykład: Joomla",
+    "intro": "Dodaj Crumb Widget do witryny Joomla 4, 5 lub 6 za pomocą rozszerzenia <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Pakiet zawiera wtyczkę treści (shortcode <code>{crumb}</code> w artykułach) oraz moduł strony (dla pozycji modułów), które dzielą jedną konfigurację. Wydania publikowane są na <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Instalacja",
+    "install": {
+      "1": "Pobierz najnowszy <code>pkg_crumb.zip</code> ze <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">strony wydań</a>.",
+      "2": "W panelu administracyjnym Joomla przejdź do <strong>System → Install → Extensions</strong> i prześlij plik zip pakietu.",
+      "3": "Włącz wtyczkę: <strong>System → Plugins</strong>, wyszukaj \"Crumb\", otwórz <strong>Content - Crumb</strong>, ustaw adres URL serwera BMLT, zapisz i przełącz status na <strong>Enabled</strong>. (Joomla domyślnie dostarcza wtyczki treści wyłączone.)"
+    },
+    "embedShortcode": "Osadź przez shortcode w artykułach",
+    "embedShortcodeBody": "Po włączeniu wtyczki treści wstaw shortcode w treść dowolnego artykułu:",
+    "serverNote": "Adres URL serwera BMLT ustawiony w opcjach wtyczki jest używany domyślnie. Możesz go nadpisać — lub filtrować według service body — bezpośrednio w shortcode:",
+    "embedModule": "Osadź przez moduł",
+    "embedModuleBody": "Opublikuj moduł <strong>Crumb</strong> w dowolnej pozycji modułu poprzez <strong>Content → Site Modules → New → Crumb</strong>. Ustawienia per-moduł obejmują adres URL serwera, filtr service body, widok domyślny i szablon CSS.",
+    "advanced": "Zaawansowana konfiguracja",
+    "advancedIntro": "Dla opcji, które nie są dostępne jako pola formularza (język, tryb ciemny, niestandardowe kafelki mapy itp.), użyj pola <strong>Widget Configuration (JSON)</strong> w panelu opcji wtyczki lub modułu. JSON jest parsowany i emitowany jako <code>window.CrumbWidgetConfig</code> obok widżetu."
+  },
   "features": {
     "title": "Funkcje",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Konfiguracja"
     },
     "row": {
-      "drupal": "Ustaw <strong>Base Path for Pretty URLs</strong> w <em>Configuration → Web services → Crumb</em>; moduł rejestruje niezbędną trasę automatycznie."
+      "drupal": "Ustaw <strong>Base Path for Pretty URLs</strong> w <em>Configuration → Web services → Crumb</em>; moduł rejestruje niezbędną trasę automatycznie.",
+      "joomla": "Ustaw <strong>Base Path for Pretty URLs</strong> w opcjach wtyczki <em>Content - Crumb</em> (lub na module). Połącz to z opcjami Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> w <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Osadzanie w iframe (Google Sites itp.)",
     "iframesP1": "Podczas osadzania w hostach opartych na iframe, takich jak Google Sites, cała nawigacja wewnątrz widżetu (klikanie spotkań, przycisk wstecz, linki sąsiadów) działa normalnie. Jednak głębokie linkowanie do konkretnego spotkania przez URL nie jest obsługiwane, ponieważ widżet działa wewnątrz proxowanego iframe i nie może kontrolować URL-a strony nadrzędnej.",

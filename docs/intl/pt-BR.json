@@ -28,6 +28,7 @@
     "exampleMap": "Mapa por padrão",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Modos de roteamento",
     "findServiceBody": "Como encontrar o ID do seu Corpo de Serviço",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Esquema de cores escuro embutido. <code>'auto'</code> segue a preferência do SO do visitante (<code>prefers-color-scheme</code>); <code>true</code> força o modo escuro independente do SO; <code>false</code> (padrão) o desativa. Funciona junto com <a href=\"#tile-dark-config\">tiles em modo escuro</a>.",
       "mapTiles": "Provedor de tiles personalizado. Substitui os tiles padrão do OpenStreetMap. Veja <a href=\"#tile-config\">Provedor de tiles</a> abaixo.",
       "mapTilesDark": "Provedor alternativo de tiles usado quando <code>prefers-color-scheme: dark</code>. Troca automaticamente quando o tema do SO muda. Veja <a href=\"#tile-dark-config\">Tiles modo escuro</a> abaixo.",
-      "mapMarkers": "Marcador personalizado para localizações de reuniões. Substitui o marcador NA padrão. Veja <a href=\"#marker-config\">Config de marcador</a> abaixo."
+      "mapMarkers": "Marcador personalizado para localizações de reuniões. Substitui o marcador NA padrão. Veja <a href=\"#marker-config\">Config de marcador</a> abaixo.",
+      "height": "Altura do widget em pixels. Equivalente ao atributo <code>data-height</code>. Omita para deixar o widget crescer até a altura natural do conteúdo.",
+      "basePath": "Caminho base para roteamento via History API (ex.: <code>'/meetings'</code>). Equivalente ao atributo <code>data-path</code> — produz URLs limpas sem o fragmento <code>#</code>. Veja <a href=\"#routing\">Roteamento</a> para detalhes."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Estado de hover neutro (botões e linhas que não usam acento)",
       "divider": "Linhas internas de separação de linhas e listas",
       "textSecondary": "Texto secundário / atenuado (cabeçalhos de tabela, hora, local)",
-      "textMuted": "Texto muito atenuado (contagem do rodapé, mensagens de estado vazio)"
+      "textMuted": "Texto muito atenuado (contagem do rodapé, mensagens de estado vazio)",
+      "inProgressBg": "Fundo do banner e da linha de reunião em andamento",
+      "inProgressText": "Texto do banner de reunião em andamento"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Configuração avançada",
     "advancedIntro": "Todas as <a href=\"#global-config\">opções de configuração global</a> (idioma, geolocalização, colunas, tiles do mapa etc.) podem ser definidas programaticamente via <code>hook_crumb_config_alter()</code> em qualquer módulo personalizado:"
   },
+  "exampleJoomla": {
+    "title": "Exemplo: Joomla",
+    "intro": "Adicione o Crumb Widget a um site Joomla 4, 5 ou 6 com a extensão <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. O pacote inclui um plugin de conteúdo (shortcode <code>{crumb}</code> em artigos) e um módulo de site (para posições de módulo), que compartilham uma única configuração. As versões são publicadas em <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Instalação",
+    "install": {
+      "1": "Baixe o <code>pkg_crumb.zip</code> mais recente da <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">página de releases</a>.",
+      "2": "No admin do Joomla, vá em <strong>System → Install → Extensions</strong> e envie o zip do pacote.",
+      "3": "Ative o plugin: <strong>System → Plugins</strong>, pesquise \"Crumb\", abra <strong>Content - Crumb</strong>, defina a URL do servidor BMLT, salve e mude o status para <strong>Enabled</strong>. (O Joomla entrega plugins de conteúdo desativados por padrão.)"
+    },
+    "embedShortcode": "Incorporar via shortcode em artigos",
+    "embedShortcodeBody": "Com o plugin de conteúdo ativado, insira o shortcode no corpo de qualquer artigo:",
+    "serverNote": "A URL do servidor BMLT definida nas opções do plugin é usada por padrão. Você pode substituí-la — ou filtrar por corpo de serviço — diretamente no shortcode:",
+    "embedModule": "Incorporar via módulo",
+    "embedModuleBody": "Publique o módulo <strong>Crumb</strong> em qualquer posição de módulo via <strong>Content → Site Modules → New → Crumb</strong>. As configurações por módulo cobrem URL do servidor, filtro de corpo de serviço, visão padrão e template CSS.",
+    "advanced": "Configuração avançada",
+    "advancedIntro": "Para opções que não aparecem como campos de formulário (idioma, modo escuro, tiles de mapa personalizados etc.), use o campo <strong>Widget Configuration (JSON)</strong> no painel de opções do plugin ou do módulo. O JSON é analisado e emitido como <code>window.CrumbWidgetConfig</code> junto com o widget."
+  },
   "features": {
     "title": "Recursos",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Configuração"
     },
     "row": {
-      "drupal": "Defina <strong>Caminho base para URLs limpas</strong> em <em>Configuração → Web services → Crumb</em>; o módulo registra a rota necessária automaticamente."
+      "drupal": "Defina <strong>Caminho base para URLs limpas</strong> em <em>Configuração → Web services → Crumb</em>; o módulo registra a rota necessária automaticamente.",
+      "joomla": "Defina <strong>Base Path for Pretty URLs</strong> nas opções do plugin <em>Content - Crumb</em> (ou no módulo). Combine com as opções do Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> em <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Incorporando em iframes (Google Sites etc.)",
     "iframesP1": "Ao incorporar em hosts baseados em iframe como o Google Sites, toda a navegação dentro do widget (clique em reuniões, botão voltar, links irmãos) funciona normalmente. No entanto, links diretos para uma reunião específica via URL não são suportados, pois o widget é executado dentro de um iframe proxiado e não consegue controlar a URL da página pai.",

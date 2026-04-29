@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-埋め込み可能な NA ミーティング検索ウィジェットです。Svelte 5 で構築されており、自己完結型の単一 JavaScript ファイルとして配布されます。[WordPress プラグイン](https://wordpress.org/plugins/crumb/)、[Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)、[CDN スクリプト](https://cdn.aws.bmlt.app/crumb-widget.js)、[npm パッケージ](https://www.npmjs.com/package/crumb-widget)として利用できます。
+埋め込み可能な NA ミーティング検索ウィジェットです。Svelte 5 で構築されており、自己完結型の単一 JavaScript ファイルとして配布されます。[WordPress プラグイン](https://wordpress.org/plugins/crumb/)、[Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)、[Joomla 拡張](https://github.com/bmlt-enabled/crumb-joomla)、[CDN スクリプト](https://cdn.aws.bmlt.app/crumb-widget.js)、[npm パッケージ](https://www.npmjs.com/package/crumb-widget)として利用できます。
 
 ## どのバージョンを使うべき？
 
@@ -31,6 +31,7 @@
 |------------------------------------------------------|----------------------------------------------------------------------|
 | **WordPress**                                        | [WordPress プラグイン](https://wordpress.org/plugins/crumb/)            |
 | **Drupal** 10.3+ または 11                            | [Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)       |
+| **Joomla** 4、5、または 6                              | [Joomla 拡張](https://github.com/bmlt-enabled/crumb-joomla)             |
 | **Wix、Squarespace、Google Sites、または素の HTML**         | [CDN スニペット](#クイックスタート) をコードブロックに貼り付け                       |
 | **JS/TS アプリ**（React、Svelte、Vue、Vite など）            | `npm install crumb-widget`（[ドキュメント](https://crumb.bmlt.app/?lang=ja#npm-package)）|
 

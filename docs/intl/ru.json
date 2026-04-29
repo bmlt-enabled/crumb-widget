@@ -28,6 +28,7 @@
     "exampleMap": "По умолчанию карта",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Режимы маршрутизации",
     "findServiceBody": "Найти ID вашего service body",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Встроенная тёмная цветовая схема. <code>'auto'</code> следует настройке ОС посетителя (<code>prefers-color-scheme</code>); <code>true</code> принудительно включает тёмный режим независимо от настройки ОС; <code>false</code> (по умолчанию) отключает его. Работает вместе с <a href=\"#tile-dark-config\">тайлами тёмного режима</a>.",
       "mapTiles": "Пользовательский поставщик тайлов карты. Заменяет тайлы OpenStreetMap по умолчанию. См. <a href=\"#tile-config\">Поставщик тайлов</a> ниже.",
       "mapTilesDark": "Альтернативный поставщик тайлов, используемый при <code>prefers-color-scheme: dark</code>. Переключается автоматически при смене темы ОС. См. <a href=\"#tile-dark-config\">Тайлы тёмного режима</a> ниже.",
-      "mapMarkers": "Пользовательский маркер карты для местоположений встреч. Заменяет маркер NA по умолчанию. См. <a href=\"#marker-config\">Конфигурация маркеров</a> ниже."
+      "mapMarkers": "Пользовательский маркер карты для местоположений встреч. Заменяет маркер NA по умолчанию. См. <a href=\"#marker-config\">Конфигурация маркеров</a> ниже.",
+      "height": "Высота виджета в пикселях. Эквивалент атрибута <code>data-height</code>. Опустите, чтобы виджет рос до естественной высоты содержимого.",
+      "basePath": "Базовый путь для маршрутизации History API (например, <code>'/meetings'</code>). Эквивалент атрибута <code>data-path</code> — создаёт чистые URL без фрагмента <code>#</code>. Подробнее см. <a href=\"#routing\">Маршрутизация</a>."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Нейтральное состояние наведения (кнопки и строки без акцента)",
       "divider": "Внутренние разделительные линии строк и списков",
       "textSecondary": "Вторичный / приглушённый текст (заголовки таблиц, время, место)",
-      "textMuted": "Очень приглушённый текст (счётчик в подвале, сообщения пустого состояния)"
+      "textMuted": "Очень приглушённый текст (счётчик в подвале, сообщения пустого состояния)",
+      "inProgressBg": "Фон баннера и строки идущей встречи",
+      "inProgressText": "Текст баннера идущей встречи"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Расширенная конфигурация",
     "advancedIntro": "Все <a href=\"#global-config\">опции глобальной конфигурации</a> (язык, геолокация, столбцы, тайлы карты и т. д.) можно установить программно через <code>hook_crumb_config_alter()</code> в любом пользовательском модуле:"
   },
+  "exampleJoomla": {
+    "title": "Пример: Joomla",
+    "intro": "Добавьте Crumb Widget на сайт Joomla 4, 5 или 6 с расширением <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>. Пакет включает плагин контента (шорткод <code>{crumb}</code> в статьях) и модуль сайта (для позиций модулей), которые используют общую конфигурацию. Релизы публикуются на <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Установка",
+    "install": {
+      "1": "Скачайте последний <code>pkg_crumb.zip</code> со <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">страницы релизов</a>.",
+      "2": "В админ-панели Joomla перейдите в <strong>System → Install → Extensions</strong> и загрузите zip пакета.",
+      "3": "Включите плагин: <strong>System → Plugins</strong>, найдите \"Crumb\", откройте <strong>Content - Crumb</strong>, задайте URL сервера BMLT, сохраните и переключите статус на <strong>Enabled</strong>. (Joomla по умолчанию поставляет плагины контента отключёнными.)"
+    },
+    "embedShortcode": "Встраивание через шорткод в статьях",
+    "embedShortcodeBody": "Когда плагин контента включён, добавьте шорткод в тело любой статьи:",
+    "serverNote": "URL сервера BMLT, заданный в настройках плагина, используется по умолчанию. Вы можете переопределить его — или фильтровать по service body — прямо в шорткоде:",
+    "embedModule": "Встраивание через модуль",
+    "embedModuleBody": "Опубликуйте модуль <strong>Crumb</strong> на любой позиции модуля через <strong>Content → Site Modules → New → Crumb</strong>. Настройки на уровне модуля включают URL сервера, фильтр service body, представление по умолчанию и CSS-шаблон.",
+    "advanced": "Расширенная конфигурация",
+    "advancedIntro": "Для опций, которые не представлены полями формы (язык, тёмный режим, пользовательские тайлы карты и т. д.), используйте поле <strong>Widget Configuration (JSON)</strong> на панели опций плагина или модуля. JSON разбирается и выводится как <code>window.CrumbWidgetConfig</code> рядом с виджетом."
+  },
   "features": {
     "title": "Возможности",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Конфигурация"
     },
     "row": {
-      "drupal": "Установите <strong>Base Path for Pretty URLs</strong> в <em>Configuration → Web services → Crumb</em>; модуль регистрирует необходимый маршрут автоматически."
+      "drupal": "Установите <strong>Base Path for Pretty URLs</strong> в <em>Configuration → Web services → Crumb</em>; модуль регистрирует необходимый маршрут автоматически.",
+      "joomla": "Установите <strong>Base Path for Pretty URLs</strong> в опциях плагина <em>Content - Crumb</em> (или на модуле). Скомбинируйте с опциями Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> в <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Встраивание в iframe (Google Sites и т. д.)",
     "iframesP1": "При встраивании в iframe-хосты, такие как Google Sites, вся внутренняя навигация виджета (клики по встречам, кнопка назад, ссылки родственников) работает нормально. Однако глубокие ссылки на конкретную встречу через URL не поддерживаются, потому что виджет работает внутри проксированного iframe и не может управлять URL-ом родительской страницы.",

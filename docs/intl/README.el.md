@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-Ένα ενσωματώσιμο widget για την εύρεση συναντήσεων NA. Κατασκευασμένο με Svelte 5 και διανέμεται ως ένα αυτόνομο αρχείο JavaScript. Διαθέσιμο ως [πρόσθετο WordPress](https://wordpress.org/plugins/crumb/), [ενότητα Drupal](https://github.com/bmlt-enabled/crumb-drupal), [σενάριο CDN](https://cdn.aws.bmlt.app/crumb-widget.js) ή [πακέτο npm](https://www.npmjs.com/package/crumb-widget).
+Ένα ενσωματώσιμο widget για την εύρεση συναντήσεων NA. Κατασκευασμένο με Svelte 5 και διανέμεται ως ένα αυτόνομο αρχείο JavaScript. Διαθέσιμο ως [πρόσθετο WordPress](https://wordpress.org/plugins/crumb/), [ενότητα Drupal](https://github.com/bmlt-enabled/crumb-drupal), [επέκταση Joomla](https://github.com/bmlt-enabled/crumb-joomla), [σενάριο CDN](https://cdn.aws.bmlt.app/crumb-widget.js) ή [πακέτο npm](https://www.npmjs.com/package/crumb-widget).
 
 ## Ποια έκδοση να χρησιμοποιήσω;
 
@@ -31,6 +31,7 @@
 |-------------------------------------------------------|---------------------------------------------------------------------------|
 | **WordPress**                                         | [Πρόσθετο WordPress](https://wordpress.org/plugins/crumb/)                |
 | **Drupal** 10.3+ ή 11                                 | [Ενότητα Drupal](https://github.com/bmlt-enabled/crumb-drupal)            |
+| **Joomla** 4, 5 ή 6                                   | [Επέκταση Joomla](https://github.com/bmlt-enabled/crumb-joomla)           |
 | **Wix, Squarespace, Google Sites ή απλό HTML**        | Επικολλήστε το [απόσπασμα CDN](#γρήγορη-εκκίνηση) σε ένα code block       |
 | **Εφαρμογή JS/TS** (React, Svelte, Vue, Vite κ.λπ.)   | `npm install crumb-widget` ([τεκμηρίωση](https://crumb.bmlt.app/?lang=el#npm-package)) |
 

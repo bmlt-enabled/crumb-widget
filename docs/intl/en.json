@@ -49,7 +49,8 @@
       "reference": "Reference",
       "npm": "npm Package",
       "legal": "Legal"
-    }
+    },
+    "exampleJoomla": "Joomla"
   },
   "header": {
     "subtitle": "An embeddable NA meeting finder widget for any website.",
@@ -111,7 +112,9 @@
       "darkMode": "Built-in dark color scheme. <code>'auto'</code> follows the visitor's OS preference (<code>prefers-color-scheme</code>); <code>true</code> forces dark mode regardless of OS setting; <code>false</code> (default) disables it. Works alongside <a href=\"#tile-dark-config\">dark mode tiles</a>.",
       "mapTiles": "Custom map tile provider. Replaces the default OpenStreetMap tiles. See <a href=\"#tile-config\">Tile Provider</a> below.",
       "mapTilesDark": "Alternate tile provider used when <code>prefers-color-scheme: dark</code>. Swaps automatically on OS theme change. See <a href=\"#tile-dark-config\">Dark Mode Tiles</a> below.",
-      "mapMarkers": "Custom map marker for meeting locations. Replaces the default NA marker. See <a href=\"#marker-config\">Marker Config</a> below."
+      "mapMarkers": "Custom map marker for meeting locations. Replaces the default NA marker. See <a href=\"#marker-config\">Marker Config</a> below.",
+      "height": "Widget height in pixels. Equivalent to the <code>data-height</code> attribute. Omit to let the widget grow to its natural content height.",
+      "basePath": "Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See <a href=\"#routing\">Routing</a> for details."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Neutral hover state (buttons and rows not using accent)",
       "divider": "Internal row and list divider lines",
       "textSecondary": "Secondary / muted text (table headers, time, location)",
-      "textMuted": "Very muted text (footer count, empty-state messages)"
+      "textMuted": "Very muted text (footer count, empty-state messages)",
+      "inProgressBg": "In-progress banner and row background",
+      "inProgressText": "In-progress banner text"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Advanced configuration",
     "advancedIntro": "All <a href=\"#global-config\">global config options</a> (language, geolocation, columns, map tiles, etc.) can be set programmatically via <code>hook_crumb_config_alter()</code> in any custom module:"
   },
+  "exampleJoomla": {
+    "title": "Example: Joomla",
+    "intro": "Add Crumb Widget to a Joomla 4, 5, or 6 site with the <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> extension. The package bundles a content plugin (<code>{crumb}</code> shortcode in articles) and a site module (for module positions), sharing one configuration. Releases are published at <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Installation",
+    "install": {
+      "1": "Download the latest <code>pkg_crumb.zip</code> from the <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">releases page</a>.",
+      "2": "In Joomla admin, go to <strong>System → Install → Extensions</strong> and upload the package zip.",
+      "3": "Enable the plugin: <strong>System → Plugins</strong>, search \"Crumb\", open <strong>Content - Crumb</strong>, set the BMLT server URL, save, and toggle status to <strong>Enabled</strong>. (Joomla ships content plugins disabled by default.)"
+    },
+    "embedShortcode": "Embed via shortcode in articles",
+    "embedShortcodeBody": "With the content plugin enabled, drop the shortcode into any article body:",
+    "serverNote": "The BMLT server URL set in the plugin options is used by default. You can override it — or filter by service body — directly in the shortcode:",
+    "embedModule": "Embed via Module",
+    "embedModuleBody": "Publish the <strong>Crumb</strong> module to any module position via <strong>Content → Site Modules → New → Crumb</strong>. Per-module settings cover server URL, service body filter, default view, and CSS template.",
+    "advanced": "Advanced configuration",
+    "advancedIntro": "For options that aren't surfaced as form fields (language, dark mode, custom map tiles, etc.), use the <strong>Widget Configuration (JSON)</strong> field on the plugin or module options panel. The JSON is parsed and emitted as <code>window.CrumbWidgetConfig</code> alongside the widget."
+  },
   "features": {
     "title": "Features",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Configuration"
     },
     "row": {
-      "drupal": "Set <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; the module registers the necessary route automatically."
+      "drupal": "Set <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; the module registers the necessary route automatically.",
+      "joomla": "Set <strong>Base Path for Pretty URLs</strong> on the <em>Content - Crumb</em> plugin's options (or on the module). Combine with Joomla's <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> options under <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Embedding in iframes (Google Sites, etc.)",
     "iframesP1": "When embedding in iframe-based hosts like Google Sites, all in-widget navigation (clicking meetings, back button, sibling links) works normally. However, deep-linking to a specific meeting via URL is not supported because the widget runs inside a proxied iframe and cannot control the parent page's URL.",

@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-Un widget integrabile per la ricerca di riunioni NA. Costruito con Svelte 5 e distribuito come un singolo file JavaScript autonomo. Disponibile come [plugin WordPress](https://wordpress.org/plugins/crumb/), [modulo Drupal](https://github.com/bmlt-enabled/crumb-drupal), [script CDN](https://cdn.aws.bmlt.app/crumb-widget.js) o [pacchetto npm](https://www.npmjs.com/package/crumb-widget).
+Un widget integrabile per la ricerca di riunioni NA. Costruito con Svelte 5 e distribuito come un singolo file JavaScript autonomo. Disponibile come [plugin WordPress](https://wordpress.org/plugins/crumb/), [modulo Drupal](https://github.com/bmlt-enabled/crumb-drupal), [estensione Joomla](https://github.com/bmlt-enabled/crumb-joomla), [script CDN](https://cdn.aws.bmlt.app/crumb-widget.js) o [pacchetto npm](https://www.npmjs.com/package/crumb-widget).
 
 ## Quale versione devo usare?
 
@@ -31,6 +31,7 @@ Un widget integrabile per la ricerca di riunioni NA. Costruito con Svelte 5 e di
 |--------------------------------------------------------|---------------------------------------------------------------------------|
 | **WordPress**                                          | [Plugin WordPress](https://wordpress.org/plugins/crumb/)                  |
 | **Drupal** 10.3+ o 11                                  | [Modulo Drupal](https://github.com/bmlt-enabled/crumb-drupal)             |
+| **Joomla** 4, 5 o 6                                    | [Estensione Joomla](https://github.com/bmlt-enabled/crumb-joomla)         |
 | **Wix, Squarespace, Google Sites o HTML semplice**     | Incolla lo [snippet CDN](#avvio-rapido) in un blocco di codice            |
 | **Un'app JS/TS** (React, Svelte, Vue, Vite, ecc.)      | `npm install crumb-widget` ([docs](https://crumb.bmlt.app/?lang=it#npm-package)) |
 

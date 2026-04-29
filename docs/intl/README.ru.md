@@ -23,7 +23,7 @@
   <img src="../screenshot-carousel.gif" alt="Crumb Widget — list, map, and meeting detail views" width="550">
 </p>
 
-Встраиваемый виджет поиска встреч NA. Построен на Svelte 5 и поставляется как единый автономный JavaScript-файл. Доступен в виде [плагина WordPress](https://wordpress.org/plugins/crumb/), [модуля Drupal](https://github.com/bmlt-enabled/crumb-drupal), [CDN-скрипта](https://cdn.aws.bmlt.app/crumb-widget.js) или [npm-пакета](https://www.npmjs.com/package/crumb-widget).
+Встраиваемый виджет поиска встреч NA. Построен на Svelte 5 и поставляется как единый автономный JavaScript-файл. Доступен в виде [плагина WordPress](https://wordpress.org/plugins/crumb/), [модуля Drupal](https://github.com/bmlt-enabled/crumb-drupal), [расширения Joomla](https://github.com/bmlt-enabled/crumb-joomla), [CDN-скрипта](https://cdn.aws.bmlt.app/crumb-widget.js) или [npm-пакета](https://www.npmjs.com/package/crumb-widget).
 
 ## Какую версию мне использовать?
 
@@ -31,6 +31,7 @@
 |-----------------------------------------------------------|--------------------------------------------------------------------------|
 | **WordPress**                                             | [Плагин WordPress](https://wordpress.org/plugins/crumb/)                 |
 | **Drupal** 10.3+ или 11                                   | [Модуль Drupal](https://github.com/bmlt-enabled/crumb-drupal)            |
+| **Joomla** 4, 5 или 6                                     | [Расширение Joomla](https://github.com/bmlt-enabled/crumb-joomla)        |
 | **Wix, Squarespace, Google Sites или обычный HTML**       | Вставьте [фрагмент CDN](#быстрый-старт) в блок кода                      |
 | **JS/TS-приложение** (React, Svelte, Vue, Vite и т. д.)   | `npm install crumb-widget` ([документация](https://crumb.bmlt.app/?lang=ru#npm-package)) |
 

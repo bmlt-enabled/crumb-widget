@@ -28,6 +28,7 @@
     "exampleMap": "Standardmäßig Karte",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
+    "exampleJoomla": "Joomla",
     "routingModes": "Routing-Modi",
     "findServiceBody": "Service-Body-ID finden",
     "googleSites": "Google Sites",
@@ -111,7 +112,9 @@
       "darkMode": "Eingebautes dunkles Farbschema. <code>'auto'</code> folgt der Betriebssystem-Präferenz des Besuchers (<code>prefers-color-scheme</code>); <code>true</code> erzwingt den dunklen Modus unabhängig vom Betriebssystem; <code>false</code> (Standard) deaktiviert ihn. Funktioniert zusammen mit <a href=\"#tile-dark-config\">Kacheln im dunklen Modus</a>.",
       "mapTiles": "Benutzerdefinierter Kartenkachel-Anbieter. Ersetzt die Standard-OpenStreetMap-Kacheln. Siehe <a href=\"#tile-config\">Kachelanbieter</a> unten.",
       "mapTilesDark": "Alternativer Kachelanbieter, der bei <code>prefers-color-scheme: dark</code> verwendet wird. Wechselt automatisch beim Wechsel des Betriebssystem-Themes. Siehe <a href=\"#tile-dark-config\">Kacheln dunkler Modus</a> unten.",
-      "mapMarkers": "Benutzerdefinierter Kartenmarker für Meeting-Standorte. Ersetzt den Standard-NA-Marker. Siehe <a href=\"#marker-config\">Marker-Konfiguration</a> unten."
+      "mapMarkers": "Benutzerdefinierter Kartenmarker für Meeting-Standorte. Ersetzt den Standard-NA-Marker. Siehe <a href=\"#marker-config\">Marker-Konfiguration</a> unten.",
+      "height": "Widget-Höhe in Pixeln. Entspricht dem Attribut <code>data-height</code>. Lass es weg, damit das Widget auf seine natürliche Inhaltshöhe wächst.",
+      "basePath": "Basispfad für History-API-Routing (z. B. <code>'/meetings'</code>). Entspricht dem Attribut <code>data-path</code> — erzeugt saubere URLs ohne <code>#</code>-Fragment. Siehe <a href=\"#routing\">Routing</a> für Details."
     }
   },
   "language": {
@@ -188,7 +191,9 @@
       "hover": "Neutraler Hover-Zustand (Schaltflächen und Zeilen ohne Akzent)",
       "divider": "Interne Zeilen- und Listentrennlinien",
       "textSecondary": "Sekundärer / abgedämpfter Text (Tabellenüberschriften, Zeit, Standort)",
-      "textMuted": "Sehr abgedämpfter Text (Fußzeilenanzahl, Leerzustandsmeldungen)"
+      "textMuted": "Sehr abgedämpfter Text (Fußzeilenanzahl, Leerzustandsmeldungen)",
+      "inProgressBg": "Hintergrund von Banner und Zeile für laufende Meetings",
+      "inProgressText": "Text des Banners für laufende Meetings"
     }
   },
   "cssDarkMode": {
@@ -283,6 +288,23 @@
     "advanced": "Erweiterte Konfiguration",
     "advancedIntro": "Alle <a href=\"#global-config\">globalen Konfigurationsoptionen</a> (Sprache, Geolokation, Spalten, Kartenkacheln usw.) können programmatisch über <code>hook_crumb_config_alter()</code> in einem benutzerdefinierten Modul gesetzt werden:"
   },
+  "exampleJoomla": {
+    "title": "Beispiel: Joomla",
+    "intro": "Füge Crumb Widget einer Joomla 4-, 5- oder 6-Site mit der Erweiterung <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a> hinzu. Das Paket bündelt ein Content-Plugin (<code>{crumb}</code>-Shortcode in Beiträgen) und ein Site-Modul (für Modulpositionen), die sich eine Konfiguration teilen. Releases werden auf <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a> veröffentlicht.",
+    "installation": "Installation",
+    "install": {
+      "1": "Lade die neueste <code>pkg_crumb.zip</code> von der <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">Releases-Seite</a> herunter.",
+      "2": "Gehe in der Joomla-Administration zu <strong>System → Install → Extensions</strong> und lade die Paket-ZIP hoch.",
+      "3": "Aktiviere das Plugin: <strong>System → Plugins</strong>, suche nach \"Crumb\", öffne <strong>Content - Crumb</strong>, trage die BMLT-Server-URL ein, speichere und schalte den Status auf <strong>Enabled</strong>. (Joomla liefert Content-Plugins standardmäßig deaktiviert aus.)"
+    },
+    "embedShortcode": "Einbetten über Shortcode in Beiträgen",
+    "embedShortcodeBody": "Sobald das Content-Plugin aktiviert ist, füge den Shortcode in den Text eines beliebigen Beitrags ein:",
+    "serverNote": "Die in den Plugin-Optionen festgelegte BMLT-Server-URL wird standardmäßig verwendet. Du kannst sie überschreiben — oder nach Service Body filtern — direkt im Shortcode:",
+    "embedModule": "Einbetten über ein Modul",
+    "embedModuleBody": "Veröffentliche das Modul <strong>Crumb</strong> auf einer beliebigen Modulposition über <strong>Content → Site Modules → New → Crumb</strong>. Die Einstellungen pro Modul umfassen Server-URL, Service-Body-Filter, Standardansicht und CSS-Template.",
+    "advanced": "Erweiterte Konfiguration",
+    "advancedIntro": "Für Optionen, die nicht als Formularfelder verfügbar sind (Sprache, dunkler Modus, benutzerdefinierte Kartenkacheln usw.), verwende das Feld <strong>Widget Configuration (JSON)</strong> im Optionen-Panel des Plugins oder Moduls. Das JSON wird geparst und als <code>window.CrumbWidgetConfig</code> zusammen mit dem Widget ausgegeben."
+  },
   "features": {
     "title": "Funktionen",
     "item": {
@@ -311,7 +333,8 @@
       "config": "Konfiguration"
     },
     "row": {
-      "drupal": "Setze <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; das Modul registriert die nötige Route automatisch."
+      "drupal": "Setze <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; das Modul registriert die nötige Route automatisch.",
+      "joomla": "Setze <strong>Base Path for Pretty URLs</strong> in den Optionen des Plugins <em>Content - Crumb</em> (oder am Modul). Kombiniere das mit Joomlas Optionen <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> unter <em>System → Global Configuration → Site</em>."
     },
     "iframes": "Einbettung in iframes (Google Sites usw.)",
     "iframesP1": "Beim Einbetten in iframe-basierte Hosts wie Google Sites funktioniert die gesamte Navigation innerhalb des Widgets (Klick auf Meetings, Zurück-Schaltfläche, Geschwister-Links) normal. Deep-Linking zu einem bestimmten Meeting per URL wird jedoch nicht unterstützt, da das Widget innerhalb eines proxierten iframes läuft und die URL der Elternseite nicht steuern kann.",
