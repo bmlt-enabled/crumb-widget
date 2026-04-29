@@ -8,14 +8,15 @@
   import { GEOLOCATION_TIMEOUT_MS } from '@utils/constants';
   import { t, direction } from '@stores/localization';
 
-  let geoErrorHint = $state('');
-  let geoDenied = $state(false);
   import Controls from '@components/Controls.svelte';
   import MeetingList from '@components/MeetingList.svelte';
   import MeetingDetail from '@components/MeetingDetail.svelte';
   import MapView from '@components/MapView.svelte';
   import Loading from '@components/Loading.svelte';
   import Icon from '@components/Icon.svelte';
+
+  let geoErrorHint = $state('');
+  let geoDenied = $state(false);
 
   interface Props {
     config: AppConfig;
