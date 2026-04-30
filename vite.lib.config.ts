@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
 import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
-import dts from 'vite-plugin-dts';
+import dts from 'unplugin-dts/vite';
 import { resolve } from 'path';
 import { readFileSync } from 'fs';
 import { execSync } from 'child_process';
