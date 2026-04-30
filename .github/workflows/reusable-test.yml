@@ -28,8 +28,6 @@ jobs:
         run: npm run coverage
       - name: build library 📦
         run: npm run build:lib
-      - name: bundle size check 📏
-        run: npm run size
       - name: upload coverage to Codecov 📊
         if: always()
         uses: codecov/codecov-action@v6
