@@ -41,7 +41,7 @@
 
   // Column span for print-only day-group header rows.
   const printHeaderColSpan = $derived(
-    (cols.has('time') ? 1 : 0) + (cols.has('name') ? 1 : 0) + (cols.has('location') ? 1 : 0) + (cols.has('address') ? 1 : 0) + (cols.has('service_body') ? 1 : 0) || 1
+    (cols.has('time') ? 1 : 0) + (uiState.geoActive ? 1 : 0) + (cols.has('name') ? 1 : 0) + (cols.has('location') ? 1 : 0) + (cols.has('address') ? 1 : 0) + (cols.has('service_body') ? 1 : 0) || 1
   );
 </script>
 
@@ -141,7 +141,7 @@
     </button>
   {:else}
     <tr>
-      <td colspan={printHeaderColSpan + (uiState.geoActive ? 1 : 0)} class="p-0">
+      <td colspan={printHeaderColSpan} class="p-0">
         <button type="button" class="bmlt-in-progress-banner flex w-full items-center justify-center gap-2 px-4 py-5 text-sm font-semibold" onclick={() => (inProgressOpen = !inProgressOpen)}>
           <span>{label}</span>
           <Icon name="chevron-down" class="h-4 w-4 shrink-0 transition-transform {inProgressOpen ? 'rotate-180' : ''}" />
