@@ -75,7 +75,7 @@
     "vitest": "^4.0.14"
   },
   "dependencies": {
-    "@bmlt-enabled/svelte-spa-router": "^5.2.0",
+    "@bmlt-enabled/svelte-spa-router": "^5.2.1",
     "bmlt-query-client": "^1.1.0",
     "localized-strings": "^2.0.3"
   },
