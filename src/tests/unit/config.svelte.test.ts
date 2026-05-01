@@ -10,10 +10,12 @@ function makeElement(attrs: Record<string, string> = {}, id = 'crumb-widget'): H
 
 beforeEach(() => {
   delete window.CrumbWidgetConfig;
+  window.history.replaceState(null, '', '/');
 });
 
 afterEach(() => {
   delete window.CrumbWidgetConfig;
+  window.history.replaceState(null, '', '/');
 });
 
 describe('initConfig', () => {
@@ -40,6 +42,30 @@ describe('initConfig', () => {
   test('defaults to empty service body ids when attribute missing', () => {
     initConfig(makeElement());
     expect(config.serviceBodyIds).toEqual([]);
+  });
+
+  test('?services query param overrides data-service-body', () => {
+    window.history.replaceState(null, '', '/?services=7');
+    initConfig(makeElement({ 'data-service-body': '3' }));
+    expect(config.serviceBodyIds).toEqual([7]);
+  });
+
+  test('?services query param accepts comma-separated ids', () => {
+    window.history.replaceState(null, '', '/?services=1,2,3');
+    initConfig(makeElement({ 'data-service-body': '99' }));
+    expect(config.serviceBodyIds).toEqual([1, 2, 3]);
+  });
+
+  test('?services= (empty) clears configured service body', () => {
+    window.history.replaceState(null, '', '/?services=');
+    initConfig(makeElement({ 'data-service-body': '3' }));
+    expect(config.serviceBodyIds).toEqual([]);
+  });
+
+  test('falls back to data-service-body when ?services not present', () => {
+    window.history.replaceState(null, '', '/?other=1');
+    initConfig(makeElement({ 'data-service-body': '3' }));
+    expect(config.serviceBodyIds).toEqual([3]);
   });
 
   test('reads view from data attribute', () => {

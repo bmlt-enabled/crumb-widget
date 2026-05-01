@@ -42,7 +42,8 @@ export const config = $state<AppConfig>({
 
 export function initConfig(el: HTMLElement): void {
   const server = validServerUrl(el.getAttribute('data-server') ?? '');
-  const serviceBody = el.getAttribute('data-service-body') ?? '';
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity
+  const serviceBody = new URLSearchParams(window.location.search).get('services') ?? el.getAttribute('data-service-body') ?? '';
   const dataPath = el.getAttribute('data-path');
 
   // data-path enables History API routing with a base path (e.g. "/meetings")
