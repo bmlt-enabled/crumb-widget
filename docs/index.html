@@ -1170,22 +1170,22 @@
         <h3 data-i18n="exampleWordpress.shortcode">Shortcode</h3>
         <div class="demo">
           <div class="demo-header">WordPress shortcode</div>
-          <pre><code>[bmlt_client]</code></pre>
+          <pre><code>[crumb]</code></pre>
         </div>
         <p data-i18n="exampleWordpress.serverNote">The BMLT server URL set in the plugin settings is used by default. You can override it — or filter by service body — directly in the shortcode:</p>
         <div class="demo">
           <div class="demo-header">WordPress shortcode — with overrides</div>
-          <pre><code>[bmlt_client server="https://your-server/main_server" service_body="42"]</code></pre>
+          <pre><code>[crumb server="https://your-server/main_server" service_body="42"]</code></pre>
         </div>
 
         <h3 data-i18n="exampleWordpress.advanced">Advanced configuration</h3>
         <p data-i18n-html="exampleWordpress.advancedIntro">
           All <a href="#global-config">global config options</a> (language, geolocation, columns, map tiles, etc.) can be set from your theme's <code>functions.php</code> via the
-          <code>bmltclient_config</code> filter:
+          <code>crumb_config</code> filter:
         </p>
         <div class="demo">
           <div class="demo-header">PHP — functions.php</div>
-          <pre><code>add_filter( 'bmltclient_config', function( $config ) {
+          <pre><code>add_filter( 'crumb_config', function( $config ) {
     return array_merge( $config, [
         'language'          =&gt; 'en',
         'geolocation'       =&gt; true,
