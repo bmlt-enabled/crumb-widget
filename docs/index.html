@@ -1308,48 +1308,15 @@
         <p data-i18n="siteBuilders.intro">Crumb Widget can also be embedded on common website builders, but the setup varies by platform.</p>
 
         <h3 id="find-service-body" data-i18n="findServiceBody.title">Finding your Service Body ID</h3>
+
         <p data-i18n-html="findServiceBody.intro">
-          Every embed below filters meetings to a specific <strong>service body</strong> (area, region, or zone) by passing its numeric ID in <code>data-service-body</code>. You can look this up from
-          your BMLT server's <strong>semantic workshop</strong>, which is available at <code>&lt;your-server&gt;/main_server/semantic</code> on every BMLT server.
+          Every embed below filters meetings to a specific <strong>service body</strong> (area, region, or zone) by passing its numeric ID in <code>data-service-body</code>.
         </p>
 
-        <ol>
-          <li data-i18n-html="findServiceBody.step.1">
-            Open the semantic workshop in your browser. For example,
-            <a href="https://bmlt.sezf.org/main_server/semantic" target="_blank" rel="noopener">https://bmlt.sezf.org/main_server/semantic</a> — replace the domain with your own BMLT server.
-          </li>
-          <li data-i18n-html="findServiceBody.step.2">
-            Under <strong>Operation</strong>, choose the action that retrieves service bodies (labels vary slightly by version, but it is typically <em>Get Service Bodies</em> or
-            <em>Retrieve information about Service Bodies</em>).
-          </li>
-          <li data-i18n-html="findServiceBody.step.3">Leave the response format as JSON and click <strong>Execute JSON Request</strong>.</li>
-          <li data-i18n-html="findServiceBody.step.4">
-            In the JSON response, find your area, region, or zone by <code>name</code>. The <code>id</code> field next to it is the number you pass to <code>data-service-body</code>.
-          </li>
-        </ol>
-
-        <div class="demo">
-          <div class="demo-header">Example JSON response</div>
-          <pre><code class="language-json">[
-  {
-    "id": "42",
-    "name": "Greater Seattle Area",
-    "type": "AS",
-    "parent_id": "7"
-  },
-  {
-    "id": "57",
-    "name": "North Sound Area",
-    "type": "AS",
-    "parent_id": "7"
-  }
-]</code></pre>
+        <div class="callout" data-i18n-html="findServiceBody.calloutSdle">
+          <strong>The easy way — look up by location.</strong> Visit <a href="https://sdle.org" target="_blank" rel="noopener">sdle.org</a>, click anywhere on the map (or search for an address), and
+          the popup shows the service body covering that area along with its numeric ID — the same number you pass to <code>data-service-body</code>.
         </div>
-
-        <p data-i18n-html="findServiceBody.outro">
-          In this example you would pass <code>data-service-body="42"</code> for just Greater Seattle, or <code>data-service-body="42,57"</code> to combine both areas. You can also skip the semantic
-          workshop and hit the JSON endpoint directly at <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.
-        </p>
 
         <div class="callout" data-i18n-html="findServiceBody.callout1">
           <strong>Don't know your server URL or service body ID?</strong> Browse <a href="https://tally.bmlt.app/" target="_blank" rel="noopener">tally.bmlt.app</a> — it lists known BMLT servers and

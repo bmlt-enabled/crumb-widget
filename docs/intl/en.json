@@ -346,14 +346,8 @@
   },
   "findServiceBody": {
     "title": "Finding your Service Body ID",
-    "intro": "Every embed below filters meetings to a specific <strong>service body</strong> (area, region, or zone) by passing its numeric ID in <code>data-service-body</code>. You can look this up from your BMLT server's <strong>semantic workshop</strong>, which is available at <code>&lt;your-server&gt;/main_server/semantic</code> on every BMLT server.",
-    "step": {
-      "1": "Open the semantic workshop in your browser. For example, <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — replace the domain with your own BMLT server.",
-      "2": "Under <strong>Operation</strong>, choose the action that retrieves service bodies (labels vary slightly by version, but it is typically <em>Get Service Bodies</em> or <em>Retrieve information about Service Bodies</em>).",
-      "3": "Leave the response format as JSON and click <strong>Execute JSON Request</strong>.",
-      "4": "In the JSON response, find your area, region, or zone by <code>name</code>. The <code>id</code> field next to it is the number you pass to <code>data-service-body</code>."
-    },
-    "outro": "In this example you would pass <code>data-service-body=\"42\"</code> for just Greater Seattle, or <code>data-service-body=\"42,57\"</code> to combine both areas. You can also skip the semantic workshop and hit the JSON endpoint directly at <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "intro": "Every embed below filters meetings to a specific <strong>service body</strong> (area, region, or zone) by passing its numeric ID in <code>data-service-body</code>.",
+    "calloutSdle": "<strong>The easy way — look up by location.</strong> Visit <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, click anywhere on the map (or search for an address), and the popup shows the service body covering that area along with its numeric ID — the same number you pass to <code>data-service-body</code>.",
     "callout1": "<strong>Don't know your server URL or service body ID?</strong> Browse <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — it lists known BMLT servers and the service bodies on each. Find your area, region, or zone to get both the <code>data-server</code> URL and the <code>data-service-body</code> ID in one place.",
     "callout2": "<strong>Tip:</strong> Child service bodies are always included automatically. If you pass a region's ID, meetings from every area under it are included — you do not need to list each child area."
   },
