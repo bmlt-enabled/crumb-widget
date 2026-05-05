@@ -93,6 +93,7 @@
     },
     "server": "Full URL to your BMLT server. <br /><em>Example:</em> <code>https://example.org/main_server</code>",
     "serviceBody": "Filter meetings to one or more service bodies. Accepts a single numeric ID or a comma-separated list. Omit to show all meetings on the server. <br /><em>Single:</em> <code>\"42\"</code> <br /><em>Multiple:</em> <code>\"42,57,103\"</code> <br /><strong>Note:</strong> recursive lookup is always enabled — child service bodies are automatically included and cannot be disabled.",
+    "formatIds": "Lock the widget to meetings matching one or more <strong>format IDs</strong> (numeric, server-specific). The filter is applied at the BMLT API level, so only matching meetings are fetched. Useful when you want to embed a list of, e.g., only Open meetings. <br /><em>Single:</em> <code>\"4\"</code> <br /><em>Multiple:</em> <code>\"4,7,12\"</code> (AND — meetings must match all listed IDs) <br />Format IDs vary per server. Look them up in BMLT admin or via <code>GetFormats</code>. For server-agnostic filtering by code (e.g. <code>O</code>, <code>BT</code>), use the <code>formats</code> global config option instead.",
     "view": "Default view when the widget loads. <br /><em>Values:</em> <code>list</code> (default), <code>map</code>, or <code>both</code> <br /><code>both</code> shows a fixed-height map above the full meeting list with no list/map toggle. <br />Can be overridden at runtime by the <code>?view=</code> query parameter (see <a href=\"#query-params\">URL Query Parameters</a>).",
     "path": "Enables History API routing (clean URLs without <code>#</code>) and sets the base path. Without this attribute, hash-based routing is used (default). <br /><em>Example:</em> <code>data-path=\"/meetings\"</code> produces URLs like <code>/meetings/monday-night-meeting-42</code> <br />Use <code>data-path=\"\"</code> for path routing with no prefix (e.g. in iframe embeds). <br />See <a href=\"#routing\">Routing</a> for details."
   },
@@ -114,6 +115,7 @@
       "mapTilesDark": "Alternate tile provider used when <code>prefers-color-scheme: dark</code>. Swaps automatically on OS theme change. See <a href=\"#tile-dark-config\">Dark Mode Tiles</a> below.",
       "mapMarkers": "Custom map marker for meeting locations. Replaces the default NA marker. See <a href=\"#marker-config\">Marker Config</a> below.",
       "height": "Widget height in pixels. Equivalent to the <code>data-height</code> attribute. Omit to let the widget grow to its natural content height.",
+      "formats": "Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Filtering is applied <em>after</em> the API response, so all meetings are still fetched and the format-key filter narrows the result set client-side. Multiple keys are AND-combined — a meeting must match every listed key. Key strings are stable across BMLT servers, so this is the best option when you want server-agnostic filtering. For server-side filtering by numeric format ID, use <code>data-format-ids</code> instead. Default: <code>[]</code> (no lock). <br /><em>Example:</em> <code>formats: ['O']</code>",
       "basePath": "Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See <a href=\"#routing\">Routing</a> for details."
     }
   },
@@ -163,7 +165,8 @@
       "auto": "Geolocate on load — success shows map with nearby results; failure falls back to list with all meetings"
     },
     "example": "Example: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button."
+    "disable": "When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button.",
+    "servicesAndFormats": "Three additional query parameters override their corresponding embed configuration so a single page can be re-targeted via URL: <code>?services=</code> overrides <code>data-service-body</code> (comma-separated service body IDs); <code>?format_ids=</code> overrides <code>data-format-ids</code> (comma-separated numeric format IDs, server-side filter); and <code>?formats=</code> overrides <code>CrumbWidgetConfig.formats</code> (comma-separated format key strings, client-side filter). All three accept an empty value to clear the configured filter (e.g. <code>?formats=</code>)."
   },
   "cssVars": {
     "title": "CSS Variables",

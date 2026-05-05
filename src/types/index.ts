@@ -11,6 +11,8 @@ export interface MarkerConfig {
 export interface AppConfig {
   serverUrl: string;
   serviceBodyIds: number[];
+  formatIds: number[];
+  formatKeys: string[];
   view: 'list' | 'map' | 'both';
   containerId: string;
   locationMarker?: MarkerConfig;
@@ -72,6 +74,8 @@ export interface CrumbWidgetConfig {
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
   hideHeader?: boolean;
+  /** Format key strings (e.g. ['O', 'BT']) to lock the widget to. Filtered client-side after fetch. */
+  formats?: string[];
   /** Base path for History API routing (e.g. '/meetings'). Enables clean URLs without '#'. */
   basePath?: string;
   map?: {

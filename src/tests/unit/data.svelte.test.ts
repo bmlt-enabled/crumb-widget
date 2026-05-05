@@ -1,5 +1,6 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
+import { config } from '@stores/config.svelte';
 import type { Meeting, Format } from '@/types';
 
 vi.mock('bmlt-query-client', () => ({
@@ -54,6 +55,8 @@ beforeEach(() => {
   dataState.meetings = [];
   dataState.loading = false;
   dataState.error = null;
+  config.formatIds = [];
+  config.formatKeys = [];
   setLanguage('en');
 
   mockSearch = vi.fn();
@@ -187,6 +190,54 @@ describe('loadData', () => {
     const names = dataState.meetings.map((m) => m.meeting_name);
     expect(names).toContain('Wednesday AM');
     expect(names).toContain('Monday PM');
+  });
+});
+
+describe('format lock', () => {
+  test('passes formats param to API when config.formatIds is set', async () => {
+    config.formatIds = [4, 7];
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ formats: [4, 7] }));
+  });
+
+  test('omits formats param when config.formatIds is empty', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.not.objectContaining({ formats: expect.anything() }));
+  });
+
+  test('formatKeys filters meetings to those matching all keys (AND)', async () => {
+    config.formatKeys = ['O', 'BT'];
+    const fmts = [rawFormat({ id: '1', key_string: 'O' }), rawFormat({ id: '2', key_string: 'BT' }), rawFormat({ id: '3', key_string: 'WC' })];
+    mockSearch.mockResolvedValue({
+      meetings: [
+        rawMeeting({ id_bigint: '1', format_shared_id_list: '1,2', meeting_name: 'Open Beginners' }),
+        rawMeeting({ id_bigint: '2', format_shared_id_list: '1', meeting_name: 'Open Only' }),
+        rawMeeting({ id_bigint: '3', format_shared_id_list: '1,2,3', meeting_name: 'Open Beginners WC' })
+      ],
+      formats: fmts
+    });
+    await loadData('https://example.org/main_server');
+    const names = dataState.meetings.map((m) => m.meeting_name);
+    expect(names).toEqual(expect.arrayContaining(['Open Beginners', 'Open Beginners WC']));
+    expect(names).not.toContain('Open Only');
+  });
+
+  test('formatKeys is case-insensitive', async () => {
+    config.formatKeys = ['o'];
+    const fmts = [rawFormat({ id: '1', key_string: 'O' })];
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '1' })], formats: fmts });
+    await loadData('https://example.org/main_server');
+    expect(dataState.meetings).toHaveLength(1);
+  });
+
+  test('formatKeys excludes meetings with no matching formats', async () => {
+    config.formatKeys = ['BT'];
+    const fmts = [rawFormat({ id: '1', key_string: 'O' })];
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '1' })], formats: fmts });
+    await loadData('https://example.org/main_server');
+    expect(dataState.meetings).toHaveLength(0);
   });
 });
 

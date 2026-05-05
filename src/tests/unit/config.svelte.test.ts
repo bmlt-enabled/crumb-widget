@@ -68,6 +68,49 @@ describe('initConfig', () => {
     expect(config.serviceBodyIds).toEqual([3]);
   });
 
+  test('parses format ids from data-format-ids', () => {
+    initConfig(makeElement({ 'data-format-ids': '4, 7, 12' }));
+    expect(config.formatIds).toEqual([4, 7, 12]);
+  });
+
+  test('?format_ids overrides data-format-ids', () => {
+    window.history.replaceState(null, '', '/?format_ids=9');
+    initConfig(makeElement({ 'data-format-ids': '4' }));
+    expect(config.formatIds).toEqual([9]);
+  });
+
+  test('defaults formatIds to empty array', () => {
+    initConfig(makeElement());
+    expect(config.formatIds).toEqual([]);
+  });
+
+  test('reads format keys from CrumbWidgetConfig.formats', () => {
+    window.CrumbWidgetConfig = { formats: ['O', 'BT'] };
+    initConfig(makeElement());
+    expect(config.formatKeys).toEqual(['O', 'BT']);
+  });
+
+  test('?formats overrides CrumbWidgetConfig.formats', () => {
+    window.CrumbWidgetConfig = { formats: ['O'] };
+    window.history.replaceState(null, '', '/?formats=BT,WC');
+    initConfig(makeElement());
+    expect(config.formatKeys).toEqual(['BT', 'WC']);
+  });
+
+  test('?formats= (empty) clears configured format keys', () => {
+    window.CrumbWidgetConfig = { formats: ['O'] };
+    window.history.replaceState(null, '', '/?formats=');
+    initConfig(makeElement());
+    expect(config.formatKeys).toEqual([]);
+  });
+
+  test('formatIds and formatKeys can be set simultaneously', () => {
+    window.CrumbWidgetConfig = { formats: ['O'] };
+    initConfig(makeElement({ 'data-format-ids': '4,7' }));
+    expect(config.formatIds).toEqual([4, 7]);
+    expect(config.formatKeys).toEqual(['O']);
+  });
+
   test('reads view from data attribute', () => {
     initConfig(makeElement({ 'data-view': 'map' }));
     expect(config.view).toBe('map');

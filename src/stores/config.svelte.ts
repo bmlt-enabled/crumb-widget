@@ -2,12 +2,15 @@ import type { AppConfig, Column } from '@/types';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization, SUPPORTED_LANGUAGES } from './localization';
 import {
+  parseFormatIds,
+  parseFormatKeys,
   parseServiceBodyIds,
   validBoolean,
   validColumns,
   validDarkMode,
   validDistanceOptions,
   validDistanceUnit,
+  validFormatKeys,
   validHeight,
   validLanguage,
   validNonNegative,
@@ -33,6 +36,8 @@ export const CONFIG_DEFAULTS = {
 export const config = $state<AppConfig>({
   serverUrl: '',
   serviceBodyIds: [],
+  formatIds: [],
+  formatKeys: [],
   containerId: 'crumb-widget',
   height: undefined,
   ...CONFIG_DEFAULTS,
@@ -43,7 +48,9 @@ export const config = $state<AppConfig>({
 export function initConfig(el: HTMLElement): void {
   const server = validServerUrl(el.getAttribute('data-server') ?? '');
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
-  const serviceBody = new URLSearchParams(window.location.search).get('services') ?? el.getAttribute('data-service-body') ?? '';
+  const query = new URLSearchParams(window.location.search);
+  const serviceBody = query.get('services') ?? el.getAttribute('data-service-body') ?? '';
+  const formatIdsRaw = query.get('format_ids') ?? el.getAttribute('data-format-ids') ?? '';
   const dataPath = el.getAttribute('data-path');
 
   // data-path enables History API routing with a base path (e.g. "/meetings")
@@ -57,6 +64,10 @@ export function initConfig(el: HTMLElement): void {
 
   config.serverUrl = server;
   config.serviceBodyIds = parseServiceBodyIds(serviceBody);
+  config.formatIds = parseFormatIds(formatIdsRaw);
+  // ?formats= overrides CrumbWidgetConfig.formats (key strings, client-side filter)
+  const formatsParam = query.get('formats');
+  config.formatKeys = formatsParam != null ? parseFormatKeys(formatsParam) : validFormatKeys(globalCfg.formats, []);
   config.view = validView(globalCfg.view, dataView);
   config.containerId = el.id || 'crumb-widget';
   config.locationMarker = globalCfg.map?.markers?.location;

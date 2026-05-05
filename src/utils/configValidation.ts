@@ -118,3 +118,28 @@ export function parseServiceBodyIds(value: string): number[] {
     .map((s) => parseInt(s.trim(), 10))
     .filter((n) => Number.isFinite(n) && n > 0);
 }
+
+export function parseFormatIds(value: string): number[] {
+  if (!value) return [];
+  return value
+    .split(',')
+    .map((s) => parseInt(s.trim(), 10))
+    .filter((n) => Number.isFinite(n) && n > 0);
+}
+
+export function parseFormatKeys(value: string): string[] {
+  if (!value) return [];
+  return value
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+}
+
+export function validFormatKeys(value: unknown, fallback: string[]): string[] {
+  if (value == null) return [...fallback];
+  if (Array.isArray(value) && value.every((x) => typeof x === 'string' && x.trim().length > 0)) {
+    return (value as string[]).map((s) => s.trim());
+  }
+  warn('formats', value, 'an array of non-empty strings', fallback);
+  return [...fallback];
+}

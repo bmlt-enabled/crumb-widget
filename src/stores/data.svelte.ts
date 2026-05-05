@@ -52,6 +52,15 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
   });
 }
 
+function applyFormatKeyLock(meetings: ProcessedMeeting[], formatKeys: string[]): ProcessedMeeting[] {
+  if (formatKeys.length === 0) return meetings;
+  const wanted = formatKeys.map((k) => k.toLowerCase());
+  return meetings.filter((m) => {
+    const have = new Set(m.resolvedFormats.map((f) => f.key_string.toLowerCase()));
+    return wanted.every((k) => have.has(k));
+  });
+}
+
 async function load(serverUrl: string, params: SearchParams): Promise<void> {
   if (!serverUrl) {
     dataState.error = 'No server URL configured. Add data-server to your embed element.';
@@ -64,7 +73,8 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
   try {
     const client = new BmltClient({ serverURL: serverUrl });
     const lang_enum = bmltLanguageFor(getLanguage());
-    const baseParams = { ...params, page_size: PAGE_SIZE };
+    const withFormatLock = config.formatIds.length > 0 ? { ...params, formats: config.formatIds } : params;
+    const baseParams = { ...withFormatLock, page_size: PAGE_SIZE };
     let { meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(lang_enum ? { ...baseParams, lang_enum } : baseParams);
 
     // If the server has no translations for the requested language it returns
@@ -79,7 +89,8 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
     dataState.formats = formatsMap;
 
-    dataState.meetings = sortMeetings(processMeetings(meetingsResp), config.nowOffset);
+    const processed = applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
+    dataState.meetings = sortMeetings(processed, config.nowOffset);
   } catch (err) {
     dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
   } finally {

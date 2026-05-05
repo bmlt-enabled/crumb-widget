@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onDestroy } from 'svelte';
+  import { SvelteSet } from 'svelte/reactivity';
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
   import { dataState, loadData } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
@@ -77,6 +78,27 @@
   const availableFormats = $derived.by(() => {
     const uniqueById = new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f]));
     return [...uniqueById.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
+  });
+
+  // Format IDs that the embedder has locked via data-format-ids / ?format_ids= (numeric, server-side)
+  // or CrumbWidgetConfig.formats / ?formats= (key strings, client-side). These render as checked
+  // and non-interactive in the format dropdown so users see why their results are pre-filtered.
+  const lockedFormatIds = $derived.by(() => {
+    const ids = new SvelteSet<string>();
+    for (const id of config.formatIds) ids.add(String(id));
+    if (config.formatKeys.length > 0) {
+      const wanted = new SvelteSet(config.formatKeys.map((k) => k.toLowerCase()));
+      for (const fmt of dataState.formats.values()) {
+        if (wanted.has(fmt.key_string.toLowerCase())) ids.add(fmt.id);
+      }
+    }
+    return ids;
+  });
+
+  const effectiveFormatIds = $derived.by(() => {
+    const merged = new SvelteSet<string>(uiState.filters.formatIds);
+    for (const id of lockedFormatIds) merged.add(id);
+    return merged;
   });
 
   const FORMAT_TYPE_GROUPS = [
@@ -377,20 +399,19 @@
           showServiceBodyDropdown = false;
           showGeoDropdown = false;
         }}
-        class="flex w-full items-center justify-between rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.venueTypes.length > 0 ||
-        uiState.filters.formatIds.length > 0
+        class="flex w-full items-center justify-between rounded-lg border-2 px-3 py-2.5 text-sm font-medium transition-colors {uiState.filters.venueTypes.length > 0 || effectiveFormatIds.size > 0
           ? 'bmlt-filter-toggle-active border-blue-500 bg-blue-50 text-blue-700'
           : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'}"
       >
         <span class="truncate">
-          {#if uiState.filters.venueTypes.length === 0 && uiState.filters.formatIds.length === 0}
+          {#if uiState.filters.venueTypes.length === 0 && effectiveFormatIds.size === 0}
             {$t.anyType}
-          {:else if uiState.filters.venueTypes.length === 1 && uiState.filters.formatIds.length === 0}
+          {:else if uiState.filters.venueTypes.length === 1 && effectiveFormatIds.size === 0}
             {$t[VENUE_TYPE_VALUES.find((v) => uiState.filters.venueTypes.includes(v.value))?.key ?? 'anyType']}
-          {:else if uiState.filters.venueTypes.length === 0 && uiState.filters.formatIds.length === 1}
-            {availableFormats.find((f) => f.id === uiState.filters.formatIds[0])?.name_string ?? '1 selected'}
+          {:else if uiState.filters.venueTypes.length === 0 && effectiveFormatIds.size === 1}
+            {availableFormats.find((f) => effectiveFormatIds.has(f.id))?.name_string ?? '1 selected'}
           {:else}
-            {uiState.filters.venueTypes.length + uiState.filters.formatIds.length} {$t.filters}
+            {uiState.filters.venueTypes.length + effectiveFormatIds.size} {$t.filters}
           {/if}
         </span>
         <Icon name="chevron-down" class="h-3.5 w-3.5 shrink-0 transition-transform {showTypeDropdown ? 'rotate-180' : ''}" />
@@ -420,19 +441,27 @@
                 <div class="px-3 pt-2 pb-0.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">{section.label}</div>
               {/if}
               {#each section.formats as fmt (fmt.id)}
+                {@const isLocked = lockedFormatIds.has(fmt.id)}
+                {@const isChecked = isLocked || uiState.filters.formatIds.includes(fmt.id)}
                 <button
-                  onclick={() => toggleArrayFilter('formatIds', fmt.id)}
-                  class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {uiState.filters.formatIds.includes(fmt.id)
+                  onclick={() => {
+                    if (!isLocked) toggleArrayFilter('formatIds', fmt.id);
+                  }}
+                  disabled={isLocked}
+                  class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm {isLocked ? 'cursor-not-allowed' : 'hover:bg-gray-50'} {isChecked
                     ? 'font-semibold text-blue-700'
                     : 'text-gray-700'}"
-                  title={fmt.description_string}
+                  title={isLocked ? `${fmt.description_string} — ${$t.locked ?? 'locked by site configuration'}` : fmt.description_string}
                 >
-                  <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {uiState.filters.formatIds.includes(fmt.id) ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
-                    {#if uiState.filters.formatIds.includes(fmt.id)}
+                  <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {isChecked ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
+                    {#if isChecked}
                       <Icon name="check" class="h-3 w-3 text-white" strokeWidth={3} />
                     {/if}
                   </span>
-                  {fmt.name_string}
+                  <span class="flex-1">{fmt.name_string}</span>
+                  {#if isLocked}
+                    <Icon name="lock" class="h-3 w-3 shrink-0 text-gray-400" strokeWidth={2} />
+                  {/if}
                 </button>
               {/each}
             {/each}

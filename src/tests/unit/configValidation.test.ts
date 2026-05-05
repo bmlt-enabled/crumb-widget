@@ -1,11 +1,14 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
+  parseFormatIds,
+  parseFormatKeys,
   parseServiceBodyIds,
   validBoolean,
   validColumns,
   validDarkMode,
   validDistanceOptions,
   validDistanceUnit,
+  validFormatKeys,
   validHeight,
   validLanguage,
   validNonNegative,
@@ -247,5 +250,60 @@ describe('parseServiceBodyIds', () => {
 
   test('returns empty array for empty string', () => {
     expect(parseServiceBodyIds('')).toEqual([]);
+  });
+});
+
+describe('parseFormatIds', () => {
+  test('parses a comma-separated list', () => {
+    expect(parseFormatIds('1,5,12')).toEqual([1, 5, 12]);
+  });
+
+  test('drops invalid entries', () => {
+    expect(parseFormatIds('1,bad,-3,0,7')).toEqual([1, 7]);
+  });
+
+  test('returns empty array for empty string', () => {
+    expect(parseFormatIds('')).toEqual([]);
+  });
+});
+
+describe('parseFormatKeys', () => {
+  test('parses a comma-separated list', () => {
+    expect(parseFormatKeys('O,BT,WC')).toEqual(['O', 'BT', 'WC']);
+  });
+
+  test('trims whitespace and drops empty entries', () => {
+    expect(parseFormatKeys(' O , , BT ')).toEqual(['O', 'BT']);
+  });
+
+  test('returns empty array for empty string', () => {
+    expect(parseFormatKeys('')).toEqual([]);
+  });
+});
+
+describe('validFormatKeys', () => {
+  test('accepts an array of strings', () => {
+    expect(validFormatKeys(['O', 'BT'], [])).toEqual(['O', 'BT']);
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('returns fallback for nullish without warning', () => {
+    expect(validFormatKeys(undefined, ['O'])).toEqual(['O']);
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('warns and falls back when array contains non-strings', () => {
+    expect(validFormatKeys(['O', 42], [])).toEqual([]);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('warns and falls back when array contains empty strings', () => {
+    expect(validFormatKeys(['O', ''], [])).toEqual([]);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('warns and falls back for non-array', () => {
+    expect(validFormatKeys('O,BT', [])).toEqual([]);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 });

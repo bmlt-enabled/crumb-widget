@@ -1494,6 +1494,17 @@
                 </td>
               </tr>
               <tr>
+                <td>data-format-ids</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.formatIds">
+                  Lock the widget to meetings matching one or more <strong>format IDs</strong> (numeric, server-specific). The filter is applied at the BMLT API level, so only matching meetings are
+                  fetched. Useful when you want to embed a list of, e.g., only Open meetings.
+                  <br /><em>Single:</em> <code>"4"</code> <br /><em>Multiple:</em> <code>"4,7,12"</code> (AND — meetings must match all listed IDs)
+                  <br />Format IDs vary per server. Look them up in BMLT admin or via <code>GetFormats</code>. For server-agnostic filtering by code (e.g. <code>O</code>, <code>BT</code>), use the
+                  <code>formats</code> global config option instead.
+                </td>
+              </tr>
+              <tr>
                 <td>data-view</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.view">
@@ -1621,6 +1632,16 @@
                 </td>
               </tr>
               <tr>
+                <td>formats</td>
+                <td><code>string[]</code></td>
+                <td data-i18n-html="globalConfig.row.formats">
+                  Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Filtering is applied
+                  <em>after</em> the API response, so all meetings are still fetched and the format-key filter narrows the result set client-side. Multiple keys are AND-combined — a meeting must
+                  match every listed key. Key strings are stable across BMLT servers, so this is the best option when you want server-agnostic filtering. For server-side filtering by numeric format
+                  ID, use <code>data-format-ids</code> instead. Default: <code>[]</code> (no lock). <br /><em>Example:</em> <code>formats: ['O']</code>
+                </td>
+              </tr>
+              <tr>
                 <td>basePath</td>
                 <td><code>string</code></td>
                 <td data-i18n-html="globalConfig.row.basePath">
@@ -1661,6 +1682,7 @@
     hideHeader: false,         // hide the "Meeting Finder" title bar
     darkMode: 'auto',          // 'auto' | true | false
     height: 600,               // widget height in pixels
+    formats: ['O'],            // lock to meetings with these format key strings (client-side, AND)
     basePath: '/meetings',     // History API base path; equivalent to data-path
     map: {
       tiles: {
@@ -1831,6 +1853,12 @@
         </div>
         <p data-i18n-html="queryParams.example">Example: <code>https://example.org/meetings/?view=auto</code></p>
         <p data-i18n-html="queryParams.disable">When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button.</p>
+        <p data-i18n-html="queryParams.servicesAndFormats">
+          Three additional query parameters override their corresponding embed configuration so a single page can be re-targeted via URL: <code>?services=</code> overrides
+          <code>data-service-body</code> (comma-separated service body IDs); <code>?format_ids=</code> overrides <code>data-format-ids</code> (comma-separated numeric format IDs, server-side filter);
+          and <code>?formats=</code> overrides <code>CrumbWidgetConfig.formats</code> (comma-separated format key strings, client-side filter). All three accept an empty value to clear the
+          configured filter (e.g. <code>?formats=</code>).
+        </p>
 
         <h2 id="css-vars" data-i18n="cssVars.title">CSS Variables</h2>
         <p data-i18n-html="cssVars.intro">

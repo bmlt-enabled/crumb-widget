@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export type IconName = 'map-pin' | 'map-pin-outline' | 'video' | 'chevron-down' | 'chevron-left' | 'search' | 'alert' | 'no-results' | 'filter' | 'map' | 'check' | 'x';
+  export type IconName = 'map-pin' | 'map-pin-outline' | 'video' | 'chevron-down' | 'chevron-left' | 'search' | 'alert' | 'no-results' | 'filter' | 'map' | 'check' | 'x' | 'lock';
 </script>
 
 <script lang="ts">
@@ -48,5 +48,12 @@
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width={strokeWidth} d="M5 13l4 4L19 7" />
   {:else if name === 'x'}
     <path stroke-linecap="round" stroke-linejoin="round" stroke-width={strokeWidth} d="M6 18L18 6M6 6l12 12" />
+  {:else if name === 'lock'}
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width={strokeWidth}
+      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+    />
   {/if}
 </svg>
