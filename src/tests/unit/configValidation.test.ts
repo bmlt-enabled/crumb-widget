@@ -13,6 +13,7 @@ import {
   validLanguage,
   validNonNegative,
   validPositive,
+  validRadius,
   validServerUrl,
   validView
 } from '@utils/configValidation';
@@ -66,6 +67,35 @@ describe('validPositive', () => {
     expect(validPositive('field', NaN, 10)).toBe(10);
     expect(validPositive('field', Infinity, 10)).toBe(10);
     expect(validPositive('field', 'five', 10)).toBe(10);
+    expect(warnSpy).toHaveBeenCalledTimes(5);
+  });
+});
+
+describe('validRadius', () => {
+  test('accepts positive numbers including floats', () => {
+    expect(validRadius('field', 5, 10)).toBe(5);
+    expect(validRadius('field', 0.5, 10)).toBe(0.5);
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('accepts negative integers (BMLT auto-radius)', () => {
+    expect(validRadius('field', -50, 10)).toBe(-50);
+    expect(validRadius('field', -1, 10)).toBe(-1);
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('returns fallback for nullish without warning', () => {
+    expect(validRadius('field', undefined, 10)).toBe(10);
+    expect(validRadius('field', null, 10)).toBe(10);
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('warns on zero, negative float, NaN, Infinity, non-number', () => {
+    expect(validRadius('field', 0, 10)).toBe(10);
+    expect(validRadius('field', -1.5, 10)).toBe(10);
+    expect(validRadius('field', NaN, 10)).toBe(10);
+    expect(validRadius('field', Infinity, 10)).toBe(10);
+    expect(validRadius('field', 'five', 10)).toBe(10);
     expect(warnSpy).toHaveBeenCalledTimes(5);
   });
 });

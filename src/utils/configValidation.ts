@@ -10,6 +10,8 @@ function warn(field: string, value: unknown, expected: string, fallback: unknown
 
 const isPositive = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v > 0;
 const isNonNegative = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v >= 0;
+// Positive finite number (fixed radius) or negative integer (BMLT auto-radius: find ~N meetings).
+const isRadius = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v !== 0 && (v > 0 || Number.isInteger(v));
 
 export function validView(value: unknown, fallback: ViewType): ViewType {
   if (value == null) return fallback;
@@ -22,6 +24,13 @@ export function validPositive(field: string, value: unknown, fallback: number): 
   if (value == null) return fallback;
   if (isPositive(value)) return value;
   warn(field, value, 'a positive number', fallback);
+  return fallback;
+}
+
+export function validRadius(field: string, value: unknown, fallback: number): number {
+  if (value == null) return fallback;
+  if (isRadius(value)) return value;
+  warn(field, value, 'a positive number or a negative integer for BMLT auto-radius', fallback);
   return fallback;
 }
 

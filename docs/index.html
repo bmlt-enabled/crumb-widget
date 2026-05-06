@@ -1586,15 +1586,14 @@
                 <td>geolocationRadius</td>
                 <td><code>number</code></td>
                 <td data-i18n-html="globalConfig.row.geolocationRadius">
-                  Maximum search radius when using geolocation. Acts as the cap for the Near Me distance dropdown — options above this value are hidden. Default: <code>75</code>.
+                  Controls the search radius when geolocation is used. A <strong>positive</strong> value sets a fixed radius in miles (or km, per <code>distanceUnit</code>) and caps the Near Me distance dropdown. A <strong>negative integer</strong> uses BMLT auto-radius mode — the server expands the search until it finds roughly that many meetings (e.g. <code>-50</code> finds ~50 nearby meetings); the distance dropdown then shows all <code>distanceOptions</code> without a cap. Default: <code>-50</code>.
                 </td>
               </tr>
               <tr>
                 <td>distanceOptions</td>
                 <td><code>number[]</code></td>
                 <td data-i18n-html="globalConfig.row.distanceOptions">
-                  Distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. Options above <code>geolocationRadius</code> are automatically hidden; if
-                  <code>geolocationRadius</code> is not in the list it is appended as the last option. Default: <code>[5, 10, 15, 25, 50, 100]</code>.
+                  Distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. When <code>geolocationRadius</code> is a positive number, options above it are hidden and it is appended as the last option if not already present. When <code>geolocationRadius</code> is negative (auto-radius), all options are shown as-is. Default: <code>[5, 10, 15, 25, 50, 100]</code>.
                 </td>
               </tr>
               <tr>
@@ -1677,7 +1676,7 @@
     language: 'en',            // override UI language; defaults to navigator.language
     columns: ['time', 'name', 'location', 'address', 'service_body'],
     geolocation: false,        // show Near Me button
-    geolocationRadius: 75,     // search radius in miles
+    geolocationRadius: -50,    // negative = BMLT auto-radius (~50 meetings); positive = fixed miles/km
     nowOffset: 10,             // minutes before a meeting is considered past and rolls to end
     hideHeader: false,         // hide the "Meeting Finder" title bar
     darkMode: 'auto',          // 'auto' | true | false
@@ -1800,8 +1799,7 @@
         </p>
         <p data-i18n-html="geolocation.p4">
           The Near Me button opens a distance dropdown so users can choose how far to search. Selecting a radius applies a client-side distance filter on the already-loaded meetings — no new network
-          request is made when changing radius. The available distances come from <code>distanceOptions</code>, capped at <code>geolocationRadius</code>; options with no meetings in range are hidden
-          automatically. Use <code>distanceUnit</code> to display kilometres instead of miles.
+          request is made when changing radius. When <code>geolocationRadius</code> is a positive number, the available distances come from <code>distanceOptions</code> capped at that value; options with no meetings in range are hidden automatically. When <code>geolocationRadius</code> is a negative integer (auto-radius), all <code>distanceOptions</code> are shown without a cap — the initial search finds roughly that many meetings, and picking a distance from the dropdown switches to a fixed radius. Use <code>distanceUnit</code> to display kilometres instead of miles.
         </p>
         <p data-i18n-html="geolocation.p5">
           While in map view with Near Me active, panning or zooming the map reveals a <strong>Search this area</strong>
@@ -1813,7 +1811,7 @@
           <pre><code class="language-html">&lt;script&gt;
   var CrumbWidgetConfig = {
     geolocation: true,
-    geolocationRadius: 25,         // miles, default 75
+    geolocationRadius: -50,        // auto-radius: find ~50 nearby meetings (default); use positive number for fixed miles/km
     distanceOptions: [5, 10, 25, 50], // defaults to [5,10,15,25,50,100]
     distanceUnit: 'mi'             // 'mi' or 'km', default 'mi'
   };
@@ -2556,7 +2554,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>geolocationRadius</code></td>
               <td><code>number</code></td>
               <td data-i18n="yesNo.no">No</td>
-              <td data-i18n-html="npmPackage.row.geolocationRadius">Maximum search radius (caps the distance dropdown). Defaults to <code>75</code>.</td>
+              <td data-i18n-html="npmPackage.row.geolocationRadius">Search radius. Positive = fixed miles/km (caps the distance dropdown). Negative integer = BMLT auto-radius: find ~N nearby meetings (e.g. <code>-50</code>). Defaults to <code>-50</code>.</td>
             </tr>
             <tr>
               <td><code>distanceOptions</code></td>

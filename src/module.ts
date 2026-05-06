@@ -4,7 +4,7 @@ import App from './App.svelte';
 import { config, CONFIG_DEFAULTS } from '@stores/config.svelte';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization, SUPPORTED_LANGUAGES } from '@stores/localization';
-import { validBoolean, validColumns, validDarkMode, validDistanceOptions, validDistanceUnit, validHeight, validLanguage, validNonNegative, validPositive, validView } from '@utils/configValidation';
+import { validBoolean, validColumns, validDarkMode, validDistanceOptions, validDistanceUnit, validHeight, validLanguage, validNonNegative, validRadius, validView } from '@utils/configValidation';
 import type { CrumbWidgetConfig, Column } from '@/types';
 
 export type { CrumbWidgetConfig, Column };
@@ -41,7 +41,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.tilesDark = options.map?.tiles_dark;
   config.columns = validColumns(options.columns, CONFIG_DEFAULTS.columns);
   config.geolocation = validBoolean('geolocation', options.geolocation, CONFIG_DEFAULTS.geolocation);
-  config.geolocationRadius = validPositive('geolocationRadius', options.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
+  config.geolocationRadius = validRadius('geolocationRadius', options.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(options.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
   config.distanceUnit = validDistanceUnit(options.distanceUnit, CONFIG_DEFAULTS.distanceUnit);
   config.height = validHeight(options.height);

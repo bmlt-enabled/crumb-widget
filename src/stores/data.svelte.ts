@@ -102,11 +102,11 @@ export function loadData(serverUrl: string, serviceBodyIds: number[] = []): Prom
   return load(serverUrl, serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {});
 }
 
-export function loadDataByCoordinates(serverUrl: string, latitude: number, longitude: number, radiusMiles: number = 10): Promise<void> {
+export function loadDataByCoordinates(serverUrl: string, latitude: number, longitude: number, geoWidth: number = 10): Promise<void> {
   return load(serverUrl, {
     lat_val: latitude,
     long_val: longitude,
-    geo_width: radiusMiles,
+    geo_width: geoWidth,
     sort_results_by_distance: true
   });
 }

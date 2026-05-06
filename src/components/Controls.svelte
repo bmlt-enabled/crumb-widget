@@ -13,12 +13,14 @@
 
   const GEO_ERROR_DISPLAY_MS = 4000;
   // Build the dropdown list from config.distanceOptions, capped at config.geolocationRadius.
-  // If geolocationRadius isn't already in the list it is appended so the maximum is always reachable.
+  // Negative geolocationRadius = BMLT auto-radius mode; no fixed max, so show all distanceOptions as-is.
+  // If a positive geolocationRadius isn't already in the list it is appended so the maximum is always reachable.
   // When a user location is known, options with zero matching meetings are hidden.
   const distanceOptions = $derived.by(() => {
     const max = config.geolocationRadius;
-    const opts = config.distanceOptions.filter((d) => d < max);
-    opts.push(max);
+    const isFixedRadius = max > 0;
+    const opts = isFixedRadius ? config.distanceOptions.filter((d) => d < max) : [...config.distanceOptions];
+    if (isFixedRadius) opts.push(max);
 
     if (!uiState.userLocation) return opts;
 

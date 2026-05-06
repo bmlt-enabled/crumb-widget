@@ -14,7 +14,7 @@ import {
   validHeight,
   validLanguage,
   validNonNegative,
-  validPositive,
+  validRadius,
   validServerUrl,
   validView
 } from '@utils/configValidation';
@@ -25,7 +25,7 @@ export const CONFIG_DEFAULTS = {
   view: 'list',
   columns: ALL_COLUMNS,
   geolocation: false,
-  geolocationRadius: 75,
+  geolocationRadius: -50,
   distanceOptions: [5, 10, 15, 25, 50, 100],
   distanceUnit: 'mi',
   nowOffset: 10,
@@ -77,7 +77,7 @@ export function initConfig(el: HTMLElement): void {
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
   const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
   config.geolocation = validBoolean('geolocation', globalCfg.geolocation, isAggregator);
-  config.geolocationRadius = validPositive('geolocationRadius', globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
+  config.geolocationRadius = validRadius('geolocationRadius', globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(globalCfg.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
   config.distanceUnit = validDistanceUnit(globalCfg.distanceUnit, CONFIG_DEFAULTS.distanceUnit);
   config.height = validHeight(globalCfg.height);

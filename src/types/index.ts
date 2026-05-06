@@ -67,6 +67,7 @@ export interface CrumbWidgetConfig {
   view?: 'list' | 'map' | 'both';
   columns?: Column[];
   geolocation?: boolean;
+  /** Positive = fixed radius in miles/km. Negative integer = BMLT auto-radius: find roughly N nearby meetings. */
   geolocationRadius?: number;
   distanceOptions?: number[];
   distanceUnit?: 'mi' | 'km';

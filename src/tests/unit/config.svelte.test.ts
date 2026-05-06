@@ -152,9 +152,9 @@ describe('initConfig', () => {
     expect(config.geolocation).toBe(false);
   });
 
-  test('defaults geolocationRadius to 75', () => {
+  test('defaults geolocationRadius to -50 (auto-radius)', () => {
     initConfig(makeElement());
-    expect(config.geolocationRadius).toBe(75);
+    expect(config.geolocationRadius).toBe(-50);
   });
 
   test('defaults distanceOptions to [1,2,5,10,15,25,50,100]', () => {
@@ -209,10 +209,28 @@ describe('initConfig', () => {
       expect(config.geolocation).toBe(false);
     });
 
-    test('overrides geolocationRadius', () => {
+    test('overrides geolocationRadius with positive value', () => {
       window.CrumbWidgetConfig = { geolocationRadius: 25 };
       initConfig(makeElement());
       expect(config.geolocationRadius).toBe(25);
+    });
+
+    test('overrides geolocationRadius with negative integer (auto-radius)', () => {
+      window.CrumbWidgetConfig = { geolocationRadius: -50 };
+      initConfig(makeElement());
+      expect(config.geolocationRadius).toBe(-50);
+    });
+
+    test('rejects zero geolocationRadius and uses default', () => {
+      window.CrumbWidgetConfig = { geolocationRadius: 0 };
+      initConfig(makeElement());
+      expect(config.geolocationRadius).toBe(-50);
+    });
+
+    test('rejects negative float geolocationRadius and uses default', () => {
+      window.CrumbWidgetConfig = { geolocationRadius: -1.5 };
+      initConfig(makeElement());
+      expect(config.geolocationRadius).toBe(-50);
     });
 
     test('overrides distanceOptions', () => {
