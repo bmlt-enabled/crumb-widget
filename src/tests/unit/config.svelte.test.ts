@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach } from 'vitest';
+import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import { config, initConfig } from '@stores/config.svelte';
 
 function makeElement(attrs: Record<string, string> = {}, id = 'crumb-widget'): HTMLElement {
@@ -8,14 +8,18 @@ function makeElement(attrs: Record<string, string> = {}, id = 'crumb-widget'): H
   return el;
 }
 
+let warnSpy: ReturnType<typeof vi.spyOn>;
+
 beforeEach(() => {
   delete window.CrumbWidgetConfig;
   window.history.replaceState(null, '', '/');
+  warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 });
 
 afterEach(() => {
   delete window.CrumbWidgetConfig;
   window.history.replaceState(null, '', '/');
+  warnSpy.mockRestore();
 });
 
 describe('initConfig', () => {

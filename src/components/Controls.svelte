@@ -2,7 +2,7 @@
   import { onDestroy } from 'svelte';
   import { SvelteSet } from 'svelte/reactivity';
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
-  import { dataState, loadData } from '@stores/data.svelte';
+  import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
   import { VENUE_TYPE } from '@/types';
   import { getGeoErrorMessage, haversineDistanceMiles } from '@utils/format';
@@ -208,13 +208,20 @@
     geoStatus = 'active';
   }
 
-  function handleNearMe(radius: number) {
+  async function handleNearMe(radius: number) {
     if (geoStatus === 'locating') return;
     showGeoDropdown = false;
 
-    // Already have a location — just update the radius, no new geolocation needed
+    // Already have a location — update radius.
+    // In auto-radius mode (negative geolocationRadius) a new server fetch is needed because
+    // the loaded meeting set is bounded by the ~N nearest results, not a fixed geographic area.
     if (uiState.userLocation) {
-      applyGeoRadius(radius);
+      if (config.geolocationRadius < 0) {
+        applyGeoRadius(radius);
+        await loadDataByCoordinates(config.serverUrl, uiState.userLocation.lat, uiState.userLocation.lng, radius);
+      } else {
+        applyGeoRadius(radius);
+      }
       return;
     }
 
