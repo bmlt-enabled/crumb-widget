@@ -56,6 +56,7 @@ export const daTranslations = {
   notes: 'Noter',
   contact: 'Kontakt',
   alsoAtThisLocation: 'Også på dette sted',
+  updateMeetingInfo: 'Opdater mødeoplysninger',
   milesAbbr: 'mi',
   away: 'væk',
   // Geolocation

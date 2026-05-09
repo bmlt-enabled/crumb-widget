@@ -56,6 +56,7 @@ export const faTranslations = {
   notes: 'یادداشت‌ها',
   contact: 'تماس',
   alsoAtThisLocation: 'همچنین در این مکان',
+  updateMeetingInfo: 'به‌روزرسانی اطلاعات جلسه',
   milesAbbr: 'مایل',
   away: 'دورتر',
   // Geolocation

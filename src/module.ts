@@ -4,7 +4,19 @@ import App from './App.svelte';
 import { config, CONFIG_DEFAULTS } from '@stores/config.svelte';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization, SUPPORTED_LANGUAGES } from '@stores/localization';
-import { validBoolean, validColumns, validDarkMode, validDistanceOptions, validDistanceUnit, validHeight, validLanguage, validNonNegative, validRadius, validView } from '@utils/configValidation';
+import {
+  validBoolean,
+  validColumns,
+  validDarkMode,
+  validDistanceOptions,
+  validDistanceUnit,
+  validHeight,
+  validLanguage,
+  validNonNegative,
+  validRadius,
+  validUpdateUrl,
+  validView
+} from '@utils/configValidation';
 import type { CrumbWidgetConfig, Column } from '@/types';
 
 export type { CrumbWidgetConfig, Column };
@@ -48,6 +60,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.darkMode = validDarkMode(options.darkMode, CONFIG_DEFAULTS.darkMode);
   config.nowOffset = validNonNegative('nowOffset', options.nowOffset, CONFIG_DEFAULTS.nowOffset);
   config.hideHeader = validBoolean('hideHeader', options.hideHeader, CONFIG_DEFAULTS.hideHeader);
+  config.updateUrl = validUpdateUrl(options.updateUrl);
 
   if (options.basePath != null) {
     setHashMode(false, options.basePath);

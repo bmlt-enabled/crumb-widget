@@ -56,6 +56,7 @@ export const elTranslations = {
   notes: 'Σημειώσεις',
   contact: 'Επικοινωνία',
   alsoAtThisLocation: 'Επίσης σε αυτήν την τοποθεσία',
+  updateMeetingInfo: 'Ενημέρωση πληροφοριών συνάντησης',
   milesAbbr: 'μίλ',
   away: 'μακριά',
   // Geolocation

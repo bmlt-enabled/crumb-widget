@@ -80,6 +80,14 @@
             <td><code>formats: ['O']</code> — client-side post-fetch filter by format key string. Also overridable via <code>?formats=</code>.</td>
           </tr>
           <tr>
+            <td><a href="update-url-form.html">Update URL — web form</a></td>
+            <td><code>updateUrl</code> pointed at <code>crna.org/meeting-update-form/?meeting_id={meeting_id}</code> (bmlt-workflow integration, Carolina Region). Open a meeting → "Update Meeting Info" link at the bottom should open the form with the meeting pre-selected.</td>
+          </tr>
+          <tr>
+            <td><a href="update-url-mailto.html">Update URL — mailto</a></td>
+            <td><code>updateUrl</code> with a <code>mailto:</code> template that interpolates <code>{meeting_id}</code>, <code>{meeting_name}</code>, and <code>{return_url}</code>. Click should open the mail client with subject and body pre-filled.</td>
+          </tr>
+          <tr>
             <td><a href="theme-orange-monster.html">Theme: Orange Monster</a></td>
             <td>Custom CSS variable theme — orange + silver palette.</td>
           </tr>

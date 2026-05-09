@@ -43,6 +43,7 @@ Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dy
 - Linki do pojedynczych spotkań przez wbudowany router
 - 13 wbudowanych języków (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — w tym układ RTL dla perskiego)
 - Konfigurowalne kolumny, kafelki mapy i niestandardowe znaczniki
+- Opcjonalny link „Zaktualizuj informacje o mityngu" w szczegółach każdego mityngu — wskazujący na formularz [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), dowolny niestandardowy formularz lub adres `mailto:` ([dokumentacja](https://crumb.bmlt.app/?lang=pl#update-url))
 - Widok listy przyjazny dla drukarki
 
 ## Szybki start

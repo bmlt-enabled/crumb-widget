@@ -45,6 +45,7 @@
 - پیوند به هر جلسه از طریق مسیریاب توکار
 - ۱۳ زبان توکار (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — شامل چینش RTL برای فارسی)
 - ستون‌ها، کاشی‌های نقشه و نشانگرهای قابل تنظیم
+- پیوند اختیاری «به‌روزرسانی اطلاعات جلسه» در صفحهٔ جزئیات هر جلسه — به فرم [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)، هر فرم سفارشی دیگر یا یک نشانی `mailto:` اشاره می‌کند ([مستندات](https://crumb.bmlt.app/?lang=fa#update-url))
 - نمای فهرست مناسب چاپ
 
 ## شروع سریع

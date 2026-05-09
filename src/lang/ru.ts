@@ -56,6 +56,7 @@ export const ruTranslations = {
   notes: 'Заметки',
   contact: 'Контакт',
   alsoAtThisLocation: 'Также по этому адресу',
+  updateMeetingInfo: 'Обновить информацию о собрании',
   milesAbbr: 'ми',
   away: 'от вас',
   // Geolocation

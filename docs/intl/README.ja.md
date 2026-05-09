@@ -43,6 +43,7 @@
 - 組み込みルーターによる個別ミーティングへのリンク
 - 13 の組み込み言語（English、Español、Português (Brasil)、Français、Deutsch、Italiano、Svenska、Dansk、Polski、Ελληνικά、Русский、日本語、فارسی — ペルシア語の RTL レイアウトを含む）
 - カスタマイズ可能な列、地図タイル、マーカー
+- 各ミーティング詳細にオプションの「ミーティング情報を更新」リンク — [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow) のフォーム、任意のカスタムフォーム、または `mailto:` URL を指定可能（[ドキュメント](https://crumb.bmlt.app/?lang=ja#update-url)）
 - 印刷向きのリスト表示
 
 ## クイックスタート

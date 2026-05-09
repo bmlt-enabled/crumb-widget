@@ -7,7 +7,7 @@
 
   import { config } from '@stores/config.svelte';
   import { clearSelectedMeeting, selectMeeting, uiState } from '@stores/ui.svelte';
-  import { getDirectionsUrl, getConferenceProvider, normalizeVirtualLink, formatTime, formatEndTime, getTimezoneAbbr } from '@utils/format';
+  import { getDirectionsUrl, getConferenceProvider, normalizeVirtualLink, formatTime, formatEndTime, formatUpdateUrl, getTimezoneAbbr } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
@@ -33,6 +33,12 @@
   );
 
   const showMap = $derived(meeting.isInPerson && !!meeting.latitude && !!meeting.longitude);
+
+  const updateLink = $derived.by(() => {
+    if (!config.updateUrl) return null;
+    const returnUrl = typeof window !== 'undefined' ? window.location.href : '';
+    return formatUpdateUrl(config.updateUrl, meeting, config.serverUrl, returnUrl);
+  });
 
   let activeFmtId = $state<string | null>(null);
 
@@ -259,6 +265,19 @@
           </div>
         {/if}
       </div>
+
+      <!-- Update meeting info link (configurable; integrates with bmlt-workflow or any external form/mailto) -->
+      {#if updateLink}
+        <a
+          href={updateLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bmlt-btn-secondary mx-4 mt-4 flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-base font-medium no-underline transition-colors"
+        >
+          <Icon name="edit" class="h-4 w-4" />
+          {$t.updateMeetingInfo}
+        </a>
+      {/if}
     </div>
 
     <!-- Right: map (in-person with coords only) -->

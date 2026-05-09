@@ -43,6 +43,7 @@ Un widget intégrable de recherche de réunions NA. Construit avec Svelte 5 et d
 - Liens vers des réunions individuelles via le routeur intégré
 - 13 langues intégrées (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — y compris la disposition RTL pour le persan)
 - Colonnes, tuiles de carte et marqueurs personnalisables
+- Lien optionnel « Mettre à jour les informations de la réunion » sur chaque détail de réunion — pointe vers un formulaire [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), n'importe quel formulaire personnalisé ou une URL `mailto:` ([docs](https://crumb.bmlt.app/?lang=fr#update-url))
 - Vue liste adaptée à l'impression
 
 ## Démarrage rapide

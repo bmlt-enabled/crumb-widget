@@ -5,6 +5,7 @@ import {
   getTimezoneAbbr,
   getTimeOfDay,
   formatAddress,
+  formatUpdateUrl,
   sortMeetings,
   isInProgress,
   getPlatform,
@@ -428,5 +429,42 @@ describe('filterMeetings distance filter', () => {
     const noCoords = makeGeoMeeting('nocoords', 0, 0);
     const result = filterMeetings([noCoords], emptyFilters, userLocation, 25);
     expect(result).toHaveLength(0);
+  });
+});
+
+describe('formatUpdateUrl', () => {
+  const meeting = { id_bigint: '42', meeting_name: 'Monday Night Group' };
+  const serverUrl = 'https://bmlt.example.org/main_server/';
+  const returnUrl = 'https://example.org/find?services=3#/meeting/42';
+
+  test('substitutes meeting_id', () => {
+    expect(formatUpdateUrl('https://example.org/update?meeting_id={meeting_id}', meeting, serverUrl, returnUrl)).toBe('https://example.org/update?meeting_id=42');
+  });
+
+  test('URL-encodes meeting_name', () => {
+    expect(formatUpdateUrl('https://example.org/update?name={meeting_name}', meeting, serverUrl, returnUrl)).toBe('https://example.org/update?name=Monday%20Night%20Group');
+  });
+
+  test('substitutes server_url and return_url (URL-encoded)', () => {
+    const out = formatUpdateUrl('https://example.org/u?id={meeting_id}&from={return_url}&srv={server_url}', meeting, serverUrl, returnUrl);
+    expect(out).toContain(`from=${encodeURIComponent(returnUrl)}`);
+    expect(out).toContain(`srv=${encodeURIComponent(serverUrl)}`);
+  });
+
+  test('works with mailto URLs', () => {
+    const out = formatUpdateUrl('mailto:web@example.org?subject=Update%20{meeting_name}&body=ID:%20{meeting_id}', meeting, serverUrl, returnUrl);
+    expect(out).toBe('mailto:web@example.org?subject=Update%20Monday%20Night%20Group&body=ID:%2042');
+  });
+
+  test('leaves unknown tokens intact', () => {
+    expect(formatUpdateUrl('https://example.org/?foo={bar}&id={meeting_id}', meeting, serverUrl, returnUrl)).toBe('https://example.org/?foo={bar}&id=42');
+  });
+
+  test('handles missing meeting fields gracefully', () => {
+    expect(formatUpdateUrl('https://example.org/?id={meeting_id}&n={meeting_name}', { id_bigint: '', meeting_name: '' }, serverUrl, returnUrl)).toBe('https://example.org/?id=&n=');
+  });
+
+  test('substitutes the same token multiple times', () => {
+    expect(formatUpdateUrl('https://example.org/{meeting_id}/edit?ref={meeting_id}', meeting, serverUrl, returnUrl)).toBe('https://example.org/42/edit?ref=42');
   });
 });

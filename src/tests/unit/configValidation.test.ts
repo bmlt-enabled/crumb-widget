@@ -15,6 +15,7 @@ import {
   validPositive,
   validRadius,
   validServerUrl,
+  validUpdateUrl,
   validView
 } from '@utils/configValidation';
 
@@ -334,6 +335,37 @@ describe('validFormatKeys', () => {
 
   test('warns and falls back for non-array', () => {
     expect(validFormatKeys('O,BT', [])).toEqual([]);
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('validUpdateUrl', () => {
+  test('returns undefined for nullish without warning', () => {
+    expect(validUpdateUrl(undefined)).toBeUndefined();
+    expect(validUpdateUrl(null)).toBeUndefined();
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('accepts a template containing a {token}', () => {
+    expect(validUpdateUrl('https://example.org/update?meeting_id={meeting_id}')).toBe('https://example.org/update?meeting_id={meeting_id}');
+    expect(validUpdateUrl('mailto:web@example.org?subject=Update%20{meeting_name}')).toBe('mailto:web@example.org?subject=Update%20{meeting_name}');
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('warns and falls back for empty / whitespace-only strings', () => {
+    expect(validUpdateUrl('')).toBeUndefined();
+    expect(validUpdateUrl('   ')).toBeUndefined();
+    expect(warnSpy).toHaveBeenCalledTimes(2);
+  });
+
+  test('warns and falls back for non-string values', () => {
+    expect(validUpdateUrl(123)).toBeUndefined();
+    expect(validUpdateUrl({})).toBeUndefined();
+    expect(warnSpy).toHaveBeenCalledTimes(2);
+  });
+
+  test('warns and falls back when no {token} is present', () => {
+    expect(validUpdateUrl('https://example.org/update')).toBeUndefined();
     expect(warnSpy).toHaveBeenCalledTimes(1);
   });
 });

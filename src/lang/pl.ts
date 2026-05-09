@@ -56,6 +56,7 @@ export const plTranslations = {
   notes: 'Notatki',
   contact: 'Kontakt',
   alsoAtThisLocation: 'Również w tej lokalizacji',
+  updateMeetingInfo: 'Zaktualizuj informacje o mityngu',
   milesAbbr: 'mi',
   away: 'stąd',
   // Geolocation

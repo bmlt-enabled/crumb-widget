@@ -56,6 +56,7 @@ export const jaTranslations = {
   notes: 'メモ',
   contact: '連絡先',
   alsoAtThisLocation: 'この場所のその他のミーティング',
+  updateMeetingInfo: 'ミーティング情報を更新',
   milesAbbr: 'マイル',
   away: '離れた場所',
   // Geolocation

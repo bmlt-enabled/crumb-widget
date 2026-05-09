@@ -949,6 +949,7 @@
           <li><a href="#global-config" data-i18n="nav.globalConfig">Global Config</a></li>
           <li><a href="#language" data-i18n="nav.language">Language</a></li>
           <li><a href="#geolocation" data-i18n="nav.geolocation">Geolocation</a></li>
+          <li><a href="#update-url" data-i18n="nav.updateUrl">Update Meeting Info Link</a></li>
           <li><a href="#query-params" data-i18n="nav.queryParams">URL Query Parameters</a></li>
           <li><a href="#css-vars" data-i18n="nav.cssVars">CSS Variables</a></li>
           <li><a href="#css-dark-mode" data-i18n="nav.cssDarkMode">Dark Mode</a></li>
@@ -1522,6 +1523,19 @@
                   iframe embeds). <br />See <a href="#routing">Routing</a> for details.
                 </td>
               </tr>
+              <tr>
+                <td>data-update-url</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.updateUrl">
+                  Show an <strong>"Update Meeting Info"</strong> link at the bottom of every meeting detail panel, pointing at a URL template you control. The template is expanded per meeting using
+                  the tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, and <code>{return_url}</code> — each token's value is URL-encoded on substitution.
+                  Designed for integration with <a href="https://github.com/bmlt-enabled/bmlt-workflow">bmlt-workflow</a>'s update form, any custom hosted form, or a <code>mailto:</code> link.
+                  Unknown tokens are left intact. The link opens in a new tab. The button is hidden when the attribute is unset. See the <a href="#update-url">Update Meeting Info Link</a> section
+                  below for examples.
+                  <br /><em>bmlt-workflow:</em>
+                  <code>data-update-url="https://example.org/meeting-update/?meeting_id={meeting_id}"</code>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1650,6 +1664,16 @@
                 </td>
               </tr>
               <tr>
+                <td>updateUrl</td>
+                <td><code>string</code></td>
+                <td data-i18n-html="globalConfig.row.updateUrl">
+                  URL template for the <strong>"Update Meeting Info"</strong> link at the bottom of the meeting detail panel. Equivalent to the <code>data-update-url</code> attribute (the
+                  attribute takes precedence). Tokens: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — URL-encoded on substitution.
+                  Works with bmlt-workflow's update form, any custom hosted form, or <code>mailto:</code> URLs. The link opens in a new tab. Hidden when unset. See the
+                  <a href="#update-url">Update Meeting Info Link</a> section below for examples.
+                </td>
+              </tr>
+              <tr>
                 <td>map.tiles</td>
                 <td><code>TilesConfig</code></td>
                 <td data-i18n-html="globalConfig.row.mapTiles">Custom map tile provider. Replaces the default OpenStreetMap tiles. See <a href="#tile-config">Tile Provider</a> below.</td>
@@ -1685,6 +1709,7 @@
     height: 600,               // widget height in pixels
     formats: ['O'],            // lock to meetings with these format key strings (client-side, AND)
     basePath: '/meetings',     // History API base path; equivalent to data-path
+    updateUrl: 'https://example.org/meeting-update/?meeting_id={meeting_id}', // "Update Meeting Info" link template
     map: {
       tiles: {
         url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -1830,6 +1855,90 @@
     distanceUnit: 'mi'             // 'mi' or 'km', default 'mi'
   };
 &lt;/script&gt;
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <h2 id="update-url" data-i18n="updateUrl.title">Update Meeting Info Link</h2>
+        <p data-i18n-html="updateUrl.intro">
+          Add an <strong>"Update Meeting Info"</strong> button at the bottom of every meeting detail panel by setting <code>data-update-url</code> (or <code>updateUrl</code> in the global config)
+          to a URL template. The widget substitutes per-meeting tokens at click time and opens the result in a new tab. The button is hidden when the option is unset, so you can opt in selectively.
+        </p>
+        <p data-i18n-html="updateUrl.tokens">Supported tokens (each value is URL-encoded on substitution; unknown <code>{tokens}</code> are left intact):</p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th data-i18n="updateUrl.th.token">Token</th>
+                <th data-i18n="updateUrl.th.value">Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>{meeting_id}</code></td>
+                <td data-i18n-html="updateUrl.token.meetingId">BMLT meeting <code>id_bigint</code> — the canonical identifier most update forms expect.</td>
+              </tr>
+              <tr>
+                <td><code>{meeting_name}</code></td>
+                <td data-i18n="updateUrl.token.meetingName">Human-readable meeting name. Useful in <code>mailto:</code> subjects.</td>
+              </tr>
+              <tr>
+                <td><code>{server_url}</code></td>
+                <td data-i18n-html="updateUrl.token.serverUrl">The configured BMLT root server URL (the <code>data-server</code> value).</td>
+              </tr>
+              <tr>
+                <td><code>{return_url}</code></td>
+                <td data-i18n="updateUrl.token.returnUrl">The current page URL — useful as a back-link or audit reference in submissions.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 data-i18n="updateUrl.workflow.title">Example: bmlt-workflow integration</h3>
+        <p data-i18n-html="updateUrl.workflow.body">
+          <a href="https://github.com/bmlt-enabled/bmlt-workflow">bmlt-workflow</a> is a WordPress plugin that exposes a meeting update form via the
+          <code>[bmltwf-meeting-update-form]</code> shortcode. The form's JavaScript reads <code>?meeting_id=</code> from the query string to pre-select the meeting, so the template only needs the
+          <code>{meeting_id}</code> token:
+        </p>
+        <div class="demo">
+          <div class="demo-header">HTML</div>
+          <pre><code>&lt;div
+  id="crumb-widget"
+  data-server="https://bmlt.example.org/main_server/"
+  data-service-body="3"
+  data-update-url="https://your-wordpress-site.example.org/meeting-update-form/?meeting_id={meeting_id}"
+&gt;&lt;/div&gt;
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <h3 data-i18n="updateUrl.mailto.title">Example: mailto link</h3>
+        <p data-i18n-html="updateUrl.mailto.body">
+          Don't have a hosted form? Point at a <code>mailto:</code> URL — the user's mail client opens with the subject and body pre-filled. Tokens are URL-encoded, so they're safe inside
+          <code>mailto:</code> query parameters:
+        </p>
+        <div class="demo">
+          <div class="demo-header">HTML</div>
+          <pre><code>&lt;div
+  id="crumb-widget"
+  data-server="https://bmlt.example.org/main_server/"
+  data-service-body="3"
+  data-update-url="mailto:webservant@example.org?subject=Update%20{meeting_name}&amp;body=Meeting%20ID%3A%20{meeting_id}%0AReference%3A%20{return_url}"
+&gt;&lt;/div&gt;
+&lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+
+        <h3 data-i18n="updateUrl.custom.title">Example: any custom endpoint</h3>
+        <p data-i18n-html="updateUrl.custom.body">
+          Any URL that accepts a meeting identifier in the query string works. The link opens in a new tab, so your endpoint can be a full page (a Google Form, an Airtable form, a custom CMS,
+          etc.). Pass <code>{return_url}</code> to give your form a back-link to the meeting page:
+        </p>
+        <div class="demo">
+          <div class="demo-header">HTML</div>
+          <pre><code>&lt;div
+  id="crumb-widget"
+  data-server="https://bmlt.example.org/main_server/"
+  data-service-body="3"
+  data-update-url="https://forms.example.org/report?id={meeting_id}&amp;name={meeting_name}&amp;back={return_url}"
+&gt;&lt;/div&gt;
 &lt;script src="https://cdn.aws.bmlt.app/crumb-widget.js"&gt;&lt;/script&gt;</code></pre>
         </div>
 

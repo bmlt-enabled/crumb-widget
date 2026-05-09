@@ -43,6 +43,7 @@ Ein einbettbares NA-Meeting-Finder-Widget. Erstellt mit Svelte 5 und als einzeln
 - Individuelle Meeting-Links über integrierten Router
 - 13 eingebaute Sprachen (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — einschließlich RTL-Layout für Persisch)
 - Konfigurierbare Spalten, Kartenkacheln und benutzerdefinierte Marker
+- Optionaler »Meetinginformationen aktualisieren«-Link auf jeder Meeting-Detailseite — verweist auf ein [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)-Formular, ein beliebiges eigenes Formular oder eine `mailto:`-URL ([Dokumentation](https://crumb.bmlt.app/?lang=de#update-url))
 - Druckerfreundliche Listenansicht
 
 ## Schnellstart

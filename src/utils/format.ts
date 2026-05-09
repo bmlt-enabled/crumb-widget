@@ -259,3 +259,26 @@ export function getDirectionsUrl(meeting: Meeting): string {
   }
   return lat && lng ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}` : `https://www.google.com/maps/dir/?api=1&destination=${addr}`;
 }
+
+/**
+ * Substitutes meeting tokens into a URL template. Designed for the configurable
+ * "Update meeting info" link — works with bmlt-workflow's `?meeting_id=` form,
+ * arbitrary HTTP(S) endpoints, and `mailto:` URLs. Supported tokens (all values
+ * are URL-encoded on substitution):
+ *
+ *   {meeting_id}    — BMLT meeting `id_bigint`
+ *   {meeting_name}  — Meeting name
+ *   {server_url}    — Configured BMLT root server URL
+ *   {return_url}    — Current page URL (provided by caller)
+ *
+ * Unknown tokens are left intact so future tokens won't break existing templates.
+ */
+export function formatUpdateUrl(template: string, meeting: Pick<Meeting, 'id_bigint' | 'meeting_name'>, serverUrl: string, returnUrl: string): string {
+  const tokens: Record<string, string> = {
+    meeting_id: meeting.id_bigint ?? '',
+    meeting_name: meeting.meeting_name ?? '',
+    server_url: serverUrl,
+    return_url: returnUrl
+  };
+  return template.replace(/\{(\w+)\}/g, (match, key: string) => (key in tokens ? encodeURIComponent(tokens[key] ?? '') : match));
+}

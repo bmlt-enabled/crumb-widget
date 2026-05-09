@@ -87,6 +87,8 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
 
 beforeEach(() => {
   config.containerId = 'crumb-widget';
+  config.updateUrl = undefined;
+  config.serverUrl = 'https://bmlt.example.org/main_server/';
 });
 
 afterEach(() => {
@@ -257,6 +259,34 @@ describe('MeetingDetail — optional sections', () => {
   test('hides contact when no email', () => {
     render(MeetingDetail, { props: { meeting: makeMeeting({ email_contact: undefined }) } });
     expect(screen.queryByText('Contact')).not.toBeInTheDocument();
+  });
+});
+
+describe('MeetingDetail — update meeting link', () => {
+  test('hides update link by default', () => {
+    render(MeetingDetail, { props: { meeting: makeMeeting() } });
+    expect(screen.queryByText('Update Meeting Info')).not.toBeInTheDocument();
+  });
+
+  test('renders link with substituted meeting_id when updateUrl is configured', () => {
+    config.updateUrl = 'https://example.org/update?meeting_id={meeting_id}';
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '42' }) } });
+    const link = screen.getByRole('link', { name: /Update Meeting Info/i });
+    expect(link).toHaveAttribute('href', 'https://example.org/update?meeting_id=42');
+    expect(link).toHaveAttribute('target', '_blank');
+    expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+  });
+
+  test('substitutes meeting_name URL-encoded', () => {
+    config.updateUrl = 'https://example.org/update?id={meeting_id}&name={meeting_name}';
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '7', meeting_name: 'Monday Night Group' }) } });
+    expect(screen.getByRole('link', { name: /Update Meeting Info/i })).toHaveAttribute('href', 'https://example.org/update?id=7&name=Monday%20Night%20Group');
+  });
+
+  test('works with mailto template', () => {
+    config.updateUrl = 'mailto:web@example.org?subject=Update%20{meeting_name}&body=ID:%20{meeting_id}';
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '99', meeting_name: 'Test' }) } });
+    expect(screen.getByRole('link', { name: /Update Meeting Info/i })).toHaveAttribute('href', 'mailto:web@example.org?subject=Update%20Test&body=ID:%2099');
   });
 });
 

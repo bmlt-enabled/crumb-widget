@@ -27,6 +27,7 @@ export interface AppConfig {
   darkMode?: 'auto' | true | false;
   nowOffset?: number;
   hideHeader?: boolean;
+  updateUrl?: string;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -80,6 +81,16 @@ export interface CrumbWidgetConfig {
   formats?: string[];
   /** Base path for History API routing (e.g. '/meetings'). Enables clean URLs without '#'. */
   basePath?: string;
+  /**
+   * URL template for the "Update meeting info" link shown at the bottom of the meeting detail
+   * panel. Supports tokens `{meeting_id}`, `{meeting_name}`, `{server_url}`, `{return_url}`
+   * (all URL-encoded on substitution). Works with bmlt-workflow's `?meeting_id=` form,
+   * arbitrary hosted forms, or `mailto:` URLs. When unset, the button is hidden.
+   *
+   * @example "https://example.org/meeting-update/?meeting_id={meeting_id}"
+   * @example "mailto:webservant@example.org?subject=Update%20for%20{meeting_name}&body=Meeting%20ID%3A%20{meeting_id}"
+   */
+  updateUrl?: string;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

@@ -43,6 +43,7 @@ En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret
 - Individuelle mødelinks via indbygget router
 - 13 indbyggede sprog (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — inklusive RTL-layout for persisk)
 - Konfigurerbare kolonner, kortfliser og brugerdefinerede markører
+- Valgfrit »Opdater mødeoplysninger«-link på hver mødedetalje — pegende på en [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)-formular, en tilpasset formular eller en `mailto:`-URL ([dokumentation](https://crumb.bmlt.app/?lang=da#update-url))
 - Printvenlig listevisning
 
 ## Hurtig start

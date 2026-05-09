@@ -56,6 +56,7 @@ export const frTranslations = {
   notes: 'Notes',
   contact: 'Contact',
   alsoAtThisLocation: 'Aussi à cet endroit',
+  updateMeetingInfo: 'Mettre à jour les informations de la réunion',
   milesAbbr: 'mi',
   away: 'de distance',
   // Geolocation

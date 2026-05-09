@@ -56,6 +56,7 @@ export const enTranslations = {
   notes: 'Notes',
   contact: 'Contact',
   alsoAtThisLocation: 'Also at this location',
+  updateMeetingInfo: 'Update Meeting Info',
   milesAbbr: 'mi',
   away: 'away',
   // Geolocation

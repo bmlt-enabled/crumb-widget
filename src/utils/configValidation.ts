@@ -120,6 +120,26 @@ export function validServerUrl(value: unknown): string {
   return value;
 }
 
+/**
+ * Validates the optional `updateUrl` template. Accepts any non-empty string with at least one
+ * `{...}` token — the template is only useful if it interpolates something. Validating the
+ * template *after* substitution would require a sample meeting, so we do a structural check
+ * here and let the runtime decide whether the substituted URL is something the browser will
+ * follow (http(s)/mailto/etc).
+ */
+export function validUpdateUrl(value: unknown): string | undefined {
+  if (value == null) return undefined;
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    warn('updateUrl', value, 'a non-empty URL template string', undefined);
+    return undefined;
+  }
+  if (!/\{\w+\}/.test(value)) {
+    warn('updateUrl', value, 'a URL template containing at least one {token} (e.g. {meeting_id})', undefined);
+    return undefined;
+  }
+  return value;
+}
+
 export function parseServiceBodyIds(value: string): number[] {
   if (!value) return [];
   return value

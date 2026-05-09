@@ -15,6 +15,7 @@
     "globalConfig": "Global Config",
     "language": "Language",
     "geolocation": "Geolocation",
+    "updateUrl": "Update Meeting Info Link",
     "queryParams": "URL Query Parameters",
     "cssVars": "CSS Variables",
     "cssDarkMode": "Dark Mode",
@@ -95,7 +96,8 @@
     "serviceBody": "Filter meetings to one or more service bodies. Accepts a single numeric ID or a comma-separated list. Omit to show all meetings on the server. <br /><em>Single:</em> <code>\"42\"</code> <br /><em>Multiple:</em> <code>\"42,57,103\"</code> <br /><strong>Note:</strong> recursive lookup is always enabled — child service bodies are automatically included and cannot be disabled.",
     "formatIds": "Lock the widget to meetings matching one or more <strong>format IDs</strong> (numeric, server-specific). The filter is applied at the BMLT API level, so only matching meetings are fetched. Useful when you want to embed a list of, e.g., only Open meetings. <br /><em>Single:</em> <code>\"4\"</code> <br /><em>Multiple:</em> <code>\"4,7,12\"</code> (AND — meetings must match all listed IDs) <br />Format IDs vary per server. Look them up in BMLT admin or via <code>GetFormats</code>. For server-agnostic filtering by code (e.g. <code>O</code>, <code>BT</code>), use the <code>formats</code> global config option instead.",
     "view": "Default view when the widget loads. <br /><em>Values:</em> <code>list</code> (default), <code>map</code>, or <code>both</code> <br /><code>both</code> shows a fixed-height map above the full meeting list with no list/map toggle. <br />Can be overridden at runtime by the <code>?view=</code> query parameter (see <a href=\"#query-params\">URL Query Parameters</a>).",
-    "path": "Enables History API routing (clean URLs without <code>#</code>) and sets the base path. Without this attribute, hash-based routing is used (default). <br /><em>Example:</em> <code>data-path=\"/meetings\"</code> produces URLs like <code>/meetings/monday-night-meeting-42</code> <br />Use <code>data-path=\"\"</code> for path routing with no prefix (e.g. in iframe embeds). <br />See <a href=\"#routing\">Routing</a> for details."
+    "path": "Enables History API routing (clean URLs without <code>#</code>) and sets the base path. Without this attribute, hash-based routing is used (default). <br /><em>Example:</em> <code>data-path=\"/meetings\"</code> produces URLs like <code>/meetings/monday-night-meeting-42</code> <br />Use <code>data-path=\"\"</code> for path routing with no prefix (e.g. in iframe embeds). <br />See <a href=\"#routing\">Routing</a> for details.",
+    "updateUrl": "Show an <strong>\"Update Meeting Info\"</strong> link at the bottom of every meeting detail panel, pointing at a URL template you control. The template is expanded per meeting using the tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, and <code>{return_url}</code> — each token's value is URL-encoded on substitution. Designed for integration with <a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>'s update form, any custom hosted form, or a <code>mailto:</code> link. Unknown tokens are left intact. The link opens in a new tab. The button is hidden when the attribute is unset. See the <a href=\"#update-url\">Update Meeting Info Link</a> section below for examples. <br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>"
   },
   "globalConfig": {
     "title": "Global Config Object",
@@ -116,7 +118,8 @@
       "mapMarkers": "Custom map marker for meeting locations. Replaces the default NA marker. See <a href=\"#marker-config\">Marker Config</a> below.",
       "height": "Widget height in pixels. Equivalent to the <code>data-height</code> attribute. Omit to let the widget grow to its natural content height.",
       "formats": "Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Filtering is applied <em>after</em> the API response, so all meetings are still fetched and the format-key filter narrows the result set client-side. Multiple keys are AND-combined — a meeting must match every listed key. Key strings are stable across BMLT servers, so this is the best option when you want server-agnostic filtering. For server-side filtering by numeric format ID, use <code>data-format-ids</code> instead. Default: <code>[]</code> (no lock). <br /><em>Example:</em> <code>formats: ['O']</code>",
-      "basePath": "Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See <a href=\"#routing\">Routing</a> for details."
+      "basePath": "Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See <a href=\"#routing\">Routing</a> for details.",
+      "updateUrl": "URL template for the <strong>\"Update Meeting Info\"</strong> link at the bottom of the meeting detail panel. Equivalent to the <code>data-update-url</code> attribute (the attribute takes precedence). Tokens: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — URL-encoded on substitution. Works with bmlt-workflow's update form, any custom hosted form, or <code>mailto:</code> URLs. The link opens in a new tab. Hidden when unset. See the <a href=\"#update-url\">Update Meeting Info Link</a> section below for examples."
     }
   },
   "language": {
@@ -152,6 +155,33 @@
     "p4": "The Near Me button opens a distance dropdown so users can choose how far to search. Selecting a radius applies a client-side distance filter on the already-loaded meetings — no new network request is made when changing radius. When <code>geolocationRadius</code> is a positive number, the available distances come from <code>distanceOptions</code> capped at that value; options with no meetings in range are hidden automatically. When <code>geolocationRadius</code> is a negative integer (auto-radius), all <code>distanceOptions</code> are shown without a cap — the initial search finds roughly that many meetings, and picking a distance from the dropdown switches to a fixed radius. Use <code>distanceUnit</code> to display kilometres instead of miles.",
     "p5": "While in map view with Near Me active, panning or zooming the map reveals a <strong>Search this area</strong> button at the top of the map. Clicking it reloads meetings centered on the current map viewport, using the same selected radius. The map stays at the user's position — it does not jump to fit the new results.",
     "p6": "The search input also gains a small mode dropdown: users can switch between <em>Filter meetings</em> (the default — a client-side text filter over already-loaded meetings) and <em>Search location</em>. In location mode, typing a city, postal code, or address (e.g. <code>Edgartown, MA</code> or <code>02539</code>) and pressing Enter resolves the place via OpenStreetMap Nominatim and reloads meetings near the resulting coordinates. The radius used is the last Near Me choice if any, otherwise <code>geolocationRadius</code>. Geocoding traffic goes to <code>nominatim.openstreetmap.org</code> directly — no API key is required, but consumers should respect <a href=\"https://operations.osmfoundation.org/policies/nominatim/\">Nominatim's usage policy</a> (max one request per second, requests must include a User-Agent identifying your application — <code>bmlt-query-client</code> sets one by default)."
+  },
+  "updateUrl": {
+    "title": "Update Meeting Info Link",
+    "intro": "Add an <strong>\"Update Meeting Info\"</strong> button at the bottom of every meeting detail panel by setting <code>data-update-url</code> (or <code>updateUrl</code> in the global config) to a URL template. The widget substitutes per-meeting tokens at click time and opens the result in a new tab. The button is hidden when the option is unset, so you can opt in selectively.",
+    "tokens": "Supported tokens (each value is URL-encoded on substitution; unknown <code>{tokens}</code> are left intact):",
+    "th": {
+      "token": "Token",
+      "value": "Value"
+    },
+    "token": {
+      "meetingId": "BMLT meeting <code>id_bigint</code> — the canonical identifier most update forms expect.",
+      "meetingName": "Human-readable meeting name. Useful in <code>mailto:</code> subjects.",
+      "serverUrl": "The configured BMLT root server URL (the <code>data-server</code> value).",
+      "returnUrl": "The current page URL — useful as a back-link or audit reference in submissions."
+    },
+    "workflow": {
+      "title": "Example: bmlt-workflow integration",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> is a WordPress plugin that exposes a meeting update form via the <code>[bmltwf-meeting-update-form]</code> shortcode. The form's JavaScript reads <code>?meeting_id=</code> from the query string to pre-select the meeting, so the template only needs the <code>{meeting_id}</code> token:"
+    },
+    "mailto": {
+      "title": "Example: mailto link",
+      "body": "Don't have a hosted form? Point at a <code>mailto:</code> URL — the user's mail client opens with the subject and body pre-filled. Tokens are URL-encoded, so they're safe inside <code>mailto:</code> query parameters:"
+    },
+    "custom": {
+      "title": "Example: any custom endpoint",
+      "body": "Any URL that accepts a meeting identifier in the query string works. The link opens in a new tab, so your endpoint can be a full page (a Google Form, an Airtable form, a custom CMS, etc.). Pass <code>{return_url}</code> to give your form a back-link to the meeting page:"
+    }
   },
   "queryParams": {
     "title": "URL Query Parameters",

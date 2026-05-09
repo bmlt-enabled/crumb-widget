@@ -16,6 +16,7 @@ import {
   validNonNegative,
   validRadius,
   validServerUrl,
+  validUpdateUrl,
   validView
 } from '@utils/configValidation';
 
@@ -87,6 +88,8 @@ export function initConfig(el: HTMLElement): void {
   config.darkMode = validDarkMode(globalCfg.darkMode, CONFIG_DEFAULTS.darkMode);
   config.nowOffset = validNonNegative('nowOffset', globalCfg.nowOffset, CONFIG_DEFAULTS.nowOffset);
   config.hideHeader = validBoolean('hideHeader', globalCfg.hideHeader, CONFIG_DEFAULTS.hideHeader);
+  // data-update-url overrides CrumbWidgetConfig.updateUrl
+  config.updateUrl = validUpdateUrl(el.getAttribute('data-update-url') ?? globalCfg.updateUrl);
 
   const explicitLanguage = validLanguage(globalCfg.language, SUPPORTED_LANGUAGES);
   const language = explicitLanguage ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');

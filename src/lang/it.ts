@@ -56,6 +56,7 @@ export const itTranslations = {
   notes: 'Note',
   contact: 'Contatto',
   alsoAtThisLocation: 'Anche in questo luogo',
+  updateMeetingInfo: 'Aggiorna informazioni della riunione',
   milesAbbr: 'mi',
   away: 'di distanza',
   // Geolocation
