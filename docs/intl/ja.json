@@ -103,7 +103,7 @@
       "view": "既定のビューを上書きします。<code>data-view</code> よりも優先されます。<code>'both'</code> は、固定高の地図を完全なリストの上に表示し、リスト／地図切替は非表示になります。",
       "language": "UI 言語を上書きします（例: <code>'es'</code>, <code>'fr'</code>）。既定では <code>navigator.language</code> を使用し、フォールバックは英語です。対応: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>。",
       "columns": "リスト表示で表示する列です。既定: <code>['time', 'name', 'location', 'address']</code>。非表示にしたい列名は省略します。利用可能な値: <code>time</code>, <code>name</code>, <code>location</code>（会場／建物名）、<code>address</code>（住所と対面／オンラインのバッジ）、<code>service_body</code>。<code>service_body</code> は既定で非表示です。サービスボディ名を表示するには明示的に追加してください。",
-      "geolocation": "<strong>現在地周辺</strong>ボタンを表示し、ページ読み込み時に自動的に位置情報を取得して、ユーザー近くのミーティングを探します。HTTPS が必要です。既定: <code>false</code>。位置情報の取得に失敗または拒否された場合はエラーが表示され、フォールバックの読み込みは行われません。<strong>注意:</strong> <code>serviceBodyIds</code> フィルターは位置情報による検索には影響しません。結果は近接性のみで決定されます。",
+      "geolocation": "位置情報による検索を有効にします: <strong>近くを検索</strong>ボタン（ブラウザでユーザーの位置を取得、HTTPS が必要）と検索フィールドの<strong>場所を検索</strong>モードで、市、郵便番号、住所（例: <code>Edgartown, MA</code> や <code>02539</code>）を OpenStreetMap Nominatim 経由で解決します。デフォルト: ほとんどのサーバーで <code>false</code>、<code>data-server</code> が <code>aggregator.bmltenabled.org</code> を指し <code>service-body</code> が未設定の場合は <code>true</code>（制約のないアグリゲーターは有用な結果を返すために位置が必要）。ブラウザのジオロケーションが失敗または拒否されると、エラーが表示されます — フォールバック読み込みは行われません。<strong>注意:</strong> <code>serviceBodyIds</code> フィルターは位置検索に影響しません; 結果は完全に近接度によって決まります。",
       "geolocationRadius": "位置情報を使用する際の最大検索半径です。現在地周辺の距離プルダウンの上限として機能し、この値を超えるオプションは非表示になります。既定: <code>75</code>。",
       "distanceOptions": "現在地周辺のプルダウンに表示する距離（<code>distanceUnit</code> 単位）の値です。<code>geolocationRadius</code> を超えるオプションは自動的に非表示になります。<code>geolocationRadius</code> がリストにない場合は、最後のオプションとして追加されます。既定: <code>[5, 10, 15, 25, 50, 100]</code>。",
       "distanceUnit": "現在地周辺のプルダウンで距離の横に表示される単位ラベル。既定: <code>'mi'</code>。",
@@ -143,11 +143,13 @@
   },
   "geolocation": {
     "title": "位置情報",
+    "p0": "<code>data-server</code> が BMLT アグリゲーター（<code>aggregator.bmltenabled.org</code>）を指し <code>service-body</code> が未設定の場合、アグリゲーターには検索を絞り込む手段が他にないため、デフォルトは <code>true</code> になります; その他の設定ではデフォルトは <code>false</code> です。<code>CrumbWidgetConfig</code> で <code>geolocation</code> を明示的に設定して、いずれかのデフォルトを上書きできます。",
     "p1": "<code>geolocation: true</code> で<strong>現在地周辺</strong>ボタンを有効化します。有効な場合、ウィジェットはページ読み込み時にも自動的にユーザーの位置情報を取得し、近くのミーティングを表示しようとします。安全なコンテキスト（HTTPS）が必要です。",
     "p2": "位置情報が拒否されたり利用できなかったりした場合はエラーメッセージが表示され、すべてのミーティングを読み込む静かなフォールバックは行いません。これは意図的なものです：サービスボディの絞り込みがない大規模サーバですべてのミーティングを読み込むと、数万件の結果が返ってくる可能性があるためです。",
     "p3": "<strong>サービスボディフィルターは位置情報検索には影響しません。</strong>現在地周辺を使用する場合、結果はユーザーの座標と <code>geolocationRadius</code> のみで決まります。<code>serviceBodyIds</code> が設定されていない場合、現在地周辺ボタンはオフにできません — 位置情報が唯一のデータソースとなります。",
     "p4": "現在地周辺ボタンを押すと距離プルダウンが開き、ユーザーは検索範囲を選べます。半径を選ぶと、すでに読み込まれているミーティングに対してクライアント側の距離フィルターが適用されます — 半径を変更しても新しいネットワークリクエストは発生しません。利用可能な距離は <code>distanceOptions</code> から取得され、<code>geolocationRadius</code> を上限とします。範囲内にミーティングがないオプションは自動的に非表示になります。マイルではなくキロメートルで表示するには <code>distanceUnit</code> を使ってください。",
-    "p5": "現在地周辺が有効な地図表示中に地図をパンまたはズームすると、地図上部に<strong>このエリアを検索</strong>ボタンが現れます。クリックすると、現在の地図ビューポートを中心に同じ選択中の半径でミーティングを再読み込みします。地図はユーザーの位置にとどまり、新しい結果に合わせて移動することはありません。"
+    "p5": "現在地周辺が有効な地図表示中に地図をパンまたはズームすると、地図上部に<strong>このエリアを検索</strong>ボタンが現れます。クリックすると、現在の地図ビューポートを中心に同じ選択中の半径でミーティングを再読み込みします。地図はユーザーの位置にとどまり、新しい結果に合わせて移動することはありません。",
+    "p6": "検索フィールドには小さなモードドロップダウンも表示されます: ユーザーは<em>ミーティングをフィルター</em>（デフォルト — すでに読み込まれたミーティングに対するクライアント側のテキストフィルター）と<em>場所を検索</em>を切り替えられます。場所モードでは、市、郵便番号、または住所（例: <code>Edgartown, MA</code> や <code>02539</code>）を入力して Enter を押すと、OpenStreetMap Nominatim で場所を解決し、結果の座標近くのミーティングを再読み込みします。使用される半径は、直近の「近くを検索」の選択がある場合はそれ、なければ <code>geolocationRadius</code> です。ジオコーディングトラフィックは <code>nominatim.openstreetmap.org</code> に直接送信されます — API キーは不要ですが、利用者は <a href=\"https://operations.osmfoundation.org/policies/nominatim/\">Nominatim の利用ポリシー</a>を尊重する必要があります（毎秒最大 1 リクエスト; リクエストにはアプリケーションを識別する User-Agent を含める必要があります — <code>bmlt-query-client</code> はデフォルトで設定します）。"
   },
   "queryParams": {
     "title": "URL クエリパラメータ",
@@ -475,7 +477,7 @@
       "serverUrl": "BMLT サーバの URL。",
       "serviceBodyIds": "絞り込み対象のサービスボディ ID。すべて表示するには省略するか <code>[]</code> を渡します。",
       "view": "初期ビュー。既定: <code>'list'</code>。<code>'both'</code> は切替なしで地図をリストの上に表示します。",
-      "geolocation": "現在地周辺ボタンを有効化します。既定: <code>false</code>。",
+      "geolocation": "近くを検索 + テキスト位置検索（市、郵便番号、住所）を有効にします。デフォルト: <code>false</code>、<code>serverURL</code> が <code>serviceBodyIds</code> 未設定のアグリゲーターの場合は <code>true</code>。",
       "geolocationRadius": "最大検索半径（距離プルダウンの上限）。既定: <code>75</code>。",
       "distanceOptions": "現在地周辺プルダウンに表示する距離の値。既定: <code>[5,10,15,25,50,100]</code>。",
       "distanceUnit": "距離の単位ラベル。既定: <code>'mi'</code>。",
