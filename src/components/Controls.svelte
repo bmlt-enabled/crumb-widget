@@ -331,7 +331,7 @@
       {/if}
       {#if searchMode === 'location'}
         <input
-          type="text"
+          type="search"
           placeholder={$t.searchLocation}
           bind:value={locationQuery}
           onkeydown={(e) => {
