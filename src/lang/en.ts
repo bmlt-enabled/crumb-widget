@@ -3,6 +3,10 @@ export const enTranslations = {
   meetingFinder: 'Meeting Finder',
   // Controls
   searchMeetings: 'Search meetings...',
+  searchLocation: 'City, zip, or address...',
+  searchModeFilter: 'Filter meetings',
+  searchModeLocation: 'Search location',
+  locationNotFound: "Couldn't find that location",
   filters: 'Filters',
   day: 'Day',
   selected: 'selected',

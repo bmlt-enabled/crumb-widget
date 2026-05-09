@@ -66,6 +66,7 @@ export interface CrumbWidgetConfig {
   language?: string;
   view?: 'list' | 'map' | 'both';
   columns?: Column[];
+  /** Show Near Me + typed location search (city/zip via Nominatim). Defaults to true on the unconstrained aggregator. */
   geolocation?: boolean;
   /** Positive = fixed radius in miles/km. Negative integer = BMLT auto-radius: find roughly N nearby meetings. */
   geolocationRadius?: number;

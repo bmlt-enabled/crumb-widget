@@ -76,7 +76,10 @@ export function initConfig(el: HTMLElement): void {
   config.columns = validColumns(globalCfg.columns, CONFIG_DEFAULTS.columns);
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
   const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
-  config.geolocation = validBoolean('geolocation', globalCfg.geolocation, isAggregator);
+  // Defaults on for the unconstrained aggregator only. With a service body the result set is
+  // already scoped, so we skip the browser geolocation prompt and hide the typed-location
+  // search by default — embedders can still opt in explicitly.
+  config.geolocation = validBoolean('geolocation', globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
   config.geolocationRadius = validRadius('geolocationRadius', globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(globalCfg.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
   config.distanceUnit = validDistanceUnit(globalCfg.distanceUnit, CONFIG_DEFAULTS.distanceUnit);

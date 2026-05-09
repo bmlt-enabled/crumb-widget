@@ -3,6 +3,10 @@ export const daTranslations = {
   meetingFinder: 'Mødefinder',
   // Controls
   searchMeetings: 'Søg møder...',
+  searchLocation: 'By, postnr. eller adresse...',
+  searchModeFilter: 'Filtrer møder',
+  searchModeLocation: 'Søg sted',
+  locationNotFound: 'Stedet blev ikke fundet',
   filters: 'Filtre',
   day: 'Dag',
   selected: 'valgte',

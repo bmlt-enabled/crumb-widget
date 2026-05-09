@@ -75,7 +75,11 @@
         view              'list' | 'map' | 'both' — overrides data-view.
         columns           Array of column keys to show in the meeting list:
                           'time' | 'name' | 'location' | 'address' | 'service_body'.
-        geolocation       Boolean — show "near me" search.
+        geolocation       Boolean — enables Near Me + typed location search
+                          (city/zip/address via Nominatim) on the search input.
+                          Defaults true on the unconstrained aggregator
+                          (aggregator.bmltenabled.org with no service-body),
+                          false otherwise.
         geolocationRadius Number — default radius (in distanceUnit).
         distanceOptions   Number[] — radii offered in the dropdown.
         distanceUnit      'mi' | 'km'.

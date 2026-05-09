@@ -3,6 +3,10 @@ export const faTranslations = {
   meetingFinder: 'جستجوی جلسات',
   // Controls
   searchMeetings: 'جستجوی جلسات...',
+  searchLocation: 'شهر، کد پستی یا آدرس...',
+  searchModeFilter: 'فیلتر جلسات',
+  searchModeLocation: 'جستجوی مکان',
+  locationNotFound: 'مکان پیدا نشد',
   filters: 'فیلترها',
   day: 'روز',
   selected: 'انتخاب‌شده',

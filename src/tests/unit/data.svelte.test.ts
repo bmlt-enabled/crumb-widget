@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
+import { dataState, loadData, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
 import { config } from '@stores/config.svelte';
 import type { Meeting, Format } from '@/types';
 
@@ -50,6 +50,7 @@ function rawFormat(overrides: Partial<Format> = {}): Format {
 }
 
 let mockSearch: ReturnType<typeof vi.fn>;
+let mockGeocode: ReturnType<typeof vi.fn>;
 
 beforeEach(() => {
   dataState.meetings = [];
@@ -60,10 +61,12 @@ beforeEach(() => {
   setLanguage('en');
 
   mockSearch = vi.fn();
+  mockGeocode = vi.fn();
   // Vitest requires `class` keyword when mocking a constructor with `new`
   vi.mocked(BmltClient).mockImplementation(
     class {
       searchMeetingsWithFormats = mockSearch;
+      geocodeAddress = mockGeocode;
     } as unknown as typeof BmltClient
   );
 });
@@ -363,5 +366,58 @@ describe('loadDataByCoordinates', () => {
     });
     await loadDataByCoordinates('https://example.org/main_server', 34.05, -118.24);
     expect(dataState.meetings).toHaveLength(2);
+  });
+});
+
+describe('loadDataByAddress', () => {
+  const fakeGeocode = {
+    coordinates: { latitude: 41.387, longitude: -70.514 },
+    display_name: 'Edgartown, MA, USA'
+  };
+
+  test('geocodes the address then searches by resulting coordinates', async () => {
+    mockGeocode.mockResolvedValue(fakeGeocode);
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting()], formats: [] });
+    const result = await loadDataByAddress('https://example.org/main_server', 'Edgartown, MA', 25);
+    expect(mockGeocode).toHaveBeenCalledWith('Edgartown, MA');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ lat_val: 41.387, long_val: -70.514, geo_width: 25 }));
+    expect(result).toEqual({ lat: 41.387, lng: -70.514, displayName: 'Edgartown, MA, USA' });
+  });
+
+  test('trims surrounding whitespace before geocoding', async () => {
+    mockGeocode.mockResolvedValue(fakeGeocode);
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadDataByAddress('https://example.org/main_server', '  02539  ', 10);
+    expect(mockGeocode).toHaveBeenCalledWith('02539');
+  });
+
+  test('returns null and skips search when address is blank', async () => {
+    const result = await loadDataByAddress('https://example.org/main_server', '   ', 10);
+    expect(result).toBeNull();
+    expect(mockGeocode).not.toHaveBeenCalled();
+    expect(mockSearch).not.toHaveBeenCalled();
+  });
+
+  test('returns null and sets error when geocoding fails', async () => {
+    mockGeocode.mockRejectedValue(new Error('No results found'));
+    const result = await loadDataByAddress('https://example.org/main_server', 'Atlantis', 10);
+    expect(result).toBeNull();
+    expect(dataState.error).toBe('No results found');
+    expect(mockSearch).not.toHaveBeenCalled();
+    expect(dataState.loading).toBe(false);
+  });
+
+  test('sets error and skips work when serverUrl is empty', async () => {
+    const result = await loadDataByAddress('', 'Edgartown, MA', 10);
+    expect(result).toBeNull();
+    expect(dataState.error).toMatch(/no server/i);
+    expect(mockGeocode).not.toHaveBeenCalled();
+  });
+
+  test('forwards a negative geoWidth (BMLT auto-radius) untouched', async () => {
+    mockGeocode.mockResolvedValue(fakeGeocode);
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadDataByAddress('https://example.org/main_server', '02539', -50);
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ geo_width: -50 }));
   });
 });

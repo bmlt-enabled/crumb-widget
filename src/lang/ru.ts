@@ -3,6 +3,10 @@ export const ruTranslations = {
   meetingFinder: 'Поиск Собраний',
   // Controls
   searchMeetings: 'Поиск собраний...',
+  searchLocation: 'Город, индекс или адрес...',
+  searchModeFilter: 'Фильтр собраний',
+  searchModeLocation: 'Поиск места',
+  locationNotFound: 'Место не найдено',
   filters: 'Фильтры',
   day: 'День',
   selected: 'выбрано',

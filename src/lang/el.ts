@@ -3,6 +3,10 @@ export const elTranslations = {
   meetingFinder: 'Εύρεση Συναντήσεων',
   // Controls
   searchMeetings: 'Αναζήτηση συναντήσεων...',
+  searchLocation: 'Πόλη, ταχ. κώδικας ή διεύθυνση...',
+  searchModeFilter: 'Φιλτράρισμα συναντήσεων',
+  searchModeLocation: 'Αναζήτηση τοποθεσίας',
+  locationNotFound: 'Δεν βρέθηκε αυτή η τοποθεσία',
   filters: 'Φίλτρα',
   day: 'Ημέρα',
   selected: 'επιλεγμένα',

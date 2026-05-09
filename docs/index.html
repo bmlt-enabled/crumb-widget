@@ -1577,9 +1577,11 @@
                 <td>geolocation</td>
                 <td><code>boolean</code></td>
                 <td data-i18n-html="globalConfig.row.geolocation">
-                  Show a <strong>Near Me</strong> button and auto-geolocate on page load to find meetings near the user. Requires HTTPS. Default: <code>false</code>. If geolocation fails or is denied,
-                  an error is shown — no fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code> filters have no effect on geolocation searches; results are determined entirely by
-                  proximity.
+                  Enable location-based search: a <strong>Near Me</strong> button (auto-geolocates the user via the browser, requires HTTPS) and a <strong>Search location</strong> mode on the search
+                  input that resolves a typed city, postal code, or address (e.g. <code>Edgartown, MA</code> or <code>02539</code>) via OpenStreetMap Nominatim. Default: <code>false</code> for most
+                  servers, <code>true</code> when <code>data-server</code> points at <code>aggregator.bmltenabled.org</code> with no <code>service-body</code> set (the unconstrained aggregator needs
+                  a location to return useful results). If browser geolocation fails or is denied, an error is shown — no fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code>
+                  filters have no effect on location searches; results are determined entirely by proximity.
                 </td>
               </tr>
               <tr>
@@ -1675,7 +1677,7 @@
     view: 'list',       // 'list' | 'map' | 'both'
     language: 'en',            // override UI language; defaults to navigator.language
     columns: ['time', 'name', 'location', 'address', 'service_body'],
-    geolocation: false,        // show Near Me button
+    geolocation: false,        // Near Me + typed location search (defaults true on the unconstrained aggregator)
     geolocationRadius: -50,    // negative = BMLT auto-radius (~50 meetings); positive = fixed miles/km
     nowOffset: 10,             // minutes before a meeting is considered past and rolls to end
     hideHeader: false,         // hide the "Meeting Finder" title bar
@@ -1785,6 +1787,11 @@
         </div>
 
         <h2 id="geolocation" data-i18n="geolocation.title">Geolocation</h2>
+        <p data-i18n-html="geolocation.p0">
+          Defaults to <code>true</code> when <code>data-server</code> points at the BMLT aggregator (<code>aggregator.bmltenabled.org</code>) with no <code>service-body</code> set, since the
+          aggregator otherwise has no way to scope a search; defaults to <code>false</code> for every other configuration. Set <code>geolocation</code> explicitly in
+          <code>CrumbWidgetConfig</code> to override either default.
+        </p>
         <p data-i18n-html="geolocation.p1">
           Enable the <strong>Near Me</strong> button with <code>geolocation: true</code>. When enabled, the widget also attempts to geolocate the user automatically on page load and show meetings
           nearby. Requires a secure context (HTTPS).
@@ -1805,6 +1812,13 @@
           While in map view with Near Me active, panning or zooming the map reveals a <strong>Search this area</strong>
           button at the top of the map. Clicking it reloads meetings centered on the current map viewport, using the same selected radius. The map stays at the user's position — it does not jump to
           fit the new results.
+        </p>
+        <p data-i18n-html="geolocation.p6">
+          The search input also gains a small mode dropdown: users can switch between <em>Filter meetings</em> (the default — a client-side text filter over already-loaded meetings) and
+          <em>Search location</em>. In location mode, typing a city, postal code, or address (e.g. <code>Edgartown, MA</code> or <code>02539</code>) and pressing Enter resolves the place via
+          OpenStreetMap Nominatim and reloads meetings near the resulting coordinates. The radius used is the last Near Me choice if any, otherwise <code>geolocationRadius</code>. Geocoding traffic
+          goes to <code>nominatim.openstreetmap.org</code> directly — no API key is required, but consumers should respect <a href="https://operations.osmfoundation.org/policies/nominatim/">Nominatim's
+          usage policy</a> (max one request per second, requests must include a User-Agent identifying your application — <code>bmlt-query-client</code> sets one by default).
         </p>
         <div class="demo">
           <div class="demo-header">HTML</div>
@@ -2548,7 +2562,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>geolocation</code></td>
               <td><code>boolean</code></td>
               <td data-i18n="yesNo.no">No</td>
-              <td data-i18n-html="npmPackage.row.geolocation">Enable the Near Me button. Defaults to <code>false</code>.</td>
+              <td data-i18n-html="npmPackage.row.geolocation">Enable Near Me + typed location search (city, zip, address). Defaults to <code>false</code>, except <code>true</code> when <code>serverURL</code> is the aggregator with no <code>serviceBodyIds</code>.</td>
             </tr>
             <tr>
               <td><code>geolocationRadius</code></td>

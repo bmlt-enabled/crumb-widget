@@ -3,6 +3,10 @@ export const deTranslations = {
   meetingFinder: 'Meetings-Suche',
   // Controls
   searchMeetings: 'Treffen suchen...',
+  searchLocation: 'Stadt, PLZ oder Adresse...',
+  searchModeFilter: 'Treffen filtern',
+  searchModeLocation: 'Ort suchen',
+  locationNotFound: 'Ort nicht gefunden',
   filters: 'Filter',
   day: 'Tag',
   selected: 'ausgewählt',

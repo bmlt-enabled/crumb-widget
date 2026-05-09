@@ -3,6 +3,10 @@ export const svTranslations = {
   meetingFinder: 'Mötesfinnare',
   // Controls
   searchMeetings: 'Sök möten...',
+  searchLocation: 'Ort, postnummer eller adress...',
+  searchModeFilter: 'Filtrera möten',
+  searchModeLocation: 'Sök plats',
+  locationNotFound: 'Platsen hittades inte',
   filters: 'Filter',
   day: 'Dag',
   selected: 'valda',

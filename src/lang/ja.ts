@@ -3,6 +3,10 @@ export const jaTranslations = {
   meetingFinder: 'ミーティング検索',
   // Controls
   searchMeetings: 'ミーティングを検索...',
+  searchLocation: '市、郵便番号、住所...',
+  searchModeFilter: 'ミーティングをフィルター',
+  searchModeLocation: '場所を検索',
+  locationNotFound: '場所が見つかりません',
   filters: 'フィルター',
   day: '曜日',
   selected: '選択中',

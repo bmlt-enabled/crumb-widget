@@ -3,6 +3,10 @@ export const ptTranslations = {
   meetingFinder: 'Buscador de Reuniões',
   // Controls
   searchMeetings: 'Pesquisar reuniões...',
+  searchLocation: 'Cidade, CEP ou endereço...',
+  searchModeFilter: 'Filtrar reuniões',
+  searchModeLocation: 'Pesquisar local',
+  locationNotFound: 'Local não encontrado',
   filters: 'Filtros',
   day: 'Dia',
   selected: 'selecionados',

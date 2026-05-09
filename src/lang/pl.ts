@@ -3,6 +3,10 @@ export const plTranslations = {
   meetingFinder: 'Wyszukiwarka Mityngów',
   // Controls
   searchMeetings: 'Szukaj mityngów...',
+  searchLocation: 'Miasto, kod pocztowy lub adres...',
+  searchModeFilter: 'Filtruj mityngi',
+  searchModeLocation: 'Szukaj lokalizacji',
+  locationNotFound: 'Nie znaleziono lokalizacji',
   filters: 'Filtry',
   day: 'Dzień',
   selected: 'wybrane',

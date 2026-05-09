@@ -146,9 +146,14 @@ describe('initConfig', () => {
     expect(config.geolocation).toBe(false);
   });
 
-  test('defaults geolocation to true for aggregator.bmltenabled.org server', () => {
+  test('defaults geolocation to true for unconstrained aggregator', () => {
     initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));
     expect(config.geolocation).toBe(true);
+  });
+
+  test('defaults geolocation to false when aggregator is scoped to a service body', () => {
+    initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/', 'data-service-body': '95,173' }));
+    expect(config.geolocation).toBe(false);
   });
 
   test('defaults geolocation to false when no server set', () => {
@@ -211,6 +216,12 @@ describe('initConfig', () => {
       window.CrumbWidgetConfig = { geolocation: false };
       initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));
       expect(config.geolocation).toBe(false);
+    });
+
+    test('overrides aggregator+service-body default geolocation to true via config', () => {
+      window.CrumbWidgetConfig = { geolocation: true };
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/', 'data-service-body': '95,173' }));
+      expect(config.geolocation).toBe(true);
     });
 
     test('overrides geolocationRadius with positive value', () => {

@@ -2,7 +2,7 @@
   import { onDestroy } from 'svelte';
   import { SvelteSet } from 'svelte/reactivity';
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
-  import { dataState, loadData, loadDataByCoordinates } from '@stores/data.svelte';
+  import { dataState, loadData, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
   import { VENUE_TYPE } from '@/types';
   import { getGeoErrorMessage, haversineDistanceMiles } from '@utils/format';
@@ -173,12 +173,21 @@
   let showServiceBodyDropdown = $state(false);
   let showTypeDropdown = $state(false);
   let showGeoDropdown = $state(false);
+  let showSearchModeDropdown = $state(false);
   let typeDropdownEl = $state<HTMLDivElement | undefined>();
   let geoDropdownEl = $state<HTMLDivElement | undefined>();
+  let searchModeDropdownEl = $state<HTMLDivElement | undefined>();
+
+  type SearchMode = 'filter' | 'location';
+  let searchMode = $state<SearchMode>('filter');
+  let locationQuery = $state('');
+  let geocodingStatus = $state<'idle' | 'loading' | 'error'>('idle');
+  let geocodingError = $state('');
 
   function handleWindowClick(e: MouseEvent) {
     if (typeDropdownEl && !typeDropdownEl.contains(e.target as Node)) showTypeDropdown = false;
     if (geoDropdownEl && !geoDropdownEl.contains(e.target as Node)) showGeoDropdown = false;
+    if (searchModeDropdownEl && !searchModeDropdownEl.contains(e.target as Node)) showSearchModeDropdown = false;
   }
 
   type GeoStatus = 'idle' | 'locating' | 'active' | 'error';
@@ -206,6 +215,50 @@
     uiState.geoActive = true;
     activeRadius = radius;
     geoStatus = 'active';
+  }
+
+  function setSearchMode(mode: SearchMode) {
+    showSearchModeDropdown = false;
+    if (searchMode === mode) return;
+    searchMode = mode;
+    geocodingStatus = 'idle';
+    geocodingError = '';
+    if (mode === 'location') {
+      // Drop the text filter so users don't get an empty intersection while typing a place.
+      if (uiState.filters.search) updateFilter('search', '');
+    } else {
+      locationQuery = '';
+    }
+  }
+
+  // Pick a radius for an address-based fetch. Honors the user's last "Near Me" choice if any,
+  // otherwise falls back to the embedder's configured geolocationRadius (which may be negative
+  // for BMLT auto-radius — `loadDataByAddress` forwards it untouched).
+  function effectiveRadiusForLocationSearch(): number {
+    if (activeRadius > 0) return config.distanceUnit === 'km' ? kmToMiles(activeRadius) : activeRadius;
+    return config.geolocationRadius;
+  }
+
+  async function handleLocationSearch() {
+    const query = locationQuery.trim();
+    if (!query || geocodingStatus === 'loading') return;
+    geocodingStatus = 'loading';
+    geocodingError = '';
+    const radius = effectiveRadiusForLocationSearch();
+    const result = await loadDataByAddress(config.serverUrl, query, radius);
+    if (!result) {
+      geocodingStatus = 'error';
+      geocodingError = dataState.error || $t.locationNotFound;
+      // Surface the friendly message instead of the raw geocoder error.
+      dataState.error = null;
+      return;
+    }
+    geocodingStatus = 'idle';
+    uiState.userLocation = { lat: result.lat, lng: result.lng };
+    uiState.geoActive = true;
+    // geoRadius is the client-side haversine cap; only set when we have a positive radius.
+    // Auto-radius (negative) leaves geoRadius=0 so all server results stay visible.
+    uiState.geoRadius = radius > 0 ? radius : 0;
   }
 
   async function handleNearMe(radius: number) {
@@ -247,15 +300,90 @@
 <div class="bmlt-controls relative border-b border-gray-200 bg-white px-3 py-3">
   <div class="grid grid-cols-2 gap-2 md:flex md:flex-nowrap md:items-center">
     <!-- Search -->
-    <div class="relative col-span-2 md:hidden lg:block lg:max-w-48 lg:min-w-0 lg:flex-1">
-      <Icon name="search" class="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-      <input
-        type="search"
-        placeholder={$t.searchMeetings}
-        value={uiState.filters.search}
-        oninput={(e) => updateFilter('search', (e.target as HTMLInputElement).value)}
-        class="w-full rounded-lg border border-gray-300 bg-white py-2.5 ps-9 pe-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-      />
+    <div class="relative col-span-2 md:hidden lg:block lg:max-w-56 lg:min-w-0 lg:flex-1" bind:this={searchModeDropdownEl}>
+      {#if config.geolocation}
+        <button
+          type="button"
+          onclick={(e) => {
+            e.stopPropagation();
+            showSearchModeDropdown = !showSearchModeDropdown;
+            showDayDropdown = false;
+            showTimeDropdown = false;
+            showTypeDropdown = false;
+            showServiceBodyDropdown = false;
+            showGeoDropdown = false;
+          }}
+          aria-label={searchMode === 'location' ? $t.searchModeLocation : $t.searchModeFilter}
+          class="absolute start-1.5 top-1/2 z-10 flex -translate-y-1/2 items-center gap-0.5 rounded-md px-1.5 py-1 text-gray-500 hover:bg-gray-100"
+        >
+          {#if geocodingStatus === 'loading'}
+            <svg class="h-4 w-4 shrink-0 animate-spin text-blue-600" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+          {:else}
+            <Icon name={searchMode === 'location' ? 'map-pin' : 'search'} class="h-4 w-4 shrink-0 {searchMode === 'location' ? 'text-blue-600' : ''}" />
+          {/if}
+          <Icon name="chevron-down" class="h-3 w-3 shrink-0 transition-transform {showSearchModeDropdown ? 'rotate-180' : ''}" />
+        </button>
+      {:else}
+        <Icon name="search" class="absolute start-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+      {/if}
+      {#if searchMode === 'location'}
+        <input
+          type="text"
+          placeholder={$t.searchLocation}
+          bind:value={locationQuery}
+          onkeydown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              handleLocationSearch();
+            }
+          }}
+          class="w-full rounded-lg border bg-white py-2.5 pe-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none {config.geolocation
+            ? 'ps-14'
+            : 'ps-9'} {geocodingStatus === 'error' ? 'border-red-300' : 'border-gray-300'}"
+        />
+      {:else}
+        <input
+          type="search"
+          placeholder={$t.searchMeetings}
+          value={uiState.filters.search}
+          oninput={(e) => updateFilter('search', (e.target as HTMLInputElement).value)}
+          class="w-full rounded-lg border border-gray-300 bg-white py-2.5 pe-3 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none {config.geolocation
+            ? 'ps-14'
+            : 'ps-9'}"
+        />
+      {/if}
+      {#if showSearchModeDropdown}
+        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+          <button
+            type="button"
+            onclick={() => setSearchMode('filter')}
+            class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {searchMode === 'filter' ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+          >
+            <Icon name="search" class="h-4 w-4 shrink-0" />
+            <span class="flex-1">{$t.searchModeFilter}</span>
+            {#if searchMode === 'filter'}
+              <Icon name="check" class="h-3.5 w-3.5 text-blue-600" strokeWidth={3} />
+            {/if}
+          </button>
+          <button
+            type="button"
+            onclick={() => setSearchMode('location')}
+            class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm hover:bg-gray-50 {searchMode === 'location' ? 'font-semibold text-blue-700' : 'text-gray-700'}"
+          >
+            <Icon name="map-pin" class="h-4 w-4 shrink-0" />
+            <span class="flex-1">{$t.searchModeLocation}</span>
+            {#if searchMode === 'location'}
+              <Icon name="check" class="h-3.5 w-3.5 text-blue-600" strokeWidth={3} />
+            {/if}
+          </button>
+        </div>
+      {/if}
+      {#if searchMode === 'location' && geocodingStatus === 'error' && geocodingError}
+        <p class="absolute top-full left-0 mt-1 text-xs text-red-600">{geocodingError}</p>
+      {/if}
     </div>
 
     <!-- Anywhere / Near Me (distance dropdown) -->

@@ -3,6 +3,10 @@ export const itTranslations = {
   meetingFinder: 'Trova Riunioni',
   // Controls
   searchMeetings: 'Cerca riunioni...',
+  searchLocation: 'Città, CAP o indirizzo...',
+  searchModeFilter: 'Filtra riunioni',
+  searchModeLocation: 'Cerca località',
+  locationNotFound: 'Località non trovata',
   filters: 'Filtri',
   day: 'Giorno',
   selected: 'selezionati',

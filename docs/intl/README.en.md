@@ -39,7 +39,7 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 
 - List and map views with real-time search and filters
 - Meeting detail with directions, virtual join link, and formats
-- Geolocation-based nearby search
+- Geolocation-based nearby search, plus typed location search by city, postal code, or address
 - Individual meeting links via built-in router
 - 13 built-in languages (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — including RTL layout for Persian)
 - Configurable columns, map tiles, and custom markers

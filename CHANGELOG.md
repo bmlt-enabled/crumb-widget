@@ -1,3 +1,8 @@
+## Unreleased
+
+- **Typed location search** — when `geolocation: true`, the search input now has a mode dropdown letting users switch between filtering meetings (existing client-side behavior) and searching by city, postal code, or address. Addresses are resolved via OpenStreetMap Nominatim and the resulting coordinates feed a single BMLT request that returns both meetings and formats
+- **Aggregator default respects service-body scope** — `geolocation` now defaults to `true` only on the unconstrained aggregator (`aggregator.bmltenabled.org` with no `service-body` set). Pages already scoped by a service body no longer auto-prompt for browser location or expose the location-search mode unless the embedder opts in explicitly
+
 ## 1.3.0 (April 26, 2026)
 
 - **Four new languages** — Greek (`el`), Polish (`pl`), Russian (`ru`), and Persian (`fa`) translations bring the total to 12 supported languages

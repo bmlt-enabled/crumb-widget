@@ -110,3 +110,37 @@ export function loadDataByCoordinates(serverUrl: string, latitude: number, longi
     sort_results_by_distance: true
   });
 }
+
+export interface GeocodedLocation {
+  lat: number;
+  lng: number;
+  displayName: string;
+}
+
+export async function loadDataByAddress(serverUrl: string, address: string, geoWidth: number = 10): Promise<GeocodedLocation | null> {
+  if (!serverUrl) {
+    dataState.error = 'No server URL configured. Add data-server to your embed element.';
+    return null;
+  }
+  const trimmed = address.trim();
+  if (!trimmed) return null;
+
+  dataState.loading = true;
+  dataState.error = null;
+
+  let coords: { latitude: number; longitude: number };
+  let displayName: string;
+  try {
+    const client = new BmltClient({ serverURL: serverUrl });
+    const result = await client.geocodeAddress(trimmed);
+    coords = result.coordinates;
+    displayName = result.display_name;
+  } catch (err) {
+    dataState.error = err instanceof Error ? err.message : 'Could not find that location.';
+    dataState.loading = false;
+    return null;
+  }
+
+  await loadDataByCoordinates(serverUrl, coords.latitude, coords.longitude, geoWidth);
+  return { lat: coords.latitude, lng: coords.longitude, displayName };
+}
