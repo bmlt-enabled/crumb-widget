@@ -270,7 +270,15 @@
     "shortcode": "Шорткод",
     "serverNote": "URL сервера BMLT, заданный в настройках плагина, используется по умолчанию. Вы можете переопределить его — или фильтровать по service body — прямо в шорткоде:",
     "advanced": "Расширенная конфигурация",
-    "advancedIntro": "Все <a href=\"#global-config\">опции глобальной конфигурации</a> (язык, геолокация, столбцы, тайлы карты и т. д.) можно установить из <code>functions.php</code> темы через фильтр <code>bmltclient_config</code>:"
+    "advancedIntro": "Все <a href=\"#global-config\">опции глобальной конфигурации</a> (язык, геолокация, столбцы, тайлы карты и т. д.) можно установить из <code>functions.php</code> темы через фильтр <code>bmltclient_config</code>:",
+    "switchFromCroutonHeading": "Переход с Crouton",
+    "switchFromCroutonIntro": "Плагин <strong>Crumb</strong> — это альтернатива плагину <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a>, который можно подключить без правок существующих страниц. Установите Crumb и затем отключите crouton — существующие страницы продолжат работать.",
+    "switchFromCrouton": {
+      "1": "Шорткоды crouton <code>[bmlt_tabs]</code>, <code>[bmlt_map]</code>, <code>[crouton_tabs]</code> и <code>[crouton_map]</code> регистрируются автоматически и преобразуются в виджет Crumb — шорткоды карты отрисовываются с <code>view=\"both\"</code>, табы — с <code>view=\"list\"</code>.",
+      "2": "Атрибуты шорткода <code>root_server</code>, <code>service_body</code>, <code>service_body_1</code>, <code>formats</code> и <code>report_update_url</code> сопоставляются с соответствующими атрибутами Crumb.",
+      "3": "Сохранённые настройки crouton (URL сервера, service body, ID форматов, URL обновления) используются как запасные значения, когда соответствующая настройка Crumb пуста. Откройте <strong>Настройки → Crumb</strong>, чтобы проверить унаследованные значения, и нажмите <strong>Сохранить изменения</strong>.",
+      "4": "Если оба плагина активны, crouton продолжает обрабатывать собственные шорткоды; Crumb берёт их на себя только после отключения crouton."
+    }
   },
   "exampleDrupal": {
     "title": "Пример: Drupal",

@@ -270,7 +270,15 @@
     "shortcode": "Kortkod",
     "serverNote": "BMLT-server-URL:en som anges i tilläggsinställningarna används som standard. Du kan åsidosätta den — eller filtrera efter service body — direkt i kortkoden:",
     "advanced": "Avancerad konfiguration",
-    "advancedIntro": "Alla <a href=\"#global-config\">globala konfigurationsalternativ</a> (språk, geolokalisering, kolumner, kartrutor osv.) kan ställas in från ditt temas <code>functions.php</code> via filtret <code>bmltclient_config</code>:"
+    "advancedIntro": "Alla <a href=\"#global-config\">globala konfigurationsalternativ</a> (språk, geolokalisering, kolumner, kartrutor osv.) kan ställas in från ditt temas <code>functions.php</code> via filtret <code>bmltclient_config</code>:",
+    "switchFromCroutonHeading": "Byta från Crouton",
+    "switchFromCroutonIntro": "Tillägget <strong>Crumb</strong> är ett alternativ till tillägget <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> och kan användas utan att du behöver redigera dina sidor. Installera Crumb och inaktivera sedan crouton — befintliga sidor fortsätter att fungera.",
+    "switchFromCrouton": {
+      "1": "Crouton-kortkoderna <code>[bmlt_tabs]</code>, <code>[bmlt_map]</code>, <code>[crouton_tabs]</code> och <code>[crouton_map]</code> registreras automatiskt och översätts till Crumb-widgeten — kart-kortkoder renderas med <code>view=\"both\"</code> och tabs med <code>view=\"list\"</code>.",
+      "2": "Kortkods-attributen <code>root_server</code>, <code>service_body</code>, <code>service_body_1</code>, <code>formats</code> och <code>report_update_url</code> mappas till sina motsvarigheter i Crumb.",
+      "3": "Croutons sparade inställningar (server-URL, service body, format-ID:n, uppdaterings-URL) används som reserv när motsvarande Crumb-inställning är tom. Öppna <strong>Inställningar → Crumb</strong> för att bekräfta de ärvda värdena och klicka på <strong>Spara ändringar</strong> för att behålla dem.",
+      "4": "Om båda tilläggen är aktiva fortsätter crouton att hantera sina egna kortkoder; Crumb tar över först när crouton inaktiveras."
+    }
   },
   "exampleDrupal": {
     "title": "Exempel: Drupal",

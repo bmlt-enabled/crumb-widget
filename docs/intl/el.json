@@ -270,7 +270,15 @@
     "shortcode": "Shortcode",
     "serverNote": "Το URL διακομιστή BMLT που έχει οριστεί στις ρυθμίσεις του προσθέτου χρησιμοποιείται από προεπιλογή. Μπορείτε να το παρακάμψετε — ή να φιλτράρετε κατά service body — απευθείας στο shortcode:",
     "advanced": "Προηγμένη διαμόρφωση",
-    "advancedIntro": "Όλες οι <a href=\"#global-config\">επιλογές καθολικής διαμόρφωσης</a> (γλώσσα, γεωτοποθέτηση, στήλες, πλακίδια χάρτη κ.λπ.) μπορούν να οριστούν από το <code>functions.php</code> του θέματός σας μέσω του φίλτρου <code>bmltclient_config</code>:"
+    "advancedIntro": "Όλες οι <a href=\"#global-config\">επιλογές καθολικής διαμόρφωσης</a> (γλώσσα, γεωτοποθέτηση, στήλες, πλακίδια χάρτη κ.λπ.) μπορούν να οριστούν από το <code>functions.php</code> του θέματός σας μέσω του φίλτρου <code>bmltclient_config</code>:",
+    "switchFromCroutonHeading": "Μετάβαση από το Crouton",
+    "switchFromCroutonIntro": "Το πρόσθετο <strong>Crumb</strong> αποτελεί εναλλακτική του προσθέτου <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> και μπορεί να εγκατασταθεί χωρίς αλλαγές στις σελίδες σας. Εγκαταστήστε το Crumb και στη συνέχεια απενεργοποιήστε το crouton — οι υπάρχουσες σελίδες συνεχίζουν να λειτουργούν.",
+    "switchFromCrouton": {
+      "1": "Τα shortcodes του crouton <code>[bmlt_tabs]</code>, <code>[bmlt_map]</code>, <code>[crouton_tabs]</code> και <code>[crouton_map]</code> δηλώνονται αυτόματα και μεταφράζονται στο widget Crumb — τα shortcodes χάρτη εμφανίζονται με <code>view=\"both\"</code> και τα tabs με <code>view=\"list\"</code>.",
+      "2": "Οι παράμετροι shortcode <code>root_server</code>, <code>service_body</code>, <code>service_body_1</code>, <code>formats</code> και <code>report_update_url</code> αντιστοιχίζονται στις αντίστοιχες παραμέτρους του Crumb.",
+      "3": "Οι αποθηκευμένες ρυθμίσεις του crouton (URL διακομιστή, service body, IDs μορφών, URL ενημέρωσης) χρησιμοποιούνται ως εφεδρικές όποτε η αντίστοιχη ρύθμιση του Crumb είναι κενή. Ανοίξτε <strong>Ρυθμίσεις → Crumb</strong> για να επιβεβαιώσετε τις κληρονομημένες τιμές και πατήστε <strong>Αποθήκευση αλλαγών</strong>.",
+      "4": "Αν είναι ενεργοποιημένα και τα δύο πρόσθετα, το crouton συνεχίζει να διαχειρίζεται τα δικά του shortcodes· το Crumb αναλαμβάνει μόνο όταν το crouton απενεργοποιηθεί."
+    }
   },
   "exampleDrupal": {
     "title": "Παράδειγμα: Drupal",

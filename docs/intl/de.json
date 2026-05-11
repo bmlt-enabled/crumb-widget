@@ -270,7 +270,15 @@
     "shortcode": "Shortcode",
     "serverNote": "Die in den Plugin-Einstellungen festgelegte BMLT-Server-URL wird standardmäßig verwendet. Du kannst sie überschreiben — oder nach Service Body filtern — direkt im Shortcode:",
     "advanced": "Erweiterte Konfiguration",
-    "advancedIntro": "Alle <a href=\"#global-config\">globalen Konfigurationsoptionen</a> (Sprache, Geolokation, Spalten, Kartenkacheln usw.) können aus der <code>functions.php</code> deines Themes über den <code>bmltclient_config</code>-Filter gesetzt werden:"
+    "advancedIntro": "Alle <a href=\"#global-config\">globalen Konfigurationsoptionen</a> (Sprache, Geolokation, Spalten, Kartenkacheln usw.) können aus der <code>functions.php</code> deines Themes über den <code>bmltclient_config</code>-Filter gesetzt werden:",
+    "switchFromCroutonHeading": "Wechsel von Crouton",
+    "switchFromCroutonIntro": "Das Plugin <strong>Crumb</strong> ist eine Alternative zum Plugin <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> und kann ohne Anpassungen an deinen Seiten eingesetzt werden. Installiere Crumb und deaktiviere anschließend crouton — vorhandene Seiten funktionieren weiterhin.",
+    "switchFromCrouton": {
+      "1": "Die crouton-Shortcodes <code>[bmlt_tabs]</code>, <code>[bmlt_map]</code>, <code>[crouton_tabs]</code> und <code>[crouton_map]</code> werden automatisch registriert und in das Crumb-Widget übersetzt — Map-Shortcodes werden mit <code>view=\"both\"</code> dargestellt, Tabs mit <code>view=\"list\"</code>.",
+      "2": "Die Shortcode-Attribute <code>root_server</code>, <code>service_body</code>, <code>service_body_1</code>, <code>formats</code> und <code>report_update_url</code> werden auf ihre Crumb-Entsprechungen abgebildet.",
+      "3": "Die gespeicherten crouton-Einstellungen (Server-URL, Service Body, Format-IDs, Update-URL) werden als Fallback verwendet, wenn die entsprechende Crumb-Einstellung leer ist. Öffne <strong>Einstellungen → Crumb</strong>, prüfe die übernommenen Werte und klicke auf <strong>Änderungen speichern</strong>.",
+      "4": "Sind beide Plugins aktiv, verarbeitet crouton weiterhin seine eigenen Shortcodes; Crumb übernimmt erst, sobald crouton deaktiviert wird."
+    }
   },
   "exampleDrupal": {
     "title": "Beispiel: Drupal",

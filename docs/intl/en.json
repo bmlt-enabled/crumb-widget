@@ -303,7 +303,15 @@
     "shortcode": "Shortcode",
     "serverNote": "The BMLT server URL set in the plugin settings is used by default. You can override it — or filter by service body — directly in the shortcode:",
     "advanced": "Advanced configuration",
-    "advancedIntro": "All <a href=\"#global-config\">global config options</a> (language, geolocation, columns, map tiles, etc.) can be set from your theme's <code>functions.php</code> via the <code>bmltclient_config</code> filter:"
+    "advancedIntro": "All <a href=\"#global-config\">global config options</a> (language, geolocation, columns, map tiles, etc.) can be set from your theme's <code>functions.php</code> via the <code>bmltclient_config</code> filter:",
+    "switchFromCroutonHeading": "Switching from Crouton",
+    "switchFromCroutonIntro": "The <strong>Crumb</strong> plugin is an alternative to the <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> plugin and can drop in without page edits. Install Crumb, then deactivate crouton — existing pages keep working.",
+    "switchFromCrouton": {
+      "1": "Crouton shortcodes <code>[bmlt_tabs]</code>, <code>[bmlt_map]</code>, <code>[crouton_tabs]</code>, and <code>[crouton_map]</code> are registered automatically and translated to the Crumb widget — map shortcodes render with <code>view=\"both\"</code>, tabs with <code>view=\"list\"</code>.",
+      "2": "Shortcode attributes <code>root_server</code>, <code>service_body</code>, <code>service_body_1</code>, <code>formats</code>, and <code>report_update_url</code> are mapped to their Crumb equivalents.",
+      "3": "Crouton's saved settings (server URL, service body, format IDs, update URL) are used as fallbacks whenever the corresponding Crumb setting is empty. Open <strong>Settings → Crumb</strong> to confirm the inherited values and click <strong>Save Changes</strong> to persist them.",
+      "4": "If both plugins are active, crouton continues to handle its own shortcodes; Crumb only takes over once crouton is deactivated."
+    }
   },
   "exampleDrupal": {
     "title": "Example: Drupal",

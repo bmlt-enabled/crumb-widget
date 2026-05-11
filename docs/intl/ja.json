@@ -270,7 +270,15 @@
     "shortcode": "ショートコード",
     "serverNote": "プラグイン設定の BMLT サーバ URL が既定で使用されます。サーバを上書きしたり、サービスボディで絞り込んだりするには、ショートコードに直接指定できます：",
     "advanced": "高度な設定",
-    "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、テーマの <code>functions.php</code> からフィルター <code>bmltclient_config</code> 経由で設定できます："
+    "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、テーマの <code>functions.php</code> からフィルター <code>bmltclient_config</code> 経由で設定できます：",
+    "switchFromCroutonHeading": "Crouton からの切り替え",
+    "switchFromCroutonIntro": "<strong>Crumb</strong> プラグインは <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> プラグインの代替で、ページを編集することなくそのまま導入できます。Crumb をインストールし、crouton を無効化してください — 既存のページはそのまま動作します。",
+    "switchFromCrouton": {
+      "1": "crouton のショートコード <code>[bmlt_tabs]</code>、<code>[bmlt_map]</code>、<code>[crouton_tabs]</code>、<code>[crouton_map]</code> は自動的に登録され、Crumb ウィジェットへ変換されます — マップ系のショートコードは <code>view=\"both\"</code>、タブ系は <code>view=\"list\"</code> でレンダリングされます。",
+      "2": "ショートコード属性 <code>root_server</code>、<code>service_body</code>、<code>service_body_1</code>、<code>formats</code>、<code>report_update_url</code> は対応する Crumb の属性にマッピングされます。",
+      "3": "対応する Crumb の設定が空のときは、crouton に保存された設定（サーバ URL、サービスボディ、フォーマット ID、更新 URL）がフォールバックとして使用されます。<strong>設定 → Crumb</strong> を開いて引き継いだ値を確認し、<strong>変更を保存</strong> をクリックして保存してください。",
+      "4": "両方のプラグインが有効な場合、crouton は引き続き自身のショートコードを処理します。Crumb が引き継ぐのは crouton を無効化した後だけです。"
+    }
   },
   "exampleDrupal": {
     "title": "例: Drupal",

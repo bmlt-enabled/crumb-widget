@@ -270,7 +270,15 @@
     "shortcode": "شورت‌کد",
     "serverNote": "آدرس سرور BMLT تنظیم‌شده در پیکربندی افزونه به‌طور پیش‌فرض استفاده می‌شود. می‌توانید آن را — یا فیلتر بر اساس کمیتهٔ خدماتی — مستقیماً در شورت‌کد بازنویسی کنید:",
     "advanced": "پیکربندی پیشرفته",
-    "advancedIntro": "همهٔ <a href=\"#global-config\">گزینه‌های پیکربندی سراسری</a> (زبان، موقعیت‌یابی، ستون‌ها، کاشی‌های نقشه و غیره) را می‌توان از <code>functions.php</code> قالب شما با فیلتر <code>bmltclient_config</code> تنظیم کرد:"
+    "advancedIntro": "همهٔ <a href=\"#global-config\">گزینه‌های پیکربندی سراسری</a> (زبان، موقعیت‌یابی، ستون‌ها، کاشی‌های نقشه و غیره) را می‌توان از <code>functions.php</code> قالب شما با فیلتر <code>bmltclient_config</code> تنظیم کرد:",
+    "switchFromCroutonHeading": "تغییر از Crouton",
+    "switchFromCroutonIntro": "افزونهٔ <strong>Crumb</strong> جایگزینی برای افزونهٔ <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> است و بدون ویرایش صفحه‌ها قابل جایگزینی است. Crumb را نصب کنید و سپس crouton را غیرفعال کنید — صفحه‌های موجود همچنان کار خواهند کرد.",
+    "switchFromCrouton": {
+      "1": "شورت‌کدهای crouton شامل <code>[bmlt_tabs]</code>، <code>[bmlt_map]</code>، <code>[crouton_tabs]</code> و <code>[crouton_map]</code> به‌طور خودکار ثبت و به ویجت Crumb ترجمه می‌شوند — شورت‌کدهای نقشه با <code>view=\"both\"</code> و تب‌ها با <code>view=\"list\"</code> رندر می‌شوند.",
+      "2": "ویژگی‌های شورت‌کد <code>root_server</code>، <code>service_body</code>، <code>service_body_1</code>، <code>formats</code> و <code>report_update_url</code> به معادل‌های Crumb نگاشته می‌شوند.",
+      "3": "تنظیمات ذخیره‌شدهٔ crouton (آدرس سرور، کمیتهٔ خدماتی، شناسه‌های قالب، آدرس به‌روزرسانی) هرگاه تنظیم متناظر در Crumb خالی باشد به‌عنوان پیش‌فرض استفاده می‌شود. به <strong>تنظیمات ← Crumb</strong> بروید تا مقادیر به‌ارث‌رسیده را تأیید کنید و روی <strong>ذخیرهٔ تغییرات</strong> کلیک کنید.",
+      "4": "اگر هر دو افزونه فعال باشند، crouton همچنان شورت‌کدهای خود را مدیریت می‌کند؛ Crumb تنها زمانی این کار را به عهده می‌گیرد که crouton غیرفعال شود."
+    }
   },
   "exampleDrupal": {
     "title": "مثال: دروپال",
