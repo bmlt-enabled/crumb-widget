@@ -333,11 +333,26 @@
    classes so they can be themed via CSS variables (e.g. for dark mode).
    ─────────────────────────────────────────────────────────────────────────── */
 
-/* Search input */
+/* Search input.
+   Some WordPress themes inject a `background-image` (their own magnifying-glass
+   icon) and style WebKit's native search pseudo-elements on `input[type='search']`.
+   Both clash with the SVG icon we overlay on top, producing a double icon or a
+   stray clear-button. Strip them all. */
 #crumb-widget input[type='search'] {
   background-color: var(--bmlt-surface) !important;
+  background-image: none !important;
   border-color: var(--bmlt-border) !important;
   color: var(--bmlt-text) !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+#crumb-widget input[type='search']::-webkit-search-decoration,
+#crumb-widget input[type='search']::-webkit-search-cancel-button,
+#crumb-widget input[type='search']::-webkit-search-results-button,
+#crumb-widget input[type='search']::-webkit-search-results-decoration {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: none !important;
 }
 
 /* Controls bar — inactive filter/geo buttons and view-toggle container */
