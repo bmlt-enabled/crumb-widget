@@ -42,6 +42,8 @@ export const esTranslations = {
   showing: 'Mostrando',
   meeting: 'reunión',
   meetings: 'reuniones',
+  group: 'grupo',
+  groups: 'grupos',
   inProgress: 'en progreso',
   // Meeting detail
   backToMeetings: 'Volver a reuniones',

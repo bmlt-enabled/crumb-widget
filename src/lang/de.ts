@@ -42,6 +42,8 @@ export const deTranslations = {
   showing: 'Angezeigt',
   meeting: 'Treffen',
   meetings: 'Treffen',
+  group: 'Gruppe',
+  groups: 'Gruppen',
   inProgress: 'laufend',
   // Meeting detail
   backToMeetings: 'Zurück zu den Treffen',

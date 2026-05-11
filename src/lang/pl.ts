@@ -42,6 +42,8 @@ export const plTranslations = {
   showing: 'Pokazane',
   meeting: 'mityng',
   meetings: 'mityngów',
+  group: 'grupa',
+  groups: 'grup',
   inProgress: 'w trakcie',
   // Meeting detail
   backToMeetings: 'Powrót do mityngów',

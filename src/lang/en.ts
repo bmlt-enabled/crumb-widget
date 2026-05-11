@@ -42,6 +42,8 @@ export const enTranslations = {
   showing: 'Showing',
   meeting: 'meeting',
   meetings: 'meetings',
+  group: 'group',
+  groups: 'groups',
   inProgress: 'in progress',
   // Meeting detail
   backToMeetings: 'Back to meetings',

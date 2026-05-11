@@ -42,6 +42,8 @@ export const faTranslations = {
   showing: 'نمایش',
   meeting: 'جلسه',
   meetings: 'جلسه',
+  group: 'گروه',
+  groups: 'گروه',
   inProgress: 'در حال برگزاری',
   // Meeting detail
   backToMeetings: 'بازگشت به جلسات',

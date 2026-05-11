@@ -42,6 +42,8 @@ export const itTranslations = {
   showing: 'Visualizzando',
   meeting: 'riunione',
   meetings: 'riunioni',
+  group: 'gruppo',
+  groups: 'gruppi',
   inProgress: 'in corso',
   // Meeting detail
   backToMeetings: 'Torna alle riunioni',

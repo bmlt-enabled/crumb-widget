@@ -42,6 +42,8 @@ export const daTranslations = {
   showing: 'Viser',
   meeting: 'møde',
   meetings: 'møder',
+  group: 'gruppe',
+  groups: 'grupper',
   inProgress: 'i gang',
   // Meeting detail
   backToMeetings: 'Tilbage til møder',

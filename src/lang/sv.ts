@@ -42,6 +42,8 @@ export const svTranslations = {
   showing: 'Visar',
   meeting: 'möte',
   meetings: 'möten',
+  group: 'grupp',
+  groups: 'grupper',
   inProgress: 'pågår',
   // Meeting detail
   backToMeetings: 'Tillbaka till möten',

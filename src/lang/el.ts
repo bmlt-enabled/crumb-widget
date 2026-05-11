@@ -42,6 +42,8 @@ export const elTranslations = {
   showing: 'Εμφανίζονται',
   meeting: 'συνάντηση',
   meetings: 'συναντήσεις',
+  group: 'ομάδα',
+  groups: 'ομάδες',
   inProgress: 'σε εξέλιξη',
   // Meeting detail
   backToMeetings: 'Επιστροφή στις συναντήσεις',

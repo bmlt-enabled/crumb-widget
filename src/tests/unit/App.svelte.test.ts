@@ -146,10 +146,10 @@ describe('App', () => {
     expect(screen.getAllByText('7:00 PM')[0]).toBeInTheDocument();
   });
 
-  test('shows meeting count in header', () => {
+  test('shows group and meeting count in header', () => {
     dataState.meetings = [makeMeeting(), makeMeeting({ id_bigint: '2', meeting_name: 'Second Meeting' })];
     render(App, { props: { config: baseConfig } });
-    expect(screen.getByText('2 meetings')).toBeInTheDocument();
+    expect(screen.getByText(/2\s+groups\s+·\s+2\s+meetings/)).toBeInTheDocument();
   });
 
   test('shows no results message when list is empty', () => {

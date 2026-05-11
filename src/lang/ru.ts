@@ -42,6 +42,8 @@ export const ruTranslations = {
   showing: 'Показано',
   meeting: 'собрание',
   meetings: 'собраний',
+  group: 'группа',
+  groups: 'групп',
   inProgress: 'идёт сейчас',
   // Meeting detail
   backToMeetings: 'Назад к собраниям',

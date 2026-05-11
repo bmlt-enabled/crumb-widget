@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { router } from '@bmlt-enabled/svelte-spa-router';
+  import { countUniqueGroups } from 'bmlt-query-client';
   import type { AppConfig, ProcessedMeeting } from '@/types';
   import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
@@ -96,6 +97,7 @@
   });
 
   const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters, uiState.userLocation, uiState.geoRadius));
+  const groupCount = $derived(countUniqueGroups(filteredMeetings));
 
   // Selected meeting: state is primary (set by selectMeeting/clearSelectedMeeting),
   // URL is fallback for deep-linking on initial load.
@@ -137,7 +139,13 @@
     <div class="bmlt-app-header flex items-center justify-between border-b border-gray-200 bg-gray-50 px-4 py-3">
       <h1 class="text-lg font-bold text-gray-800">{$t.meetingFinder}</h1>
       {#if !dataState.loading && !dataState.error}
-        <span class="text-xs text-gray-500">{dataState.meetings.length} meetings</span>
+        <span class="text-xs text-gray-500">
+          {groupCount}
+          {groupCount === 1 ? $t.group : $t.groups}
+          ·
+          {filteredMeetings.length}
+          {filteredMeetings.length === 1 ? $t.meeting : $t.meetings}
+        </span>
       {/if}
     </div>
   {/if}

@@ -42,6 +42,8 @@ export const jaTranslations = {
   showing: '表示中',
   meeting: 'ミーティング',
   meetings: 'ミーティング',
+  group: 'グループ',
+  groups: 'グループ',
   inProgress: '進行中',
   // Meeting detail
   backToMeetings: 'ミーティング一覧に戻る',
