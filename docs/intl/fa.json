@@ -271,7 +271,7 @@
     "shortcode": "شورت‌کد",
     "serverNote": "آدرس سرور BMLT تنظیم‌شده در پیکربندی افزونه به‌طور پیش‌فرض استفاده می‌شود. می‌توانید آن را — یا فیلتر بر اساس کمیتهٔ خدماتی — مستقیماً در شورت‌کد بازنویسی کنید:",
     "advanced": "پیکربندی پیشرفته",
-    "advancedIntro": "همهٔ <a href=\"#global-config\">گزینه‌های پیکربندی سراسری</a> (زبان، موقعیت‌یابی، ستون‌ها، کاشی‌های نقشه و غیره) را می‌توان از <code>functions.php</code> قالب شما با فیلتر <code>bmltclient_config</code> تنظیم کرد:",
+    "advancedIntro": "همهٔ <a href=\"#global-config\">گزینه‌های پیکربندی سراسری</a> (زبان، موقعیت‌یابی، ستون‌ها، کاشی‌های نقشه و غیره) را می‌توان از <code>functions.php</code> قالب شما با فیلتر <code>crumb_config</code> تنظیم کرد:",
     "switchFromCroutonHeading": "تغییر از Crouton",
     "switchFromCroutonIntro": "افزونهٔ <strong>Crumb</strong> جایگزینی برای افزونهٔ <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> است و بدون ویرایش صفحه‌ها قابل جایگزینی است. Crumb را نصب کنید و سپس crouton را غیرفعال کنید — صفحه‌های موجود همچنان کار خواهند کرد.",
     "switchFromCrouton": {

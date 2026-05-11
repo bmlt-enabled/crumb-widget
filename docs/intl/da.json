@@ -271,7 +271,7 @@
     "shortcode": "Shortcode",
     "serverNote": "BMLT-server-URL'en angivet i plugin-indstillingerne bruges som standard. Du kan tilsidesætte den — eller filtrere efter service body — direkte i shortcoden:",
     "advanced": "Avanceret konfiguration",
-    "advancedIntro": "Alle <a href=\"#global-config\">globale konfigurationsindstillinger</a> (sprog, geolokation, kolonner, kortfliser osv.) kan sættes fra dit temas <code>functions.php</code> via <code>bmltclient_config</code>-filteret:",
+    "advancedIntro": "Alle <a href=\"#global-config\">globale konfigurationsindstillinger</a> (sprog, geolokation, kolonner, kortfliser osv.) kan sættes fra dit temas <code>functions.php</code> via <code>crumb_config</code>-filteret:",
     "switchFromCroutonHeading": "Skift fra Crouton",
     "switchFromCroutonIntro": "<strong>Crumb</strong>-plugin'et er et alternativ til <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a>-plugin'et og kan tages i brug uden ændringer på dine sider. Installer Crumb, og deaktivér derefter crouton — eksisterende sider fortsætter med at virke.",
     "switchFromCrouton": {

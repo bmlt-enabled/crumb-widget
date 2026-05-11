@@ -271,7 +271,7 @@
     "shortcode": "Shortcode",
     "serverNote": "Το URL διακομιστή BMLT που έχει οριστεί στις ρυθμίσεις του προσθέτου χρησιμοποιείται από προεπιλογή. Μπορείτε να το παρακάμψετε — ή να φιλτράρετε κατά service body — απευθείας στο shortcode:",
     "advanced": "Προηγμένη διαμόρφωση",
-    "advancedIntro": "Όλες οι <a href=\"#global-config\">επιλογές καθολικής διαμόρφωσης</a> (γλώσσα, γεωτοποθέτηση, στήλες, πλακίδια χάρτη κ.λπ.) μπορούν να οριστούν από το <code>functions.php</code> του θέματός σας μέσω του φίλτρου <code>bmltclient_config</code>:",
+    "advancedIntro": "Όλες οι <a href=\"#global-config\">επιλογές καθολικής διαμόρφωσης</a> (γλώσσα, γεωτοποθέτηση, στήλες, πλακίδια χάρτη κ.λπ.) μπορούν να οριστούν από το <code>functions.php</code> του θέματός σας μέσω του φίλτρου <code>crumb_config</code>:",
     "switchFromCroutonHeading": "Μετάβαση από το Crouton",
     "switchFromCroutonIntro": "Το πρόσθετο <strong>Crumb</strong> αποτελεί εναλλακτική του προσθέτου <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> και μπορεί να εγκατασταθεί χωρίς αλλαγές στις σελίδες σας. Εγκαταστήστε το Crumb και στη συνέχεια απενεργοποιήστε το crouton — οι υπάρχουσες σελίδες συνεχίζουν να λειτουργούν.",
     "switchFromCrouton": {

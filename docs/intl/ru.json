@@ -271,7 +271,7 @@
     "shortcode": "Шорткод",
     "serverNote": "URL сервера BMLT, заданный в настройках плагина, используется по умолчанию. Вы можете переопределить его — или фильтровать по service body — прямо в шорткоде:",
     "advanced": "Расширенная конфигурация",
-    "advancedIntro": "Все <a href=\"#global-config\">опции глобальной конфигурации</a> (язык, геолокация, столбцы, тайлы карты и т. д.) можно установить из <code>functions.php</code> темы через фильтр <code>bmltclient_config</code>:",
+    "advancedIntro": "Все <a href=\"#global-config\">опции глобальной конфигурации</a> (язык, геолокация, столбцы, тайлы карты и т. д.) можно установить из <code>functions.php</code> темы через фильтр <code>crumb_config</code>:",
     "switchFromCroutonHeading": "Переход с Crouton",
     "switchFromCroutonIntro": "Плагин <strong>Crumb</strong> — это альтернатива плагину <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a>, который можно подключить без правок существующих страниц. Установите Crumb и затем отключите crouton — существующие страницы продолжат работать.",
     "switchFromCrouton": {

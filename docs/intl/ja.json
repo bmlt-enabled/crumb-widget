@@ -271,7 +271,7 @@
     "shortcode": "ショートコード",
     "serverNote": "プラグイン設定の BMLT サーバ URL が既定で使用されます。サーバを上書きしたり、サービスボディで絞り込んだりするには、ショートコードに直接指定できます：",
     "advanced": "高度な設定",
-    "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、テーマの <code>functions.php</code> からフィルター <code>bmltclient_config</code> 経由で設定できます：",
+    "advancedIntro": "<a href=\"#global-config\">グローバル設定オプション</a>のすべて（言語、位置情報、列、地図タイルなど）は、テーマの <code>functions.php</code> からフィルター <code>crumb_config</code> 経由で設定できます：",
     "switchFromCroutonHeading": "Crouton からの切り替え",
     "switchFromCroutonIntro": "<strong>Crumb</strong> プラグインは <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> プラグインの代替で、ページを編集することなくそのまま導入できます。Crumb をインストールし、crouton を無効化してください — 既存のページはそのまま動作します。",
     "switchFromCrouton": {

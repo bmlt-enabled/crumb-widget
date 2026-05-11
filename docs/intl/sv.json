@@ -271,7 +271,7 @@
     "shortcode": "Kortkod",
     "serverNote": "BMLT-server-URL:en som anges i tilläggsinställningarna används som standard. Du kan åsidosätta den — eller filtrera efter service body — direkt i kortkoden:",
     "advanced": "Avancerad konfiguration",
-    "advancedIntro": "Alla <a href=\"#global-config\">globala konfigurationsalternativ</a> (språk, geolokalisering, kolumner, kartrutor osv.) kan ställas in från ditt temas <code>functions.php</code> via filtret <code>bmltclient_config</code>:",
+    "advancedIntro": "Alla <a href=\"#global-config\">globala konfigurationsalternativ</a> (språk, geolokalisering, kolumner, kartrutor osv.) kan ställas in från ditt temas <code>functions.php</code> via filtret <code>crumb_config</code>:",
     "switchFromCroutonHeading": "Byta från Crouton",
     "switchFromCroutonIntro": "Tillägget <strong>Crumb</strong> är ett alternativ till tillägget <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a> och kan användas utan att du behöver redigera dina sidor. Installera Crumb och inaktivera sedan crouton — befintliga sidor fortsätter att fungera.",
     "switchFromCrouton": {
