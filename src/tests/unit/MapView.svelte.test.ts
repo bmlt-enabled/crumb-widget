@@ -142,6 +142,23 @@ describe('MapView — rendering', () => {
     expect(vi.mocked(L.marker)).toHaveBeenCalledWith([34.05, -118.24], expect.anything());
     expect(vi.mocked(L.marker)).toHaveBeenCalledWith([35, -119], expect.anything());
   });
+
+  test('groups markers when coords differ only in sub-meter precision', () => {
+    // Two meetings at the same physical venue with slightly different geocoded
+    // coords (≈0.5 m apart) — they must share a single pin/popup.
+    const m1 = makeMeeting({ id_bigint: '1', meeting_name: '90/90 Group', latitude: 41.420342467488, longitude: -70.594697850926 });
+    const m2 = makeMeeting({ id_bigint: '2', meeting_name: 'TGIF', latitude: 41.420342467488, longitude: -70.594692486508 });
+    render(MapView, { props: { meetings: [m1, m2] } });
+    // Both meetings must land on a single combined marker. Each render pass calls
+    // L.marker once per unique location, so every call should carry both names.
+    const calls = vi.mocked(L.marker).mock.calls;
+    expect(calls.length).toBeGreaterThan(0);
+    for (const [, opts] of calls) {
+      const altText = (opts?.alt ?? '') as string;
+      expect(altText).toContain('90/90 Group');
+      expect(altText).toContain('TGIF');
+    }
+  });
 });
 
 describe('MapView — empty state', () => {

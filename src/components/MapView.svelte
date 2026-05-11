@@ -67,16 +67,30 @@
 
     if (mappableMeetings.length === 0) return;
 
-    const groups: Record<string, ProcessedMeeting[]> = {};
+    // Group meetings whose coords are within ~10 m of each other so the same
+    // physical venue collapses to a single pin even when BMLT entries are
+    // geocoded with slightly different precision. Simple rounding has boundary
+    // bugs (points 0.5 m apart can fall into different bins), so we cluster by
+    // tolerance instead.
+    const COORD_EPSILON = 0.0001; // ~11 m at the equator
+    const groups: ProcessedMeeting[][] = [];
+    const groupCoords: [number, number][] = [];
     for (const m of mappableMeetings) {
-      const key = `${m.latitude},${m.longitude}`;
-      groups[key] ??= [];
-      groups[key].push(m);
+      const lat = Number(m.latitude);
+      const lng = Number(m.longitude);
+      const idx = groupCoords.findIndex(([gLat, gLng]) => Math.abs(gLat - lat) < COORD_EPSILON && Math.abs(gLng - lng) < COORD_EPSILON);
+      if (idx >= 0) {
+        groups[idx]!.push(m);
+      } else {
+        groups.push([m]);
+        groupCoords.push([lat, lng]);
+      }
     }
 
     const markers: Marker[] = [];
-    for (const [key, group] of Object.entries(groups)) {
-      const [lat, lng] = key.split(',').map(Number) as [number, number];
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i]!;
+      const [lat, lng] = groupCoords[i]!;
       const label = group.map((m) => m.meeting_name).join(', ');
       const marker = L.marker([lat, lng], {
         icon: buildMarkerIcon(locationMarker ?? DEFAULT_LOCATION_MARKER),
