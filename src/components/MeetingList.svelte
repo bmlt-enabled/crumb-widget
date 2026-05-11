@@ -15,6 +15,7 @@
   const { meetings }: Props = $props();
 
   const cols = $derived(new Set(config.columns));
+  const showDistance = $derived(uiState.geoActive && cols.has('distance'));
 
   function meetingDistanceLabel(meeting: ProcessedMeeting): string {
     if (!uiState.userLocation || !meeting.latitude || !meeting.longitude) return '';
@@ -41,7 +42,7 @@
 
   // Column span for print-only day-group header rows.
   const printHeaderColSpan = $derived(
-    (cols.has('time') ? 1 : 0) + (uiState.geoActive ? 1 : 0) + (cols.has('name') ? 1 : 0) + (cols.has('location') ? 1 : 0) + (cols.has('address') ? 1 : 0) + (cols.has('service_body') ? 1 : 0) || 1
+    (cols.has('time') ? 1 : 0) + (showDistance ? 1 : 0) + (cols.has('name') ? 1 : 0) + (cols.has('location') ? 1 : 0) + (cols.has('address') ? 1 : 0) + (cols.has('service_body') ? 1 : 0) || 1
   );
 </script>
 
@@ -69,7 +70,7 @@
       <div class="w-24 shrink-0 overflow-hidden text-sm text-gray-600">
         <div class="whitespace-nowrap">{meeting.formattedTime}</div>
         <div>{$t.weekdays[meeting.weekday_tinyint - 1]}</div>
-        {#if uiState.geoActive}{@const d = meetingDistanceLabel(meeting)}{#if d}<div class="text-xs text-gray-400">{d}</div>{/if}{/if}
+        {#if showDistance}{@const d = meetingDistanceLabel(meeting)}{#if d}<div class="text-xs text-gray-400">{d}</div>{/if}{/if}
       </div>
     {/if}
     <div class="min-w-0 flex-1">
@@ -101,7 +102,7 @@
         </time>
       </td>
     {/if}
-    {#if uiState.geoActive}
+    {#if showDistance}
       <td class="px-4 py-4 text-sm whitespace-nowrap text-gray-500">{meetingDistanceLabel(meeting)}</td>
     {/if}
     {#if cols.has('name')}
@@ -179,7 +180,7 @@
       <thead class="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
         <tr>
           {#if cols.has('time')}<th class="bmlt-time-col w-24 px-4 py-2 text-start lg:w-40">{$t.dayAndTime}</th>{/if}
-          {#if uiState.geoActive}<th class="w-24 px-3 py-2 text-start">{$t.distance}</th>{/if}
+          {#if showDistance}<th class="w-24 px-3 py-2 text-start">{$t.distance}</th>{/if}
           {#if cols.has('name')}<th class="min-w-[8rem] px-4 py-2 text-start">{$t.meetingColumn}</th>{/if}
           {#if cols.has('location')}<th class="min-w-[7rem] px-4 py-2 text-start">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-start">{$t.address}</th>{/if}

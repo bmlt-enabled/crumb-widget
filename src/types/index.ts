@@ -56,7 +56,7 @@ export const VENUE_TYPE = {
 
 export type ViewType = 'list' | 'map' | 'both';
 
-export type Column = 'time' | 'name' | 'location' | 'address' | 'service_body';
+export type Column = 'time' | 'distance' | 'name' | 'location' | 'address' | 'service_body';
 
 export interface TilesConfig {
   url: string;

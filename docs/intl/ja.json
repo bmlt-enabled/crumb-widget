@@ -94,6 +94,7 @@
     "server": "BMLT サーバの完全な URL。<br /><em>例:</em> <code>https://example.org/main_server</code>",
     "serviceBody": "ミーティングを 1 つ以上のサービスボディで絞り込みます。1 つの数値 ID、またはカンマ区切りのリストを指定できます。サーバ上のすべてのミーティングを表示するには省略します。<br /><em>単一:</em> <code>\"42\"</code> <br /><em>複数:</em> <code>\"42,57,103\"</code> <br /><strong>注意:</strong> 再帰的な検索が常に有効です。子のサービスボディは自動的に含まれ、無効化することはできません。",
     "view": "ウィジェット読み込み時の既定ビューです。<br /><em>値:</em> <code>list</code>（既定）, <code>map</code>, <code>both</code> <br /><code>both</code> は、リスト／地図切替なしで、固定高の地図を完全なミーティング一覧の上に表示します。<br />実行時には <code>?view=</code> クエリパラメータで上書き可能です（<a href=\"#query-params\">URL クエリパラメータ</a>を参照）。",
+    "columns": "リスト表示に表示する列のカンマ区切りリストです。グローバル設定オプションの <code>columns</code> と同じ値が使えます: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>。両方が設定されている場合は <code>CrumbWidgetConfig.columns</code> によって上書きされます。<br /><em>例:</em> <code>data-columns=\"time,name,address\"</code>",
     "path": "History API ルーティング（<code>#</code> のないクリーン URL）を有効にし、ベースパスを設定します。この属性がない場合はハッシュベースのルーティングが使われます（既定）。<br /><em>例:</em> <code>data-path=\"/meetings\"</code> は <code>/meetings/monday-night-meeting-42</code> のような URL を生成します。<br />接頭辞なしのパスルーティング（iframe 埋め込みなど）には <code>data-path=\"\"</code> を使用します。<br />詳細は<a href=\"#routing\">ルーティング</a>を参照してください。"
   },
   "globalConfig": {
@@ -102,11 +103,11 @@
     "row": {
       "view": "既定のビューを上書きします。<code>data-view</code> よりも優先されます。<code>'both'</code> は、固定高の地図を完全なリストの上に表示し、リスト／地図切替は非表示になります。",
       "language": "UI 言語を上書きします（例: <code>'es'</code>, <code>'fr'</code>）。既定では <code>navigator.language</code> を使用し、フォールバックは英語です。対応: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>。",
-      "columns": "リスト表示で表示する列です。既定: <code>['time', 'name', 'location', 'address']</code>。非表示にしたい列名は省略します。利用可能な値: <code>time</code>, <code>name</code>, <code>location</code>（会場／建物名）、<code>address</code>（住所と対面／オンラインのバッジ）、<code>service_body</code>。<code>service_body</code> は既定で非表示です。サービスボディ名を表示するには明示的に追加してください。",
+      "columns": "リスト表示で表示する列です。既定: <code>['time', 'distance', 'name', 'location', 'address']</code>。<code>data-columns</code> よりも優先されます。非表示にしたい列名は省略します。利用可能な値: <code>time</code>, <code>distance</code>（位置情報が有効な場合のみ表示されます）、<code>name</code>, <code>location</code>（会場／建物名）、<code>address</code>（住所と対面／オンラインのバッジ）、<code>service_body</code>。<code>service_body</code> は既定で非表示です。サービスボディ名を表示するには明示的に追加してください。",
       "geolocation": "位置情報による検索を有効にします: <strong>近くを検索</strong>ボタン（ブラウザでユーザーの位置を取得、HTTPS が必要）と検索フィールドの<strong>場所を検索</strong>モードで、市、郵便番号、住所（例: <code>Edgartown, MA</code> や <code>02539</code>）を OpenStreetMap Nominatim 経由で解決します。デフォルト: ほとんどのサーバーで <code>false</code>、<code>data-server</code> が <code>aggregator.bmltenabled.org</code> を指し <code>service-body</code> が未設定の場合は <code>true</code>（制約のないアグリゲーターは有用な結果を返すために位置が必要）。ブラウザのジオロケーションが失敗または拒否されると、エラーが表示されます — フォールバック読み込みは行われません。<strong>注意:</strong> <code>serviceBodyIds</code> フィルターは位置検索に影響しません; 結果は完全に近接度によって決まります。",
       "geolocationRadius": "位置情報を使用する際の最大検索半径です。現在地周辺の距離プルダウンの上限として機能し、この値を超えるオプションは非表示になります。既定: <code>75</code>。",
       "distanceOptions": "現在地周辺のプルダウンに表示する距離（<code>distanceUnit</code> 単位）の値です。<code>geolocationRadius</code> を超えるオプションは自動的に非表示になります。<code>geolocationRadius</code> がリストにない場合は、最後のオプションとして追加されます。既定: <code>[5, 10, 15, 25, 50, 100]</code>。",
-      "distanceUnit": "現在地周辺のプルダウンで距離の横に表示される単位ラベル。既定: <code>'mi'</code>。",
+      "distanceUnit": "現在地周辺のプルダウンで距離の横に表示される単位ラベル。既定: 解決されたロケールから自動検出（<code>en-US</code>, <code>en-GB</code>, <code>en-LR</code>, <code>my-MM</code> → <code>'mi'</code>、その他 → <code>'km'</code>）。明示的に設定すると単位を強制できます。",
       "nowOffset": "ミーティングが「終了済み」と見なされるまでの猶予分数です。直近 <code>nowOffset</code> 分以内に始まったミーティングはリストの上部に残り、それより古い当日の曜日のミーティングはリストの末尾に移動します（翌週開催のように扱われます）。既定: <code>10</code>。開始時刻を過ぎたら直ちに末尾へ移すには <code>0</code> を指定します。",
       "hideHeader": "ウィジェット上部の「ミーティング検索」タイトルバーとミーティング数を非表示にします。既定: <code>false</code>。",
       "darkMode": "組み込みのダーク配色です。<code>'auto'</code> は訪問者の OS の設定（<code>prefers-color-scheme</code>）に従い、<code>true</code> は OS 設定に関係なくダークモードを強制し、<code>false</code>（既定）は無効化します。<a href=\"#tile-dark-config\">ダークモード用タイル</a>と併用できます。",
@@ -488,7 +489,7 @@
       "geolocation": "近くを検索 + テキスト位置検索（市、郵便番号、住所）を有効にします。デフォルト: <code>false</code>、<code>serverURL</code> が <code>serviceBodyIds</code> 未設定のアグリゲーターの場合は <code>true</code>。",
       "geolocationRadius": "最大検索半径（距離プルダウンの上限）。既定: <code>75</code>。",
       "distanceOptions": "現在地周辺プルダウンに表示する距離の値。既定: <code>[5,10,15,25,50,100]</code>。",
-      "distanceUnit": "距離の単位ラベル。既定: <code>'mi'</code>。",
+      "distanceUnit": "距離の単位ラベル。省略時は解決されたロケールから自動検出されます（例: <code>en-US</code> → <code>'mi'</code>、<code>de-DE</code> → <code>'km'</code>）。",
       "darkMode": "ダークモード設定。既定: <code>false</code>。",
       "language": "BCP-47 言語タグ（例: <code>'es'</code>）。既定はブラウザロケール。",
       "columns": "表示するテーブル列。<a href=\"#global-config\">グローバル設定</a>を参照。",

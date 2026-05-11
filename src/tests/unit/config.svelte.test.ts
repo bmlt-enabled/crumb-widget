@@ -130,6 +130,21 @@ describe('initConfig', () => {
     expect(config.view).toBe('list');
   });
 
+  test('reads columns from data-columns attribute', () => {
+    initConfig(makeElement({ 'data-columns': 'time,name,address' }));
+    expect(config.columns).toEqual(['time', 'name', 'address']);
+  });
+
+  test('data-columns trims whitespace and drops empty entries', () => {
+    initConfig(makeElement({ 'data-columns': ' time , , name ,address ' }));
+    expect(config.columns).toEqual(['time', 'name', 'address']);
+  });
+
+  test('invalid data-columns falls back to default', () => {
+    initConfig(makeElement({ 'data-columns': 'time,bogus' }));
+    expect(config.columns).toEqual(['time', 'distance', 'name', 'location', 'address']);
+  });
+
   test('uses element id as containerId', () => {
     initConfig(makeElement({}, 'my-widget'));
     expect(config.containerId).toBe('my-widget');
@@ -171,7 +186,20 @@ describe('initConfig', () => {
     expect(config.distanceOptions).toEqual([5, 10, 15, 25, 50, 100]);
   });
 
-  test('defaults distanceUnit to mi', () => {
+  test('defaults distanceUnit by auto-detecting from navigator.language (en-US → mi)', () => {
+    // jsdom's navigator.language is 'en-US' by default
+    initConfig(makeElement());
+    expect(config.distanceUnit).toBe('mi');
+  });
+
+  test('auto-detects km when language override is metric', () => {
+    window.CrumbWidgetConfig = { language: 'de' };
+    initConfig(makeElement());
+    expect(config.distanceUnit).toBe('km');
+  });
+
+  test('explicit distanceUnit overrides auto-detection', () => {
+    window.CrumbWidgetConfig = { language: 'de', distanceUnit: 'mi' };
     initConfig(makeElement());
     expect(config.distanceUnit).toBe('mi');
   });
@@ -269,6 +297,12 @@ describe('initConfig', () => {
     test('overrides columns', () => {
       window.CrumbWidgetConfig = { columns: ['time', 'name'] };
       initConfig(makeElement());
+      expect(config.columns).toEqual(['time', 'name']);
+    });
+
+    test('CrumbWidgetConfig.columns overrides data-columns', () => {
+      window.CrumbWidgetConfig = { columns: ['time', 'name'] };
+      initConfig(makeElement({ 'data-columns': 'time,address,service_body' }));
       expect(config.columns).toEqual(['time', 'name']);
     });
 

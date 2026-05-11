@@ -4,6 +4,7 @@ import App from './App.svelte';
 import { config, CONFIG_DEFAULTS } from '@stores/config.svelte';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization, SUPPORTED_LANGUAGES } from '@stores/localization';
+import { detectDistanceUnit } from '@utils/constants';
 import {
   validBoolean,
   validColumns,
@@ -55,7 +56,6 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.geolocation = validBoolean('geolocation', options.geolocation, CONFIG_DEFAULTS.geolocation);
   config.geolocationRadius = validRadius('geolocationRadius', options.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(options.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
-  config.distanceUnit = validDistanceUnit(options.distanceUnit, CONFIG_DEFAULTS.distanceUnit);
   config.height = validHeight(options.height);
   config.darkMode = validDarkMode(options.darkMode, CONFIG_DEFAULTS.darkMode);
   config.nowOffset = validNonNegative('nowOffset', options.nowOffset, CONFIG_DEFAULTS.nowOffset);
@@ -68,6 +68,8 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
 
   const explicitLanguage = validLanguage(options.language, SUPPORTED_LANGUAGES);
   const language = explicitLanguage ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
+  // Auto-detect mi/km from the resolved locale; explicit distanceUnit always wins.
+  config.distanceUnit = validDistanceUnit(options.distanceUnit, detectDistanceUnit(language));
   initLocalization(language);
 
   if (config.darkMode === 'auto') {

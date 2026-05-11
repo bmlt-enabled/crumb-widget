@@ -47,7 +47,7 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
 beforeEach(() => {
   // Pin to a Wednesday so no meeting's weekday accidentally triggers "in progress"
   vi.useFakeTimers({ now: new Date('2026-04-08T12:00:00') });
-  config.columns = ['time', 'name', 'location', 'address'];
+  config.columns = ['time', 'distance', 'name', 'location', 'address'];
   config.nowOffset = 10;
   config.distanceUnit = 'mi';
   uiState.userLocation = undefined;
@@ -315,5 +315,13 @@ describe('MeetingList — distance display', () => {
     render(MeetingList, { props: { meetings: [meeting] } });
     // Distance td renders empty string — no "mi" text
     expect(screen.queryByText(/\d+\.\d+ mi/)).not.toBeInTheDocument();
+  });
+
+  test('hides distance column when omitted from columns config even with geoActive', () => {
+    config.columns = ['time', 'name', 'location', 'address'];
+    const meeting = makeMeeting({ latitude: 34.05, longitude: -118.24 });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.queryByText('Distance')).not.toBeInTheDocument();
+    expect(screen.queryByText(/0\.0 mi/)).not.toBeInTheDocument();
   });
 });

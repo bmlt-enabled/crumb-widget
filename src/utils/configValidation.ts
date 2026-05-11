@@ -2,7 +2,7 @@ import type { Column, ViewType } from '@/types';
 
 const PREFIX = '[crumb-widget]';
 const VIEWS: readonly ViewType[] = ['list', 'map', 'both'];
-const COLUMNS: readonly Column[] = ['time', 'name', 'location', 'address', 'service_body'];
+const COLUMNS: readonly Column[] = ['time', 'distance', 'name', 'location', 'address', 'service_body'];
 
 function warn(field: string, value: unknown, expected: string, fallback: unknown): void {
   console.warn(`${PREFIX} invalid ${field} (${JSON.stringify(value)}); expected ${expected}. Using ${JSON.stringify(fallback)}.`);

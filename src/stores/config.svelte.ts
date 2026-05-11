@@ -1,6 +1,7 @@
 import type { AppConfig, Column } from '@/types';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization, SUPPORTED_LANGUAGES } from './localization';
+import { detectDistanceUnit } from '@utils/constants';
 import {
   parseFormatIds,
   parseFormatKeys,
@@ -20,7 +21,7 @@ import {
   validView
 } from '@utils/configValidation';
 
-const ALL_COLUMNS: Column[] = ['time', 'name', 'location', 'address'];
+const ALL_COLUMNS: Column[] = ['time', 'distance', 'name', 'location', 'address'];
 
 export const CONFIG_DEFAULTS = {
   view: 'list',
@@ -62,6 +63,18 @@ export function initConfig(el: HTMLElement): void {
 
   const globalCfg = window.CrumbWidgetConfig ?? {};
   const dataView = validView(el.getAttribute('data-view'), CONFIG_DEFAULTS.view);
+  // data-columns is a comma-separated list (e.g. "time,name,address"); CrumbWidgetConfig.columns overrides.
+  const dataColumnsRaw = el.getAttribute('data-columns');
+  const dataColumns =
+    dataColumnsRaw != null
+      ? validColumns(
+          dataColumnsRaw
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean),
+          CONFIG_DEFAULTS.columns
+        )
+      : CONFIG_DEFAULTS.columns;
 
   config.serverUrl = server;
   config.serviceBodyIds = parseServiceBodyIds(serviceBody);
@@ -74,7 +87,7 @@ export function initConfig(el: HTMLElement): void {
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
-  config.columns = validColumns(globalCfg.columns, CONFIG_DEFAULTS.columns);
+  config.columns = validColumns(globalCfg.columns, dataColumns);
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
   const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
   // Defaults on for the unconstrained aggregator only. With a service body the result set is
@@ -83,7 +96,6 @@ export function initConfig(el: HTMLElement): void {
   config.geolocation = validBoolean('geolocation', globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
   config.geolocationRadius = validRadius('geolocationRadius', globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(globalCfg.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
-  config.distanceUnit = validDistanceUnit(globalCfg.distanceUnit, CONFIG_DEFAULTS.distanceUnit);
   config.height = validHeight(globalCfg.height);
   config.darkMode = validDarkMode(globalCfg.darkMode, CONFIG_DEFAULTS.darkMode);
   config.nowOffset = validNonNegative('nowOffset', globalCfg.nowOffset, CONFIG_DEFAULTS.nowOffset);
@@ -93,5 +105,7 @@ export function initConfig(el: HTMLElement): void {
 
   const explicitLanguage = validLanguage(globalCfg.language, SUPPORTED_LANGUAGES);
   const language = explicitLanguage ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
+  // Auto-detect mi/km from the resolved locale; explicit distanceUnit always wins.
+  config.distanceUnit = validDistanceUnit(globalCfg.distanceUnit, detectDistanceUnit(language));
   initLocalization(language);
 }
