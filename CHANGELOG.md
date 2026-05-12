@@ -1,3 +1,7 @@
+## 1.4.1 (May 11, 2026)
+
+- **Fix README on npm** — `README.md` was a symlink to `docs/intl/README.en.md`; npm doesn't follow symlinks when packing, so 1.4.0 published with no README. Flipped the symlink so `README.md` is now the real file at the repo root
+
 ## 1.4.0 (May 11, 2026)
 
 - **Typed location search** — when `geolocation: true`, the search input has a mode dropdown so users can filter meetings or search by city, postal code, or address (resolved via OpenStreetMap Nominatim)
