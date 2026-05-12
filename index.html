@@ -69,14 +69,18 @@
                                          {meeting_id}, {meeting_name}, {server_url},
                                          {return_url} (URL-encoded). Works with
                                          bmlt-workflow, hosted forms, or mailto:.
+        data-query           (optional)  Raw BMLT query string passed to rawQuery()
+                                         verbatim (e.g. "meeting_key=location_nation
+                                         &meeting_key_value[]=USA"). Use for filters
+                                         the structured options can't express.
+                                         Replaces the default load entirely —
+                                         service-body, format-ids, and ?services are
+                                         ignored. Forces geolocation off (can't
+                                         safely layer lat/long/geo_width on top).
+                                         page_size, get_used_formats=1, and lang_enum
+                                         are appended automatically.
     -->
-    <div
-      id="crumb-widget"
-      data-server="https://bmlt.sezf.org/main_server/"
-      data-service-body="95,173"
-      data-view="list"
-      data-path="/"
-    ></div>
+    <div id="crumb-widget" data-server="https://bmlt.sezf.org/main_server/" data-service-body="95,173" data-view="list" data-path="/"></div>
 
     <!--
       **********************************************************
@@ -122,6 +126,10 @@
                           '/meetings'). Equivalent to the data-path attribute.
         updateUrl         String — URL template for the "Update Meeting Info"
                           link. Equivalent to the data-update-url attribute.
+        query             String — raw BMLT query passed through to rawQuery().
+                          Equivalent to the data-query attribute. Replaces the
+                          default load; forces geolocation off. See data-query
+                          above for details.
         map.tiles         { url, attribution } — custom tile layer (light).
         map.tiles_dark    { url, attribution } — custom tile layer (dark).
         map.markers.location  Custom Leaflet marker { html, width, height }.
@@ -129,7 +137,7 @@
     <script>
       var CrumbWidgetConfig = {
         language: 'en',
-        formats: ['O'],
+        // query: 'GetSearchResults&venue_types=2&meeting_key=location_nation&meeting_key_value[]=US&meeting_key_value[]=USA',
         columns: ['time', 'name', 'location', 'address', 'service_body']
       };
     </script>

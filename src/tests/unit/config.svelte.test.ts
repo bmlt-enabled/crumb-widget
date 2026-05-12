@@ -333,4 +333,44 @@ describe('initConfig', () => {
       expect(config.view).toBe('list');
     });
   });
+
+  describe('raw query', () => {
+    test('defaults config.query to undefined', () => {
+      initConfig(makeElement());
+      expect(config.query).toBeUndefined();
+    });
+
+    test('reads data-query attribute', () => {
+      initConfig(makeElement({ 'data-query': 'meeting_key=location_nation&meeting_key_value[]=USA' }));
+      expect(config.query).toBe('meeting_key=location_nation&meeting_key_value[]=USA');
+    });
+
+    test('reads CrumbWidgetConfig.query', () => {
+      window.CrumbWidgetConfig = { query: 'weekdays=2' };
+      initConfig(makeElement());
+      expect(config.query).toBe('weekdays=2');
+    });
+
+    test('data-query attribute overrides CrumbWidgetConfig.query', () => {
+      window.CrumbWidgetConfig = { query: 'weekdays=2' };
+      initConfig(makeElement({ 'data-query': 'weekdays=6' }));
+      expect(config.query).toBe('weekdays=6');
+    });
+
+    test('forces geolocation off when a custom query is set, even on the unconstrained aggregator', () => {
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/', 'data-query': 'weekdays=2' }));
+      expect(config.geolocation).toBe(false);
+    });
+
+    test('forces geolocation off even when CrumbWidgetConfig.geolocation=true', () => {
+      window.CrumbWidgetConfig = { geolocation: true, query: 'weekdays=2' };
+      initConfig(makeElement());
+      expect(config.geolocation).toBe(false);
+    });
+
+    test('geolocation default is unaffected when query is absent', () => {
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/' }));
+      expect(config.geolocation).toBe(true);
+    });
+  });
 });

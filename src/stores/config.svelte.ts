@@ -15,6 +15,7 @@ import {
   validHeight,
   validLanguage,
   validNonNegative,
+  validQuery,
   validRadius,
   validServerUrl,
   validUpdateUrl,
@@ -90,10 +91,13 @@ export function initConfig(el: HTMLElement): void {
   config.columns = validColumns(globalCfg.columns, dataColumns);
   // eslint-disable-next-line svelte/prefer-svelte-reactivity
   const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
+  // data-query overrides CrumbWidgetConfig.query
+  config.query = validQuery(el.getAttribute('data-query') ?? globalCfg.query);
   // Defaults on for the unconstrained aggregator only. With a service body the result set is
   // already scoped, so we skip the browser geolocation prompt and hide the typed-location
-  // search by default — embedders can still opt in explicitly.
-  config.geolocation = validBoolean('geolocation', globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
+  // search by default — embedders can still opt in explicitly. A custom query forces it off:
+  // we can't safely layer lat_val/long_val/geo_width on top of an arbitrary raw query.
+  config.geolocation = !config.query && validBoolean('geolocation', globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
   config.geolocationRadius = validRadius('geolocationRadius', globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(globalCfg.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
   config.height = validHeight(globalCfg.height);

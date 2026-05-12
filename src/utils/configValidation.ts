@@ -140,6 +140,15 @@ export function validUpdateUrl(value: unknown): string | undefined {
   return value;
 }
 
+export function validQuery(value: unknown): string | undefined {
+  if (value == null) return undefined;
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    warn('query', value, 'a non-empty BMLT query string', undefined);
+    return undefined;
+  }
+  return value.trim().replace(/^[?&]+/, '');
+}
+
 export function parseServiceBodyIds(value: string): number[] {
   if (!value) return [];
   return value

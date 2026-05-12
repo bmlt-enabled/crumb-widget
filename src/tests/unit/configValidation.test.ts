@@ -13,6 +13,7 @@ import {
   validLanguage,
   validNonNegative,
   validPositive,
+  validQuery,
   validRadius,
   validServerUrl,
   validUpdateUrl,
@@ -367,5 +368,43 @@ describe('validUpdateUrl', () => {
   test('warns and falls back when no {token} is present', () => {
     expect(validUpdateUrl('https://example.org/update')).toBeUndefined();
     expect(warnSpy).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('validQuery', () => {
+  test('returns undefined for nullish without warning', () => {
+    expect(validQuery(undefined)).toBeUndefined();
+    expect(validQuery(null)).toBeUndefined();
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('passes a valid query string through', () => {
+    expect(validQuery('meeting_key=location_nation&meeting_key_value[]=USA')).toBe('meeting_key=location_nation&meeting_key_value[]=USA');
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('trims surrounding whitespace', () => {
+    expect(validQuery('  weekdays=2  ')).toBe('weekdays=2');
+  });
+
+  test('strips a leading ? so embedders can paste a URL fragment', () => {
+    expect(validQuery('?weekdays=2&venue_types=1')).toBe('weekdays=2&venue_types=1');
+  });
+
+  test('strips a leading & for the same reason', () => {
+    expect(validQuery('&weekdays=2')).toBe('weekdays=2');
+  });
+
+  test('warns and falls back for empty / whitespace-only strings', () => {
+    expect(validQuery('')).toBeUndefined();
+    expect(validQuery('   ')).toBeUndefined();
+    expect(warnSpy).toHaveBeenCalledTimes(2);
+  });
+
+  test('warns and falls back for non-string values', () => {
+    expect(validQuery(123)).toBeUndefined();
+    expect(validQuery({})).toBeUndefined();
+    expect(validQuery(['weekdays=2'])).toBeUndefined();
+    expect(warnSpy).toHaveBeenCalledTimes(3);
   });
 });

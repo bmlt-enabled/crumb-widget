@@ -51,6 +51,7 @@ function rawFormat(overrides: Partial<Format> = {}): Format {
 
 let mockSearch: ReturnType<typeof vi.fn>;
 let mockGeocode: ReturnType<typeof vi.fn>;
+let mockRawQuery: ReturnType<typeof vi.fn>;
 
 beforeEach(() => {
   dataState.meetings = [];
@@ -58,15 +59,18 @@ beforeEach(() => {
   dataState.error = null;
   config.formatIds = [];
   config.formatKeys = [];
+  config.query = undefined;
   setLanguage('en');
 
   mockSearch = vi.fn();
   mockGeocode = vi.fn();
+  mockRawQuery = vi.fn();
   // Vitest requires `class` keyword when mocking a constructor with `new`
   vi.mocked(BmltClient).mockImplementation(
     class {
       searchMeetingsWithFormats = mockSearch;
       geocodeAddress = mockGeocode;
+      rawQuery = mockRawQuery;
     } as unknown as typeof BmltClient
   );
 });
@@ -419,5 +423,102 @@ describe('loadDataByAddress', () => {
     mockSearch.mockResolvedValue({ meetings: [], formats: [] });
     await loadDataByAddress('https://example.org/main_server', '02539', -50);
     expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ geo_width: -50 }));
+  });
+});
+
+describe('raw query mode', () => {
+  test('routes through rawQuery instead of searchMeetingsWithFormats', async () => {
+    config.query = 'meeting_key=location_nation&meeting_key_value[]=USA';
+    mockRawQuery.mockResolvedValue({ meetings: [rawMeeting()], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockRawQuery).toHaveBeenCalledTimes(1);
+    expect(mockSearch).not.toHaveBeenCalled();
+    expect(dataState.meetings).toHaveLength(1);
+  });
+
+  test('appends page_size and get_used_formats=1 if the embedder did not include them', async () => {
+    config.query = 'weekdays=2';
+    mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    const sent = mockRawQuery.mock.calls[0]![0] as string;
+    expect(sent).toContain('weekdays=2');
+    expect(sent).toContain('page_size=');
+    expect(sent).toContain('get_used_formats=1');
+  });
+
+  test('does not duplicate keys the embedder already supplied', async () => {
+    config.query = 'weekdays=2&page_size=10&get_used_formats=1';
+    mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    const sent = mockRawQuery.mock.calls[0]![0] as string;
+    // Each key should appear exactly once
+    expect(sent.match(/(^|&)page_size=/g)).toHaveLength(1);
+    expect(sent.match(/(^|&)get_used_formats=/g)).toHaveLength(1);
+    expect(sent.match(/(^|&)weekdays=/g)).toHaveLength(1);
+  });
+
+  test('appends lang_enum when widget language is a BMLT-supported language', async () => {
+    setLanguage('es');
+    config.query = 'weekdays=2';
+    mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockRawQuery.mock.calls[0]![0]).toContain('lang_enum=es');
+  });
+
+  test('omits lang_enum for languages not supported by BMLT (ja)', async () => {
+    setLanguage('ja');
+    config.query = 'weekdays=2';
+    mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockRawQuery.mock.calls[0]![0]).not.toContain('lang_enum=');
+  });
+
+  test('ignores serviceBodyIds in raw query mode (embedder controls the query)', async () => {
+    config.query = 'weekdays=2';
+    mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server', [1, 2, 3]);
+    const sent = mockRawQuery.mock.calls[0]![0] as string;
+    expect(sent).not.toContain('services=');
+  });
+
+  test('ignores config.formatIds in raw query mode (no auto format lock)', async () => {
+    config.query = 'weekdays=2';
+    config.formatIds = [4, 7];
+    mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    const sent = mockRawQuery.mock.calls[0]![0] as string;
+    // get_used_formats is added by the widget; the numeric format lock (&formats=) must not be
+    expect(sent).not.toMatch(/(^|&)formats=/);
+  });
+
+  test('config.formatKeys client-side filter still applies', async () => {
+    config.query = 'weekdays=2';
+    config.formatKeys = ['BT'];
+    const fmts = [rawFormat({ id: '1', key_string: 'O' })];
+    mockRawQuery.mockResolvedValue({ meetings: [rawMeeting({ format_shared_id_list: '1' })], formats: fmts });
+    await loadData('https://example.org/main_server');
+    expect(dataState.meetings).toHaveLength(0);
+  });
+
+  test('retries without lang_enum when first response has empty formats (same fallback as structured path)', async () => {
+    setLanguage('el');
+    config.query = 'weekdays=2';
+    const fmt = rawFormat({ id: '7', name_string: 'Open' });
+    mockRawQuery
+      .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '' })], formats: [] })
+      .mockResolvedValueOnce({ meetings: [rawMeeting({ format_shared_id_list: '7' })], formats: [fmt] });
+    await loadData('https://example.org/main_server');
+    expect(mockRawQuery).toHaveBeenCalledTimes(2);
+    expect(mockRawQuery.mock.calls[0]![0]).toContain('lang_enum=el');
+    expect(mockRawQuery.mock.calls[1]![0]).not.toContain('lang_enum=');
+    expect(dataState.meetings[0]!.resolvedFormats[0]!.name_string).toBe('Open');
+  });
+
+  test('sets error on rawQuery failure and clears loading', async () => {
+    config.query = 'weekdays=2';
+    mockRawQuery.mockRejectedValue(new Error('Bad query'));
+    await loadData('https://example.org/main_server');
+    expect(dataState.error).toBe('Bad query');
+    expect(dataState.loading).toBe(false);
   });
 });

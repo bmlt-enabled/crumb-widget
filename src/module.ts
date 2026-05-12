@@ -14,6 +14,7 @@ import {
   validHeight,
   validLanguage,
   validNonNegative,
+  validQuery,
   validRadius,
   validUpdateUrl,
   validView
@@ -53,7 +54,9 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.tiles = options.map?.tiles;
   config.tilesDark = options.map?.tiles_dark;
   config.columns = validColumns(options.columns, CONFIG_DEFAULTS.columns);
-  config.geolocation = validBoolean('geolocation', options.geolocation, CONFIG_DEFAULTS.geolocation);
+  config.query = validQuery(options.query);
+  // A custom raw query disables geolocation — we can't safely layer geo params on top.
+  config.geolocation = !config.query && validBoolean('geolocation', options.geolocation, CONFIG_DEFAULTS.geolocation);
   config.geolocationRadius = validRadius('geolocationRadius', options.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(options.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
   config.height = validHeight(options.height);

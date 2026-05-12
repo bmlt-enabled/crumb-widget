@@ -28,6 +28,7 @@ export interface AppConfig {
   nowOffset?: number;
   hideHeader?: boolean;
   updateUrl?: string;
+  query?: string;
 }
 
 export interface ProcessedMeeting extends Meeting {
@@ -91,6 +92,14 @@ export interface CrumbWidgetConfig {
    * @example "mailto:webservant@example.org?subject=Update%20for%20{meeting_name}&body=Meeting%20ID%3A%20{meeting_id}"
    */
   updateUrl?: string;
+  /**
+   * Raw BMLT query string passed through to `client.rawQuery()` (e.g. `"meeting_key=location_nation&meeting_key_value[]=USA"`).
+   * Replaces the default service-body-based load entirely. When set, geolocation is forced off —
+   * "Near Me", typed-location search, and "Search this area" are all disabled to avoid layering
+   * `lat_val`/`long_val`/`geo_width` on top of the custom query. `get_used_formats=1` is appended
+   * automatically if not present so meetings + formats come back in a single request.
+   */
+  query?: string;
   map?: {
     tiles?: TilesConfig;
     tiles_dark?: TilesConfig;

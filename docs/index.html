@@ -1556,6 +1556,19 @@
                 </td>
               </tr>
               <tr>
+                <td>data-query</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.query">
+                  Raw <a href="https://semantic.bmlt.app/" target="_blank" rel="noopener">BMLT query string</a> passed through to the server verbatim, for filters the structured
+                  options can't express (e.g. <code>meeting_key_value[]</code> matching multiple values). Replaces the default service-body load entirely — <code>data-service-body</code>,
+                  <code>data-format-ids</code>, and <code>?services</code> are ignored when this is set, so the embedder controls the query end-to-end. Geolocation is forced off because
+                  <code>lat_val</code>/<code>long_val</code>/<code>geo_width</code> can't safely be layered on top of an arbitrary query. <code>page_size</code>,
+                  <code>get_used_formats=1</code>, and <code>lang_enum</code> are appended automatically if you don't include them, so meetings + formats still arrive in a single round-trip.
+                  <br /><em>Example:</em>
+                  <code>data-query="meeting_key=location_nation&amp;meeting_key_value[]=USA&amp;meeting_key_value[]=US"</code>
+                </td>
+              </tr>
+              <tr>
                 <td>data-update-url</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.updateUrl">
@@ -1700,6 +1713,20 @@
                 </td>
               </tr>
               <tr>
+                <td>query</td>
+                <td><code>string</code></td>
+                <td data-i18n-html="globalConfig.row.query">
+                  Raw <a href="https://semantic.bmlt.app/" target="_blank" rel="noopener">BMLT query string</a> passed through to the server verbatim. Equivalent to the
+                  <code>data-query</code> attribute (the attribute takes precedence). Use this for filters the structured options can't express — e.g. <code>meeting_key_value[]</code> matching multiple
+                  values, or combinations of <code>StartsAfterH</code>/<code>EndsBeforeH</code>. Replaces the default load entirely (<code>serviceBodyIds</code> and the numeric format lock are
+                  ignored), and forces <code>geolocation</code> to <code>false</code> — Near Me, typed-location search, and "Search this area" are all disabled because geo params can't safely
+                  be layered on top of an arbitrary query. <code>page_size</code>, <code>get_used_formats=1</code>, and <code>lang_enum</code> are appended automatically if you don't include them.
+                  Client-side <code>formats</code> key filtering (see above) still applies after the fetch.
+                  <br /><em>Example:</em>
+                  <code>query: 'meeting_key=location_nation&amp;meeting_key_value[]=USA'</code>
+                </td>
+              </tr>
+              <tr>
                 <td>updateUrl</td>
                 <td><code>string</code></td>
                 <td data-i18n-html="globalConfig.row.updateUrl">
@@ -1744,6 +1771,7 @@
     darkMode: 'auto',          // 'auto' | true | false
     height: 600,               // widget height in pixels
     formats: ['O'],            // lock to meetings with these format key strings (client-side, AND)
+    query: 'meeting_key=location_nation&amp;meeting_key_value[]=USA', // raw BMLT query; replaces default load, disables geolocation
     basePath: '/meetings',     // History API base path; equivalent to data-path
     updateUrl: 'https://example.org/meeting-update/?meeting_id={meeting_id}', // "Update Meeting Info" link template
     map: {
