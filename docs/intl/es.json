@@ -493,6 +493,12 @@
       "darkMode": "Configuración del modo oscuro. Por defecto <code>false</code>.",
       "language": "Etiqueta de idioma BCP-47 (p. ej. <code>'es'</code>). Por defecto la del navegador.",
       "columns": "Columnas de tabla a mostrar. Consulta <a href=\"#global-config\">Config global</a>.",
+      "nowOffset": "Minutos de margen antes de considerar una reunión como pasada. Por defecto <code>10</code>; establece <code>0</code> para pasarla al final inmediatamente.",
+      "hideHeader": "Oculta la barra de título \"Buscador de reuniones\" y el conteo de reuniones. Por defecto <code>false</code>.",
+      "height": "Altura fija del widget en píxeles. Omítelo para altura natural.",
+      "formats": "Cadenas de clave de formato (p. ej. <code>['O', 'BT']</code>) a las que se restringe el widget. Filtro en el cliente tras la obtención. Usa filtrado numérico al estilo de <code>serviceBodyIds</code> mediante el atributo <code>data-format-ids</code> del widget para filtrado en el servidor.",
+      "basePath": "Ruta base para el enrutamiento mediante History API (p. ej. <code>'/meetings'</code>). Produce URL limpias sin el fragmento <code>#</code>. Equivalente al atributo <code>data-path</code>.",
+      "updateUrl": "Plantilla de URL para el enlace \"Actualizar información de la reunión\" en el panel de detalles de la reunión. Admite los tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (codificados en URL). Funciona con bmlt-workflow, formularios alojados o URL <code>mailto:</code>.",
       "map": "Configuración de proveedor de mosaicos y marcadores. Consulta <a href=\"#tile-config\">Proveedor de mosaicos</a>."
     },
     "note": "<strong>Nota:</strong> el paquete npm empaqueta Svelte y todos los estilos en un único archivo JS. <code>leaflet</code> es una dependencia de iguales (instálalo junto con <code>crumb-widget</code>) para que puedas deduplicar con cualquier otro código que use Leaflet en tu app. Cada llamada a <code>mountCrumbWidget</code> es independiente, pero actualmente no se admiten varios widgets en la misma página."

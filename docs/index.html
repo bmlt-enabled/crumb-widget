@@ -2746,6 +2746,52 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td data-i18n-html="npmPackage.row.columns">Table columns to display. See <a href="#global-config">Global Config</a>.</td>
             </tr>
             <tr>
+              <td><code>nowOffset</code></td>
+              <td><code>number</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.nowOffset">
+                Minutes of grace period before a meeting is considered past. Defaults to <code>10</code>; set to <code>0</code> to roll over immediately.
+              </td>
+            </tr>
+            <tr>
+              <td><code>hideHeader</code></td>
+              <td><code>boolean</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.hideHeader">Hide the "Meeting Finder" title bar and meeting count. Defaults to <code>false</code>.</td>
+            </tr>
+            <tr>
+              <td><code>height</code></td>
+              <td><code>number</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.height">Fixed widget height in pixels. Omit for natural height.</td>
+            </tr>
+            <tr>
+              <td><code>formats</code></td>
+              <td><code>string[]</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.formats">
+                Format key strings (e.g. <code>['O', 'BT']</code>) to lock the widget to. Client-side filter after fetch. Use <code>serviceBodyIds</code>-style numeric filtering via the widget's
+                <code>data-format-ids</code> attribute for server-side filtering.
+              </td>
+            </tr>
+            <tr>
+              <td><code>basePath</code></td>
+              <td><code>string</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.basePath">
+                Base path for History API routing (e.g. <code>'/meetings'</code>). Produces clean URLs without the <code>#</code> fragment. Equivalent to the <code>data-path</code> attribute.
+              </td>
+            </tr>
+            <tr>
+              <td><code>updateUrl</code></td>
+              <td><code>string</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.updateUrl">
+                URL template for the "Update Meeting Info" link on the meeting detail panel. Supports <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>,
+                <code>{return_url}</code> tokens (URL-encoded). Works with bmlt-workflow, hosted forms, or <code>mailto:</code> URLs.
+              </td>
+            </tr>
+            <tr>
               <td><code>map</code></td>
               <td><code>object</code></td>
               <td data-i18n="yesNo.no">No</td>

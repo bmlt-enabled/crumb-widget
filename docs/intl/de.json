@@ -493,6 +493,12 @@
       "darkMode": "Einstellung für dunklen Modus. Standard: <code>false</code>.",
       "language": "BCP-47-Sprach-Tag (z. B. <code>'es'</code>). Standard: Browser-Locale.",
       "columns": "Anzuzeigende Tabellenspalten. Siehe <a href=\"#global-config\">Globale Konfiguration</a>.",
+      "nowOffset": "Toleranzminuten, bevor ein Meeting als vergangen gilt. Standard ist <code>10</code>; setze auf <code>0</code>, um sofort umzuwälzen.",
+      "hideHeader": "Blendet die Titelleiste \"Meeting-Finder\" und die Meeting-Anzahl aus. Standard ist <code>false</code>.",
+      "height": "Feste Widget-Höhe in Pixeln. Weglassen für natürliche Höhe.",
+      "formats": "Format-Schlüsselzeichenfolgen (z. B. <code>['O', 'BT']</code>), auf die das Widget festgelegt wird. Client-seitiger Filter nach dem Abruf. Verwende numerische Filterung im Stil von <code>serviceBodyIds</code> über das Attribut <code>data-format-ids</code> des Widgets für die serverseitige Filterung.",
+      "basePath": "Basis-Pfad für History-API-Routing (z. B. <code>'/meetings'</code>). Erzeugt saubere URLs ohne das <code>#</code>-Fragment. Entspricht dem Attribut <code>data-path</code>.",
+      "updateUrl": "URL-Vorlage für den Link \"Meeting-Info aktualisieren\" im Meeting-Detailpanel. Unterstützt die Tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (URL-kodiert). Funktioniert mit bmlt-workflow, gehosteten Formularen oder <code>mailto:</code>-URLs.",
       "map": "Kachelanbieter und Marker-Konfiguration. Siehe <a href=\"#tile-config\">Kachelanbieter</a>."
     },
     "note": "<strong>Hinweis:</strong> Das npm-Paket bündelt Svelte und alle Stile in eine einzige JS-Datei. <code>leaflet</code> ist eine Peer-Abhängigkeit (installiere es zusammen mit <code>crumb-widget</code>), sodass du mit anderem Leaflet-nutzenden Code in deiner App dedupen kannst. Jeder Aufruf von <code>mountCrumbWidget</code> ist unabhängig, aber mehrere Widgets auf derselben Seite werden derzeit nicht unterstützt."

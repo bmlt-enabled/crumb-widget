@@ -493,6 +493,12 @@
       "darkMode": "Inställning för mörkt läge. Standard: <code>false</code>.",
       "language": "BCP-47-språktagg (t.ex. <code>'es'</code>). Standard: webbläsarspråk.",
       "columns": "Tabellkolumner att visa. Se <a href=\"#global-config\">Global konfiguration</a>.",
+      "nowOffset": "Frist i minuter innan ett möte räknas som passerat. Standard: <code>10</code>; sätt till <code>0</code> för att flytta direkt.",
+      "hideHeader": "Döljer titelraden \"Mötesfinnare\" och mötesräkningen. Standard: <code>false</code>.",
+      "height": "Fast widgethöjd i pixlar. Utelämna för naturlig höjd.",
+      "formats": "Strängar med formatnycklar (t.ex. <code>['O', 'BT']</code>) som widgeten låses till. Klientside-filter efter hämtning. Använd numerisk filtrering i <code>serviceBodyIds</code>-stil via widgetens <code>data-format-ids</code>-attribut för serverside-filtrering.",
+      "basePath": "Bassökväg för History API-routing (t.ex. <code>'/meetings'</code>). Producerar rena URL:er utan <code>#</code>-fragmentet. Motsvarar <code>data-path</code>-attributet.",
+      "updateUrl": "URL-mall för länken \"Uppdatera mötesinformation\" i mötets detaljpanel. Stöder tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (URL-kodade). Fungerar med bmlt-workflow, hostade formulär eller <code>mailto:</code>-URL:er.",
       "map": "Kartrutleverantör och markörkonfiguration. Se <a href=\"#tile-config\">Kartrutleverantör</a>."
     },
     "note": "<strong>Obs:</strong> npm-paketet buntar Svelte och alla stilar i en enda JS-fil. <code>leaflet</code> är ett peer-beroende (installera det vid sidan av <code>crumb-widget</code>) så att du kan dedupera med all annan Leaflet-användande kod i din app. Varje anrop till <code>mountCrumbWidget</code> är oberoende, men flera widgetar på samma sida stöds för närvarande inte."

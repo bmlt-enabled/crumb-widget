@@ -493,6 +493,12 @@
       "darkMode": "Ustawienie trybu ciemnego. Domyślnie <code>false</code>.",
       "language": "Tag językowy BCP-47 (np. <code>'es'</code>). Domyślnie locale przeglądarki.",
       "columns": "Kolumny tabeli do wyświetlenia. Zobacz <a href=\"#global-config\">Konfigurację globalną</a>.",
+      "nowOffset": "Minuty tolerancji, zanim spotkanie zostanie uznane za zakończone. Domyślnie <code>10</code>; ustaw <code>0</code>, aby przenieść natychmiast.",
+      "hideHeader": "Ukrywa pasek tytułu \"Wyszukiwarka spotkań\" i licznik spotkań. Domyślnie <code>false</code>.",
+      "height": "Stała wysokość widżetu w pikselach. Pomiń, aby uzyskać naturalną wysokość.",
+      "formats": "Łańcuchy kluczy formatów (np. <code>['O', 'BT']</code>), do których ograniczyć widżet. Filtr po stronie klienta po pobraniu. Do filtrowania po stronie serwera użyj filtrowania numerycznego w stylu <code>serviceBodyIds</code> za pomocą atrybutu <code>data-format-ids</code> widżetu.",
+      "basePath": "Ścieżka bazowa dla routingu History API (np. <code>'/meetings'</code>). Generuje czyste URL-e bez fragmentu <code>#</code>. Odpowiednik atrybutu <code>data-path</code>.",
+      "updateUrl": "Szablon URL dla linku \"Aktualizuj informacje o spotkaniu\" w panelu szczegółów spotkania. Obsługuje tokeny <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (zakodowane w URL). Działa z bmlt-workflow, hostowanymi formularzami lub URL-ami <code>mailto:</code>.",
       "map": "Dostawca kafelków i konfiguracja znaczników. Zobacz <a href=\"#tile-config\">Dostawca kafelków</a>."
     },
     "note": "<strong>Uwaga:</strong> pakiet npm pakuje Svelte i wszystkie style w jeden plik JS. <code>leaflet</code> jest zależnością peer (zainstaluj go obok <code>crumb-widget</code>), abyś mógł deduplikować z innym kodem używającym Leaflet w aplikacji. Każde wywołanie <code>mountCrumbWidget</code> jest niezależne, ale wiele widżetów na tej samej stronie nie jest obecnie obsługiwane."

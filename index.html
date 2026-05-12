@@ -43,13 +43,32 @@
         data-service-body    (optional)  A single service body ID, or a
                                          comma-separated list ("1,2,3").
                                          Omit / empty = fetch all meetings.
+                                         Overridable at runtime via ?services=.
+        data-format-ids      (optional)  Numeric BMLT format IDs to lock the
+                                         widget to ("4" or "4,7,12"). Server-side
+                                         filter — only matching meetings fetched.
+                                         Overridable at runtime via ?format_ids=.
+                                         For server-agnostic filtering by code,
+                                         use CrumbWidgetConfig.formats instead.
         data-view            (optional)  Default view: "list" | "map" | "both"
-                                         (default: "list"). Can also be set
-                                         via CrumbWidgetConfig.view.
+                                         (default: "list"). Overridable at
+                                         runtime via ?view= (also accepts "auto"
+                                         to prompt for geolocation on load).
+        data-columns         (optional)  Comma-separated list of columns to show:
+                                         "time,distance,name,location,address,service_body"
+                                         (e.g. "time,name,address"). Overridden by
+                                         CrumbWidgetConfig.columns when both set.
         data-path            (optional)  Base path for History API routing
-                                         (e.g. "/meetings" produces clean
-                                         URLs like /meetings/123). Omit to
+                                         (e.g. "/meetings" produces clean URLs
+                                         like /meetings/monday-night-meeting-42).
+                                         Use data-path="" for path routing with
+                                         no prefix (e.g. iframe embeds). Omit to
                                          use hash-based routing (default).
+        data-update-url      (optional)  URL template for the "Update Meeting Info"
+                                         link on the meeting detail panel. Tokens:
+                                         {meeting_id}, {meeting_name}, {server_url},
+                                         {return_url} (URL-encoded). Works with
+                                         bmlt-workflow, hosted forms, or mailto:.
     -->
     <div
       id="crumb-widget"
@@ -67,27 +86,42 @@
       any matching `data-*` attribute. It MUST be defined BEFORE the
       widget script tag below, otherwise the values are ignored.
 
-      All fields are optional. Common ones shown below; see
-      src/types/index.ts (CrumbWidgetConfig) for the full surface.
+      All fields are optional. See src/types/index.ts (CrumbWidgetConfig)
+      for the full TypeScript surface.
 
-        language          ISO code, e.g. 'en', 'es', 'fr', 'de', 'pt',
-                          'it', 'sv', 'da'. Defaults to navigator.language.
+        language          ISO code, one of: 'en', 'es', 'fr', 'de', 'pt',
+                          'it', 'sv', 'da', 'el', 'fa', 'pl', 'ru', 'ja'.
+                          Defaults to navigator.language; unsupported
+                          codes silently fall back.
         view              'list' | 'map' | 'both' — overrides data-view.
         columns           Array of column keys to show in the meeting list:
-                          'time' | 'name' | 'location' | 'address' | 'service_body'.
+                          'time' | 'distance' | 'name' | 'location' | 'address'
+                          | 'service_body'. 'service_body' hidden by default;
+                          'distance' only renders when geolocation is active.
         geolocation       Boolean — enables Near Me + typed location search
                           (city/zip/address via Nominatim) on the search input.
                           Defaults true on the unconstrained aggregator
                           (aggregator.bmltenabled.org with no service-body),
                           false otherwise.
-        geolocationRadius Number — default radius (in distanceUnit).
-        distanceOptions   Number[] — radii offered in the dropdown.
-        distanceUnit      'mi' | 'km'.
+        geolocationRadius Number. Positive = fixed radius in distanceUnit.
+                          Negative integer = BMLT auto-radius (e.g. -50 finds
+                          roughly 50 nearby meetings). Defaults to -50.
+        distanceOptions   Number[] — radii offered in the dropdown. Defaults
+                          to [5, 10, 15, 25, 50, 100].
+        distanceUnit      'mi' | 'km'. Auto-detected from the resolved locale
+                          when omitted (US/UK/Liberia/Myanmar → 'mi', else 'km').
         height            Number (px) — fixed widget height.
         darkMode          'auto' | true | false — auto follows the OS.
         nowOffset         Number (minutes) — meetings starting within this
-                          window count as "happening now".
+                          window count as "happening now". Defaults to 10.
         hideHeader        Boolean — suppress the widget header.
+        formats           String[] — format key strings (e.g. ['O', 'BT']) to
+                          lock the widget to. Client-side filter after fetch.
+                          Overridable at runtime via ?formats=.
+        basePath          String — base path for History API routing (e.g.
+                          '/meetings'). Equivalent to the data-path attribute.
+        updateUrl         String — URL template for the "Update Meeting Info"
+                          link. Equivalent to the data-update-url attribute.
         map.tiles         { url, attribution } — custom tile layer (light).
         map.tiles_dark    { url, attribution } — custom tile layer (dark).
         map.markers.location  Custom Leaflet marker { html, width, height }.

@@ -493,6 +493,12 @@
       "darkMode": "Indstilling for mørk tilstand. Standard: <code>false</code>.",
       "language": "BCP-47-sprog-tag (f.eks. <code>'es'</code>). Standard: browser-locale.",
       "columns": "Tabelkolonner at vise. Se <a href=\"#global-config\">Global konfiguration</a>.",
+      "nowOffset": "Minutters frist, før et møde betragtes som forbi. Standard er <code>10</code>; sæt til <code>0</code> for at flytte med det samme.",
+      "hideHeader": "Skjul titellinjen \"Mødefinder\" og mødetallet. Standard er <code>false</code>.",
+      "height": "Fast widget-højde i pixels. Udelad for naturlig højde.",
+      "formats": "Format-nøglestrenge (f.eks. <code>['O', 'BT']</code>), som widget'en låses til. Klient-side-filter efter hentning. Brug <code>serviceBodyIds</code>-lignende numerisk filtrering via widget'ens <code>data-format-ids</code>-attribut for server-side-filtrering.",
+      "basePath": "Basissti til History API-routing (f.eks. <code>'/meetings'</code>). Producerer rene URL'er uden <code>#</code>-fragmentet. Svarer til <code>data-path</code>-attributten.",
+      "updateUrl": "URL-skabelon til \"Opdater mødeinformation\"-linket på mødedetaljepanelet. Understøtter tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (URL-kodede). Fungerer med bmlt-workflow, hostede formularer eller <code>mailto:</code>-URL'er.",
       "map": "Flise-udbyder og markør-konfiguration. Se <a href=\"#tile-config\">Flise-udbyder</a>."
     },
     "note": "<strong>Bemærk:</strong> npm-pakken bundler Svelte og alle stilarter i en enkelt JS-fil. <code>leaflet</code> er en peer-afhængighed (installér det ved siden af <code>crumb-widget</code>), så du kan dedupe med enhver anden Leaflet-brugende kode i din app. Hvert kald til <code>mountCrumbWidget</code> er uafhængigt, men flere widgets på samme side er ikke i øjeblikket understøttet."

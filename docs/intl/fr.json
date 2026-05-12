@@ -493,6 +493,12 @@
       "darkMode": "Réglage du mode sombre. Par défaut <code>false</code>.",
       "language": "Étiquette de langue BCP-47 (par ex. <code>'es'</code>). Par défaut, la locale du navigateur.",
       "columns": "Colonnes du tableau à afficher. Voir <a href=\"#global-config\">Config globale</a>.",
+      "nowOffset": "Minutes de tolérance avant qu'une réunion soit considérée comme passée. Par défaut <code>10</code> ; mettez <code>0</code> pour la basculer immédiatement.",
+      "hideHeader": "Masque la barre de titre « Recherche de réunions » et le compteur de réunions. Par défaut <code>false</code>.",
+      "height": "Hauteur fixe du widget en pixels. Omettez pour une hauteur naturelle.",
+      "formats": "Chaînes de clés de formats (par ex. <code>['O', 'BT']</code>) auxquelles restreindre le widget. Filtre côté client après la récupération. Utilisez un filtrage numérique de type <code>serviceBodyIds</code> via l'attribut <code>data-format-ids</code> du widget pour un filtrage côté serveur.",
+      "basePath": "Chemin de base pour le routage History API (par ex. <code>'/meetings'</code>). Produit des URL propres sans le fragment <code>#</code>. Équivalent à l'attribut <code>data-path</code>.",
+      "updateUrl": "Modèle d'URL pour le lien « Mettre à jour les informations de la réunion » dans le panneau de détail de la réunion. Prend en charge les jetons <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (encodés URL). Fonctionne avec bmlt-workflow, des formulaires hébergés ou des URL <code>mailto:</code>.",
       "map": "Configuration du fournisseur de tuiles et du marqueur. Voir <a href=\"#tile-config\">Fournisseur de tuiles</a>."
     },
     "note": "<strong>Note :</strong> le paquet npm regroupe Svelte et tous les styles dans un seul fichier JS. <code>leaflet</code> est une peer dependency (installez-le aux côtés de <code>crumb-widget</code>) pour pouvoir dédupliquer avec tout autre code utilisant Leaflet dans votre application. Chaque appel à <code>mountCrumbWidget</code> est indépendant, mais plusieurs widgets sur la même page ne sont pas pris en charge actuellement."

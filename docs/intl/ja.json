@@ -493,6 +493,12 @@
       "darkMode": "ダークモード設定。既定: <code>false</code>。",
       "language": "BCP-47 言語タグ（例: <code>'es'</code>）。既定はブラウザロケール。",
       "columns": "表示するテーブル列。<a href=\"#global-config\">グローバル設定</a>を参照。",
+      "nowOffset": "ミーティングが終了済みと見なされるまでの猶予分数。既定: <code>10</code>。<code>0</code> を指定すると即座に末尾へ移動します。",
+      "hideHeader": "「ミーティング検索」タイトルバーとミーティング数を非表示にします。既定: <code>false</code>。",
+      "height": "ウィジェットの固定高さ（ピクセル）。自然な高さにするには省略します。",
+      "formats": "ウィジェットを限定するフォーマットキー文字列（例: <code>['O', 'BT']</code>）。取得後のクライアント側フィルタです。サーバー側でフィルタするには、ウィジェットの <code>data-format-ids</code> 属性を介して <code>serviceBodyIds</code> 形式の数値フィルタを使用してください。",
+      "basePath": "History API ルーティングのベースパス（例: <code>'/meetings'</code>）。<code>#</code> フラグメントのないクリーンな URL を生成します。<code>data-path</code> 属性と同等です。",
+      "updateUrl": "ミーティング詳細パネルの「ミーティング情報を更新」リンク用の URL テンプレート。<code>{meeting_id}</code>、<code>{meeting_name}</code>、<code>{server_url}</code>、<code>{return_url}</code> トークン（URL エンコード）をサポートします。bmlt-workflow、ホスト型フォーム、または <code>mailto:</code> URL で機能します。",
       "map": "タイルプロバイダとマーカー設定。<a href=\"#tile-config\">タイルプロバイダ</a>を参照。"
     },
     "note": "<strong>注意:</strong> npm パッケージは Svelte とすべてのスタイルを 1 つの JS ファイルにバンドルします。<code>leaflet</code> はピア依存なので（<code>crumb-widget</code> と一緒にインストール）、Leaflet を使う他のコードと dedupe できます。<code>mountCrumbWidget</code> の各呼び出しは独立していますが、同じページ上に複数のウィジェットを置くことは現在サポートされていません。"

@@ -493,6 +493,12 @@
       "darkMode": "Configuração do modo escuro. Padrão <code>false</code>.",
       "language": "Tag de idioma BCP-47 (ex.: <code>'es'</code>). Padrão é o locale do navegador.",
       "columns": "Colunas da tabela a exibir. Veja <a href=\"#global-config\">Config global</a>.",
+      "nowOffset": "Minutos de tolerância antes que uma reunião seja considerada passada. Padrão <code>10</code>; defina <code>0</code> para passá-la ao final imediatamente.",
+      "hideHeader": "Oculta a barra de título \"Buscador de reuniões\" e a contagem de reuniões. Padrão <code>false</code>.",
+      "height": "Altura fixa do widget em pixels. Omita para altura natural.",
+      "formats": "Strings de chave de formato (ex.: <code>['O', 'BT']</code>) às quais restringir o widget. Filtro do lado do cliente após a busca. Use filtragem numérica no estilo <code>serviceBodyIds</code> via o atributo <code>data-format-ids</code> do widget para filtragem no lado do servidor.",
+      "basePath": "Caminho base para roteamento via History API (ex.: <code>'/meetings'</code>). Produz URLs limpas sem o fragmento <code>#</code>. Equivalente ao atributo <code>data-path</code>.",
+      "updateUrl": "Modelo de URL para o link \"Atualizar informações da reunião\" no painel de detalhes da reunião. Suporta os tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (codificados em URL). Funciona com bmlt-workflow, formulários hospedados ou URLs <code>mailto:</code>.",
       "map": "Configuração de provedor de tiles e marcador. Veja <a href=\"#tile-config\">Provedor de tiles</a>."
     },
     "note": "<strong>Observação:</strong> o pacote npm empacota o Svelte e todos os estilos em um único arquivo JS. <code>leaflet</code> é uma peer dependency (instale-o junto de <code>crumb-widget</code>) para que você possa deduplicar com qualquer outro código que use Leaflet no seu app. Cada chamada a <code>mountCrumbWidget</code> é independente, mas múltiplos widgets na mesma página não são suportados atualmente."

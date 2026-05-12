@@ -493,6 +493,12 @@
       "darkMode": "Impostazione modalità scura. Predefinito: <code>false</code>.",
       "language": "Tag lingua BCP-47 (es. <code>'es'</code>). Predefinito: locale del browser.",
       "columns": "Colonne della tabella da mostrare. Vedi <a href=\"#global-config\">Configurazione globale</a>.",
+      "nowOffset": "Minuti di tolleranza prima che una riunione sia considerata passata. Predefinito: <code>10</code>; imposta <code>0</code> per spostarla subito.",
+      "hideHeader": "Nasconde la barra del titolo \"Trova riunioni\" e il conteggio delle riunioni. Predefinito: <code>false</code>.",
+      "height": "Altezza fissa del widget in pixel. Omettila per altezza naturale.",
+      "formats": "Stringhe di chiavi formato (es. <code>['O', 'BT']</code>) a cui vincolare il widget. Filtro lato client dopo il fetch. Usa il filtro numerico in stile <code>serviceBodyIds</code> tramite l'attributo <code>data-format-ids</code> del widget per il filtro lato server.",
+      "basePath": "Percorso base per il routing tramite History API (es. <code>'/meetings'</code>). Produce URL pulite senza il frammento <code>#</code>. Equivalente all'attributo <code>data-path</code>.",
+      "updateUrl": "Modello di URL per il link \"Aggiorna informazioni riunione\" nel pannello dettagli della riunione. Supporta i token <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (codificati URL). Funziona con bmlt-workflow, moduli ospitati o URL <code>mailto:</code>.",
       "map": "Provider tessere e configurazione marker. Vedi <a href=\"#tile-config\">Provider tessere</a>."
     },
     "note": "<strong>Nota:</strong> il pacchetto npm impacchetta Svelte e tutti gli stili in un singolo file JS. <code>leaflet</code> è una peer dependency (installalo accanto a <code>crumb-widget</code>) così puoi deduplicare con qualsiasi altro codice che usa Leaflet nella tua app. Ogni chiamata a <code>mountCrumbWidget</code> è indipendente, ma più widget sulla stessa pagina non sono attualmente supportati."
