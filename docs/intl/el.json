@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "Ορίστε <strong>Base Path for Pretty URLs</strong> στο <em>Configuration → Web services → Crumb</em>· το άρθρωμα καταχωρεί την απαραίτητη διαδρομή αυτόματα.",
-      "joomla": "Ορίστε το <strong>Base Path for Pretty URLs</strong> στις επιλογές του plugin <em>Content - Crumb</em> (ή στο module). Συνδυάστε το με τις επιλογές <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> του Joomla στο <em>System → Global Configuration → Site</em>."
+      "joomla": "Ορίστε το <strong>Base Path for Pretty URLs</strong> στις επιλογές του plugin <em>Content - Crumb</em> (ή στο module). Συνδυάστε το με τις επιλογές <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> του Joomla στο <em>System → Global Configuration → Site</em>.",
+      "cloudflare": "Προσθέστε ένα αρχείο <code>_redirects</code> στον κατάλογο δημοσίευσης με περιεχόμενο <code>/meetings/* /meetings/index.html 200</code> (ή <code>/* /index.html 200</code> όταν η σελίδα εξυπηρετείται από τον ριζικό φάκελο)."
     },
     "iframes": "Ενσωμάτωση σε iframes (Google Sites κ.λπ.)",
     "iframesP1": "Κατά την ενσωμάτωση σε hosts βασισμένα σε iframe όπως το Google Sites, όλη η εσωτερική πλοήγηση widget (κλικ σε συναντήσεις, κουμπί πίσω, σύνδεσμοι αδελφών) λειτουργεί κανονικά. Ωστόσο, η deep-link σε συγκεκριμένη συνάντηση μέσω URL δεν υποστηρίζεται επειδή το widget εκτελείται μέσα σε proxied iframe και δεν μπορεί να ελέγξει το URL της γονικής σελίδας.",

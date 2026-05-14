@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "Ustaw <strong>Base Path for Pretty URLs</strong> w <em>Configuration → Web services → Crumb</em>; moduł rejestruje niezbędną trasę automatycznie.",
-      "joomla": "Ustaw <strong>Base Path for Pretty URLs</strong> w opcjach wtyczki <em>Content - Crumb</em> (lub na module). Połącz to z opcjami Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> w <em>System → Global Configuration → Site</em>."
+      "joomla": "Ustaw <strong>Base Path for Pretty URLs</strong> w opcjach wtyczki <em>Content - Crumb</em> (lub na module). Połącz to z opcjami Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> w <em>System → Global Configuration → Site</em>.",
+      "cloudflare": "Dodaj plik <code>_redirects</code> w katalogu publikacji z zawartością <code>/meetings/* /meetings/index.html 200</code> (lub <code>/* /index.html 200</code>, gdy serwowane z katalogu głównego)."
     },
     "iframes": "Osadzanie w iframe (Google Sites itp.)",
     "iframesP1": "Podczas osadzania w hostach opartych na iframe, takich jak Google Sites, cała nawigacja wewnątrz widżetu (klikanie spotkań, przycisk wstecz, linki sąsiadów) działa normalnie. Jednak głębokie linkowanie do konkretnego spotkania przez URL nie jest obsługiwane, ponieważ widżet działa wewnątrz proxowanego iframe i nie może kontrolować URL-a strony nadrzędnej.",

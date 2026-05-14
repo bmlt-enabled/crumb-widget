@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "<strong>مسیر پایه برای آدرس‌های زیبا</strong> را در <em>Configuration ← Web services ← Crumb</em> تنظیم کنید؛ ماژول مسیر لازم را به‌طور خودکار ثبت می‌کند.",
-      "joomla": "<strong>Base Path for Pretty URLs</strong> را در گزینه‌های پلاگین <em>Content - Crumb</em> (یا روی ماژول) تنظیم کنید. آن را با گزینه‌های <em>Search Engine Friendly URLs</em> و <em>URL Rewriting</em> جوملا در <em>System ← Global Configuration ← Site</em> ترکیب کنید."
+      "joomla": "<strong>Base Path for Pretty URLs</strong> را در گزینه‌های پلاگین <em>Content - Crumb</em> (یا روی ماژول) تنظیم کنید. آن را با گزینه‌های <em>Search Engine Friendly URLs</em> و <em>URL Rewriting</em> جوملا در <em>System ← Global Configuration ← Site</em> ترکیب کنید.",
+      "cloudflare": "یک فایل <code>_redirects</code> به دایرکتوری انتشار خود اضافه کنید که شامل <code>/meetings/* /meetings/index.html 200</code> باشد (یا <code>/* /index.html 200</code> هنگام ارائه از ریشه)."
     },
     "iframes": "جاسازی در iframe (Google Sites و غیره)",
     "iframesP1": "هنگام جاسازی در میزبان‌های مبتنی بر iframe مانند Google Sites، تمام پیمایش داخل ویجت (کلیک روی جلسات، دکمهٔ بازگشت، پیوندهای خواهرانه) به‌طور عادی کار می‌کند. اما پیوند مستقیم به یک جلسهٔ خاص از طریق URL پشتیبانی نمی‌شود زیرا ویجت داخل یک iframe پروکسی‌شده اجرا می‌شود و نمی‌تواند URL صفحهٔ والد را کنترل کند.",

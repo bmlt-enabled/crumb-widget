@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "Définissez <strong>Chemin de base pour les URLs propres</strong> dans <em>Configuration → Services web → Crumb</em> ; le module enregistre automatiquement la route nécessaire.",
-      "joomla": "Définissez <strong>Base Path for Pretty URLs</strong> dans les options du plugin <em>Content - Crumb</em> (ou du module). Combinez-le avec les options <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> de Joomla dans <em>System → Global Configuration → Site</em>."
+      "joomla": "Définissez <strong>Base Path for Pretty URLs</strong> dans les options du plugin <em>Content - Crumb</em> (ou du module). Combinez-le avec les options <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> de Joomla dans <em>System → Global Configuration → Site</em>.",
+      "cloudflare": "Ajoutez un fichier <code>_redirects</code> dans votre répertoire de publication contenant <code>/meetings/* /meetings/index.html 200</code> (ou <code>/* /index.html 200</code> s'il est servi depuis la racine)."
     },
     "iframes": "Intégration dans des iframes (Google Sites, etc.)",
     "iframesP1": "Lors d'une intégration dans des hôtes basés sur iframe comme Google Sites, toute la navigation interne au widget (clic sur les réunions, bouton retour, liens connexes) fonctionne normalement. En revanche, les liens directs vers une réunion spécifique via URL ne sont pas pris en charge car le widget s'exécute dans un iframe par procuration et ne peut pas contrôler l'URL de la page parente.",

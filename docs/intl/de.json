@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "Setze <strong>Base Path for Pretty URLs</strong> in <em>Configuration → Web services → Crumb</em>; das Modul registriert die nötige Route automatisch.",
-      "joomla": "Setze <strong>Base Path for Pretty URLs</strong> in den Optionen des Plugins <em>Content - Crumb</em> (oder am Modul). Kombiniere das mit Joomlas Optionen <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> unter <em>System → Global Configuration → Site</em>."
+      "joomla": "Setze <strong>Base Path for Pretty URLs</strong> in den Optionen des Plugins <em>Content - Crumb</em> (oder am Modul). Kombiniere das mit Joomlas Optionen <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> unter <em>System → Global Configuration → Site</em>.",
+      "cloudflare": "Lege im Veröffentlichungsverzeichnis eine <code>_redirects</code>-Datei mit dem Inhalt <code>/meetings/* /meetings/index.html 200</code> an (oder <code>/* /index.html 200</code>, wenn vom Stammverzeichnis ausgeliefert wird)."
     },
     "iframes": "Einbettung in iframes (Google Sites usw.)",
     "iframesP1": "Beim Einbetten in iframe-basierte Hosts wie Google Sites funktioniert die gesamte Navigation innerhalb des Widgets (Klick auf Meetings, Zurück-Schaltfläche, Geschwister-Links) normal. Deep-Linking zu einem bestimmten Meeting per URL wird jedoch nicht unterstützt, da das Widget innerhalb eines proxierten iframes läuft und die URL der Elternseite nicht steuern kann.",

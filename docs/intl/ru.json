@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "Установите <strong>Base Path for Pretty URLs</strong> в <em>Configuration → Web services → Crumb</em>; модуль регистрирует необходимый маршрут автоматически.",
-      "joomla": "Установите <strong>Base Path for Pretty URLs</strong> в опциях плагина <em>Content - Crumb</em> (или на модуле). Скомбинируйте с опциями Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> в <em>System → Global Configuration → Site</em>."
+      "joomla": "Установите <strong>Base Path for Pretty URLs</strong> в опциях плагина <em>Content - Crumb</em> (или на модуле). Скомбинируйте с опциями Joomla <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> в <em>System → Global Configuration → Site</em>.",
+      "cloudflare": "Добавьте файл <code>_redirects</code> в каталог публикации с содержимым <code>/meetings/* /meetings/index.html 200</code> (или <code>/* /index.html 200</code> при размещении в корне)."
     },
     "iframes": "Встраивание в iframe (Google Sites и т. д.)",
     "iframesP1": "При встраивании в iframe-хосты, такие как Google Sites, вся внутренняя навигация виджета (клики по встречам, кнопка назад, ссылки родственников) работает нормально. Однако глубокие ссылки на конкретную встречу через URL не поддерживаются, потому что виджет работает внутри проксированного iframe и не может управлять URL-ом родительской страницы.",

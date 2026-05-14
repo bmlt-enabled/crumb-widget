@@ -345,7 +345,8 @@
     },
     "row": {
       "drupal": "<em>Configuration → Web services → Crumb</em> で <strong>Base Path for Pretty URLs</strong> を設定します。モジュールが必要なルートを自動的に登録します。",
-      "joomla": "<em>Content - Crumb</em> プラグインのオプション（またはモジュール側）で <strong>Base Path for Pretty URLs</strong> を設定します。さらに <em>System → Global Configuration → Site</em> にある Joomla の <em>Search Engine Friendly URLs</em> ＋ <em>URL Rewriting</em> オプションと組み合わせてください。"
+      "joomla": "<em>Content - Crumb</em> プラグインのオプション（またはモジュール側）で <strong>Base Path for Pretty URLs</strong> を設定します。さらに <em>System → Global Configuration → Site</em> にある Joomla の <em>Search Engine Friendly URLs</em> ＋ <em>URL Rewriting</em> オプションと組み合わせてください。",
+      "cloudflare": "公開ディレクトリに <code>_redirects</code> ファイルを追加し、内容を <code>/meetings/* /meetings/index.html 200</code> にします（ルートから配信する場合は <code>/* /index.html 200</code>）。"
     },
     "iframes": "iframe への埋め込み（Google Sites など）",
     "iframesP1": "Google Sites のような iframe ベースのホストに埋め込んだ場合、ウィジェット内のすべてのナビゲーション（ミーティングのクリック、戻るボタン、関連リンク）は通常どおり動作します。ただし、ウィジェットがプロキシされた iframe 内で動作するため URL から特定のミーティングへのディープリンクはサポートされません — 親ページの URL を制御できないためです。",
