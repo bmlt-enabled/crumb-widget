@@ -46,7 +46,7 @@ function rawMeeting(overrides: Partial<Meeting> = {}): Meeting {
 }
 
 function rawFormat(overrides: Partial<Format> = {}): Format {
-  return { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en', ...overrides };
+  return { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', lang: 'en', world_id: '', format_type_enum: '', ...overrides };
 }
 
 let mockSearch: ReturnType<typeof vi.fn>;

@@ -1,6 +1,6 @@
 {
   "name": "crumb-widget",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@bmlt-enabled/svelte-spa-router": "^5.2.2",
-    "bmlt-query-client": "^1.0.8",
+    "bmlt-query-client": "^1.4.1",
     "localized-strings": "^2.0.3"
   },
   "peerDependencies": {

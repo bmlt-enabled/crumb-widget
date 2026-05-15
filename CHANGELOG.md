@@ -1,3 +1,7 @@
+## 1.5.1 (May 15, 2026)
+
+- **Upgrade `bmlt-query-client` to `^1.4.1`** — numeric fields on `Meeting` (`latitude`, `longitude`, `weekday_tinyint`, `venue_type`, `published`, `distance_in_km`, `distance_in_miles`) and on `ServerInfo` / `CoverageArea` now arrive as real `number` values instead of strings, matching the existing TypeScript types. No behavior change in the widget — the internal coercion path in `data.svelte.ts` was already handling both shapes — but typings now line up end-to-end and downstream consumers don't need to parse
+
 ## 1.5.0 (May 12, 2026)
 
 - **Custom raw BMLT queries** — new `query` config option and `data-query` attribute pass an arbitrary BMLT query string through to the server via `bmlt-query-client`'s `rawQuery()`. Use it for filters the structured options can't express (e.g. `meeting_key_value[]` matching multiple values). When set, it replaces the default service-body load entirely and forces `geolocation` off — Near Me, typed-location search, and "Search this area" are disabled because geo params can't safely be layered on top of an arbitrary query. `page_size`, `get_used_formats=1`, and `lang_enum` are appended automatically so meetings + formats still arrive in a single round-trip

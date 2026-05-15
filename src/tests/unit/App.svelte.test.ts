@@ -75,6 +75,8 @@ function makeFormat(overrides: Partial<Format> = {}): Format {
     name_string: 'Open',
     description_string: 'Open to all',
     lang: 'en',
+    world_id: '',
+    format_type_enum: '',
     ...overrides
   };
 }
@@ -96,7 +98,11 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
     longitude: -118.24,
     published: 1,
     service_body_bigint: '1',
+    formats: '',
     format_shared_id_list: '',
+    phone_meeting_number: '',
+    bus_lines: '',
+    train_lines: '',
     formattedTime: '7:00 PM',
     formattedAddress: '123 Main St, Anytown, CA, 90210',
     timeOfDay: 'evening',

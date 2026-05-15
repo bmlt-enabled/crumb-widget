@@ -78,6 +78,10 @@ function makeMeeting(overrides: Partial<Meeting> = {}): Meeting {
     longitude: 0,
     published: 1,
     service_body_bigint: '1',
+    formats: '',
+    phone_meeting_number: '',
+    bus_lines: '',
+    train_lines: '',
     ...overrides
   };
 }
@@ -392,7 +396,11 @@ describe('filterMeetings distance filter', () => {
       longitude: lng,
       published: 1,
       service_body_bigint: '1',
+      formats: '',
       format_shared_id_list: '',
+      phone_meeting_number: '',
+      bus_lines: '',
+      train_lines: '',
       formattedTime: '7:00 PM',
       formattedAddress: '',
       timeOfDay: 'evening',

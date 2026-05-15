@@ -62,7 +62,11 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
     longitude: -118.24,
     published: 1,
     service_body_bigint: '1',
+    formats: '',
     format_shared_id_list: '',
+    phone_meeting_number: '',
+    bus_lines: '',
+    train_lines: '',
     formattedTime: '7:00 PM',
     formattedAddress: '123 Main St, Anytown, CA, 90210',
     timeOfDay: 'evening',
@@ -433,7 +437,7 @@ describe('active filter chips', () => {
 
 describe('format type dropdown grouping', () => {
   function makeFormat(id: string, name: string, type?: string) {
-    return { id, key_string: id, name_string: name, description_string: '', lang: 'en', format_type_enum: type };
+    return { id, key_string: id, name_string: name, description_string: '', lang: 'en', world_id: '', format_type_enum: type ?? '' };
   }
 
   async function openTypeDropdown() {
