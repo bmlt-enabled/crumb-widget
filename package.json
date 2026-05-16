@@ -31,6 +31,7 @@
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
+    "docs:api": "typedoc",
     "all": "npm run format && npm run lint && npm run test && npm run build"
   },
   "devDependencies": {
@@ -57,6 +58,7 @@
     "svelte-check": "^4.3.4",
     "svelte-eslint-parser": "^1.6.0",
     "tailwindcss": "^4.1.17",
+    "typedoc": "^0.28.19",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.48.0",
     "unplugin-dts": "^1.0.0",

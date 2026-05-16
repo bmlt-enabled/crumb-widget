@@ -15,6 +15,7 @@ test-results/
 playwright-report/
 coverage/
 .lighthouseci/
+docs/api/
 
 
 # Editor directories and files

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/module.ts"],
+  "out": "docs/api",
+  "tsconfig": "tsconfig.json",
+  "readme": "README.md",
+  "name": "crumb-widget",
+  "includeVersion": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "githubPages": false,
+  "hideGenerator": true,
+  "navigationLinks": {
+    "GitHub": "https://github.com/bmlt-enabled/crumb-widget",
+    "Docs site": "https://bmlt-enabled.github.io/crumb-widget/"
+  }
+}
