@@ -50,7 +50,8 @@
       "reference": "Riferimento",
       "npm": "Pacchetto npm",
       "legal": "Note legali"
-    }
+    },
+    "updateUrl": "Link aggiornamento riunione"
   },
   "header": {
     "subtitle": "Un widget integrabile per la ricerca di riunioni NA per qualsiasi sito web.",
@@ -131,7 +132,9 @@
     "serviceBody": "Filtra le riunioni per uno o più service body. Accetta un singolo ID numerico o un elenco separato da virgole. Ometti per mostrare tutte le riunioni del server. <br /><em>Singolo:</em> <code>\"42\"</code> <br /><em>Multipli:</em> <code>\"42,57,103\"</code> <br /><strong>Nota:</strong> la ricerca ricorsiva è sempre attiva — i service body figli vengono inclusi automaticamente e non possono essere disattivati.",
     "view": "Vista predefinita al caricamento del widget. <br /><em>Valori:</em> <code>list</code> (predefinito), <code>map</code> o <code>both</code> <br /><code>both</code> mostra una mappa ad altezza fissa sopra l'elenco completo delle riunioni senza il selettore lista/mappa. <br />Può essere sovrascritto a runtime dal parametro di query <code>?view=</code> (vedi <a href=\"#query-params\">Parametri di query URL</a>).",
     "columns": "Elenco di colonne separate da virgole da mostrare nella vista elenco. Stessi valori consentiti dell'opzione di configurazione globale <code>columns</code>: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>. Sovrascritto da <code>CrumbWidgetConfig.columns</code> quando entrambi sono impostati. <br /><em>Esempio:</em> <code>data-columns=\"time,name,address\"</code>",
-    "path": "Abilita il routing tramite History API (URL pulite senza <code>#</code>) e imposta il percorso base. Senza questo attributo viene utilizzato il routing basato su hash (predefinito). <br /><em>Esempio:</em> <code>data-path=\"/meetings\"</code> produce URL come <code>/meetings/monday-night-meeting-42</code> <br />Usa <code>data-path=\"\"</code> per il routing per percorso senza prefisso (es. negli iframe). <br />Vedi <a href=\"#routing\">Routing</a> per i dettagli."
+    "path": "Abilita il routing tramite History API (URL pulite senza <code>#</code>) e imposta il percorso base. Senza questo attributo viene utilizzato il routing basato su hash (predefinito). <br /><em>Esempio:</em> <code>data-path=\"/meetings\"</code> produce URL come <code>/meetings/monday-night-meeting-42</code> <br />Usa <code>data-path=\"\"</code> per il routing per percorso senza prefisso (es. negli iframe). <br />Vedi <a href=\"#routing\">Routing</a> per i dettagli.",
+    "formatIds": "Blocca il widget alle riunioni che corrispondono a uno o più <strong>ID di formato</strong> (numerici, specifici del server). Il filtro viene applicato a livello dell'API BMLT, quindi vengono recuperate solo le riunioni corrispondenti. Utile quando vuoi incorporare una lista, ad es., solo di riunioni aperte. <br /><em>Singolo:</em> <code>\"4\"</code> <br /><em>Multipli:</em> <code>\"4,7,12\"</code> (AND — le riunioni devono corrispondere a tutti gli ID elencati) <br />Gli ID di formato variano per server. Cercali nell'admin BMLT o tramite <code>GetFormats</code>. Per il filtraggio indipendente dal server tramite codice (ad es. <code>O</code>, <code>BT</code>), usa invece l'opzione globale <code>formats</code>.",
+    "updateUrl": "Mostra un link <strong>\"Aggiorna info riunione\"</strong> in fondo a ogni pannello di dettaglio, puntando a un modello di URL che controlli tu. Il modello viene espanso per riunione usando i token <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code> e <code>{return_url}</code> — il valore di ogni token viene codificato URL alla sostituzione. Progettato per l'integrazione con il modulo di aggiornamento di <a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>, qualsiasi modulo ospitato personalizzato, o un link <code>mailto:</code>. I token sconosciuti vengono lasciati intatti. Il link si apre in una nuova scheda. Il pulsante è nascosto quando l'attributo non è impostato. Vedi la sezione <a href=\"#update-url\">Link aggiornamento riunione</a> sotto per esempi. <br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>"
   },
   "globalConfig": {
     "title": "Oggetto di configurazione globale",
@@ -151,7 +154,9 @@
       "mapTilesDark": "Provider di tessere alternativo usato quando <code>prefers-color-scheme: dark</code>. Cambia automaticamente al cambio di tema del sistema. Vedi <a href=\"#tile-dark-config\">Tessere modalità scura</a> di seguito.",
       "mapMarkers": "Marker personalizzato per le posizioni delle riunioni. Sostituisce il marker NA predefinito. Vedi <a href=\"#marker-config\">Config marker</a> di seguito.",
       "height": "Altezza del widget in pixel. Equivalente all'attributo <code>data-height</code>. Ometti per lasciare che il widget cresca fino alla sua altezza naturale di contenuto.",
-      "basePath": "Percorso base per il routing tramite History API (es. <code>'/meetings'</code>). Equivalente all'attributo <code>data-path</code> — produce URL puliti senza il frammento <code>#</code>. Vedi <a href=\"#routing\">Routing</a> per i dettagli."
+      "basePath": "Percorso base per il routing tramite History API (es. <code>'/meetings'</code>). Equivalente all'attributo <code>data-path</code> — produce URL puliti senza il frammento <code>#</code>. Vedi <a href=\"#routing\">Routing</a> per i dettagli.",
+      "formats": "Blocca il widget alle riunioni che corrispondono a una o più <strong>stringhe chiave di formato</strong> (ad es. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Il filtraggio viene applicato <em>dopo</em> la risposta dell'API, quindi tutte le riunioni vengono comunque recuperate e il filtro per chiave di formato restringe il risultato lato client. Più chiavi sono combinate con AND — una riunione deve corrispondere a tutte le chiavi elencate. Le stringhe chiave sono stabili tra server BMLT, quindi questa è l'opzione migliore per il filtraggio indipendente dal server. Per il filtraggio lato server per ID numerico, usa <code>data-format-ids</code>. Predefinito: <code>[]</code> (nessun blocco). <br /><em>Esempio:</em> <code>formats: ['O']</code>",
+      "updateUrl": "Modello di URL per il link <strong>\"Aggiorna info riunione\"</strong> in fondo al pannello di dettaglio. Equivalente all'attributo <code>data-update-url</code> (l'attributo ha la precedenza). Token: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — codificati URL alla sostituzione. Funziona con il modulo di aggiornamento di bmlt-workflow, qualsiasi modulo ospitato personalizzato, o URL <code>mailto:</code>. Il link si apre in una nuova scheda. Nascosto quando non impostato. Vedi la sezione <a href=\"#update-url\">Link aggiornamento riunione</a> sotto per esempi."
     }
   },
   "language": {
@@ -202,7 +207,8 @@
       "auto": "Geolocalizza al caricamento — il successo mostra la mappa con i risultati vicini; il fallimento ricade sull'elenco con tutte le riunioni"
     },
     "example": "Esempio: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "Quando <code>geolocation: true</code> è impostato, il widget richiede automaticamente la geolocalizzazione al caricamento — incluso per <code>?view=map</code> e <code>?view=both</code>. <code>?view=list</code> è l'esclusione esplicita: sopprime la richiesta automatica in modo che l'utente possa comunque attivarla manualmente tramite il pulsante Vicino a me."
+    "disable": "Quando <code>geolocation: true</code> è impostato, il widget richiede automaticamente la geolocalizzazione al caricamento — incluso per <code>?view=map</code> e <code>?view=both</code>. <code>?view=list</code> è l'esclusione esplicita: sopprime la richiesta automatica in modo che l'utente possa comunque attivarla manualmente tramite il pulsante Vicino a me.",
+    "servicesAndFormats": "Tre parametri di query aggiuntivi sovrascrivono la loro configurazione di embed corrispondente, in modo che una stessa pagina possa essere ridirezionata via URL: <code>?services=</code> sovrascrive <code>data-service-body</code> (ID di organismi di servizio separati da virgole); <code>?format_ids=</code> sovrascrive <code>data-format-ids</code> (ID numerici di formato separati da virgole, filtro lato server); e <code>?formats=</code> sovrascrive <code>CrumbWidgetConfig.formats</code> (stringhe chiave di formato separate da virgole, filtro lato client). Tutti e tre accettano un valore vuoto per cancellare il filtro configurato (ad es. <code>?formats=</code>)."
   },
   "cssVars": {
     "title": "Variabili CSS",
@@ -394,16 +400,10 @@
   },
   "findServiceBody": {
     "title": "Trova l'ID del tuo service body",
-    "intro": "Ogni esempio sotto filtra le riunioni per uno specifico <strong>service body</strong> (area, regione o zona) passando il suo ID numerico in <code>data-service-body</code>. Puoi cercarlo nel <strong>laboratorio semantico</strong> del tuo server BMLT, disponibile su <code>&lt;your-server&gt;/main_server/semantic</code> in ogni server BMLT.",
-    "step": {
-      "1": "Apri il laboratorio semantico nel tuo browser. Ad esempio, <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — sostituisci il dominio con il tuo server BMLT.",
-      "2": "Sotto <strong>Operation</strong>, scegli l'azione che recupera i service body (le etichette variano leggermente in base alla versione, ma in genere è <em>Get Service Bodies</em> o <em>Retrieve information about Service Bodies</em>).",
-      "3": "Lascia il formato di risposta su JSON e clicca <strong>Execute JSON Request</strong>.",
-      "4": "Nella risposta JSON, trova la tua area, regione o zona per <code>name</code>. Il campo <code>id</code> accanto è il numero che passi a <code>data-service-body</code>."
-    },
-    "outro": "In questo esempio passeresti <code>data-service-body=\"42\"</code> solo per Greater Seattle, oppure <code>data-service-body=\"42,57\"</code> per combinare entrambe le aree. Puoi anche saltare il laboratorio semantico e accedere direttamente all'endpoint JSON su <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "intro": "Ogni embed qui sotto filtra le riunioni per un <strong>organismo di servizio</strong> specifico (area, regione o zona) passando il suo ID numerico in <code>data-service-body</code>.",
     "callout1": "<strong>Non conosci l'URL del server o l'ID del service body?</strong> Sfoglia <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — elenca i server BMLT noti e i service body su ciascuno. Trova la tua area, regione o zona per ottenere sia l'URL <code>data-server</code> sia l'ID <code>data-service-body</code> in un unico posto.",
-    "callout2": "<strong>Suggerimento:</strong> i service body figli vengono sempre inclusi automaticamente. Se passi l'ID di una regione, vengono incluse le riunioni di ogni area sotto di essa — non è necessario elencare ogni area figlia."
+    "callout2": "<strong>Suggerimento:</strong> i service body figli vengono sempre inclusi automaticamente. Se passi l'ID di una regione, vengono incluse le riunioni di ogni area sotto di essa — non è necessario elencare ogni area figlia.",
+    "calloutSdle": "<strong>Il modo facile — ricerca per posizione.</strong> Visita <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, clicca ovunque sulla mappa (o cerca un indirizzo), e il popup mostra l'organismo di servizio che copre quell'area. Espandi <strong>Server details</strong> nel popup per vedere sia l'<strong>URL del server</strong> che l'<strong>ID dell'organismo di servizio</strong> — per il tuo server locale o l'aggregatore. Clicca su un valore qualsiasi per copiarlo, poi incolla in <code>data-server</code> e <code>data-service-body</code>."
   },
   "googleSites": {
     "title": "Google Sites",
@@ -543,5 +543,32 @@
   "philosophy": {
     "title": "Filosofia",
     "body": "Questo progetto mira a coprire bene le esigenze della maggior parte dei service body NA — non ogni possibile caso d'uso. È mantenuto intenzionalmente semplice e focalizzato. Le nuove funzionalità sono valutate rispetto al costo per il codice; le richieste di nicchia che gonfiano il progetto per tutti generalmente sono fuori scopo. Se hai bisogno di personalizzazioni profonde, questo potrebbe non essere lo strumento giusto."
+  },
+  "updateUrl": {
+    "title": "Link aggiornamento info riunione",
+    "intro": "Aggiungi un pulsante <strong>\"Aggiorna info riunione\"</strong> in fondo a ogni pannello di dettaglio impostando <code>data-update-url</code> (o <code>updateUrl</code> nella config globale) su un modello di URL. Il widget sostituisce i token per riunione al momento del clic e apre il risultato in una nuova scheda. Il pulsante è nascosto quando l'opzione non è impostata, così puoi attivarlo selettivamente.",
+    "tokens": "Token supportati (ogni valore è codificato URL alla sostituzione; i <code>{token}</code> sconosciuti vengono lasciati intatti):",
+    "th": {
+      "token": "Token",
+      "value": "Valore"
+    },
+    "token": {
+      "meetingId": "L'<code>id_bigint</code> della riunione BMLT — l'identificatore canonico che la maggior parte dei moduli di aggiornamento si aspetta.",
+      "meetingName": "Nome leggibile della riunione. Utile negli oggetti <code>mailto:</code>.",
+      "serverUrl": "L'URL del server root BMLT configurato (il valore di <code>data-server</code>).",
+      "returnUrl": "L'URL della pagina corrente — utile come link di ritorno o riferimento di audit negli invii."
+    },
+    "workflow": {
+      "title": "Esempio: integrazione con bmlt-workflow",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> è un plugin WordPress che espone un modulo di aggiornamento riunione tramite lo shortcode <code>[bmltwf-meeting-update-form]</code>. Il JavaScript del modulo legge <code>?meeting_id=</code> dalla query string per preselezionare la riunione, quindi il modello ha bisogno solo del token <code>{meeting_id}</code>:"
+    },
+    "mailto": {
+      "title": "Esempio: link mailto",
+      "body": "Non hai un modulo ospitato? Punta a un URL <code>mailto:</code> — il client di posta dell'utente si apre con oggetto e corpo precompilati. I token sono codificati URL, quindi sono sicuri all'interno dei parametri di query <code>mailto:</code>:"
+    },
+    "custom": {
+      "title": "Esempio: qualsiasi endpoint personalizzato",
+      "body": "Qualsiasi URL che accetti un identificatore di riunione nella query string funziona. Il link si apre in una nuova scheda, quindi il tuo endpoint può essere una pagina completa (un Google Form, un modulo Airtable, un CMS personalizzato, ecc.). Passa <code>{return_url}</code> per dare al tuo modulo un link di ritorno alla pagina della riunione:"
+    }
   }
 }

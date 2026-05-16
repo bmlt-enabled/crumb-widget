@@ -50,7 +50,8 @@
       "reference": "Dokumentacja",
       "npm": "Pakiet npm",
       "legal": "Informacje prawne"
-    }
+    },
+    "updateUrl": "Link aktualizacji mityngu"
   },
   "header": {
     "subtitle": "Osadzalny widżet wyszukiwarki spotkań NA dla dowolnej strony internetowej.",
@@ -131,7 +132,9 @@
     "serviceBody": "Filtruje spotkania do jednego lub wielu service body. Akceptuje pojedyncze ID liczbowe lub listę oddzieloną przecinkami. Pomiń, aby pokazać wszystkie spotkania na serwerze. <br /><em>Pojedyncze:</em> <code>\"42\"</code> <br /><em>Wielokrotne:</em> <code>\"42,57,103\"</code> <br /><strong>Uwaga:</strong> wyszukiwanie rekursywne jest zawsze aktywne — podrzędne service body są automatycznie uwzględniane i nie można ich wyłączyć.",
     "view": "Domyślny widok przy ładowaniu widżetu. <br /><em>Wartości:</em> <code>list</code> (domyślny), <code>map</code> lub <code>both</code> <br /><code>both</code> pokazuje mapę o stałej wysokości nad pełną listą spotkań bez przełącznika lista/mapa. <br />Może zostać nadpisany w czasie wykonywania przez parametr zapytania <code>?view=</code> (zobacz <a href=\"#query-params\">Parametry zapytania URL</a>).",
     "columns": "Lista kolumn oddzielona przecinkami do wyświetlenia w widoku listy. Te same dozwolone wartości co globalna opcja konfiguracji <code>columns</code>: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>. Nadpisywane przez <code>CrumbWidgetConfig.columns</code>, gdy oba są ustawione. <br /><em>Przykład:</em> <code>data-columns=\"time,name,address\"</code>",
-    "path": "Włącza routing History API (czyste URL bez <code>#</code>) i ustawia ścieżkę bazową. Bez tego atrybutu używany jest routing oparty na hash (domyślny). <br /><em>Przykład:</em> <code>data-path=\"/meetings\"</code> tworzy URL-e jak <code>/meetings/monday-night-meeting-42</code> <br />Użyj <code>data-path=\"\"</code> dla routingu po ścieżce bez prefiksu (np. w osadzeniach iframe). <br />Zobacz <a href=\"#routing\">Routing</a> po szczegóły."
+    "path": "Włącza routing History API (czyste URL bez <code>#</code>) i ustawia ścieżkę bazową. Bez tego atrybutu używany jest routing oparty na hash (domyślny). <br /><em>Przykład:</em> <code>data-path=\"/meetings\"</code> tworzy URL-e jak <code>/meetings/monday-night-meeting-42</code> <br />Użyj <code>data-path=\"\"</code> dla routingu po ścieżce bez prefiksu (np. w osadzeniach iframe). <br />Zobacz <a href=\"#routing\">Routing</a> po szczegóły.",
+    "formatIds": "Blokuje widget do mityngów pasujących do jednego lub kilku <strong>ID formatów</strong> (numeryczne, specyficzne dla serwera). Filtr jest stosowany na poziomie API BMLT, więc pobierane są tylko pasujące mityngi. Przydatne, gdy chcesz osadzić listę np. tylko mityngów otwartych. <br /><em>Pojedynczy:</em> <code>\"4\"</code> <br /><em>Wiele:</em> <code>\"4,7,12\"</code> (AND — mityngi muszą pasować do wszystkich wymienionych ID) <br />ID formatów różnią się zależnie od serwera. Sprawdź je w panelu BMLT lub przez <code>GetFormats</code>. Do filtrowania niezależnego od serwera po kodzie (np. <code>O</code>, <code>BT</code>), użyj zamiast tego globalnej opcji <code>formats</code>.",
+    "updateUrl": "Wyświetla link <strong>„Zaktualizuj info o mityngu\"</strong> u dołu każdego panelu szczegółów mityngu, wskazujący na szablon URL, który kontrolujesz. Szablon jest rozwijany dla każdego mityngu przy użyciu tokenów <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code> i <code>{return_url}</code> — wartość każdego tokenu jest kodowana URL przy podstawieniu. Zaprojektowany do integracji z formularzem aktualizacji <a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>, dowolnym niestandardowym formularzem hostowanym, lub linkiem <code>mailto:</code>. Nieznane tokeny pozostają nietknięte. Link otwiera się w nowej karcie. Przycisk jest ukryty, gdy atrybut nie jest ustawiony. Zobacz sekcję <a href=\"#update-url\">Link aktualizacji informacji o mityngu</a> poniżej, aby zobaczyć przykłady. <br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>"
   },
   "globalConfig": {
     "title": "Globalny obiekt konfiguracji",
@@ -151,7 +154,9 @@
       "mapTilesDark": "Alternatywny dostawca kafelków używany przy <code>prefers-color-scheme: dark</code>. Przełącza się automatycznie przy zmianie motywu systemu. Zobacz <a href=\"#tile-dark-config\">Kafelki w trybie ciemnym</a> poniżej.",
       "mapMarkers": "Niestandardowy znacznik mapy dla lokalizacji spotkań. Zastępuje domyślny znacznik NA. Zobacz <a href=\"#marker-config\">Konfigurację znaczników</a> poniżej.",
       "height": "Wysokość widżetu w pikselach. Odpowiednik atrybutu <code>data-height</code>. Pomiń, aby pozwolić widżetowi rozrosnąć się do naturalnej wysokości zawartości.",
-      "basePath": "Ścieżka bazowa dla routingu History API (np. <code>'/meetings'</code>). Odpowiednik atrybutu <code>data-path</code> — generuje czyste adresy URL bez fragmentu <code>#</code>. Zobacz <a href=\"#routing\">Routing</a>, aby uzyskać szczegóły."
+      "basePath": "Ścieżka bazowa dla routingu History API (np. <code>'/meetings'</code>). Odpowiednik atrybutu <code>data-path</code> — generuje czyste adresy URL bez fragmentu <code>#</code>. Zobacz <a href=\"#routing\">Routing</a>, aby uzyskać szczegóły.",
+      "formats": "Blokuje widget do mityngów pasujących do jednego lub kilku <strong>kluczy formatów</strong> (np. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Filtrowanie jest stosowane <em>po</em> odpowiedzi API, więc wszystkie mityngi są nadal pobierane, a filtr klucza formatu zawęża wynik po stronie klienta. Wiele kluczy łączy się z AND — mityng musi pasować do wszystkich wymienionych kluczy. Klucze są stabilne między serwerami BMLT, więc jest to najlepsza opcja, gdy chcesz filtrowania niezależnego od serwera. Do filtrowania po stronie serwera po numerycznym ID formatu użyj zamiast tego <code>data-format-ids</code>. Domyślnie: <code>[]</code> (bez blokady). <br /><em>Przykład:</em> <code>formats: ['O']</code>",
+      "updateUrl": "Szablon URL dla linku <strong>„Zaktualizuj info o mityngu\"</strong> u dołu panelu szczegółów mityngu. Odpowiednik atrybutu <code>data-update-url</code> (atrybut ma pierwszeństwo). Tokeny: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — kodowane URL przy podstawieniu. Działa z formularzem aktualizacji bmlt-workflow, dowolnym niestandardowym formularzem hostowanym, lub URL-ami <code>mailto:</code>. Link otwiera się w nowej karcie. Ukryty, gdy nieustawiony. Zobacz sekcję <a href=\"#update-url\">Link aktualizacji informacji o mityngu</a> poniżej, aby zobaczyć przykłady."
     }
   },
   "language": {
@@ -202,7 +207,8 @@
       "auto": "Geolokalizuj przy ładowaniu — sukces pokazuje mapę z pobliskimi wynikami; niepowodzenie wraca do listy ze wszystkimi spotkaniami"
     },
     "example": "Przykład: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "Gdy ustawiono <code>geolocation: true</code>, widżet automatycznie pyta o geolokalizację przy ładowaniu — w tym dla <code>?view=map</code> i <code>?view=both</code>. <code>?view=list</code> jest jawnym wyłączeniem: tłumi automatyczne pytanie, dzięki czemu użytkownik nadal może uruchomić je ręcznie za pomocą przycisku W pobliżu."
+    "disable": "Gdy ustawiono <code>geolocation: true</code>, widżet automatycznie pyta o geolokalizację przy ładowaniu — w tym dla <code>?view=map</code> i <code>?view=both</code>. <code>?view=list</code> jest jawnym wyłączeniem: tłumi automatyczne pytanie, dzięki czemu użytkownik nadal może uruchomić je ręcznie za pomocą przycisku W pobliżu.",
+    "servicesAndFormats": "Trzy dodatkowe parametry zapytania nadpisują odpowiadającą im konfigurację osadzania, dzięki czemu pojedyncza strona może być przekierowana przez URL: <code>?services=</code> nadpisuje <code>data-service-body</code> (ID ciał służebnych oddzielone przecinkami); <code>?format_ids=</code> nadpisuje <code>data-format-ids</code> (numeryczne ID formatów oddzielone przecinkami, filtr po stronie serwera); a <code>?formats=</code> nadpisuje <code>CrumbWidgetConfig.formats</code> (klucze formatów oddzielone przecinkami, filtr po stronie klienta). Wszystkie trzy akceptują pustą wartość, aby wyczyścić skonfigurowany filtr (np. <code>?formats=</code>)."
   },
   "cssVars": {
     "title": "Zmienne CSS",
@@ -394,16 +400,10 @@
   },
   "findServiceBody": {
     "title": "Znajdź ID swojego service body",
-    "intro": "Każde poniższe osadzenie filtruje spotkania do konkretnego <strong>service body</strong> (obszar, region lub strefa) poprzez przekazanie jego numerycznego ID w <code>data-service-body</code>. Możesz to znaleźć w <strong>warsztacie semantycznym</strong> swojego serwera BMLT, dostępnym pod adresem <code>&lt;your-server&gt;/main_server/semantic</code> na każdym serwerze BMLT.",
-    "step": {
-      "1": "Otwórz warsztat semantyczny w przeglądarce. Na przykład <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — zastąp domenę swoim własnym serwerem BMLT.",
-      "2": "W <strong>Operation</strong> wybierz akcję pobierającą service body (etykiety nieco się różnią w zależności od wersji, ale zwykle jest to <em>Get Service Bodies</em> lub <em>Retrieve information about Service Bodies</em>).",
-      "3": "Pozostaw format odpowiedzi jako JSON i kliknij <strong>Execute JSON Request</strong>.",
-      "4": "W odpowiedzi JSON znajdź swój obszar, region lub strefę po <code>name</code>. Pole <code>id</code> obok to liczba, którą przekazujesz do <code>data-service-body</code>."
-    },
-    "outro": "W tym przykładzie przekazałbyś <code>data-service-body=\"42\"</code> tylko dla Greater Seattle, lub <code>data-service-body=\"42,57\"</code>, aby połączyć oba obszary. Możesz również pominąć warsztat semantyczny i uderzyć bezpośrednio w endpoint JSON pod <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "intro": "Każde osadzenie poniżej filtruje mityngi do konkretnego <strong>ciała służebnego</strong> (obszar, region lub strefa), przekazując jego numeryczne ID w <code>data-service-body</code>.",
     "callout1": "<strong>Nie znasz swojego URL-a serwera lub ID service body?</strong> Przeglądaj <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — wymienia znane serwery BMLT i service body na każdym z nich. Znajdź swój obszar, region lub strefę, aby uzyskać zarówno URL <code>data-server</code>, jak i ID <code>data-service-body</code> w jednym miejscu.",
-    "callout2": "<strong>Wskazówka:</strong> Podrzędne service body są zawsze uwzględniane automatycznie. Jeśli przekażesz ID regionu, uwzględniane są spotkania ze wszystkich obszarów pod nim — nie musisz wymieniać każdego podrzędnego obszaru."
+    "callout2": "<strong>Wskazówka:</strong> Podrzędne service body są zawsze uwzględniane automatycznie. Jeśli przekażesz ID regionu, uwzględniane są spotkania ze wszystkich obszarów pod nim — nie musisz wymieniać każdego podrzędnego obszaru.",
+    "calloutSdle": "<strong>Łatwy sposób — wyszukiwanie po lokalizacji.</strong> Odwiedź <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, kliknij w dowolnym miejscu na mapie (lub wyszukaj adres), a popup pokaże ciało służebne obsługujące ten obszar. Rozwiń <strong>Server details</strong> w popupie, aby zobaczyć zarówno <strong>URL serwera</strong>, jak i <strong>ID ciała służebnego</strong> — dla swojego serwera macierzystego lub agregatora. Kliknij dowolną wartość, aby ją skopiować, a następnie wklej do <code>data-server</code> i <code>data-service-body</code>."
   },
   "googleSites": {
     "title": "Google Sites",
@@ -543,5 +543,32 @@
   "philosophy": {
     "title": "Filozofia",
     "body": "Ten projekt ma na celu dobre pokrycie potrzeb większości service body NA — nie każdego możliwego przypadku użycia. Jest celowo utrzymany prosto i koncentruje się na sednie. Nowe funkcje są ważone w stosunku do kosztu dla bazy kodu; niszowe prośby, które zawyżają projekt dla wszystkich, są zwykle poza zakresem. Jeśli potrzebujesz głębokiej personalizacji, to może nie być właściwe narzędzie."
+  },
+  "updateUrl": {
+    "title": "Link aktualizacji informacji o mityngu",
+    "intro": "Dodaj przycisk <strong>„Zaktualizuj info o mityngu\"</strong> u dołu każdego panelu szczegółów mityngu, ustawiając <code>data-update-url</code> (lub <code>updateUrl</code> w konfiguracji globalnej) na szablon URL. Widget podstawia tokeny per mityng w momencie kliknięcia i otwiera wynik w nowej karcie. Przycisk jest ukryty, gdy opcja nie jest ustawiona, więc możesz włączyć ją selektywnie.",
+    "tokens": "Obsługiwane tokeny (każda wartość jest kodowana URL przy podstawieniu; nieznane <code>{tokeny}</code> pozostają nietknięte):",
+    "th": {
+      "token": "Token",
+      "value": "Wartość"
+    },
+    "token": {
+      "meetingId": "<code>id_bigint</code> mityngu BMLT — kanoniczny identyfikator, którego oczekuje większość formularzy aktualizacji.",
+      "meetingName": "Czytelna dla człowieka nazwa mityngu. Przydatna w tematach <code>mailto:</code>.",
+      "serverUrl": "Skonfigurowany URL serwera root BMLT (wartość <code>data-server</code>).",
+      "returnUrl": "URL bieżącej strony — przydatny jako link powrotny lub referencja audytu w zgłoszeniach."
+    },
+    "workflow": {
+      "title": "Przykład: integracja z bmlt-workflow",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> to wtyczka WordPress, która udostępnia formularz aktualizacji mityngu przez kod krótki <code>[bmltwf-meeting-update-form]</code>. JavaScript formularza odczytuje <code>?meeting_id=</code> z ciągu zapytania, aby wstępnie wybrać mityng, więc szablon potrzebuje tylko tokenu <code>{meeting_id}</code>:"
+    },
+    "mailto": {
+      "title": "Przykład: link mailto",
+      "body": "Nie masz hostowanego formularza? Wskaż URL <code>mailto:</code> — klient pocztowy użytkownika otwiera się z wstępnie wypełnionym tematem i treścią. Tokeny są kodowane URL, więc są bezpieczne wewnątrz parametrów zapytania <code>mailto:</code>:"
+    },
+    "custom": {
+      "title": "Przykład: dowolny niestandardowy endpoint",
+      "body": "Dowolny URL, który akceptuje identyfikator mityngu w ciągu zapytania, działa. Link otwiera się w nowej karcie, więc Twój endpoint może być pełną stroną (formularz Google, formularz Airtable, niestandardowy CMS, itp.). Przekaż <code>{return_url}</code>, aby dać swojemu formularzowi link powrotny do strony mityngu:"
+    }
   }
 }

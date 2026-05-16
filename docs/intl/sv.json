@@ -50,7 +50,8 @@
       "reference": "Referens",
       "npm": "npm-paket",
       "legal": "Juridiskt"
-    }
+    },
+    "updateUrl": "Länk för mötesuppdatering"
   },
   "header": {
     "subtitle": "En inbäddningsbar widget för att hitta NA-möten, för vilken webbplats som helst.",
@@ -131,7 +132,9 @@
     "serviceBody": "Filtrera möten till ett eller flera service bodies. Accepterar ett enskilt numeriskt ID eller en kommaseparerad lista. Utelämna för att visa alla möten på servern. <br /><em>Enskilt:</em> <code>\"42\"</code> <br /><em>Flera:</em> <code>\"42,57,103\"</code> <br /><strong>Obs:</strong> rekursiv sökning är alltid aktiverad — underordnade service bodies inkluderas automatiskt och kan inte inaktiveras.",
     "view": "Standardvy när widgeten laddas. <br /><em>Värden:</em> <code>list</code> (standard), <code>map</code> eller <code>both</code> <br /><code>both</code> visar en karta med fast höjd över hela möteslistan utan list/karta-växel. <br />Kan åsidosättas vid körning av frågeparametern <code>?view=</code> (se <a href=\"#query-params\">URL-frågeparametrar</a>).",
     "columns": "Kommaseparerad lista över kolumner som ska visas i listvyn. Samma tillåtna värden som det globala konfigurationsalternativet <code>columns</code>: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>. Åsidosätts av <code>CrumbWidgetConfig.columns</code> när båda är satta. <br /><em>Exempel:</em> <code>data-columns=\"time,name,address\"</code>",
-    "path": "Aktiverar History API-routing (rena URL:er utan <code>#</code>) och anger basvägen. Utan detta attribut används hash-baserad routing (standard). <br /><em>Exempel:</em> <code>data-path=\"/meetings\"</code> producerar URL:er som <code>/meetings/monday-night-meeting-42</code> <br />Använd <code>data-path=\"\"</code> för väg-routing utan prefix (t.ex. i iframe-inbäddningar). <br />Se <a href=\"#routing\">Routing</a> för detaljer."
+    "path": "Aktiverar History API-routing (rena URL:er utan <code>#</code>) och anger basvägen. Utan detta attribut används hash-baserad routing (standard). <br /><em>Exempel:</em> <code>data-path=\"/meetings\"</code> producerar URL:er som <code>/meetings/monday-night-meeting-42</code> <br />Använd <code>data-path=\"\"</code> för väg-routing utan prefix (t.ex. i iframe-inbäddningar). <br />Se <a href=\"#routing\">Routing</a> för detaljer.",
+    "formatIds": "Låser widgeten till möten som matchar ett eller flera <strong>format-ID:n</strong> (numeriska, serverspecifika). Filtret tillämpas på BMLT-API-nivå, så endast matchande möten hämtas. Användbart när du vill bädda in en lista med, till exempel, bara öppna möten. <br /><em>Enkel:</em> <code>\"4\"</code> <br /><em>Flera:</em> <code>\"4,7,12\"</code> (AND — möten måste matcha alla listade ID:n) <br />Format-ID:n varierar per server. Slå upp dem i BMLT-administratören eller via <code>GetFormats</code>. För serveroberoende filtrering via kod (t.ex. <code>O</code>, <code>BT</code>), använd den globala <code>formats</code>-optionen istället.",
+    "updateUrl": "Visa en <strong>\"Uppdatera mötesinfo\"</strong>-länk längst ned i varje mötesdetaljpanel, som pekar på en URL-mall du kontrollerar. Mallen expanderas per möte med hjälp av tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code> och <code>{return_url}</code> — varje tokens värde URL-kodas vid ersättning. Designad för integration med <a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>:s uppdateringsformulär, valfritt anpassat hostat formulär eller en <code>mailto:</code>-länk. Okända tokens lämnas orörda. Länken öppnas i en ny flik. Knappen döljs när attributet inte är satt. Se avsnittet <a href=\"#update-url\">Länk för mötesuppdatering</a> nedan för exempel. <br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>"
   },
   "globalConfig": {
     "title": "Globalt konfigurationsobjekt",
@@ -151,7 +154,9 @@
       "mapTilesDark": "Alternativ kartrutleverantör som används vid <code>prefers-color-scheme: dark</code>. Byter automatiskt vid OS-temabyte. Se <a href=\"#tile-dark-config\">Kartrutor i mörkt läge</a> nedan.",
       "mapMarkers": "Anpassad kartmarkör för mötesplatser. Ersätter standard NA-markören. Se <a href=\"#marker-config\">Markörkonfiguration</a> nedan.",
       "height": "Widgetens höjd i pixlar. Motsvarar attributet <code>data-height</code>. Utelämna för att låta widgeten växa till sin naturliga innehållshöjd.",
-      "basePath": "Bassökväg för History API-routing (t.ex. <code>'/meetings'</code>). Motsvarar attributet <code>data-path</code> — producerar rena URL:er utan <code>#</code>-fragmentet. Se <a href=\"#routing\">Routing</a> för detaljer."
+      "basePath": "Bassökväg för History API-routing (t.ex. <code>'/meetings'</code>). Motsvarar attributet <code>data-path</code> — producerar rena URL:er utan <code>#</code>-fragmentet. Se <a href=\"#routing\">Routing</a> för detaljer.",
+      "formats": "Låser widgeten till möten som matchar en eller flera <strong>formatnyckelsträngar</strong> (t.ex. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Filtreringen tillämpas <em>efter</em> API-svaret, så alla möten hämtas fortfarande och formatnyckel-filtret begränsar resultatet på klientsidan. Flera nycklar kombineras med AND — ett möte måste matcha alla listade nycklar. Nyckelsträngar är stabila över BMLT-servrar, så detta är det bästa alternativet för serveroberoende filtrering. För serverside-filtrering via numeriskt format-ID, använd <code>data-format-ids</code> istället. Standard: <code>[]</code> (ingen låsning). <br /><em>Exempel:</em> <code>formats: ['O']</code>",
+      "updateUrl": "URL-mall för <strong>\"Uppdatera mötesinfo\"</strong>-länken längst ned i mötesdetaljpanelen. Motsvarar attributet <code>data-update-url</code> (attributet har företräde). Tokens: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — URL-kodade vid ersättning. Fungerar med bmlt-workflows uppdateringsformulär, valfritt anpassat hostat formulär eller <code>mailto:</code>-URL:er. Länken öppnas i en ny flik. Dolt när inte satt. Se avsnittet <a href=\"#update-url\">Länk för mötesuppdatering</a> nedan för exempel."
     }
   },
   "language": {
@@ -202,7 +207,8 @@
       "auto": "Geolokalisera vid laddning — framgång visar kartan med närliggande resultat; misslyckande faller tillbaka till lista med alla möten"
     },
     "example": "Exempel: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "När <code>geolocation: true</code> är inställt frågar widgeten automatiskt om geolokalisering vid laddning — även för <code>?view=map</code> och <code>?view=both</code>. <code>?view=list</code> är det uttryckliga undantaget: det undertrycker den automatiska frågan så att användaren fortfarande kan utlösa den manuellt via Nära mig-knappen."
+    "disable": "När <code>geolocation: true</code> är inställt frågar widgeten automatiskt om geolokalisering vid laddning — även för <code>?view=map</code> och <code>?view=both</code>. <code>?view=list</code> är det uttryckliga undantaget: det undertrycker den automatiska frågan så att användaren fortfarande kan utlösa den manuellt via Nära mig-knappen.",
+    "servicesAndFormats": "Tre ytterligare query-parametrar åsidosätter motsvarande embedkonfiguration så att en enda sida kan omdirigeras via URL: <code>?services=</code> åsidosätter <code>data-service-body</code> (kommaseparerade servicekommitté-ID:n); <code>?format_ids=</code> åsidosätter <code>data-format-ids</code> (kommaseparerade numeriska format-ID:n, serversidans filter); och <code>?formats=</code> åsidosätter <code>CrumbWidgetConfig.formats</code> (kommaseparerade formatnyckelsträngar, klientsidans filter). Alla tre accepterar ett tomt värde för att rensa det konfigurerade filtret (t.ex. <code>?formats=</code>)."
   },
   "cssVars": {
     "title": "CSS-variabler",
@@ -394,16 +400,10 @@
   },
   "findServiceBody": {
     "title": "Hitta ditt service body-ID",
-    "intro": "Varje inbäddning nedan filtrerar möten till ett specifikt <strong>service body</strong> (område, region eller zon) genom att skicka dess numeriska ID i <code>data-service-body</code>. Du kan slå upp detta från din BMLT-servers <strong>semantiska verkstad</strong>, som är tillgänglig på <code>&lt;your-server&gt;/main_server/semantic</code> på varje BMLT-server.",
-    "step": {
-      "1": "Öppna den semantiska verkstaden i din webbläsare. Till exempel <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — ersätt domänen med din egen BMLT-server.",
-      "2": "Under <strong>Operation</strong>, välj åtgärden som hämtar service bodies (etiketter varierar något efter version, men det är vanligtvis <em>Get Service Bodies</em> eller <em>Retrieve information about Service Bodies</em>).",
-      "3": "Lämna svarsformatet på JSON och klicka på <strong>Execute JSON Request</strong>.",
-      "4": "I JSON-svaret, hitta ditt område, din region eller zon efter <code>name</code>. <code>id</code>-fältet bredvid är numret du skickar till <code>data-service-body</code>."
-    },
-    "outro": "I detta exempel skulle du skicka <code>data-service-body=\"42\"</code> bara för Greater Seattle, eller <code>data-service-body=\"42,57\"</code> för att kombinera båda områdena. Du kan också hoppa över den semantiska verkstaden och nå JSON-slutpunkten direkt på <code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code>.",
+    "intro": "Varje inbäddning nedan filtrerar möten till en specifik <strong>servicekommitté</strong> (område, region eller zon) genom att skicka dess numeriska ID i <code>data-service-body</code>.",
     "callout1": "<strong>Vet du inte din server-URL eller service body-ID?</strong> Bläddra på <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — den listar kända BMLT-servrar och service bodies på var och en. Hitta ditt område, din region eller zon för att få både <code>data-server</code>-URL:en och <code>data-service-body</code>-ID:t på ett ställe.",
-    "callout2": "<strong>Tips:</strong> Underordnade service bodies inkluderas alltid automatiskt. Om du skickar en regions ID inkluderas möten från varje område under den — du behöver inte lista varje underordnat område."
+    "callout2": "<strong>Tips:</strong> Underordnade service bodies inkluderas alltid automatiskt. Om du skickar en regions ID inkluderas möten från varje område under den — du behöver inte lista varje underordnat område.",
+    "calloutSdle": "<strong>Det enkla sättet — slå upp via plats.</strong> Besök <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, klicka var som helst på kartan (eller sök efter en adress), och popupen visar servicekommittén som täcker det området. Expandera <strong>Server details</strong> i popupen för att se både <strong>Server-URL</strong> och <strong>servicekommitté-ID</strong> — antingen för din hemserver eller aggregatorn. Klicka på vilket värde som helst för att kopiera det, klistra sedan in i <code>data-server</code> och <code>data-service-body</code>."
   },
   "googleSites": {
     "title": "Google Sites",
@@ -543,5 +543,32 @@
   "philosophy": {
     "title": "Filosofi",
     "body": "Detta projekt syftar till att täcka behoven hos de flesta NA-service bodies väl — inte alla möjliga användningsfall. Det hålls medvetet enkelt och fokuserat. Nya funktioner vägs mot kostnaden för kodbasen; nischförfrågningar som blåser upp projektet för alla är generellt utanför omfånget. Om du behöver djup anpassning är detta kanske inte rätt verktyg."
+  },
+  "updateUrl": {
+    "title": "Länk för mötesuppdatering",
+    "intro": "Lägg till en <strong>\"Uppdatera mötesinfo\"</strong>-knapp längst ned i varje mötesdetaljpanel genom att sätta <code>data-update-url</code> (eller <code>updateUrl</code> i den globala konfigurationen) till en URL-mall. Widgeten ersätter tokens per möte vid klick och öppnar resultatet i en ny flik. Knappen döljs när alternativet inte är satt, så du kan välja att aktivera det selektivt.",
+    "tokens": "Stödda tokens (varje värde URL-kodas vid ersättning; okända <code>{tokens}</code> lämnas orörda):",
+    "th": {
+      "token": "Token",
+      "value": "Värde"
+    },
+    "token": {
+      "meetingId": "BMLT-mötets <code>id_bigint</code> — den kanoniska identifieraren som de flesta uppdateringsformulär förväntar sig.",
+      "meetingName": "Mänskligt läsbart mötesnamn. Användbart i <code>mailto:</code>-ämnen.",
+      "serverUrl": "Den konfigurerade BMLT-rootserver-URL:en (värdet för <code>data-server</code>).",
+      "returnUrl": "URL:en för den aktuella sidan — användbar som tillbakalänk eller granskningsreferens i inlämningar."
+    },
+    "workflow": {
+      "title": "Exempel: bmlt-workflow-integration",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> är ett WordPress-plugin som exponerar ett mötesuppdateringsformulär via shortcoden <code>[bmltwf-meeting-update-form]</code>. Formulärets JavaScript läser <code>?meeting_id=</code> från query-strängen för att förvälja mötet, så mallen behöver bara token <code>{meeting_id}</code>:"
+    },
+    "mailto": {
+      "title": "Exempel: mailto-länk",
+      "body": "Har du inte ett hostat formulär? Peka på en <code>mailto:</code>-URL — användarens e-postklient öppnas med ämne och meddelandetext förifyllda. Tokens är URL-kodade, så de är säkra inuti <code>mailto:</code>-queryparametrar:"
+    },
+    "custom": {
+      "title": "Exempel: valfri anpassad endpoint",
+      "body": "Vilken URL som helst som accepterar en mötesidentifierare i query-strängen fungerar. Länken öppnas i en ny flik, så din endpoint kan vara en hel sida (ett Google-formulär, ett Airtable-formulär, ett anpassat CMS, etc.). Skicka med <code>{return_url}</code> för att ge ditt formulär en tillbakalänk till mötessidan:"
+    }
   }
 }

@@ -50,7 +50,8 @@
       "reference": "リファレンス",
       "npm": "npm パッケージ",
       "legal": "法務情報"
-    }
+    },
+    "updateUrl": "ミーティング情報更新リンク"
   },
   "header": {
     "subtitle": "あらゆるウェブサイト向けの、埋め込み可能な NA ミーティング検索ウィジェット。",
@@ -131,7 +132,9 @@
     "serviceBody": "ミーティングを 1 つ以上のサービスボディで絞り込みます。1 つの数値 ID、またはカンマ区切りのリストを指定できます。サーバ上のすべてのミーティングを表示するには省略します。<br /><em>単一:</em> <code>\"42\"</code> <br /><em>複数:</em> <code>\"42,57,103\"</code> <br /><strong>注意:</strong> 再帰的な検索が常に有効です。子のサービスボディは自動的に含まれ、無効化することはできません。",
     "view": "ウィジェット読み込み時の既定ビューです。<br /><em>値:</em> <code>list</code>（既定）, <code>map</code>, <code>both</code> <br /><code>both</code> は、リスト／地図切替なしで、固定高の地図を完全なミーティング一覧の上に表示します。<br />実行時には <code>?view=</code> クエリパラメータで上書き可能です（<a href=\"#query-params\">URL クエリパラメータ</a>を参照）。",
     "columns": "リスト表示に表示する列のカンマ区切りリストです。グローバル設定オプションの <code>columns</code> と同じ値が使えます: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>。両方が設定されている場合は <code>CrumbWidgetConfig.columns</code> によって上書きされます。<br /><em>例:</em> <code>data-columns=\"time,name,address\"</code>",
-    "path": "History API ルーティング（<code>#</code> のないクリーン URL）を有効にし、ベースパスを設定します。この属性がない場合はハッシュベースのルーティングが使われます（既定）。<br /><em>例:</em> <code>data-path=\"/meetings\"</code> は <code>/meetings/monday-night-meeting-42</code> のような URL を生成します。<br />接頭辞なしのパスルーティング（iframe 埋め込みなど）には <code>data-path=\"\"</code> を使用します。<br />詳細は<a href=\"#routing\">ルーティング</a>を参照してください。"
+    "path": "History API ルーティング（<code>#</code> のないクリーン URL）を有効にし、ベースパスを設定します。この属性がない場合はハッシュベースのルーティングが使われます（既定）。<br /><em>例:</em> <code>data-path=\"/meetings\"</code> は <code>/meetings/monday-night-meeting-42</code> のような URL を生成します。<br />接頭辞なしのパスルーティング（iframe 埋め込みなど）には <code>data-path=\"\"</code> を使用します。<br />詳細は<a href=\"#routing\">ルーティング</a>を参照してください。",
+    "formatIds": "1つまたは複数の<strong>フォーマットID</strong>(数値、サーバー固有)に一致するミーティングにウィジェットをロックします。フィルターはBMLT APIレベルで適用されるため、一致するミーティングのみが取得されます。たとえばオープンミーティングのみのリストを埋め込みたい場合に便利です。<br /><em>単一:</em> <code>\"4\"</code> <br /><em>複数:</em> <code>\"4,7,12\"</code> (AND — ミーティングはリストされたすべてのIDに一致する必要があります) <br />フォーマットIDはサーバーによって異なります。BMLT管理画面または<code>GetFormats</code>で確認してください。コードによるサーバー非依存のフィルタリング(例: <code>O</code>、<code>BT</code>)には、代わりにグローバル<code>formats</code>オプションを使用してください。",
+    "updateUrl": "各ミーティング詳細パネルの下部に、あなたが管理するURLテンプレートを指す<strong>「ミーティング情報を更新」</strong>リンクを表示します。テンプレートはミーティングごとに<code>{meeting_id}</code>、<code>{meeting_name}</code>、<code>{server_url}</code>、<code>{return_url}</code>のトークンを使って展開されます — 各トークンの値は置換時にURLエンコードされます。<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>の更新フォーム、任意のカスタムホストフォーム、または<code>mailto:</code>リンクとの統合のために設計されています。未知のトークンはそのまま残されます。リンクは新しいタブで開きます。属性が設定されていない場合、ボタンは非表示になります。例については以下の<a href=\"#update-url\">ミーティング情報更新リンク</a>セクションをご覧ください。<br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>"
   },
   "globalConfig": {
     "title": "グローバル設定オブジェクト",
@@ -151,7 +154,9 @@
       "mapTilesDark": "<code>prefers-color-scheme: dark</code> 時に使用される代替タイルプロバイダ。OS のテーマ変更時に自動的に切り替わります。下の<a href=\"#tile-dark-config\">ダークモード用タイル</a>を参照してください。",
       "mapMarkers": "ミーティング場所用のカスタム地図マーカー。既定の NA マーカーを置き換えます。下の<a href=\"#marker-config\">マーカー設定</a>を参照してください。",
       "height": "ウィジェットの高さ（ピクセル）。<code>data-height</code> 属性と同等です。省略するとコンテンツに合わせた自然な高さになります。",
-      "basePath": "History API ルーティング用のベースパス（例: <code>'/meetings'</code>）。<code>data-path</code> 属性と同等で、<code>#</code> フラグメントのない綺麗な URL を生成します。詳しくは <a href=\"#routing\">ルーティング</a>を参照してください。"
+      "basePath": "History API ルーティング用のベースパス（例: <code>'/meetings'</code>）。<code>data-path</code> 属性と同等で、<code>#</code> フラグメントのない綺麗な URL を生成します。詳しくは <a href=\"#routing\">ルーティング</a>を参照してください。",
+      "formats": "1つまたは複数の<strong>フォーマットキー文字列</strong>(例: <code>'O'</code>、<code>'BT'</code>、<code>'WC'</code>)に一致するミーティングにウィジェットをロックします。フィルタリングはAPI応答の<em>後</em>に適用されるため、すべてのミーティングは取得され、フォーマットキーフィルターはクライアント側で結果セットを絞り込みます。複数のキーはANDで結合されます — ミーティングはリストされたすべてのキーに一致する必要があります。キー文字列はBMLTサーバー間で安定しているため、サーバー非依存のフィルタリングをしたい場合の最良の選択肢です。サーバー側で数値フォーマットIDによるフィルタリングを行うには、代わりに<code>data-format-ids</code>を使用してください。デフォルト: <code>[]</code> (ロックなし)。<br /><em>例:</em> <code>formats: ['O']</code>",
+      "updateUrl": "ミーティング詳細パネルの下部にある<strong>「ミーティング情報を更新」</strong>リンクのURLテンプレート。<code>data-update-url</code>属性と同等(属性が優先されます)。トークン: <code>{meeting_id}</code>、<code>{meeting_name}</code>、<code>{server_url}</code>、<code>{return_url}</code> — 置換時にURLエンコードされます。bmlt-workflowの更新フォーム、任意のカスタムホストフォーム、または<code>mailto:</code> URLで動作します。リンクは新しいタブで開きます。未設定時は非表示。例については以下の<a href=\"#update-url\">ミーティング情報更新リンク</a>セクションをご覧ください。"
     }
   },
   "language": {
@@ -202,7 +207,8 @@
       "auto": "読み込み時に位置情報を取得 — 成功時は近隣の結果を伴う地図を表示、失敗時はすべてのミーティングを伴うリストにフォールバック"
     },
     "example": "例: <code>https://example.org/meetings/?view=auto</code>",
-    "disable": "<code>geolocation: true</code> が設定されている場合、ウィジェットは <code>?view=map</code> および <code>?view=both</code> を含め、読み込み時に自動的に位置情報を要求します。<code>?view=list</code> は明示的なオプトアウトです：自動要求を抑制し、ユーザーが現在地周辺ボタンから手動で発動できるようにします。"
+    "disable": "<code>geolocation: true</code> が設定されている場合、ウィジェットは <code>?view=map</code> および <code>?view=both</code> を含め、読み込み時に自動的に位置情報を要求します。<code>?view=list</code> は明示的なオプトアウトです：自動要求を抑制し、ユーザーが現在地周辺ボタンから手動で発動できるようにします。",
+    "servicesAndFormats": "3つの追加クエリパラメータは対応する埋め込み設定を上書きするため、1つのページをURL経由で再ターゲットできます: <code>?services=</code>は<code>data-service-body</code>を上書きします(カンマ区切りのサービス機関ID); <code>?format_ids=</code>は<code>data-format-ids</code>を上書きします(カンマ区切りの数値フォーマットID、サーバー側フィルター); そして<code>?formats=</code>は<code>CrumbWidgetConfig.formats</code>を上書きします(カンマ区切りのフォーマットキー文字列、クライアント側フィルター)。3つすべて空の値を受け入れて設定されたフィルターをクリアできます(例: <code>?formats=</code>)。"
   },
   "cssVars": {
     "title": "CSS 変数",
@@ -394,16 +400,10 @@
   },
   "findServiceBody": {
     "title": "サービスボディ ID の確認方法",
-    "intro": "以下の各埋め込みは、<code>data-service-body</code> に数値 ID を渡すことで特定の<strong>サービスボディ</strong>（エリア、リージョン、ゾーン）にミーティングを絞り込みます。これは BMLT サーバの<strong>セマンティックワークショップ</strong>から確認できます。すべての BMLT サーバで <code>&lt;your-server&gt;/main_server/semantic</code> から利用できます。",
-    "step": {
-      "1": "ブラウザでセマンティックワークショップを開きます。例: <a href=\"https://bmlt.sezf.org/main_server/semantic\" target=\"_blank\" rel=\"noopener\">https://bmlt.sezf.org/main_server/semantic</a> — ドメインはご自身の BMLT サーバに置き換えてください。",
-      "2": "<strong>Operation</strong> で、サービスボディを取得するアクションを選択します（バージョンによりラベルは多少異なりますが、通常は <em>Get Service Bodies</em> または <em>Retrieve information about Service Bodies</em>）。",
-      "3": "レスポンス形式は JSON のままにし、<strong>Execute JSON Request</strong> をクリックします。",
-      "4": "JSON レスポンスから、<code>name</code> でエリア、リージョン、またはゾーンを探します。隣の <code>id</code> フィールドが <code>data-service-body</code> に渡す数値です。"
-    },
-    "outro": "この例では、Greater Seattle のみであれば <code>data-service-body=\"42\"</code>、両方のエリアをまとめるなら <code>data-service-body=\"42,57\"</code> を渡します。セマンティックワークショップを使わず、<code>&lt;your-server&gt;/main_server/client_interface/json/?switcher=GetServiceBodies</code> の JSON エンドポイントを直接叩くこともできます。",
+    "intro": "以下の各埋め込みは、<code>data-service-body</code>に数値IDを渡すことで、特定の<strong>サービス機関</strong>(エリア、リージョン、またはゾーン)でミーティングをフィルタリングします。",
     "callout1": "<strong>サーバ URL やサービスボディ ID が分からない？</strong> <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> を見てみてください。既知の BMLT サーバとそれぞれのサービスボディが一覧されています。エリア、リージョン、またはゾーンを見つければ、<code>data-server</code> URL と <code>data-service-body</code> ID を 1 か所で取得できます。",
-    "callout2": "<strong>ヒント:</strong> 子のサービスボディは常に自動的に含まれます。リージョン ID を渡せば、その配下のすべてのエリアのミーティングが含まれるため、子のエリアを個別に列挙する必要はありません。"
+    "callout2": "<strong>ヒント:</strong> 子のサービスボディは常に自動的に含まれます。リージョン ID を渡せば、その配下のすべてのエリアのミーティングが含まれるため、子のエリアを個別に列挙する必要はありません。",
+    "calloutSdle": "<strong>簡単な方法 — 場所で検索。</strong><a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>を訪問し、地図の任意の場所をクリック(または住所を検索)すると、そのエリアをカバーするサービス機関がポップアップで表示されます。ポップアップ内の<strong>Server details</strong>を展開すると、<strong>サーバーURL</strong>と<strong>サービス機関ID</strong>の両方が表示されます — 自前のサーバーまたは集約サーバーのいずれかについて。任意の値をクリックしてコピーし、<code>data-server</code>と<code>data-service-body</code>に貼り付けてください。"
   },
   "googleSites": {
     "title": "Google Sites",
@@ -543,5 +543,32 @@
   "philosophy": {
     "title": "理念",
     "body": "このプロジェクトは、ほとんどの NA サービスボディのニーズをきちんとカバーすることを目的としており、あらゆるユースケースを対象にしているわけではありません。意図的にシンプルで焦点を絞った状態を保っています。新機能はコードベースへのコストと比較して評価されます。みんなにとってプロジェクトを肥大化させるニッチな要望は通常スコープ外です。深いカスタマイズが必要な場合、これは適したツールではないかもしれません。"
+  },
+  "updateUrl": {
+    "title": "ミーティング情報更新リンク",
+    "intro": "<code>data-update-url</code>(またはグローバル設定の<code>updateUrl</code>)をURLテンプレートに設定することで、各ミーティング詳細パネルの下部に<strong>「ミーティング情報を更新」</strong>ボタンを追加します。ウィジェットはクリック時にミーティングごとのトークンを置換し、結果を新しいタブで開きます。オプションが未設定の場合ボタンは非表示になるため、選択的にオプトインできます。",
+    "tokens": "サポートされるトークン(各値は置換時にURLエンコードされます; 未知の<code>{tokens}</code>はそのまま残されます):",
+    "th": {
+      "token": "トークン",
+      "value": "値"
+    },
+    "token": {
+      "meetingId": "BMLTミーティングの<code>id_bigint</code> — ほとんどの更新フォームが期待する正規の識別子。",
+      "meetingName": "人間が読めるミーティング名。<code>mailto:</code>の件名で便利。",
+      "serverUrl": "設定されたBMLTルートサーバーURL(<code>data-server</code>の値)。",
+      "returnUrl": "現在のページのURL — 提出物の戻りリンクや監査参照として便利。"
+    },
+    "workflow": {
+      "title": "例: bmlt-workflow連携",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>は、ショートコード<code>[bmltwf-meeting-update-form]</code>を介してミーティング更新フォームを公開するWordPressプラグインです。フォームのJavaScriptはクエリ文字列から<code>?meeting_id=</code>を読み取ってミーティングを事前選択するため、テンプレートには<code>{meeting_id}</code>トークンのみが必要です:"
+    },
+    "mailto": {
+      "title": "例: mailtoリンク",
+      "body": "ホストされたフォームがありませんか? <code>mailto:</code> URLを指してください — ユーザーのメールクライアントが件名と本文が事前入力された状態で開きます。トークンはURLエンコードされるため、<code>mailto:</code>クエリパラメータ内で安全に使用できます:"
+    },
+    "custom": {
+      "title": "例: 任意のカスタムエンドポイント",
+      "body": "クエリ文字列でミーティング識別子を受け入れる任意のURLが機能します。リンクは新しいタブで開くため、エンドポイントは完全なページ(Googleフォーム、Airtableフォーム、カスタムCMSなど)にすることができます。<code>{return_url}</code>を渡すと、フォームにミーティングページへの戻りリンクを提供できます:"
+    }
   }
 }
