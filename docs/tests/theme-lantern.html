@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test: Theme — Lantern — Crumb Widget</title>
+    <style>
+      :root {
+        /* Lantern design tokens — from bmlt-wp-theme/lantern/style.css */
+        --lantern-paper: #f7f1e6;
+        --lantern-paper-deep: #efe6d3;
+        --lantern-ink: #1a2538;
+        --lantern-ink-soft: #2c3a52;
+        --lantern-ink-faint: rgba(26, 37, 56, 0.62);
+        --lantern-ink-line: rgba(26, 37, 56, 0.16);
+        --lantern-ink-hair: rgba(26, 37, 56, 0.08);
+        --lantern-ember: #c7572b;
+        --lantern-ember-deep: #9d3e1a;
+        --lantern-sage: #5d7561;
+        --lantern-sand: #d9c79a;
+        --lantern-gold: #b7892b;
+        --lantern-body: 'Instrument Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        --lantern-radius: 4px;
+      }
+
+      body { margin: 0; font-family: var(--lantern-body); background: var(--lantern-paper); }
+      .test-bar { background: var(--lantern-ink); color: var(--lantern-paper); padding: 10px 16px; font-size: 13px; display: flex; align-items: center; gap: 12px; }
+      .test-bar a { color: var(--lantern-sand); text-decoration: none; }
+      .test-bar a:hover { color: var(--lantern-paper); }
+      .test-bar strong { color: var(--lantern-paper); }
+      .test-bar code { background: rgba(247, 241, 230, 0.12); padding: 2px 7px; border-radius: 4px; font-size: 12px; }
+
+      #crumb-widget.bmlt-theme-lantern {
+        /* Type */
+        --bmlt-font-family:        var(--lantern-body);
+        --bmlt-font-size:          1rem;
+
+        /* Surfaces */
+        --bmlt-background:         var(--lantern-paper);
+        --bmlt-surface:            var(--lantern-paper);
+        --bmlt-row-alt:            var(--lantern-paper-deep);
+        --bmlt-hover:              var(--lantern-paper-deep);
+
+        /* Text */
+        --bmlt-text:               var(--lantern-ink);
+        --bmlt-text-secondary:     var(--lantern-ink-soft);
+        --bmlt-text-muted:         var(--lantern-ink-faint);
+
+        /* Lines */
+        --bmlt-border:             var(--lantern-ink-line);
+        --bmlt-divider:            var(--lantern-ink-hair);
+        --bmlt-border-radius:      var(--lantern-radius);
+
+        /* Accent — terracotta ember for active state, links, focus */
+        --bmlt-accent:             var(--lantern-ember);
+        --bmlt-accent-light:       color-mix(in srgb, var(--lantern-ember) 12%, var(--lantern-paper));
+
+        /* In-person badge — sage on warm parchment */
+        --bmlt-in-person:          color-mix(in srgb, var(--lantern-sage) 80%, var(--lantern-ink));
+        --bmlt-in-person-bg:       color-mix(in srgb, var(--lantern-sage) 18%, var(--lantern-paper));
+
+        /* Virtual badge — ink-on-paper tint */
+        --bmlt-virtual:            var(--lantern-ink);
+        --bmlt-virtual-bg:         color-mix(in srgb, var(--lantern-ink) 8%, var(--lantern-paper));
+
+        /* In-progress banner — gold highlight */
+        --bmlt-in-progress-bg:     color-mix(in srgb, var(--lantern-gold) 20%, var(--lantern-paper));
+        --bmlt-in-progress-text:   color-mix(in srgb, var(--lantern-gold) 60%, var(--lantern-ink));
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-bar">
+      <a href="/tests/index.html">← Tests</a>
+      <strong>Theme: Lantern</strong>
+      <code>bmlt-theme-lantern</code> — warm parchment, terracotta ember, ink navy
+    </div>
+
+    <div id="crumb-widget"
+      class="bmlt-theme-lantern"
+      data-service-body="95,173"
+      data-server="https://aggregator.bmltenabled.org/main_server/"
+      data-path="/tests/theme-lantern.html"
+    ></div>
+
+    <script src="../app.js"></script>
+  </body>
+</html>
