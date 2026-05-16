@@ -74,14 +74,50 @@
     "yes": "Yes",
     "no": "No"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb is a meeting finder you can add to your service body's website.</strong> Members type in a city, tap \"Near Me,\" or browse a list and map to find an NA meeting — right on your site, no app required. It's free and open source."
+  },
+  "pickPlatform": {
+    "label": "Get started",
+    "heading": "Pick your platform",
+    "sub": "Whatever runs your service body's website, there's a way to add Crumb. Click the one that matches your setup:",
+    "cards": {
+      "wordpress": "Install the official Crumb plugin from the WordPress directory.",
+      "drupal": "Install the Crumb module for Drupal 10.3+ or 11.",
+      "joomla": "Install the Crumb extension for Joomla 4, 5, or 6.",
+      "squarespace": "Paste a small code block into any Squarespace page.",
+      "wix": "Drop the Crumb embed into a Wix HTML block.",
+      "other": "Other / Plain HTML",
+      "otherDesc": "Google Sites, plain HTML, or any site that takes a code snippet.",
+      "install": "Install plugin →",
+      "viewSteps": "View steps →",
+      "copySnippet": "Copy snippet →"
+    }
+  },
+  "memberFeatures": {
+    "label": "What your members get",
+    "heading": "Built for finding meetings, fast",
+    "f1": {
+      "title": "Search & filters",
+      "body": "Filter by day, format, time of day, or just see what's happening now. Type to search by name or location."
+    },
+    "f2": {
+      "title": "Map & Near Me",
+      "body": "Interactive map. Tap \"Near Me\" or type a city or zip to find the closest meetings. Directions open in Google Maps."
+    },
+    "f3": {
+      "title": "Works everywhere",
+      "body": "Mobile-friendly. 13 languages including Persian (RTL). Light and dark mode. Printer-friendly list."
+    }
+  },
   "overview": {
-    "title": "Overview",
-    "p1": "Crumb Widget is a self-contained JavaScript widget that queries a <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT server</a> and renders a fully featured meeting finder — search, filters, list view, and an interactive map.",
-    "p2": "It ships as a <strong>single JavaScript file</strong> with all CSS injected at runtime. No stylesheets, no build steps, no framework required on the host page."
+    "title": "About Crumb",
+    "p1": "Crumb Widget queries a <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT server</a> (the database your area uses to store meeting info) and turns it into a friendly meeting finder on your site — with search, filters, a list, and an interactive map.",
+    "p2": "Under the hood it's a <strong>single JavaScript file</strong>. No stylesheets to manage, no setup steps, no developer required if you're using one of the plugins above."
   },
   "quickStart": {
-    "title": "Quick Start",
-    "intro": "To get started, add a container element to your page, point it at your BMLT server, and load the widget script. Here is a complete example:",
+    "title": "Quick Start (Code Snippet)",
+    "intro": "If your site lets you paste in a small piece of HTML — like a Squarespace code block, a Wix HTML embed, or a plain web page — this is all you need. Replace the server URL with your service body's BMLT server, then paste the snippet anywhere on the page:",
     "autoInit": "The widget initializes automatically when the script loads, so no additional JavaScript is needed.",
     "viewport": "<strong>Important:</strong> Be sure your page includes <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> in the <code>&lt;head&gt;</code>. This is important for proper rendering on mobile devices and small screens."
   },

@@ -477,6 +477,123 @@
         border: none;
       }
 
+      /* "What is this?" intro panel */
+      .what-is {
+        background: var(--doc-accent-soft);
+        border: 1px solid var(--doc-border);
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin: 2rem 0 2.25rem;
+      }
+      .what-is p {
+        margin: 0;
+        color: var(--doc-text);
+        font-size: 1rem;
+      }
+      .what-is p + p {
+        margin-top: 0.6rem;
+      }
+
+      /* Platform picker */
+      .platform-section {
+        margin: 2.25rem 0 0.5rem;
+      }
+      .platform-section .platform-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--doc-text-dim);
+        margin-bottom: 0.75rem;
+      }
+      .platform-section h3.platform-heading {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin: 0 0 0.35rem;
+        color: var(--doc-text);
+        letter-spacing: -0.01em;
+      }
+      .platform-section .platform-sub {
+        margin: 0 0 1.25rem;
+        color: var(--doc-text-dim);
+        font-size: 0.95rem;
+      }
+      .platform-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.85rem;
+        margin: 0 0 2.5rem;
+      }
+      .platform-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+        padding: 1rem 1.1rem;
+        background: var(--doc-bg);
+        border: 1px solid var(--doc-border);
+        border-radius: 10px;
+        text-decoration: none !important;
+        color: inherit;
+        transition:
+          border-color 0.15s,
+          transform 0.1s,
+          box-shadow 0.15s;
+      }
+      .platform-card:hover {
+        border-color: var(--doc-accent);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        color: inherit;
+      }
+      .platform-card .platform-icon {
+        width: 28px;
+        height: 28px;
+        color: var(--doc-text-muted);
+        flex-shrink: 0;
+      }
+      .platform-card .platform-name {
+        font-weight: 700;
+        font-size: 1rem;
+        color: var(--doc-text);
+        letter-spacing: -0.01em;
+      }
+      .platform-card .platform-desc {
+        font-size: 0.85rem;
+        color: var(--doc-text-dim);
+        line-height: 1.45;
+      }
+      .platform-card .platform-cta {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--doc-accent);
+        margin-top: auto;
+      }
+
+      /* "What members get" inline feature blurbs */
+      .quick-features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin: 1rem 0 2rem;
+      }
+      .quick-feature {
+        padding: 1rem 1.1rem;
+        background: var(--doc-bg);
+        border: 1px solid var(--doc-border-lt);
+        border-radius: 10px;
+      }
+      .quick-feature .qf-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--doc-text);
+        margin-bottom: 0.25rem;
+      }
+      .quick-feature .qf-body {
+        font-size: 0.85rem;
+        color: var(--doc-text-dim);
+        line-height: 1.5;
+      }
+
       /* Live Demo button */
       .live-demo-btn {
         display: inline-flex;
@@ -642,6 +759,13 @@
         }
         #ss-prev, #ss-next { display: none !important; }
         #ss-dots button { width: 12px; height: 12px; }
+
+        .platform-grid {
+          grid-template-columns: 1fr;
+        }
+        .quick-features {
+          grid-template-columns: 1fr;
+        }
       }
       .demo-header {
         display: flex;
@@ -1106,16 +1230,87 @@
           })();
         </script>
 
-        <h2 id="overview" data-i18n="overview.title">Overview</h2>
+        <div class="what-is">
+          <p data-i18n-html="whatIs.p1"><strong>Crumb is a meeting finder you can add to your service body's website.</strong> Members type in a city, tap "Near Me," or browse a list and map to find an NA meeting — right on your site, no app required. It's free and open source.</p>
+        </div>
+
+        <div class="platform-section">
+          <div class="platform-label" data-i18n="pickPlatform.label">Get started</div>
+          <h3 class="platform-heading" data-i18n="pickPlatform.heading">Pick your platform</h3>
+          <p class="platform-sub" data-i18n="pickPlatform.sub">Whatever runs your service body's website, there's a way to add Crumb. Click the one that matches your setup:</p>
+          <div class="platform-grid">
+            <a href="https://wordpress.org/plugins/crumb/" target="_blank" rel="noopener" class="platform-card">
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.158 12.786L9.46 20.625a9 9 0 002.696.413 9 9 0 003.026-.524 1 1 0 01-.077-.15l-2.947-8.075v.497zM3.009 12a8.99 8.99 0 005.067 8.092L3.788 8.32A8.96 8.96 0 003.009 12zm15.06-.454c0-1.112-.4-1.881-.741-2.48-.456-.741-.883-1.368-.883-2.109 0-.826.627-1.596 1.51-1.596.04 0 .078.005.117.007A8.974 8.974 0 0012 3.009a8.99 8.99 0 00-7.512 4.04c.211.007.41.011.579.011.94 0 2.395-.114 2.395-.114.484-.028.541.683.057.74 0 0-.487.058-1.029.086l3.274 9.739 1.968-5.901-1.401-3.838c-.484-.028-.943-.085-.943-.085-.485-.029-.428-.768.057-.74 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.485-.028.542.683.057.74 0 0-.488.058-1.029.086l3.249 9.665.897-2.996c.456-1.169.628-2.085.628-2.911zm1.82-3.482c.039.286.06.593.06.924 0 .912-.171 1.938-.684 3.22l-2.747 7.94a8.998 8.998 0 003.371-12.084zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+              <span class="platform-name">WordPress</span>
+              <span class="platform-desc" data-i18n="pickPlatform.cards.wordpress">Install the official Crumb plugin from the WordPress directory.</span>
+              <span class="platform-cta" data-i18n="pickPlatform.cards.install">Install plugin →</span>
+            </a>
+
+            <a href="https://github.com/bmlt-enabled/crumb-drupal" target="_blank" rel="noopener" class="platform-card">
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.78 5.113C14.09 3.425 12.46 1.815 12 0c-.46 1.814-2.09 3.424-3.78 5.113C5.69 7.644 3 10.252 3 14.167 3 19.04 6.97 23 12 23s9-3.959 9-8.833c0-3.915-2.69-6.523-5.22-9.054zM6.018 15.469c-.376-.012-1.741-2.36.41-4.485l2.85 3.116a.235.235 0 01-.014.347c-.732.687-2.215 1.34-3.246 1.022zm5.853 4.59a3.018 3.018 0 01-3.02-2.97c.014-.812.343-1.595.792-2.27.546-.812 2.226-3.005 2.226-3.005s1.656 2.222 2.222 3c.475.65.81 1.452.798 2.276a3.027 3.027 0 01-3.018 2.97zm6.747-5.864c-.085.187-.279.499-.539.518h-.024c-.469 0-.602-.464-.93-.987-.728-1.169-2.84-3.93-3.21-4.527-.319-.514-.046-.876.085-1.05.158-.21 1.354-1.471 1.94-2.066.61.618 2.346 2.366 3.224 3.806.873 1.434.852 3.235-.546 4.306z"/></svg>
+              <span class="platform-name">Drupal</span>
+              <span class="platform-desc" data-i18n="pickPlatform.cards.drupal">Install the Crumb module for Drupal 10.3+ or 11.</span>
+              <span class="platform-cta" data-i18n="pickPlatform.cards.install">Install module →</span>
+            </a>
+
+            <a href="https://github.com/bmlt-enabled/crumb-joomla" target="_blank" rel="noopener" class="platform-card">
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.486 0a3.78 3.78 0 00-3.745 4.286 3.79 3.79 0 00-1.74 3.184c0 1.43.81 2.79 2.114 3.405l5.954-5.953A3.795 3.795 0 005.486 0zm13.026 0a3.79 3.79 0 00-3.789 3.789 3.79 3.79 0 00.205 1.232l2.502 2.503a1.077 1.077 0 010 1.524l-7.668 7.668 1.92 1.92 7.667-7.668a3.789 3.789 0 005.176-5.176A3.79 3.79 0 0018.512 0zM5.281 5.794L.106 10.97a3.789 3.789 0 005.176 5.176L7.785 13.642a1.077 1.077 0 010-1.524L9.91 9.992 7.784 7.866a3.789 3.789 0 01-2.503-2.072zm10.93 5.157l-7.667 7.668a3.789 3.789 0 01-5.176 5.176A3.789 3.789 0 006.532 23.9c1.04 0 2.043-.428 2.762-1.147l7.668-7.668-.751-.75z"/></svg>
+              <span class="platform-name">Joomla</span>
+              <span class="platform-desc" data-i18n="pickPlatform.cards.joomla">Install the Crumb extension for Joomla 4, 5, or 6.</span>
+              <span class="platform-cta" data-i18n="pickPlatform.cards.install">Install extension →</span>
+            </a>
+
+            <a href="#squarespace" class="platform-card">
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.655 8.719c-1.802-1.801-4.726-1.801-6.564 0l-7.351 7.351c-.45.45-.45 1.184 0 1.634.45.45 1.184.45 1.634 0l7.351-7.351c.9-.9 2.363-.9 3.262 0 .9.9.9 2.363 0 3.262l-7.27 7.27c.9.9 2.363.9 3.263 0l5.675-5.638c1.838-1.801 1.838-4.726 0-6.527M19.353 12.02c-.45-.45-1.183-.45-1.634 0l-7.35 7.351c-.9.9-2.363.9-3.263 0-.9-.9-.9-2.363 0-3.263l7.27-7.27c-.9-.9-2.363-.9-3.262 0L5.477 14.45c-1.801 1.801-1.801 4.726 0 6.564 1.802 1.801 4.726 1.801 6.564 0l7.35-7.351c.45-.45.45-1.184 0-1.634m-3.302-3.301c.45.45.45 1.184 0 1.634L8.7 17.704c-.9.9-2.363.9-3.262 0-.9-.9-.9-2.363 0-3.262l5.638-5.638c-1.801-1.802-4.726-1.802-6.564 0-1.801 1.801-1.801 4.726 0 6.564l1.638-1.639c-.45-.45-.45-1.184 0-1.634.45-.45 1.184-.45 1.634 0 .45.45.45 1.184 0 1.634L6.184 15.33c-.9-.9-.9-2.363 0-3.262l5.638-5.638c1.801-1.802 4.726-1.802 6.564 0 .45.45.45 1.184 0 1.634-.45.45-1.184.45-1.634 0-.9-.9-2.363-.9-3.263 0L7.892 13.66c.45.45 1.184.45 1.634 0l6.525-6.564z"/></svg>
+              <span class="platform-name">Squarespace</span>
+              <span class="platform-desc" data-i18n="pickPlatform.cards.squarespace">Paste a small code block into any Squarespace page.</span>
+              <span class="platform-cta" data-i18n="pickPlatform.cards.viewSteps">View steps →</span>
+            </a>
+
+            <a href="#wix" class="platform-card">
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.115 4.43L3 13.95l1.927-9.46zm5.34 0L7.74 14.91l-.937-3.46-.94-3.522.937 3.523h.001L7.737 14.9h.003l2.715-10.47zm5.04.07L13.5 9.49l-1.99-4.99h2.78l1.205 3.014L16.7 4.5h-1.205zm5.6 0l-3.435 8.96 3.435-8.96zM3 13.95v-.001L4.927 4.43 3 13.95zm7.452-9.45L8.495 13.95l.94 3.523-.001-.001-.937-3.523L11.39 4.5h-.937zM18.78 13.95l1.92-9.45L18.78 13.95zM7.74 14.91L10.452 4.5 7.74 14.91zm5.76-5.42l2-4.99-2 4.99zm-2-4.99L8.495 13.95l2.715-10.47.29.94z"/></svg>
+              <span class="platform-name">Wix</span>
+              <span class="platform-desc" data-i18n="pickPlatform.cards.wix">Drop the Crumb embed into a Wix HTML block.</span>
+              <span class="platform-cta" data-i18n="pickPlatform.cards.viewSteps">View steps →</span>
+            </a>
+
+            <a href="#quick-start" class="platform-card">
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5C6.21 1.5 1.5 6.21 1.5 12S6.21 22.5 12 22.5 22.5 17.79 22.5 12 17.79 1.5 12 1.5zm0 19.5c-4.95 0-9-4.05-9-9s4.05-9 9-9 9 4.05 9 9-4.05 9-9 9zM8.25 12L12 8.25l3.75 3.75-1.06 1.06L12 10.37l-2.69 2.69L8.25 12zm0 0L12 15.75 15.75 12l-1.06-1.06L12 13.63l-2.69-2.69L8.25 12z"/></svg>
+              <span class="platform-name" data-i18n="pickPlatform.cards.other">Other / Plain HTML</span>
+              <span class="platform-desc" data-i18n="pickPlatform.cards.otherDesc">Google Sites, plain HTML, or any site that takes a code snippet.</span>
+              <span class="platform-cta" data-i18n="pickPlatform.cards.copySnippet">Copy snippet →</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="platform-section">
+          <div class="platform-label" data-i18n="memberFeatures.label">What your members get</div>
+          <h3 class="platform-heading" data-i18n="memberFeatures.heading">Built for finding meetings, fast</h3>
+          <div class="quick-features">
+            <div class="quick-feature">
+              <div class="qf-title" data-i18n="memberFeatures.f1.title">Search &amp; filters</div>
+              <div class="qf-body" data-i18n="memberFeatures.f1.body">Filter by day, format, time of day, or just see what's happening now. Type to search by name or location.</div>
+            </div>
+            <div class="quick-feature">
+              <div class="qf-title" data-i18n="memberFeatures.f2.title">Map &amp; Near Me</div>
+              <div class="qf-body" data-i18n="memberFeatures.f2.body">Interactive map. Tap "Near Me" or type a city or zip to find the closest meetings. Directions open in Google Maps.</div>
+            </div>
+            <div class="quick-feature">
+              <div class="qf-title" data-i18n="memberFeatures.f3.title">Works everywhere</div>
+              <div class="qf-body" data-i18n="memberFeatures.f3.body">Mobile-friendly. 13 languages including Persian (RTL). Light and dark mode. Printer-friendly list.</div>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="overview" data-i18n="overview.title">About Crumb</h2>
         <p data-i18n-html="overview.p1">
-          Crumb Widget is a self-contained JavaScript widget that queries a
-          <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT server</a> and renders a fully featured meeting finder — search, filters, list view, and an interactive map.
+          Crumb Widget queries a <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT server</a> (the database your area uses to store meeting info) and turns it into a friendly meeting finder on your site — with search, filters, a list, and an interactive map.
         </p>
         <p data-i18n-html="overview.p2">
-          It ships as a <strong>single JavaScript file</strong> with all CSS injected at runtime. No stylesheets, no build steps, no framework required on the host page.
+          Under the hood it's a <strong>single JavaScript file</strong>. No stylesheets to manage, no setup steps, no developer required if you're using one of the plugins above.
         </p>
-        <h2 id="quick-start" data-i18n="quickStart.title">Quick Start</h2>
-        <p data-i18n="quickStart.intro">To get started, add a container element to your page, point it at your BMLT server, and load the widget script. Here is a complete example:</p>
+        <h2 id="quick-start" data-i18n="quickStart.title">Quick Start (Code Snippet)</h2>
+        <p data-i18n="quickStart.intro">If your site lets you paste in a small piece of HTML — like a Squarespace code block, a Wix HTML embed, or a plain web page — this is all you need. Replace the server URL with your service body's BMLT server, then paste the snippet anywhere on the page:</p>
 
         <div class="demo">
           <div class="demo-header">

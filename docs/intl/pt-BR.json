@@ -73,14 +73,50 @@
     "yes": "Sim",
     "no": "Não"
   },
+  "whatIs": {
+    "p1": "<strong>O Crumb é um buscador de reuniões que você pode adicionar ao site do seu corpo de serviço.</strong> Os membros digitam uma cidade, tocam em \"Perto de mim\" ou navegam por uma lista e mapa para encontrar uma reunião de NA — direto no seu site, sem aplicativo. É gratuito e de código aberto."
+  },
+  "pickPlatform": {
+    "label": "Começar",
+    "heading": "Escolha sua plataforma",
+    "sub": "Seja qual for a plataforma do site do seu corpo de serviço, há um jeito de adicionar o Crumb. Clique na que corresponde à sua configuração:",
+    "cards": {
+      "wordpress": "Instale o plugin oficial do Crumb pelo diretório do WordPress.",
+      "drupal": "Instale o módulo Crumb para Drupal 10.3+ ou 11.",
+      "joomla": "Instale a extensão Crumb para Joomla 4, 5 ou 6.",
+      "squarespace": "Cole um pequeno bloco de código em qualquer página do Squarespace.",
+      "wix": "Coloque o embed do Crumb em um bloco HTML do Wix.",
+      "other": "Outro / HTML simples",
+      "otherDesc": "Google Sites, HTML simples ou qualquer site que aceite um trecho de código.",
+      "install": "Instalar plugin →",
+      "viewSteps": "Ver passos →",
+      "copySnippet": "Copiar trecho →"
+    }
+  },
+  "memberFeatures": {
+    "label": "O que seus membros recebem",
+    "heading": "Feito para encontrar reuniões, rápido",
+    "f1": {
+      "title": "Busca e filtros",
+      "body": "Filtre por dia, formato, período do dia ou simplesmente veja o que está acontecendo agora. Digite para buscar por nome ou local."
+    },
+    "f2": {
+      "title": "Mapa e Perto de mim",
+      "body": "Mapa interativo. Toque em \"Perto de mim\" ou digite uma cidade ou CEP para encontrar as reuniões mais próximas. As direções abrem no Google Maps."
+    },
+    "f3": {
+      "title": "Funciona em qualquer lugar",
+      "body": "Compatível com celular. 13 idiomas incluindo persa (RTL). Modo claro e escuro. Lista pronta para impressão."
+    }
+  },
   "overview": {
-    "title": "Visão geral",
-    "p1": "O Crumb Widget é um widget JavaScript autônomo que consulta um <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">servidor BMLT</a> e renderiza um buscador de reuniões completo — busca, filtros, visão em lista e um mapa interativo.",
-    "p2": "Ele é distribuído como um <strong>único arquivo JavaScript</strong> com todo o CSS injetado em tempo de execução. Sem folhas de estilo, sem etapas de build, sem necessidade de framework na página hospedeira."
+    "title": "Sobre o Crumb",
+    "p1": "O Crumb Widget consulta um <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">servidor BMLT</a> (o banco de dados que sua área usa para armazenar informações de reuniões) e o transforma em um buscador de reuniões amigável no seu site — com busca, filtros, lista e um mapa interativo.",
+    "p2": "Por baixo dos panos é um <strong>único arquivo JavaScript</strong>. Sem folhas de estilo para gerenciar, sem etapas de configuração, sem necessidade de desenvolvedor se você usar um dos plugins acima."
   },
   "quickStart": {
-    "title": "Início rápido",
-    "intro": "Para começar, adicione um elemento contêiner à sua página, aponte-o para o seu servidor BMLT e carregue o script do widget. Aqui está um exemplo completo:",
+    "title": "Início rápido (trecho de código)",
+    "intro": "Se o seu site permite colar um pequeno trecho de HTML — como um bloco de código do Squarespace, um embed HTML do Wix ou uma página web simples — isso é tudo o que você precisa. Substitua a URL do servidor pelo servidor BMLT do seu corpo de serviço e cole o trecho em qualquer lugar da página:",
     "autoInit": "O widget se inicializa automaticamente quando o script carrega, então não é necessário JavaScript adicional.",
     "viewport": "<strong>Importante:</strong> certifique-se de que sua página inclua <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> no <code>&lt;head&gt;</code>. Isso é importante para a renderização correta em dispositivos móveis e telas pequenas."
   },

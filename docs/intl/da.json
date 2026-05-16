@@ -73,14 +73,50 @@
     "yes": "Ja",
     "no": "Nej"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb er en mødefinder, du kan tilføje til dit servicelegemes hjemmeside.</strong> Medlemmer skriver en by, trykker på \"I nærheden af mig\" eller gennemser en liste og et kort for at finde et NA-møde — direkte på din side, uden app. Det er gratis og open source."
+  },
+  "pickPlatform": {
+    "label": "Kom i gang",
+    "heading": "Vælg din platform",
+    "sub": "Uanset hvad der driver dit servicelegemes hjemmeside, er der en måde at tilføje Crumb på. Klik på den, der passer til din opsætning:",
+    "cards": {
+      "wordpress": "Installer det officielle Crumb-plugin fra WordPress-mappen.",
+      "drupal": "Installer Crumb-modulet til Drupal 10.3+ eller 11.",
+      "joomla": "Installer Crumb-udvidelsen til Joomla 4, 5 eller 6.",
+      "squarespace": "Indsæt en lille kodeblok på en hvilken som helst Squarespace-side.",
+      "wix": "Læg Crumb-embedet ind i en Wix HTML-blok.",
+      "other": "Andet / Almindelig HTML",
+      "otherDesc": "Google Sites, almindelig HTML eller enhver side, der accepterer et kodestykke.",
+      "install": "Installer plugin →",
+      "viewSteps": "Se trin →",
+      "copySnippet": "Kopier kodestykke →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Hvad dine medlemmer får",
+    "heading": "Bygget til hurtigt at finde møder",
+    "f1": {
+      "title": "Søgning og filtre",
+      "body": "Filtrer efter dag, format, tidspunkt på dagen, eller se bare hvad der foregår nu. Skriv for at søge efter navn eller sted."
+    },
+    "f2": {
+      "title": "Kort og I nærheden af mig",
+      "body": "Interaktivt kort. Tryk på \"I nærheden af mig\" eller skriv en by eller postnummer for at finde de nærmeste møder. Vejvisning åbnes i Google Maps."
+    },
+    "f3": {
+      "title": "Virker overalt",
+      "body": "Mobilvenlig. 13 sprog inklusive persisk (RTL). Lys og mørk tilstand. Udskrivningsvenlig liste."
+    }
+  },
   "overview": {
-    "title": "Oversigt",
-    "p1": "Crumb Widget er en selvstændig JavaScript-widget, der spørger en <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-server</a> og viser en fuldt udstyret mødefinder — søgning, filtre, listevisning og et interaktivt kort.",
-    "p2": "Den leveres som en <strong>enkelt JavaScript-fil</strong>, hvor al CSS injiceres ved kørsel. Ingen stylesheets, ingen build-trin, intet framework krævet på værtssiden."
+    "title": "Om Crumb",
+    "p1": "Crumb Widget forespørger en <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-server</a> (databasen, som dit område bruger til at gemme mødeinformation) og gør den til en venlig mødefinder på din side — med søgning, filtre, en liste og et interaktivt kort.",
+    "p2": "Under motorhjelmen er det en <strong>enkelt JavaScript-fil</strong>. Ingen stylesheets at administrere, ingen opsætningstrin, ingen udvikler nødvendig, hvis du bruger et af pluginsene ovenfor."
   },
   "quickStart": {
-    "title": "Hurtig start",
-    "intro": "For at komme i gang skal du tilføje et containerelement til din side, pege det mod din BMLT-server og indlæse widget-scriptet. Her er et komplet eksempel:",
+    "title": "Hurtig start (kodestykke)",
+    "intro": "Hvis din side lader dig indsætte et lille stykke HTML — som en Squarespace-kodeblok, en Wix HTML-embed eller en almindelig webside — så er det alt, du har brug for. Erstat server-URL'en med dit servicelegemes BMLT-server, og indsæt kodestykket hvor som helst på siden:",
     "autoInit": "Widget'en initialiseres automatisk, når scriptet indlæses, så ingen yderligere JavaScript er nødvendig.",
     "viewport": "<strong>Vigtigt:</strong> Sørg for, at din side indeholder <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> i <code>&lt;head&gt;</code>. Det er vigtigt for korrekt rendering på mobilenheder og små skærme."
   },

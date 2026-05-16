@@ -73,14 +73,50 @@
     "yes": "Oui",
     "no": "Non"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb est un outil de recherche de réunions que vous pouvez ajouter au site web de votre structure de service.</strong> Les membres saisissent une ville, touchent « À proximité » ou parcourent une liste et une carte pour trouver une réunion NA — directement sur votre site, sans application. C'est gratuit et open source."
+  },
+  "pickPlatform": {
+    "label": "Pour commencer",
+    "heading": "Choisissez votre plateforme",
+    "sub": "Quelle que soit la plateforme du site web de votre structure de service, il existe un moyen d'ajouter Crumb. Cliquez sur celle qui correspond à votre configuration :",
+    "cards": {
+      "wordpress": "Installez le plugin officiel Crumb depuis le répertoire WordPress.",
+      "drupal": "Installez le module Crumb pour Drupal 10.3+ ou 11.",
+      "joomla": "Installez l'extension Crumb pour Joomla 4, 5 ou 6.",
+      "squarespace": "Collez un petit bloc de code dans n'importe quelle page Squarespace.",
+      "wix": "Déposez l'embed Crumb dans un bloc HTML Wix.",
+      "other": "Autre / HTML simple",
+      "otherDesc": "Google Sites, HTML simple ou tout site acceptant un extrait de code.",
+      "install": "Installer le plugin →",
+      "viewSteps": "Voir les étapes →",
+      "copySnippet": "Copier l'extrait →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Ce que vos membres obtiennent",
+    "heading": "Conçu pour trouver des réunions, rapidement",
+    "f1": {
+      "title": "Recherche et filtres",
+      "body": "Filtrez par jour, format, moment de la journée, ou voyez simplement ce qui se passe maintenant. Tapez pour rechercher par nom ou lieu."
+    },
+    "f2": {
+      "title": "Carte et À proximité",
+      "body": "Carte interactive. Touchez « À proximité » ou saisissez une ville ou un code postal pour trouver les réunions les plus proches. Les itinéraires s'ouvrent dans Google Maps."
+    },
+    "f3": {
+      "title": "Fonctionne partout",
+      "body": "Compatible mobile. 13 langues dont le persan (RTL). Mode clair et sombre. Liste imprimable."
+    }
+  },
   "overview": {
-    "title": "Aperçu",
-    "p1": "Crumb Widget est un widget JavaScript autonome qui interroge un <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">serveur BMLT</a> et affiche un outil de recherche de réunions complet — recherche, filtres, vue liste et carte interactive.",
-    "p2": "Il est livré sous forme d'un <strong>fichier JavaScript unique</strong> avec tout le CSS injecté à l'exécution. Aucune feuille de style, aucune étape de build, aucun framework requis sur la page hôte."
+    "title": "À propos de Crumb",
+    "p1": "Crumb Widget interroge un <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">serveur BMLT</a> (la base de données que votre région utilise pour stocker les informations sur les réunions) et le transforme en un outil convivial de recherche de réunions sur votre site — avec recherche, filtres, liste et carte interactive.",
+    "p2": "Sous le capot, c'est un <strong>fichier JavaScript unique</strong>. Pas de feuilles de style à gérer, pas d'étapes de configuration, pas de développeur nécessaire si vous utilisez l'un des plugins ci-dessus."
   },
   "quickStart": {
-    "title": "Démarrage rapide",
-    "intro": "Pour commencer, ajoutez un élément conteneur à votre page, faites-le pointer vers votre serveur BMLT et chargez le script du widget. Voici un exemple complet :",
+    "title": "Démarrage rapide (extrait de code)",
+    "intro": "Si votre site vous permet de coller un petit extrait HTML — comme un bloc de code Squarespace, un embed HTML Wix ou une page web simple — c'est tout ce dont vous avez besoin. Remplacez l'URL du serveur par le serveur BMLT de votre structure de service, puis collez l'extrait n'importe où sur la page :",
     "autoInit": "Le widget s'initialise automatiquement au chargement du script ; aucun JavaScript supplémentaire n'est nécessaire.",
     "viewport": "<strong>Important :</strong> assurez-vous que votre page contient <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> dans le <code>&lt;head&gt;</code>. C'est essentiel pour un rendu correct sur mobiles et petits écrans."
   },

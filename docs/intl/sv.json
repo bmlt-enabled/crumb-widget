@@ -73,14 +73,50 @@
     "yes": "Ja",
     "no": "Nej"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb är en mötesfinnare som du kan lägga till på ditt servicekommittés webbplats.</strong> Medlemmar skriver in en stad, trycker på \"Nära mig\" eller bläddrar i en lista och karta för att hitta ett NA-möte — direkt på din webbplats, utan app. Det är gratis och öppen källkod."
+  },
+  "pickPlatform": {
+    "label": "Kom igång",
+    "heading": "Välj din plattform",
+    "sub": "Vilken plattform ditt servicekommittés webbplats än använder, finns det ett sätt att lägga till Crumb. Klicka på den som matchar din uppsättning:",
+    "cards": {
+      "wordpress": "Installera det officiella Crumb-pluginet från WordPress-katalogen.",
+      "drupal": "Installera Crumb-modulen för Drupal 10.3+ eller 11.",
+      "joomla": "Installera Crumb-tillägget för Joomla 4, 5 eller 6.",
+      "squarespace": "Klistra in ett litet kodblock på vilken Squarespace-sida som helst.",
+      "wix": "Lägg Crumb-embedden i ett Wix HTML-block.",
+      "other": "Annat / Vanlig HTML",
+      "otherDesc": "Google Sites, vanlig HTML eller vilken webbplats som helst som tar ett kodutdrag.",
+      "install": "Installera plugin →",
+      "viewSteps": "Se steg →",
+      "copySnippet": "Kopiera utdrag →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Vad dina medlemmar får",
+    "heading": "Byggd för att hitta möten, snabbt",
+    "f1": {
+      "title": "Sökning och filter",
+      "body": "Filtrera efter dag, format, tid på dagen, eller se bara vad som händer nu. Skriv för att söka efter namn eller plats."
+    },
+    "f2": {
+      "title": "Karta och Nära mig",
+      "body": "Interaktiv karta. Tryck på \"Nära mig\" eller skriv en stad eller postnummer för att hitta de närmaste mötena. Vägbeskrivningar öppnas i Google Maps."
+    },
+    "f3": {
+      "title": "Fungerar överallt",
+      "body": "Mobilvänlig. 13 språk inklusive persiska (RTL). Ljust och mörkt läge. Utskriftsvänlig lista."
+    }
+  },
   "overview": {
-    "title": "Översikt",
-    "p1": "Crumb Widget är en fristående JavaScript-widget som frågar en <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-server</a> och renderar en fullt utrustad mötesfinnare — sökning, filter, listvy och en interaktiv karta.",
-    "p2": "Den levereras som en <strong>enda JavaScript-fil</strong> där all CSS injiceras vid körning. Inga stilmallar, inga byggsteg, inget ramverk krävs på värdsidan."
+    "title": "Om Crumb",
+    "p1": "Crumb Widget frågar en <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-server</a> (databasen som ditt område använder för att lagra mötesinformation) och förvandlar den till en vänlig mötesfinnare på din webbplats — med sökning, filter, en lista och en interaktiv karta.",
+    "p2": "Under huven är det en <strong>enda JavaScript-fil</strong>. Inga stilmallar att hantera, inga installationssteg, ingen utvecklare behövs om du använder ett av pluginen ovan."
   },
   "quickStart": {
-    "title": "Snabbstart",
-    "intro": "För att komma igång, lägg till ett containerelement på din sida, peka det mot din BMLT-server och ladda widget-skriptet. Här är ett komplett exempel:",
+    "title": "Snabbstart (kodutdrag)",
+    "intro": "Om din webbplats låter dig klistra in en liten bit HTML — som ett Squarespace-kodblock, en Wix HTML-embed eller en vanlig webbsida — är det allt du behöver. Ersätt server-URL:en med ditt servicekommittés BMLT-server och klistra in utdraget var som helst på sidan:",
     "autoInit": "Widgeten initieras automatiskt när skriptet laddas, så ingen ytterligare JavaScript behövs.",
     "viewport": "<strong>Viktigt:</strong> se till att din sida innehåller <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> i <code>&lt;head&gt;</code>. Detta är viktigt för korrekt rendering på mobila enheter och små skärmar."
   },

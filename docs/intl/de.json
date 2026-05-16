@@ -73,14 +73,50 @@
     "yes": "Ja",
     "no": "Nein"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb ist ein Meeting-Finder, den du zur Website deiner Servicestruktur hinzufügen kannst.</strong> Mitglieder geben eine Stadt ein, tippen auf „In meiner Nähe\" oder durchstöbern eine Liste und Karte, um ein NA-Meeting zu finden — direkt auf deiner Seite, ohne App. Es ist kostenlos und Open Source."
+  },
+  "pickPlatform": {
+    "label": "Loslegen",
+    "heading": "Wähle deine Plattform",
+    "sub": "Welche Plattform die Website deiner Servicestruktur auch nutzt — es gibt einen Weg, Crumb hinzuzufügen. Klicke auf die, die zu deinem Setup passt:",
+    "cards": {
+      "wordpress": "Installiere das offizielle Crumb-Plugin aus dem WordPress-Verzeichnis.",
+      "drupal": "Installiere das Crumb-Modul für Drupal 10.3+ oder 11.",
+      "joomla": "Installiere die Crumb-Erweiterung für Joomla 4, 5 oder 6.",
+      "squarespace": "Füge einen kleinen Codeblock auf einer Squarespace-Seite ein.",
+      "wix": "Setze das Crumb-Embed in einen Wix-HTML-Block.",
+      "other": "Andere / einfaches HTML",
+      "otherDesc": "Google Sites, einfaches HTML oder jede Website, die ein Code-Snippet akzeptiert.",
+      "install": "Plugin installieren →",
+      "viewSteps": "Schritte ansehen →",
+      "copySnippet": "Snippet kopieren →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Was deine Mitglieder bekommen",
+    "heading": "Entwickelt, um Meetings schnell zu finden",
+    "f1": {
+      "title": "Suche & Filter",
+      "body": "Filtere nach Tag, Format, Tageszeit oder sieh einfach, was gerade läuft. Tippe, um nach Name oder Ort zu suchen."
+    },
+    "f2": {
+      "title": "Karte & In meiner Nähe",
+      "body": "Interaktive Karte. Tippe auf „In meiner Nähe\" oder gib eine Stadt oder Postleitzahl ein, um die nächstgelegenen Meetings zu finden. Wegbeschreibungen öffnen sich in Google Maps."
+    },
+    "f3": {
+      "title": "Funktioniert überall",
+      "body": "Mobilfreundlich. 13 Sprachen inklusive Persisch (RTL). Hell- und Dunkelmodus. Druckfreundliche Liste."
+    }
+  },
   "overview": {
-    "title": "Überblick",
-    "p1": "Crumb Widget ist ein eigenständiges JavaScript-Widget, das einen <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-Server</a> abfragt und einen vollwertigen Meeting-Finder rendert — Suche, Filter, Listenansicht und eine interaktive Karte.",
-    "p2": "Es wird als <strong>einzelne JavaScript-Datei</strong> ausgeliefert, wobei das gesamte CSS zur Laufzeit injiziert wird. Keine Stylesheets, keine Build-Schritte, kein Framework auf der Hostseite erforderlich."
+    "title": "Über Crumb",
+    "p1": "Crumb Widget fragt einen <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-Server</a> ab (die Datenbank, in der dein Gebiet Meeting-Informationen speichert) und macht daraus einen freundlichen Meeting-Finder auf deiner Seite — mit Suche, Filtern, Liste und einer interaktiven Karte.",
+    "p2": "Unter der Haube ist es eine <strong>einzelne JavaScript-Datei</strong>. Keine Stylesheets zu verwalten, keine Einrichtungsschritte, kein Entwickler nötig, wenn du eines der Plugins oben verwendest."
   },
   "quickStart": {
-    "title": "Schnellstart",
-    "intro": "Um zu beginnen, füge deiner Seite ein Container-Element hinzu, richte es auf deinen BMLT-Server aus und lade das Widget-Skript. Hier ist ein vollständiges Beispiel:",
+    "title": "Schnellstart (Code-Snippet)",
+    "intro": "Wenn deine Seite es erlaubt, ein kleines Stück HTML einzufügen — wie einen Squarespace-Codeblock, ein Wix-HTML-Embed oder eine einfache Webseite — dann reicht das. Ersetze die Server-URL durch den BMLT-Server deiner Servicestruktur und füge das Snippet an einer beliebigen Stelle der Seite ein:",
     "autoInit": "Das Widget initialisiert sich automatisch beim Laden des Skripts, sodass kein zusätzliches JavaScript erforderlich ist.",
     "viewport": "<strong>Wichtig:</strong> Stelle sicher, dass deine Seite <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> im <code>&lt;head&gt;</code> enthält. Dies ist wichtig für die korrekte Darstellung auf Mobilgeräten und kleinen Bildschirmen."
   },

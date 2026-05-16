@@ -73,14 +73,50 @@
     "yes": "Sì",
     "no": "No"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb è un cercatore di riunioni che puoi aggiungere al sito web del tuo organismo di servizio.</strong> I membri digitano una città, toccano «Vicino a me» o sfogliano una lista e una mappa per trovare una riunione NA — direttamente sul tuo sito, senza app. È gratuito e open source."
+  },
+  "pickPlatform": {
+    "label": "Inizia",
+    "heading": "Scegli la tua piattaforma",
+    "sub": "Qualunque piattaforma usi il sito web del tuo organismo di servizio, c'è un modo per aggiungere Crumb. Clicca su quella che corrisponde alla tua configurazione:",
+    "cards": {
+      "wordpress": "Installa il plugin ufficiale di Crumb dalla directory di WordPress.",
+      "drupal": "Installa il modulo Crumb per Drupal 10.3+ o 11.",
+      "joomla": "Installa l'estensione Crumb per Joomla 4, 5 o 6.",
+      "squarespace": "Incolla un piccolo blocco di codice in qualsiasi pagina Squarespace.",
+      "wix": "Inserisci l'embed Crumb in un blocco HTML di Wix.",
+      "other": "Altro / HTML semplice",
+      "otherDesc": "Google Sites, HTML semplice o qualsiasi sito che accetti uno snippet di codice.",
+      "install": "Installa il plugin →",
+      "viewSteps": "Vedi i passaggi →",
+      "copySnippet": "Copia lo snippet →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Cosa ottengono i tuoi membri",
+    "heading": "Pensato per trovare riunioni, velocemente",
+    "f1": {
+      "title": "Ricerca e filtri",
+      "body": "Filtra per giorno, formato, ora del giorno o vedi semplicemente cosa c'è ora. Digita per cercare per nome o luogo."
+    },
+    "f2": {
+      "title": "Mappa e Vicino a me",
+      "body": "Mappa interattiva. Tocca «Vicino a me» o digita una città o un codice postale per trovare le riunioni più vicine. Le indicazioni si aprono in Google Maps."
+    },
+    "f3": {
+      "title": "Funziona ovunque",
+      "body": "Ottimizzato per mobile. 13 lingue incluso il persiano (RTL). Modalità chiara e scura. Lista pronta per la stampa."
+    }
+  },
   "overview": {
-    "title": "Panoramica",
-    "p1": "Crumb Widget è un widget JavaScript autonomo che interroga un <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">server BMLT</a> e mostra uno strumento completo di ricerca riunioni — ricerca, filtri, vista elenco e mappa interattiva.",
-    "p2": "È distribuito come un <strong>singolo file JavaScript</strong> con tutto il CSS iniettato a runtime. Nessun foglio di stile, nessun passaggio di build, nessun framework richiesto sulla pagina ospite."
+    "title": "Informazioni su Crumb",
+    "p1": "Crumb Widget interroga un <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">server BMLT</a> (il database che la tua area usa per memorizzare le informazioni sulle riunioni) e lo trasforma in un cercatore di riunioni amichevole sul tuo sito — con ricerca, filtri, lista e mappa interattiva.",
+    "p2": "Dietro le quinte è un <strong>singolo file JavaScript</strong>. Nessun foglio di stile da gestire, nessun passaggio di configurazione, nessuno sviluppatore necessario se usi uno dei plugin sopra."
   },
   "quickStart": {
-    "title": "Avvio rapido",
-    "intro": "Per iniziare, aggiungi un elemento contenitore alla tua pagina, puntalo al tuo server BMLT e carica lo script del widget. Ecco un esempio completo:",
+    "title": "Avvio rapido (snippet di codice)",
+    "intro": "Se il tuo sito ti permette di incollare un piccolo pezzo di HTML — come un blocco di codice Squarespace, un embed HTML Wix o una semplice pagina web — questo è tutto ciò di cui hai bisogno. Sostituisci l'URL del server con il server BMLT del tuo organismo di servizio, poi incolla lo snippet ovunque sulla pagina:",
     "autoInit": "Il widget si inizializza automaticamente al caricamento dello script, quindi non è necessario alcun JavaScript aggiuntivo.",
     "viewport": "<strong>Importante:</strong> assicurati che la tua pagina includa <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> nell'<code>&lt;head&gt;</code>. È importante per un rendering corretto su dispositivi mobili e schermi piccoli."
   },

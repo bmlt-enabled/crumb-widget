@@ -73,14 +73,50 @@
     "yes": "Tak",
     "no": "Nie"
   },
+  "whatIs": {
+    "p1": "<strong>Crumb to wyszukiwarka mityngów, którą możesz dodać do strony swojego ciała służebnego.</strong> Członkowie wpisują miasto, dotykają „W pobliżu\" lub przeglądają listę i mapę, aby znaleźć mityng NA — bezpośrednio na Twojej stronie, bez aplikacji. Jest darmowy i open source."
+  },
+  "pickPlatform": {
+    "label": "Zacznij",
+    "heading": "Wybierz swoją platformę",
+    "sub": "Niezależnie od tego, na czym działa strona Twojego ciała służebnego, jest sposób, aby dodać Crumb. Kliknij ten, który pasuje do Twojej konfiguracji:",
+    "cards": {
+      "wordpress": "Zainstaluj oficjalną wtyczkę Crumb z katalogu WordPress.",
+      "drupal": "Zainstaluj moduł Crumb dla Drupal 10.3+ lub 11.",
+      "joomla": "Zainstaluj rozszerzenie Crumb dla Joomla 4, 5 lub 6.",
+      "squarespace": "Wklej mały blok kodu na dowolną stronę Squarespace.",
+      "wix": "Umieść osadzony Crumb w bloku HTML Wix.",
+      "other": "Inne / zwykły HTML",
+      "otherDesc": "Google Sites, zwykły HTML lub dowolna strona, która przyjmuje fragment kodu.",
+      "install": "Zainstaluj wtyczkę →",
+      "viewSteps": "Zobacz kroki →",
+      "copySnippet": "Kopiuj fragment →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Co dostają Twoi członkowie",
+    "heading": "Stworzone do szybkiego znajdowania mityngów",
+    "f1": {
+      "title": "Wyszukiwanie i filtry",
+      "body": "Filtruj według dnia, formatu, pory dnia lub zobacz po prostu, co dzieje się teraz. Wpisz, aby szukać po nazwie lub lokalizacji."
+    },
+    "f2": {
+      "title": "Mapa i W pobliżu",
+      "body": "Interaktywna mapa. Dotknij „W pobliżu\" lub wpisz miasto albo kod pocztowy, aby znaleźć najbliższe mityngi. Wskazówki dojazdu otwierają się w Google Maps."
+    },
+    "f3": {
+      "title": "Działa wszędzie",
+      "body": "Przyjazny dla urządzeń mobilnych. 13 języków, w tym perski (RTL). Tryb jasny i ciemny. Lista przyjazna do druku."
+    }
+  },
   "overview": {
-    "title": "Przegląd",
-    "p1": "Crumb Widget to samodzielny widżet JavaScript, który odpytuje <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">serwer BMLT</a> i renderuje w pełni funkcjonalną wyszukiwarkę spotkań — wyszukiwanie, filtry, widok listy oraz interaktywną mapę.",
-    "p2": "Dostarczany jest jako <strong>pojedynczy plik JavaScript</strong>, w którym cały CSS jest wstrzykiwany w czasie wykonania. Bez arkuszy stylów, bez kroków budowania, bez frameworka wymaganego po stronie hosta."
+    "title": "O Crumb",
+    "p1": "Crumb Widget odpytuje <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">serwer BMLT</a> (bazę danych, której Twój region używa do przechowywania informacji o mityngach) i przekształca go w przyjazną wyszukiwarkę mityngów na Twojej stronie — z wyszukiwaniem, filtrami, listą i interaktywną mapą.",
+    "p2": "Pod maską to <strong>pojedynczy plik JavaScript</strong>. Żadnych arkuszy stylów do zarządzania, żadnych kroków konfiguracyjnych, żadnego programisty, jeśli używasz jednej z powyższych wtyczek."
   },
   "quickStart": {
-    "title": "Szybki start",
-    "intro": "Aby zacząć, dodaj element kontenera do swojej strony, wskaż go na swój serwer BMLT i załaduj skrypt widżetu. Oto kompletny przykład:",
+    "title": "Szybki start (fragment kodu)",
+    "intro": "Jeśli Twoja strona pozwala wkleić mały kawałek HTML — jak blok kodu Squarespace, osadzenie HTML Wix lub zwykła strona internetowa — to wszystko, czego potrzebujesz. Zamień URL serwera na serwer BMLT swojego ciała służebnego i wklej fragment w dowolnym miejscu na stronie:",
     "autoInit": "Widżet inicjalizuje się automatycznie po załadowaniu skryptu, więc dodatkowy JavaScript nie jest potrzebny.",
     "viewport": "<strong>Ważne:</strong> upewnij się, że Twoja strona zawiera <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> w sekcji <code>&lt;head&gt;</code>. Jest to istotne dla poprawnego renderowania na urządzeniach mobilnych i małych ekranach."
   },
