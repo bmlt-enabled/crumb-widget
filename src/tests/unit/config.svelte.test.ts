@@ -373,4 +373,32 @@ describe('initConfig', () => {
       expect(config.geolocation).toBe(true);
     });
   });
+
+  describe('geolocation data attribute', () => {
+    test('data-geolocation="true" enables geolocation', () => {
+      initConfig(makeElement({ 'data-geolocation': 'true' }));
+      expect(config.geolocation).toBe(true);
+    });
+
+    test('data-geolocation="1" enables geolocation', () => {
+      initConfig(makeElement({ 'data-geolocation': '1' }));
+      expect(config.geolocation).toBe(true);
+    });
+
+    test('data-geolocation="false" disables aggregator default', () => {
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/', 'data-geolocation': 'false' }));
+      expect(config.geolocation).toBe(false);
+    });
+
+    test('data-geolocation overrides CrumbWidgetConfig.geolocation', () => {
+      window.CrumbWidgetConfig = { geolocation: false };
+      initConfig(makeElement({ 'data-geolocation': 'true' }));
+      expect(config.geolocation).toBe(true);
+    });
+
+    test('data-geolocation is forced off by a custom query', () => {
+      initConfig(makeElement({ 'data-geolocation': 'true', 'data-query': 'weekdays=2' }));
+      expect(config.geolocation).toBe(false);
+    });
+  });
 });

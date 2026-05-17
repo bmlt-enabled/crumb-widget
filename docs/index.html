@@ -1751,6 +1751,16 @@
                 </td>
               </tr>
               <tr>
+                <td>data-geolocation</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.geolocation">
+                  Enable or disable location-based search (the <strong>Near Me</strong> button and typed-location search). Takes precedence over
+                  <code>CrumbWidgetConfig.geolocation</code>. Default: <code>false</code> for most servers, <code>true</code> when <code>data-server</code> points at
+                  <code>aggregator.bmltenabled.org</code> with no <code>data-service-body</code> set. Forced off when <code>data-query</code> is used.
+                  <br /><em>Values:</em> <code>"true"</code>, <code>"false"</code>, <code>"1"</code>, or <code>"0"</code>
+                </td>
+              </tr>
+              <tr>
                 <td>data-query</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.query">
