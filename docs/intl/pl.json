@@ -10,6 +10,7 @@
     "liveDemo": "→ Demo na żywo",
     "qaTests": "→ Strony testów QA",
     "overview": "Przegląd",
+    "videos": "Tutoriale wideo",
     "quickStart": "Szybki start",
     "attributes": "Atrybuty data",
     "globalConfig": "Konfiguracja globalna",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "Działa wszędzie",
       "body": "Przyjazny dla urządzeń mobilnych. 13 języków, w tym perski (RTL). Tryb jasny i ciemny. Lista przyjazna do druku."
+    }
+  },
+  "videos": {
+    "label": "Oglądaj i ucz się",
+    "heading": "Tutoriale wideo",
+    "sub": "Krótkie poradniki konfiguracji dla WordPressa i zwykłych stron HTML. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Zobacz całą playlistę na YouTube →</a>",
+    "v1": {
+      "title": "Dodaj wyszukiwarkę mityngów NA do dowolnej strony",
+      "duration": "Crumb Widget · 90 sekund"
+    },
+    "v2": {
+      "title": "Filtruj Crumb do jednego service body",
+      "duration": "Crumb Widget · 2 minuty"
+    },
+    "v3": {
+      "title": "Dodaj wyszukiwarkę mityngów NA do WordPressa",
+      "duration": "Wtyczka Crumb · 3 minuty"
+    },
+    "v4": {
+      "title": "Przejście z Croutona na Crumb",
+      "duration": "Wtyczka Crumb dla WordPressa · 2 minuty"
     }
   },
   "overview": {

@@ -10,6 +10,7 @@
     "liveDemo": "→ Démo en direct",
     "qaTests": "→ Pages de tests QA",
     "overview": "Aperçu",
+    "videos": "Tutoriels vidéo",
     "quickStart": "Démarrage rapide",
     "attributes": "Attributs de données",
     "globalConfig": "Config globale",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "Fonctionne partout",
       "body": "Compatible mobile. 13 langues dont le persan (RTL). Mode clair et sombre. Liste imprimable."
+    }
+  },
+  "videos": {
+    "label": "Regardez et apprenez",
+    "heading": "Tutoriels vidéo",
+    "sub": "Courtes démonstrations d'installation pour WordPress et les sites HTML. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Voir la playlist complète sur YouTube →</a>",
+    "v1": {
+      "title": "Ajouter un localisateur de réunions NA à n'importe quel site",
+      "duration": "Crumb Widget · 90 secondes"
+    },
+    "v2": {
+      "title": "Filtrer Crumb sur un seul corps de service",
+      "duration": "Crumb Widget · 2 minutes"
+    },
+    "v3": {
+      "title": "Ajouter un localisateur de réunions NA à WordPress",
+      "duration": "Extension Crumb · 3 minutes"
+    },
+    "v4": {
+      "title": "Passer de Crouton à Crumb",
+      "duration": "Extension Crumb pour WordPress · 2 minutes"
     }
   },
   "overview": {

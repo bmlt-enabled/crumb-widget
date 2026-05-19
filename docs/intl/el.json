@@ -10,6 +10,7 @@
     "liveDemo": "→ Ζωντανή επίδειξη",
     "qaTests": "→ Σελίδες δοκιμών QA",
     "overview": "Επισκόπηση",
+    "videos": "Βίντεο οδηγοί",
     "quickStart": "Γρήγορη εκκίνηση",
     "attributes": "Χαρακτηριστικά data",
     "globalConfig": "Καθολική διαμόρφωση",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "Λειτουργεί παντού",
       "body": "Φιλικό προς κινητά. 13 γλώσσες συμπεριλαμβανομένων των Περσικών (RTL). Φωτεινή και σκοτεινή λειτουργία. Λίστα κατάλληλη για εκτύπωση."
+    }
+  },
+  "videos": {
+    "label": "Δες και μάθε",
+    "heading": "Βίντεο οδηγοί",
+    "sub": "Σύντομες παρουσιάσεις εγκατάστασης για WordPress και απλές HTML σελίδες. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Δείτε όλη τη λίστα αναπαραγωγής στο YouTube →</a>",
+    "v1": {
+      "title": "Προσθέστε έναν εντοπιστή συναντήσεων NA σε οποιαδήποτε ιστοσελίδα",
+      "duration": "Crumb Widget · 90 δευτερόλεπτα"
+    },
+    "v2": {
+      "title": "Φιλτράρετε το Crumb σε ένα service body",
+      "duration": "Crumb Widget · 2 λεπτά"
+    },
+    "v3": {
+      "title": "Προσθέστε έναν εντοπιστή συναντήσεων NA στο WordPress",
+      "duration": "Πρόσθετο Crumb · 3 λεπτά"
+    },
+    "v4": {
+      "title": "Μετάβαση από Crouton σε Crumb",
+      "duration": "Πρόσθετο Crumb για WordPress · 2 λεπτά"
     }
   },
   "overview": {

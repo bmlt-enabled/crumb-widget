@@ -10,6 +10,7 @@
     "liveDemo": "← دموی زنده",
     "qaTests": "← صفحات تست QA",
     "overview": "نمای کلی",
+    "videos": "آموزش‌های ویدئویی",
     "quickStart": "شروع سریع",
     "attributes": "ویژگی‌های داده",
     "globalConfig": "پیکربندی سراسری",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "همه‌جا کار می‌کند",
       "body": "سازگار با موبایل. ۱۳ زبان از جمله فارسی (RTL). حالت روشن و تاریک. فهرست مناسب چاپ."
+    }
+  },
+  "videos": {
+    "label": "تماشا کن و یاد بگیر",
+    "heading": "آموزش‌های ویدئویی",
+    "sub": "راهنماهای کوتاه برای راه‌اندازی در وردپرس و سایت‌های HTML ساده. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">مشاهدهٔ لیست کامل پخش در یوتیوب ←</a>",
+    "v1": {
+      "title": "افزودن جستجوگر جلسات NA به هر وب‌سایت",
+      "duration": "Crumb Widget · ۹۰ ثانیه"
+    },
+    "v2": {
+      "title": "فیلتر کردن Crumb روی یک کمیتهٔ خدماتی",
+      "duration": "Crumb Widget · ۲ دقیقه"
+    },
+    "v3": {
+      "title": "افزودن جستجوگر جلسات NA به وردپرس",
+      "duration": "افزونهٔ Crumb · ۳ دقیقه"
+    },
+    "v4": {
+      "title": "تغییر از Crouton به Crumb",
+      "duration": "افزونهٔ Crumb برای وردپرس · ۲ دقیقه"
     }
   },
   "overview": {

@@ -10,6 +10,7 @@
     "liveDemo": "→ Livedemo",
     "qaTests": "→ QA-testsidor",
     "overview": "Översikt",
+    "videos": "Videohandledningar",
     "quickStart": "Snabbstart",
     "attributes": "Dataattribut",
     "globalConfig": "Global konfiguration",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "Fungerar överallt",
       "body": "Mobilvänlig. 13 språk inklusive persiska (RTL). Ljust och mörkt läge. Utskriftsvänlig lista."
+    }
+  },
+  "videos": {
+    "label": "Titta och lär",
+    "heading": "Videohandledningar",
+    "sub": "Korta genomgångar för installation på WordPress- och vanliga HTML-sidor. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Se hela spellistan på YouTube →</a>",
+    "v1": {
+      "title": "Lägg till en NA-mötessökare på vilken webbplats som helst",
+      "duration": "Crumb Widget · 90 sekunder"
+    },
+    "v2": {
+      "title": "Filtrera Crumb till ett service body",
+      "duration": "Crumb Widget · 2 minuter"
+    },
+    "v3": {
+      "title": "Lägg till en NA-mötessökare i WordPress",
+      "duration": "Crumb-plugin · 3 minuter"
+    },
+    "v4": {
+      "title": "Byt från Crouton till Crumb",
+      "duration": "Crumb WordPress-plugin · 2 minuter"
     }
   },
   "overview": {

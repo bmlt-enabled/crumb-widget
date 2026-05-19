@@ -10,6 +10,7 @@
     "liveDemo": "→ Демо в реальном времени",
     "qaTests": "→ Страницы QA-тестов",
     "overview": "Обзор",
+    "videos": "Видеоуроки",
     "quickStart": "Быстрый старт",
     "attributes": "Data-атрибуты",
     "globalConfig": "Глобальная конфигурация",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "Работает везде",
       "body": "Удобен для мобильных устройств. 13 языков, включая персидский (RTL). Светлая и тёмная темы. Список, удобный для печати."
+    }
+  },
+  "videos": {
+    "label": "Смотри и учись",
+    "heading": "Видеоуроки",
+    "sub": "Короткие пошаговые инструкции по настройке для WordPress и простых HTML-сайтов. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Смотреть весь плейлист на YouTube →</a>",
+    "v1": {
+      "title": "Добавьте поисковик собраний NA на любой сайт",
+      "duration": "Crumb Widget · 90 секунд"
+    },
+    "v2": {
+      "title": "Фильтрация Crumb по одному service body",
+      "duration": "Crumb Widget · 2 минуты"
+    },
+    "v3": {
+      "title": "Добавьте поисковик собраний NA в WordPress",
+      "duration": "Плагин Crumb · 3 минуты"
+    },
+    "v4": {
+      "title": "Переход с Crouton на Crumb",
+      "duration": "Плагин Crumb для WordPress · 2 минуты"
     }
   },
   "overview": {
