@@ -569,6 +569,79 @@
         margin-top: auto;
       }
 
+      /* Video tutorials grid */
+      .video-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        margin: 0 0 2.5rem;
+      }
+      .video-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--doc-bg);
+        border: 1px solid var(--doc-border);
+        border-radius: 10px;
+        overflow: hidden;
+        text-decoration: none !important;
+        color: inherit;
+        transition:
+          border-color 0.15s,
+          transform 0.1s,
+          box-shadow 0.15s;
+      }
+      .video-card:hover {
+        border-color: var(--doc-accent);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        color: inherit;
+      }
+      .video-thumb {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background: #000;
+        overflow: hidden;
+      }
+      .video-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .video-thumb::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 56px;
+        height: 56px;
+        margin: -28px 0 0 -28px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.75);
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M8 5v14l11-7z'/></svg>");
+        background-repeat: no-repeat;
+        background-position: 54% 50%;
+        background-size: 28px 28px;
+        transition: background-color 0.15s;
+      }
+      .video-card:hover .video-thumb::after {
+        background-color: #cc0000;
+      }
+      .video-meta {
+        padding: 0.85rem 1rem 1rem;
+      }
+      .video-title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--doc-text);
+        line-height: 1.35;
+        margin-bottom: 0.35rem;
+      }
+      .video-duration {
+        font-size: 0.8rem;
+        color: var(--doc-text-dim);
+      }
+
       /* "What members get" inline feature blurbs */
       .quick-features {
         display: grid;
@@ -764,6 +837,9 @@
           grid-template-columns: 1fr;
         }
         .quick-features {
+          grid-template-columns: 1fr;
+        }
+        .video-grid {
           grid-template-columns: 1fr;
         }
       }
@@ -1058,6 +1134,7 @@
           <li><a href="meetings.html" data-i18n="nav.liveDemo">→ Live Demo</a></li>
           <li><a href="tests/" data-i18n="nav.qaTests">→ QA Test Pages</a></li>
           <li><a href="#overview" data-i18n="nav.overview">Overview</a></li>
+          <li><a href="#videos" data-i18n="nav.videos">Video Tutorials</a></li>
           <li><a href="#quick-start" data-i18n="nav.quickStart">Quick Start</a></li>
           <li class="section-label" data-i18n="nav.section.platforms">Platforms</li>
           <li><a href="#example-wordpress" data-i18n="nav.exampleWordpress">WordPress</a></li>
@@ -1299,6 +1376,50 @@
               <div class="qf-title" data-i18n="memberFeatures.f3.title">Works everywhere</div>
               <div class="qf-body" data-i18n="memberFeatures.f3.body">Mobile-friendly. 13 languages including Persian (RTL). Light and dark mode. Printer-friendly list.</div>
             </div>
+          </div>
+        </div>
+
+        <div class="platform-section" id="videos">
+          <div class="platform-label" data-i18n="videos.label">Watch &amp; learn</div>
+          <h3 class="platform-heading" data-i18n="videos.heading">Video tutorials</h3>
+          <p class="platform-sub" data-i18n-html="videos.sub">Short walkthroughs covering setup for WordPress and plain-HTML sites. <a href="https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy" target="_blank" rel="noopener">Watch the full playlist on YouTube →</a></p>
+          <div class="video-grid">
+            <a href="https://youtu.be/Y2pT-J27TUM" target="_blank" rel="noopener" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/Y2pT-J27TUM/hqdefault.jpg" alt="Add an NA meeting finder to any website in 90 seconds — Crumb Widget" loading="lazy" />
+              </div>
+              <div class="video-meta">
+                <div class="video-title" data-i18n="videos.v1.title">Add an NA meeting finder to any website</div>
+                <div class="video-duration" data-i18n="videos.v1.duration">Crumb Widget · 90 seconds</div>
+              </div>
+            </a>
+            <a href="https://youtu.be/MpURKdZcxVk" target="_blank" rel="noopener" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/MpURKdZcxVk/hqdefault.jpg" alt="Filter Crumb to one service body in 120 seconds — Crumb Widget" loading="lazy" />
+              </div>
+              <div class="video-meta">
+                <div class="video-title" data-i18n="videos.v2.title">Filter Crumb to one service body</div>
+                <div class="video-duration" data-i18n="videos.v2.duration">Crumb Widget · 2 minutes</div>
+              </div>
+            </a>
+            <a href="https://youtu.be/TMG3GwSjswo" target="_blank" rel="noopener" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/TMG3GwSjswo/hqdefault.jpg" alt="Add an NA meeting finder to WordPress in 3 minutes — Crumb plugin" loading="lazy" />
+              </div>
+              <div class="video-meta">
+                <div class="video-title" data-i18n="videos.v3.title">Add an NA meeting finder to WordPress</div>
+                <div class="video-duration" data-i18n="videos.v3.duration">Crumb plugin · 3 minutes</div>
+              </div>
+            </a>
+            <a href="https://youtu.be/YxGyVE04gSs" target="_blank" rel="noopener" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/YxGyVE04gSs/hqdefault.jpg" alt="Switch from Crouton to Crumb in 120 seconds — Crumb WordPress plugin" loading="lazy" />
+              </div>
+              <div class="video-meta">
+                <div class="video-title" data-i18n="videos.v4.title">Switch from Crouton to Crumb</div>
+                <div class="video-duration" data-i18n="videos.v4.duration">Crumb WordPress plugin · 2 minutes</div>
+              </div>
+            </a>
           </div>
         </div>
 

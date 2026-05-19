@@ -10,6 +10,7 @@
     "liveDemo": "→ Live Demo",
     "qaTests": "→ QA Test Pages",
     "overview": "Overview",
+    "videos": "Video Tutorials",
     "quickStart": "Quick Start",
     "attributes": "Data Attributes",
     "globalConfig": "Global Config",
@@ -108,6 +109,27 @@
     "f3": {
       "title": "Works everywhere",
       "body": "Mobile-friendly. 13 languages including Persian (RTL). Light and dark mode. Printer-friendly list."
+    }
+  },
+  "videos": {
+    "label": "Watch & learn",
+    "heading": "Video tutorials",
+    "sub": "Short walkthroughs covering setup for WordPress and plain-HTML sites. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Watch the full playlist on YouTube →</a>",
+    "v1": {
+      "title": "Add an NA meeting finder to any website",
+      "duration": "Crumb Widget · 90 seconds"
+    },
+    "v2": {
+      "title": "Filter Crumb to one service body",
+      "duration": "Crumb Widget · 2 minutes"
+    },
+    "v3": {
+      "title": "Add an NA meeting finder to WordPress",
+      "duration": "Crumb plugin · 3 minutes"
+    },
+    "v4": {
+      "title": "Switch from Crouton to Crumb",
+      "duration": "Crumb WordPress plugin · 2 minutes"
     }
   },
   "overview": {
