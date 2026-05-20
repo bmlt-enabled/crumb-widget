@@ -270,6 +270,7 @@
     "row": {
       "fontFamily": "Widget font stack",
       "fontSize": "Base font size",
+      "crumbRem": "Internal \"rem unit\" for text, spacing, and radius. Pinned to a 16px floor so host themes that shrink <code>&lt;html&gt;</code> can't shrink the widget; scales up when users set a larger browser default font size.",
       "background": "Widget and controls bar background",
       "text": "Primary text color",
       "border": "Borders and dividers",

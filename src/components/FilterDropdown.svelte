@@ -29,7 +29,7 @@
   }}
 />
 
-<div class="relative md:max-w-[13rem] md:min-w-[8rem] md:flex-1 {containerClass}" bind:this={rootEl}>
+<div class="relative md:max-w-[208px] md:min-w-[128px] md:flex-1 {containerClass}" bind:this={rootEl}>
   <button
     onclick={(e) => {
       e.stopPropagation();
@@ -44,7 +44,7 @@
     <Icon name="chevron-down" class="h-3.5 w-3.5 shrink-0 transition-transform {isOpen ? 'rotate-180' : ''}" />
   </button>
   {#if isOpen}
-    <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-full overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
+    <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-full overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(288px, 60vh)">
       {#each options as opt (opt.value)}
         <button
           onclick={() => onToggle(opt.value)}

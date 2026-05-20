@@ -356,7 +356,7 @@
         />
       {/if}
       {#if showSearchModeDropdown}
-        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[160px] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
           <button
             type="button"
             onclick={() => setSearchMode('filter')}
@@ -445,7 +445,7 @@
 
         <!-- Distance dropdown -->
         {#if showGeoDropdown}
-          <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[9rem] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
+          <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[144px] overflow-hidden rounded-lg border border-gray-200 bg-white py-1 shadow-lg">
             {#if config.serviceBodyIds.length > 0}
               <button
                 onclick={() => {
@@ -526,7 +526,7 @@
     />
 
     <!-- Type dropdown (venue type + format) -->
-    <div class="relative md:max-w-[13rem] md:min-w-[8rem] md:flex-1 {showViewToggle ? '' : 'col-span-2'}" bind:this={typeDropdownEl}>
+    <div class="relative md:max-w-[208px] md:min-w-[128px] md:flex-1 {showViewToggle ? '' : 'col-span-2'}" bind:this={typeDropdownEl}>
       <button
         onclick={(e) => {
           e.stopPropagation();
@@ -554,7 +554,7 @@
         <Icon name="chevron-down" class="h-3.5 w-3.5 shrink-0 transition-transform {showTypeDropdown ? 'rotate-180' : ''}" />
       </button>
       {#if showTypeDropdown}
-        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[10rem] overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(18rem, 60vh)">
+        <div class="absolute top-full left-0 z-[1001] mt-1 w-full min-w-[160px] overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-lg" style="max-height:min(288px, 60vh)">
           <div class="px-3 pt-2 pb-0.5 text-xs font-semibold tracking-wide text-gray-400 uppercase">{$t.venueType}</div>
           {#each VENUE_TYPE_VALUES as vt (vt.value)}
             <button

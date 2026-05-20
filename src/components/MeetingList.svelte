@@ -181,8 +181,8 @@
         <tr>
           {#if cols.has('time')}<th class="bmlt-time-col w-24 px-4 py-2 text-start lg:w-40">{$t.dayAndTime}</th>{/if}
           {#if showDistance}<th class="w-24 px-3 py-2 text-start">{$t.distance}</th>{/if}
-          {#if cols.has('name')}<th class="min-w-[8rem] px-4 py-2 text-start">{$t.meetingColumn}</th>{/if}
-          {#if cols.has('location')}<th class="min-w-[7rem] px-4 py-2 text-start">{$t.location}</th>{/if}
+          {#if cols.has('name')}<th class="min-w-[128px] px-4 py-2 text-start">{$t.meetingColumn}</th>{/if}
+          {#if cols.has('location')}<th class="min-w-[112px] px-4 py-2 text-start">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-start">{$t.address}</th>{/if}
           {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-start lg:table-cell">{$t.serviceBody}</th>{/if}
         </tr>

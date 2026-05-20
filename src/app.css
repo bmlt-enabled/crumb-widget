@@ -43,12 +43,34 @@
 :where(#crumb-widget) {
   --bmlt-font-family: system-ui, -apple-system, sans-serif;
   --bmlt-font-size: 17px;
+  /* Our internal "rem unit". Pinned to a 16px floor so host themes that
+     shrink <html> (e.g. WordPress's Citylogic uses `html { font-size: 62.5% }`,
+     the old "10px rem" trick) can't shrink every Tailwind utility (text,
+     spacing, radius) to ~62%. The `max(…, 1rem)` lets the value scale UP
+     for accessibility users who set a larger browser default font-size,
+     so we don't trap them at 16px. */
+  --crumb-rem: max(16px, 1rem);
   /* Bump Tailwind's font-size scale up ~1px across the board */
-  --text-xs: 0.8125rem; /* 13px (was 12px) */
-  --text-sm: 0.9375rem; /* 15px (was 14px) */
-  --text-base: 1.0625rem; /* 17px (was 16px) */
-  --text-lg: 1.1875rem; /* 19px (was 18px) */
-  --text-xl: 1.3125rem; /* 21px (was 20px) */
+  --text-xs: calc(0.8125 * var(--crumb-rem)); /* 13px (was 12px) */
+  --text-sm: calc(0.9375 * var(--crumb-rem)); /* 15px (was 14px) */
+  --text-base: calc(1.0625 * var(--crumb-rem)); /* 17px (was 16px) */
+  --text-lg: calc(1.1875 * var(--crumb-rem)); /* 19px (was 18px) */
+  --text-xl: calc(1.3125 * var(--crumb-rem)); /* 21px (was 20px) */
+  --text-2xl: calc(1.5 * var(--crumb-rem));
+  --text-3xl: calc(1.875 * var(--crumb-rem));
+  --text-4xl: calc(2.25 * var(--crumb-rem));
+  /* Tailwind's spacing scale (p-*, m-*, gap-*, w-*, h-*, etc.) and radius
+     scale are all rem-based too — pin them to --crumb-rem for the same reason. */
+  --spacing: calc(0.25 * var(--crumb-rem));
+  --radius-xs: calc(0.125 * var(--crumb-rem));
+  --radius-sm: calc(0.25 * var(--crumb-rem));
+  --radius-md: calc(0.375 * var(--crumb-rem));
+  --radius-lg: calc(0.5 * var(--crumb-rem));
+  --radius-xl: calc(0.75 * var(--crumb-rem));
+  --radius-2xl: var(--crumb-rem);
+  --radius-3xl: calc(1.5 * var(--crumb-rem));
+  --radius-4xl: calc(2 * var(--crumb-rem));
+  --radius: calc(0.25 * var(--crumb-rem));
   --bmlt-background: #ffffff;
   --bmlt-text: #111827;
   --bmlt-border: #e5e7eb;
@@ -461,11 +483,11 @@
   min-width: 600px !important;
 }
 #crumb-widget .bmlt-time-col {
-  width: 6rem !important;
+  width: calc(6 * var(--crumb-rem)) !important;
 }
 @media (min-width: 1024px) {
   #crumb-widget .bmlt-time-col {
-    width: 10rem !important;
+    width: calc(10 * var(--crumb-rem)) !important;
   }
 }
 

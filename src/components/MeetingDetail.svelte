@@ -282,8 +282,8 @@
 
     <!-- Right: map (in-person with coords only) -->
     {#if showMap}
-      <div class="min-h-[28rem] flex-1 sm:min-h-0">
-        <div bind:this={mapEl} class="h-full min-h-[28rem] w-full"></div>
+      <div class="min-h-[448px] flex-1 sm:min-h-0">
+        <div bind:this={mapEl} class="h-full min-h-[448px] w-full"></div>
       </div>
     {/if}
   </div>
