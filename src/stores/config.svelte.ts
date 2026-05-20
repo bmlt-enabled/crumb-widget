@@ -63,7 +63,11 @@ export function initConfig(el: HTMLElement): void {
   }
 
   const globalCfg = window.CrumbWidgetConfig ?? {};
-  const dataView = validView(el.getAttribute('data-view'), CONFIG_DEFAULTS.view);
+  // data-view overrides CrumbWidgetConfig.view — matches the precedence of every other
+  // attribute/config pair in this file. Resolve the global value first so an invalid
+  // data-view falls through to the configured global rather than CONFIG_DEFAULTS.
+  const globalView = validView(globalCfg.view, CONFIG_DEFAULTS.view);
+  const dataView = validView(el.getAttribute('data-view'), globalView);
   // data-columns is a comma-separated list (e.g. "time,name,address"); CrumbWidgetConfig.columns overrides.
   const dataColumnsRaw = el.getAttribute('data-columns');
   const dataColumns =
@@ -83,7 +87,7 @@ export function initConfig(el: HTMLElement): void {
   // ?formats= overrides CrumbWidgetConfig.formats (key strings, client-side filter)
   const formatsParam = query.get('formats');
   config.formatKeys = formatsParam != null ? parseFormatKeys(formatsParam) : validFormatKeys(globalCfg.formats, []);
-  config.view = validView(globalCfg.view, dataView);
+  config.view = dataView;
   config.containerId = el.id || 'crumb-widget';
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;

@@ -327,10 +327,25 @@ describe('initConfig', () => {
       expect(config.locationMarker).toEqual(marker);
     });
 
-    test('global config view takes precedence over data-view attribute', () => {
+    test('data-view attribute takes precedence over global config view', () => {
+      // Matches the precedence of every other attribute/config pair (data-update-url,
+      // data-query, data-geolocation, etc.) — the embedder-supplied per-instance attribute
+      // wins over the page-wide CrumbWidgetConfig.
       window.CrumbWidgetConfig = { view: 'list' };
       initConfig(makeElement({ 'data-view': 'map' }));
-      expect(config.view).toBe('list');
+      expect(config.view).toBe('map');
+    });
+
+    test('invalid data-view falls through to CrumbWidgetConfig.view', () => {
+      window.CrumbWidgetConfig = { view: 'both' };
+      initConfig(makeElement({ 'data-view': 'not-a-view' }));
+      expect(config.view).toBe('both');
+    });
+
+    test('no data-view uses CrumbWidgetConfig.view', () => {
+      window.CrumbWidgetConfig = { view: 'both' };
+      initConfig(makeElement());
+      expect(config.view).toBe('both');
     });
   });
 
