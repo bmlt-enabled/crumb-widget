@@ -243,6 +243,7 @@
     "row": {
       "fontFamily": "Schriftart-Stack des Widgets",
       "fontSize": "Basis-Schriftgröße",
+      "crumbRem": "Interne „rem-Einheit\" für Text, Abstände und Eckenradius. Mindestens 16px, damit Host-Themes, die <code>&lt;html&gt;</code> verkleinern, das Widget nicht verkleinern können; skaliert nach oben, wenn Nutzer eine größere Standardschriftgröße im Browser einstellen.",
       "background": "Widget- und Steuerleisten-Hintergrund",
       "text": "Primäre Textfarbe",
       "border": "Ränder und Trennlinien",

@@ -243,6 +243,7 @@
     "row": {
       "fontFamily": "Pile de polices du widget",
       "fontSize": "Taille de police de base",
+      "crumbRem": "« Unité rem » interne pour le texte, les espacements et les rayons. Plancher fixé à 16px pour empêcher les thèmes hôtes qui réduisent <code>&lt;html&gt;</code> de réduire le widget ; augmente si l'utilisateur définit une taille de police par défaut plus grande dans son navigateur.",
       "background": "Fond du widget et de la barre de contrôles",
       "text": "Couleur de texte principale",
       "border": "Bordures et séparateurs",

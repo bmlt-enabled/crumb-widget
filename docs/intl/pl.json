@@ -243,6 +243,7 @@
     "row": {
       "fontFamily": "Stos czcionek widżetu",
       "fontSize": "Bazowy rozmiar czcionki",
+      "crumbRem": "Wewnętrzna „jednostka rem\" dla tekstu, odstępów i promieni. Dolny limit ustawiony na 16px, aby motywy strony zmniejszające <code>&lt;html&gt;</code> nie mogły zmniejszyć widżetu; powiększa się, gdy użytkownik ustawi większą domyślną wielkość czcionki w przeglądarce.",
       "background": "Tło widżetu i paska kontrolek",
       "text": "Główny kolor tekstu",
       "border": "Obramowania i separatory",

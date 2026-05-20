@@ -243,6 +243,7 @@
     "row": {
       "fontFamily": "Widgetens typsnittsstack",
       "fontSize": "Bas-typsnittsstorlek",
+      "crumbRem": "Intern ”rem-enhet” för text, mellanrum och hörnradier. Fastlåst till minst 16px så att värd-teman som krymper <code>&lt;html&gt;</code> inte kan krympa widgeten; skalas upp när användaren har ställt in en större standardteckenstorlek i webbläsaren.",
       "background": "Widget- och kontrollistans bakgrund",
       "text": "Primär textfärg",
       "border": "Kanter och avgränsare",

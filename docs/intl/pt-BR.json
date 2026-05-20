@@ -243,6 +243,7 @@
     "row": {
       "fontFamily": "Pilha de fontes do widget",
       "fontSize": "Tamanho de fonte base",
+      "crumbRem": "«Unidade rem» interna para texto, espaçamento e raios. Fixada em um piso de 16px para que temas do site que reduzem <code>&lt;html&gt;</code> não possam encolher o widget; aumenta quando o usuário define um tamanho de fonte padrão maior no navegador.",
       "background": "Fundo do widget e da barra de controles",
       "text": "Cor de texto principal",
       "border": "Bordas e separadores",

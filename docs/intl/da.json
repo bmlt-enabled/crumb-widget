@@ -243,6 +243,7 @@
     "row": {
       "fontFamily": "Widgetens skrifttypestak",
       "fontSize": "Basis-skriftstørrelse",
+      "crumbRem": "Intern \"rem-enhed\" for tekst, mellemrum og radius. Fastsat til mindst 16px, så værtstemaer, der formindsker <code>&lt;html&gt;</code>, ikke kan formindske widgetten; skaleres op, hvis brugeren har angivet en større standardskriftstørrelse i browseren.",
       "background": "Widget- og kontrollinjebaggrund",
       "text": "Primær tekstfarve",
       "border": "Kanter og skillelinjer",
