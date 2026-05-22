@@ -73,6 +73,7 @@ export const jaTranslations = {
   locationError: '位置情報を取得できません',
   locationErrorHint: '位置情報の取得中に問題が発生しました。もう一度お試しください。',
   retry: '再試行',
+  searchByAddress: '住所で検索',
   // Loading
   loadingMeetings: 'ミーティングを読み込み中…',
   // Map

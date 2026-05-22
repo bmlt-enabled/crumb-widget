@@ -73,6 +73,7 @@ export const elTranslations = {
   locationError: 'Αδυναμία λήψης τοποθεσίας',
   locationErrorHint: 'Κάτι πήγε στραβά κατά τη λήψη της τοποθεσίας σας. Δοκιμάστε ξανά.',
   retry: 'Δοκιμάστε ξανά',
+  searchByAddress: 'Αναζήτηση με διεύθυνση',
   // Loading
   loadingMeetings: 'Φόρτωση συναντήσεων…',
   // Map

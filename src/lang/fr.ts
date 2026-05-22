@@ -73,6 +73,7 @@ export const frTranslations = {
   locationError: "Impossible d'obtenir la localisation",
   locationErrorHint: "Une erreur s'est produite lors de l'obtention de votre position. Veuillez réessayer.",
   retry: 'Réessayer',
+  searchByAddress: 'Rechercher par adresse',
   // Loading
   loadingMeetings: 'Chargement des réunions\u2026',
   // Map

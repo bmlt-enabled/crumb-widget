@@ -73,6 +73,7 @@ export const deTranslations = {
   locationError: 'Standort konnte nicht ermittelt werden',
   locationErrorHint: 'Beim Ermitteln Ihres Standorts ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.',
   retry: 'Erneut versuchen',
+  searchByAddress: 'Nach Adresse suchen',
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',
   // Map

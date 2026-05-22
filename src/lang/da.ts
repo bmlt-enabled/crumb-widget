@@ -73,6 +73,7 @@ export const daTranslations = {
   locationError: 'Kunne ikke hente placering',
   locationErrorHint: 'Noget gik galt ved hentning af din placering. Prøv venligst igen.',
   retry: 'Prøv igen',
+  searchByAddress: 'Søg efter adresse',
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',
   // Map

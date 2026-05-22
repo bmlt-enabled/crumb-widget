@@ -760,4 +760,26 @@ describe('geolocation', () => {
     render(App, { props: { config: geoConfig } });
     await waitFor(() => expect(dataState.loading).toBe(false));
   });
+
+  test('hard timeout clears the spinner when getCurrentPosition never resolves', async () => {
+    // Simulate a permission prompt that the user never dismisses — the success
+    // and error callbacks are never invoked. Without a wall-clock timeout this
+    // is the spinner-hang from issue #5.
+    mockGeo(() => {
+      /* no-op: never call success or error */
+    });
+    vi.useFakeTimers();
+    try {
+      render(App, { props: { config: geoConfig } });
+      // Loading is set synchronously by attemptGeolocation, but we wrap in
+      // waitFor so any microtasks (Permissions API pre-check) settle first.
+      await vi.waitFor(() => expect(dataState.loading).toBe(true));
+      // Advance past the wall-clock ceiling.
+      await vi.advanceTimersByTimeAsync(16000);
+      expect(dataState.loading).toBe(false);
+      expect(dataState.error).toBe('Location request timed out');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
 });

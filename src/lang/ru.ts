@@ -73,6 +73,7 @@ export const ruTranslations = {
   locationError: 'Не удалось получить местоположение',
   locationErrorHint: 'Что-то пошло не так при получении местоположения. Попробуйте ещё раз.',
   retry: 'Повторить',
+  searchByAddress: 'Поиск по адресу',
   // Loading
   loadingMeetings: 'Загрузка собраний…',
   // Map
