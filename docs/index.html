@@ -1858,7 +1858,7 @@
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.columns">
                   Comma-separated list of columns to show in list view. Same allowed values as the <code>columns</code> global config option:
-                  <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>. Overridden by
+                  <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>, <code>formats</code>. Overridden by
                   <code>CrumbWidgetConfig.columns</code> when both are set. <br /><em>Example:</em> <code>data-columns="time,name,address"</code>
                 </td>
               </tr>
@@ -1955,8 +1955,8 @@
                 <td data-i18n-html="globalConfig.row.columns">
                   Columns to show in list view. Default: <code>['time', 'distance', 'name', 'location', 'address']</code>. Takes precedence over <code>data-columns</code>. Omit any column name to
                   hide it. Available values: <code>time</code>, <code>distance</code> (only renders when geolocation is active), <code>name</code>, <code>location</code> (venue/building name),
-                  <code>address</code> (street address with in-person/online badges), <code>service_body</code>. <code>service_body</code> is hidden by default — add it explicitly to show the
-                  service body name.
+                  <code>address</code> (street address with in-person/online badges), <code>service_body</code>, <code>formats</code> (format-key chips like <code>O</code>, <code>BT</code>).
+                  <code>service_body</code> and <code>formats</code> are hidden by default — add them explicitly to show.
                 </td>
               </tr>
               <tr>

@@ -131,7 +131,7 @@ export const VENUE_TYPE = {
 export type ViewType = 'list' | 'map' | 'both';
 
 /** Available columns for the meeting list table. */
-export type Column = 'time' | 'distance' | 'name' | 'location' | 'address' | 'service_body';
+export type Column = 'time' | 'distance' | 'name' | 'location' | 'address' | 'service_body' | 'formats';
 
 /**
  * A Leaflet tile-layer override. Use this to swap the default OpenStreetMap
