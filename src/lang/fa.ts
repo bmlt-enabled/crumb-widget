@@ -73,6 +73,7 @@ export const faTranslations = {
   locationError: 'دریافت موقعیت ممکن نشد',
   locationErrorHint: 'هنگام دریافت موقعیت مشکلی پیش آمد. لطفاً دوباره تلاش کنید.',
   retry: 'تلاش دوباره',
+  searchByAddress: 'جستجو بر اساس آدرس',
   // Loading
   loadingMeetings: 'در حال بارگذاری جلسات…',
   // Map

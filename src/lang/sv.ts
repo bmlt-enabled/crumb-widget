@@ -73,6 +73,7 @@ export const svTranslations = {
   locationError: 'Kunde inte hämta plats',
   locationErrorHint: 'Något gick fel vid hämtning av din plats. Försök igen.',
   retry: 'Försök igen',
+  searchByAddress: 'Sök efter adress',
   // Loading
   loadingMeetings: 'Laddar möten\u2026',
   // Map

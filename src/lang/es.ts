@@ -73,6 +73,7 @@ export const esTranslations = {
   locationError: 'No se puede obtener la ubicación',
   locationErrorHint: 'Algo salió mal al obtener su ubicación. Por favor, intente de nuevo.',
   retry: 'Intentar de nuevo',
+  searchByAddress: 'Buscar por dirección',
   // Loading
   loadingMeetings: 'Cargando reuniones\u2026',
   // Map

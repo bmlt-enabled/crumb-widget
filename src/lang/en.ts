@@ -73,6 +73,7 @@ export const enTranslations = {
   locationError: 'Unable to get location',
   locationErrorHint: 'Something went wrong getting your location. Please try again.',
   retry: 'Try Again',
+  searchByAddress: 'Search by address',
   // Loading
   loadingMeetings: 'Loading meetings\u2026',
   // Map

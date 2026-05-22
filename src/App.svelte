@@ -3,10 +3,10 @@
   import { router } from '@bmlt-enabled/svelte-spa-router';
   import { countUniqueGroups } from 'bmlt-query-client';
   import type { AppConfig, ProcessedMeeting } from '@/types';
-  import { loadData, loadDataByCoordinates, dataState } from '@stores/data.svelte';
+  import { loadData, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage } from '@utils/format';
-  import { GEOLOCATION_TIMEOUT_MS } from '@utils/constants';
+  import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS } from '@utils/constants';
   import { t, direction } from '@stores/localization';
 
   import Controls from '@components/Controls.svelte';
@@ -18,6 +18,7 @@
 
   let geoErrorHint = $state('');
   let geoDenied = $state(false);
+  let manualAddress = $state('');
 
   interface Props {
     config: AppConfig;
@@ -36,7 +37,19 @@
     await loadData(config.serverUrl, config.serviceBodyIds);
   }
 
-  function attemptGeolocation() {
+  function reportGeoError(code: number) {
+    if (hasServiceBody()) {
+      fallbackToList();
+      return;
+    }
+    const msg = getGeoErrorMessage(code, $t);
+    dataState.error = msg.title;
+    geoErrorHint = msg.hint;
+    geoDenied = code === 1;
+    dataState.loading = false;
+  }
+
+  async function attemptGeolocation() {
     if (!navigator.geolocation) {
       if (hasServiceBody()) {
         fallbackToList();
@@ -49,9 +62,40 @@
     dataState.error = '';
     geoErrorHint = '';
     geoDenied = false;
+
+    // Skip the prompt outright if the user has already blocked location for this
+    // origin — saves up to GEOLOCATION_HARD_TIMEOUT_MS of stuck spinner.
+    // navigator.permissions is unavailable in some embeddings/browsers; treat
+    // any failure as "unknown" and fall through to getCurrentPosition.
+    try {
+      const status = await navigator.permissions?.query({ name: 'geolocation' as PermissionName });
+      if (status?.state === 'denied') {
+        reportGeoError(1);
+        return;
+      }
+    } catch {
+      // ignore — fall through to the actual request
+    }
+
     dataState.loading = true;
+
+    // The browser-level `timeout` option only counts time AFTER the user
+    // dismisses the permission prompt. If the prompt is ignored or silently
+    // suppressed (sandboxed iframe, blocked Permissions Policy, prior site
+    // block), the callbacks never fire and the spinner hangs forever. Guard
+    // with a wall-clock timer that always resolves the loading state.
+    let settled = false;
+    const hardTimer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      reportGeoError(3); // TIMEOUT
+    }, GEOLOCATION_HARD_TIMEOUT_MS);
+
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(hardTimer);
         uiState.userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         await loadDataByCoordinates(config.serverUrl, pos.coords.latitude, pos.coords.longitude, config.geolocationRadius);
         if (!dataState.error) {
@@ -59,18 +103,29 @@
         }
       },
       (err) => {
-        if (hasServiceBody()) {
-          fallbackToList();
-          return;
-        }
-        const msg = getGeoErrorMessage(err.code, $t);
-        dataState.error = msg.title;
-        geoErrorHint = msg.hint;
-        geoDenied = err.code === 1;
-        dataState.loading = false;
+        if (settled) return;
+        settled = true;
+        clearTimeout(hardTimer);
+        reportGeoError(err.code);
       },
       { timeout: GEOLOCATION_TIMEOUT_MS }
     );
+  }
+
+  async function handleManualAddressSearch() {
+    const query = manualAddress.trim();
+    if (!query || dataState.loading) return;
+    // loadDataByAddress owns dataState.loading + dataState.error; on geocode
+    // failure it sets a friendly error message that takes over the page-level
+    // error display. On success it clears the error and the meeting list
+    // renders normally.
+    geoErrorHint = '';
+    geoDenied = false;
+    const result = await loadDataByAddress(config.serverUrl, query, config.geolocationRadius);
+    if (!result) return;
+    uiState.userLocation = { lat: result.lat, lng: result.lng };
+    uiState.geoActive = true;
+    uiState.geoRadius = config.geolocationRadius > 0 ? config.geolocationRadius : 0;
   }
 
   onMount(async () => {
@@ -152,7 +207,7 @@
 
   {#if dataState.error}
     <!-- Error state -->
-    <div class="flex flex-col items-center justify-center py-16 text-center">
+    <div class="flex flex-col items-center justify-center px-4 py-16 text-center">
       <Icon name="map-pin" class="mb-3 h-10 w-10 text-amber-400" strokeWidth={1.5} />
       <p class="text-sm font-medium text-gray-800">{dataState.error}</p>
       {#if geoErrorHint}
@@ -162,6 +217,34 @@
         <button onclick={attemptGeolocation} class="mt-4 rounded-lg border border-blue-500 bg-blue-50 px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100">
           {$t.retry}
         </button>
+      {/if}
+      {#if config.geolocation}
+        <form
+          class="mt-6 flex w-full max-w-sm flex-col gap-2"
+          onsubmit={(e) => {
+            e.preventDefault();
+            handleManualAddressSearch();
+          }}
+        >
+          <label for="crumb-manual-address" class="text-xs font-medium text-gray-700">{$t.searchByAddress}</label>
+          <div class="flex gap-2">
+            <input
+              id="crumb-manual-address"
+              type="text"
+              bind:value={manualAddress}
+              placeholder={$t.searchLocation}
+              class="min-w-0 flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={!manualAddress.trim() || dataState.loading}
+              class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Icon name="search" class="h-4 w-4" strokeWidth={2} />
+              <span class="sr-only">{$t.searchByAddress}</span>
+            </button>
+          </div>
+        </form>
       {/if}
     </div>
   {:else if dataState.loading}

@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
-import { dataState, loadDataByCoordinates } from '@stores/data.svelte';
+import { dataState, loadDataByAddress, loadDataByCoordinates } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import { config } from '@stores/config.svelte';
 import type { ProcessedMeeting } from '@/types/index';
@@ -14,6 +14,7 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
   return {
     ...actual,
     loadData: vi.fn(),
+    loadDataByAddress: vi.fn(),
     loadDataByCoordinates: vi.fn()
   };
 });
@@ -759,5 +760,99 @@ describe('geolocation', () => {
     mockGeo((_, error) => error({ code: 1 } as GeolocationPositionError));
     render(App, { props: { config: geoConfig } });
     await waitFor(() => expect(dataState.loading).toBe(false));
+  });
+
+  test('hard timeout clears the spinner when getCurrentPosition never resolves', async () => {
+    // Simulate a permission prompt that the user never dismisses — the success
+    // and error callbacks are never invoked. Without a wall-clock timeout this
+    // is the spinner-hang from issue #5.
+    mockGeo(() => {
+      /* no-op: never call success or error */
+    });
+    vi.useFakeTimers();
+    try {
+      render(App, { props: { config: geoConfig } });
+      // Loading is set synchronously by attemptGeolocation, but we wrap in
+      // waitFor so any microtasks (Permissions API pre-check) settle first.
+      await vi.waitFor(() => expect(dataState.loading).toBe(true));
+      // Advance past the wall-clock ceiling.
+      await vi.advanceTimersByTimeAsync(16000);
+      expect(dataState.loading).toBe(false);
+      expect(dataState.error).toBe('Location request timed out');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  test('skips the prompt when Permissions API reports denied', async () => {
+    // If the user has previously blocked location for this origin, the
+    // Permissions API short-circuits us to the denied state without ever
+    // calling getCurrentPosition.
+    const geoSpy = vi.fn();
+    mockGeo(geoSpy);
+    const permsQuery = vi.fn().mockResolvedValue({ state: 'denied' });
+    Object.defineProperty(navigator, 'permissions', {
+      value: { query: permsQuery },
+      configurable: true
+    });
+    try {
+      render(App, { props: { config: geoConfig } });
+      await waitFor(() => expect(dataState.error).toBe('Location access denied'));
+      expect(geoSpy).not.toHaveBeenCalled();
+      expect(permsQuery).toHaveBeenCalledWith({ name: 'geolocation' });
+    } finally {
+      // @ts-expect-error — delete is fine on the override
+      delete (navigator as Navigator & { permissions?: unknown }).permissions;
+    }
+  });
+
+  test('falls through to getCurrentPosition when Permissions API throws', async () => {
+    // Safari / older browsers throw on permissions.query — must not block geo.
+    mockGeo((success) => success({ coords: { latitude: 35.1, longitude: -80.2 } } as GeolocationPosition));
+    Object.defineProperty(navigator, 'permissions', {
+      value: {
+        query: vi.fn().mockRejectedValue(new Error('not supported'))
+      },
+      configurable: true
+    });
+    try {
+      render(App, { props: { config: geoConfig } });
+      await waitFor(() => expect(vi.mocked(loadDataByCoordinates)).toHaveBeenCalledWith(geoConfig.serverUrl, 35.1, -80.2, geoConfig.geolocationRadius));
+    } finally {
+      // @ts-expect-error — delete is fine on the override
+      delete (navigator as Navigator & { permissions?: unknown }).permissions;
+    }
+  });
+
+  test('manual address fallback calls loadDataByAddress with the typed query', async () => {
+    mockGeo((_, error) => error({ code: 1 } as GeolocationPositionError));
+    vi.mocked(loadDataByAddress).mockResolvedValueOnce({ lat: 35.1, lng: -80.2, displayName: 'Charlotte, NC' });
+    render(App, { props: { config: geoConfig } });
+    // Wait for the error state + address form to render
+    await waitFor(() => expect(dataState.error).toBe('Location access denied'));
+    const input = await screen.findByLabelText('Search by address');
+    await fireEvent.input(input, { target: { value: 'Charlotte, NC' } });
+    const submit = screen.getAllByRole('button', { name: 'Search by address' }).at(-1)!;
+    await fireEvent.click(submit);
+    await waitFor(() => expect(vi.mocked(loadDataByAddress)).toHaveBeenCalledWith(geoConfig.serverUrl, 'Charlotte, NC', geoConfig.geolocationRadius));
+    await waitFor(() => expect(uiState.geoActive).toBe(true));
+    expect(uiState.userLocation).toEqual({ lat: 35.1, lng: -80.2 });
+  });
+
+  test('manual address fallback surfaces geocoding error as page-level message', async () => {
+    mockGeo((_, error) => error({ code: 1 } as GeolocationPositionError));
+    vi.mocked(loadDataByAddress).mockImplementationOnce(async () => {
+      dataState.error = 'Could not find that location.';
+      return null;
+    });
+    render(App, { props: { config: geoConfig } });
+    await waitFor(() => expect(dataState.error).toBe('Location access denied'));
+    const input = await screen.findByLabelText('Search by address');
+    await fireEvent.input(input, { target: { value: 'asdfqwerty' } });
+    const submit = screen.getAllByRole('button', { name: 'Search by address' }).at(-1)!;
+    await fireEvent.click(submit);
+    // loadDataByAddress owns the error message — the page-level error
+    // updates to reflect what the user just tried.
+    await waitFor(() => expect(dataState.error).toBe('Could not find that location.'));
   });
 });

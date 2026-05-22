@@ -73,6 +73,7 @@ export const itTranslations = {
   locationError: 'Impossibile ottenere la posizione',
   locationErrorHint: 'Si è verificato un errore durante il recupero della posizione. Riprova.',
   retry: 'Riprova',
+  searchByAddress: 'Cerca per indirizzo',
   // Loading
   loadingMeetings: 'Caricamento riunioni\u2026',
   // Map
