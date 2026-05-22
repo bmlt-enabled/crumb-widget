@@ -19,7 +19,6 @@
   let geoErrorHint = $state('');
   let geoDenied = $state(false);
   let manualAddress = $state('');
-  let manualAddressError = $state('');
 
   interface Props {
     config: AppConfig;
@@ -63,7 +62,6 @@
     dataState.error = '';
     geoErrorHint = '';
     geoDenied = false;
-    manualAddressError = '';
 
     // Skip the prompt outright if the user has already blocked location for this
     // origin — saves up to GEOLOCATION_HARD_TIMEOUT_MS of stuck spinner.
@@ -117,16 +115,14 @@
   async function handleManualAddressSearch() {
     const query = manualAddress.trim();
     if (!query || dataState.loading) return;
-    manualAddressError = '';
-    dataState.error = null;
+    // loadDataByAddress owns dataState.loading + dataState.error; on geocode
+    // failure it sets a friendly error message that takes over the page-level
+    // error display. On success it clears the error and the meeting list
+    // renders normally.
     geoErrorHint = '';
+    geoDenied = false;
     const result = await loadDataByAddress(config.serverUrl, query, config.geolocationRadius);
-    if (!result) {
-      manualAddressError = dataState.error || $t.locationNotFound;
-      // Surface the friendly inline message instead of the full-page error.
-      dataState.error = null;
-      return;
-    }
+    if (!result) return;
     uiState.userLocation = { lat: result.lat, lng: result.lng };
     uiState.geoActive = true;
     uiState.geoRadius = config.geolocationRadius > 0 ? config.geolocationRadius : 0;
@@ -248,9 +244,6 @@
               <span class="sr-only">{$t.searchByAddress}</span>
             </button>
           </div>
-          {#if manualAddressError}
-            <p class="text-start text-xs text-red-600">{manualAddressError}</p>
-          {/if}
         </form>
       {/if}
     </div>
