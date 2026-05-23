@@ -14,9 +14,10 @@ import {
   haversineDistanceMiles,
   filterMeetings,
   normalizeVirtualLink,
-  getConferenceProvider
+  getConferenceProvider,
+  sortFormats
 } from '@utils/format';
-import type { ProcessedMeeting, FilterState } from '@/types/index';
+import type { ProcessedMeeting, FilterState, Format } from '@/types/index';
 import type { Meeting } from 'bmlt-query-client';
 
 describe('formatTime', () => {
@@ -474,5 +475,35 @@ describe('formatUpdateUrl', () => {
 
   test('substitutes the same token multiple times', () => {
     expect(formatUpdateUrl('https://example.org/{meeting_id}/edit?ref={meeting_id}', meeting, serverUrl, returnUrl)).toBe('https://example.org/42/edit?ref=42');
+  });
+});
+
+describe('sortFormats', () => {
+  function fmt(key: string, id = key): Format {
+    return { id, key_string: key, name_string: key, description_string: '', format_type_enum: '', lang: 'en', world_id: '' } as Format;
+  }
+
+  test('pins C and O to the front, alphabetizes the rest', () => {
+    const result = sortFormats([fmt('ST'), fmt('O'), fmt('BT'), fmt('C'), fmt('D')]);
+    expect(result.map((f) => f.key_string)).toEqual(['C', 'O', 'BT', 'D', 'ST']);
+  });
+
+  test('preserves order when only non-priority formats are present', () => {
+    const result = sortFormats([fmt('ST'), fmt('BT'), fmt('D')]);
+    expect(result.map((f) => f.key_string)).toEqual(['BT', 'D', 'ST']);
+  });
+
+  test('handles only O present', () => {
+    const result = sortFormats([fmt('ST'), fmt('O'), fmt('BT')]);
+    expect(result.map((f) => f.key_string)).toEqual(['O', 'BT', 'ST']);
+  });
+
+  test('handles only C present', () => {
+    const result = sortFormats([fmt('ST'), fmt('BT'), fmt('C')]);
+    expect(result.map((f) => f.key_string)).toEqual(['C', 'BT', 'ST']);
+  });
+
+  test('returns empty array when given empty input', () => {
+    expect(sortFormats([])).toEqual([]);
   });
 });

@@ -3,7 +3,7 @@
   import type { ProcessedMeeting } from '@/types/index';
   import { selectMeeting, uiState } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
-  import { formatShortAddress, isInProgress, haversineDistanceMiles } from '@utils/format';
+  import { formatShortAddress, isInProgress, haversineDistanceMiles, sortFormats } from '@utils/format';
   import { milesToKm } from '@utils/constants';
   import { t } from '@stores/localization';
   import Icon from '@components/Icon.svelte';
@@ -17,14 +17,11 @@
   const cols = $derived(new Set(config.columns));
   const showDistance = $derived(uiState.geoActive && cols.has('distance'));
 
-  // C (Closed) and O (Open) are pinned to the front so the meeting's open/closed status
-  // is the first thing read — everything else sorts alphabetically.
-  const FORMAT_PRIORITY = ['C', 'O'];
   function formatList(meeting: ProcessedMeeting): string {
-    const keys = meeting.resolvedFormats.map((f) => f.key_string).filter(Boolean);
-    const priority = FORMAT_PRIORITY.filter((p) => keys.includes(p));
-    const rest = keys.filter((k) => !FORMAT_PRIORITY.includes(k)).sort((a, b) => a.localeCompare(b));
-    return [...priority, ...rest].join(', ');
+    return sortFormats(meeting.resolvedFormats)
+      .map((f) => f.key_string)
+      .filter(Boolean)
+      .join(', ');
   }
 
   function meetingDistanceLabel(meeting: ProcessedMeeting): string {
