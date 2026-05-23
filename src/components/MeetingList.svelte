@@ -17,6 +17,16 @@
   const cols = $derived(new Set(config.columns));
   const showDistance = $derived(uiState.geoActive && cols.has('distance'));
 
+  // C (Closed) and O (Open) are pinned to the front so the meeting's open/closed status
+  // is the first thing read — everything else sorts alphabetically.
+  const FORMAT_PRIORITY = ['C', 'O'];
+  function formatList(meeting: ProcessedMeeting): string {
+    const keys = meeting.resolvedFormats.map((f) => f.key_string).filter(Boolean);
+    const priority = FORMAT_PRIORITY.filter((p) => keys.includes(p));
+    const rest = keys.filter((k) => !FORMAT_PRIORITY.includes(k)).sort((a, b) => a.localeCompare(b));
+    return [...priority, ...rest].join(', ');
+  }
+
   function meetingDistanceLabel(meeting: ProcessedMeeting): string {
     if (!uiState.userLocation || !meeting.latitude || !meeting.longitude) return '';
     const distMiles = haversineDistanceMiles(uiState.userLocation.lat, uiState.userLocation.lng, Number(meeting.latitude), Number(meeting.longitude));
@@ -76,6 +86,7 @@
     <div class="min-w-0 flex-1">
       {#if cols.has('name')}
         <p class="bmlt-link text-lg font-semibold {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}</p>
+        {#if config.showFormats}{@const fmts = formatList(meeting)}{#if fmts}<p class="mt-0.5 text-xs text-gray-500">{fmts}</p>{/if}{/if}
       {/if}
       {#if cols.has('location') && meeting.location_text}
         <p class="mt-0.5 text-base text-gray-600">{meeting.location_text}</p>
@@ -108,6 +119,7 @@
     {#if cols.has('name')}
       <td class="px-4 py-4">
         <span class="bmlt-link font-medium {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}</span>
+        {#if config.showFormats}{@const fmts = formatList(meeting)}{#if fmts}<p class="mt-0.5 text-xs text-gray-500">{fmts}</p>{/if}{/if}
         {#if meeting.comments}
           <p class="mt-0.5 max-w-xs truncate text-xs text-gray-500">{meeting.comments}</p>
         {/if}
