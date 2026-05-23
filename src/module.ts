@@ -129,6 +129,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.darkMode = validDarkMode(options.darkMode, CONFIG_DEFAULTS.darkMode);
   config.nowOffset = validNonNegative('nowOffset', options.nowOffset, CONFIG_DEFAULTS.nowOffset);
   config.hideHeader = validBoolean('hideHeader', options.hideHeader, CONFIG_DEFAULTS.hideHeader);
+  config.showFormats = validBoolean('showFormats', options.showFormats, CONFIG_DEFAULTS.showFormats);
   config.updateUrl = validUpdateUrl(options.updateUrl);
 
   if (options.basePath != null) {

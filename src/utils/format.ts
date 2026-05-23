@@ -1,5 +1,15 @@
 import { VENUE_TYPE } from '@/types/index';
-import type { Meeting, ProcessedMeeting, FilterState } from '@/types/index';
+import type { Meeting, ProcessedMeeting, FilterState, Format } from '@/types/index';
+
+// C (Closed) and O (Open) are pinned to the front so the open/closed status
+// is the first thing read; everything else sorts alphabetically by key_string.
+const FORMAT_KEY_PRIORITY = ['C', 'O'];
+
+export function sortFormats(formats: Format[]): Format[] {
+  const priority = FORMAT_KEY_PRIORITY.map((k) => formats.find((f) => f.key_string === k)).filter((f): f is Format => f != null);
+  const rest = formats.filter((f) => !FORMAT_KEY_PRIORITY.includes(f.key_string)).sort((a, b) => (a.key_string ?? '').localeCompare(b.key_string ?? ''));
+  return [...priority, ...rest];
+}
 
 function is24HourTime(locale?: string): boolean {
   return !new Intl.DateTimeFormat(locale, {

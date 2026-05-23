@@ -54,6 +54,7 @@ beforeEach(() => {
   config.columns = ['time', 'distance', 'name', 'location', 'address'];
   config.nowOffset = 10;
   config.distanceUnit = 'mi';
+  config.showFormats = false;
   uiState.userLocation = undefined;
   uiState.geoActive = false;
   uiState.geoRadius = 0;
@@ -276,6 +277,46 @@ describe('MeetingList — print helpers', () => {
     window.dispatchEvent(new Event('beforeprint'));
     await Promise.resolve();
     expect(screen.getAllByText(/Bring coffee/).length).toBeGreaterThan(0);
+  });
+});
+
+describe('MeetingList — showFormats flag', () => {
+  test('hides formats line when showFormats is false (default)', () => {
+    const fmt = { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open', format_type_enum: 'O', lang: 'en', world_id: '' };
+    const meeting = makeMeeting({ resolvedFormats: [fmt] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.queryByText('O')).not.toBeInTheDocument();
+  });
+
+  test('renders comma-separated key_string list under meeting name when enabled', () => {
+    config.showFormats = true;
+    const f1 = { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open', format_type_enum: 'O', lang: 'en', world_id: '' };
+    const f2 = { id: '2', key_string: 'BT', name_string: 'Beginners', description_string: 'Beginners', format_type_enum: 'O', lang: 'en', world_id: '' };
+    const meeting = makeMeeting({ resolvedFormats: [f1, f2] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('O, BT')[0]).toBeInTheDocument();
+  });
+
+  test('does not render formats line when meeting has no resolved formats even if flag enabled', () => {
+    config.showFormats = true;
+    const meeting = makeMeeting({ resolvedFormats: [], meeting_name: 'Solo Group' });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    // Meeting still renders, no format-codes line snuck in
+    expect(screen.getAllByText('Solo Group')[0]).toBeInTheDocument();
+  });
+
+  test('pins C and O to the front and alphabetizes the rest', () => {
+    config.showFormats = true;
+    const fmts = [
+      { id: '1', key_string: 'ST', name_string: 'Step', description_string: '', format_type_enum: '', lang: 'en', world_id: '' },
+      { id: '2', key_string: 'O', name_string: 'Open', description_string: '', format_type_enum: '', lang: 'en', world_id: '' },
+      { id: '3', key_string: 'BT', name_string: 'Beginners', description_string: '', format_type_enum: '', lang: 'en', world_id: '' },
+      { id: '4', key_string: 'C', name_string: 'Closed', description_string: '', format_type_enum: '', lang: 'en', world_id: '' },
+      { id: '5', key_string: 'D', name_string: 'Discussion', description_string: '', format_type_enum: '', lang: 'en', world_id: '' }
+    ];
+    const meeting = makeMeeting({ resolvedFormats: fmts as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('C, O, BT, D, ST')[0]).toBeInTheDocument();
   });
 });
 

@@ -3,7 +3,7 @@
   import type { ProcessedMeeting } from '@/types/index';
   import { selectMeeting, uiState } from '@stores/ui.svelte';
   import { config } from '@stores/config.svelte';
-  import { formatShortAddress, isInProgress, haversineDistanceMiles } from '@utils/format';
+  import { formatShortAddress, isInProgress, haversineDistanceMiles, sortFormats } from '@utils/format';
   import { milesToKm } from '@utils/constants';
   import { t } from '@stores/localization';
   import Icon from '@components/Icon.svelte';
@@ -16,6 +16,13 @@
 
   const cols = $derived(new Set(config.columns));
   const showDistance = $derived(uiState.geoActive && cols.has('distance'));
+
+  function formatList(meeting: ProcessedMeeting): string {
+    return sortFormats(meeting.resolvedFormats)
+      .map((f) => f.key_string)
+      .filter(Boolean)
+      .join(', ');
+  }
 
   function meetingDistanceLabel(meeting: ProcessedMeeting): string {
     if (!uiState.userLocation || !meeting.latitude || !meeting.longitude) return '';
@@ -76,6 +83,7 @@
     <div class="min-w-0 flex-1">
       {#if cols.has('name')}
         <p class="bmlt-link text-lg font-semibold {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}</p>
+        {#if config.showFormats}{@const fmts = formatList(meeting)}{#if fmts}<p class="mt-0.5 text-xs text-gray-500">{fmts}</p>{/if}{/if}
       {/if}
       {#if cols.has('location') && meeting.location_text}
         <p class="mt-0.5 text-base text-gray-600">{meeting.location_text}</p>
@@ -108,6 +116,7 @@
     {#if cols.has('name')}
       <td class="px-4 py-4">
         <span class="bmlt-link font-medium {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}</span>
+        {#if config.showFormats}{@const fmts = formatList(meeting)}{#if fmts}<p class="mt-0.5 text-xs text-gray-500">{fmts}</p>{/if}{/if}
         {#if meeting.comments}
           <p class="mt-0.5 max-w-xs truncate text-xs text-gray-500">{meeting.comments}</p>
         {/if}

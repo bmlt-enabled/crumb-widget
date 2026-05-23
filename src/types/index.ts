@@ -60,6 +60,8 @@ export interface AppConfig {
   nowOffset?: number;
   /** Hide the header bar at the top of the widget. */
   hideHeader?: boolean;
+  /** Show a comma-separated list of format codes (`key_string`) beneath each meeting name in the list/cards. */
+  showFormats: boolean;
   /** Template URL for the "Update meeting info" link (see {@link CrumbWidgetConfig.updateUrl}). */
   updateUrl?: string;
   /** Raw BMLT query string passed through to `client.rawQuery()` verbatim. */
@@ -194,6 +196,11 @@ export interface CrumbWidgetConfig {
   nowOffset?: number;
   /** Hide the header bar at the top of the widget. */
   hideHeader?: boolean;
+  /**
+   * Show a comma-separated list of format codes (`key_string`, e.g. `"O, BT, D"`) beneath each
+   * meeting name in the list/cards view. Defaults to `false`.
+   */
+  showFormats?: boolean;
   /** Format key strings (e.g. ['O', 'BT']) to lock the widget to. Filtered client-side after fetch. */
   formats?: string[];
   /** Base path for History API routing (e.g. '/meetings'). Enables clean URLs without '#'. */

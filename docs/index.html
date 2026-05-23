@@ -1907,6 +1907,16 @@
                   <code>data-update-url="https://example.org/meeting-update/?meeting_id={meeting_id}"</code>
                 </td>
               </tr>
+              <tr>
+                <td>data-show-formats</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.showFormats">
+                  Show a comma-separated list of <strong>format codes</strong> (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and
+                  <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Takes precedence over <code>CrumbWidgetConfig.showFormats</code>. Default:
+                  <code>false</code>.
+                  <br /><em>Values:</em> <code>"true"</code>, <code>"false"</code>, <code>"1"</code>, or <code>"0"</code>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -2007,6 +2017,15 @@
                 <td data-i18n-html="globalConfig.row.hideHeader">Hide the "Meeting Finder" title bar and meeting count at the top of the widget. Default: <code>false</code>.</td>
               </tr>
               <tr>
+                <td>showFormats</td>
+                <td><code>boolean</code></td>
+                <td data-i18n-html="globalConfig.row.showFormats">
+                  Show a comma-separated list of <strong>format codes</strong> (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and
+                  <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Equivalent to the <code>data-show-formats</code> attribute (the attribute takes precedence).
+                  Default: <code>false</code>.
+                </td>
+              </tr>
+              <tr>
                 <td>darkMode</td>
                 <td><code>'auto' | true | false</code></td>
                 <td data-i18n-html="globalConfig.row.darkMode">
@@ -2094,6 +2113,7 @@
     geolocationRadius: -50,    // negative = BMLT auto-radius (~50 meetings); positive = fixed miles/km
     nowOffset: 10,             // minutes before a meeting is considered past and rolls to end
     hideHeader: false,         // hide the "Meeting Finder" title bar
+    showFormats: false,        // show comma-separated format codes under each meeting name
     darkMode: 'auto',          // 'auto' | true | false
     height: 600,               // widget height in pixels
     formats: ['O'],            // lock to meetings with these format key strings (client-side, AND)
@@ -3123,6 +3143,15 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>boolean</code></td>
               <td data-i18n="yesNo.no">No</td>
               <td data-i18n-html="npmPackage.row.hideHeader">Hide the "Meeting Finder" title bar and meeting count. Defaults to <code>false</code>.</td>
+            </tr>
+            <tr>
+              <td><code>showFormats</code></td>
+              <td><code>boolean</code></td>
+              <td data-i18n="yesNo.no">No</td>
+              <td data-i18n-html="npmPackage.row.showFormats">
+                Show a comma-separated list of format codes (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and <code>O</code> (Open) are pinned
+                to the front; remaining codes are alphabetized. Defaults to <code>false</code>.
+              </td>
             </tr>
             <tr>
               <td><code>height</code></td>

@@ -66,7 +66,8 @@ const baseConfig: AppConfig = {
   geolocationRadius: 75,
   distanceOptions: [5, 10, 15, 25, 50, 100],
   distanceUnit: 'mi',
-  height: 600
+  height: 600,
+  showFormats: false
 };
 
 function makeFormat(overrides: Partial<Format> = {}): Format {

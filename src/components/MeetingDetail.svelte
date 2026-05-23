@@ -7,7 +7,7 @@
 
   import { config } from '@stores/config.svelte';
   import { clearSelectedMeeting, selectMeeting, uiState } from '@stores/ui.svelte';
-  import { getDirectionsUrl, getConferenceProvider, normalizeVirtualLink, formatTime, formatEndTime, formatUpdateUrl, getTimezoneAbbr } from '@utils/format';
+  import { getDirectionsUrl, getConferenceProvider, normalizeVirtualLink, formatTime, formatEndTime, formatUpdateUrl, getTimezoneAbbr, sortFormats } from '@utils/format';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
@@ -159,8 +159,9 @@
             {/if}
           </div>
           {#if meeting.resolvedFormats.length > 0}
+            {@const sortedFormats = sortFormats(meeting.resolvedFormats)}
             <div class="mt-1.5 flex flex-wrap gap-1">
-              {#each meeting.resolvedFormats as fmt (fmt.id)}
+              {#each sortedFormats as fmt (fmt.id)}
                 <button
                   class="cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2.5 py-1 text-base text-gray-600 select-none"
                   style="font-family:inherit"
