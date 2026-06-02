@@ -1,3 +1,7 @@
+## Unreleased
+
+- **Data attribute coverage** — nine settings that previously required `CrumbWidgetConfig` can now also be set as HTML data attributes (the attribute takes precedence over the config value in all cases): `data-formats` (format key filter), `data-geolocation-radius`, `data-distance-options` (comma-separated), `data-distance-unit` (`mi` or `km`), `data-height` (pixels), `data-dark-mode` (`auto`, `true`/`1`, `false`/`0`), `data-now-offset`, `data-hide-header`, and `data-language` (BCP-47 tag). The only settings still exclusive to `CrumbWidgetConfig` are the `map` options (tile providers and custom markers)
+
 ## 1.5.2 (June 1, 2026)
 
 - **Inline format highlights** — new `inlineFormats` config option and `data-inline-formats` attribute highlight selected format key strings (e.g. `['M', 'W']`) inline next to each meeting name in the list/cards. Each matching format renders its localized name (e.g. "Women") as a muted suffix — a curated highlight for special-interest meetings, independent of `showFormats`. Opt-in — defaults to `[]` (none), so existing embeds are unaffected. BMLT format key strings vary by server, so a configured code only shows where the server actually uses it
