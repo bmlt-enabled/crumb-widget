@@ -24,6 +24,16 @@
       .join(', ');
   }
 
+  // Curated special-interest highlight: localized names of the meeting's formats whose
+  // key_string is listed in config.inlineFormats, shown as a muted suffix next to the name.
+  function inlineFormatList(meeting: ProcessedMeeting): string {
+    if (config.inlineFormats.length === 0) return '';
+    return sortFormats(meeting.resolvedFormats.filter((f) => config.inlineFormats.includes(f.key_string)))
+      .map((f) => f.name_string)
+      .filter(Boolean)
+      .join(', ');
+  }
+
   function meetingDistanceLabel(meeting: ProcessedMeeting): string {
     if (!uiState.userLocation || !meeting.latitude || !meeting.longitude) return '';
     const distMiles = haversineDistanceMiles(uiState.userLocation.lat, uiState.userLocation.lng, Number(meeting.latitude), Number(meeting.longitude));
@@ -71,6 +81,11 @@
   {/if}
 {/snippet}
 
+{#snippet inlineFormatBadge(meeting: ProcessedMeeting)}
+  {@const labels = inlineFormatList(meeting)}
+  {#if labels}<span class="bmlt-inline-formats ml-2 text-sm font-normal text-gray-500">{labels}</span>{/if}
+{/snippet}
+
 {#snippet card(meeting: ProcessedMeeting, inProgress: boolean)}
   <button type="button" class="bmlt-row {inProgress ? 'bmlt-in-progress-row' : 'transition-colors'} flex w-full cursor-pointer gap-4 px-4 py-4 text-start" onclick={() => selectMeeting(meeting)}>
     {#if cols.has('time')}
@@ -82,7 +97,7 @@
     {/if}
     <div class="min-w-0 flex-1">
       {#if cols.has('name')}
-        <p class="bmlt-link text-lg font-semibold {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}</p>
+        <p class="bmlt-link text-lg font-semibold {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}{@render inlineFormatBadge(meeting)}</p>
         {#if config.showFormats}{@const fmts = formatList(meeting)}{#if fmts}<p class="mt-0.5 text-xs text-gray-500">{fmts}</p>{/if}{/if}
       {/if}
       {#if cols.has('location') && meeting.location_text}
@@ -115,7 +130,7 @@
     {/if}
     {#if cols.has('name')}
       <td class="px-4 py-4">
-        <span class="bmlt-link font-medium {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}</span>
+        <span class="bmlt-link font-medium {inProgress ? '' : 'text-blue-600'}">{meeting.meeting_name}{@render inlineFormatBadge(meeting)}</span>
         {#if config.showFormats}{@const fmts = formatList(meeting)}{#if fmts}<p class="mt-0.5 text-xs text-gray-500">{fmts}</p>{/if}{/if}
         {#if meeting.comments}
           <p class="mt-0.5 max-w-xs truncate text-xs text-gray-500">{meeting.comments}</p>

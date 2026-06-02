@@ -62,6 +62,11 @@ export interface AppConfig {
   hideHeader?: boolean;
   /** Show a comma-separated list of format codes (`key_string`) beneath each meeting name in the list/cards. */
   showFormats: boolean;
+  /**
+   * Format key strings (e.g. `['M', 'W']`) to highlight inline next to each meeting name.
+   * Matching formats render their localized `name_string` as a muted suffix. Empty means none.
+   */
+  inlineFormats: string[];
   /** Template URL for the "Update meeting info" link (see {@link CrumbWidgetConfig.updateUrl}). */
   updateUrl?: string;
   /** Raw BMLT query string passed through to `client.rawQuery()` verbatim. */
@@ -203,6 +208,15 @@ export interface CrumbWidgetConfig {
   showFormats?: boolean;
   /** Format key strings (e.g. ['O', 'BT']) to lock the widget to. Filtered client-side after fetch. */
   formats?: string[];
+  /**
+   * Format key strings (e.g. `['M', 'W']`) to highlight inline next to each meeting name in the
+   * list/cards view. Matching formats render their localized name (e.g. "Men", "Women") as a muted
+   * suffix — a curated highlight for special-interest meetings, independent of `showFormats`.
+   * BMLT format key strings vary by server, so this is opt-in: defaults to `[]` (none), and a
+   * configured code only shows where the server actually uses it. Equivalent to the
+   * `data-inline-formats` attribute (the attribute takes precedence).
+   */
+  inlineFormats?: string[];
   /** Base path for History API routing (e.g. '/meetings'). Enables clean URLs without '#'. */
   basePath?: string;
   /**

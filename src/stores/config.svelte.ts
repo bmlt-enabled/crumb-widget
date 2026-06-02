@@ -34,6 +34,7 @@ export const CONFIG_DEFAULTS = {
   nowOffset: 10,
   hideHeader: false,
   showFormats: false,
+  inlineFormats: [] as string[],
   darkMode: false as 'auto' | true | false
 } satisfies Partial<AppConfig>;
 
@@ -46,7 +47,8 @@ export const config = $state<AppConfig>({
   height: undefined,
   ...CONFIG_DEFAULTS,
   columns: [...CONFIG_DEFAULTS.columns],
-  distanceOptions: [...CONFIG_DEFAULTS.distanceOptions]
+  distanceOptions: [...CONFIG_DEFAULTS.distanceOptions],
+  inlineFormats: [...CONFIG_DEFAULTS.inlineFormats]
 });
 
 export function initConfig(el: HTMLElement): void {
@@ -113,6 +115,9 @@ export function initConfig(el: HTMLElement): void {
   config.hideHeader = validBoolean('hideHeader', globalCfg.hideHeader, CONFIG_DEFAULTS.hideHeader);
   // data-show-formats overrides CrumbWidgetConfig.showFormats
   config.showFormats = validBoolean('showFormats', el.getAttribute('data-show-formats') ?? globalCfg.showFormats, CONFIG_DEFAULTS.showFormats);
+  // data-inline-formats (comma-separated key strings) overrides CrumbWidgetConfig.inlineFormats
+  const inlineFormatsAttr = el.getAttribute('data-inline-formats');
+  config.inlineFormats = inlineFormatsAttr != null ? parseFormatKeys(inlineFormatsAttr) : validFormatKeys(globalCfg.inlineFormats, CONFIG_DEFAULTS.inlineFormats, 'inlineFormats');
   // data-update-url overrides CrumbWidgetConfig.updateUrl
   config.updateUrl = validUpdateUrl(el.getAttribute('data-update-url') ?? globalCfg.updateUrl);
 

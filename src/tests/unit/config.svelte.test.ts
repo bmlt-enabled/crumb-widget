@@ -115,6 +115,29 @@ describe('initConfig', () => {
     expect(config.formatKeys).toEqual(['O']);
   });
 
+  test('defaults inlineFormats to empty array', () => {
+    initConfig(makeElement());
+    expect(config.inlineFormats).toEqual([]);
+  });
+
+  test('reads inlineFormats from CrumbWidgetConfig.inlineFormats', () => {
+    window.CrumbWidgetConfig = { inlineFormats: ['M', 'W'] };
+    initConfig(makeElement());
+    expect(config.inlineFormats).toEqual(['M', 'W']);
+  });
+
+  test('data-inline-formats overrides CrumbWidgetConfig.inlineFormats', () => {
+    window.CrumbWidgetConfig = { inlineFormats: ['M'] };
+    initConfig(makeElement({ 'data-inline-formats': 'W, LGBTQ' }));
+    expect(config.inlineFormats).toEqual(['W', 'LGBTQ']);
+  });
+
+  test('data-inline-formats (empty) clears configured inlineFormats', () => {
+    window.CrumbWidgetConfig = { inlineFormats: ['M', 'W'] };
+    initConfig(makeElement({ 'data-inline-formats': '' }));
+    expect(config.inlineFormats).toEqual([]);
+  });
+
   test('reads view from data attribute', () => {
     initConfig(makeElement({ 'data-view': 'map' }));
     expect(config.view).toBe('map');
