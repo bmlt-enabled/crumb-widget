@@ -173,11 +173,11 @@ export function parseFormatKeys(value: string): string[] {
     .filter((s) => s.length > 0);
 }
 
-export function validFormatKeys(value: unknown, fallback: string[]): string[] {
+export function validFormatKeys(value: unknown, fallback: string[], field = 'formats'): string[] {
   if (value == null) return [...fallback];
   if (Array.isArray(value) && value.every((x) => typeof x === 'string' && x.trim().length > 0)) {
     return (value as string[]).map((s) => s.trim());
   }
-  warn('formats', value, 'an array of non-empty strings', fallback);
+  warn(field, value, 'an array of non-empty strings', fallback);
   return [...fallback];
 }

@@ -58,6 +58,11 @@
                                          "time,distance,name,location,address,service_body"
                                          (e.g. "time,name,address"). Overridden by
                                          CrumbWidgetConfig.columns when both set.
+        data-inline-formats  (optional)  Comma-separated format key strings
+                                         (e.g. "M,W") highlighted inline next to
+                                         each meeting name. Opt-in: defaults to
+                                         "" (none). Overridden by
+                                         CrumbWidgetConfig.inlineFormats when both set.
         data-path            (optional)  Base path for History API routing
                                          (e.g. "/meetings" produces clean URLs
                                          like /meetings/monday-night-meeting-42).
@@ -122,6 +127,12 @@
         formats           String[] — format key strings (e.g. ['O', 'BT']) to
                           lock the widget to. Client-side filter after fetch.
                           Overridable at runtime via ?formats=.
+        inlineFormats     String[] — format key strings (e.g. ['M', 'W']) to
+                          highlight inline next to each meeting name in the
+                          list/cards. Renders the matching format's localized
+                          name (e.g. "Women") as a muted suffix. Opt-in:
+                          defaults to [] (none). Codes vary by server.
+                          Equivalent to the data-inline-formats attribute.
         basePath          String — base path for History API routing (e.g.
                           '/meetings'). Equivalent to the data-path attribute.
         updateUrl         String — URL template for the "Update Meeting Info"
@@ -139,7 +150,8 @@
         language: 'en',
         // query: 'GetSearchResults&venue_types=2&meeting_key=location_nation&meeting_key_value[]=US&meeting_key_value[]=USA',
         columns: ['time', 'name', 'location', 'address', 'service_body'],
-        showFormats: true
+        inlineFormats: ['W']
+        // showFormats: true
       };
     </script>
 

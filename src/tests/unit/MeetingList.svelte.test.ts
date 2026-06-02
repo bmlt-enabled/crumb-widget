@@ -55,6 +55,7 @@ beforeEach(() => {
   config.nowOffset = 10;
   config.distanceUnit = 'mi';
   config.showFormats = false;
+  config.inlineFormats = [];
   uiState.userLocation = undefined;
   uiState.geoActive = false;
   uiState.geoRadius = 0;
@@ -317,6 +318,43 @@ describe('MeetingList — showFormats flag', () => {
     const meeting = makeMeeting({ resolvedFormats: fmts as ProcessedMeeting['resolvedFormats'] });
     render(MeetingList, { props: { meetings: [meeting] } });
     expect(screen.getAllByText('C, O, BT, D, ST')[0]).toBeInTheDocument();
+  });
+});
+
+describe('MeetingList — inlineFormats highlight', () => {
+  const men = { id: '1', key_string: 'M', name_string: 'Men', description_string: '', format_type_enum: '', lang: 'en', world_id: '' };
+  const women = { id: '2', key_string: 'W', name_string: 'Women', description_string: '', format_type_enum: '', lang: 'en', world_id: '' };
+  const open = { id: '3', key_string: 'O', name_string: 'Open', description_string: '', format_type_enum: '', lang: 'en', world_id: '' };
+
+  test('shows no inline flag when inlineFormats is empty (default)', () => {
+    const meeting = makeMeeting({ resolvedFormats: [men, open] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.queryByText('Men')).not.toBeInTheDocument();
+  });
+
+  test('renders matching format name_string inline next to the meeting name', () => {
+    config.inlineFormats = ['M', 'W'];
+    const meeting = makeMeeting({ resolvedFormats: [women, open] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Women')[0]).toBeInTheDocument();
+    // a non-flagged format is not surfaced inline
+    expect(screen.queryByText('Open')).not.toBeInTheDocument();
+  });
+
+  test('joins multiple matched flags, sorted', () => {
+    config.inlineFormats = ['M', 'W'];
+    const meeting = makeMeeting({ resolvedFormats: [women, men, open] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Men, Women')[0]).toBeInTheDocument();
+  });
+
+  test('shows nothing when the meeting has no matching format', () => {
+    config.inlineFormats = ['M', 'W'];
+    const meeting = makeMeeting({ resolvedFormats: [open] as ProcessedMeeting['resolvedFormats'], meeting_name: 'Open Group' });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Open Group')[0]).toBeInTheDocument();
+    expect(screen.queryByText('Men')).not.toBeInTheDocument();
+    expect(screen.queryByText('Women')).not.toBeInTheDocument();
   });
 });
 

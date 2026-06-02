@@ -1,3 +1,7 @@
+## 1.5.2 (June 1, 2026)
+
+- **Inline format highlights** — new `inlineFormats` config option and `data-inline-formats` attribute highlight selected format key strings (e.g. `['M', 'W']`) inline next to each meeting name in the list/cards. Each matching format renders its localized name (e.g. "Women") as a muted suffix — a curated highlight for special-interest meetings, independent of `showFormats`. Opt-in — defaults to `[]` (none), so existing embeds are unaffected. BMLT format key strings vary by server, so a configured code only shows where the server actually uses it
+
 ## 1.5.1 (May 15, 2026)
 
 - **Upgrade `bmlt-query-client` to `^1.4.1`** — numeric fields on `Meeting` (`latitude`, `longitude`, `weekday_tinyint`, `venue_type`, `published`, `distance_in_km`, `distance_in_miles`) and on `ServerInfo` / `CoverageArea` now arrive as real `number` values instead of strings, matching the existing TypeScript types. No behavior change in the widget — the internal coercion path in `data.svelte.ts` was already handling both shapes — but typings now line up end-to-end and downstream consumers don't need to parse
