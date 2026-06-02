@@ -74,6 +74,8 @@ export function validColumns(value: unknown, fallback: Column[]): Column[] {
 export function validDarkMode(value: unknown, fallback: 'auto' | true | false): 'auto' | true | false {
   if (value == null) return fallback;
   if (typeof value === 'boolean' || value === 'auto') return value;
+  if (value === '1' || value === 'true') return true;
+  if (value === '0' || value === 'false') return false;
   warn('darkMode', value, "true, false, or 'auto'", fallback);
   return fallback;
 }

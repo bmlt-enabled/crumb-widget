@@ -1928,12 +1928,87 @@
                   <br /><em>Example:</em> <code>data-inline-formats="M,W"</code>
                 </td>
               </tr>
+              <tr>
+                <td>data-formats</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.formats">
+                  Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>O</code>, <code>BT</code>). Comma-separated. Filtering is applied client-side
+                  after fetch. Takes precedence over <code>CrumbWidgetConfig.formats</code>; overridden by the <code>?formats=</code> query parameter. Default: <code>""</code> (no lock).
+                  <br /><em>Example:</em> <code>data-formats="O"</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-geolocation-radius</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.geolocationRadius">
+                  Fixed or auto search radius for Near Me. A <strong>positive</strong> number sets a fixed radius in miles/km. A <strong>negative integer</strong> uses BMLT auto-radius
+                  (e.g. <code>-50</code> finds ~50 nearby meetings). Takes precedence over <code>CrumbWidgetConfig.geolocationRadius</code>. Default: <code>-50</code>.
+                </td>
+              </tr>
+              <tr>
+                <td>data-distance-options</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.distanceOptions">
+                  Comma-separated distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. Takes precedence over <code>CrumbWidgetConfig.distanceOptions</code>.
+                  Default: <code>5,10,15,25,50,100</code>.
+                  <br /><em>Example:</em> <code>data-distance-options="5,10,25"</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-distance-unit</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.distanceUnit">
+                  Unit used for distance display. Takes precedence over <code>CrumbWidgetConfig.distanceUnit</code>. Default: auto-detected from locale.
+                  <br /><em>Values:</em> <code>mi</code> or <code>km</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-language</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.language">
+                  Override the UI language. Takes precedence over <code>CrumbWidgetConfig.language</code>. Defaults to <code>navigator.language</code>, falling back to English.
+                  <br /><em>Example:</em> <code>data-language="fr"</code>
+                  <br />Supported codes: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-dark-mode</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.darkMode">
+                  Dark color scheme. Takes precedence over <code>CrumbWidgetConfig.darkMode</code>. Default: <code>false</code>.
+                  <br /><em>Values:</em> <code>auto</code> (follow OS preference), <code>true</code> / <code>1</code> (force dark), <code>false</code> / <code>0</code> (force light)
+                </td>
+              </tr>
+              <tr>
+                <td>data-height</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.height">
+                  Fixed widget height in pixels. Takes precedence over <code>CrumbWidgetConfig.height</code>. Omit for natural content height.
+                  <br /><em>Example:</em> <code>data-height="600"</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-hide-header</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.hideHeader">
+                  Hide the "Meeting Finder" title bar and meeting count at the top of the widget. Takes precedence over <code>CrumbWidgetConfig.hideHeader</code>. Default: <code>false</code>.
+                  <br /><em>Values:</em> <code>true</code>, <code>false</code>, <code>1</code>, or <code>0</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-now-offset</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.nowOffset">
+                  Minutes of grace period before a meeting is considered past. Meetings that started within the last <code>nowOffset</code> minutes still appear at the top; older ones roll
+                  to the end of the list. Takes precedence over <code>CrumbWidgetConfig.nowOffset</code>. Default: <code>10</code>. Set to <code>0</code> to roll over immediately.
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
 
         <h2 id="global-config" data-i18n="globalConfig.title">Global Config Object</h2>
-        <p data-i18n-html="globalConfig.intro">For options not available as data attributes, define <code>CrumbWidgetConfig</code> as a global variable <strong>before</strong> loading the script.</p>
+        <p data-i18n-html="globalConfig.intro">Define <code>CrumbWidgetConfig</code> as a global variable <strong>before</strong> loading the script. Most options can also be set as <a href="#attributes">data attributes</a> — the attribute always takes precedence over the corresponding config value. <code>CrumbWidgetConfig</code> is still the only way to configure <code>map</code> (tile providers and custom markers) and is useful when you need to set config from server-side code rather than the HTML element.</p>
 
         <div class="demo">
           <div class="demo-header">HTML</div>

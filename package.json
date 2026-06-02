@@ -56,7 +56,7 @@
     "prettier-plugin-tailwindcss": "^0.8.0",
     "svelte": "^5.55.9",
     "svelte-check": "^4.4.8",
-    "svelte-eslint-parser": "^1.6.1",
+    "svelte-eslint-parser": "^1.7.1",
     "tailwindcss": "^4.3.0",
     "typedoc": "^0.28.19",
     "typescript": "5.9.3",
@@ -76,5 +76,9 @@
   },
   "engines": {
     "node": ">=22"
+  },
+  "allowScripts": {
+    "fsevents@2.3.2": true,
+    "fsevents@2.3.3": true
   }
 }

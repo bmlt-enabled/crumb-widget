@@ -89,7 +89,8 @@ export function initConfig(el: HTMLElement): void {
   config.formatIds = parseFormatIds(formatIdsRaw);
   // ?formats= overrides CrumbWidgetConfig.formats (key strings, client-side filter)
   const formatsParam = query.get('formats');
-  config.formatKeys = formatsParam != null ? parseFormatKeys(formatsParam) : validFormatKeys(globalCfg.formats, []);
+  const formatsAttr = el.getAttribute('data-formats');
+  config.formatKeys = formatsParam != null ? parseFormatKeys(formatsParam) : formatsAttr != null ? parseFormatKeys(formatsAttr) : validFormatKeys(globalCfg.formats, []);
   config.view = dataView;
   config.containerId = el.id || 'crumb-widget';
   config.locationMarker = globalCfg.map?.markers?.location;
@@ -107,12 +108,24 @@ export function initConfig(el: HTMLElement): void {
   // data-geolocation overrides CrumbWidgetConfig.geolocation.
   const geolocationAttr = el.getAttribute('data-geolocation');
   config.geolocation = !config.query && validBoolean('geolocation', geolocationAttr ?? globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
-  config.geolocationRadius = validRadius('geolocationRadius', globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
-  config.distanceOptions = validDistanceOptions(globalCfg.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
-  config.height = validHeight(globalCfg.height);
-  config.darkMode = validDarkMode(globalCfg.darkMode, CONFIG_DEFAULTS.darkMode);
-  config.nowOffset = validNonNegative('nowOffset', globalCfg.nowOffset, CONFIG_DEFAULTS.nowOffset);
-  config.hideHeader = validBoolean('hideHeader', globalCfg.hideHeader, CONFIG_DEFAULTS.hideHeader);
+  const geolocationRadiusAttr = el.getAttribute('data-geolocation-radius');
+  config.geolocationRadius = validRadius('geolocationRadius', geolocationRadiusAttr != null ? parseFloat(geolocationRadiusAttr) : globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
+  const distanceOptionsAttr = el.getAttribute('data-distance-options');
+  config.distanceOptions = validDistanceOptions(
+    distanceOptionsAttr != null
+      ? distanceOptionsAttr
+          .split(',')
+          .map((s) => parseFloat(s.trim()))
+          .filter((n) => Number.isFinite(n))
+      : globalCfg.distanceOptions,
+    CONFIG_DEFAULTS.distanceOptions
+  );
+  const heightAttr = el.getAttribute('data-height');
+  config.height = validHeight(heightAttr != null ? parseFloat(heightAttr) : globalCfg.height);
+  config.darkMode = validDarkMode(el.getAttribute('data-dark-mode') ?? globalCfg.darkMode, CONFIG_DEFAULTS.darkMode);
+  const nowOffsetAttr = el.getAttribute('data-now-offset');
+  config.nowOffset = validNonNegative('nowOffset', nowOffsetAttr != null ? parseFloat(nowOffsetAttr) : globalCfg.nowOffset, CONFIG_DEFAULTS.nowOffset);
+  config.hideHeader = validBoolean('hideHeader', el.getAttribute('data-hide-header') ?? globalCfg.hideHeader, CONFIG_DEFAULTS.hideHeader);
   // data-show-formats overrides CrumbWidgetConfig.showFormats
   config.showFormats = validBoolean('showFormats', el.getAttribute('data-show-formats') ?? globalCfg.showFormats, CONFIG_DEFAULTS.showFormats);
   // data-inline-formats (comma-separated key strings) overrides CrumbWidgetConfig.inlineFormats
@@ -121,9 +134,9 @@ export function initConfig(el: HTMLElement): void {
   // data-update-url overrides CrumbWidgetConfig.updateUrl
   config.updateUrl = validUpdateUrl(el.getAttribute('data-update-url') ?? globalCfg.updateUrl);
 
-  const explicitLanguage = validLanguage(globalCfg.language, SUPPORTED_LANGUAGES);
+  const explicitLanguage = validLanguage(el.getAttribute('data-language') ?? globalCfg.language, SUPPORTED_LANGUAGES);
   const language = explicitLanguage ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
   // Auto-detect mi/km from the resolved locale; explicit distanceUnit always wins.
-  config.distanceUnit = validDistanceUnit(globalCfg.distanceUnit, detectDistanceUnit(language));
+  config.distanceUnit = validDistanceUnit(el.getAttribute('data-distance-unit') ?? globalCfg.distanceUnit, detectDistanceUnit(language));
   initLocalization(language);
 }

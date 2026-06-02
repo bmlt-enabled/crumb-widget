@@ -94,6 +94,23 @@ describe('initConfig', () => {
     expect(config.formatKeys).toEqual(['O', 'BT']);
   });
 
+  test('data-formats sets formatKeys', () => {
+    initConfig(makeElement({ 'data-formats': 'O,BT' }));
+    expect(config.formatKeys).toEqual(['O', 'BT']);
+  });
+
+  test('data-formats overrides CrumbWidgetConfig.formats', () => {
+    window.CrumbWidgetConfig = { formats: ['O'] };
+    initConfig(makeElement({ 'data-formats': 'BT,WC' }));
+    expect(config.formatKeys).toEqual(['BT', 'WC']);
+  });
+
+  test('?formats overrides data-formats', () => {
+    window.history.replaceState(null, '', '/?formats=D');
+    initConfig(makeElement({ 'data-formats': 'O,BT' }));
+    expect(config.formatKeys).toEqual(['D']);
+  });
+
   test('?formats overrides CrumbWidgetConfig.formats', () => {
     window.CrumbWidgetConfig = { formats: ['O'] };
     window.history.replaceState(null, '', '/?formats=BT,WC');
@@ -230,6 +247,121 @@ describe('initConfig', () => {
   test('defaults height to undefined', () => {
     initConfig(makeElement());
     expect(config.height).toBeUndefined();
+  });
+
+  describe('data attribute overrides', () => {
+    test('data-hide-header="true" sets hideHeader', () => {
+      initConfig(makeElement({ 'data-hide-header': 'true' }));
+      expect(config.hideHeader).toBe(true);
+    });
+
+    test('data-hide-header="1" sets hideHeader', () => {
+      initConfig(makeElement({ 'data-hide-header': '1' }));
+      expect(config.hideHeader).toBe(true);
+    });
+
+    test('data-hide-header overrides CrumbWidgetConfig.hideHeader', () => {
+      window.CrumbWidgetConfig = { hideHeader: false };
+      initConfig(makeElement({ 'data-hide-header': 'true' }));
+      expect(config.hideHeader).toBe(true);
+    });
+
+    test('data-dark-mode="auto" sets darkMode', () => {
+      initConfig(makeElement({ 'data-dark-mode': 'auto' }));
+      expect(config.darkMode).toBe('auto');
+    });
+
+    test('data-dark-mode="true" forces dark mode', () => {
+      initConfig(makeElement({ 'data-dark-mode': 'true' }));
+      expect(config.darkMode).toBe(true);
+    });
+
+    test('data-dark-mode="false" forces light mode', () => {
+      initConfig(makeElement({ 'data-dark-mode': 'false' }));
+      expect(config.darkMode).toBe(false);
+    });
+
+    test('data-dark-mode overrides CrumbWidgetConfig.darkMode', () => {
+      window.CrumbWidgetConfig = { darkMode: true };
+      initConfig(makeElement({ 'data-dark-mode': 'false' }));
+      expect(config.darkMode).toBe(false);
+    });
+
+    test('data-height sets height', () => {
+      initConfig(makeElement({ 'data-height': '400' }));
+      expect(config.height).toBe(400);
+    });
+
+    test('data-height overrides CrumbWidgetConfig.height', () => {
+      window.CrumbWidgetConfig = { height: 600 };
+      initConfig(makeElement({ 'data-height': '400' }));
+      expect(config.height).toBe(400);
+    });
+
+    test('invalid data-height falls back to undefined', () => {
+      initConfig(makeElement({ 'data-height': 'tall' }));
+      expect(config.height).toBeUndefined();
+    });
+
+    test('data-now-offset sets nowOffset', () => {
+      initConfig(makeElement({ 'data-now-offset': '15' }));
+      expect(config.nowOffset).toBe(15);
+    });
+
+    test('data-now-offset overrides CrumbWidgetConfig.nowOffset', () => {
+      window.CrumbWidgetConfig = { nowOffset: 5 };
+      initConfig(makeElement({ 'data-now-offset': '20' }));
+      expect(config.nowOffset).toBe(20);
+    });
+
+    test('data-distance-unit="km" sets distanceUnit', () => {
+      initConfig(makeElement({ 'data-distance-unit': 'km' }));
+      expect(config.distanceUnit).toBe('km');
+    });
+
+    test('data-distance-unit overrides CrumbWidgetConfig.distanceUnit', () => {
+      window.CrumbWidgetConfig = { distanceUnit: 'mi' };
+      initConfig(makeElement({ 'data-distance-unit': 'km' }));
+      expect(config.distanceUnit).toBe('km');
+    });
+
+    test('data-geolocation-radius sets a fixed radius', () => {
+      initConfig(makeElement({ 'data-geolocation-radius': '25' }));
+      expect(config.geolocationRadius).toBe(25);
+    });
+
+    test('data-geolocation-radius negative integer sets auto-radius', () => {
+      initConfig(makeElement({ 'data-geolocation-radius': '-100' }));
+      expect(config.geolocationRadius).toBe(-100);
+    });
+
+    test('data-geolocation-radius overrides CrumbWidgetConfig.geolocationRadius', () => {
+      window.CrumbWidgetConfig = { geolocationRadius: 10 };
+      initConfig(makeElement({ 'data-geolocation-radius': '50' }));
+      expect(config.geolocationRadius).toBe(50);
+    });
+
+    test('data-distance-options sets distanceOptions', () => {
+      initConfig(makeElement({ 'data-distance-options': '5,10,25' }));
+      expect(config.distanceOptions).toEqual([5, 10, 25]);
+    });
+
+    test('data-distance-options overrides CrumbWidgetConfig.distanceOptions', () => {
+      window.CrumbWidgetConfig = { distanceOptions: [1, 2, 3] };
+      initConfig(makeElement({ 'data-distance-options': '5,10,25' }));
+      expect(config.distanceOptions).toEqual([5, 10, 25]);
+    });
+
+    test('data-language sets language (reflected via distanceUnit auto-detect)', () => {
+      initConfig(makeElement({ 'data-language': 'de' }));
+      expect(config.distanceUnit).toBe('km');
+    });
+
+    test('data-language overrides CrumbWidgetConfig.language', () => {
+      window.CrumbWidgetConfig = { language: 'en' };
+      initConfig(makeElement({ 'data-language': 'de' }));
+      expect(config.distanceUnit).toBe('km');
+    });
   });
 
   describe('CrumbWidgetConfig overrides', () => {
