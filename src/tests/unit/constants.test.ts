@@ -45,7 +45,7 @@ describe('detectDistanceUnit', () => {
     expect(detectDistanceUnit('my-MM')).toBe('mi');
   });
 
-  test('falls back to mi on garbage input', () => {
-    expect(detectDistanceUnit('not-a-locale-!!!')).toBe('mi');
+  test('falls back to km on garbage input', () => {
+    expect(detectDistanceUnit('not-a-locale-!!!')).toBe('km');
   });
 });

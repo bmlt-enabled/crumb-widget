@@ -21,13 +21,13 @@ export function kmToMiles(km: number): number {
 const MILE_REGIONS = new Set(['US', 'LR', 'MM', 'GB']);
 
 // Derive 'mi'/'km' from a BCP-47 language tag. Uses Intl.Locale#maximize() so a
-// bare 'en' (no region) resolves to 'en-Latn-US' → mi. Falls back to 'mi' on any
+// bare 'en' (no region) resolves to 'en-Latn-US' → mi. Falls back to 'km' on any
 // parse error.
 export function detectDistanceUnit(lang: string): 'mi' | 'km' {
   try {
     const region = new Intl.Locale(lang).maximize().region;
     return region != null && MILE_REGIONS.has(region) ? 'mi' : 'km';
   } catch {
-    return 'mi';
+    return 'km';
   }
 }
