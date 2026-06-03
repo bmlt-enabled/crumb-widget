@@ -151,7 +151,7 @@ export function validQuery(value: unknown): string | undefined {
   return value.trim().replace(/^[?&]+/, '');
 }
 
-export function parseServiceBodyIds(value: string): number[] {
+function parsePositiveIntList(value: string): number[] {
   if (!value) return [];
   return value
     .split(',')
@@ -159,12 +159,12 @@ export function parseServiceBodyIds(value: string): number[] {
     .filter((n) => Number.isFinite(n) && n > 0);
 }
 
+export function parseServiceBodyIds(value: string): number[] {
+  return parsePositiveIntList(value);
+}
+
 export function parseFormatIds(value: string): number[] {
-  if (!value) return [];
-  return value
-    .split(',')
-    .map((s) => parseInt(s.trim(), 10))
-    .filter((n) => Number.isFinite(n) && n > 0);
+  return parsePositiveIntList(value);
 }
 
 export function parseFormatKeys(value: string): string[] {
