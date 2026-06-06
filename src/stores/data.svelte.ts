@@ -9,6 +9,41 @@ import { getLanguage } from '@stores/localization';
 
 const PAGE_SIZE = 5000;
 
+// Restrict the GetSearchResults response to only the meeting fields the widget
+// actually reads. The BMLT `json` handler otherwise returns all ~44 fields per
+// meeting (admin notes, contact info, world IDs, etc.), roughly doubling the
+// payload vs what we render. Keep this in sync with field reads across the
+// components/utils — notably countUniqueGroups (service_body_bigint,
+// virtual_meeting_link, virtual_meeting_additional_info, latitude, longitude),
+// processMeetings (format_shared_id_list, venue_type), and formatAddress
+// (location_* fields). The top-level `formats` array (get_used_formats) is
+// unaffected by data_field_key.
+const MEETING_DATA_FIELDS = [
+  'id_bigint',
+  'meeting_name',
+  'weekday_tinyint',
+  'start_time',
+  'duration_time',
+  'time_zone',
+  'venue_type',
+  'service_body_bigint',
+  'service_body_name',
+  'latitude',
+  'longitude',
+  'distance_in_miles',
+  'format_shared_id_list',
+  'virtual_meeting_link',
+  'virtual_meeting_additional_info',
+  'location_text',
+  'location_street',
+  'location_municipality',
+  'location_province',
+  'location_postal_code_1',
+  'location_info',
+  'comments',
+  'email_contact'
+].join(',');
+
 type SearchParams = Parameters<BmltClient['searchMeetingsWithFormats']>[0];
 
 const BMLT_LANGS = new Set<string>(Object.values(Language));
@@ -112,7 +147,7 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
       formatsResp = resp.formats;
     } else {
       const withFormatLock = config.formatIds.length > 0 ? { ...params, formats: config.formatIds } : params;
-      const baseParams = { ...withFormatLock, page_size: PAGE_SIZE };
+      const baseParams = { ...withFormatLock, page_size: PAGE_SIZE, data_field_key: MEETING_DATA_FIELDS };
       ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(lang_enum ? { ...baseParams, lang_enum } : baseParams));
 
       // If the server has no translations for the requested language it returns
