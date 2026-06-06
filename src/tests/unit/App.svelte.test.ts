@@ -135,10 +135,13 @@ describe('App', () => {
     expect(screen.getByText('Meeting Finder')).toBeInTheDocument();
   });
 
-  test('shows loading spinner while loading', () => {
+  test('delays the loading spinner so fast loads do not flash it', async () => {
     dataState.loading = true;
     render(App, { props: { config: baseConfig } });
-    expect(screen.getByText('Loading meetings…')).toBeInTheDocument();
+    // Not shown immediately — only after the load drags past SPINNER_DELAY_MS.
+    expect(screen.queryByText('Loading meetings…')).not.toBeInTheDocument();
+    // Once the threshold elapses, the spinner appears.
+    await waitFor(() => expect(screen.getByText('Loading meetings…')).toBeInTheDocument());
   });
 
   test('shows error message on failure', () => {
