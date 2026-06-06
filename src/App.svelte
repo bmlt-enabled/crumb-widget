@@ -6,7 +6,7 @@
   import { loadData, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage } from '@utils/format';
-  import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS } from '@utils/constants';
+  import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS, SPINNER_DELAY_MS } from '@utils/constants';
   import { t, direction } from '@stores/localization';
 
   import Controls from '@components/Controls.svelte';
@@ -19,6 +19,7 @@
   let geoErrorHint = $state('');
   let geoDenied = $state(false);
   let manualAddress = $state('');
+  let showSpinner = $state(false);
 
   interface Props {
     config: AppConfig;
@@ -167,6 +168,20 @@
     return dataState.meetings.find((m) => m.id_bigint === match[1]);
   });
 
+  // Delay the spinner so fast loads don't flash it. While loading is pending
+  // but the threshold hasn't elapsed, the body stays blank (the header still
+  // shows); only a load that drags past SPINNER_DELAY_MS reveals the spinner.
+  $effect(() => {
+    if (!dataState.loading) {
+      showSpinner = false;
+      return;
+    }
+    const timer = setTimeout(() => {
+      showSpinner = true;
+    }, SPINNER_DELAY_MS);
+    return () => clearTimeout(timer);
+  });
+
   let widgetEl = $state<HTMLDivElement | undefined>();
 
   $effect(() => {
@@ -248,7 +263,9 @@
       {/if}
     </div>
   {:else if dataState.loading}
-    <Loading />
+    {#if showSpinner}
+      <Loading />
+    {/if}
   {:else if selectedMeeting}
     <!-- Detail view (no Controls) -->
     <div class={config.height ? 'min-h-0 flex-1 overflow-y-auto' : ''}>

@@ -7,6 +7,12 @@ export const GEOLOCATION_TIMEOUT_MS = 10000;
 // fires. This JS-side timer guarantees the spinner cannot hang forever.
 export const GEOLOCATION_HARD_TIMEOUT_MS = 15000;
 
+// Delay before the loading spinner appears. Fast loads (small service bodies,
+// warm fetches) resolve in well under this, so they show no spinner at all —
+// only loads that genuinely drag past the threshold reveal one. Avoids the
+// jarring spinner flash on every page load.
+export const SPINNER_DELAY_MS = 450;
+
 const KM_PER_MILE = 1.60934;
 
 export function milesToKm(miles: number): number {
