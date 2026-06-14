@@ -24,6 +24,7 @@ export function kmToMiles(km: number): number {
 }
 
 // Regions that use miles for road distance.
+// ISO 3166-1 alpha-2: US (United States), LR (Liberia), MM (Myanmar), GB (United Kingdom).
 const MILE_REGIONS = new Set(['US', 'LR', 'MM', 'GB']);
 
 // Derive 'mi'/'km' from a BCP-47 language tag. Uses Intl.Locale#maximize() so a
