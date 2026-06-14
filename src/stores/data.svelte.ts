@@ -49,8 +49,9 @@ type SearchParams = Parameters<BmltClient['searchMeetingsWithFormats']>[0];
 const BMLT_LANGS = new Set<string>(Object.values(Language));
 
 function bmltLanguageFor(widgetLang: string): Language | undefined {
-  const base = (widgetLang.split('-')[0] ?? '').toLowerCase();
-  return BMLT_LANGS.has(base) ? (base as Language) : undefined;
+  const [base = ''] = widgetLang.split('-');
+  const lower = base.toLowerCase();
+  return BMLT_LANGS.has(lower) ? (lower as Language) : undefined;
 }
 
 interface DataState {
@@ -120,7 +121,7 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
 
   try {
     const client = new BmltClient({ serverURL: serverUrl });
-    const lang_enum = bmltLanguageFor(getLanguage());
+    const langEnum = bmltLanguageFor(getLanguage());
 
     let meetingsResp: Meeting[];
     let formatsResp: Format[];
@@ -128,18 +129,18 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     if (config.query) {
       // Raw query path: pass the embedder's query string through verbatim.
       // We append page_size + get_used_formats so meetings + formats still arrive
-      // in a single round-trip, and lang_enum to match the rest of the widget.
+      // in a single round-trip, and langEnum to match the rest of the widget.
       const extras: Record<string, string> = {
         page_size: String(PAGE_SIZE),
         get_used_formats: '1'
       };
-      if (lang_enum) extras.lang_enum = lang_enum;
+      if (langEnum) extras.lang_enum = langEnum;
       let resp = await client.rawQuery<MeetingsWithFormats>(buildRawQuery(config.query, extras));
 
       // Same lang-fallback as the structured path: a server with no translations
       // for the requested language returns empty formats and strips
-      // format_shared_id_list from meetings. Retry once without lang_enum.
-      if (lang_enum && lang_enum !== Language.ENGLISH && resp.formats.length === 0 && resp.meetings.length > 0) {
+      // format_shared_id_list from meetings. Retry once without langEnum.
+      if (langEnum && langEnum !== Language.ENGLISH && resp.formats.length === 0 && resp.meetings.length > 0) {
         const { lang_enum: _omit, ...rest } = extras;
         resp = await client.rawQuery<MeetingsWithFormats>(buildRawQuery(config.query, rest));
       }
@@ -148,13 +149,13 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     } else {
       const withFormatLock = config.formatIds.length > 0 ? { ...params, formats: config.formatIds } : params;
       const baseParams = { ...withFormatLock, page_size: PAGE_SIZE, data_field_key: MEETING_DATA_FIELDS };
-      ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(lang_enum ? { ...baseParams, lang_enum } : baseParams));
+      ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(langEnum ? { ...baseParams, lang_enum: langEnum } : baseParams));
 
       // If the server has no translations for the requested language it returns
       // an empty formats array AND strips format_shared_id_list from every
-      // meeting. Retry once without lang_enum so meetings come back with format
+      // meeting. Retry once without langEnum so meetings come back with format
       // references and English format names.
-      if (lang_enum && lang_enum !== Language.ENGLISH && formatsResp.length === 0 && meetingsResp.length > 0) {
+      if (langEnum && langEnum !== Language.ENGLISH && formatsResp.length === 0 && meetingsResp.length > 0) {
         ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(baseParams));
       }
     }
