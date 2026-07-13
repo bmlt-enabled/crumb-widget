@@ -59,7 +59,7 @@
     "svelte-eslint-parser": "^1.7.1",
     "tailwindcss": "^4.3.0",
     "typedoc": "^0.28.19",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "typescript-eslint": "^8.59.4",
     "unplugin-dts": "^1.0.1",
     "vite": "^8.0.14",
