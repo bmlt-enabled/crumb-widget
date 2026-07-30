@@ -1,6 +1,8 @@
-## Unreleased
+## 1.6.0 (July 30, 2026)
 
 - **Data attribute coverage** — nine settings that previously required `CrumbWidgetConfig` can now also be set as HTML data attributes (the attribute takes precedence over the config value in all cases): `data-formats` (format key filter), `data-geolocation-radius`, `data-distance-options` (comma-separated), `data-distance-unit` (`mi` or `km`), `data-height` (pixels), `data-dark-mode` (`auto`, `true`/`1`, `false`/`0`), `data-now-offset`, `data-hide-header`, and `data-language` (BCP-47 tag). The only settings still exclusive to `CrumbWidgetConfig` are the `map` options (tile providers and custom markers)
+- **`formats` column** — new opt-in `formats` column for list view renders one chip per format showing its **localized name** (e.g. "Open", "Basic Text"), not the key string, with `C`/`O` ordered to the front. Add `formats` to `columns` or `data-columns` to show it — hidden by default, so existing embeds are unaffected. Chips carry a `bmlt-format-chip` class for custom styling and use the format's description as their tooltip. Independent of `showFormats` (which lists key strings beneath the meeting name) and `inlineFormats`
+- **Fix empty service body name** — the `service_body` column, the meeting detail panel, and the service body filter dropdown had all been blank since the widget started restricting responses with `data_field_key`. Root servers silently drop `service_body_name` from that request: it's a joined value from the service body relation rather than a meeting column, so it isn't in the field whitelist and can never be returned. The name is now resolved client-side via `GetServiceBodies`, requesting only the service bodies the result set actually references. Best-effort — if the lookup fails the names stay empty rather than failing the load
 
 ## 1.5.2 (June 1, 2026)
 

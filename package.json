@@ -1,6 +1,6 @@
 {
   "name": "crumb-widget",
-  "version": "1.5.2",
+  "version": "1.6.0",
   "type": "module",
   "license": "MIT",
   "repository": {
@@ -50,7 +50,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-svelte": "^3.17.1",
     "globals": "^17.6.0",
-    "jsdom": "^30.0.0",
+    "jsdom": "^29.1.1",
     "prettier": "^3.8.3",
     "prettier-plugin-svelte": "^4.0.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
