@@ -55,9 +55,10 @@
                                          runtime via ?view= (also accepts "auto"
                                          to prompt for geolocation on load).
         data-columns         (optional)  Comma-separated list of columns to show:
-                                         "time,distance,name,location,address,service_body"
-                                         (e.g. "time,name,address"). Overridden by
-                                         CrumbWidgetConfig.columns when both set.
+                                         "time,distance,name,location,address,
+                                         service_body,formats" (e.g. "time,name,address").
+                                         Overridden by CrumbWidgetConfig.columns
+                                         when both set.
         data-inline-formats  (optional)  Comma-separated format key strings
                                          (e.g. "M,W") highlighted inline next to
                                          each meeting name. Opt-in: defaults to
@@ -105,7 +106,9 @@
         view              'list' | 'map' | 'both' — overrides data-view.
         columns           Array of column keys to show in the meeting list:
                           'time' | 'distance' | 'name' | 'location' | 'address'
-                          | 'service_body'. 'service_body' hidden by default;
+                          | 'service_body' | 'formats'. 'service_body' and
+                          'formats' hidden by default; 'formats' renders one chip
+                          per format showing its localized name (e.g. "Open");
                           'distance' only renders when geolocation is active.
         geolocation       Boolean — enables Near Me + typed location search
                           (city/zip/address via Nominatim) on the search input.
@@ -149,8 +152,8 @@
       var CrumbWidgetConfig = {
         language: 'en',
         // query: 'GetSearchResults&venue_types=2&meeting_key=location_nation&meeting_key_value[]=US&meeting_key_value[]=USA',
-        columns: ['time', 'name', 'location', 'address', 'service_body'],
-        inlineFormats: ['W']
+        columns: ['time', 'name', 'location', 'address', 'service_body', 'formats'],
+        // inlineFormats: ['W']
         // showFormats: true
       };
     </script>

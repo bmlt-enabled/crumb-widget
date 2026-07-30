@@ -52,6 +52,7 @@ function rawFormat(overrides: Partial<Format> = {}): Format {
 let mockSearch: ReturnType<typeof vi.fn>;
 let mockGeocode: ReturnType<typeof vi.fn>;
 let mockRawQuery: ReturnType<typeof vi.fn>;
+let mockGetServiceBodies: ReturnType<typeof vi.fn>;
 
 beforeEach(() => {
   dataState.meetings = [];
@@ -65,12 +66,14 @@ beforeEach(() => {
   mockSearch = vi.fn();
   mockGeocode = vi.fn();
   mockRawQuery = vi.fn();
+  mockGetServiceBodies = vi.fn().mockResolvedValue([]);
   // Vitest requires `class` keyword when mocking a constructor with `new`
   vi.mocked(BmltClient).mockImplementation(
     class {
       searchMeetingsWithFormats = mockSearch;
       geocodeAddress = mockGeocode;
       rawQuery = mockRawQuery;
+      getServiceBodies = mockGetServiceBodies;
     } as unknown as typeof BmltClient
   );
 });
@@ -197,6 +200,63 @@ describe('loadData', () => {
     const names = dataState.meetings.map((m) => m.meeting_name);
     expect(names).toContain('Wednesday AM');
     expect(names).toContain('Monday PM');
+  });
+});
+
+describe('service body names', () => {
+  test('does not request service_body_name via data_field_key', async () => {
+    // Root servers reject it as a data_field_key; asking for it is silently ignored.
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    const { data_field_key: fields } = mockSearch.mock.calls[0]![0];
+    expect(fields).toContain('service_body_bigint');
+    expect(fields).not.toContain('service_body_name');
+  });
+
+  test('resolves names from service_body_bigint when the server omits them', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_bigint: '95' })], formats: [] });
+    mockGetServiceBodies.mockResolvedValue([{ id: '95', name: 'Capital Area' }]);
+    await loadData('https://example.org/main_server');
+    expect(dataState.meetings[0]!.service_body_name).toBe('Capital Area');
+  });
+
+  test('requests only the service bodies the result set references', async () => {
+    mockSearch.mockResolvedValue({
+      meetings: [rawMeeting({ id_bigint: '1', service_body_bigint: '95' }), rawMeeting({ id_bigint: '2', service_body_bigint: '173' }), rawMeeting({ id_bigint: '3', service_body_bigint: '95' })],
+      formats: []
+    });
+    mockGetServiceBodies.mockResolvedValue([]);
+    await loadData('https://example.org/main_server');
+    expect(mockGetServiceBodies).toHaveBeenCalledWith({ services: [95, 173] });
+  });
+
+  test('skips the lookup when no meeting has a usable service body id', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_bigint: '0' })], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockGetServiceBodies).not.toHaveBeenCalled();
+  });
+
+  test('leaves the name empty when no service body matches', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_bigint: '95' })], formats: [] });
+    mockGetServiceBodies.mockResolvedValue([{ id: '7', name: 'Somewhere Else' }]);
+    await loadData('https://example.org/main_server');
+    expect(dataState.meetings[0]!.service_body_name).toBe('');
+  });
+
+  test('skips the lookup when the server already supplied names', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_name: 'Already Here' })], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockGetServiceBodies).not.toHaveBeenCalled();
+    expect(dataState.meetings[0]!.service_body_name).toBe('Already Here');
+  });
+
+  test('still loads meetings when the service body lookup fails', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_bigint: '95' })], formats: [] });
+    mockGetServiceBodies.mockRejectedValue(new Error('boom'));
+    await loadData('https://example.org/main_server');
+    expect(dataState.error).toBeNull();
+    expect(dataState.meetings).toHaveLength(1);
+    expect(dataState.meetings[0]!.service_body_name).toBeUndefined();
   });
 });
 

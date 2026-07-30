@@ -18,6 +18,13 @@ const PAGE_SIZE = 5000;
 // processMeetings (format_shared_id_list, venue_type), and formatAddress
 // (location_* fields). The top-level `formats` array (get_used_formats) is
 // unaffected by data_field_key.
+//
+// `service_body_name` is deliberately absent: root servers reject it as a
+// data_field_key (it is a joined value from the service body relation, not a
+// meeting column, so it is missing from Meeting::$mainFields and from the
+// whitelist in MeetingResource). Requesting it is silently ignored, so the name
+// is resolved client-side from service_body_bigint instead — see
+// resolveServiceBodyNames below.
 const MEETING_DATA_FIELDS = [
   'id_bigint',
   'meeting_name',
@@ -27,7 +34,6 @@ const MEETING_DATA_FIELDS = [
   'time_zone',
   'venue_type',
   'service_body_bigint',
-  'service_body_name',
   'latitude',
   'longitude',
   'distance_in_miles',
@@ -86,6 +92,33 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
       isVirtual: venueType === VENUE_TYPE.VIRTUAL || venueType === VENUE_TYPE.HYBRID
     };
   });
+}
+
+// Fill in service_body_name from a GetServiceBodies lookup for any meeting the
+// server did not supply one for. Used by the service_body column, the meeting
+// detail panel, and the service body filter. Best-effort: if the lookup fails
+// the names stay empty, exactly as they would have been anyway.
+async function resolveServiceBodyNames(client: BmltClient, meetings: Meeting[]): Promise<void> {
+  if (meetings.length === 0 || meetings.every((m) => m.service_body_name)) return;
+
+  // Ask only for the service bodies actually referenced by the result set —
+  // unfiltered, GetServiceBodies returns every body on the server (115 on a
+  // typical region, ~1600 on the aggregator) to resolve a handful of names.
+  const wanted = [...new Set(meetings.filter((m) => !m.service_body_name).map((m) => Number(m.service_body_bigint)))].filter((id) => Number.isFinite(id) && id > 0);
+  if (wanted.length === 0) return;
+
+  let bodies: Awaited<ReturnType<BmltClient['getServiceBodies']>>;
+  try {
+    bodies = await client.getServiceBodies({ services: wanted });
+  } catch {
+    return;
+  }
+
+  const nameById = new Map(bodies.map((b) => [String(b.id), b.name]));
+  for (const meeting of meetings) {
+    if (meeting.service_body_name) continue;
+    meeting.service_body_name = nameById.get(String(meeting.service_body_bigint)) ?? '';
+  }
 }
 
 function applyFormatKeyLock(meetings: ProcessedMeeting[], formatKeys: string[]): ProcessedMeeting[] {
@@ -163,6 +196,8 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     const formatsMap = new SvelteMap<string, Format>();
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
     dataState.formats = formatsMap;
+
+    await resolveServiceBodyNames(client, meetingsResp);
 
     const processed = applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
     dataState.meetings = sortMeetings(processed, config.nowOffset);

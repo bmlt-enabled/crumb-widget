@@ -59,9 +59,25 @@
 
   // Column span for print-only day-group header rows.
   const printHeaderColSpan = $derived(
-    (cols.has('time') ? 1 : 0) + (showDistance ? 1 : 0) + (cols.has('name') ? 1 : 0) + (cols.has('location') ? 1 : 0) + (cols.has('address') ? 1 : 0) + (cols.has('service_body') ? 1 : 0) || 1
+    (cols.has('time') ? 1 : 0) +
+      (showDistance ? 1 : 0) +
+      (cols.has('name') ? 1 : 0) +
+      (cols.has('location') ? 1 : 0) +
+      (cols.has('address') ? 1 : 0) +
+      (cols.has('service_body') ? 1 : 0) +
+      (cols.has('formats') ? 1 : 0) || 1
   );
 </script>
+
+{#snippet formatChips(meeting: ProcessedMeeting)}
+  {#if meeting.resolvedFormats.length > 0}
+    <div class="flex flex-wrap gap-1">
+      {#each sortFormats(meeting.resolvedFormats) as fmt (fmt.id)}
+        <span class="bmlt-format-chip rounded border border-gray-200 bg-white px-2 py-0.5 text-xs text-gray-700" title={fmt.description_string || undefined}>{fmt.name_string}</span>
+      {/each}
+    </div>
+  {/if}
+{/snippet}
 
 {#snippet venueBadges(meeting: ProcessedMeeting)}
   {#if meeting.isInPerson}
@@ -111,6 +127,11 @@
       {#if cols.has('service_body') && meeting.service_body_name}
         <p class="mt-2.5 text-base text-gray-500">{meeting.service_body_name}</p>
       {/if}
+      {#if cols.has('formats')}
+        <div class="mt-2">
+          {@render formatChips(meeting)}
+        </div>
+      {/if}
     </div>
   </button>
 {/snippet}
@@ -152,6 +173,11 @@
     {#if cols.has('service_body')}
       <td class="hidden px-4 py-4 text-base text-gray-600 lg:table-cell">
         {meeting.service_body_name ?? ''}
+      </td>
+    {/if}
+    {#if cols.has('formats')}
+      <td class="px-4 py-4">
+        {@render formatChips(meeting)}
       </td>
     {/if}
   </tr>
@@ -209,6 +235,7 @@
           {#if cols.has('location')}<th class="min-w-[112px] px-4 py-2 text-start">{$t.location}</th>{/if}
           {#if cols.has('address')}<th class="px-4 py-2 text-start">{$t.address}</th>{/if}
           {#if cols.has('service_body')}<th class="hidden px-4 py-2 text-start lg:table-cell">{$t.serviceBody}</th>{/if}
+          {#if cols.has('formats')}<th class="px-4 py-2 text-start">{$t.format}</th>{/if}
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-100">
