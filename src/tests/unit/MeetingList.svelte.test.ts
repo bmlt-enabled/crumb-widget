@@ -358,6 +358,58 @@ describe('MeetingList — inlineFormats highlight', () => {
   });
 });
 
+describe('MeetingList — formats column', () => {
+  const openFmt = { id: '1', key_string: 'O', name_string: 'Open', description_string: 'Open to all', format_type_enum: 'O', lang: 'en', world_id: '' };
+  const basicText = { id: '2', key_string: 'BT', name_string: 'Basic Text', description_string: 'Basic Text study', format_type_enum: '', lang: 'en', world_id: '' };
+  const noDesc = { id: '3', key_string: 'ST', name_string: 'Step', description_string: '', format_type_enum: '', lang: 'en', world_id: '' };
+
+  test('is hidden unless added to columns', () => {
+    const meeting = makeMeeting({ resolvedFormats: [openFmt] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.queryByText('Open')).not.toBeInTheDocument();
+  });
+
+  test('renders one chip per format using the localized name, not the key string', () => {
+    config.columns = ['time', 'name', 'formats'];
+    const meeting = makeMeeting({ resolvedFormats: [basicText, openFmt] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Open')[0]).toBeInTheDocument();
+    expect(screen.getAllByText('Basic Text')[0]).toBeInTheDocument();
+    expect(screen.queryByText('BT')).not.toBeInTheDocument();
+  });
+
+  test('orders chips with sortFormats — O pinned ahead of the rest', () => {
+    config.columns = ['time', 'name', 'formats'];
+    const meeting = makeMeeting({ resolvedFormats: [basicText, openFmt] as ProcessedMeeting['resolvedFormats'] });
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    // The list renders both a mobile card and a desktop table — check the table's chips
+    const chips = [...container.querySelectorAll('table .bmlt-format-chip')].map((el) => el.textContent);
+    expect(chips).toEqual(['Open', 'Basic Text']);
+  });
+
+  test('uses the format description as the chip tooltip', () => {
+    config.columns = ['time', 'name', 'formats'];
+    const meeting = makeMeeting({ resolvedFormats: [openFmt] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Open')[0]).toHaveAttribute('title', 'Open to all');
+  });
+
+  test('omits the tooltip entirely when the format has no description', () => {
+    config.columns = ['time', 'name', 'formats'];
+    const meeting = makeMeeting({ resolvedFormats: [noDesc] as ProcessedMeeting['resolvedFormats'] });
+    render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Step')[0]).not.toHaveAttribute('title');
+  });
+
+  test('renders nothing when the meeting has no formats', () => {
+    config.columns = ['time', 'name', 'formats'];
+    const meeting = makeMeeting({ resolvedFormats: [], meeting_name: 'Solo Group' });
+    const { container } = render(MeetingList, { props: { meetings: [meeting] } });
+    expect(screen.getAllByText('Solo Group')[0]).toBeInTheDocument();
+    expect(container.querySelectorAll('.bmlt-format-chip')).toHaveLength(0);
+  });
+});
+
 describe('MeetingList — distance display', () => {
   beforeEach(() => {
     uiState.userLocation = { lat: 34.05, lng: -118.24 };
