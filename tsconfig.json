@@ -17,7 +17,7 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "moduleResolution": "bundler",
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals", "vite/client"],
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
