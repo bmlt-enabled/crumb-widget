@@ -29,6 +29,7 @@ export const elTranslations = {
   afternoon: 'Απόγευμα',
   evening: 'Βράδυ',
   night: 'Νύχτα',
+  locked: 'κλειδωμένο από τη ρύθμιση του ιστότοπου',
   // Meeting list
   noMeetingsFound: 'Δεν βρέθηκαν συναντήσεις',
   tryAdjustingFilters: 'Δοκιμάστε να προσαρμόσετε την αναζήτηση ή τα φίλτρα',

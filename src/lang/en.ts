@@ -29,6 +29,7 @@ export const enTranslations = {
   afternoon: 'Afternoon',
   evening: 'Evening',
   night: 'Night',
+  locked: 'locked by site configuration',
   // Meeting list
   noMeetingsFound: 'No meetings found',
   tryAdjustingFilters: 'Try adjusting your search or filters',

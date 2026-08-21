@@ -29,6 +29,7 @@ export const esTranslations = {
   afternoon: 'Tarde',
   evening: 'Noche',
   night: 'Madrugada',
+  locked: 'bloqueado por la configuración del sitio',
   // Meeting list
   noMeetingsFound: 'No se encontraron reuniones',
   tryAdjustingFilters: 'Intenta ajustar tu búsqueda o filtros',

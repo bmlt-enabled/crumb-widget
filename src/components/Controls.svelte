@@ -588,7 +588,7 @@
                   class="flex w-full items-center gap-2.5 border-0 px-3 py-2 text-start text-sm {isLocked ? 'cursor-not-allowed' : 'hover:bg-gray-50'} {isChecked
                     ? 'font-semibold text-blue-700'
                     : 'text-gray-700'}"
-                  title={isLocked ? `${fmt.description_string} — ${$t.locked ?? 'locked by site configuration'}` : fmt.description_string}
+                  title={isLocked ? `${fmt.description_string} — ${$t.locked}` : fmt.description_string}
                 >
                   <span class="flex h-4 w-4 shrink-0 items-center justify-center rounded border {isChecked ? 'border-blue-600 bg-blue-600' : 'border-gray-400'}">
                     {#if isChecked}

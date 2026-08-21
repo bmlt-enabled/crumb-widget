@@ -27,12 +27,12 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@components': resolve(__dirname, 'src/components'),
-      '@utils': resolve(__dirname, 'src/utils'),
-      '@tests': resolve(__dirname, 'src/tests'),
-      '@stores': resolve(__dirname, 'src/stores'),
-      '@assets': resolve(__dirname, 'src/assets')
+      '@': resolve(import.meta.dirname, 'src'),
+      '@components': resolve(import.meta.dirname, 'src/components'),
+      '@utils': resolve(import.meta.dirname, 'src/utils'),
+      '@tests': resolve(import.meta.dirname, 'src/tests'),
+      '@stores': resolve(import.meta.dirname, 'src/stores'),
+      '@assets': resolve(import.meta.dirname, 'src/assets')
     }
   },
   plugins: [

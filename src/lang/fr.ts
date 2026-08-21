@@ -29,6 +29,7 @@ export const frTranslations = {
   afternoon: 'Après-midi',
   evening: 'Soirée',
   night: 'Nuit',
+  locked: 'verrouillé par la configuration du site',
   // Meeting list
   noMeetingsFound: 'Aucune réunion trouvée',
   tryAdjustingFilters: "Essayez d'ajuster votre recherche ou vos filtres",

@@ -59,7 +59,7 @@
     "svelte-eslint-parser": "^1.7.1",
     "tailwindcss": "^4.3.0",
     "typedoc": "^0.28.19",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "typescript-eslint": "^8.59.4",
     "unplugin-dts": "^1.0.1",
     "vite": "^8.0.14",
@@ -68,8 +68,7 @@
   },
   "dependencies": {
     "@bmlt-enabled/svelte-spa-router": "^5.2.2",
-    "bmlt-query-client": "^1.4.2",
-    "localized-strings": "^2.0.3"
+    "bmlt-query-client": "^1.4.2"
   },
   "peerDependencies": {
     "leaflet": "^1.9.4"

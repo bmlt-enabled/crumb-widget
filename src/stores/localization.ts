@@ -1,4 +1,3 @@
-import LocalizedStrings from 'localized-strings';
 import { writable } from 'svelte/store';
 import {
   daTranslations,
@@ -17,11 +16,11 @@ import {
 } from '@/lang';
 
 type Translations = typeof enTranslations;
-// localized-strings exposes translation keys via runtime proxy with `[key: string]: any`,
-// so we widen the instance type once here and stay strongly typed everywhere else.
-type LocalizedTranslations = LocalizedStrings & Translations;
 
-const TRANSLATIONS = {
+// Typing the map as `Record<string, Translations>` makes every language file
+// structurally checked against English, so a missing or misspelled key is a
+// compile error rather than an `undefined` at runtime.
+const TRANSLATIONS: Record<string, Translations> = {
   da: daTranslations,
   de: deTranslations,
   el: elTranslations,
@@ -40,9 +39,7 @@ const TRANSLATIONS = {
 export const SUPPORTED_LANGUAGES: readonly string[] = Object.keys(TRANSLATIONS);
 const RTL_LANGUAGES: readonly string[] = ['ar', 'fa', 'he', 'ur'];
 
-const ls = new LocalizedStrings(TRANSLATIONS) as LocalizedTranslations;
-
-const { subscribe, set } = writable<LocalizedTranslations>(ls);
+const { subscribe, set } = writable<Translations>(enTranslations);
 const dirStore = writable<'ltr' | 'rtl'>('ltr');
 let resolvedLanguage = 'en';
 
@@ -57,9 +54,9 @@ export function initLocalization(language: string): void {
   const base = (language.split('-')[0] ?? '').toLowerCase();
   const resolved = SUPPORTED_LANGUAGES.includes(base) ? base : 'en';
   resolvedLanguage = resolved;
-  ls.setLanguage(resolved);
   dirStore.set(RTL_LANGUAGES.includes(resolved) ? 'rtl' : 'ltr');
-  set(ls);
+  // Spread over English so any key a translation is missing falls back to it.
+  set({ ...enTranslations, ...TRANSLATIONS[resolved] });
 }
 
 export function getLanguage(): string {
