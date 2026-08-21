@@ -29,6 +29,7 @@ export const faTranslations = {
   afternoon: 'بعدازظهر',
   evening: 'عصر',
   night: 'شب',
+  locked: 'قفل‌شده توسط پیکربندی سایت',
   // Meeting list
   noMeetingsFound: 'جلسه‌ای یافت نشد',
   tryAdjustingFilters: 'جستجو یا فیلترهای خود را تغییر دهید',

@@ -29,6 +29,7 @@ export const deTranslations = {
   afternoon: 'Nachmittag',
   evening: 'Abend',
   night: 'Nacht',
+  locked: 'durch die Website-Konfiguration gesperrt',
   // Meeting list
   noMeetingsFound: 'Keine Treffen gefunden',
   tryAdjustingFilters: 'Versuche, deine Suche oder Filter anzupassen',

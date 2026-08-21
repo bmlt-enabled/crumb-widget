@@ -29,6 +29,7 @@ export const svTranslations = {
   afternoon: 'Eftermiddag',
   evening: 'Kväll',
   night: 'Natt',
+  locked: 'låst av webbplatsens konfiguration',
   // Meeting list
   noMeetingsFound: 'Inga möten hittades',
   tryAdjustingFilters: 'Försök att justera din sökning eller filter',

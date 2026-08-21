@@ -29,6 +29,7 @@ export const ruTranslations = {
   afternoon: 'День',
   evening: 'Вечер',
   night: 'Ночь',
+  locked: 'заблокировано настройками сайта',
   // Meeting list
   noMeetingsFound: 'Собрания не найдены',
   tryAdjustingFilters: 'Попробуйте изменить параметры поиска',

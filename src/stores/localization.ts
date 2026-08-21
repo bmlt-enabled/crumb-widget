@@ -17,9 +17,6 @@ import {
 } from '@/lang';
 
 type Translations = typeof enTranslations;
-// localized-strings exposes translation keys via runtime proxy with `[key: string]: any`,
-// so we widen the instance type once here and stay strongly typed everywhere else.
-type LocalizedTranslations = LocalizedStrings & Translations;
 
 const TRANSLATIONS = {
   da: daTranslations,
@@ -40,9 +37,14 @@ const TRANSLATIONS = {
 export const SUPPORTED_LANGUAGES: readonly string[] = Object.keys(TRANSLATIONS);
 const RTL_LANGUAGES: readonly string[] = ['ar', 'fa', 'he', 'ur'];
 
-const ls = new LocalizedStrings(TRANSLATIONS) as LocalizedTranslations;
+// `LocalizedStrings` declares `[key: string]: any`, so intersecting it into the
+// store's value type would let any key — including one that does not exist —
+// type-check as `any`. The widened type is therefore kept on the instance only
+// (it needs the class methods for `ls.setLanguage`), while subscribers see the
+// exact `Translations` shape, making a missing key a compile error.
+const ls = new LocalizedStrings(TRANSLATIONS) as LocalizedStrings & Translations;
 
-const { subscribe, set } = writable<LocalizedTranslations>(ls);
+const { subscribe, set } = writable<Translations>(ls);
 const dirStore = writable<'ltr' | 'rtl'>('ltr');
 let resolvedLanguage = 'en';
 

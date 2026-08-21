@@ -29,6 +29,7 @@ export const daTranslations = {
   afternoon: 'Eftermiddag',
   evening: 'Aften',
   night: 'Nat',
+  locked: 'låst af sidens konfiguration',
   // Meeting list
   noMeetingsFound: 'Ingen møder fundet',
   tryAdjustingFilters: 'Prøv at justere din søgning eller filtre',

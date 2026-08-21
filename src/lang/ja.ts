@@ -29,6 +29,7 @@ export const jaTranslations = {
   afternoon: '午後',
   evening: '夕方',
   night: '夜',
+  locked: 'サイト設定によりロックされています',
   // Meeting list
   noMeetingsFound: 'ミーティングが見つかりません',
   tryAdjustingFilters: '検索条件やフィルターを変更してみてください',
