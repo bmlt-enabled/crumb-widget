@@ -77,6 +77,9 @@ export const ptTranslations = {
   searchByAddress: 'Pesquisar por endereço',
   // Loading
   loadingMeetings: 'Carregando reuniões\u2026',
+  // Errors
+  errorNoServer: 'Nenhum URL de servidor configurado. Adicione data-server ao seu elemento de incorporação.',
+  errorLoadingMeetings: 'Falha ao carregar as reuniões.',
   // Map
   noInPersonMeetings: 'Nenhuma reunião presencial para exibir no mapa com os filtros atuais',
   searchThisArea: 'Pesquisar nesta área',

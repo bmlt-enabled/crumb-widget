@@ -77,6 +77,9 @@ export const enTranslations = {
   searchByAddress: 'Search by address',
   // Loading
   loadingMeetings: 'Loading meetings\u2026',
+  // Errors
+  errorNoServer: 'No server URL configured. Add data-server to your embed element.',
+  errorLoadingMeetings: 'Failed to load meetings.',
   // Map
   noInPersonMeetings: 'No in-person meetings to show on map with current filters',
   searchThisArea: 'Search this area',

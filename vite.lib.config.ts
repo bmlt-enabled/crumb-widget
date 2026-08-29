@@ -6,32 +6,12 @@ import tailwindcss from '@tailwindcss/vite';
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js';
 import dts from 'unplugin-dts/vite';
 import { resolve } from 'path';
-import { readFileSync } from 'fs';
-import { execSync } from 'child_process';
-
-const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'));
-let shortSha = 'unknown';
-try {
-  shortSha = execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] })
-    .toString()
-    .trim();
-} catch {
-  // not a git checkout (e.g. tarball, Docker without .git) — fall back
-}
+import { versionDefine, srcAliases } from './vite.shared.ts';
 
 export default defineConfig({
-  define: {
-    __APP_VERSION__: JSON.stringify(`${pkg.version}+${shortSha}`)
-  },
+  define: versionDefine,
   resolve: {
-    alias: {
-      '@': resolve(import.meta.dirname, 'src'),
-      '@components': resolve(import.meta.dirname, 'src/components'),
-      '@utils': resolve(import.meta.dirname, 'src/utils'),
-      '@tests': resolve(import.meta.dirname, 'src/tests'),
-      '@stores': resolve(import.meta.dirname, 'src/stores'),
-      '@assets': resolve(import.meta.dirname, 'src/assets')
-    }
+    alias: srcAliases
   },
   plugins: [tailwindcss(), svelte(), cssInjectedByJsPlugin(), dts({ include: ['src/module.ts', 'src/types/index.ts'], outDir: 'dist', rollupTypes: true })],
   build: {

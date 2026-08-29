@@ -77,6 +77,9 @@ export const jaTranslations = {
   searchByAddress: '住所で検索',
   // Loading
   loadingMeetings: 'ミーティングを読み込み中…',
+  // Errors
+  errorNoServer: 'サーバーURLが設定されていません。埋め込み要素に data-server を追加してください。',
+  errorLoadingMeetings: 'ミーティングを読み込めませんでした。',
   // Map
   noInPersonMeetings: '現在のフィルターでは地図に表示できる対面ミーティングがありません',
   searchThisArea: 'このエリアを検索',

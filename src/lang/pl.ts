@@ -77,6 +77,9 @@ export const plTranslations = {
   searchByAddress: 'Szukaj według adresu',
   // Loading
   loadingMeetings: 'Ładowanie mityngów…',
+  // Errors
+  errorNoServer: 'Nie skonfigurowano adresu URL serwera. Dodaj data-server do elementu osadzającego.',
+  errorLoadingMeetings: 'Nie udało się załadować mityngów.',
   // Map
   noInPersonMeetings: 'Brak mityngów stacjonarnych do wyświetlenia na mapie przy bieżących filtrach',
   searchThisArea: 'Szukaj w tym obszarze',

@@ -77,6 +77,9 @@ export const daTranslations = {
   searchByAddress: 'Søg efter adresse',
   // Loading
   loadingMeetings: 'Indlæser møder\u2026',
+  // Errors
+  errorNoServer: 'Ingen server-URL konfigureret. Tilføj data-server til dit indlejringselement.',
+  errorLoadingMeetings: 'Møderne kunne ikke indlæses.',
   // Map
   noInPersonMeetings: 'Ingen fysiske møder at vise på kortet med de nuværende filtre',
   searchThisArea: 'Søg i dette område',

@@ -77,6 +77,9 @@ export const ruTranslations = {
   searchByAddress: 'Поиск по адресу',
   // Loading
   loadingMeetings: 'Загрузка собраний…',
+  // Errors
+  errorNoServer: 'URL сервера не настроен. Добавьте data-server в элемент встраивания.',
+  errorLoadingMeetings: 'Не удалось загрузить собрания.',
   // Map
   noInPersonMeetings: 'Нет очных собраний для отображения на карте с текущими фильтрами',
   searchThisArea: 'Искать в этой области',

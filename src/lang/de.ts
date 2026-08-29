@@ -77,6 +77,9 @@ export const deTranslations = {
   searchByAddress: 'Nach Adresse suchen',
   // Loading
   loadingMeetings: 'Treffen werden geladen\u2026',
+  // Errors
+  errorNoServer: 'Keine Server-URL konfiguriert. Fügen Sie data-server zu Ihrem Einbettungselement hinzu.',
+  errorLoadingMeetings: 'Treffen konnten nicht geladen werden.',
   // Map
   noInPersonMeetings: 'Keine Präsenztreffen mit den aktuellen Filtern auf der Karte anzuzeigen',
   searchThisArea: 'Diesen Bereich durchsuchen',

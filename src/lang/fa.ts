@@ -77,6 +77,9 @@ export const faTranslations = {
   searchByAddress: 'جستجو بر اساس آدرس',
   // Loading
   loadingMeetings: 'در حال بارگذاری جلسات…',
+  // Errors
+  errorNoServer: 'آدرس سرور پیکربندی نشده است. data-server را به عنصر جاسازی خود اضافه کنید.',
+  errorLoadingMeetings: 'بارگذاری جلسات ناموفق بود.',
   // Map
   noInPersonMeetings: 'با فیلترهای فعلی هیچ جلسهٔ حضوری برای نمایش روی نقشه وجود ندارد',
   searchThisArea: 'جستجو در این محدوده',

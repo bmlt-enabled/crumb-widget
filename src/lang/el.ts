@@ -77,6 +77,9 @@ export const elTranslations = {
   searchByAddress: 'Αναζήτηση με διεύθυνση',
   // Loading
   loadingMeetings: 'Φόρτωση συναντήσεων…',
+  // Errors
+  errorNoServer: 'Δεν έχει ρυθμιστεί διεύθυνση URL διακομιστή. Προσθέστε το data-server στο στοιχείο ενσωμάτωσης.',
+  errorLoadingMeetings: 'Η φόρτωση των συναντήσεων απέτυχε.',
   // Map
   noInPersonMeetings: 'Δεν υπάρχουν δια ζώσης συναντήσεις για εμφάνιση στον χάρτη με τα τρέχοντα φίλτρα',
   searchThisArea: 'Αναζήτηση σε αυτήν την περιοχή',

@@ -5,7 +5,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -42,18 +41,3 @@ jobs:
           include-hidden-files: true
           if-no-files-found: ignore
           retention-days: 7
-
-  auto-merge-renovate:
-    needs: [tests, lighthouse]
-    if: github.actor == 'renovate[bot]'
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Approve PR
-        run: gh pr review ${{ github.event.pull_request.number }} --approve --repo ${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Merge PR
-        run: gh pr merge ${{ github.event.pull_request.number }} --merge --repo ${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

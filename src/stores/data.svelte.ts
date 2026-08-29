@@ -1,3 +1,4 @@
+import { get } from 'svelte/store';
 import { SvelteMap } from 'svelte/reactivity';
 import { BmltClient, Language } from 'bmlt-query-client';
 import type { Meeting, Format, MeetingsWithFormats } from 'bmlt-query-client';
@@ -5,7 +6,7 @@ import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
 import { config } from '@stores/config.svelte';
-import { getLanguage } from '@stores/localization';
+import { getLanguage, t } from '@stores/localization';
 
 const PAGE_SIZE = 5000;
 
@@ -73,6 +74,11 @@ export const dataState = $state<DataState>({
   loading: false,
   error: null
 });
+
+// Monotonic token for in-flight searches: every search bumps it, and a
+// response only writes to dataState when no newer search has started since —
+// the latest *search* wins, not whichever response happens to land last.
+let activeRequest = 0;
 
 function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
   return meetingsResp.map((m) => {
@@ -145,10 +151,11 @@ function buildRawQuery(base: string, extras: Record<string, string>): string {
 
 async function load(serverUrl: string, params: SearchParams): Promise<void> {
   if (!serverUrl) {
-    dataState.error = 'No server URL configured. Add data-server to your embed element.';
+    dataState.error = get(t).errorNoServer;
     return;
   }
 
+  const request = ++activeRequest;
   dataState.loading = true;
   dataState.error = null;
 
@@ -193,18 +200,20 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
       }
     }
 
+    await resolveServiceBodyNames(client, meetingsResp);
+
+    if (request !== activeRequest) return;
+
     const formatsMap = new SvelteMap<string, Format>();
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
     dataState.formats = formatsMap;
 
-    await resolveServiceBodyNames(client, meetingsResp);
-
     const processed = applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
     dataState.meetings = sortMeetings(processed, config.nowOffset);
   } catch (err) {
-    dataState.error = err instanceof Error ? err.message : 'Failed to load meetings.';
+    if (request === activeRequest) dataState.error = err instanceof Error ? err.message : get(t).errorLoadingMeetings;
   } finally {
-    dataState.loading = false;
+    if (request === activeRequest) dataState.loading = false;
   }
 }
 
@@ -229,12 +238,13 @@ export interface GeocodedLocation {
 
 export async function loadDataByAddress(serverUrl: string, address: string, geoWidth: number = 10): Promise<GeocodedLocation | null> {
   if (!serverUrl) {
-    dataState.error = 'No server URL configured. Add data-server to your embed element.';
+    dataState.error = get(t).errorNoServer;
     return null;
   }
   const trimmed = address.trim();
   if (!trimmed) return null;
 
+  const request = ++activeRequest;
   dataState.loading = true;
   dataState.error = null;
 
@@ -246,10 +256,14 @@ export async function loadDataByAddress(serverUrl: string, address: string, geoW
     coords = result.coordinates;
     displayName = result.display_name;
   } catch (err) {
-    dataState.error = err instanceof Error ? err.message : 'Could not find that location.';
-    dataState.loading = false;
+    if (request === activeRequest) {
+      dataState.error = err instanceof Error ? err.message : get(t).locationNotFound;
+      dataState.loading = false;
+    }
     return null;
   }
+
+  if (request !== activeRequest) return null;
 
   await loadDataByCoordinates(serverUrl, coords.latitude, coords.longitude, geoWidth);
   return { lat: coords.latitude, lng: coords.longitude, displayName };

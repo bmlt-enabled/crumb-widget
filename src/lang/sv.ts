@@ -77,6 +77,9 @@ export const svTranslations = {
   searchByAddress: 'Sök efter adress',
   // Loading
   loadingMeetings: 'Laddar möten\u2026',
+  // Errors
+  errorNoServer: 'Ingen server-URL konfigurerad. Lägg till data-server i ditt inbäddningselement.',
+  errorLoadingMeetings: 'Det gick inte att ladda mötena.',
   // Map
   noInPersonMeetings: 'Inga fysiska möten att visa på kartan med nuvarande filter',
   searchThisArea: 'Sök i det här området',
