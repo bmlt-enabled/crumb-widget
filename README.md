@@ -27,13 +27,13 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 
 ## Which version should I use?
 
-| Your site                                             | Use this                                                                 |
-|-------------------------------------------------------|--------------------------------------------------------------------------|
-| **WordPress**                                         | [WordPress plugin](https://wordpress.org/plugins/crumb/)                 |
-| **Drupal** 10.3+ or 11                                | [Drupal module](https://github.com/bmlt-enabled/crumb-drupal)            |
-| **Joomla** 4, 5, or 6                                 | [Joomla extension](https://github.com/bmlt-enabled/crumb-joomla)         |
-| **Wix, Squarespace, Google Sites, or plain HTML**     | Paste the [CDN snippet](#quick-start) into a code block                  |
-| **A JS/TS app** (React, Svelte, Vue, Vite, etc.)      | `npm install crumb-widget` ([docs](https://crumb.bmlt.app/#npm-package)) |
+| Your site                                         | Use this                                                                 |
+| ------------------------------------------------- | ------------------------------------------------------------------------ |
+| **WordPress**                                     | [WordPress plugin](https://wordpress.org/plugins/crumb/)                 |
+| **Drupal** 10.3+ or 11                            | [Drupal module](https://github.com/bmlt-enabled/crumb-drupal)            |
+| **Joomla** 4, 5, or 6                             | [Joomla extension](https://github.com/bmlt-enabled/crumb-joomla)         |
+| **Wix, Squarespace, Google Sites, or plain HTML** | Paste the [CDN snippet](#quick-start) into a code block                  |
+| **A JS/TS app** (React, Svelte, Vue, Vite, etc.)  | `npm install crumb-widget` ([docs](https://crumb.bmlt.app/#npm-package)) |
 
 ## Features
 
@@ -63,10 +63,7 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 **Filter to a single service body:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

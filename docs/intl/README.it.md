@@ -27,13 +27,13 @@ Un widget integrabile per la ricerca di riunioni NA. Costruito con Svelte 5 e di
 
 ## Quale versione devo usare?
 
-| Il tuo sito                                            | Usa questa                                                                |
-|--------------------------------------------------------|---------------------------------------------------------------------------|
-| **WordPress**                                          | [Plugin WordPress](https://wordpress.org/plugins/crumb/)                  |
-| **Drupal** 10.3+ o 11                                  | [Modulo Drupal](https://github.com/bmlt-enabled/crumb-drupal)             |
-| **Joomla** 4, 5 o 6                                    | [Estensione Joomla](https://github.com/bmlt-enabled/crumb-joomla)         |
-| **Wix, Squarespace, Google Sites o HTML semplice**     | Incolla lo [snippet CDN](#avvio-rapido) in un blocco di codice            |
-| **Un'app JS/TS** (React, Svelte, Vue, Vite, ecc.)      | `npm install crumb-widget` ([docs](https://crumb.bmlt.app/?lang=it#npm-package)) |
+| Il tuo sito                                        | Usa questa                                                                       |
+| -------------------------------------------------- | -------------------------------------------------------------------------------- |
+| **WordPress**                                      | [Plugin WordPress](https://wordpress.org/plugins/crumb/)                         |
+| **Drupal** 10.3+ o 11                              | [Modulo Drupal](https://github.com/bmlt-enabled/crumb-drupal)                    |
+| **Joomla** 4, 5 o 6                                | [Estensione Joomla](https://github.com/bmlt-enabled/crumb-joomla)                |
+| **Wix, Squarespace, Google Sites o HTML semplice** | Incolla lo [snippet CDN](#avvio-rapido) in un blocco di codice                   |
+| **Un'app JS/TS** (React, Svelte, Vue, Vite, ecc.)  | `npm install crumb-widget` ([docs](https://crumb.bmlt.app/?lang=it#npm-package)) |
 
 ## Funzionalità
 
@@ -63,10 +63,7 @@ Un widget integrabile per la ricerca di riunioni NA. Costruito con Svelte 5 e di
 **Filtra per un singolo service body:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

@@ -23,49 +23,73 @@
         --lantern-radius: 4px;
       }
 
-      body { margin: 0; font-family: var(--lantern-body); background: var(--lantern-paper); }
-      .test-bar { background: var(--lantern-ink); color: var(--lantern-paper); padding: 10px 16px; font-size: 13px; display: flex; align-items: center; gap: 12px; }
-      .test-bar a { color: var(--lantern-sand); text-decoration: none; }
-      .test-bar a:hover { color: var(--lantern-paper); }
-      .test-bar strong { color: var(--lantern-paper); }
-      .test-bar code { background: rgba(247, 241, 230, 0.12); padding: 2px 7px; border-radius: 4px; font-size: 12px; }
+      body {
+        margin: 0;
+        font-family: var(--lantern-body);
+        background: var(--lantern-paper);
+      }
+      .test-bar {
+        background: var(--lantern-ink);
+        color: var(--lantern-paper);
+        padding: 10px 16px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .test-bar a {
+        color: var(--lantern-sand);
+        text-decoration: none;
+      }
+      .test-bar a:hover {
+        color: var(--lantern-paper);
+      }
+      .test-bar strong {
+        color: var(--lantern-paper);
+      }
+      .test-bar code {
+        background: rgba(247, 241, 230, 0.12);
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
 
       #crumb-widget.bmlt-theme-lantern {
         /* Type */
-        --bmlt-font-family:        var(--lantern-body);
-        --bmlt-font-size:          1rem;
+        --bmlt-font-family: var(--lantern-body);
+        --bmlt-font-size: 1rem;
 
         /* Surfaces */
-        --bmlt-background:         var(--lantern-paper);
-        --bmlt-surface:            var(--lantern-paper);
-        --bmlt-row-alt:            var(--lantern-paper-deep);
-        --bmlt-hover:              var(--lantern-paper-deep);
+        --bmlt-background: var(--lantern-paper);
+        --bmlt-surface: var(--lantern-paper);
+        --bmlt-row-alt: var(--lantern-paper-deep);
+        --bmlt-hover: var(--lantern-paper-deep);
 
         /* Text */
-        --bmlt-text:               var(--lantern-ink);
-        --bmlt-text-secondary:     var(--lantern-ink-soft);
-        --bmlt-text-muted:         var(--lantern-ink-faint);
+        --bmlt-text: var(--lantern-ink);
+        --bmlt-text-secondary: var(--lantern-ink-soft);
+        --bmlt-text-muted: var(--lantern-ink-faint);
 
         /* Lines */
-        --bmlt-border:             var(--lantern-ink-line);
-        --bmlt-divider:            var(--lantern-ink-hair);
-        --bmlt-border-radius:      var(--lantern-radius);
+        --bmlt-border: var(--lantern-ink-line);
+        --bmlt-divider: var(--lantern-ink-hair);
+        --bmlt-border-radius: var(--lantern-radius);
 
         /* Accent — terracotta ember for active state, links, focus */
-        --bmlt-accent:             var(--lantern-ember);
-        --bmlt-accent-light:       color-mix(in srgb, var(--lantern-ember) 12%, var(--lantern-paper));
+        --bmlt-accent: var(--lantern-ember);
+        --bmlt-accent-light: color-mix(in srgb, var(--lantern-ember) 12%, var(--lantern-paper));
 
         /* In-person badge — sage on warm parchment */
-        --bmlt-in-person:          color-mix(in srgb, var(--lantern-sage) 80%, var(--lantern-ink));
-        --bmlt-in-person-bg:       color-mix(in srgb, var(--lantern-sage) 18%, var(--lantern-paper));
+        --bmlt-in-person: color-mix(in srgb, var(--lantern-sage) 80%, var(--lantern-ink));
+        --bmlt-in-person-bg: color-mix(in srgb, var(--lantern-sage) 18%, var(--lantern-paper));
 
         /* Virtual badge — ink-on-paper tint */
-        --bmlt-virtual:            var(--lantern-ink);
-        --bmlt-virtual-bg:         color-mix(in srgb, var(--lantern-ink) 8%, var(--lantern-paper));
+        --bmlt-virtual: var(--lantern-ink);
+        --bmlt-virtual-bg: color-mix(in srgb, var(--lantern-ink) 8%, var(--lantern-paper));
 
         /* In-progress banner — gold highlight */
-        --bmlt-in-progress-bg:     color-mix(in srgb, var(--lantern-gold) 20%, var(--lantern-paper));
-        --bmlt-in-progress-text:   color-mix(in srgb, var(--lantern-gold) 60%, var(--lantern-ink));
+        --bmlt-in-progress-bg: color-mix(in srgb, var(--lantern-gold) 20%, var(--lantern-paper));
+        --bmlt-in-progress-text: color-mix(in srgb, var(--lantern-gold) 60%, var(--lantern-ink));
       }
     </style>
   </head>
@@ -76,12 +100,7 @@
       <code>bmlt-theme-lantern</code> — warm parchment, terracotta ember, ink navy
     </div>
 
-    <div id="crumb-widget"
-      class="bmlt-theme-lantern"
-      data-service-body="95,173"
-      data-server="https://aggregator.bmltenabled.org/main_server/"
-      data-path="/tests/theme-lantern.html"
-    ></div>
+    <div id="crumb-widget" class="bmlt-theme-lantern" data-service-body="95,173" data-server="https://aggregator.bmltenabled.org/main_server/" data-path="/tests/theme-lantern.html"></div>
 
     <script src="../app.js"></script>
   </body>

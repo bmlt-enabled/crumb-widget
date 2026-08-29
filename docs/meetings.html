@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BMLT Meeting Finder</title>
     <style>
-      html, body {
+      html,
+      body {
         margin: 0;
         padding: 0;
         background: #ffffff;
@@ -17,28 +18,35 @@
         box-sizing: border-box;
       }
 
-      body.dark { background: #0f172a; }
+      body.dark {
+        background: #0f172a;
+      }
 
       #demo-bar {
         position: fixed;
-        top: 0; left: 0; right: 0;
+        top: 0;
+        left: 0;
+        right: 0;
         z-index: 9999;
         display: flex;
         align-items: center;
         gap: 8px;
         padding: 6px 12px;
-        background: rgba(255,255,255,0.9);
+        background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(6px);
         border-bottom: 1px solid #e5e7eb;
         font-family: system-ui, sans-serif;
         font-size: 13px;
       }
       body.dark #demo-bar {
-        background: rgba(15,23,42,0.9);
+        background: rgba(15, 23, 42, 0.9);
         border-color: #334155;
         color: #f1f5f9;
       }
-      #demo-bar label { color: inherit; opacity: 0.6; }
+      #demo-bar label {
+        color: inherit;
+        opacity: 0.6;
+      }
       #theme-select {
         padding: 3px 6px;
         border-radius: 6px;
@@ -62,9 +70,13 @@
         opacity: 0.8;
         line-height: 1;
       }
-      #dark-btn:hover { opacity: 1; }
+      #dark-btn:hover {
+        opacity: 1;
+      }
 
-      #crumb-widget { margin-top: 41px; }
+      #crumb-widget {
+        margin-top: 41px;
+      }
 
       /* ── Custom themes via CSS variable overrides ───────────────────────────
          This is how you'd add your own theme — override only the vars you want.
@@ -73,62 +85,92 @@
 
       /* ocean */
       #crumb-widget.bmlt-theme-ocean {
-        --bmlt-accent: #0891b2; --bmlt-accent-light: #ecfeff;
-        --bmlt-in-person: #0e7490; --bmlt-in-person-bg: #cffafe;
-        --bmlt-virtual: #2563eb; --bmlt-virtual-bg: #dbeafe;
+        --bmlt-accent: #0891b2;
+        --bmlt-accent-light: #ecfeff;
+        --bmlt-in-person: #0e7490;
+        --bmlt-in-person-bg: #cffafe;
+        --bmlt-virtual: #2563eb;
+        --bmlt-virtual-bg: #dbeafe;
       }
       #crumb-widget.bmlt-dark-force.bmlt-theme-ocean {
-        --bmlt-accent: #22d3ee; --bmlt-accent-light: #164e63;
-        --bmlt-in-person: #67e8f9; --bmlt-in-person-bg: #164e63;
-        --bmlt-virtual: #93c5fd; --bmlt-virtual-bg: #1e3a5f;
+        --bmlt-accent: #22d3ee;
+        --bmlt-accent-light: #164e63;
+        --bmlt-in-person: #67e8f9;
+        --bmlt-in-person-bg: #164e63;
+        --bmlt-virtual: #93c5fd;
+        --bmlt-virtual-bg: #1e3a5f;
       }
 
       /* forest */
       #crumb-widget.bmlt-theme-forest {
-        --bmlt-accent: #16a34a; --bmlt-accent-light: #f0fdf4;
-        --bmlt-in-person: #15803d; --bmlt-in-person-bg: #dcfce7;
-        --bmlt-virtual: #0284c7; --bmlt-virtual-bg: #e0f2fe;
+        --bmlt-accent: #16a34a;
+        --bmlt-accent-light: #f0fdf4;
+        --bmlt-in-person: #15803d;
+        --bmlt-in-person-bg: #dcfce7;
+        --bmlt-virtual: #0284c7;
+        --bmlt-virtual-bg: #e0f2fe;
       }
       #crumb-widget.bmlt-dark-force.bmlt-theme-forest {
-        --bmlt-accent: #4ade80; --bmlt-accent-light: #14532d;
-        --bmlt-in-person: #86efac; --bmlt-in-person-bg: #14532d;
-        --bmlt-virtual: #7dd3fc; --bmlt-virtual-bg: #0c4a6e;
+        --bmlt-accent: #4ade80;
+        --bmlt-accent-light: #14532d;
+        --bmlt-in-person: #86efac;
+        --bmlt-in-person-bg: #14532d;
+        --bmlt-virtual: #7dd3fc;
+        --bmlt-virtual-bg: #0c4a6e;
       }
 
       /* warm */
       #crumb-widget.bmlt-theme-warm {
-        --bmlt-accent: #d97706; --bmlt-accent-light: #fffbeb;
-        --bmlt-in-person: #b45309; --bmlt-in-person-bg: #fef3c7;
-        --bmlt-virtual: #0284c7; --bmlt-virtual-bg: #e0f2fe;
+        --bmlt-accent: #d97706;
+        --bmlt-accent-light: #fffbeb;
+        --bmlt-in-person: #b45309;
+        --bmlt-in-person-bg: #fef3c7;
+        --bmlt-virtual: #0284c7;
+        --bmlt-virtual-bg: #e0f2fe;
       }
       #crumb-widget.bmlt-dark-force.bmlt-theme-warm {
-        --bmlt-accent: #fbbf24; --bmlt-accent-light: #451a03;
-        --bmlt-in-person: #fcd34d; --bmlt-in-person-bg: #451a03;
-        --bmlt-virtual: #7dd3fc; --bmlt-virtual-bg: #0c4a6e;
+        --bmlt-accent: #fbbf24;
+        --bmlt-accent-light: #451a03;
+        --bmlt-in-person: #fcd34d;
+        --bmlt-in-person-bg: #451a03;
+        --bmlt-virtual: #7dd3fc;
+        --bmlt-virtual-bg: #0c4a6e;
       }
 
       /* rose */
       #crumb-widget.bmlt-theme-rose {
-        --bmlt-accent: #e11d48; --bmlt-accent-light: #fff1f2;
-        --bmlt-in-person: #be123c; --bmlt-in-person-bg: #ffe4e6;
-        --bmlt-virtual: #7c3aed; --bmlt-virtual-bg: #ede9fe;
+        --bmlt-accent: #e11d48;
+        --bmlt-accent-light: #fff1f2;
+        --bmlt-in-person: #be123c;
+        --bmlt-in-person-bg: #ffe4e6;
+        --bmlt-virtual: #7c3aed;
+        --bmlt-virtual-bg: #ede9fe;
       }
       #crumb-widget.bmlt-dark-force.bmlt-theme-rose {
-        --bmlt-accent: #fb7185; --bmlt-accent-light: #4c0519;
-        --bmlt-in-person: #fda4af; --bmlt-in-person-bg: #4c0519;
-        --bmlt-virtual: #c4b5fd; --bmlt-virtual-bg: #2e1065;
+        --bmlt-accent: #fb7185;
+        --bmlt-accent-light: #4c0519;
+        --bmlt-in-person: #fda4af;
+        --bmlt-in-person-bg: #4c0519;
+        --bmlt-virtual: #c4b5fd;
+        --bmlt-virtual-bg: #2e1065;
       }
 
       /* slate */
       #crumb-widget.bmlt-theme-slate {
-        --bmlt-accent: #7c3aed; --bmlt-accent-light: #ede9fe;
-        --bmlt-in-person: #6d28d9; --bmlt-in-person-bg: #ddd6fe;
-        --bmlt-virtual: #0891b2; --bmlt-virtual-bg: #ecfeff;
+        --bmlt-accent: #7c3aed;
+        --bmlt-accent-light: #ede9fe;
+        --bmlt-in-person: #6d28d9;
+        --bmlt-in-person-bg: #ddd6fe;
+        --bmlt-virtual: #0891b2;
+        --bmlt-virtual-bg: #ecfeff;
       }
       #crumb-widget.bmlt-dark-force.bmlt-theme-slate {
-        --bmlt-accent: #a78bfa; --bmlt-accent-light: #2e1065;
-        --bmlt-in-person: #c4b5fd; --bmlt-in-person-bg: #2e1065;
-        --bmlt-virtual: #22d3ee; --bmlt-virtual-bg: #164e63;
+        --bmlt-accent: #a78bfa;
+        --bmlt-accent-light: #2e1065;
+        --bmlt-in-person: #c4b5fd;
+        --bmlt-in-person-bg: #2e1065;
+        --bmlt-virtual: #22d3ee;
+        --bmlt-virtual-bg: #164e63;
       }
 
       /* orange monster — #ed921d active orange / #d0d5db silver / #d95117 deep orange */
@@ -189,11 +231,7 @@
       <button id="dark-btn" onclick="toggleDark()">🌙</button>
     </div>
 
-    <div
-      id="crumb-widget"
-      data-server="https://aggregator.bmltenabled.org/main_server/"
-      data-path="/meetings.html"
-    ></div>
+    <div id="crumb-widget" data-server="https://aggregator.bmltenabled.org/main_server/" data-path="/meetings.html"></div>
 
     <script>
       var _t = atob('cGsuZXlKMUlqb2ljR3BoZFdScGIyMTJJaXdpWVNJNkltTnJOSGczTjJwdmVqQjNOWGd6YW04NU5UWTBkbWh6WlRNaWZRLmRpaC1XTDJEbm1odDdmalZWUlBwMWc=');
@@ -201,7 +239,7 @@
       var CrumbWidgetConfig = {
         geolocation: true,
         geolocationRadius: 75,
-        ...(_lang ? { language: _lang } : {}),
+        ...(_lang ? { language: _lang } : {})
         // map: {
         //   tiles: {
         //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -219,7 +257,9 @@
       function setTheme(theme) {
         var w = document.getElementById('crumb-widget');
         if (!w) return;
-        THEMES.forEach(function(t) { w.classList.remove('bmlt-theme-' + t); });
+        THEMES.forEach(function (t) {
+          w.classList.remove('bmlt-theme-' + t);
+        });
         if (theme !== 'default') w.classList.add('bmlt-theme-' + theme);
         localStorage.setItem('bmlt-demo-theme', theme);
       }

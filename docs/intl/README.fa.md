@@ -29,12 +29,12 @@
 
 ## از کدام نسخه استفاده کنم؟
 
-| سایت شما                                                | از این استفاده کنید                                                          |
-|---------------------------------------------------------|------------------------------------------------------------------------------|
-| **وردپرس**                                              | [افزونهٔ وردپرس](https://wordpress.org/plugins/crumb/)                       |
-| **دروپال** ۱۰٫۳+ یا ۱۱                                   | [ماژول دروپال](https://github.com/bmlt-enabled/crumb-drupal)                 |
-| **جوملا** ۴، ۵ یا ۶                                       | [افزونهٔ جوملا](https://github.com/bmlt-enabled/crumb-joomla)                  |
-| **Wix، Squarespace، Google Sites یا HTML ساده**         | قطعهٔ [CDN](#شروع-سریع) را در یک بلاک کد بچسبانید                              |
+| سایت شما                                               | از این استفاده کنید                                                                 |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------- |
+| **وردپرس**                                             | [افزونهٔ وردپرس](https://wordpress.org/plugins/crumb/)                              |
+| **دروپال** ۱۰٫۳+ یا ۱۱                                 | [ماژول دروپال](https://github.com/bmlt-enabled/crumb-drupal)                        |
+| **جوملا** ۴، ۵ یا ۶                                    | [افزونهٔ جوملا](https://github.com/bmlt-enabled/crumb-joomla)                       |
+| **Wix، Squarespace، Google Sites یا HTML ساده**        | قطعهٔ [CDN](#شروع-سریع) را در یک بلاک کد بچسبانید                                   |
 | **یک برنامهٔ JS/TS** (React, Svelte, Vue, Vite و غیره) | `npm install crumb-widget` ([مستندات](https://crumb.bmlt.app/?lang=fa#npm-package)) |
 
 ## امکانات
@@ -71,10 +71,7 @@
 </div>
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

@@ -27,13 +27,13 @@
 
 ## Ποια έκδοση να χρησιμοποιήσω;
 
-| Ο ιστότοπός σας                                       | Χρησιμοποιήστε αυτό                                                       |
-|-------------------------------------------------------|---------------------------------------------------------------------------|
-| **WordPress**                                         | [Πρόσθετο WordPress](https://wordpress.org/plugins/crumb/)                |
-| **Drupal** 10.3+ ή 11                                 | [Ενότητα Drupal](https://github.com/bmlt-enabled/crumb-drupal)            |
-| **Joomla** 4, 5 ή 6                                   | [Επέκταση Joomla](https://github.com/bmlt-enabled/crumb-joomla)           |
-| **Wix, Squarespace, Google Sites ή απλό HTML**        | Επικολλήστε το [απόσπασμα CDN](#γρήγορη-εκκίνηση) σε ένα code block       |
-| **Εφαρμογή JS/TS** (React, Svelte, Vue, Vite κ.λπ.)   | `npm install crumb-widget` ([τεκμηρίωση](https://crumb.bmlt.app/?lang=el#npm-package)) |
+| Ο ιστότοπός σας                                     | Χρησιμοποιήστε αυτό                                                                    |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **WordPress**                                       | [Πρόσθετο WordPress](https://wordpress.org/plugins/crumb/)                             |
+| **Drupal** 10.3+ ή 11                               | [Ενότητα Drupal](https://github.com/bmlt-enabled/crumb-drupal)                         |
+| **Joomla** 4, 5 ή 6                                 | [Επέκταση Joomla](https://github.com/bmlt-enabled/crumb-joomla)                        |
+| **Wix, Squarespace, Google Sites ή απλό HTML**      | Επικολλήστε το [απόσπασμα CDN](#γρήγορη-εκκίνηση) σε ένα code block                    |
+| **Εφαρμογή JS/TS** (React, Svelte, Vue, Vite κ.λπ.) | `npm install crumb-widget` ([τεκμηρίωση](https://crumb.bmlt.app/?lang=el#npm-package)) |
 
 ## Χαρακτηριστικά
 
@@ -63,10 +63,7 @@
 **Φιλτράρισμα σε ένα μόνο service body:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

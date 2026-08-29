@@ -609,7 +609,7 @@
         display: block;
       }
       .video-thumb::after {
-        content: "";
+        content: '';
         position: absolute;
         top: 50%;
         left: 50%;
@@ -830,8 +830,14 @@
         td:first-child {
           white-space: normal;
         }
-        #ss-prev, #ss-next { display: none !important; }
-        #ss-dots button { width: 12px; height: 12px; }
+        #ss-prev,
+        #ss-next {
+          display: none !important;
+        }
+        #ss-dots button {
+          width: 12px;
+          height: 12px;
+        }
 
         .platform-grid {
           grid-template-columns: 1fr;
@@ -1032,7 +1038,9 @@
       <span class="logo-text">BMLT Crumb Widget</span>
       <div class="mobile-right">
         <div class="lang-switcher-mobile">
-          <select id="lang-select-mobile" aria-label="Language" onchange="setLanguage(this.value)"><option value="en">English</option></select>
+          <select id="lang-select-mobile" aria-label="Language" onchange="setLanguage(this.value)">
+            <option value="en">English</option>
+          </select>
         </div>
         <button class="theme-toggle-mobile" onclick="toggleTheme()" aria-label="Toggle dark mode" id="mobile-theme-btn">
           <svg
@@ -1239,76 +1247,184 @@
           <span data-i18n="header.btn.qaTests">QA Tests</span>
         </a>
 
-        <div id="ss-carousel" style="position:relative;margin:1.5rem 0 0;user-select:none;">
-          <div id="ss-wrapper" style="overflow:hidden;border-radius:10px;border:1px solid var(--doc-border);touch-action:pan-y;">
-            <div id="ss-track" style="display:flex;transition:transform .35s cubic-bezier(.4,0,.2,1);will-change:transform;">
-              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
-                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
+        <div id="ss-carousel" style="position: relative; margin: 1.5rem 0 0; user-select: none">
+          <div id="ss-wrapper" style="overflow: hidden; border-radius: 10px; border: 1px solid var(--doc-border); touch-action: pan-y">
+            <div id="ss-track" style="display: flex; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform">
+              <a href="meetings.html" target="_blank" style="min-width: 100%; display: block; touch-action: pan-y; -webkit-tap-highlight-color: transparent">
+                <img src="screenshot-list.png" alt="Crumb Widget — list view" style="width: 100%; height: auto; display: block; -webkit-user-drag: none; touch-action: pan-y" draggable="false" />
               </a>
-              <a href="meetings.html?view=map" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
-                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
+              <a href="meetings.html?view=map" target="_blank" style="min-width: 100%; display: block; touch-action: pan-y; -webkit-tap-highlight-color: transparent">
+                <img src="screenshot-map.png" alt="Crumb Widget — map view" style="width: 100%; height: auto; display: block; -webkit-user-drag: none; touch-action: pan-y" draggable="false" />
               </a>
-              <a href="meetings.html" target="_blank" style="min-width:100%;display:block;touch-action:pan-y;-webkit-tap-highlight-color:transparent;">
-                <img src="screenshot-meeting.png" alt="Crumb Widget — meeting detail" style="width:100%;height:auto;display:block;-webkit-user-drag:none;touch-action:pan-y;" draggable="false" />
+              <a href="meetings.html" target="_blank" style="min-width: 100%; display: block; touch-action: pan-y; -webkit-tap-highlight-color: transparent">
+                <img
+                  src="screenshot-meeting.png"
+                  alt="Crumb Widget — meeting detail"
+                  style="width: 100%; height: auto; display: block; -webkit-user-drag: none; touch-action: pan-y"
+                  draggable="false"
+                />
               </a>
             </div>
           </div>
           <!-- arrows -->
-          <button id="ss-prev" aria-label="Previous screenshot" style="position:absolute;top:50%;left:-18px;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid var(--doc-border);background:var(--doc-bg,#fff);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.15);color:inherit;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <button
+            id="ss-prev"
+            aria-label="Previous screenshot"
+            style="
+              position: absolute;
+              top: 50%;
+              left: -18px;
+              transform: translateY(-50%);
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              border: 1px solid var(--doc-border);
+              background: var(--doc-bg, #fff);
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+              color: inherit;
+            "
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
           </button>
-          <button id="ss-next" aria-label="Next screenshot" style="position:absolute;top:50%;right:-18px;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:1px solid var(--doc-border);background:var(--doc-bg,#fff);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.15);color:inherit;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          <button
+            id="ss-next"
+            aria-label="Next screenshot"
+            style="
+              position: absolute;
+              top: 50%;
+              right: -18px;
+              transform: translateY(-50%);
+              width: 36px;
+              height: 36px;
+              border-radius: 50%;
+              border: 1px solid var(--doc-border);
+              background: var(--doc-bg, #fff);
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+              color: inherit;
+            "
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
           </button>
           <!-- dots -->
-          <div id="ss-dots" style="display:flex;justify-content:center;gap:6px;margin-top:10px;">
-            <button aria-label="Slide 1" style="width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--doc-link,#3b82f6);"></button>
-            <button aria-label="Slide 2" style="width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--doc-border,#ccc);"></button>
-            <button aria-label="Slide 3" style="width:8px;height:8px;border-radius:50%;border:none;padding:0;cursor:pointer;background:var(--doc-border,#ccc);"></button>
+          <div id="ss-dots" style="display: flex; justify-content: center; gap: 6px; margin-top: 10px">
+            <button aria-label="Slide 1" style="width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; cursor: pointer; background: var(--doc-link, #3b82f6)"></button>
+            <button aria-label="Slide 2" style="width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; cursor: pointer; background: var(--doc-border, #ccc)"></button>
+            <button aria-label="Slide 3" style="width: 8px; height: 8px; border-radius: 50%; border: none; padding: 0; cursor: pointer; background: var(--doc-border, #ccc)"></button>
           </div>
         </div>
         <script>
-          (function(){
-            var track=document.getElementById('ss-track');
-            var wrapper=document.getElementById('ss-wrapper');
-            var dots=[].slice.call(document.getElementById('ss-dots').children);
-            var total=3,cur=0,startX=0,dragging=false,dragDx=0,didSwipe=false;
-            function go(n){
-              cur=(n+total)%total;
-              track.style.transform='translateX(-'+cur*100+'%)';
-              dots.forEach(function(d,i){d.style.background=i===cur?'var(--doc-link,#3b82f6)':'var(--doc-border,#ccc)';});
+          (function () {
+            var track = document.getElementById('ss-track');
+            var wrapper = document.getElementById('ss-wrapper');
+            var dots = [].slice.call(document.getElementById('ss-dots').children);
+            var total = 3,
+              cur = 0,
+              startX = 0,
+              dragging = false,
+              dragDx = 0,
+              didSwipe = false;
+            function go(n) {
+              cur = (n + total) % total;
+              track.style.transform = 'translateX(-' + cur * 100 + '%)';
+              dots.forEach(function (d, i) {
+                d.style.background = i === cur ? 'var(--doc-link,#3b82f6)' : 'var(--doc-border,#ccc)';
+              });
             }
-            document.getElementById('ss-prev').addEventListener('click',function(e){e.preventDefault();go(cur-1);});
-            document.getElementById('ss-next').addEventListener('click',function(e){e.preventDefault();go(cur+1);});
-            dots.forEach(function(d,i){d.addEventListener('click',function(){go(i);});});
+            document.getElementById('ss-prev').addEventListener('click', function (e) {
+              e.preventDefault();
+              go(cur - 1);
+            });
+            document.getElementById('ss-next').addEventListener('click', function (e) {
+              e.preventDefault();
+              go(cur + 1);
+            });
+            dots.forEach(function (d, i) {
+              d.addEventListener('click', function () {
+                go(i);
+              });
+            });
             /* mouse swipe */
-            track.addEventListener('mousedown',function(e){dragging=true;dragDx=0;didSwipe=false;startX=e.clientX;track.style.transition='none';});
-            track.addEventListener('mousemove',function(e){if(!dragging)return;dragDx=e.clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';});
-            track.addEventListener('mouseup',function(){finish();});
-            track.addEventListener('mouseleave',function(){if(dragging)finish();});
+            track.addEventListener('mousedown', function (e) {
+              dragging = true;
+              dragDx = 0;
+              didSwipe = false;
+              startX = e.clientX;
+              track.style.transition = 'none';
+            });
+            track.addEventListener('mousemove', function (e) {
+              if (!dragging) return;
+              dragDx = e.clientX - startX;
+              track.style.transform = 'translateX(calc(-' + cur * 100 + '% + ' + dragDx + 'px))';
+            });
+            track.addEventListener('mouseup', function () {
+              finish();
+            });
+            track.addEventListener('mouseleave', function () {
+              if (dragging) finish();
+            });
             /* touch swipe — listeners on wrapper (plain div) so iOS tap-detection on <a> children doesn't interfere */
-            wrapper.addEventListener('touchstart',function(e){dragDx=0;didSwipe=false;startX=e.touches[0].clientX;track.style.transition='none';},{passive:true});
-            wrapper.addEventListener('touchmove',function(e){dragDx=e.touches[0].clientX-startX;track.style.transform='translateX(calc(-'+cur*100+'% + '+dragDx+'px))';},{passive:true});
-            wrapper.addEventListener('touchend',function(){finish();});
-            wrapper.addEventListener('touchcancel',function(){finish();});
-            function finish(){
-              dragging=false;
-              if(Math.abs(dragDx)>5)didSwipe=true;
-              track.style.transition='transform .35s cubic-bezier(.4,0,.2,1)';
-              if(dragDx<-50)go(cur+1);
-              else if(dragDx>50)go(cur-1);
+            wrapper.addEventListener(
+              'touchstart',
+              function (e) {
+                dragDx = 0;
+                didSwipe = false;
+                startX = e.touches[0].clientX;
+                track.style.transition = 'none';
+              },
+              { passive: true }
+            );
+            wrapper.addEventListener(
+              'touchmove',
+              function (e) {
+                dragDx = e.touches[0].clientX - startX;
+                track.style.transform = 'translateX(calc(-' + cur * 100 + '% + ' + dragDx + 'px))';
+              },
+              { passive: true }
+            );
+            wrapper.addEventListener('touchend', function () {
+              finish();
+            });
+            wrapper.addEventListener('touchcancel', function () {
+              finish();
+            });
+            function finish() {
+              dragging = false;
+              if (Math.abs(dragDx) > 5) didSwipe = true;
+              track.style.transition = 'transform .35s cubic-bezier(.4,0,.2,1)';
+              if (dragDx < -50) go(cur + 1);
+              else if (dragDx > 50) go(cur - 1);
               else go(cur);
-              dragDx=0;
+              dragDx = 0;
             }
             /* prevent link navigation when the gesture was a swipe */
-            track.querySelectorAll('a').forEach(function(a){
-              a.addEventListener('click',function(e){if(didSwipe){e.preventDefault();didSwipe=false;}});
+            track.querySelectorAll('a').forEach(function (a) {
+              a.addEventListener('click', function (e) {
+                if (didSwipe) {
+                  e.preventDefault();
+                  didSwipe = false;
+                }
+              });
             });
           })();
         </script>
 
         <div class="what-is">
-          <p data-i18n-html="whatIs.p1"><strong>Crumb is a meeting finder you can add to your service body's website.</strong> Members type in a city, tap "Near Me," or browse a list and map to find an NA meeting — right on your site, no app required. It's free and open source.</p>
+          <p data-i18n-html="whatIs.p1">
+            <strong>Crumb is a meeting finder you can add to your service body's website.</strong> Members type in a city, tap "Near Me," or browse a list and map to find an NA meeting — right on your
+            site, no app required. It's free and open source.
+          </p>
         </div>
 
         <div class="platform-section">
@@ -1317,42 +1433,66 @@
           <p class="platform-sub" data-i18n="pickPlatform.sub">Whatever runs your service body's website, there's a way to add Crumb. Click the one that matches your setup:</p>
           <div class="platform-grid">
             <a href="https://wordpress.org/plugins/crumb/" target="_blank" rel="noopener" class="platform-card">
-              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.158 12.786L9.46 20.625a9 9 0 002.696.413 9 9 0 003.026-.524 1 1 0 01-.077-.15l-2.947-8.075v.497zM3.009 12a8.99 8.99 0 005.067 8.092L3.788 8.32A8.96 8.96 0 003.009 12zm15.06-.454c0-1.112-.4-1.881-.741-2.48-.456-.741-.883-1.368-.883-2.109 0-.826.627-1.596 1.51-1.596.04 0 .078.005.117.007A8.974 8.974 0 0012 3.009a8.99 8.99 0 00-7.512 4.04c.211.007.41.011.579.011.94 0 2.395-.114 2.395-.114.484-.028.541.683.057.74 0 0-.487.058-1.029.086l3.274 9.739 1.968-5.901-1.401-3.838c-.484-.028-.943-.085-.943-.085-.485-.029-.428-.768.057-.74 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.485-.028.542.683.057.74 0 0-.488.058-1.029.086l3.249 9.665.897-2.996c.456-1.169.628-2.085.628-2.911zm1.82-3.482c.039.286.06.593.06.924 0 .912-.171 1.938-.684 3.22l-2.747 7.94a8.998 8.998 0 003.371-12.084zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></svg>
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12.158 12.786L9.46 20.625a9 9 0 002.696.413 9 9 0 003.026-.524 1 1 0 01-.077-.15l-2.947-8.075v.497zM3.009 12a8.99 8.99 0 005.067 8.092L3.788 8.32A8.96 8.96 0 003.009 12zm15.06-.454c0-1.112-.4-1.881-.741-2.48-.456-.741-.883-1.368-.883-2.109 0-.826.627-1.596 1.51-1.596.04 0 .078.005.117.007A8.974 8.974 0 0012 3.009a8.99 8.99 0 00-7.512 4.04c.211.007.41.011.579.011.94 0 2.395-.114 2.395-.114.484-.028.541.683.057.74 0 0-.487.058-1.029.086l3.274 9.739 1.968-5.901-1.401-3.838c-.484-.028-.943-.085-.943-.085-.485-.029-.428-.768.057-.74 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.485-.028.542.683.057.74 0 0-.488.058-1.029.086l3.249 9.665.897-2.996c.456-1.169.628-2.085.628-2.911zm1.82-3.482c.039.286.06.593.06.924 0 .912-.171 1.938-.684 3.22l-2.747 7.94a8.998 8.998 0 003.371-12.084zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"
+                />
+              </svg>
               <span class="platform-name">WordPress</span>
               <span class="platform-desc" data-i18n="pickPlatform.cards.wordpress">Install the official Crumb plugin from the WordPress directory.</span>
               <span class="platform-cta" data-i18n="pickPlatform.cards.install">Install plugin →</span>
             </a>
 
             <a href="https://github.com/bmlt-enabled/crumb-drupal" target="_blank" rel="noopener" class="platform-card">
-              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.78 5.113C14.09 3.425 12.46 1.815 12 0c-.46 1.814-2.09 3.424-3.78 5.113C5.69 7.644 3 10.252 3 14.167 3 19.04 6.97 23 12 23s9-3.959 9-8.833c0-3.915-2.69-6.523-5.22-9.054zM6.018 15.469c-.376-.012-1.741-2.36.41-4.485l2.85 3.116a.235.235 0 01-.014.347c-.732.687-2.215 1.34-3.246 1.022zm5.853 4.59a3.018 3.018 0 01-3.02-2.97c.014-.812.343-1.595.792-2.27.546-.812 2.226-3.005 2.226-3.005s1.656 2.222 2.222 3c.475.65.81 1.452.798 2.276a3.027 3.027 0 01-3.018 2.97zm6.747-5.864c-.085.187-.279.499-.539.518h-.024c-.469 0-.602-.464-.93-.987-.728-1.169-2.84-3.93-3.21-4.527-.319-.514-.046-.876.085-1.05.158-.21 1.354-1.471 1.94-2.066.61.618 2.346 2.366 3.224 3.806.873 1.434.852 3.235-.546 4.306z"/></svg>
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M15.78 5.113C14.09 3.425 12.46 1.815 12 0c-.46 1.814-2.09 3.424-3.78 5.113C5.69 7.644 3 10.252 3 14.167 3 19.04 6.97 23 12 23s9-3.959 9-8.833c0-3.915-2.69-6.523-5.22-9.054zM6.018 15.469c-.376-.012-1.741-2.36.41-4.485l2.85 3.116a.235.235 0 01-.014.347c-.732.687-2.215 1.34-3.246 1.022zm5.853 4.59a3.018 3.018 0 01-3.02-2.97c.014-.812.343-1.595.792-2.27.546-.812 2.226-3.005 2.226-3.005s1.656 2.222 2.222 3c.475.65.81 1.452.798 2.276a3.027 3.027 0 01-3.018 2.97zm6.747-5.864c-.085.187-.279.499-.539.518h-.024c-.469 0-.602-.464-.93-.987-.728-1.169-2.84-3.93-3.21-4.527-.319-.514-.046-.876.085-1.05.158-.21 1.354-1.471 1.94-2.066.61.618 2.346 2.366 3.224 3.806.873 1.434.852 3.235-.546 4.306z"
+                />
+              </svg>
               <span class="platform-name">Drupal</span>
               <span class="platform-desc" data-i18n="pickPlatform.cards.drupal">Install the Crumb module for Drupal 10.3+ or 11.</span>
               <span class="platform-cta" data-i18n="pickPlatform.cards.install">Install module →</span>
             </a>
 
             <a href="https://github.com/bmlt-enabled/crumb-joomla" target="_blank" rel="noopener" class="platform-card">
-              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.486 0a3.78 3.78 0 00-3.745 4.286 3.79 3.79 0 00-1.74 3.184c0 1.43.81 2.79 2.114 3.405l5.954-5.953A3.795 3.795 0 005.486 0zm13.026 0a3.79 3.79 0 00-3.789 3.789 3.79 3.79 0 00.205 1.232l2.502 2.503a1.077 1.077 0 010 1.524l-7.668 7.668 1.92 1.92 7.667-7.668a3.789 3.789 0 005.176-5.176A3.79 3.79 0 0018.512 0zM5.281 5.794L.106 10.97a3.789 3.789 0 005.176 5.176L7.785 13.642a1.077 1.077 0 010-1.524L9.91 9.992 7.784 7.866a3.789 3.789 0 01-2.503-2.072zm10.93 5.157l-7.667 7.668a3.789 3.789 0 01-5.176 5.176A3.789 3.789 0 006.532 23.9c1.04 0 2.043-.428 2.762-1.147l7.668-7.668-.751-.75z"/></svg>
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M5.486 0a3.78 3.78 0 00-3.745 4.286 3.79 3.79 0 00-1.74 3.184c0 1.43.81 2.79 2.114 3.405l5.954-5.953A3.795 3.795 0 005.486 0zm13.026 0a3.79 3.79 0 00-3.789 3.789 3.79 3.79 0 00.205 1.232l2.502 2.503a1.077 1.077 0 010 1.524l-7.668 7.668 1.92 1.92 7.667-7.668a3.789 3.789 0 005.176-5.176A3.79 3.79 0 0018.512 0zM5.281 5.794L.106 10.97a3.789 3.789 0 005.176 5.176L7.785 13.642a1.077 1.077 0 010-1.524L9.91 9.992 7.784 7.866a3.789 3.789 0 01-2.503-2.072zm10.93 5.157l-7.667 7.668a3.789 3.789 0 01-5.176 5.176A3.789 3.789 0 006.532 23.9c1.04 0 2.043-.428 2.762-1.147l7.668-7.668-.751-.75z"
+                />
+              </svg>
               <span class="platform-name">Joomla</span>
               <span class="platform-desc" data-i18n="pickPlatform.cards.joomla">Install the Crumb extension for Joomla 4, 5, or 6.</span>
               <span class="platform-cta" data-i18n="pickPlatform.cards.install">Install extension →</span>
             </a>
 
             <a href="#squarespace" class="platform-card">
-              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22.655 8.719c-1.802-1.801-4.726-1.801-6.564 0l-7.351 7.351c-.45.45-.45 1.184 0 1.634.45.45 1.184.45 1.634 0l7.351-7.351c.9-.9 2.363-.9 3.262 0 .9.9.9 2.363 0 3.262l-7.27 7.27c.9.9 2.363.9 3.263 0l5.675-5.638c1.838-1.801 1.838-4.726 0-6.527M19.353 12.02c-.45-.45-1.183-.45-1.634 0l-7.35 7.351c-.9.9-2.363.9-3.263 0-.9-.9-.9-2.363 0-3.263l7.27-7.27c-.9-.9-2.363-.9-3.262 0L5.477 14.45c-1.801 1.801-1.801 4.726 0 6.564 1.802 1.801 4.726 1.801 6.564 0l7.35-7.351c.45-.45.45-1.184 0-1.634m-3.302-3.301c.45.45.45 1.184 0 1.634L8.7 17.704c-.9.9-2.363.9-3.262 0-.9-.9-.9-2.363 0-3.262l5.638-5.638c-1.801-1.802-4.726-1.802-6.564 0-1.801 1.801-1.801 4.726 0 6.564l1.638-1.639c-.45-.45-.45-1.184 0-1.634.45-.45 1.184-.45 1.634 0 .45.45.45 1.184 0 1.634L6.184 15.33c-.9-.9-.9-2.363 0-3.262l5.638-5.638c1.801-1.802 4.726-1.802 6.564 0 .45.45.45 1.184 0 1.634-.45.45-1.184.45-1.634 0-.9-.9-2.363-.9-3.263 0L7.892 13.66c.45.45 1.184.45 1.634 0l6.525-6.564z"/></svg>
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M22.655 8.719c-1.802-1.801-4.726-1.801-6.564 0l-7.351 7.351c-.45.45-.45 1.184 0 1.634.45.45 1.184.45 1.634 0l7.351-7.351c.9-.9 2.363-.9 3.262 0 .9.9.9 2.363 0 3.262l-7.27 7.27c.9.9 2.363.9 3.263 0l5.675-5.638c1.838-1.801 1.838-4.726 0-6.527M19.353 12.02c-.45-.45-1.183-.45-1.634 0l-7.35 7.351c-.9.9-2.363.9-3.263 0-.9-.9-.9-2.363 0-3.263l7.27-7.27c-.9-.9-2.363-.9-3.262 0L5.477 14.45c-1.801 1.801-1.801 4.726 0 6.564 1.802 1.801 4.726 1.801 6.564 0l7.35-7.351c.45-.45.45-1.184 0-1.634m-3.302-3.301c.45.45.45 1.184 0 1.634L8.7 17.704c-.9.9-2.363.9-3.262 0-.9-.9-.9-2.363 0-3.262l5.638-5.638c-1.801-1.802-4.726-1.802-6.564 0-1.801 1.801-1.801 4.726 0 6.564l1.638-1.639c-.45-.45-.45-1.184 0-1.634.45-.45 1.184-.45 1.634 0 .45.45.45 1.184 0 1.634L6.184 15.33c-.9-.9-.9-2.363 0-3.262l5.638-5.638c1.801-1.802 4.726-1.802 6.564 0 .45.45.45 1.184 0 1.634-.45.45-1.184.45-1.634 0-.9-.9-2.363-.9-3.263 0L7.892 13.66c.45.45 1.184.45 1.634 0l6.525-6.564z"
+                />
+              </svg>
               <span class="platform-name">Squarespace</span>
               <span class="platform-desc" data-i18n="pickPlatform.cards.squarespace">Paste a small code block into any Squarespace page.</span>
               <span class="platform-cta" data-i18n="pickPlatform.cards.viewSteps">View steps →</span>
             </a>
 
             <a href="#wix" class="platform-card">
-              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.115 4.43L3 13.95l1.927-9.46zm5.34 0L7.74 14.91l-.937-3.46-.94-3.522.937 3.523h.001L7.737 14.9h.003l2.715-10.47zm5.04.07L13.5 9.49l-1.99-4.99h2.78l1.205 3.014L16.7 4.5h-1.205zm5.6 0l-3.435 8.96 3.435-8.96zM3 13.95v-.001L4.927 4.43 3 13.95zm7.452-9.45L8.495 13.95l.94 3.523-.001-.001-.937-3.523L11.39 4.5h-.937zM18.78 13.95l1.92-9.45L18.78 13.95zM7.74 14.91L10.452 4.5 7.74 14.91zm5.76-5.42l2-4.99-2 4.99zm-2-4.99L8.495 13.95l2.715-10.47.29.94z"/></svg>
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M5.115 4.43L3 13.95l1.927-9.46zm5.34 0L7.74 14.91l-.937-3.46-.94-3.522.937 3.523h.001L7.737 14.9h.003l2.715-10.47zm5.04.07L13.5 9.49l-1.99-4.99h2.78l1.205 3.014L16.7 4.5h-1.205zm5.6 0l-3.435 8.96 3.435-8.96zM3 13.95v-.001L4.927 4.43 3 13.95zm7.452-9.45L8.495 13.95l.94 3.523-.001-.001-.937-3.523L11.39 4.5h-.937zM18.78 13.95l1.92-9.45L18.78 13.95zM7.74 14.91L10.452 4.5 7.74 14.91zm5.76-5.42l2-4.99-2 4.99zm-2-4.99L8.495 13.95l2.715-10.47.29.94z"
+                />
+              </svg>
               <span class="platform-name">Wix</span>
               <span class="platform-desc" data-i18n="pickPlatform.cards.wix">Drop the Crumb embed into a Wix HTML block.</span>
               <span class="platform-cta" data-i18n="pickPlatform.cards.viewSteps">View steps →</span>
             </a>
 
             <a href="#quick-start" class="platform-card">
-              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 1.5C6.21 1.5 1.5 6.21 1.5 12S6.21 22.5 12 22.5 22.5 17.79 22.5 12 17.79 1.5 12 1.5zm0 19.5c-4.95 0-9-4.05-9-9s4.05-9 9-9 9 4.05 9 9-4.05 9-9 9zM8.25 12L12 8.25l3.75 3.75-1.06 1.06L12 10.37l-2.69 2.69L8.25 12zm0 0L12 15.75 15.75 12l-1.06-1.06L12 13.63l-2.69-2.69L8.25 12z"/></svg>
+              <svg class="platform-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path
+                  d="M12 1.5C6.21 1.5 1.5 6.21 1.5 12S6.21 22.5 12 22.5 22.5 17.79 22.5 12 17.79 1.5 12 1.5zm0 19.5c-4.95 0-9-4.05-9-9s4.05-9 9-9 9 4.05 9 9-4.05 9-9 9zM8.25 12L12 8.25l3.75 3.75-1.06 1.06L12 10.37l-2.69 2.69L8.25 12zm0 0L12 15.75 15.75 12l-1.06-1.06L12 13.63l-2.69-2.69L8.25 12z"
+                />
+              </svg>
               <span class="platform-name" data-i18n="pickPlatform.cards.other">Other / Plain HTML</span>
               <span class="platform-desc" data-i18n="pickPlatform.cards.otherDesc">Google Sites, plain HTML, or any site that takes a code snippet.</span>
               <span class="platform-cta" data-i18n="pickPlatform.cards.copySnippet">Copy snippet →</span>
@@ -1382,7 +1522,10 @@
         <div class="platform-section" id="videos">
           <div class="platform-label" data-i18n="videos.label">Watch &amp; learn</div>
           <h3 class="platform-heading" data-i18n="videos.heading">Video tutorials</h3>
-          <p class="platform-sub" data-i18n-html="videos.sub">Short walkthroughs covering setup for WordPress and plain-HTML sites. <a href="https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy" target="_blank" rel="noopener">Watch the full playlist on YouTube →</a></p>
+          <p class="platform-sub" data-i18n-html="videos.sub">
+            Short walkthroughs covering setup for WordPress and plain-HTML sites.
+            <a href="https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy" target="_blank" rel="noopener">Watch the full playlist on YouTube →</a>
+          </p>
           <div class="video-grid">
             <a href="https://youtu.be/Y2pT-J27TUM" target="_blank" rel="noopener" class="video-card">
               <div class="video-thumb">
@@ -1425,13 +1568,17 @@
 
         <h2 id="overview" data-i18n="overview.title">About Crumb</h2>
         <p data-i18n-html="overview.p1">
-          Crumb Widget queries a <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT server</a> (the database your area uses to store meeting info) and turns it into a friendly meeting finder on your site — with search, filters, a list, and an interactive map.
+          Crumb Widget queries a <a href="https://bmlt.app" target="_blank" rel="noopener">BMLT server</a> (the database your area uses to store meeting info) and turns it into a friendly meeting
+          finder on your site — with search, filters, a list, and an interactive map.
         </p>
         <p data-i18n-html="overview.p2">
           Under the hood it's a <strong>single JavaScript file</strong>. No stylesheets to manage, no setup steps, no developer required if you're using one of the plugins above.
         </p>
         <h2 id="quick-start" data-i18n="quickStart.title">Quick Start (Code Snippet)</h2>
-        <p data-i18n="quickStart.intro">If your site lets you paste in a small piece of HTML — like a Squarespace code block, a Wix HTML embed, or a plain web page — this is all you need. Replace the server URL with your service body's BMLT server, then paste the snippet anywhere on the page:</p>
+        <p data-i18n="quickStart.intro">
+          If your site lets you paste in a small piece of HTML — like a Squarespace code block, a Wix HTML embed, or a plain web page — this is all you need. Replace the server URL with your service
+          body's BMLT server, then paste the snippet anywhere on the page:
+        </p>
 
         <div class="demo">
           <div class="demo-header">
@@ -1528,12 +1675,10 @@
             equivalents.
           </li>
           <li data-i18n-html="exampleWordpress.switchFromCrouton.3">
-            Crouton's saved settings (server URL, service body, format IDs, update URL) are used as fallbacks whenever the corresponding Crumb setting is empty. Open <strong>Settings → Crumb</strong>
-            to confirm the inherited values and click <strong>Save Changes</strong> to persist them.
+            Crouton's saved settings (server URL, service body, format IDs, update URL) are used as fallbacks whenever the corresponding Crumb setting is empty. Open
+            <strong>Settings → Crumb</strong> to confirm the inherited values and click <strong>Save Changes</strong> to persist them.
           </li>
-          <li data-i18n-html="exampleWordpress.switchFromCrouton.4">
-            If both plugins are active, crouton continues to handle its own shortcodes; Crumb only takes over once crouton is deactivated.
-          </li>
+          <li data-i18n-html="exampleWordpress.switchFromCrouton.4">If both plugins are active, crouton continues to handle its own shortcodes; Crumb only takes over once crouton is deactivated.</li>
         </ul>
 
         <h2 id="example-drupal" data-i18n="exampleDrupal.title">Example: Drupal</h2>
@@ -1607,7 +1752,10 @@
             Download the latest <code>pkg_crumb.zip</code> from the <a href="https://github.com/bmlt-enabled/crumb-joomla/releases" target="_blank" rel="noopener">releases page</a>.
           </li>
           <li data-i18n-html="exampleJoomla.install.2">In Joomla admin, go to <strong>System → Install → Extensions</strong> and upload the package zip.</li>
-          <li data-i18n-html="exampleJoomla.install.3">Enable the plugin: <strong>System → Plugins</strong>, search "Crumb", open <strong>Content - Crumb</strong>, set the BMLT server URL, save, and toggle status to <strong>Enabled</strong>. (Joomla ships content plugins disabled by default.)</li>
+          <li data-i18n-html="exampleJoomla.install.3">
+            Enable the plugin: <strong>System → Plugins</strong>, search "Crumb", open <strong>Content - Crumb</strong>, set the BMLT server URL, save, and toggle status to <strong>Enabled</strong>.
+            (Joomla ships content plugins disabled by default.)
+          </li>
         </ol>
 
         <h3 data-i18n="exampleJoomla.embedShortcode">Embed via shortcode in articles</h3>
@@ -1625,12 +1773,14 @@
 
         <h3 data-i18n="exampleJoomla.embedModule">Embed via Module</h3>
         <p data-i18n-html="exampleJoomla.embedModuleBody">
-          Publish the <strong>Crumb</strong> module to any module position via <strong>Content → Site Modules → New → Crumb</strong>. Per-module settings cover server URL, service body filter, default view, and CSS template.
+          Publish the <strong>Crumb</strong> module to any module position via <strong>Content → Site Modules → New → Crumb</strong>. Per-module settings cover server URL, service body filter, default
+          view, and CSS template.
         </p>
 
         <h3 data-i18n="exampleJoomla.advanced">Advanced configuration</h3>
         <p data-i18n-html="exampleJoomla.advancedIntro">
-          For options that aren't surfaced as form fields (language, dark mode, custom map tiles, etc.), use the <strong>Widget Configuration (JSON)</strong> field on the plugin or module options panel. The JSON is parsed and emitted as <code>window.CrumbWidgetConfig</code> alongside the widget.
+          For options that aren't surfaced as form fields (language, dark mode, custom map tiles, etc.), use the <strong>Widget Configuration (JSON)</strong> field on the plugin or module options
+          panel. The JSON is parsed and emitted as <code>window.CrumbWidgetConfig</code> alongside the widget.
         </p>
         <div class="demo">
           <div class="demo-header">Widget Configuration (JSON)</div>
@@ -1838,10 +1988,9 @@
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.formatIds">
                   Lock the widget to meetings matching one or more <strong>format IDs</strong> (numeric, server-specific). The filter is applied at the BMLT API level, so only matching meetings are
-                  fetched. Useful when you want to embed a list of, e.g., only Open meetings.
-                  <br /><em>Single:</em> <code>"4"</code> <br /><em>Multiple:</em> <code>"4,7,12"</code> (AND — meetings must match all listed IDs)
-                  <br />Format IDs vary per server. Look them up in BMLT admin or via <code>GetFormats</code>. For server-agnostic filtering by code (e.g. <code>O</code>, <code>BT</code>), use the
-                  <code>formats</code> global config option instead.
+                  fetched. Useful when you want to embed a list of, e.g., only Open meetings. <br /><em>Single:</em> <code>"4"</code> <br /><em>Multiple:</em> <code>"4,7,12"</code> (AND — meetings
+                  must match all listed IDs) <br />Format IDs vary per server. Look them up in BMLT admin or via <code>GetFormats</code>. For server-agnostic filtering by code (e.g. <code>O</code>,
+                  <code>BT</code>), use the <code>formats</code> global config option instead.
                 </td>
               </tr>
               <tr>
@@ -1857,9 +2006,9 @@
                 <td>data-columns</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.columns">
-                  Comma-separated list of columns to show in list view. Same allowed values as the <code>columns</code> global config option:
-                  <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>, <code>formats</code>. Overridden by
-                  <code>CrumbWidgetConfig.columns</code> when both are set. <br /><em>Example:</em> <code>data-columns="time,name,address"</code>
+                  Comma-separated list of columns to show in list view. Same allowed values as the <code>columns</code> global config option: <code>time</code>, <code>distance</code>,
+                  <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>, <code>formats</code>. Overridden by <code>CrumbWidgetConfig.columns</code> when both are
+                  set. <br /><em>Example:</em> <code>data-columns="time,name,address"</code>
                 </td>
               </tr>
               <tr>
@@ -1875,22 +2024,22 @@
                 <td>data-geolocation</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.geolocation">
-                  Enable or disable location-based search (the <strong>Near Me</strong> button and typed-location search). Takes precedence over
-                  <code>CrumbWidgetConfig.geolocation</code>. Default: <code>false</code> for most servers, <code>true</code> when <code>data-server</code> points at
-                  <code>aggregator.bmltenabled.org</code> with no <code>data-service-body</code> set. Forced off when <code>data-query</code> is used.
-                  <br /><em>Values:</em> <code>"true"</code>, <code>"false"</code>, <code>"1"</code>, or <code>"0"</code>
+                  Enable or disable location-based search (the <strong>Near Me</strong> button and typed-location search). Takes precedence over <code>CrumbWidgetConfig.geolocation</code>. Default:
+                  <code>false</code> for most servers, <code>true</code> when <code>data-server</code> points at <code>aggregator.bmltenabled.org</code> with no <code>data-service-body</code> set.
+                  Forced off when <code>data-query</code> is used. <br /><em>Values:</em> <code>"true"</code>, <code>"false"</code>, <code>"1"</code>, or <code>"0"</code>
                 </td>
               </tr>
               <tr>
                 <td>data-query</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.query">
-                  Raw <a href="https://semantic.bmlt.app/" target="_blank" rel="noopener">BMLT query string</a> passed through to the server verbatim, for filters the structured
-                  options can't express (e.g. <code>meeting_key_value[]</code> matching multiple values). Replaces the default service-body load entirely — <code>data-service-body</code>,
-                  <code>data-format-ids</code>, and <code>?services</code> are ignored when this is set, so the embedder controls the query end-to-end. Geolocation is forced off because
-                  <code>lat_val</code>/<code>long_val</code>/<code>geo_width</code> can't safely be layered on top of an arbitrary query. <code>page_size</code>,
-                  <code>get_used_formats=1</code>, and <code>lang_enum</code> are appended automatically if you don't include them, so meetings + formats still arrive in a single round-trip.
-                  <br /><em>Example:</em>
+                  Raw <a href="https://semantic.bmlt.app/" target="_blank" rel="noopener">BMLT query string</a> passed through to the server verbatim, for filters the structured options can't express
+                  (e.g. <code>meeting_key_value[]</code> matching multiple values). Replaces the default service-body load entirely — <code>data-service-body</code>, <code>data-format-ids</code>, and
+                  <code>?services</code> are ignored when this is set, so the embedder controls the query end-to-end. Geolocation is forced off because <code>lat_val</code>/<code>long_val</code>/<code
+                    >geo_width</code
+                  >
+                  can't safely be layered on top of an arbitrary query. <code>page_size</code>, <code>get_used_formats=1</code>, and <code>lang_enum</code> are appended automatically if you don't
+                  include them, so meetings + formats still arrive in a single round-trip. <br /><em>Example:</em>
                   <code>data-query="meeting_key=location_nation&amp;meeting_key_value[]=USA&amp;meeting_key_value[]=US"</code>
                 </td>
               </tr>
@@ -1900,10 +2049,9 @@
                 <td data-i18n-html="attributes.updateUrl">
                   Show an <strong>"Update Meeting Info"</strong> link at the bottom of every meeting detail panel, pointing at a URL template you control. The template is expanded per meeting using
                   the tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, and <code>{return_url}</code> — each token's value is URL-encoded on substitution.
-                  Designed for integration with <a href="https://github.com/bmlt-enabled/bmlt-workflow">bmlt-workflow</a>'s update form, any custom hosted form, or a <code>mailto:</code> link.
-                  Unknown tokens are left intact. The link opens in a new tab. The button is hidden when the attribute is unset. See the <a href="#update-url">Update Meeting Info Link</a> section
-                  below for examples.
-                  <br /><em>bmlt-workflow:</em>
+                  Designed for integration with <a href="https://github.com/bmlt-enabled/bmlt-workflow">bmlt-workflow</a>'s update form, any custom hosted form, or a <code>mailto:</code> link. Unknown
+                  tokens are left intact. The link opens in a new tab. The button is hidden when the attribute is unset. See the <a href="#update-url">Update Meeting Info Link</a> section below for
+                  examples. <br /><em>bmlt-workflow:</em>
                   <code>data-update-url="https://example.org/meeting-update/?meeting_id={meeting_id}"</code>
                 </td>
               </tr>
@@ -1912,8 +2060,7 @@
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.showFormats">
                   Show a comma-separated list of <strong>format codes</strong> (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and
-                  <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Takes precedence over <code>CrumbWidgetConfig.showFormats</code>. Default:
-                  <code>false</code>.
+                  <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Takes precedence over <code>CrumbWidgetConfig.showFormats</code>. Default: <code>false</code>.
                   <br /><em>Values:</em> <code>"true"</code>, <code>"false"</code>, <code>"1"</code>, or <code>"0"</code>
                 </td>
               </tr>
@@ -1921,70 +2068,69 @@
                 <td>data-inline-formats</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.inlineFormats">
-                  Comma-separated <strong>format key strings</strong> (e.g. <code>M,W</code>) highlighted inline next to each meeting name in the list/cards. Each matching format renders its
-                  localized name (e.g. "Women") as a muted suffix — a curated highlight for special-interest meetings, independent of <code>data-show-formats</code>. Takes precedence over
-                  <code>CrumbWidgetConfig.inlineFormats</code>. Opt-in: defaults to <code>""</code> (none). Note that BMLT format key strings vary by server, so a code only shows where the
-                  server actually uses it.
-                  <br /><em>Example:</em> <code>data-inline-formats="M,W"</code>
+                  Comma-separated <strong>format key strings</strong> (e.g. <code>M,W</code>) highlighted inline next to each meeting name in the list/cards. Each matching format renders its localized
+                  name (e.g. "Women") as a muted suffix — a curated highlight for special-interest meetings, independent of <code>data-show-formats</code>. Takes precedence over
+                  <code>CrumbWidgetConfig.inlineFormats</code>. Opt-in: defaults to <code>""</code> (none). Note that BMLT format key strings vary by server, so a code only shows where the server
+                  actually uses it. <br /><em>Example:</em> <code>data-inline-formats="M,W"</code>
                 </td>
               </tr>
               <tr>
                 <td>data-formats</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.formats">
-                  Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>O</code>, <code>BT</code>). Comma-separated. Filtering is applied client-side
-                  after fetch. Takes precedence over <code>CrumbWidgetConfig.formats</code>; overridden by the <code>?formats=</code> query parameter. Default: <code>""</code> (no lock).
-                  <br /><em>Example:</em> <code>data-formats="O"</code>
+                  Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>O</code>, <code>BT</code>). Comma-separated. Filtering is applied client-side after
+                  fetch. Takes precedence over <code>CrumbWidgetConfig.formats</code>; overridden by the <code>?formats=</code> query parameter. Default: <code>""</code> (no lock). <br /><em
+                    >Example:</em
+                  >
+                  <code>data-formats="O"</code>
                 </td>
               </tr>
               <tr>
                 <td>data-geolocation-radius</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.geolocationRadius">
-                  Fixed or auto search radius for Near Me. A <strong>positive</strong> number sets a fixed radius in miles/km. A <strong>negative integer</strong> uses BMLT auto-radius
-                  (e.g. <code>-50</code> finds ~50 nearby meetings). Takes precedence over <code>CrumbWidgetConfig.geolocationRadius</code>. Default: <code>-50</code>.
+                  Fixed or auto search radius for Near Me. A <strong>positive</strong> number sets a fixed radius in miles/km. A <strong>negative integer</strong> uses BMLT auto-radius (e.g.
+                  <code>-50</code> finds ~50 nearby meetings). Takes precedence over <code>CrumbWidgetConfig.geolocationRadius</code>. Default: <code>-50</code>.
                 </td>
               </tr>
               <tr>
                 <td>data-distance-options</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.distanceOptions">
-                  Comma-separated distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. Takes precedence over <code>CrumbWidgetConfig.distanceOptions</code>.
-                  Default: <code>5,10,15,25,50,100</code>.
-                  <br /><em>Example:</em> <code>data-distance-options="5,10,25"</code>
+                  Comma-separated distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. Takes precedence over <code>CrumbWidgetConfig.distanceOptions</code>. Default:
+                  <code>5,10,15,25,50,100</code>. <br /><em>Example:</em> <code>data-distance-options="5,10,25"</code>
                 </td>
               </tr>
               <tr>
                 <td>data-distance-unit</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.distanceUnit">
-                  Unit used for distance display. Takes precedence over <code>CrumbWidgetConfig.distanceUnit</code>. Default: auto-detected from locale.
-                  <br /><em>Values:</em> <code>mi</code> or <code>km</code>
+                  Unit used for distance display. Takes precedence over <code>CrumbWidgetConfig.distanceUnit</code>. Default: auto-detected from locale. <br /><em>Values:</em> <code>mi</code> or
+                  <code>km</code>
                 </td>
               </tr>
               <tr>
                 <td>data-language</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.language">
-                  Override the UI language. Takes precedence over <code>CrumbWidgetConfig.language</code>. Defaults to <code>navigator.language</code>, falling back to English.
-                  <br /><em>Example:</em> <code>data-language="fr"</code>
-                  <br />Supported codes: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>
+                  Override the UI language. Takes precedence over <code>CrumbWidgetConfig.language</code>. Defaults to <code>navigator.language</code>, falling back to English. <br /><em>Example:</em>
+                  <code>data-language="fr"</code> <br />Supported codes: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>,
+                  <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>
                 </td>
               </tr>
               <tr>
                 <td>data-dark-mode</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.darkMode">
-                  Dark color scheme. Takes precedence over <code>CrumbWidgetConfig.darkMode</code>. Default: <code>false</code>.
-                  <br /><em>Values:</em> <code>auto</code> (follow OS preference), <code>true</code> / <code>1</code> (force dark), <code>false</code> / <code>0</code> (force light)
+                  Dark color scheme. Takes precedence over <code>CrumbWidgetConfig.darkMode</code>. Default: <code>false</code>. <br /><em>Values:</em> <code>auto</code> (follow OS preference),
+                  <code>true</code> / <code>1</code> (force dark), <code>false</code> / <code>0</code> (force light)
                 </td>
               </tr>
               <tr>
                 <td>data-height</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.height">
-                  Fixed widget height in pixels. Takes precedence over <code>CrumbWidgetConfig.height</code>. Omit for natural content height.
-                  <br /><em>Example:</em> <code>data-height="600"</code>
+                  Fixed widget height in pixels. Takes precedence over <code>CrumbWidgetConfig.height</code>. Omit for natural content height. <br /><em>Example:</em> <code>data-height="600"</code>
                 </td>
               </tr>
               <tr>
@@ -1999,8 +2145,8 @@
                 <td>data-now-offset</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.nowOffset">
-                  Minutes of grace period before a meeting is considered past. Meetings that started within the last <code>nowOffset</code> minutes still appear at the top; older ones roll
-                  to the end of the list. Takes precedence over <code>CrumbWidgetConfig.nowOffset</code>. Default: <code>10</code>. Set to <code>0</code> to roll over immediately.
+                  Minutes of grace period before a meeting is considered past. Meetings that started within the last <code>nowOffset</code> minutes still appear at the top; older ones roll to the end
+                  of the list. Takes precedence over <code>CrumbWidgetConfig.nowOffset</code>. Default: <code>10</code>. Set to <code>0</code> to roll over immediately.
                 </td>
               </tr>
             </tbody>
@@ -2008,7 +2154,11 @@
         </div>
 
         <h2 id="global-config" data-i18n="globalConfig.title">Global Config Object</h2>
-        <p data-i18n-html="globalConfig.intro">Define <code>CrumbWidgetConfig</code> as a global variable <strong>before</strong> loading the script. Most options can also be set as <a href="#attributes">data attributes</a> — the attribute always takes precedence over the corresponding config value. <code>CrumbWidgetConfig</code> is still the only way to configure <code>map</code> (tile providers and custom markers) and is useful when you need to set config from server-side code rather than the HTML element.</p>
+        <p data-i18n-html="globalConfig.intro">
+          Define <code>CrumbWidgetConfig</code> as a global variable <strong>before</strong> loading the script. Most options can also be set as <a href="#attributes">data attributes</a> — the
+          attribute always takes precedence over the corresponding config value. <code>CrumbWidgetConfig</code> is still the only way to configure <code>map</code> (tile providers and custom markers)
+          and is useful when you need to set config from server-side code rather than the HTML element.
+        </p>
 
         <div class="demo">
           <div class="demo-header">HTML</div>
@@ -2049,8 +2199,8 @@
                 <td>columns</td>
                 <td><code>string[]</code></td>
                 <td data-i18n-html="globalConfig.row.columns">
-                  Columns to show in list view. Default: <code>['time', 'distance', 'name', 'location', 'address']</code>. Takes precedence over <code>data-columns</code>. Omit any column name to
-                  hide it. Available values: <code>time</code>, <code>distance</code> (only renders when geolocation is active), <code>name</code>, <code>location</code> (venue/building name),
+                  Columns to show in list view. Default: <code>['time', 'distance', 'name', 'location', 'address']</code>. Takes precedence over <code>data-columns</code>. Omit any column name to hide
+                  it. Available values: <code>time</code>, <code>distance</code> (only renders when geolocation is active), <code>name</code>, <code>location</code> (venue/building name),
                   <code>address</code> (street address with in-person/online badges), <code>service_body</code>, <code>formats</code> (one chip per format, showing its localized name — e.g.
                   <code>Open</code>, <code>Basic Text</code> — not the key string). <code>service_body</code> and <code>formats</code> are hidden by default — add them explicitly to show.
                 </td>
@@ -2061,8 +2211,8 @@
                 <td data-i18n-html="globalConfig.row.geolocation">
                   Enable location-based search: a <strong>Near Me</strong> button (auto-geolocates the user via the browser, requires HTTPS) and a <strong>Search location</strong> mode on the search
                   input that resolves a typed city, postal code, or address (e.g. <code>Edgartown, MA</code> or <code>02539</code>) via OpenStreetMap Nominatim. Default: <code>false</code> for most
-                  servers, <code>true</code> when <code>data-server</code> points at <code>aggregator.bmltenabled.org</code> with no <code>service-body</code> set (the unconstrained aggregator needs
-                  a location to return useful results). If browser geolocation fails or is denied, an error is shown — no fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code>
+                  servers, <code>true</code> when <code>data-server</code> points at <code>aggregator.bmltenabled.org</code> with no <code>service-body</code> set (the unconstrained aggregator needs a
+                  location to return useful results). If browser geolocation fails or is denied, an error is shown — no fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code>
                   filters have no effect on location searches; results are determined entirely by proximity.
                 </td>
               </tr>
@@ -2070,14 +2220,17 @@
                 <td>geolocationRadius</td>
                 <td><code>number</code></td>
                 <td data-i18n-html="globalConfig.row.geolocationRadius">
-                  Controls the search radius when geolocation is used. A <strong>positive</strong> value sets a fixed radius in miles (or km, per <code>distanceUnit</code>) and caps the Near Me distance dropdown. A <strong>negative integer</strong> uses BMLT auto-radius mode — the server expands the search until it finds roughly that many meetings (e.g. <code>-50</code> finds ~50 nearby meetings); the distance dropdown then shows all <code>distanceOptions</code> without a cap. Default: <code>-50</code>.
+                  Controls the search radius when geolocation is used. A <strong>positive</strong> value sets a fixed radius in miles (or km, per <code>distanceUnit</code>) and caps the Near Me
+                  distance dropdown. A <strong>negative integer</strong> uses BMLT auto-radius mode — the server expands the search until it finds roughly that many meetings (e.g.
+                  <code>-50</code> finds ~50 nearby meetings); the distance dropdown then shows all <code>distanceOptions</code> without a cap. Default: <code>-50</code>.
                 </td>
               </tr>
               <tr>
                 <td>distanceOptions</td>
                 <td><code>number[]</code></td>
                 <td data-i18n-html="globalConfig.row.distanceOptions">
-                  Distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. When <code>geolocationRadius</code> is a positive number, options above it are hidden and it is appended as the last option if not already present. When <code>geolocationRadius</code> is negative (auto-radius), all options are shown as-is. Default: <code>[5, 10, 15, 25, 50, 100]</code>.
+                  Distance values (in <code>distanceUnit</code>) shown in the Near Me dropdown. When <code>geolocationRadius</code> is a positive number, options above it are hidden and it is appended
+                  as the last option if not already present. When <code>geolocationRadius</code> is negative (auto-radius), all options are shown as-is. Default: <code>[5, 10, 15, 25, 50, 100]</code>.
                 </td>
               </tr>
               <tr>
@@ -2107,8 +2260,8 @@
                 <td><code>boolean</code></td>
                 <td data-i18n-html="globalConfig.row.showFormats">
                   Show a comma-separated list of <strong>format codes</strong> (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and
-                  <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Equivalent to the <code>data-show-formats</code> attribute (the attribute takes precedence).
-                  Default: <code>false</code>.
+                  <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Equivalent to the <code>data-show-formats</code> attribute (the attribute takes precedence). Default:
+                  <code>false</code>.
                 </td>
               </tr>
               <tr>
@@ -2131,9 +2284,9 @@
                 <td><code>string[]</code></td>
                 <td data-i18n-html="globalConfig.row.formats">
                   Lock the widget to meetings matching one or more <strong>format key strings</strong> (e.g. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Filtering is applied
-                  <em>after</em> the API response, so all meetings are still fetched and the format-key filter narrows the result set client-side. Multiple keys are AND-combined — a meeting must
-                  match every listed key. Key strings are stable across BMLT servers, so this is the best option when you want server-agnostic filtering. For server-side filtering by numeric format
-                  ID, use <code>data-format-ids</code> instead. Default: <code>[]</code> (no lock). <br /><em>Example:</em> <code>formats: ['O']</code>
+                  <em>after</em> the API response, so all meetings are still fetched and the format-key filter narrows the result set client-side. Multiple keys are AND-combined — a meeting must match
+                  every listed key. Key strings are stable across BMLT servers, so this is the best option when you want server-agnostic filtering. For server-side filtering by numeric format ID, use
+                  <code>data-format-ids</code> instead. Default: <code>[]</code> (no lock). <br /><em>Example:</em> <code>formats: ['O']</code>
                 </td>
               </tr>
               <tr>
@@ -2142,15 +2295,16 @@
                 <td data-i18n-html="globalConfig.row.inlineFormats">
                   Highlight one or more <strong>format key strings</strong> (e.g. <code>'M'</code>, <code>'W'</code>) inline next to each meeting name in the list/cards. Each meeting's matching format
                   renders its localized name (e.g. "Women") as a muted suffix — a curated highlight for special-interest meetings, independent of <code>showFormats</code>. Equivalent to the
-                  <code>data-inline-formats</code> attribute (the attribute takes precedence). Opt-in: defaults to <code>[]</code> (none). Note that BMLT format key strings vary by
-                  server, so a code only shows where the server actually uses it. <br /><em>Example:</em> <code>inlineFormats: ['M', 'W']</code>
+                  <code>data-inline-formats</code> attribute (the attribute takes precedence). Opt-in: defaults to <code>[]</code> (none). Note that BMLT format key strings vary by server, so a code
+                  only shows where the server actually uses it. <br /><em>Example:</em> <code>inlineFormats: ['M', 'W']</code>
                 </td>
               </tr>
               <tr>
                 <td>basePath</td>
                 <td><code>string</code></td>
                 <td data-i18n-html="globalConfig.row.basePath">
-                  Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See <a href="#routing">Routing</a> for details.
+                  Base path for History API routing (e.g. <code>'/meetings'</code>). Equivalent to the <code>data-path</code> attribute — produces clean URLs without the <code>#</code> fragment. See
+                  <a href="#routing">Routing</a> for details.
                 </td>
               </tr>
               <tr>
@@ -2158,12 +2312,11 @@
                 <td><code>string</code></td>
                 <td data-i18n-html="globalConfig.row.query">
                   Raw <a href="https://semantic.bmlt.app/" target="_blank" rel="noopener">BMLT query string</a> passed through to the server verbatim. Equivalent to the
-                  <code>data-query</code> attribute (the attribute takes precedence). Use this for filters the structured options can't express — e.g. <code>meeting_key_value[]</code> matching multiple
-                  values, or combinations of <code>StartsAfterH</code>/<code>EndsBeforeH</code>. Replaces the default load entirely (<code>serviceBodyIds</code> and the numeric format lock are
-                  ignored), and forces <code>geolocation</code> to <code>false</code> — Near Me, typed-location search, and "Search this area" are all disabled because geo params can't safely
-                  be layered on top of an arbitrary query. <code>page_size</code>, <code>get_used_formats=1</code>, and <code>lang_enum</code> are appended automatically if you don't include them.
-                  Client-side <code>formats</code> key filtering (see above) still applies after the fetch.
-                  <br /><em>Example:</em>
+                  <code>data-query</code> attribute (the attribute takes precedence). Use this for filters the structured options can't express — e.g. <code>meeting_key_value[]</code> matching
+                  multiple values, or combinations of <code>StartsAfterH</code>/<code>EndsBeforeH</code>. Replaces the default load entirely (<code>serviceBodyIds</code> and the numeric format lock
+                  are ignored), and forces <code>geolocation</code> to <code>false</code> — Near Me, typed-location search, and "Search this area" are all disabled because geo params can't safely be
+                  layered on top of an arbitrary query. <code>page_size</code>, <code>get_used_formats=1</code>, and <code>lang_enum</code> are appended automatically if you don't include them.
+                  Client-side <code>formats</code> key filtering (see above) still applies after the fetch. <br /><em>Example:</em>
                   <code>query: 'meeting_key=location_nation&amp;meeting_key_value[]=USA'</code>
                 </td>
               </tr>
@@ -2171,9 +2324,9 @@
                 <td>updateUrl</td>
                 <td><code>string</code></td>
                 <td data-i18n-html="globalConfig.row.updateUrl">
-                  URL template for the <strong>"Update Meeting Info"</strong> link at the bottom of the meeting detail panel. Equivalent to the <code>data-update-url</code> attribute (the
-                  attribute takes precedence). Tokens: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — URL-encoded on substitution.
-                  Works with bmlt-workflow's update form, any custom hosted form, or <code>mailto:</code> URLs. The link opens in a new tab. Hidden when unset. See the
+                  URL template for the <strong>"Update Meeting Info"</strong> link at the bottom of the meeting detail panel. Equivalent to the <code>data-update-url</code> attribute (the attribute
+                  takes precedence). Tokens: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — URL-encoded on substitution. Works with
+                  bmlt-workflow's update form, any custom hosted form, or <code>mailto:</code> URLs. The link opens in a new tab. Hidden when unset. See the
                   <a href="#update-url">Update Meeting Info Link</a> section below for examples.
                 </td>
               </tr>
@@ -2321,8 +2474,8 @@
         <h2 id="geolocation" data-i18n="geolocation.title">Geolocation</h2>
         <p data-i18n-html="geolocation.p0">
           Defaults to <code>true</code> when <code>data-server</code> points at the BMLT aggregator (<code>aggregator.bmltenabled.org</code>) with no <code>service-body</code> set, since the
-          aggregator otherwise has no way to scope a search; defaults to <code>false</code> for every other configuration. Set <code>geolocation</code> explicitly in
-          <code>CrumbWidgetConfig</code> to override either default.
+          aggregator otherwise has no way to scope a search; defaults to <code>false</code> for every other configuration. Set <code>geolocation</code> explicitly in <code>CrumbWidgetConfig</code> to
+          override either default.
         </p>
         <p data-i18n-html="geolocation.p1">
           Enable the <strong>Near Me</strong> button with <code>geolocation: true</code>. When enabled, the widget also attempts to geolocate the user automatically on page load and show meetings
@@ -2338,7 +2491,9 @@
         </p>
         <p data-i18n-html="geolocation.p4">
           The Near Me button opens a distance dropdown so users can choose how far to search. Selecting a radius applies a client-side distance filter on the already-loaded meetings — no new network
-          request is made when changing radius. When <code>geolocationRadius</code> is a positive number, the available distances come from <code>distanceOptions</code> capped at that value; options with no meetings in range are hidden automatically. When <code>geolocationRadius</code> is a negative integer (auto-radius), all <code>distanceOptions</code> are shown without a cap — the initial search finds roughly that many meetings, and picking a distance from the dropdown switches to a fixed radius. Use <code>distanceUnit</code> to display kilometres instead of miles.
+          request is made when changing radius. When <code>geolocationRadius</code> is a positive number, the available distances come from <code>distanceOptions</code> capped at that value; options
+          with no meetings in range are hidden automatically. When <code>geolocationRadius</code> is a negative integer (auto-radius), all <code>distanceOptions</code> are shown without a cap — the
+          initial search finds roughly that many meetings, and picking a distance from the dropdown switches to a fixed radius. Use <code>distanceUnit</code> to display kilometres instead of miles.
         </p>
         <p data-i18n-html="geolocation.p5">
           While in map view with Near Me active, panning or zooming the map reveals a <strong>Search this area</strong>
@@ -2349,8 +2504,9 @@
           The search input also gains a small mode dropdown: users can switch between <em>Filter meetings</em> (the default — a client-side text filter over already-loaded meetings) and
           <em>Search location</em>. In location mode, typing a city, postal code, or address (e.g. <code>Edgartown, MA</code> or <code>02539</code>) and pressing Enter resolves the place via
           OpenStreetMap Nominatim and reloads meetings near the resulting coordinates. The radius used is the last Near Me choice if any, otherwise <code>geolocationRadius</code>. Geocoding traffic
-          goes to <code>nominatim.openstreetmap.org</code> directly — no API key is required, but consumers should respect <a href="https://operations.osmfoundation.org/policies/nominatim/">Nominatim's
-          usage policy</a> (max one request per second, requests must include a User-Agent identifying your application — <code>bmlt-query-client</code> sets one by default).
+          goes to <code>nominatim.openstreetmap.org</code> directly — no API key is required, but consumers should respect
+          <a href="https://operations.osmfoundation.org/policies/nominatim/">Nominatim's usage policy</a> (max one request per second, requests must include a User-Agent identifying your application —
+          <code>bmlt-query-client</code> sets one by default).
         </p>
         <div class="demo">
           <div class="demo-header">HTML</div>
@@ -2367,8 +2523,8 @@
 
         <h2 id="update-url" data-i18n="updateUrl.title">Update Meeting Info Link</h2>
         <p data-i18n-html="updateUrl.intro">
-          Add an <strong>"Update Meeting Info"</strong> button at the bottom of every meeting detail panel by setting <code>data-update-url</code> (or <code>updateUrl</code> in the global config)
-          to a URL template. The widget substitutes per-meeting tokens at click time and opens the result in a new tab. The button is hidden when the option is unset, so you can opt in selectively.
+          Add an <strong>"Update Meeting Info"</strong> button at the bottom of every meeting detail panel by setting <code>data-update-url</code> (or <code>updateUrl</code> in the global config) to a
+          URL template. The widget substitutes per-meeting tokens at click time and opens the result in a new tab. The button is hidden when the option is unset, so you can opt in selectively.
         </p>
         <p data-i18n-html="updateUrl.tokens">Supported tokens (each value is URL-encoded on substitution; unknown <code>{tokens}</code> are left intact):</p>
         <div class="table-wrap">
@@ -2435,8 +2591,8 @@
 
         <h3 data-i18n="updateUrl.custom.title">Example: any custom endpoint</h3>
         <p data-i18n-html="updateUrl.custom.body">
-          Any URL that accepts a meeting identifier in the query string works. The link opens in a new tab, so your endpoint can be a full page (a Google Form, an Airtable form, a custom CMS,
-          etc.). Pass <code>{return_url}</code> to give your form a back-link to the meeting page:
+          Any URL that accepts a meeting identifier in the query string works. The link opens in a new tab, so your endpoint can be a full page (a Google Form, an Airtable form, a custom CMS, etc.).
+          Pass <code>{return_url}</code> to give your form a back-link to the meeting page:
         </p>
         <div class="demo">
           <div class="demo-header">HTML</div>
@@ -2480,12 +2636,15 @@
           </table>
         </div>
         <p data-i18n-html="queryParams.example">Example: <code>https://example.org/meetings/?view=auto</code></p>
-        <p data-i18n-html="queryParams.disable">When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button.</p>
+        <p data-i18n-html="queryParams.disable">
+          When <code>geolocation: true</code> is set, the widget auto-prompts on load — including for <code>?view=map</code> and <code>?view=both</code>. <code>?view=list</code> is the explicit
+          opt-out: it suppresses the auto-prompt so the user can still trigger it manually via the Near Me button.
+        </p>
         <p data-i18n-html="queryParams.servicesAndFormats">
           Three additional query parameters override their corresponding embed configuration so a single page can be re-targeted via URL: <code>?services=</code> overrides
           <code>data-service-body</code> (comma-separated service body IDs); <code>?format_ids=</code> overrides <code>data-format-ids</code> (comma-separated numeric format IDs, server-side filter);
-          and <code>?formats=</code> overrides <code>CrumbWidgetConfig.formats</code> (comma-separated format key strings, client-side filter). All three accept an empty value to clear the
-          configured filter (e.g. <code>?formats=</code>).
+          and <code>?formats=</code> overrides <code>CrumbWidgetConfig.formats</code> (comma-separated format key strings, client-side filter). All three accept an empty value to clear the configured
+          filter (e.g. <code>?formats=</code>).
         </p>
 
         <h2 id="css-vars" data-i18n="cssVars.title">CSS Variables</h2>
@@ -2517,7 +2676,10 @@
               <tr>
                 <td>--crumb-rem</td>
                 <td><code>max(16px, 1rem)</code></td>
-                <td data-i18n="cssVars.row.crumbRem">Internal "rem unit" for text, spacing, and radius. Pinned to a 16px floor so host themes that shrink <code>&lt;html&gt;</code> can't shrink the widget; scales up when users set a larger browser default font size.</td>
+                <td data-i18n="cssVars.row.crumbRem">
+                  Internal "rem unit" for text, spacing, and radius. Pinned to a 16px floor so host themes that shrink <code>&lt;html&gt;</code> can't shrink the widget; scales up when users set a
+                  larger browser default font size.
+                </td>
               </tr>
               <tr>
                 <td>--bmlt-background</td>
@@ -2995,7 +3157,8 @@
               <tr>
                 <td>Joomla</td>
                 <td data-i18n-html="routing.row.joomla">
-                  Set <strong>Base Path for Pretty URLs</strong> on the <em>Content - Crumb</em> plugin's options (or on the module). Combine with Joomla's <em>Search Engine Friendly URLs</em> + <em>URL Rewriting</em> options under <em>System → Global Configuration → Site</em>.
+                  Set <strong>Base Path for Pretty URLs</strong> on the <em>Content - Crumb</em> plugin's options (or on the module). Combine with Joomla's <em>Search Engine Friendly URLs</em> +
+                  <em>URL Rewriting</em> options under <em>System → Global Configuration → Site</em>.
                 </td>
               </tr>
               <tr>
@@ -3009,7 +3172,8 @@
               <tr>
                 <td>Cloudflare Pages</td>
                 <td data-i18n-html="routing.row.cloudflare">
-                  Add a <code>_redirects</code> file to your publish directory containing <code>/meetings/* /meetings/index.html 200</code> (or <code>/* /index.html 200</code> when serving at the root).
+                  Add a <code>_redirects</code> file to your publish directory containing <code>/meetings/* /meetings/index.html 200</code> (or <code>/* /index.html 200</code> when serving at the
+                  root).
                 </td>
               </tr>
             </tbody>
@@ -3065,43 +3229,69 @@
         <h2 id="faq" data-i18n="faq.title">FAQ &amp; Troubleshooting</h2>
 
         <h3 data-i18n="faq.nothing.title">Nothing is showing up — the widget area is blank</h3>
-        <p data-i18n-html="faq.nothing.body">
-          The two most common causes:
-        </p>
+        <p data-i18n-html="faq.nothing.body">The two most common causes:</p>
         <ul>
-          <li data-i18n-html="faq.nothing.li1"><strong>Wrong server URL.</strong> Open <code>data-server</code> in a browser. It should load a BMLT admin page (or at least respond). Double-check the trailing path — most servers expect <code>/main_server/</code> at the end.</li>
-          <li data-i18n-html="faq.nothing.li2"><strong>Missing container.</strong> The widget mounts into an element with <code>id="crumb-widget"</code>. If the ID is misspelled or the <code>&lt;div&gt;</code> is missing, nothing renders.</li>
-          <li data-i18n-html="faq.nothing.li3"><strong>CORS errors.</strong> Open your browser's developer console (F12). If you see a CORS error, your BMLT server is not allowing requests from your site's domain — contact your server admin.</li>
-          <li data-i18n-html="faq.nothing.li4"><strong>Container has no height.</strong> If you set <code>data-view="map"</code> or <code>data-view="both"</code>, the parent container needs a height. Add <code>style="height:600px"</code> to the <code>&lt;div&gt;</code>.</li>
+          <li data-i18n-html="faq.nothing.li1">
+            <strong>Wrong server URL.</strong> Open <code>data-server</code> in a browser. It should load a BMLT admin page (or at least respond). Double-check the trailing path — most servers expect
+            <code>/main_server/</code> at the end.
+          </li>
+          <li data-i18n-html="faq.nothing.li2">
+            <strong>Missing container.</strong> The widget mounts into an element with <code>id="crumb-widget"</code>. If the ID is misspelled or the <code>&lt;div&gt;</code> is missing, nothing
+            renders.
+          </li>
+          <li data-i18n-html="faq.nothing.li3">
+            <strong>CORS errors.</strong> Open your browser's developer console (F12). If you see a CORS error, your BMLT server is not allowing requests from your site's domain — contact your server
+            admin.
+          </li>
+          <li data-i18n-html="faq.nothing.li4">
+            <strong>Container has no height.</strong> If you set <code>data-view="map"</code> or <code>data-view="both"</code>, the parent container needs a height. Add
+            <code>style="height:600px"</code> to the <code>&lt;div&gt;</code>.
+          </li>
         </ul>
 
         <h3 data-i18n="faq.map.title">The map is blank or won't load</h3>
         <ul>
-          <li data-i18n-html="faq.map.li1"><strong>No meetings have coordinates.</strong> The map only shows meetings with valid latitude/longitude on your BMLT server. Check the meetings in your BMLT admin.</li>
-          <li data-i18n-html="faq.map.li2"><strong>Tile provider blocked.</strong> If your site has a strict Content-Security-Policy, make sure tile URLs (default: <code>tile.openstreetmap.org</code>) are allowed in <code>img-src</code> and <code>connect-src</code>.</li>
-          <li data-i18n-html="faq.map.li3"><strong>Geolocation denied.</strong> "Near me" search requires the user to grant location permission in their browser. If denied, the search falls back to text/postal-code search.</li>
+          <li data-i18n-html="faq.map.li1">
+            <strong>No meetings have coordinates.</strong> The map only shows meetings with valid latitude/longitude on your BMLT server. Check the meetings in your BMLT admin.
+          </li>
+          <li data-i18n-html="faq.map.li2">
+            <strong>Tile provider blocked.</strong> If your site has a strict Content-Security-Policy, make sure tile URLs (default: <code>tile.openstreetmap.org</code>) are allowed in
+            <code>img-src</code> and <code>connect-src</code>.
+          </li>
+          <li data-i18n-html="faq.map.li3">
+            <strong>Geolocation denied.</strong> "Near me" search requires the user to grant location permission in their browser. If denied, the search falls back to text/postal-code search.
+          </li>
         </ul>
 
         <h3 data-i18n="faq.colors.title">How do I change the colors to match my site?</h3>
         <p data-i18n-html="faq.colors.body">
-          Override the widget's CSS custom properties — see <a href="#css-vars">CSS Variables</a>. For dark mode, see <a href="#css-dark-mode">Dark Mode</a>. You can also use one of the built-in helper themes — see <a href="#css-classes">CSS Helper Classes</a>.
+          Override the widget's CSS custom properties — see <a href="#css-vars">CSS Variables</a>. For dark mode, see <a href="#css-dark-mode">Dark Mode</a>. You can also use one of the built-in
+          helper themes — see <a href="#css-classes">CSS Helper Classes</a>.
         </p>
 
         <h3 data-i18n="faq.serviceBody.title">My service body filter shows no meetings — why?</h3>
         <ul>
-          <li data-i18n-html="faq.serviceBody.li1"><strong>Wrong service body ID.</strong> The ID must be the numeric ID from your BMLT server, not the name. See <a href="#find-service-body">Finding your Service Body ID</a>.</li>
+          <li data-i18n-html="faq.serviceBody.li1">
+            <strong>Wrong service body ID.</strong> The ID must be the numeric ID from your BMLT server, not the name. See <a href="#find-service-body">Finding your Service Body ID</a>.
+          </li>
           <li data-i18n-html="faq.serviceBody.li2"><strong>No published meetings.</strong> The service body may exist but have no active/published meetings on the server.</li>
-          <li data-i18n-html="faq.serviceBody.li3"><strong>Recursion is always on.</strong> Child service bodies are automatically included — this cannot be disabled. If you want only one specific body, that body must be a leaf (no children) on the server.</li>
+          <li data-i18n-html="faq.serviceBody.li3">
+            <strong>Recursion is always on.</strong> Child service bodies are automatically included — this cannot be disabled. If you want only one specific body, that body must be a leaf (no
+            children) on the server.
+          </li>
         </ul>
 
         <h3 data-i18n="faq.iframe.title">Can I embed this inside an iframe (Google Sites, etc.)?</h3>
         <p data-i18n-html="faq.iframe.body">
-          Yes. Set <code>data-router="hash"</code> so individual meeting links use <code>#</code>-style URLs, which work inside iframes where the parent page controls the address bar. See <a href="#routing">Routing</a> and the <a href="#google-sites">Google Sites example</a>.
+          Yes. Set <code>data-router="hash"</code> so individual meeting links use <code>#</code>-style URLs, which work inside iframes where the parent page controls the address bar. See
+          <a href="#routing">Routing</a> and the <a href="#google-sites">Google Sites example</a>.
         </p>
 
         <h3 data-i18n="faq.help.title">I'm still stuck — where can I get help?</h3>
         <ul>
-          <li data-i18n-html="faq.help.li1"><strong>Bug or feature request:</strong> open an issue on <a href="https://github.com/bmlt-enabled/crumb-widget/issues" target="_blank" rel="noopener">GitHub</a>.</li>
+          <li data-i18n-html="faq.help.li1">
+            <strong>Bug or feature request:</strong> open an issue on <a href="https://github.com/bmlt-enabled/crumb-widget/issues" target="_blank" rel="noopener">GitHub</a>.
+          </li>
           <li data-i18n-html="faq.help.li2"><strong>Email:</strong> <a href="mailto:help@bmlt.app">help@bmlt.app</a>.</li>
           <li data-i18n-html="faq.help.li3"><strong>Community:</strong> the <a href="https://www.facebook.com/groups/bmltapp/" target="_blank" rel="noopener">BMLT Facebook group</a>.</li>
         </ul>
@@ -3189,13 +3379,19 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>geolocation</code></td>
               <td><code>boolean</code></td>
               <td data-i18n="yesNo.no">No</td>
-              <td data-i18n-html="npmPackage.row.geolocation">Enable Near Me + typed location search (city, zip, address). Defaults to <code>false</code>, except <code>true</code> when <code>serverURL</code> is the aggregator with no <code>serviceBodyIds</code>.</td>
+              <td data-i18n-html="npmPackage.row.geolocation">
+                Enable Near Me + typed location search (city, zip, address). Defaults to <code>false</code>, except <code>true</code> when <code>serverURL</code> is the aggregator with no
+                <code>serviceBodyIds</code>.
+              </td>
             </tr>
             <tr>
               <td><code>geolocationRadius</code></td>
               <td><code>number</code></td>
               <td data-i18n="yesNo.no">No</td>
-              <td data-i18n-html="npmPackage.row.geolocationRadius">Search radius. Positive = fixed miles/km (caps the distance dropdown). Negative integer = BMLT auto-radius: find ~N nearby meetings (e.g. <code>-50</code>). Defaults to <code>-50</code>.</td>
+              <td data-i18n-html="npmPackage.row.geolocationRadius">
+                Search radius. Positive = fixed miles/km (caps the distance dropdown). Negative integer = BMLT auto-radius: find ~N nearby meetings (e.g. <code>-50</code>). Defaults to
+                <code>-50</code>.
+              </td>
             </tr>
             <tr>
               <td><code>distanceOptions</code></td>
@@ -3207,7 +3403,9 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>distanceUnit</code></td>
               <td><code>'mi' | 'km'</code></td>
               <td data-i18n="yesNo.no">No</td>
-              <td data-i18n-html="npmPackage.row.distanceUnit">Unit label for distances. Auto-detected from the resolved locale when omitted (e.g. <code>en-US</code> → <code>'mi'</code>, <code>de-DE</code> → <code>'km'</code>).</td>
+              <td data-i18n-html="npmPackage.row.distanceUnit">
+                Unit label for distances. Auto-detected from the resolved locale when omitted (e.g. <code>en-US</code> → <code>'mi'</code>, <code>de-DE</code> → <code>'km'</code>).
+              </td>
             </tr>
             <tr>
               <td><code>darkMode</code></td>
@@ -3246,8 +3444,8 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>boolean</code></td>
               <td data-i18n="yesNo.no">No</td>
               <td data-i18n-html="npmPackage.row.showFormats">
-                Show a comma-separated list of format codes (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and <code>O</code> (Open) are pinned
-                to the front; remaining codes are alphabetized. Defaults to <code>false</code>.
+                Show a comma-separated list of format codes (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and <code>O</code> (Open) are pinned to
+                the front; remaining codes are alphabetized. Defaults to <code>false</code>.
               </td>
             </tr>
             <tr>
@@ -3315,17 +3513,42 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         <p>
           Crumb Widget owes a great deal to the work of the
           <a href="https://code4recovery.org" target="_blank" rel="noopener">Code4Recovery</a> community, and in particular to
-          <a href="https://github.com/code4recovery/tsml-ui" target="_blank" rel="noopener">tsml-ui</a> — a React-based meeting finder that inspired many of the UX patterns and
-          solved many of the same real-world problems. Crumb Widget exists precisely because BMLT's data model differs enough from tsml-ui's assumptions that it needed a
-          first-class UX of its own rather than a shoehorned fit. If you're not running a BMLT server, tsml-ui is what you should be using.
+          <a href="https://github.com/code4recovery/tsml-ui" target="_blank" rel="noopener">tsml-ui</a> — a React-based meeting finder that inspired many of the UX patterns and solved many of the same
+          real-world problems. Crumb Widget exists precisely because BMLT's data model differs enough from tsml-ui's assumptions that it needed a first-class UX of its own rather than a shoehorned
+          fit. If you're not running a BMLT server, tsml-ui is what you should be using.
         </p>
       </main>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js" integrity="sha512-HiD3V4nv8fcjtouznjT9TqDNDm1EXngV331YGbfVGeKUoH+OLkRTCMzA34ecjlgSQZpdHZupdSrqHY+Hz3l6uQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-typescript.min.js" integrity="sha512-uOw7XYETzS/DPmmirpP5UCMihSDNMeyTS965J0/456OSPfxn9xEtHHjj5Q/5WefVdqyMfN/afmQnNpZd/tpkcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-bash.min.js" integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-markup-templating.min.js" integrity="sha512-+8BiRfWso6waiFDv6tEmWF8yfPGgxAtOYLDUB0rRISLwtpxkJ9lpPNUhxwWlikn3qSO+4RQyzDppi62o3ON/AA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-php.min.js" integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/prism.min.js"
+      integrity="sha512-HiD3V4nv8fcjtouznjT9TqDNDm1EXngV331YGbfVGeKUoH+OLkRTCMzA34ecjlgSQZpdHZupdSrqHY+Hz3l6uQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-typescript.min.js"
+      integrity="sha512-uOw7XYETzS/DPmmirpP5UCMihSDNMeyTS965J0/456OSPfxn9xEtHHjj5Q/5WefVdqyMfN/afmQnNpZd/tpkcA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-bash.min.js"
+      integrity="sha512-whYhDwtTmlC/NpZlCr6PSsAaLOrfjVg/iXAnC4H/dtiHawpShhT2SlIMbpIhT/IL/NrpdMm+Hq2C13+VKpHTYw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-markup-templating.min.js"
+      integrity="sha512-+8BiRfWso6waiFDv6tEmWF8yfPGgxAtOYLDUB0rRISLwtpxkJ9lpPNUhxwWlikn3qSO+4RQyzDppi62o3ON/AA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/components/prism-php.min.js"
+      integrity="sha512-plzrTi61ltEMFf84gTVO9IkvIMfBu07bnDuahvdlIclmFWzXJ9VcRsny9d45sxFZRv3jJg/MHNyuxnUYEMxMEg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script>
       var COPY_ICON =
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';

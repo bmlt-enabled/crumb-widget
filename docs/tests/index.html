@@ -5,19 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crumb Widget — Test Pages</title>
     <style>
-      *, *::before, *::after { box-sizing: border-box; }
-      body { margin: 0; font-family: system-ui, sans-serif; background: #f8fafc; color: #0f172a; }
-      header { background: #1e293b; color: #f1f5f9; padding: 20px 32px; }
-      header h1 { margin: 0; font-size: 1.25rem; }
-      header p { margin: 4px 0 0; font-size: 0.85rem; opacity: 0.6; }
-      main { max-width: 720px; margin: 40px auto; padding: 0 24px; }
-      table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
-      th { background: #f1f5f9; text-align: left; padding: 10px 16px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: .05em; color: #64748b; }
-      td { padding: 12px 16px; border-top: 1px solid #f1f5f9; font-size: 0.9rem; vertical-align: top; }
-      td:first-child { white-space: nowrap; }
-      a { color: #2563eb; text-decoration: none; font-weight: 500; }
-      a:hover { text-decoration: underline; }
-      code { background: #f1f5f9; padding: 1px 5px; border-radius: 4px; font-size: 0.82rem; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f8fafc;
+        color: #0f172a;
+      }
+      header {
+        background: #1e293b;
+        color: #f1f5f9;
+        padding: 20px 32px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.25rem;
+      }
+      header p {
+        margin: 4px 0 0;
+        font-size: 0.85rem;
+        opacity: 0.6;
+      }
+      main {
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 24px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+      }
+      th {
+        background: #f1f5f9;
+        text-align: left;
+        padding: 10px 16px;
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #64748b;
+      }
+      td {
+        padding: 12px 16px;
+        border-top: 1px solid #f1f5f9;
+        font-size: 0.9rem;
+        vertical-align: top;
+      }
+      td:first-child {
+        white-space: nowrap;
+      }
+      a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      code {
+        background: #f1f5f9;
+        padding: 1px 5px;
+        border-radius: 4px;
+        font-size: 0.82rem;
+      }
     </style>
   </head>
   <body>
@@ -28,7 +85,10 @@
     <main>
       <table>
         <thead>
-          <tr><th>Page</th><th>What it tests</th></tr>
+          <tr>
+            <th>Page</th>
+            <th>What it tests</th>
+          </tr>
         </thead>
         <tbody>
           <tr>
@@ -67,7 +127,7 @@
             <td><a href="geolocation.html">Geolocation</a></td>
             <td><code>geolocation: true</code> — Near Me button, geolocates on load.</td>
           </tr>
-                    <tr>
+          <tr>
             <td><a href="geolocation-service-bodies.html">Geolocation + Service Bodies</a></td>
             <td><code>geolocation: true</code> — Near Me button, geolocates on load with service bodies column.</td>
           </tr>
@@ -85,11 +145,17 @@
           </tr>
           <tr>
             <td><a href="update-url-form.html">Update URL — web form</a></td>
-            <td><code>updateUrl</code> pointed at <code>crna.org/meeting-update-form/?meeting_id={meeting_id}</code> (bmlt-workflow integration, Carolina Region). Open a meeting → "Update Meeting Info" link at the bottom should open the form with the meeting pre-selected.</td>
+            <td>
+              <code>updateUrl</code> pointed at <code>crna.org/meeting-update-form/?meeting_id={meeting_id}</code> (bmlt-workflow integration, Carolina Region). Open a meeting → "Update Meeting Info"
+              link at the bottom should open the form with the meeting pre-selected.
+            </td>
           </tr>
           <tr>
             <td><a href="update-url-mailto.html">Update URL — mailto</a></td>
-            <td><code>updateUrl</code> with a <code>mailto:</code> template that interpolates <code>{meeting_id}</code>, <code>{meeting_name}</code>, and <code>{return_url}</code>. Click should open the mail client with subject and body pre-filled.</td>
+            <td>
+              <code>updateUrl</code> with a <code>mailto:</code> template that interpolates <code>{meeting_id}</code>, <code>{meeting_name}</code>, and <code>{return_url}</code>. Click should open the
+              mail client with subject and body pre-filled.
+            </td>
           </tr>
           <tr>
             <td><a href="theme-orange-monster.html">Theme: Orange Monster</a></td>

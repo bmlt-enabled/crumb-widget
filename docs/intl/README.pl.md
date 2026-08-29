@@ -27,13 +27,13 @@ Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dy
 
 ## Której wersji powinienem użyć?
 
-| Twoja strona                                              | Użyj tego                                                                |
-|-----------------------------------------------------------|--------------------------------------------------------------------------|
-| **WordPress**                                             | [wtyczka WordPress](https://wordpress.org/plugins/crumb/)                |
-| **Drupal** 10.3+ lub 11                                   | [moduł Drupal](https://github.com/bmlt-enabled/crumb-drupal)             |
-| **Joomla** 4, 5 lub 6                                     | [rozszerzenie Joomla](https://github.com/bmlt-enabled/crumb-joomla)      |
-| **Wix, Squarespace, Google Sites lub zwykły HTML**        | Wklej [fragment CDN](#szybki-start) do bloku kodu                        |
-| **Aplikacja JS/TS** (React, Svelte, Vue, Vite itp.)       | `npm install crumb-widget` ([dokumentacja](https://crumb.bmlt.app/?lang=pl#npm-package)) |
+| Twoja strona                                        | Użyj tego                                                                                |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **WordPress**                                       | [wtyczka WordPress](https://wordpress.org/plugins/crumb/)                                |
+| **Drupal** 10.3+ lub 11                             | [moduł Drupal](https://github.com/bmlt-enabled/crumb-drupal)                             |
+| **Joomla** 4, 5 lub 6                               | [rozszerzenie Joomla](https://github.com/bmlt-enabled/crumb-joomla)                      |
+| **Wix, Squarespace, Google Sites lub zwykły HTML**  | Wklej [fragment CDN](#szybki-start) do bloku kodu                                        |
+| **Aplikacja JS/TS** (React, Svelte, Vue, Vite itp.) | `npm install crumb-widget` ([dokumentacja](https://crumb.bmlt.app/?lang=pl#npm-package)) |
 
 ## Funkcje
 
@@ -63,10 +63,7 @@ Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dy
 **Filtrowanie do pojedynczego service body:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

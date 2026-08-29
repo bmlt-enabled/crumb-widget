@@ -27,13 +27,13 @@ En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret
 
 ## Hvilken version skal jeg bruge?
 
-| Dit websted                                            | Brug dette                                                               |
-|--------------------------------------------------------|--------------------------------------------------------------------------|
-| **WordPress**                                          | [WordPress-plugin](https://wordpress.org/plugins/crumb/)                 |
-| **Drupal** 10.3+ eller 11                              | [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal)             |
-| **Joomla** 4, 5 eller 6                                | [Joomla-udvidelse](https://github.com/bmlt-enabled/crumb-joomla)         |
-| **Wix, Squarespace, Google Sites eller almindelig HTML** | Indsæt [CDN-uddraget](#hurtig-start) i en kodeblok                     |
-| **En JS/TS-app** (React, Svelte, Vue, Vite osv.)       | `npm install crumb-widget` ([dokumentation](https://crumb.bmlt.app/?lang=da#npm-package)) |
+| Dit websted                                              | Brug dette                                                                                |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **WordPress**                                            | [WordPress-plugin](https://wordpress.org/plugins/crumb/)                                  |
+| **Drupal** 10.3+ eller 11                                | [Drupal-modul](https://github.com/bmlt-enabled/crumb-drupal)                              |
+| **Joomla** 4, 5 eller 6                                  | [Joomla-udvidelse](https://github.com/bmlt-enabled/crumb-joomla)                          |
+| **Wix, Squarespace, Google Sites eller almindelig HTML** | Indsæt [CDN-uddraget](#hurtig-start) i en kodeblok                                        |
+| **En JS/TS-app** (React, Svelte, Vue, Vite osv.)         | `npm install crumb-widget` ([dokumentation](https://crumb.bmlt.app/?lang=da#npm-package)) |
 
 ## Funktioner
 
@@ -63,10 +63,7 @@ En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret
 **Filtrér til et enkelt service body:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

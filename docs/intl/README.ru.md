@@ -27,13 +27,13 @@
 
 ## Какую версию мне использовать?
 
-| Ваш сайт                                                  | Используйте это                                                          |
-|-----------------------------------------------------------|--------------------------------------------------------------------------|
-| **WordPress**                                             | [Плагин WordPress](https://wordpress.org/plugins/crumb/)                 |
-| **Drupal** 10.3+ или 11                                   | [Модуль Drupal](https://github.com/bmlt-enabled/crumb-drupal)            |
-| **Joomla** 4, 5 или 6                                     | [Расширение Joomla](https://github.com/bmlt-enabled/crumb-joomla)        |
-| **Wix, Squarespace, Google Sites или обычный HTML**       | Вставьте [фрагмент CDN](#быстрый-старт) в блок кода                      |
-| **JS/TS-приложение** (React, Svelte, Vue, Vite и т. д.)   | `npm install crumb-widget` ([документация](https://crumb.bmlt.app/?lang=ru#npm-package)) |
+| Ваш сайт                                                | Используйте это                                                                          |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| **WordPress**                                           | [Плагин WordPress](https://wordpress.org/plugins/crumb/)                                 |
+| **Drupal** 10.3+ или 11                                 | [Модуль Drupal](https://github.com/bmlt-enabled/crumb-drupal)                            |
+| **Joomla** 4, 5 или 6                                   | [Расширение Joomla](https://github.com/bmlt-enabled/crumb-joomla)                        |
+| **Wix, Squarespace, Google Sites или обычный HTML**     | Вставьте [фрагмент CDN](#быстрый-старт) в блок кода                                      |
+| **JS/TS-приложение** (React, Svelte, Vue, Vite и т. д.) | `npm install crumb-widget` ([документация](https://crumb.bmlt.app/?lang=ru#npm-package)) |
 
 ## Возможности
 
@@ -63,10 +63,7 @@
 **Фильтр по одному service body:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

@@ -7,11 +7,13 @@ We are committed to making participation in this project a welcoming experience 
 ## Our Standards
 
 **Expected behavior:**
+
 - Be respectful and considerate in all interactions
 - Accept constructive feedback graciously
 - Focus on what is best for the community and the people this software serves
 
 **Unacceptable behavior:**
+
 - Harassment, insults, or personal attacks
 - Trolling or deliberately disruptive behavior
 - Any conduct that would be considered inappropriate in a professional setting

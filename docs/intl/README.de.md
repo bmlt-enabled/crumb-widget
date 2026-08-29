@@ -27,13 +27,13 @@ Ein einbettbares NA-Meeting-Finder-Widget. Erstellt mit Svelte 5 und als einzeln
 
 ## Welche Version sollte ich verwenden?
 
-| Deine Site                                              | Verwende dies                                                            |
-|---------------------------------------------------------|--------------------------------------------------------------------------|
-| **WordPress**                                           | [WordPress-Plugin](https://wordpress.org/plugins/crumb/)                 |
-| **Drupal** 10.3+ oder 11                                | [Drupal-Modul](https://github.com/bmlt-enabled/crumb-drupal)             |
-| **Joomla** 4, 5 oder 6                                  | [Joomla-Erweiterung](https://github.com/bmlt-enabled/crumb-joomla)       |
-| **Wix, Squarespace, Google Sites oder einfaches HTML**  | Füge das [CDN-Snippet](#schnellstart) in einen Codeblock ein             |
-| **Eine JS/TS-App** (React, Svelte, Vue, Vite usw.)      | `npm install crumb-widget` ([Doku](https://crumb.bmlt.app/?lang=de#npm-package)) |
+| Deine Site                                             | Verwende dies                                                                    |
+| ------------------------------------------------------ | -------------------------------------------------------------------------------- |
+| **WordPress**                                          | [WordPress-Plugin](https://wordpress.org/plugins/crumb/)                         |
+| **Drupal** 10.3+ oder 11                               | [Drupal-Modul](https://github.com/bmlt-enabled/crumb-drupal)                     |
+| **Joomla** 4, 5 oder 6                                 | [Joomla-Erweiterung](https://github.com/bmlt-enabled/crumb-joomla)               |
+| **Wix, Squarespace, Google Sites oder einfaches HTML** | Füge das [CDN-Snippet](#schnellstart) in einen Codeblock ein                     |
+| **Eine JS/TS-App** (React, Svelte, Vue, Vite usw.)     | `npm install crumb-widget` ([Doku](https://crumb.bmlt.app/?lang=de#npm-package)) |
 
 ## Funktionen
 
@@ -63,10 +63,7 @@ Ein einbettbares NA-Meeting-Finder-Widget. Erstellt mit Svelte 5 und als einzeln
 **Auf einen einzelnen Service Body filtern:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 

@@ -27,13 +27,13 @@
 
 ## どのバージョンを使うべき？
 
-| あなたのサイト                                            | 使用するもの                                                            |
-|------------------------------------------------------|----------------------------------------------------------------------|
-| **WordPress**                                        | [WordPress プラグイン](https://wordpress.org/plugins/crumb/)            |
-| **Drupal** 10.3+ または 11                            | [Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)       |
-| **Joomla** 4、5、または 6                              | [Joomla 拡張](https://github.com/bmlt-enabled/crumb-joomla)             |
-| **Wix、Squarespace、Google Sites、または素の HTML**         | [CDN スニペット](#クイックスタート) をコードブロックに貼り付け                       |
-| **JS/TS アプリ**（React、Svelte、Vue、Vite など）            | `npm install crumb-widget`（[ドキュメント](https://crumb.bmlt.app/?lang=ja#npm-package)）|
+| あなたのサイト                                      | 使用するもの                                                                              |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **WordPress**                                       | [WordPress プラグイン](https://wordpress.org/plugins/crumb/)                              |
+| **Drupal** 10.3+ または 11                          | [Drupal モジュール](https://github.com/bmlt-enabled/crumb-drupal)                         |
+| **Joomla** 4、5、または 6                           | [Joomla 拡張](https://github.com/bmlt-enabled/crumb-joomla)                               |
+| **Wix、Squarespace、Google Sites、または素の HTML** | [CDN スニペット](#クイックスタート) をコードブロックに貼り付け                            |
+| **JS/TS アプリ**（React、Svelte、Vue、Vite など）   | `npm install crumb-widget`（[ドキュメント](https://crumb.bmlt.app/?lang=ja#npm-package)） |
 
 ## 機能
 
@@ -63,10 +63,7 @@
 **単一のサービスボディに絞り込む場合:**
 
 ```html
-<div id="crumb-widget"
-    data-server="https://myserver.com/main_server/"
-    data-service-body="3"
-></div>
+<div id="crumb-widget" data-server="https://myserver.com/main_server/" data-service-body="3"></div>
 <script type="module" src="https://cdn.aws.bmlt.app/crumb-widget.js"></script>
 ```
 
