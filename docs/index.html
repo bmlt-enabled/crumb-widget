@@ -80,84 +80,41 @@
       }
 
       /* ── Color tokens — NA brand palette ─────────────────────────────── */
+      /* Each token holds both themes via light-dark(); color-scheme picks one.
+         Default follows the OS; the .light / .dark classes force a mode. */
       :root {
-        --doc-bg: #f4f6f9;
-        --doc-surface: #2e3192;
-        --doc-text: #1a1a2e;
-        --doc-text-muted: #3a3a52;
-        --doc-text-dim: #6b6b80;
-        --doc-border: #d8dce6;
-        --doc-border-lt: #ebeef3;
-        --doc-code-bg: #ebeef3;
-        --doc-nav-link: rgba(255, 255, 255, 0.8);
-        --doc-nav-hover: rgba(255, 255, 255, 0.1);
-        --doc-nav-active: rgba(255, 255, 255, 0.15);
-        --doc-th-bg: #ebeef3;
-        --doc-demo-hdr: #f4f6f9;
-        --doc-link: #1e77bc;
-        --doc-link-hover: #155a91;
-        --doc-callout-bg: #e8f5ee;
-        --doc-callout-tx: #006b3f;
+        color-scheme: light dark;
+        --doc-bg: light-dark(#f4f6f9, #0d0d1a);
+        --doc-surface: light-dark(#2e3192, #1a1a35);
+        --doc-text: light-dark(#1a1a2e, #f0f0f6);
+        --doc-text-muted: light-dark(#3a3a52, #cccce0);
+        --doc-text-dim: light-dark(#6b6b80, #9a9ab4);
+        --doc-border: light-dark(#d8dce6, #2a2a45);
+        --doc-border-lt: light-dark(#ebeef3, #1f1f38);
+        --doc-code-bg: light-dark(#ebeef3, #1a1a30);
+        --doc-nav-link: light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.75));
+        --doc-nav-hover: light-dark(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.08));
+        --doc-nav-active: light-dark(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.12));
+        --doc-th-bg: light-dark(#ebeef3, #1a1a30);
+        --doc-demo-hdr: light-dark(#f4f6f9, #1a1a30);
+        --doc-link: light-dark(#1e77bc, #5ba3d9);
+        --doc-link-hover: light-dark(#155a91, #7dbde8);
+        --doc-callout-bg: light-dark(#e8f5ee, #0d1f15);
+        --doc-callout-tx: light-dark(#006b3f, #6dd89e);
         --doc-callout-border: #00a651;
-        --doc-accent: #1e77bc;
-        --doc-accent-soft: #e0eef8;
-        --doc-nav-text: #ffffff;
-        --doc-nav-dim: rgba(255, 255, 255, 0.5);
-        --doc-nav-border: rgba(255, 255, 255, 0.12);
+        --doc-accent: light-dark(#1e77bc, #5ba3d9);
+        --doc-accent-soft: light-dark(#e0eef8, #1a2e40);
+        --doc-nav-text: light-dark(#ffffff, #e8e8f0);
+        --doc-nav-dim: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.4));
+        --doc-nav-border: light-dark(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.08));
+      }
+
+      .light {
+        color-scheme: light;
       }
 
       .dark {
-        --doc-bg: #0d0d1a;
-        --doc-surface: #1a1a35;
-        --doc-text: #f0f0f6;
-        --doc-text-muted: #cccce0;
-        --doc-text-dim: #9a9ab4;
-        --doc-border: #2a2a45;
-        --doc-border-lt: #1f1f38;
-        --doc-code-bg: #1a1a30;
-        --doc-nav-link: rgba(255, 255, 255, 0.75);
-        --doc-nav-hover: rgba(255, 255, 255, 0.08);
-        --doc-nav-active: rgba(255, 255, 255, 0.12);
-        --doc-th-bg: #1a1a30;
-        --doc-demo-hdr: #1a1a30;
-        --doc-link: #5ba3d9;
-        --doc-link-hover: #7dbde8;
-        --doc-callout-bg: #0d1f15;
-        --doc-callout-tx: #6dd89e;
-        --doc-callout-border: #00a651;
-        --doc-accent: #5ba3d9;
-        --doc-accent-soft: #1a2e40;
-        --doc-nav-text: #e8e8f0;
-        --doc-nav-dim: rgba(255, 255, 255, 0.4);
-        --doc-nav-border: rgba(255, 255, 255, 0.08);
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root:not(.light) {
-          --doc-bg: #0d0d1a;
-          --doc-surface: #1a1a35;
-          --doc-text: #f0f0f6;
-          --doc-text-muted: #cccce0;
-          --doc-text-dim: #9a9ab4;
-          --doc-border: #2a2a45;
-          --doc-border-lt: #1f1f38;
-          --doc-code-bg: #1a1a30;
-          --doc-nav-link: rgba(255, 255, 255, 0.75);
-          --doc-nav-hover: rgba(255, 255, 255, 0.08);
-          --doc-nav-active: rgba(255, 255, 255, 0.12);
-          --doc-th-bg: #1a1a30;
-          --doc-demo-hdr: #1a1a30;
-          --doc-link: #5ba3d9;
-          --doc-link-hover: #7dbde8;
-          --doc-callout-bg: #0d1f15;
-          --doc-callout-tx: #6dd89e;
-          --doc-callout-border: #00a651;
-          --doc-accent: #5ba3d9;
-          --doc-accent-soft: #1a2e40;
-          --doc-nav-text: #e8e8f0;
-          --doc-nav-dim: rgba(255, 255, 255, 0.4);
-          --doc-nav-border: rgba(255, 255, 255, 0.08);
-        }
+        color-scheme: dark;
       }
 
       body {
@@ -3283,7 +3240,7 @@
 
         <h3 data-i18n="faq.iframe.title">Can I embed this inside an iframe (Google Sites, etc.)?</h3>
         <p data-i18n-html="faq.iframe.body">
-          Yes. Set <code>data-router="hash"</code> so individual meeting links use <code>#</code>-style URLs, which work inside iframes where the parent page controls the address bar. See
+          Yes. No special router setting is needed: if you omit <code>data-path</code>, the widget uses <code>#</code>-style URLs by default, which work well inside iframes where the parent page controls the address bar. See
           <a href="#routing">Routing</a> and the <a href="#google-sites">Google Sites example</a>.
         </p>
 
@@ -3380,7 +3337,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
               <td><code>boolean</code></td>
               <td data-i18n="yesNo.no">No</td>
               <td data-i18n-html="npmPackage.row.geolocation">
-                Enable Near Me + typed location search (city, zip, address). Defaults to <code>false</code>, except <code>true</code> when <code>serverURL</code> is the aggregator with no
+                Enable Near Me + typed location search (city, zip, address). Defaults to <code>false</code>, except <code>true</code> when <code>serverUrl</code> is the aggregator with no
                 <code>serviceBodyIds</code>.
               </td>
             </tr>
