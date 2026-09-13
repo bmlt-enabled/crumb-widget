@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
-import { dataState, loadData, loadVirtualData, loadDataByAddress, loadDataByCoordinates } from '@stores/data.svelte';
+import { dataState, loadData, loadVirtualData, loadMeetingById, loadDataByAddress, loadDataByCoordinates } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import { config } from '@stores/config.svelte';
 import type { ProcessedMeeting } from '@/types/index';
@@ -16,6 +16,7 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
     ...actual,
     loadData: vi.fn(),
     loadVirtualData: vi.fn(),
+    loadMeetingById: vi.fn(),
     loadDataByAddress: vi.fn(),
     loadDataByCoordinates: vi.fn()
   };
@@ -707,6 +708,45 @@ describe('deep-link', () => {
     render(App, { props: { config: baseConfig } });
     expect(screen.queryByText('Back to meetings')).not.toBeInTheDocument();
     expect(screen.getAllByText('90-90 Group')[0]).toBeInTheDocument();
+  });
+});
+
+describe('deep-link lazy loading', () => {
+  beforeEach(() => {
+    vi.mocked(loadMeetingById).mockClear();
+    vi.mocked(loadData).mockClear();
+    vi.mocked(loadVirtualData).mockClear();
+  });
+
+  test('a direct meeting URL fetches just that meeting — no full load, no geolocation', async () => {
+    routerLoc.value = '/surrender-to-win-146548';
+    render(App, { props: { config: { ...baseConfig, geolocation: true } } });
+    await waitFor(() => expect(loadMeetingById).toHaveBeenCalledWith('https://test.example.org/main_server', '146548'));
+    expect(loadData).not.toHaveBeenCalled();
+    expect(loadVirtualData).not.toHaveBeenCalled();
+  });
+
+  test('does not re-fetch a meeting already present in the loaded set', async () => {
+    dataState.meetings = [makeMeeting({ id_bigint: '146548' })];
+    routerLoc.value = '/surrender-to-win-146548';
+    render(App, { props: { config: baseConfig } });
+    // The meeting is already loaded (e.g. navigated from the list), so no by-id fetch.
+    expect(loadMeetingById).not.toHaveBeenCalled();
+  });
+
+  test('navigating back to the list triggers the full load, once', async () => {
+    routerLoc.value = '/surrender-to-win-146548';
+    render(App, { props: { config: baseConfig } });
+    await waitFor(() => expect(loadMeetingById).toHaveBeenCalled());
+    expect(loadData).not.toHaveBeenCalled();
+
+    routerLoc.value = '/'; // simulate "Back to meetings"
+    await waitFor(() => expect(loadData).toHaveBeenCalledTimes(1));
+
+    // Returning to a meeting and back again must not reload.
+    routerLoc.value = '/surrender-to-win-146548';
+    routerLoc.value = '/';
+    expect(loadData).toHaveBeenCalledTimes(1);
   });
 });
 

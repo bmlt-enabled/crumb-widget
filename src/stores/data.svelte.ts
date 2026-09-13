@@ -175,7 +175,7 @@ function buildRawQuery(base: string, extras: Record<string, string>): string {
   return additions.length > 0 ? `${base}&${additions.join('&')}` : base;
 }
 
-async function load(serverUrl: string, params: SearchParams): Promise<void> {
+async function load(serverUrl: string, params: SearchParams, opts: { byId?: boolean } = {}): Promise<void> {
   if (!serverUrl) {
     dataState.error = get(t).errorNoServer;
     return;
@@ -192,7 +192,9 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     let meetingsResp: Meeting[];
     let formatsResp: Format[];
 
-    if (config.query) {
+    // A by-id fetch (deep link to one meeting) ignores the embedder's raw query
+    // and format locks — it must return exactly the requested meeting.
+    if (config.query && !opts.byId) {
       // Raw query path: pass the embedder's query string through verbatim.
       // We append page_size + get_used_formats so meetings + formats still arrive
       // in a single round-trip, and langEnum to match the rest of the widget.
@@ -213,7 +215,7 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
       meetingsResp = resp.meetings;
       formatsResp = resp.formats;
     } else {
-      const withFormatLock = config.formatIds.length > 0 ? { ...params, formats: config.formatIds } : params;
+      const withFormatLock = !opts.byId && config.formatIds.length > 0 ? { ...params, formats: config.formatIds } : params;
       const baseParams = { ...withFormatLock, page_size: PAGE_SIZE, data_field_key: MEETING_DATA_FIELDS };
       ({ meetings: meetingsResp, formats: formatsResp } = await client.searchMeetingsWithFormats(langEnum ? { ...baseParams, lang_enum: langEnum } : baseParams));
 
@@ -237,7 +239,7 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
     dataState.formats = formatsMap;
 
-    const processed = applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
+    const processed = opts.byId ? processMeetings(meetingsResp) : applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
     dataState.meetings = sortMeetings(processed, config.nowOffset);
   } catch (err) {
     if (request === activeRequest) dataState.error = err instanceof Error ? err.message : get(t).errorLoadingMeetings;
@@ -248,6 +250,17 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
 
 export function loadData(serverUrl: string, serviceBodyIds: number[] = []): Promise<void> {
   return load(serverUrl, serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {});
+}
+
+// Fetch a single meeting by id — used when a meeting detail page is opened
+// directly (deep link) so we don't load the whole result set (or prompt for
+// geolocation) just to show one meeting. The full set is loaded lazily only when
+// the user navigates to the list ("Back to meetings"). Ignores service-body,
+// format locks, geolocation, and the virtual day filter.
+export function loadMeetingById(serverUrl: string, id: string | number): Promise<void> {
+  const numId = Number(id);
+  if (!Number.isFinite(numId) || numId <= 0) return Promise.resolve();
+  return load(serverUrl, { meeting_ids: [numId] }, { byId: true });
 }
 
 // Session cache of already-loaded virtual days, keyed by weekday (1=Sun…7=Sat).

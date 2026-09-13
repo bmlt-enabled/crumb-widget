@@ -10,7 +10,13 @@ import { config } from '@stores/config.svelte';
 // Prevent real API calls
 vi.mock('@stores/data.svelte', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@stores/data.svelte')>();
-  return { ...actual, loadData: vi.fn(), loadVirtualData: vi.fn().mockResolvedValue(undefined), loadDataByCoordinates: vi.fn().mockResolvedValue(undefined) };
+  return {
+    ...actual,
+    loadData: vi.fn(),
+    loadVirtualData: vi.fn().mockResolvedValue(undefined),
+    loadMeetingById: vi.fn().mockResolvedValue(undefined),
+    loadDataByCoordinates: vi.fn().mockResolvedValue(undefined)
+  };
 });
 
 vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {

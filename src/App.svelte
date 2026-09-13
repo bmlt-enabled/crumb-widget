@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { untrack } from 'svelte';
   import { router } from '@bmlt-enabled/svelte-spa-router';
   import { countUniqueGroups } from 'bmlt-query-client';
-  import type { AppConfig, ProcessedMeeting } from '@/types';
-  import { loadData, loadVirtualData, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
+  import type { AppConfig } from '@/types';
+  import { loadData, loadVirtualData, loadMeetingById, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage, meetingIdFromPath } from '@utils/format';
   import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS, SPINNER_DELAY_MS } from '@utils/constants';
@@ -129,13 +129,15 @@
     uiState.geoRadius = config.geolocationRadius > 0 ? config.geolocationRadius : 0;
   }
 
-  onMount(async () => {
+  // The full-experience load: the whole result set (and geolocation, if configured),
+  // or the virtual finder's current day. Kicked off once — see the effect below.
+  function startFullLoad(): void {
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
 
     // Virtual finder mode loads virtual+hybrid meetings one day at a time
     // (default: today) and never geolocates — short-circuit before geo/view logic.
     if (config.virtual) {
-      await loadVirtualData(config.serverUrl, config.serviceBodyIds, uiState.virtualDay);
+      loadVirtualData(config.serverUrl, config.serviceBodyIds, uiState.virtualDay);
       return;
     }
 
@@ -155,21 +157,41 @@
     if (tryGeo) {
       attemptGeolocation();
     } else {
-      await loadData(config.serverUrl, config.serviceBodyIds);
+      loadData(config.serverUrl, config.serviceBodyIds);
     }
-  });
-
-  const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters, uiState.userLocation, uiState.geoRadius));
-  const groupCount = $derived(countUniqueGroups(filteredMeetings));
+  }
 
   // The URL is the single source of truth for which meeting is open: the router's
   // location is reactive (it listens to popstate/hashchange), so this re-derives on
   // navigation — clicking a meeting (which pushes a route), the in-app Back button,
   // and the browser Back/Forward buttons all work through the same path.
-  const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {
-    const id = meetingIdFromPath(router.location);
-    return id ? dataState.meetings.find((m) => m.id_bigint === id) : undefined;
+  const urlMeetingId = $derived(meetingIdFromPath(router.location));
+
+  // Load only what the current URL needs. Opening a meeting detail directly
+  // (deep link) fetches just that meeting — no full result set, no geolocation
+  // prompt. The full set (and geolocation, if configured) loads lazily the first
+  // time the list is shown, e.g. via "Back to meetings". `fullLoadStarted` ensures
+  // that only happens once; afterwards, navigating list <-> detail reuses the data.
+  let fullLoadStarted = false;
+  $effect(() => {
+    const id = urlMeetingId;
+    untrack(() => {
+      if (id) {
+        // Deep link to a meeting we don't already have loaded → fetch just it.
+        if (!fullLoadStarted && !dataState.loading && !dataState.meetings.some((m) => m.id_bigint === id)) {
+          loadMeetingById(config.serverUrl, id);
+        }
+      } else if (!fullLoadStarted) {
+        fullLoadStarted = true;
+        startFullLoad();
+      }
+    });
   });
+
+  const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters, uiState.userLocation, uiState.geoRadius));
+  const groupCount = $derived(countUniqueGroups(filteredMeetings));
+
+  const selectedMeeting = $derived(urlMeetingId ? dataState.meetings.find((m) => m.id_bigint === urlMeetingId) : undefined);
 
   // Delay the spinner so fast loads don't flash it. While loading is pending
   // but the threshold hasn't elapsed, the body stays blank (the header still

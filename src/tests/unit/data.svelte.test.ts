@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { dataState, loadData, loadVirtualData, clearVirtualDayCache, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
+import { dataState, loadData, loadVirtualData, loadMeetingById, clearVirtualDayCache, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
 import { config } from '@stores/config.svelte';
 import { viewerTimeZone } from '@utils/timezone';
 import type { Meeting, Format } from '@/types';
@@ -689,5 +689,35 @@ describe('loadVirtualData caching', () => {
     clearVirtualDayCache();
     await loadVirtualData(url, [], 2);
     expect(mockSearch).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('loadMeetingById (deep-link single fetch)', () => {
+  test('requests only the given meeting id', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ id_bigint: '42', meeting_name: 'Just This One' })], formats: [] });
+    await loadMeetingById('https://example.org/main_server', '42');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ meeting_ids: [42] }));
+    expect(dataState.meetings).toHaveLength(1);
+    expect(dataState.meetings[0]!.meeting_name).toBe('Just This One');
+  });
+
+  test('bypasses the server-side format lock (still returns the meeting)', async () => {
+    config.formatIds = [7];
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ id_bigint: '42' })], formats: [] });
+    await loadMeetingById('https://example.org/main_server', '42');
+    expect(mockSearch).toHaveBeenCalledWith(expect.not.objectContaining({ formats: expect.anything() }));
+  });
+
+  test('bypasses a raw custom query (fetches by id instead)', async () => {
+    config.query = 'meeting_key=location_nation&meeting_key_value[]=USA';
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ id_bigint: '42' })], formats: [] });
+    await loadMeetingById('https://example.org/main_server', '42');
+    expect(mockRawQuery).not.toHaveBeenCalled();
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ meeting_ids: [42] }));
+  });
+
+  test('does nothing for an unparseable id', async () => {
+    await loadMeetingById('https://example.org/main_server', 'not-a-number');
+    expect(mockSearch).not.toHaveBeenCalled();
   });
 });
