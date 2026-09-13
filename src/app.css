@@ -410,6 +410,20 @@
   border-color: var(--bmlt-text-secondary) !important;
 }
 
+/* Format chips (meeting list) and format pills (meeting detail). These use
+   hardcoded bg-white / bg-gray-100 utilities, so map them to theme variables
+   here — otherwise they stay light-on-dark in dark mode. Light values match the
+   original utilities, so light mode is unchanged. */
+#crumb-widget .bmlt-format-chip {
+  background-color: var(--bmlt-surface) !important;
+  border-color: var(--bmlt-border) !important;
+  color: var(--bmlt-text) !important;
+}
+#crumb-widget .bmlt-format-pill {
+  background-color: var(--bmlt-row-alt) !important;
+  color: var(--bmlt-text) !important;
+}
+
 /* Table header */
 #crumb-widget thead {
   background-color: var(--bmlt-row-alt) !important;

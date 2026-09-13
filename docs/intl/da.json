@@ -287,7 +287,9 @@
       "badgeInPerson": "Mærke for fysisk sted",
       "badgeVirtual": "Mærke for online sted",
       "card": "Kort i detaljesektioner",
-      "row": "Rækker i mødelistens tabel"
+      "row": "Rækker i mødelistens tabel",
+      "formatChip": "Formatmærker i mødelisten",
+      "formatPill": "Formatmærker i mødedetaljepanelet"
     }
   },
   "tileConfig": {

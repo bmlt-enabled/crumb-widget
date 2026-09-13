@@ -287,7 +287,9 @@
       "badgeInPerson": "Märke för fysisk plats",
       "badgeVirtual": "Märke för online-plats",
       "card": "Kort i detaljsektioner",
-      "row": "Rader i mötesilistans tabell"
+      "row": "Rader i mötesilistans tabell",
+      "formatChip": "Formatmärken i möteslistan",
+      "formatPill": "Formatmärken i mötesdetaljpanelen"
     }
   },
   "tileConfig": {

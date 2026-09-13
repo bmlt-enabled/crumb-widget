@@ -287,7 +287,9 @@
       "badgeInPerson": "Badge de lieu en présentiel",
       "badgeVirtual": "Badge de lieu virtuel",
       "card": "Cartes de section de détail",
-      "row": "Lignes du tableau de la liste de réunions"
+      "row": "Lignes du tableau de la liste de réunions",
+      "formatChip": "Puces de format dans la liste des réunions",
+      "formatPill": "Puces de format dans le panneau de détail de la réunion"
     }
   },
   "tileConfig": {

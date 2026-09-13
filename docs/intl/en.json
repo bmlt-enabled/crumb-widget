@@ -325,7 +325,9 @@
       "badgeInPerson": "In-person venue badge",
       "badgeVirtual": "Virtual venue badge",
       "card": "Detail section cards",
-      "row": "Meeting list table rows"
+      "row": "Meeting list table rows",
+      "formatChip": "Format chips in the meeting list",
+      "formatPill": "Format pills in the meeting detail panel"
     }
   },
   "tileConfig": {

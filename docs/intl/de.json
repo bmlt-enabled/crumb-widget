@@ -287,7 +287,9 @@
       "badgeInPerson": "Badge für Präsenzort",
       "badgeVirtual": "Badge für Online-Ort",
       "card": "Detailbereichs-Karten",
-      "row": "Zeilen der Meeting-Listen-Tabelle"
+      "row": "Zeilen der Meeting-Listen-Tabelle",
+      "formatChip": "Format-Chips in der Meeting-Liste",
+      "formatPill": "Format-Chips im Meeting-Detailbereich"
     }
   },
   "tileConfig": {

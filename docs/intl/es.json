@@ -287,7 +287,9 @@
       "badgeInPerson": "Distintivo de local presencial",
       "badgeVirtual": "Distintivo de local virtual",
       "card": "Tarjetas de la sección de detalle",
-      "row": "Filas de la tabla de reuniones"
+      "row": "Filas de la tabla de reuniones",
+      "formatChip": "Etiquetas de formato en la lista de reuniones",
+      "formatPill": "Etiquetas de formato en el panel de detalle de la reunión"
     }
   },
   "tileConfig": {

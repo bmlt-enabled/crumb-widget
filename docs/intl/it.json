@@ -287,7 +287,9 @@
       "badgeInPerson": "Badge sede in presenza",
       "badgeVirtual": "Badge sede online",
       "card": "Card delle sezioni di dettaglio",
-      "row": "Righe della tabella elenco riunioni"
+      "row": "Righe della tabella elenco riunioni",
+      "formatChip": "Chip di formato nell'elenco delle riunioni",
+      "formatPill": "Chip di formato nel pannello dei dettagli della riunione"
     }
   },
   "tileConfig": {

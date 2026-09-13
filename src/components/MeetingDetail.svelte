@@ -170,7 +170,7 @@
             <div class="mt-1.5 flex flex-wrap gap-1">
               {#each sortedFormats as fmt (fmt.id)}
                 <button
-                  class="cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2.5 py-1 text-base text-gray-600 select-none"
+                  class="bmlt-format-pill cursor-pointer appearance-none rounded border-0 bg-gray-100 px-2.5 py-1 text-base text-gray-600 select-none"
                   style="font-family:inherit"
                   title={fmt.description_string}
                   onclick={() => {

@@ -287,7 +287,9 @@
       "badgeInPerson": "Odznaka miejsca stacjonarnego",
       "badgeVirtual": "Odznaka miejsca online",
       "card": "Karty sekcji szczegółów",
-      "row": "Wiersze tabeli listy spotkań"
+      "row": "Wiersze tabeli listy spotkań",
+      "formatChip": "Etykiety formatu na liście spotkań",
+      "formatPill": "Etykiety formatu w panelu szczegółów spotkania"
     }
   },
   "tileConfig": {
