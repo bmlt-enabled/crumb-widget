@@ -1,10 +1,11 @@
 import { get } from 'svelte/store';
 import { SvelteMap } from 'svelte/reactivity';
-import { BmltClient, Language } from 'bmlt-query-client';
+import { BmltClient, Language, VenueType, Weekday } from 'bmlt-query-client';
 import type { Meeting, Format, MeetingsWithFormats } from 'bmlt-query-client';
 import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
+import { toViewerSchedule, viewerTimeZone } from '@utils/timezone';
 import { config } from '@stores/config.svelte';
 import { getLanguage, t } from '@stores/localization';
 
@@ -20,12 +21,12 @@ const PAGE_SIZE = 5000;
 // (location_* fields). The top-level `formats` array (get_used_formats) is
 // unaffected by data_field_key.
 //
-// `service_body_name` is deliberately absent: root servers reject it as a
-// data_field_key (it is a joined value from the service body relation, not a
-// meeting column, so it is missing from Meeting::$mainFields and from the
-// whitelist in MeetingResource). Requesting it is silently ignored, so the name
-// is resolved client-side from service_body_bigint instead — see
-// resolveServiceBodyNames below.
+// `service_body_name` is requested here: modern BMLT servers (and the aggregator)
+// now return it inline as a data_field_key, so the name arrives with the meeting
+// and no extra request is needed. Older servers that predate that fix silently
+// omit it; for those, resolveServiceBodyNames() below still resolves the name
+// client-side from service_body_bigint as a fallback (a no-op when the name is
+// already present).
 const MEETING_DATA_FIELDS = [
   'id_bigint',
   'meeting_name',
@@ -35,6 +36,7 @@ const MEETING_DATA_FIELDS = [
   'time_zone',
   'venue_type',
   'service_body_bigint',
+  'service_body_name',
   'latitude',
   'longitude',
   'distance_in_miles',
@@ -81,12 +83,15 @@ export const dataState = $state<DataState>({
 let activeRequest = 0;
 
 function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
+  // Virtual finder mode: re-express every meeting's schedule in the viewer's
+  // zone so the worldwide list reads in local time and sorts soonest-first.
+  const viewerZone = config.virtual ? viewerTimeZone() : '';
   return meetingsResp.map((m) => {
     const weekday = Number(m.weekday_tinyint);
     const venueType = Number(m.venue_type);
     const formatIds = m.format_shared_id_list ? m.format_shared_id_list.split(',') : [];
     const resolvedFormats = formatIds.map((id) => dataState.formats.get(id.trim())).filter(Boolean) as Format[];
-    return {
+    const base: ProcessedMeeting = {
       ...m,
       weekday_tinyint: weekday,
       venue_type: venueType,
@@ -96,6 +101,27 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
       resolvedFormats,
       isInPerson: venueType === VENUE_TYPE.IN_PERSON || venueType === VENUE_TYPE.HYBRID,
       isVirtual: venueType === VENUE_TYPE.VIRTUAL || venueType === VENUE_TYPE.HYBRID
+    };
+
+    // Only convert in virtual mode, and only when we know the meeting's own zone
+    // and it differs from the viewer's. Overwriting weekday/start_time/time_zone
+    // lets the existing sort, day-grouping, and "in progress" logic all operate
+    // in local terms; the originals are preserved for display beneath.
+    const sourceZone = m.time_zone || '';
+    if (!config.virtual || !sourceZone || sourceZone === viewerZone) return base;
+    const local = toViewerSchedule(weekday, m.start_time, sourceZone, viewerZone);
+    if (!local) return base;
+    return {
+      ...base,
+      weekday_tinyint: local.weekday,
+      start_time: local.startTime,
+      formattedTime: formatTime(local.startTime),
+      timeOfDay: getTimeOfDay(local.startTime),
+      time_zone: viewerZone,
+      localConverted: true,
+      originalStartTime: m.start_time,
+      originalWeekday: weekday,
+      originalTimeZone: sourceZone
     };
   });
 }
@@ -200,6 +226,9 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
       }
     }
 
+    // Fallback for older servers that don't return service_body_name inline:
+    // resolve any still-missing names from service_body_bigint. A no-op when the
+    // server already supplied every name (modern servers and the aggregator).
     await resolveServiceBodyNames(client, meetingsResp);
 
     if (request !== activeRequest) return;
@@ -219,6 +248,66 @@ async function load(serverUrl: string, params: SearchParams): Promise<void> {
 
 export function loadData(serverUrl: string, serviceBodyIds: number[] = []): Promise<void> {
   return load(serverUrl, serviceBodyIds.length > 0 ? { services: serviceBodyIds, recursive: true } : {});
+}
+
+// Session cache of already-loaded virtual days, keyed by weekday (1=Sun…7=Sat).
+// The virtual finder loads one day at a time; caching lets you flip back to a day
+// you've already viewed instantly, with no refetch. Session-only (not persisted);
+// a page reload starts fresh. clearVirtualDayCache() drops it if inputs change.
+// eslint-disable-next-line svelte/prefer-svelte-reactivity -- plain lookup cache; results are copied into the reactive dataState, the cache itself is not rendered
+const virtualDayCache = new Map<number, { meetings: ProcessedMeeting[]; formats: SvelteMap<string, Format> }>();
+// Tracks the most recently requested virtual weekday so a superseded in-flight
+// fetch never caches its (now stale) result under the wrong key.
+let latestVirtualWeekday = 0;
+
+export function clearVirtualDayCache(): void {
+  virtualDayCache.clear();
+}
+
+// Virtual finder mode: virtual + hybrid meetings for a single weekday, ordered
+// "starting soonest". Worldwide there are thousands of virtual meetings, so the
+// finder loads one day at a time (default: today) rather than everything at once.
+// On the aggregator the server buckets the day in the viewer's zone
+// (target_time_zone) and orders soonest-first (sort_results_by_next_start);
+// ordinary root servers ignore those and the client's local-time conversion +
+// sort still produce a correct soonest-first list for that day.
+// eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient read for the default weekday, not stored reactive state
+export function loadVirtualData(serverUrl: string, serviceBodyIds: number[] = [], weekday: number = new Date().getDay() + 1): Promise<void> {
+  latestVirtualWeekday = weekday;
+
+  const cached = virtualDayCache.get(weekday);
+  if (cached) {
+    // Restore instantly. Bump the request token so any in-flight fetch for a
+    // previously selected day can't overwrite the restored data when it lands.
+    activeRequest++;
+    dataState.error = null;
+    dataState.loading = false;
+    dataState.formats = cached.formats;
+    // Re-sort against the current time so "starting soonest" stays fresh even if
+    // the day was cached a while ago (isInProgress is recomputed at render).
+    dataState.meetings = sortMeetings(cached.meetings, config.nowOffset);
+    return Promise.resolve();
+  }
+
+  const params: SearchParams = {
+    venue_types: [VenueType.VIRTUAL, VenueType.HYBRID],
+    weekdays: [weekday as Weekday],
+    sort_results_by_next_start: true,
+    next_start_grace_minutes: 15,
+    target_time_zone: viewerTimeZone()
+  };
+  if (serviceBodyIds.length > 0) {
+    params.services = serviceBodyIds;
+    params.recursive = true;
+  }
+
+  return load(serverUrl, params).then(() => {
+    // Cache only a successful load that is still the selected day — guards against
+    // a superseded fetch storing another day's data (now in dataState) under this key.
+    if (!dataState.error && latestVirtualWeekday === weekday) {
+      virtualDayCache.set(weekday, { meetings: dataState.meetings, formats: dataState.formats });
+    }
+  });
 }
 
 export function loadDataByCoordinates(serverUrl: string, latitude: number, longitude: number, geoWidth: number = 10): Promise<void> {

@@ -49,6 +49,7 @@ export const enTranslations = {
   // Meeting detail
   backToMeetings: 'Back to meetings',
   schedule: 'Schedule',
+  meetingLocalTime: "Meeting's local time",
   at: 'at',
   duration: 'Duration',
   getDirections: 'Get Directions',

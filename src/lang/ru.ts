@@ -49,6 +49,7 @@ export const ruTranslations = {
   // Meeting detail
   backToMeetings: 'Назад к собраниям',
   schedule: 'Расписание',
+  meetingLocalTime: 'Местное время собрания',
   at: 'в',
   duration: 'Продолжительность',
   getDirections: 'Маршрут',

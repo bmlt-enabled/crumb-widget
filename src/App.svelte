@@ -3,7 +3,7 @@
   import { router } from '@bmlt-enabled/svelte-spa-router';
   import { countUniqueGroups } from 'bmlt-query-client';
   import type { AppConfig, ProcessedMeeting } from '@/types';
-  import { loadData, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
+  import { loadData, loadVirtualData, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage } from '@utils/format';
   import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS, SPINNER_DELAY_MS } from '@utils/constants';
@@ -131,6 +131,13 @@
 
   onMount(async () => {
     const viewParam = new URLSearchParams(window.location.search).get('view'); // 'list' | 'map' | 'auto' | null
+
+    // Virtual finder mode loads virtual+hybrid meetings one day at a time
+    // (default: today) and never geolocates — short-circuit before geo/view logic.
+    if (config.virtual) {
+      await loadVirtualData(config.serverUrl, config.serviceBodyIds, uiState.virtualDay);
+      return;
+    }
 
     // Determine whether to attempt geolocation on load.
     // If config.geolocation is true, always try — that's the embedder's stated intent.

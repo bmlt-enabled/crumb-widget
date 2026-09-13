@@ -507,3 +507,55 @@ describe('sortFormats', () => {
     expect(sortFormats([])).toEqual([]);
   });
 });
+
+describe('filterMeetings format filter (name-based, aggregator-safe)', () => {
+  const base: FilterState = { search: '', weekdays: [], venueTypes: [], timeOfDay: [], formatIds: [], serviceBodyNames: [] };
+
+  function withFormats(id: string, fmts: { id: string; name: string }[]): ProcessedMeeting {
+    return {
+      id_bigint: id,
+      weekday_tinyint: 2,
+      venue_type: 2,
+      start_time: '19:00:00',
+      duration_time: '01:00:00',
+      meeting_name: 'M' + id,
+      location_text: '',
+      latitude: 0,
+      longitude: 0,
+      published: 1,
+      service_body_bigint: '1',
+      formats: '',
+      format_shared_id_list: '',
+      phone_meeting_number: '',
+      bus_lines: '',
+      train_lines: '',
+      formattedTime: '7:00 PM',
+      formattedAddress: '',
+      timeOfDay: 'evening',
+      resolvedFormats: fmts.map((f) => ({ id: f.id, key_string: 'X', name_string: f.name, description_string: '', lang: 'en', world_id: '', format_type_enum: '' })),
+      isVirtual: true,
+      isInPerson: false
+    } as ProcessedMeeting;
+  }
+
+  // Same-named format returned once per root server → different ids.
+  const a = withFormats('a', [{ id: '10', name: 'Ask-It-Basket' }]);
+  const b = withFormats('b', [{ id: '20', name: 'Ask-It-Basket' }]);
+  const c = withFormats('c', [{ id: '30', name: 'Basic Text' }]);
+
+  test('selecting one server copy matches every same-named format across servers', () => {
+    const result = filterMeetings([a, b, c], { ...base, formatIds: ['10'] });
+    expect(result.map((m) => m.id_bigint).sort()).toEqual(['a', 'b']);
+  });
+
+  test('excludes meetings without the selected format', () => {
+    const result = filterMeetings([a, b, c], { ...base, formatIds: ['10'] });
+    expect(result.map((m) => m.id_bigint)).not.toContain('c');
+  });
+
+  test('matching is case/space-insensitive on the name', () => {
+    const d = withFormats('d', [{ id: '40', name: '  ask-it-basket ' }]);
+    const result = filterMeetings([a, d], { ...base, formatIds: ['10'] });
+    expect(result.map((m) => m.id_bigint).sort()).toEqual(['a', 'd']);
+  });
+});

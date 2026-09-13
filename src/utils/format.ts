@@ -210,7 +210,16 @@ export function filterMeetings(meetings: ProcessedMeeting[], filters: FilterStat
     result = result.filter((m) => timeOfDay.includes(m.timeOfDay));
   }
   if (formatIds.length > 0) {
-    result = result.filter((m) => m.resolvedFormats.some((f) => formatIds.includes(f.id)));
+    // Match by canonical format name, not id. On the aggregator the same world
+    // format is returned once per root server (same name, different id), so a
+    // single selection must match every server's copy — matching raw ids would
+    // only catch one server's meetings.
+    const idToName = new Map<string, string>();
+    for (const m of meetings) for (const f of m.resolvedFormats) idToName.set(f.id, f.name_string.trim().toLowerCase());
+    const selectedNames = new Set(formatIds.map((id) => idToName.get(id)).filter((n): n is string => !!n));
+    if (selectedNames.size > 0) {
+      result = result.filter((m) => m.resolvedFormats.some((f) => selectedNames.has(f.name_string.trim().toLowerCase())));
+    }
   }
   if (serviceBodyNames.length > 0) {
     result = result.filter((m) => m.service_body_name && serviceBodyNames.includes(m.service_body_name));

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test: Virtual Finder — Crumb Widget</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+        background: #f8fafc;
+      }
+      .test-bar {
+        background: #1e293b;
+        color: #f1f5f9;
+        padding: 10px 16px;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .test-bar a {
+        color: #94a3b8;
+        text-decoration: none;
+      }
+      .test-bar a:hover {
+        color: #f1f5f9;
+      }
+      .test-bar strong {
+        color: #fff;
+      }
+      .test-bar code {
+        background: #334155;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-bar">
+      <a href="/tests/index.html">← Tests</a>
+      <strong>Virtual Finder</strong>
+      <code>data-virtual="true"</code> — virtual + hybrid, one day at a time (default today), soonest-first, in your local time
+    </div>
+
+    <!-- Uses the aggregator so the server also orders soonest-first (sort_results_by_next_start) -->
+    <div id="crumb-widget" data-server="https://aggregator.bmltenabled.org/main_server/" data-virtual="true" data-path="/tests/virtual.html"></div>
+
+    <script src="../app.js"></script>
+  </body>
+</html>

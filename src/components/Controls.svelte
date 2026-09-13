@@ -2,7 +2,7 @@
   import { onDestroy } from 'svelte';
   import { SvelteSet } from 'svelte/reactivity';
   import { uiState, toggleArrayFilter, updateFilter, setView, resetFilters } from '@stores/ui.svelte';
-  import { dataState, loadData, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
+  import { dataState, loadData, loadVirtualData, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
   import { config } from '@stores/config.svelte';
   import { VENUE_TYPE } from '@/types';
   import { getGeoErrorMessage, haversineDistanceMiles } from '@utils/format';
@@ -78,8 +78,17 @@
     return chips;
   });
   const availableFormats = $derived.by(() => {
-    const uniqueById = new Map(dataState.meetings.flatMap((m) => m.resolvedFormats).map((f) => [f.id, f]));
-    return [...uniqueById.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
+    // Collapse by canonical name, not id: the aggregator returns the same world
+    // format once per root server (same name, different id), which would otherwise
+    // fill the dropdown with duplicates. One representative per name is kept; the
+    // filter matches by name (see filterMeetings) so it still catches every copy.
+    const byName = new Map(
+      dataState.meetings
+        .flatMap((m) => m.resolvedFormats)
+        .map((f) => [f.name_string.trim().toLowerCase(), f] as const)
+        .filter(([key]) => key)
+    );
+    return [...byName.values()].sort((a, b) => a.name_string.localeCompare(b.name_string));
   });
 
   // Format IDs that the embedder has locked via data-format-ids / ?format_ids= (numeric, server-side)
@@ -166,7 +175,7 @@
     return [...names].sort((a, b) => a.localeCompare(b));
   });
   const showServiceBodyFilter = $derived(config.columns.includes('service_body') && availableServiceBodies.length > 1);
-  const showViewToggle = $derived(config.view !== 'both' && (hasMapMeetings || uiState.view === 'map' || uiState.geoActive));
+  const showViewToggle = $derived(!config.virtual && config.view !== 'both' && (hasMapMeetings || uiState.view === 'map' || uiState.geoActive));
 
   let showDayDropdown = $state(false);
   let showTimeDropdown = $state(false);
@@ -199,6 +208,14 @@
   onDestroy(() => {
     if (geoErrorTimer) clearTimeout(geoErrorTimer);
   });
+
+  // Virtual finder loads one weekday at a time; changing the day refetches.
+  async function setVirtualDay(day: number) {
+    showDayDropdown = false;
+    if (day === uiState.virtualDay) return;
+    uiState.virtualDay = day;
+    await loadVirtualData(config.serverUrl, config.serviceBodyIds, day);
+  }
 
   async function clearGeo() {
     uiState.geoActive = false;
@@ -486,24 +503,42 @@
     {/if}
 
     <!-- Day dropdown -->
-    <FilterDropdown
-      buttonLabel={uiState.filters.weekdays.length === 0
-        ? $t.anyDay
-        : uiState.filters.weekdays.length === 1
-          ? ($t.weekdays[uiState.filters.weekdays[0]! - 1] ?? '')
-          : `${uiState.filters.weekdays.length} ${$t.selected}`}
-      isActive={uiState.filters.weekdays.length > 0}
-      selected={uiState.filters.weekdays}
-      options={$t.weekdays.map((day, i) => ({ value: i + 1, label: day }))}
-      bind:isOpen={showDayDropdown}
-      onToggle={(v) => toggleArrayFilter('weekdays', v)}
-      onOpen={() => {
-        showTimeDropdown = false;
-        showTypeDropdown = false;
-        showServiceBodyDropdown = false;
-        showGeoDropdown = false;
-      }}
-    />
+    {#if config.virtual}
+      <!-- Virtual finder loads a single day at a time (no "Any Day"): the day is a loader, not a client-side filter. -->
+      <FilterDropdown
+        buttonLabel={$t.weekdays[uiState.virtualDay - 1] ?? ''}
+        isActive={true}
+        selected={[uiState.virtualDay]}
+        options={$t.weekdays.map((day, i) => ({ value: i + 1, label: day }))}
+        bind:isOpen={showDayDropdown}
+        onToggle={(v) => setVirtualDay(v)}
+        onOpen={() => {
+          showTimeDropdown = false;
+          showTypeDropdown = false;
+          showServiceBodyDropdown = false;
+          showGeoDropdown = false;
+        }}
+      />
+    {:else}
+      <FilterDropdown
+        buttonLabel={uiState.filters.weekdays.length === 0
+          ? $t.anyDay
+          : uiState.filters.weekdays.length === 1
+            ? ($t.weekdays[uiState.filters.weekdays[0]! - 1] ?? '')
+            : `${uiState.filters.weekdays.length} ${$t.selected}`}
+        isActive={uiState.filters.weekdays.length > 0}
+        selected={uiState.filters.weekdays}
+        options={$t.weekdays.map((day, i) => ({ value: i + 1, label: day }))}
+        bind:isOpen={showDayDropdown}
+        onToggle={(v) => toggleArrayFilter('weekdays', v)}
+        onOpen={() => {
+          showTimeDropdown = false;
+          showTypeDropdown = false;
+          showServiceBodyDropdown = false;
+          showGeoDropdown = false;
+        }}
+      />
+    {/if}
 
     <!-- Time of day dropdown -->
     <FilterDropdown

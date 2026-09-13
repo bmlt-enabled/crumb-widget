@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
-import { dataState, loadDataByAddress, loadDataByCoordinates } from '@stores/data.svelte';
+import { dataState, loadData, loadVirtualData, loadDataByAddress, loadDataByCoordinates } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import { config } from '@stores/config.svelte';
 import type { ProcessedMeeting } from '@/types/index';
@@ -14,6 +14,7 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
   return {
     ...actual,
     loadData: vi.fn(),
+    loadVirtualData: vi.fn(),
     loadDataByAddress: vi.fn(),
     loadDataByCoordinates: vi.fn()
   };
@@ -68,7 +69,8 @@ const baseConfig: AppConfig = {
   distanceUnit: 'mi',
   height: 600,
   showFormats: false,
-  inlineFormats: []
+  inlineFormats: [],
+  virtual: false
 };
 
 function makeFormat(overrides: Partial<Format> = {}): Format {
@@ -859,5 +861,24 @@ describe('geolocation', () => {
     // loadDataByAddress owns the error message — the page-level error
     // updates to reflect what the user just tried.
     await waitFor(() => expect(dataState.error).toBe('Could not find that location.'));
+  });
+});
+
+describe('virtual finder mode', () => {
+  beforeEach(() => {
+    vi.mocked(loadData).mockClear();
+    vi.mocked(loadVirtualData).mockClear();
+  });
+
+  test('loads virtual data on mount and skips the normal/geo load', async () => {
+    render(App, { props: { config: { ...baseConfig, virtual: true } } });
+    await waitFor(() => expect(loadVirtualData).toHaveBeenCalled());
+    expect(loadData).not.toHaveBeenCalled();
+  });
+
+  test('passes the selected weekday to loadVirtualData', async () => {
+    uiState.virtualDay = 4; // Wednesday
+    render(App, { props: { config: { ...baseConfig, virtual: true } } });
+    await waitFor(() => expect(loadVirtualData).toHaveBeenCalledWith('https://test.example.org/main_server', [], 4));
   });
 });

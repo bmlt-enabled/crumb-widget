@@ -115,14 +115,17 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.serverUrl = options.serverUrl;
   config.serviceBodyIds = options.serviceBodyIds ?? [];
   config.containerId = el.id || 'crumb-widget';
-  config.view = validView(options.view, CONFIG_DEFAULTS.view);
+  // Virtual finder mode forces list view and disables geolocation/map (below).
+  config.virtual = validBoolean('virtual', options.virtual, CONFIG_DEFAULTS.virtual);
+  config.view = config.virtual ? 'list' : validView(options.view, CONFIG_DEFAULTS.view);
   config.locationMarker = options.map?.markers?.location;
   config.tiles = options.map?.tiles;
   config.tilesDark = options.map?.tiles_dark;
   config.columns = validColumns(options.columns, CONFIG_DEFAULTS.columns);
   config.query = validQuery(options.query);
-  // A custom raw query disables geolocation — we can't safely layer geo params on top.
-  config.geolocation = !config.query && validBoolean('geolocation', options.geolocation, CONFIG_DEFAULTS.geolocation);
+  // A custom raw query or virtual mode disables geolocation — we can't safely
+  // layer geo params on top, and virtual meetings aren't location-based.
+  config.geolocation = !config.query && !config.virtual && validBoolean('geolocation', options.geolocation, CONFIG_DEFAULTS.geolocation);
   config.geolocationRadius = validRadius('geolocationRadius', options.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   config.distanceOptions = validDistanceOptions(options.distanceOptions, CONFIG_DEFAULTS.distanceOptions);
   config.height = validHeight(options.height);

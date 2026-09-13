@@ -49,6 +49,7 @@ export const deTranslations = {
   // Meeting detail
   backToMeetings: 'Zurück zu den Treffen',
   schedule: 'Zeitplan',
+  meetingLocalTime: 'Ortszeit des Meetings',
   at: 'um',
   duration: 'Dauer',
   getDirections: 'Route berechnen',

@@ -49,6 +49,7 @@ export const elTranslations = {
   // Meeting detail
   backToMeetings: 'Επιστροφή στις συναντήσεις',
   schedule: 'Πρόγραμμα',
+  meetingLocalTime: 'Τοπική ώρα συνάντησης',
   at: 'στις',
   duration: 'Διάρκεια',
   getDirections: 'Οδηγίες',

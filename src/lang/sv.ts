@@ -49,6 +49,7 @@ export const svTranslations = {
   // Meeting detail
   backToMeetings: 'Tillbaka till möten',
   schedule: 'Schema',
+  meetingLocalTime: 'Mötets lokala tid',
   at: 'kl.',
   duration: 'Varaktighet',
   getDirections: 'Vägbeskrivning',
