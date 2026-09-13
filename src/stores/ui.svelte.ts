@@ -13,7 +13,6 @@ export const uiState = $state<{
   view: ViewType;
   filters: FilterState;
   geoActive: boolean;
-  selectedMeetingId: string | null;
   userLocation: { lat: number; lng: number } | undefined;
   geoRadius: number;
   virtualDay: number;
@@ -28,7 +27,6 @@ export const uiState = $state<{
     serviceBodyNames: []
   },
   geoActive: false,
-  selectedMeetingId: null,
   userLocation: undefined,
   geoRadius: 0,
   virtualDay: todayWeekday()
@@ -38,13 +36,14 @@ export function setView(view: ViewType): void {
   uiState.view = view;
 }
 
+// The open meeting is derived from the URL (see App.svelte), so selecting or
+// clearing a meeting is just navigation — the router's reactive location drives
+// the view, which keeps the in-app and browser Back/Forward buttons in sync.
 export function selectMeeting(meeting: { meeting_name: string; id_bigint: string }): void {
-  uiState.selectedMeetingId = meeting.id_bigint;
   push('/' + meetingSlug(meeting));
 }
 
 export function clearSelectedMeeting(): void {
-  uiState.selectedMeetingId = null;
   push('/');
 }
 

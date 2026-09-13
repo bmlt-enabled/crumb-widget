@@ -5,7 +5,7 @@
   import type { AppConfig, ProcessedMeeting } from '@/types';
   import { loadData, loadVirtualData, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
   import { uiState } from '@stores/ui.svelte';
-  import { filterMeetings, getGeoErrorMessage } from '@utils/format';
+  import { filterMeetings, getGeoErrorMessage, meetingIdFromPath } from '@utils/format';
   import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS, SPINNER_DELAY_MS } from '@utils/constants';
   import { t, direction } from '@stores/localization';
 
@@ -162,17 +162,13 @@
   const filteredMeetings = $derived(filterMeetings(dataState.meetings, uiState.filters, uiState.userLocation, uiState.geoRadius));
   const groupCount = $derived(countUniqueGroups(filteredMeetings));
 
-  // Selected meeting: state is primary (set by selectMeeting/clearSelectedMeeting),
-  // URL is fallback for deep-linking on initial load.
+  // The URL is the single source of truth for which meeting is open: the router's
+  // location is reactive (it listens to popstate/hashchange), so this re-derives on
+  // navigation — clicking a meeting (which pushes a route), the in-app Back button,
+  // and the browser Back/Forward buttons all work through the same path.
   const selectedMeeting = $derived.by((): ProcessedMeeting | undefined => {
-    if (uiState.selectedMeetingId) {
-      return dataState.meetings.find((m) => m.id_bigint === uiState.selectedMeetingId);
-    }
-    // Deep-link fallback: parse meeting ID from the last segment of the URL
-    const loc = router.location.replace(/\/$/, '');
-    const match = loc.match(/-(\d+)$/);
-    if (!match) return undefined;
-    return dataState.meetings.find((m) => m.id_bigint === match[1]);
+    const id = meetingIdFromPath(router.location);
+    return id ? dataState.meetings.find((m) => m.id_bigint === id) : undefined;
   });
 
   // Delay the spinner so fast loads don't flash it. While loading is pending

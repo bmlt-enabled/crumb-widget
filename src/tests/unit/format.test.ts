@@ -15,7 +15,9 @@ import {
   filterMeetings,
   normalizeVirtualLink,
   getConferenceProvider,
-  sortFormats
+  sortFormats,
+  meetingSlug,
+  meetingIdFromPath
 } from '@utils/format';
 import type { ProcessedMeeting, FilterState, Format } from '@/types/index';
 import type { Meeting } from 'bmlt-query-client';
@@ -557,5 +559,41 @@ describe('filterMeetings format filter (name-based, aggregator-safe)', () => {
     const d = withFormats('d', [{ id: '40', name: '  ask-it-basket ' }]);
     const result = filterMeetings([a, d], { ...base, formatIds: ['10'] });
     expect(result.map((m) => m.id_bigint).sort()).toEqual(['a', 'd']);
+  });
+});
+
+describe('meetingIdFromPath (routing: slug <-> id)', () => {
+  test('extracts the id from a meeting path', () => {
+    expect(meetingIdFromPath('/monday-night-meeting-42')).toBe('42');
+  });
+
+  test('ignores a trailing slash', () => {
+    expect(meetingIdFromPath('/monday-night-meeting-42/')).toBe('42');
+  });
+
+  test('ignores a base-path prefix (id is always the trailing segment)', () => {
+    expect(meetingIdFromPath('/tests/default.html/humility-group-2914')).toBe('2914');
+  });
+
+  test('takes the trailing id even when the name itself contains numbers', () => {
+    expect(meetingIdFromPath('/90-90-group-6')).toBe('6');
+    expect(meetingIdFromPath('/step-12-study-742')).toBe('742');
+  });
+
+  test('returns null for the list route and non-meeting paths', () => {
+    expect(meetingIdFromPath('/')).toBeNull();
+    expect(meetingIdFromPath('')).toBeNull();
+    expect(meetingIdFromPath('/tests/default.html')).toBeNull();
+  });
+
+  test('round-trips with meetingSlug', () => {
+    for (const m of [
+      { meeting_name: 'Monday Night Meeting', id_bigint: '42' },
+      { meeting_name: "Bill's Place!", id_bigint: '7' },
+      { meeting_name: '90/90 Group', id_bigint: '6' },
+      { meeting_name: '???', id_bigint: '99' }
+    ]) {
+      expect(meetingIdFromPath('/' + meetingSlug(m))).toBe(m.id_bigint);
+    }
   });
 });

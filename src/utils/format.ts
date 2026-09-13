@@ -188,6 +188,17 @@ export function meetingSlug(meeting: { meeting_name: string; id_bigint: string }
   return `${name || 'meeting'}-${meeting.id_bigint}`;
 }
 
+/**
+ * Inverse of {@link meetingSlug} for routing: extract the meeting id from a router
+ * location path such as `/some-meeting-42` or `/base/some-meeting-42/`. The id is
+ * always the trailing `-<digits>` segment that meetingSlug appends, so any
+ * base-path prefix or trailing slash is ignored. Returns `null` for non-meeting
+ * paths (e.g. the list route `/`).
+ */
+export function meetingIdFromPath(path: string): string | null {
+  return path.replace(/\/+$/, '').match(/-(\d+)$/)?.[1] ?? null;
+}
+
 export function haversineDistanceMiles(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 3958.8;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;

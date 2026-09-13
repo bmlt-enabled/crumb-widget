@@ -7,6 +7,7 @@ import { dataState, loadData, loadVirtualData, loadDataByAddress, loadDataByCoor
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import { config } from '@stores/config.svelte';
 import type { ProcessedMeeting } from '@/types/index';
+import { routerLoc } from './helpers/router-location.svelte';
 
 // Prevent real API calls in all tests
 vi.mock('@stores/data.svelte', async (importOriginal) => {
@@ -20,21 +21,19 @@ vi.mock('@stores/data.svelte', async (importOriginal) => {
   };
 });
 
-// Mutable object shared between the hoisted vi.mock factory and the tests.
-// Tests set .value before rendering to simulate direct (deep-link) navigation.
-const mockRouterLoc = vi.hoisted(() => ({ value: '/' }));
-
-// Make push/pop synchronous in tests — the real push() awaits tick() before
-// setting the hash, which breaks fireEvent-based assertions.
-// router.location is exposed as a plain getter so deep-link tests can prime it
-// before rendering without depending on Svelte reactivity propagation.
+// Mock the router with a reactive location (see helpers/router-location.svelte.ts).
+// The real router's `location` is reactive, so App's $derived re-runs on navigation.
+// Reproducing that here lets tests drive the view by setting `routerLoc.value`
+// (deep links) or by clicking (push updates it) — and push/pop are synchronous,
+// avoiding the real push()'s `await tick()`.
 vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@bmlt-enabled/svelte-spa-router')>();
+  const { routerLoc } = await import('./helpers/router-location.svelte');
   return {
     ...actual,
     router: {
       get location() {
-        return mockRouterLoc.value;
+        return routerLoc.value;
       },
       get querystring() {
         return '';
@@ -43,14 +42,14 @@ vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
         return undefined;
       },
       get loc() {
-        return { location: mockRouterLoc.value, querystring: '' };
+        return { location: routerLoc.value, querystring: '' };
       }
     },
     push: vi.fn((path: string) => {
-      mockRouterLoc.value = path.startsWith('/') ? path : '/' + path;
+      routerLoc.value = path.startsWith('/') ? path : '/' + path;
     }),
     pop: vi.fn(() => {
-      mockRouterLoc.value = '/';
+      routerLoc.value = '/';
     })
   };
 });
@@ -127,8 +126,7 @@ beforeEach(() => {
   uiState.geoActive = false;
   uiState.userLocation = undefined;
   uiState.geoRadius = 0;
-  uiState.selectedMeetingId = null;
-  mockRouterLoc.value = '/';
+  routerLoc.value = '/';
 });
 
 describe('App', () => {
@@ -438,6 +436,19 @@ describe('meeting detail', () => {
     await waitFor(() => expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument());
   });
 
+  test('browser Back (reactive URL change) closes the detail and returns to the list', async () => {
+    dataState.meetings = [makeMeeting({ meeting_name: 'Monday Night Meeting' })];
+    routerLoc.value = '/monday-night-meeting-1';
+    render(App, { props: { config: baseConfig } });
+    await waitFor(() => expect(screen.getByText('Back to meetings')).toBeInTheDocument());
+
+    // Simulate the browser Back button: the router's reactive location changes,
+    // with no in-app action. Selection is URL-derived, so the detail must close.
+    routerLoc.value = '/';
+    await waitFor(() => expect(screen.queryByText('Back to meetings')).not.toBeInTheDocument());
+    expect(screen.getAllByText('Monday Night Meeting')[0]).toBeInTheDocument();
+  });
+
   test('shows time range when duration is present', async () => {
     await navigateToDetail(makeMeeting({ start_time: '19:00:00', duration_time: '01:30:00' }));
     expect(screen.getByText(/7:00 PM/)).toBeInTheDocument();
@@ -668,7 +679,7 @@ describe('deep-link', () => {
   test('shows meeting detail when URL has trailing slash (direct navigation)', () => {
     const meeting = makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' });
     dataState.meetings = [meeting];
-    mockRouterLoc.value = '/90-90-group-6/';
+    routerLoc.value = '/90-90-group-6/';
     render(App, { props: { config: baseConfig } });
     expect(screen.getByText('Back to meetings')).toBeInTheDocument();
   });
@@ -676,7 +687,7 @@ describe('deep-link', () => {
   test('shows meeting detail when URL has no trailing slash', () => {
     const meeting = makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' });
     dataState.meetings = [meeting];
-    mockRouterLoc.value = '/90-90-group-6';
+    routerLoc.value = '/90-90-group-6';
     render(App, { props: { config: baseConfig } });
     expect(screen.getByText('Back to meetings')).toBeInTheDocument();
   });
@@ -685,14 +696,14 @@ describe('deep-link', () => {
     const meeting = makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' });
     dataState.meetings = [meeting];
     // router.location contains only the path; querystring is separated by the router
-    mockRouterLoc.value = '/90-90-group-6/';
+    routerLoc.value = '/90-90-group-6/';
     render(App, { props: { config: baseConfig } });
     expect(screen.getByText('Back to meetings')).toBeInTheDocument();
   });
 
   test('shows meeting list when URL path does not match any meeting', () => {
     dataState.meetings = [makeMeeting({ id_bigint: '6', meeting_name: '90-90 Group' })];
-    mockRouterLoc.value = '/';
+    routerLoc.value = '/';
     render(App, { props: { config: baseConfig } });
     expect(screen.queryByText('Back to meetings')).not.toBeInTheDocument();
     expect(screen.getAllByText('90-90 Group')[0]).toBeInTheDocument();
