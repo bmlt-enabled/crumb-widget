@@ -8,7 +8,6 @@ import { push } from '@bmlt-enabled/svelte-spa-router';
 beforeEach(() => {
   uiState.view = 'list';
   uiState.geoActive = false;
-  uiState.selectedMeetingId = null;
   resetFilters();
   vi.mocked(push).mockClear();
 });
@@ -32,11 +31,6 @@ describe('selectMeeting', () => {
     expect(push).toHaveBeenCalledWith('/monday-night-meeting-42');
   });
 
-  test('sets selectedMeetingId in state', () => {
-    selectMeeting({ meeting_name: 'Monday Night Meeting', id_bigint: '42' });
-    expect(uiState.selectedMeetingId).toBe('42');
-  });
-
   test('slugifies special characters in meeting name', () => {
     selectMeeting({ meeting_name: "Bill's Place!", id_bigint: '7' });
     expect(push).toHaveBeenCalledWith('/bill-s-place-7');
@@ -49,11 +43,8 @@ describe('selectMeeting', () => {
 });
 
 describe('clearSelectedMeeting', () => {
-  test('clears selectedMeetingId and pushes root route', () => {
-    selectMeeting({ meeting_name: 'Test', id_bigint: '1' });
-    expect(uiState.selectedMeetingId).toBe('1');
+  test('pushes the root route', () => {
     clearSelectedMeeting();
-    expect(uiState.selectedMeetingId).toBeNull();
     expect(push).toHaveBeenCalledWith('/');
   });
 });

@@ -147,6 +147,27 @@ test.describe('Widget — meeting detail', () => {
     await expect(meetingCell(page, 'Monday Serenity Group')).toBeVisible();
   });
 
+  // Regression guard (broke in f8f7b1d): the open meeting must be derived from the
+  // URL, so the browser's own Back/Forward — not just the in-app button — works.
+  test('browser Back button returns to the meeting list', async ({ page }) => {
+    await loadWidget(page);
+    await meetingCell(page, 'Monday Serenity Group').click();
+    await expect(page.getByText('Back to meetings')).toBeVisible();
+    await page.goBack();
+    await expect(page.getByText('Back to meetings')).toHaveCount(0);
+    await expect(meetingCell(page, 'Monday Serenity Group')).toBeVisible();
+  });
+
+  test('browser Forward button reopens the meeting detail', async ({ page }) => {
+    await loadWidget(page);
+    await meetingCell(page, 'Monday Serenity Group').click();
+    await expect(page.getByText('Back to meetings')).toBeVisible();
+    await page.goBack();
+    await expect(page.getByText('Back to meetings')).toHaveCount(0);
+    await page.goForward();
+    await expect(page.getByText('Back to meetings')).toBeVisible();
+  });
+
   test('virtual meeting shows online badge', async ({ page }) => {
     await loadWidget(page);
     await meetingCell(page, 'Friday Online Group').click();
