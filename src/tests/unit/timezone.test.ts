@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, vi } from 'vitest';
 import { nextOccurrence, toViewerSchedule, viewerTimeZone } from '@utils/timezone';
 
 // A fixed reference instant: Monday 2026-01-05 12:00 UTC (January → no US DST).
@@ -24,6 +24,17 @@ describe('nextOccurrence', () => {
   test('returns null for unparseable input', () => {
     expect(nextOccurrence(1, 'not-a-time', 'America/New_York', MON_NOON_UTC)).toBeNull();
     expect(nextOccurrence(0, '19:00:00', 'America/New_York', MON_NOON_UTC)).toBeNull();
+  });
+
+  test('resolves a wall time that lands in a DST spring-forward gap', () => {
+    // US spring-forward: Sun 2026-03-08, clocks jump 02:00 -> 03:00 in New York,
+    // so 02:30 does not exist. nextOccurrence must still return a valid instant
+    // on that Sunday (exercises the offset-refine branch).
+    const from = new Date('2026-03-06T12:00:00Z'); // the Friday before
+    const instant = nextOccurrence(1, '02:30:00', 'America/New_York', from);
+    expect(instant).toBeInstanceOf(Date);
+    expect(instant!.toISOString().slice(0, 10)).toBe('2026-03-08');
+    expect(instant!.getTime()).toBeGreaterThan(from.getTime());
   });
 });
 
@@ -52,5 +63,16 @@ describe('toViewerSchedule', () => {
 describe('viewerTimeZone', () => {
   test('returns a non-empty IANA zone string', () => {
     expect(viewerTimeZone()).toMatch(/^[A-Za-z]+(?:\/[A-Za-z0-9_+-]+)*$/);
+  });
+
+  test('falls back to UTC when the environment cannot resolve a zone', () => {
+    const spy = vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(() => {
+      throw new Error('no Intl');
+    });
+    try {
+      expect(viewerTimeZone()).toBe('UTC');
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

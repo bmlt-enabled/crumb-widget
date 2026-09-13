@@ -3,14 +3,14 @@ import '@testing-library/jest-dom/vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, ProcessedMeeting } from '@/types/index';
-import { dataState } from '@stores/data.svelte';
+import { dataState, loadVirtualData } from '@stores/data.svelte';
 import { uiState, resetFilters } from '@stores/ui.svelte';
 import { config } from '@stores/config.svelte';
 
 // Prevent real API calls
 vi.mock('@stores/data.svelte', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@stores/data.svelte')>();
-  return { ...actual, loadData: vi.fn(), loadDataByCoordinates: vi.fn().mockResolvedValue(undefined) };
+  return { ...actual, loadData: vi.fn(), loadVirtualData: vi.fn().mockResolvedValue(undefined), loadDataByCoordinates: vi.fn().mockResolvedValue(undefined) };
 });
 
 vi.mock('@bmlt-enabled/svelte-spa-router', async (importOriginal) => {
@@ -90,6 +90,7 @@ beforeEach(() => {
   uiState.userLocation = undefined;
   uiState.geoRadius = 0;
   config.geolocation = false;
+  config.virtual = false;
   config.serviceBodyIds = [];
   config.serverUrl = 'https://test.example.org/main_server';
   config.geolocationRadius = 75;
@@ -543,5 +544,36 @@ describe('format type dropdown grouping', () => {
     await openTypeDropdown();
     await fireEvent.click(screen.getByRole('button', { name: 'Open' }));
     expect(uiState.filters.formatIds).toContain('5');
+  });
+});
+
+describe('virtual finder mode', () => {
+  const virtualConfig: AppConfig = { ...baseConfig, virtual: true, view: 'list' };
+
+  test('renders a single-day loader instead of the "Any Day" filter', () => {
+    config.virtual = true;
+    uiState.virtualDay = 1; // Sunday
+    render(App, { props: { config: virtualConfig } });
+    // Non-virtual shows "Any Day"; the virtual finder shows the selected weekday.
+    expect(screen.queryByText('Any Day')).not.toBeInTheDocument();
+    expect(screen.getByText('Sunday')).toBeInTheDocument();
+  });
+
+  test('choosing a day refetches that weekday and updates the selection', async () => {
+    config.virtual = true;
+    uiState.virtualDay = 1; // Sunday
+    render(App, { props: { config: virtualConfig } });
+    await fireEvent.click(screen.getByText('Sunday')); // open the dropdown
+    await fireEvent.click(screen.getByText('Wednesday')); // pick a new day
+    expect(vi.mocked(loadVirtualData)).toHaveBeenCalledWith('https://test.example.org/main_server', [], 4);
+    expect(uiState.virtualDay).toBe(4);
+  });
+
+  test('hides the list/map view toggle even when hybrid meetings are mappable', () => {
+    config.virtual = true;
+    // A hybrid meeting is mappable (isInPerson), which would normally show the toggle.
+    dataState.meetings = [makeMeeting({ venue_type: 3, isInPerson: true, isVirtual: true })];
+    render(App, { props: { config: virtualConfig } });
+    expect(screen.queryByRole('button', { name: 'Map' })).not.toBeInTheDocument();
   });
 });

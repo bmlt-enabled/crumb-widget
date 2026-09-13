@@ -325,3 +325,38 @@ describe('MeetingDetail — sibling meetings', () => {
     expect(screen.queryByText('Also at this location')).not.toBeInTheDocument();
   });
 });
+
+describe('MeetingDetail — virtual finder (local time + service body)', () => {
+  test("shows the meeting's own local time beneath the viewer-local time when converted", () => {
+    render(MeetingDetail, {
+      props: {
+        meeting: makeMeeting({
+          venue_type: 2,
+          isInPerson: false,
+          isVirtual: true,
+          latitude: 0,
+          longitude: 0,
+          weekday_tinyint: 1,
+          start_time: '08:00:00',
+          formattedTime: '8:00 AM',
+          time_zone: 'America/New_York',
+          localConverted: true,
+          originalStartTime: '07:00:00',
+          originalWeekday: 1,
+          originalTimeZone: 'America/Chicago'
+        })
+      }
+    });
+    expect(screen.getByText(/Meeting's local time/)).toBeInTheDocument();
+  });
+
+  test('does not show the local-time note for a non-converted meeting', () => {
+    render(MeetingDetail, { props: { meeting: makeMeeting({ venue_type: 2, isInPerson: false, isVirtual: true, latitude: 0, longitude: 0 }) } });
+    expect(screen.queryByText(/Meeting's local time/)).not.toBeInTheDocument();
+  });
+
+  test('shows the service body name when present (now returned inline)', () => {
+    render(MeetingDetail, { props: { meeting: makeMeeting({ service_body_name: 'Central Texas Area' }) } });
+    expect(screen.getByText('Central Texas Area')).toBeInTheDocument();
+  });
+});
