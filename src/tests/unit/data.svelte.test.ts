@@ -632,7 +632,7 @@ describe('loadVirtualData', () => {
     const viewer = viewerTimeZone();
     const sourceZone = viewer === 'America/New_York' ? 'Asia/Tokyo' : 'America/New_York';
     mockSearch.mockResolvedValue({
-      meetings: [rawMeeting({ venue_type: 2, weekday_tinyint: 3, start_time: '20:00:00', time_zone: sourceZone })],
+      meetings: [rawMeeting({ venue_type: 2, weekday_tinyint: 3, start_time: '20:00:00', time_zone: sourceZone, virtual_meeting_link: 'https://zoom.us/j/1' })],
       formats: []
     });
     await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
@@ -647,7 +647,7 @@ describe('loadVirtualData', () => {
   test('leaves a same-zone meeting unconverted', async () => {
     config.virtual = true;
     mockSearch.mockResolvedValue({
-      meetings: [rawMeeting({ venue_type: 2, time_zone: viewerTimeZone() })],
+      meetings: [rawMeeting({ venue_type: 2, time_zone: viewerTimeZone(), virtual_meeting_link: 'https://zoom.us/j/1' })],
       formats: []
     });
     await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
@@ -656,7 +656,7 @@ describe('loadVirtualData', () => {
 
   test('leaves a meeting with no time_zone unconverted', async () => {
     config.virtual = true;
-    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 2, time_zone: '' })], formats: [] });
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 2, time_zone: '', virtual_meeting_link: 'https://zoom.us/j/1' })], formats: [] });
     await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
     expect(dataState.meetings[0]!.localConverted).toBeUndefined();
   });
@@ -719,5 +719,78 @@ describe('loadMeetingById (deep-link single fetch)', () => {
   test('does nothing for an unparseable id', async () => {
     await loadMeetingById('https://example.org/main_server', 'not-a-number');
     expect(mockSearch).not.toHaveBeenCalled();
+  });
+});
+
+describe('virtual finder quality filters (ASM + unjoinable)', () => {
+  const url = 'https://aggregator.bmltenabled.org/main_server';
+  beforeEach(() => {
+    config.virtual = true;
+  });
+
+  test('excludes ASM (area/service) meetings', async () => {
+    mockSearch.mockResolvedValue({
+      meetings: [
+        rawMeeting({ id_bigint: '1', venue_type: 2, virtual_meeting_link: 'https://zoom.us/j/1', format_shared_id_list: '99' }),
+        rawMeeting({ id_bigint: '2', venue_type: 2, virtual_meeting_link: 'https://zoom.us/j/2', format_shared_id_list: '50' })
+      ],
+      formats: [rawFormat({ id: '99', key_string: 'O', name_string: 'Open' }), rawFormat({ id: '50', key_string: 'ASM', name_string: 'Area Service' })]
+    });
+    await loadVirtualData(url);
+    const ids = dataState.meetings.map((m) => m.id_bigint);
+    expect(ids).toContain('1');
+    expect(ids).not.toContain('2');
+  });
+
+  test('excludes purely-virtual meetings with no valid link and no phone', async () => {
+    mockSearch.mockResolvedValue({
+      meetings: [
+        rawMeeting({ id_bigint: 'link', venue_type: 2, virtual_meeting_link: 'https://zoom.us/j/1', phone_meeting_number: '' }),
+        rawMeeting({ id_bigint: 'phone', venue_type: 2, virtual_meeting_link: '', phone_meeting_number: '+1 555 000 1234' }),
+        rawMeeting({ id_bigint: 'nothing', venue_type: 2, virtual_meeting_link: '', phone_meeting_number: '' }),
+        rawMeeting({ id_bigint: 'badlink', venue_type: 2, virtual_meeting_link: 'Meeting ID 123 456', phone_meeting_number: '' })
+      ],
+      formats: []
+    });
+    await loadVirtualData(url);
+    const ids = dataState.meetings.map((m) => m.id_bigint);
+    expect(ids).toEqual(expect.arrayContaining(['link', 'phone']));
+    expect(ids).not.toContain('nothing');
+    expect(ids).not.toContain('badlink');
+  });
+
+  test('keeps hybrid meetings even without a virtual link', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ id_bigint: 'hy', venue_type: 3, virtual_meeting_link: '', phone_meeting_number: '' })], formats: [] });
+    await loadVirtualData(url);
+    expect(dataState.meetings.map((m) => m.id_bigint)).toContain('hy');
+  });
+
+  test('keeps temporarily-closed virtual meetings even without a link', async () => {
+    mockSearch.mockResolvedValue({
+      meetings: [rawMeeting({ id_bigint: 'tc', venue_type: 2, virtual_meeting_link: '', phone_meeting_number: '', format_shared_id_list: '70' })],
+      formats: [rawFormat({ id: '70', key_string: 'TC', name_string: 'Temporarily Closed' })]
+    });
+    await loadVirtualData(url);
+    expect(dataState.meetings.map((m) => m.id_bigint)).toContain('tc');
+  });
+
+  test('does not filter in non-virtual mode', async () => {
+    config.virtual = false;
+    mockSearch.mockResolvedValue({
+      meetings: [rawMeeting({ id_bigint: 'asm', venue_type: 2, format_shared_id_list: '50' }), rawMeeting({ id_bigint: 'nolink', venue_type: 2, virtual_meeting_link: '', phone_meeting_number: '' })],
+      formats: [rawFormat({ id: '50', key_string: 'ASM' })]
+    });
+    await loadData(url);
+    const ids = dataState.meetings.map((m) => m.id_bigint);
+    expect(ids).toEqual(expect.arrayContaining(['asm', 'nolink']));
+  });
+
+  test('does not filter a by-id deep link (direct link always resolves)', async () => {
+    mockSearch.mockResolvedValue({
+      meetings: [rawMeeting({ id_bigint: '2', venue_type: 2, virtual_meeting_link: '', phone_meeting_number: '', format_shared_id_list: '50' })],
+      formats: [rawFormat({ id: '50', key_string: 'ASM' })]
+    });
+    await loadMeetingById(url, '2');
+    expect(dataState.meetings).toHaveLength(1);
   });
 });
