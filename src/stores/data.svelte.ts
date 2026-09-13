@@ -4,7 +4,7 @@ import { BmltClient, Language, VenueType, Weekday } from 'bmlt-query-client';
 import type { Meeting, Format, MeetingsWithFormats } from 'bmlt-query-client';
 import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
-import { formatTime, formatAddress, getTimeOfDay, sortMeetings } from '@utils/format';
+import { formatTime, formatAddress, getTimeOfDay, sortMeetings, normalizeVirtualLink } from '@utils/format';
 import { toViewerSchedule, viewerTimeZone } from '@utils/timezone';
 import { config } from '@stores/config.svelte';
 import { getLanguage, t } from '@stores/localization';
@@ -43,6 +43,7 @@ const MEETING_DATA_FIELDS = [
   'format_shared_id_list',
   'virtual_meeting_link',
   'virtual_meeting_additional_info',
+  'phone_meeting_number',
   'location_text',
   'location_street',
   'location_municipality',
@@ -153,6 +154,28 @@ async function resolveServiceBodyNames(client: BmltClient, meetings: Meeting[]):
   }
 }
 
+function hasFormatKey(meeting: ProcessedMeeting, key: string): boolean {
+  return meeting.resolvedFormats.some((f) => (f.key_string ?? '').trim().toUpperCase() === key);
+}
+
+// Quality filter for the virtual finder, mirroring na-meetings-near-me: drop
+// area/service (administrative) meetings, and drop purely-virtual meetings that
+// can't actually be joined (no valid link and no dial-in). Hybrid meetings have a
+// physical venue, and temporarily-closed virtual meetings are kept with their
+// info — both are exempt from the joinable check.
+function filterVirtualMeetings(meetings: ProcessedMeeting[]): ProcessedMeeting[] {
+  return meetings.filter((m) => {
+    if (hasFormatKey(m, 'ASM')) return false; // Area Service Meeting / administrative
+    const pureVirtual = m.venue_type === VENUE_TYPE.VIRTUAL;
+    if (pureVirtual && !hasFormatKey(m, 'TC')) {
+      const hasLink = !!normalizeVirtualLink(m.virtual_meeting_link ?? '');
+      const hasPhone = !!(m.phone_meeting_number ?? '').trim();
+      if (!hasLink && !hasPhone) return false;
+    }
+    return true;
+  });
+}
+
 function applyFormatKeyLock(meetings: ProcessedMeeting[], formatKeys: string[]): ProcessedMeeting[] {
   if (formatKeys.length === 0) return meetings;
   const wanted = formatKeys.map((k) => k.toLowerCase());
@@ -239,7 +262,11 @@ async function load(serverUrl: string, params: SearchParams, opts: { byId?: bool
     for (const fmt of formatsResp) formatsMap.set(fmt.id, fmt);
     dataState.formats = formatsMap;
 
-    const processed = opts.byId ? processMeetings(meetingsResp) : applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
+    let processed = opts.byId ? processMeetings(meetingsResp) : applyFormatKeyLock(processMeetings(meetingsResp), config.formatKeys);
+    // Virtual finder: hide administrative (ASM) meetings and unjoinable virtual
+    // meetings from the list. Skipped for a by-id deep link — a direct link to a
+    // specific meeting should always resolve, even an ASM or link-less one.
+    if (config.virtual && !opts.byId) processed = filterVirtualMeetings(processed);
     dataState.meetings = sortMeetings(processed, config.nowOffset);
   } catch (err) {
     if (request === activeRequest) dataState.error = err instanceof Error ? err.message : get(t).errorLoadingMeetings;
