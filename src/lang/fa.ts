@@ -49,6 +49,7 @@ export const faTranslations = {
   // Meeting detail
   backToMeetings: 'بازگشت به جلسات',
   schedule: 'برنامه',
+  meetingLocalTime: 'زمان محلی جلسه',
   at: 'ساعت',
   duration: 'مدت',
   getDirections: 'مسیریابی',

@@ -49,6 +49,7 @@ export const jaTranslations = {
   // Meeting detail
   backToMeetings: 'ミーティング一覧に戻る',
   schedule: 'スケジュール',
+  meetingLocalTime: 'ミーティングの現地時間',
   at: 'に',
   duration: '時間',
   getDirections: '道順を取得',

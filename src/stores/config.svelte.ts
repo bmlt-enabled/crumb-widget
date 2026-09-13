@@ -35,7 +35,8 @@ export const CONFIG_DEFAULTS = {
   hideHeader: false,
   showFormats: false,
   inlineFormats: [] as string[],
-  darkMode: false as 'auto' | true | false
+  darkMode: false as 'auto' | true | false,
+  virtual: false
 } satisfies Partial<AppConfig>;
 
 export const config = $state<AppConfig>({
@@ -66,6 +67,10 @@ export function initConfig(el: HTMLElement): void {
   }
 
   const globalCfg = window.CrumbWidgetConfig ?? {};
+  // data-virtual overrides CrumbWidgetConfig.virtual. Virtual finder mode loads
+  // virtual+hybrid meetings worldwide, ordered soonest-first in the viewer's
+  // local time; it forces list view and disables geolocation/map below.
+  config.virtual = validBoolean('virtual', el.getAttribute('data-virtual') ?? globalCfg.virtual, CONFIG_DEFAULTS.virtual);
   // data-view overrides CrumbWidgetConfig.view — matches the precedence of every other
   // attribute/config pair in this file. Resolve the global value first so an invalid
   // data-view falls through to the configured global rather than CONFIG_DEFAULTS.
@@ -91,7 +96,8 @@ export function initConfig(el: HTMLElement): void {
   const formatsParam = query.get('formats');
   const formatsAttr = el.getAttribute('data-formats');
   config.formatKeys = formatsParam != null ? parseFormatKeys(formatsParam) : formatsAttr != null ? parseFormatKeys(formatsAttr) : validFormatKeys(globalCfg.formats, []);
-  config.view = dataView;
+  // Virtual meetings have no map location, so the finder is list-only.
+  config.view = config.virtual ? 'list' : dataView;
   config.containerId = el.id || 'crumb-widget';
   config.locationMarker = globalCfg.map?.markers?.location;
   config.tiles = globalCfg.map?.tiles;
@@ -106,8 +112,10 @@ export function initConfig(el: HTMLElement): void {
   // search by default — embedders can still opt in explicitly. A custom query forces it off:
   // we can't safely layer lat_val/long_val/geo_width on top of an arbitrary raw query.
   // data-geolocation overrides CrumbWidgetConfig.geolocation.
+  // Virtual finder mode is worldwide and location-agnostic, so geolocation /
+  // typed-location search are forced off (like the custom-query path).
   const geolocationAttr = el.getAttribute('data-geolocation');
-  config.geolocation = !config.query && validBoolean('geolocation', geolocationAttr ?? globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
+  config.geolocation = !config.query && !config.virtual && validBoolean('geolocation', geolocationAttr ?? globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
   const geolocationRadiusAttr = el.getAttribute('data-geolocation-radius');
   config.geolocationRadius = validRadius('geolocationRadius', geolocationRadiusAttr != null ? parseFloat(geolocationRadiusAttr) : globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
   const distanceOptionsAttr = el.getAttribute('data-distance-options');

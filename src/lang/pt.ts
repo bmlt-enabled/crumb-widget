@@ -49,6 +49,7 @@ export const ptTranslations = {
   // Meeting detail
   backToMeetings: 'Voltar às reuniões',
   schedule: 'Horário',
+  meetingLocalTime: 'Horário local da reunião',
   at: 'às',
   duration: 'Duração',
   getDirections: 'Como chegar',

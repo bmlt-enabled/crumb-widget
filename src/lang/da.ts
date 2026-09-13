@@ -49,6 +49,7 @@ export const daTranslations = {
   // Meeting detail
   backToMeetings: 'Tilbage til møder',
   schedule: 'Tidsplan',
+  meetingLocalTime: 'Mødets lokale tid',
   at: 'kl.',
   duration: 'Varighed',
   getDirections: 'Vejvisning',

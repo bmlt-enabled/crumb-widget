@@ -571,4 +571,32 @@ describe('initConfig', () => {
       expect(config.geolocation).toBe(false);
     });
   });
+
+  describe('virtual finder mode', () => {
+    test('defaults to false', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/' }));
+      expect(config.virtual).toBe(false);
+    });
+
+    test('data-virtual="true" enables virtual mode', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/', 'data-virtual': 'true' }));
+      expect(config.virtual).toBe(true);
+    });
+
+    test('CrumbWidgetConfig.virtual enables virtual mode', () => {
+      window.CrumbWidgetConfig = { virtual: true };
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/' }));
+      expect(config.virtual).toBe(true);
+    });
+
+    test('forces list view even when data-view=map is set', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/', 'data-virtual': 'true', 'data-view': 'map' }));
+      expect(config.view).toBe('list');
+    });
+
+    test('forces geolocation off on the aggregator (where it would otherwise default on)', () => {
+      initConfig(makeElement({ 'data-server': 'https://aggregator.bmltenabled.org/main_server/', 'data-virtual': 'true' }));
+      expect(config.geolocation).toBe(false);
+    });
+  });
 });

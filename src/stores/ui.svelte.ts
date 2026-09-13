@@ -2,6 +2,13 @@ import type { FilterState, ViewType } from '@/types';
 import { push } from '@bmlt-enabled/svelte-spa-router';
 import { meetingSlug } from '@utils/format';
 
+// Today as a BMLT weekday_tinyint (1=Sun … 7=Sat) in the viewer's local zone.
+// The virtual finder loads one day at a time and defaults to today.
+export function todayWeekday(): number {
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- transient read, not stored reactive state
+  return new Date().getDay() + 1;
+}
+
 export const uiState = $state<{
   view: ViewType;
   filters: FilterState;
@@ -9,6 +16,7 @@ export const uiState = $state<{
   selectedMeetingId: string | null;
   userLocation: { lat: number; lng: number } | undefined;
   geoRadius: number;
+  virtualDay: number;
 }>({
   view: 'list',
   filters: {
@@ -22,7 +30,8 @@ export const uiState = $state<{
   geoActive: false,
   selectedMeetingId: null,
   userLocation: undefined,
-  geoRadius: 0
+  geoRadius: 0,
+  virtualDay: todayWeekday()
 });
 
 export function setView(view: ViewType): void {

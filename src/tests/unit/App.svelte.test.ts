@@ -68,7 +68,8 @@ const baseConfig: AppConfig = {
   distanceUnit: 'mi',
   height: 600,
   showFormats: false,
-  inlineFormats: []
+  inlineFormats: [],
+  virtual: false
 };
 
 function makeFormat(overrides: Partial<Format> = {}): Format {

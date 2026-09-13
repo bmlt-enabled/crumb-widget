@@ -71,6 +71,12 @@ export interface AppConfig {
   updateUrl?: string;
   /** Raw BMLT query string passed through to `client.rawQuery()` verbatim. */
   query?: string;
+  /**
+   * Virtual-meeting finder mode: load virtual + hybrid meetings from across
+   * timezones, ordered "starting soonest" and displayed in the viewer's local
+   * time. Forces list view and disables geolocation/map.
+   */
+  virtual: boolean;
 }
 
 /**
@@ -93,6 +99,19 @@ export interface ProcessedMeeting extends Meeting {
   isVirtual: boolean;
   /** True for `venue_type` 1 (In-Person) or 3 (Hybrid). */
   isInPerson: boolean;
+  /**
+   * Virtual-mode only. When true, `weekday_tinyint`, `start_time`,
+   * `formattedTime`, and `time_zone` have been converted to the viewer's local
+   * zone, and the fields below preserve the meeting's original schedule for
+   * display beneath the local time.
+   */
+  localConverted?: boolean;
+  /** Original (server) start time, 'HH:MM:SS', before local conversion. */
+  originalStartTime?: string;
+  /** Original (server) weekday (1=Sun…7=Sat) before local conversion. */
+  originalWeekday?: number;
+  /** Original (server) IANA time zone the meeting meets in. */
+  originalTimeZone?: string;
 }
 
 /**
@@ -237,6 +256,16 @@ export interface CrumbWidgetConfig {
    * automatically if not present so meetings + formats come back in a single request.
    */
   query?: string;
+  /**
+   * Virtual-meeting finder mode. Loads virtual + hybrid meetings from across
+   * timezones, ordered "starting soonest" and shown in the viewer's local time
+   * (with each meeting's own time/zone beneath). Forces list view and turns off
+   * geolocation, typed-location search, and the map. Equivalent to the
+   * `data-virtual` attribute (the attribute takes precedence). Defaults to
+   * `false`. Best against the aggregator, where the server also orders results
+   * soonest-first; on other root servers the ordering is computed client-side.
+   */
+  virtual?: boolean;
   /** Map-related overrides (tile layers, custom markers). */
   map?: {
     /** Light-mode tile layer override. */

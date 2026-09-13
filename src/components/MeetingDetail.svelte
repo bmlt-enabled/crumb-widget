@@ -145,6 +145,13 @@
                 <span class="text-base font-normal text-gray-500">{getTimezoneAbbr(meeting.time_zone)}</span>
               {/if}
             </p>
+            {#if meeting.localConverted && meeting.originalStartTime && meeting.originalTimeZone}
+              <p class="mt-1 text-sm text-gray-500">
+                <span class="font-medium">{$t.meetingLocalTime}:</span>
+                {$t.weekdays[(meeting.originalWeekday ?? meeting.weekday_tinyint) - 1]}, {formatTime(meeting.originalStartTime)}
+                {getTimezoneAbbr(meeting.originalTimeZone)}
+              </p>
+            {/if}
           </div>
         </div>
 

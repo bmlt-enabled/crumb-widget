@@ -1987,6 +1987,17 @@
                 </td>
               </tr>
               <tr>
+                <td>data-virtual</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.virtual">
+                  Turn on <strong>Virtual Finder</strong> mode: load online (virtual) and hybrid meetings from across all time zones, ordered by which starts soonest and shown in the visitor's local
+                  time (each meeting's own time and zone is shown on its detail page). Meetings load one weekday at a time (defaulting to today) and are cached as you switch days. Forces list view and
+                  turns off the map and location search. Best against <code>aggregator.bmltenabled.org</code>, where the server also orders results soonest-first; on other root servers the ordering is
+                  computed in the browser. Takes precedence over <code>CrumbWidgetConfig.virtual</code>. Default: <code>false</code>. <br /><em>Values:</em> <code>"true"</code>, <code>"false"</code>,
+                  <code>"1"</code>, or <code>"0"</code>
+                </td>
+              </tr>
+              <tr>
                 <td>data-query</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.query">
@@ -2171,6 +2182,14 @@
                   servers, <code>true</code> when <code>data-server</code> points at <code>aggregator.bmltenabled.org</code> with no <code>service-body</code> set (the unconstrained aggregator needs a
                   location to return useful results). If browser geolocation fails or is denied, an error is shown — no fallback load occurs. <strong>Note:</strong> <code>serviceBodyIds</code>
                   filters have no effect on location searches; results are determined entirely by proximity.
+                </td>
+              </tr>
+              <tr>
+                <td>virtual</td>
+                <td><code>boolean</code></td>
+                <td data-i18n-html="globalConfig.row.virtual">
+                  Enable <strong>Virtual Finder</strong> mode — online + hybrid meetings worldwide, loaded one weekday at a time (default: today), ordered soonest-first and shown in the visitor's local
+                  time. Forces list view and disables the map and location search. Equivalent to the <code>data-virtual</code> attribute (the attribute takes precedence). Default: <code>false</code>.
                 </td>
               </tr>
               <tr>

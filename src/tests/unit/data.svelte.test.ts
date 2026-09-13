@@ -1,6 +1,7 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { dataState, loadData, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
+import { dataState, loadData, loadVirtualData, clearVirtualDayCache, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
 import { config } from '@stores/config.svelte';
+import { viewerTimeZone } from '@utils/timezone';
 import type { Meeting, Format } from '@/types';
 
 vi.mock('bmlt-query-client', () => ({
@@ -18,7 +19,9 @@ vi.mock('bmlt-query-client', () => ({
     PORTUGUESE: 'pt',
     RUSSIAN: 'ru',
     SWEDISH: 'sv'
-  }
+  },
+  VenueType: { IN_PERSON: 1, VIRTUAL: 2, HYBRID: 3 },
+  Weekday: { SUNDAY: 1, MONDAY: 2, TUESDAY: 3, WEDNESDAY: 4, THURSDAY: 5, FRIDAY: 6, SATURDAY: 7 }
 }));
 
 import { BmltClient } from 'bmlt-query-client';
@@ -61,6 +64,8 @@ beforeEach(() => {
   config.formatIds = [];
   config.formatKeys = [];
   config.query = undefined;
+  config.virtual = false;
+  clearVirtualDayCache();
   setLanguage('en');
 
   mockSearch = vi.fn();
@@ -204,13 +209,19 @@ describe('loadData', () => {
 });
 
 describe('service body names', () => {
-  test('does not request service_body_name via data_field_key', async () => {
-    // Root servers reject it as a data_field_key; asking for it is silently ignored.
+  test('requests service_body_name via data_field_key (modern servers return it inline)', async () => {
     mockSearch.mockResolvedValue({ meetings: [], formats: [] });
     await loadData('https://example.org/main_server');
     const { data_field_key: fields } = mockSearch.mock.calls[0]![0];
     expect(fields).toContain('service_body_bigint');
-    expect(fields).not.toContain('service_body_name');
+    expect(fields).toContain('service_body_name');
+  });
+
+  test('uses the inline service_body_name without an extra lookup', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_bigint: '18', service_body_name: 'Dallas Area' })], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(mockGetServiceBodies).not.toHaveBeenCalled();
+    expect(dataState.meetings[0]!.service_body_name).toBe('Dallas Area');
   });
 
   test('resolves names from service_body_bigint when the server omits them', async () => {
@@ -580,5 +591,103 @@ describe('raw query mode', () => {
     await loadData('https://example.org/main_server');
     expect(dataState.error).toBe('Bad query');
     expect(dataState.loading).toBe(false);
+  });
+});
+
+describe('loadVirtualData', () => {
+  test('requests virtual + hybrid venues, soonest-first, in the viewer zone', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        venue_types: [2, 3],
+        sort_results_by_next_start: true,
+        next_start_grace_minutes: 15,
+        target_time_zone: viewerTimeZone()
+      })
+    );
+  });
+
+  test('defaults to today when no weekday is given', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ weekdays: [new Date().getDay() + 1] }));
+  });
+
+  test('scopes to the given weekday', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server', [], 4);
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ weekdays: [4] }));
+  });
+
+  test('scopes to service bodies recursively when provided', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server', [9]);
+    expect(mockSearch).toHaveBeenCalledWith(expect.objectContaining({ services: [9], recursive: true }));
+  });
+
+  test('converts a foreign-zone meeting to the viewer zone and preserves the original', async () => {
+    config.virtual = true;
+    // Pick a source zone guaranteed to differ from the test runner's zone.
+    const viewer = viewerTimeZone();
+    const sourceZone = viewer === 'America/New_York' ? 'Asia/Tokyo' : 'America/New_York';
+    mockSearch.mockResolvedValue({
+      meetings: [rawMeeting({ venue_type: 2, weekday_tinyint: 3, start_time: '20:00:00', time_zone: sourceZone })],
+      formats: []
+    });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
+    const m = dataState.meetings[0]!;
+    expect(m.localConverted).toBe(true);
+    expect(m.originalTimeZone).toBe(sourceZone);
+    expect(m.originalStartTime).toBe('20:00:00');
+    expect(m.originalWeekday).toBe(3);
+    expect(m.time_zone).toBe(viewer);
+  });
+
+  test('leaves a same-zone meeting unconverted', async () => {
+    config.virtual = true;
+    mockSearch.mockResolvedValue({
+      meetings: [rawMeeting({ venue_type: 2, time_zone: viewerTimeZone() })],
+      formats: []
+    });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
+    expect(dataState.meetings[0]!.localConverted).toBeUndefined();
+  });
+
+  test('leaves a meeting with no time_zone unconverted', async () => {
+    config.virtual = true;
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 2, time_zone: '' })], formats: [] });
+    await loadVirtualData('https://aggregator.bmltenabled.org/main_server');
+    expect(dataState.meetings[0]!.localConverted).toBeUndefined();
+  });
+});
+
+describe('loadVirtualData caching', () => {
+  const url = 'https://aggregator.bmltenabled.org/main_server';
+
+  test('fetches each distinct day the first time it is viewed', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadVirtualData(url, [], 2); // Monday
+    await loadVirtualData(url, [], 4); // Wednesday
+    expect(mockSearch).toHaveBeenCalledTimes(2);
+  });
+
+  test('serves an already-loaded day from cache without refetching', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ venue_type: 2, meeting_name: 'Cached' })], formats: [] });
+    await loadVirtualData(url, [], 4); // Wednesday (fetch)
+    await loadVirtualData(url, [], 2); // Monday (fetch)
+    const before = mockSearch.mock.calls.length;
+    await loadVirtualData(url, [], 4); // back to Wednesday → cache hit, no fetch
+    expect(mockSearch.mock.calls.length).toBe(before);
+    expect(dataState.meetings).toHaveLength(1);
+    expect(dataState.meetings[0]!.meeting_name).toBe('Cached');
+  });
+
+  test('clearVirtualDayCache forces a refetch', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadVirtualData(url, [], 2);
+    clearVirtualDayCache();
+    await loadVirtualData(url, [], 2);
+    expect(mockSearch).toHaveBeenCalledTimes(2);
   });
 });
