@@ -77,6 +77,8 @@ export interface AppConfig {
    * time. Forces list view and disables geolocation/map.
    */
   virtual: boolean;
+  /** Weekday filter pre-selected on load. `'today'` selects the viewer's current day. */
+  defaultDay?: 'today';
 }
 
 /**
@@ -266,6 +268,14 @@ export interface CrumbWidgetConfig {
    * soonest-first; on other root servers the ordering is computed client-side.
    */
   virtual?: boolean;
+  /**
+   * Pre-select a weekday filter on load. `'today'` selects the viewer's current
+   * day, so the list opens showing only today's meetings; the filter chip can be
+   * cleared to show every day. Ignored in virtual finder mode, which already
+   * loads one day at a time. Equivalent to the `data-default-day` attribute (the
+   * attribute takes precedence). Defaults to unset (all days).
+   */
+  defaultDay?: 'today';
   /** Map-related overrides (tile layers, custom markers). */
   map?: {
     /** Light-mode tile layer override. */

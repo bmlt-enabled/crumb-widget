@@ -51,6 +51,11 @@ describe('mountCrumbWidget', () => {
     expect(config.hideHeader).toBe(true);
   });
 
+  test('defaultDay flows through', () => {
+    mountCrumbWidget(el, { serverUrl: 'https://bmlt.example.org/main_server/', defaultDay: 'today' });
+    expect(config.defaultDay).toBe('today');
+  });
+
   test('virtual option forces list view and disables geolocation', () => {
     mountCrumbWidget(el, { serverUrl: 'https://aggregator.bmltenabled.org/main_server/', virtual: true, view: 'map', geolocation: true });
     expect(config.virtual).toBe(true);

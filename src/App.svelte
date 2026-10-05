@@ -4,7 +4,7 @@
   import { countUniqueGroups } from 'bmlt-query-client';
   import type { AppConfig } from '@/types';
   import { loadData, loadVirtualData, loadMeetingById, loadDataByAddress, loadDataByCoordinates, dataState } from '@stores/data.svelte';
-  import { uiState } from '@stores/ui.svelte';
+  import { uiState, todayWeekday } from '@stores/ui.svelte';
   import { filterMeetings, getGeoErrorMessage, meetingIdFromPath } from '@utils/format';
   import { GEOLOCATION_HARD_TIMEOUT_MS, GEOLOCATION_TIMEOUT_MS, SPINNER_DELAY_MS } from '@utils/constants';
   import { t, direction } from '@stores/localization';
@@ -139,6 +139,12 @@
     if (config.virtual) {
       loadVirtualData(config.serverUrl, config.serviceBodyIds, uiState.virtualDay);
       return;
+    }
+
+    // defaultDay: 'today' pre-selects the viewer's current weekday as a regular
+    // filter, so the chip shows and can be cleared to reveal every day.
+    if (config.defaultDay === 'today') {
+      uiState.filters.weekdays = [todayWeekday()];
     }
 
     // Determine whether to attempt geolocation on load.

@@ -80,6 +80,13 @@ export function validDarkMode(value: unknown, fallback: 'auto' | true | false): 
   return fallback;
 }
 
+export function validDefaultDay(value: unknown): 'today' | undefined {
+  if (value == null || value === '') return undefined;
+  if (value === 'today') return 'today';
+  warn('defaultDay', value, "'today'", undefined);
+  return undefined;
+}
+
 export function validBoolean(field: string, value: unknown, fallback: boolean): boolean {
   if (value == null) return fallback;
   if (typeof value === 'boolean') return value;

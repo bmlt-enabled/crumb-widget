@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   test-ts:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: checkout 🛒
         uses: actions/checkout@v7
@@ -36,7 +36,7 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
 
   test-e2e:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: checkout 🛒
         uses: actions/checkout@v7

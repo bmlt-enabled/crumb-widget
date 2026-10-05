@@ -35,6 +35,7 @@ import {
   validBoolean,
   validColumns,
   validDarkMode,
+  validDefaultDay,
   validDistanceOptions,
   validDistanceUnit,
   validHeight,
@@ -134,6 +135,7 @@ export function mountCrumbWidget(el: HTMLElement, options: MountOptions): void {
   config.hideHeader = validBoolean('hideHeader', options.hideHeader, CONFIG_DEFAULTS.hideHeader);
   config.showFormats = validBoolean('showFormats', options.showFormats, CONFIG_DEFAULTS.showFormats);
   config.updateUrl = validUpdateUrl(options.updateUrl);
+  config.defaultDay = validDefaultDay(options.defaultDay);
 
   if (options.basePath != null) {
     setHashMode(false, options.basePath);
