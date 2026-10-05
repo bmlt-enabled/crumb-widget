@@ -1998,6 +1998,15 @@
                 </td>
               </tr>
               <tr>
+                <td>data-default-day</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.defaultDay">
+                  Pre-select a weekday filter on load. <code>"today"</code> opens the list showing only the visitor's current day; the day chip can be cleared to show every day. Ignored in Virtual
+                  Finder mode, which already loads one day at a time. Takes precedence over <code>CrumbWidgetConfig.defaultDay</code>. Default: unset (all days). <br /><em>Values:</em>
+                  <code>"today"</code>
+                </td>
+              </tr>
+              <tr>
                 <td>data-query</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.query">
@@ -2190,6 +2199,14 @@
                 <td data-i18n-html="globalConfig.row.virtual">
                   Enable <strong>Virtual Finder</strong> mode — online + hybrid meetings worldwide, loaded one weekday at a time (default: today), ordered soonest-first and shown in the visitor's local
                   time. Forces list view and disables the map and location search. Equivalent to the <code>data-virtual</code> attribute (the attribute takes precedence). Default: <code>false</code>.
+                </td>
+              </tr>
+              <tr>
+                <td>defaultDay</td>
+                <td><code>'today'</code></td>
+                <td data-i18n-html="globalConfig.row.defaultDay">
+                  Pre-select a weekday filter on load. <code>'today'</code> opens the list showing only the visitor's current day; the day chip can be cleared to show every day. Ignored in Virtual
+                  Finder mode. Equivalent to the <code>data-default-day</code> attribute (the attribute takes precedence). Default: unset (all days).
                 </td>
               </tr>
               <tr>

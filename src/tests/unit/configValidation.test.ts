@@ -6,6 +6,7 @@ import {
   validBoolean,
   validColumns,
   validDarkMode,
+  validDefaultDay,
   validDistanceOptions,
   validDistanceUnit,
   validFormatKeys,
@@ -210,6 +211,26 @@ describe('validBoolean', () => {
   test('warns on non-boolean', () => {
     expect(validBoolean('field', 1, false)).toBe(false);
     expect(validBoolean('field', 'yes', false)).toBe(false);
+    expect(warnSpy).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('validDefaultDay', () => {
+  test('returns undefined for nullish or empty without warning', () => {
+    expect(validDefaultDay(undefined)).toBeUndefined();
+    expect(validDefaultDay(null)).toBeUndefined();
+    expect(validDefaultDay('')).toBeUndefined();
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test("accepts 'today'", () => {
+    expect(validDefaultDay('today')).toBe('today');
+    expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  test('warns on anything else', () => {
+    expect(validDefaultDay('monday')).toBeUndefined();
+    expect(validDefaultDay(2)).toBeUndefined();
     expect(warnSpy).toHaveBeenCalledTimes(2);
   });
 });

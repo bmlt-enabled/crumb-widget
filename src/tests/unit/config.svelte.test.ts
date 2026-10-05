@@ -504,6 +504,30 @@ describe('initConfig', () => {
     });
   });
 
+  describe('defaultDay', () => {
+    test('defaults to undefined', () => {
+      initConfig(makeElement());
+      expect(config.defaultDay).toBeUndefined();
+    });
+
+    test('reads data-default-day', () => {
+      initConfig(makeElement({ 'data-default-day': 'today' }));
+      expect(config.defaultDay).toBe('today');
+    });
+
+    test('reads CrumbWidgetConfig.defaultDay', () => {
+      window.CrumbWidgetConfig = { defaultDay: 'today' };
+      initConfig(makeElement());
+      expect(config.defaultDay).toBe('today');
+    });
+
+    test('invalid value warns and falls back to undefined', () => {
+      initConfig(makeElement({ 'data-default-day': 'monday' }));
+      expect(config.defaultDay).toBeUndefined();
+      expect(warnSpy).toHaveBeenCalled();
+    });
+  });
+
   describe('raw query', () => {
     test('defaults config.query to undefined', () => {
       initConfig(makeElement());

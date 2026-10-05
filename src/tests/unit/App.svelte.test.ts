@@ -4,7 +4,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/svelte';
 import App from '@/App.svelte';
 import type { AppConfig, Format } from '@/types/index';
 import { dataState, loadData, loadVirtualData, loadMeetingById, loadDataByAddress, loadDataByCoordinates } from '@stores/data.svelte';
-import { uiState, resetFilters } from '@stores/ui.svelte';
+import { uiState, resetFilters, todayWeekday } from '@stores/ui.svelte';
 import { config } from '@stores/config.svelte';
 import type { ProcessedMeeting } from '@/types/index';
 import { routerLoc } from './helpers/router-location.svelte';
@@ -912,6 +912,25 @@ describe('geolocation', () => {
     // loadDataByAddress owns the error message — the page-level error
     // updates to reflect what the user just tried.
     await waitFor(() => expect(dataState.error).toBe('Could not find that location.'));
+  });
+});
+
+describe('defaultDay', () => {
+  test("'today' pre-selects the current weekday filter on load", async () => {
+    render(App, { props: { config: { ...baseConfig, defaultDay: 'today' } } });
+    await waitFor(() => expect(uiState.filters.weekdays).toEqual([todayWeekday()]));
+  });
+
+  test('unset leaves the weekday filter empty', async () => {
+    render(App, { props: { config: baseConfig } });
+    await waitFor(() => expect(loadData).toHaveBeenCalled());
+    expect(uiState.filters.weekdays).toEqual([]);
+  });
+
+  test('is ignored in virtual finder mode', async () => {
+    render(App, { props: { config: { ...baseConfig, virtual: true, defaultDay: 'today' } } });
+    await waitFor(() => expect(loadVirtualData).toHaveBeenCalled());
+    expect(uiState.filters.weekdays).toEqual([]);
   });
 });
 

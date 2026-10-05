@@ -9,6 +9,7 @@ import {
   validBoolean,
   validColumns,
   validDarkMode,
+  validDefaultDay,
   validDistanceOptions,
   validDistanceUnit,
   validFormatKeys,
@@ -141,6 +142,8 @@ export function initConfig(el: HTMLElement): void {
   config.inlineFormats = inlineFormatsAttr != null ? parseFormatKeys(inlineFormatsAttr) : validFormatKeys(globalCfg.inlineFormats, CONFIG_DEFAULTS.inlineFormats, 'inlineFormats');
   // data-update-url overrides CrumbWidgetConfig.updateUrl
   config.updateUrl = validUpdateUrl(el.getAttribute('data-update-url') ?? globalCfg.updateUrl);
+  // data-default-day overrides CrumbWidgetConfig.defaultDay
+  config.defaultDay = validDefaultDay(el.getAttribute('data-default-day') ?? globalCfg.defaultDay);
 
   const explicitLanguage = validLanguage(el.getAttribute('data-language') ?? globalCfg.language, SUPPORTED_LANGUAGES);
   const language = explicitLanguage ?? (typeof navigator !== 'undefined' ? navigator.language : 'en');
