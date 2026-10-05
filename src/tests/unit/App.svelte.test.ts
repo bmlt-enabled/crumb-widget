@@ -119,6 +119,10 @@ function makeMeeting(overrides: Partial<ProcessedMeeting> = {}): ProcessedMeetin
 }
 
 beforeEach(() => {
+  // Pin to a Wednesday so the Monday 7 PM default meeting never falls in the
+  // "in progress" window (and gets collapsed). Only Date is faked — waitFor and
+  // geolocation timeouts still need real timers.
+  vi.useFakeTimers({ toFake: ['Date'], now: new Date('2026-04-08T12:00:00') });
   dataState.meetings = [];
   dataState.loading = false;
   dataState.error = null;
@@ -128,6 +132,10 @@ beforeEach(() => {
   uiState.userLocation = undefined;
   uiState.geoRadius = 0;
   routerLoc.value = '/';
+});
+
+afterEach(() => {
+  vi.useRealTimers();
 });
 
 describe('App', () => {
