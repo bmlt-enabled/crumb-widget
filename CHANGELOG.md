@@ -1,6 +1,7 @@
 ## 1.6.2 (October 8, 2026)
 
 - **Finnish translation** (`fi`) — widget UI and documentation page, plus a Finnish README. 14 languages total. BMLT has no Finnish `lang_enum`, so format names come from the server in its default language (same as Japanese)
+- **Docs page translations caught up** — the 12 non-English docs dictionaries were missing 12 newer entries (the attribute rows added in 1.6.0 for `data-formats`, `data-dark-mode`, `data-language`, etc., plus the `inlineFormats` rows) and still had English text for the three `showFormats` rows, so those lines showed in English. All are now translated
 
 ## 1.6.1 (October 8, 2026)
 

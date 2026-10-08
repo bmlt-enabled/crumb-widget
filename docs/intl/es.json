@@ -16,6 +16,7 @@
     "globalConfig": "Config global",
     "language": "Idioma",
     "geolocation": "Geolocalización",
+    "updateUrl": "Enlace para actualizar info",
     "queryParams": "Parámetros URL",
     "cssVars": "Variables CSS",
     "cssDarkMode": "Modo oscuro",
@@ -29,7 +30,6 @@
     "exampleMap": "Mapa por defecto",
     "exampleWordpress": "WordPress",
     "exampleDrupal": "Drupal",
-    "exampleJoomla": "Joomla",
     "routingModes": "Modos de enrutado",
     "findServiceBody": "Encontrar el ID de tu cuerpo de servicio",
     "googleSites": "Google Sites",
@@ -52,7 +52,7 @@
       "npm": "Paquete npm",
       "legal": "Legal"
     },
-    "updateUrl": "Enlace para actualizar info"
+    "exampleJoomla": "Joomla"
   },
   "header": {
     "subtitle": "Un widget incrustable de búsqueda de reuniones de NA para cualquier sitio web.",
@@ -152,12 +152,22 @@
     },
     "server": "URL completa de tu servidor BMLT. <br /><em>Ejemplo:</em> <code>https://example.org/main_server</code>",
     "serviceBody": "Filtra reuniones por uno o varios cuerpos de servicio. Acepta un único ID numérico o una lista separada por comas. Omítelo para mostrar todas las reuniones del servidor. <br /><em>Único:</em> <code>\"42\"</code> <br /><em>Varios:</em> <code>\"42,57,103\"</code> <br /><strong>Nota:</strong> la búsqueda recursiva siempre está activada — los cuerpos de servicio hijos se incluyen automáticamente y no se pueden desactivar.",
+    "formatIds": "Limita el widget a las reuniones que coinciden con uno o varios <strong>IDs de formato</strong> (numéricos, específicos del servidor). El filtro se aplica a nivel de la API de BMLT, por lo que solo se recuperan las reuniones coincidentes. Útil cuando quieres mostrar, por ejemplo, solo reuniones abiertas. <br /><em>Único:</em> <code>\"4\"</code> <br /><em>Varios:</em> <code>\"4,7,12\"</code> (AND — las reuniones deben coincidir con todos los IDs listados) <br />Los IDs de formato varían por servidor. Búscalos en el panel de BMLT o vía <code>GetFormats</code>. Para un filtrado independiente del servidor por código (p. ej. <code>O</code>, <code>BT</code>), usa la opción global <code>formats</code> en su lugar.",
     "view": "Vista por defecto cuando carga el widget. <br /><em>Valores:</em> <code>list</code> (predeterminado), <code>map</code> o <code>both</code> <br /><code>both</code> muestra un mapa de altura fija sobre la lista completa de reuniones, sin alternancia lista/mapa. <br />Se puede sobrescribir en tiempo de ejecución mediante el parámetro <code>?view=</code> (ver <a href=\"#query-params\">Parámetros URL</a>).",
     "columns": "Lista separada por comas de columnas a mostrar en la vista de lista. Mismos valores permitidos que la opción global <code>columns</code>: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>, <code>formats</code>. <code>CrumbWidgetConfig.columns</code> tiene prioridad cuando ambos están definidos. <br /><em>Ejemplo:</em> <code>data-columns=\"time,name,address\"</code>",
     "path": "Activa el enrutado mediante History API (URLs limpias sin <code>#</code>) y define la ruta base. Sin este atributo se usa el enrutado por hash (predeterminado). <br /><em>Ejemplo:</em> <code>data-path=\"/meetings\"</code> produce URLs como <code>/meetings/monday-night-meeting-42</code> <br />Usa <code>data-path=\"\"</code> para enrutado por ruta sin prefijo (por ejemplo, en iframes). <br />Consulta <a href=\"#routing\">Enrutado</a> para más detalles.",
-    "formatIds": "Limita el widget a las reuniones que coinciden con uno o varios <strong>IDs de formato</strong> (numéricos, específicos del servidor). El filtro se aplica a nivel de la API de BMLT, por lo que solo se recuperan las reuniones coincidentes. Útil cuando quieres mostrar, por ejemplo, solo reuniones abiertas. <br /><em>Único:</em> <code>\"4\"</code> <br /><em>Varios:</em> <code>\"4,7,12\"</code> (AND — las reuniones deben coincidir con todos los IDs listados) <br />Los IDs de formato varían por servidor. Búscalos en el panel de BMLT o vía <code>GetFormats</code>. Para un filtrado independiente del servidor por código (p. ej. <code>O</code>, <code>BT</code>), usa la opción global <code>formats</code> en su lugar.",
     "updateUrl": "Muestra un enlace <strong>«Actualizar info de la reunión»</strong> al pie de cada panel de detalle, apuntando a una plantilla de URL que tú controlas. La plantilla se expande por reunión usando los tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code> y <code>{return_url}</code> — el valor de cada token se codifica en URL al sustituirse. Diseñado para integrarse con el formulario de actualización de <a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>, cualquier formulario alojado personalizado o un enlace <code>mailto:</code>. Los tokens desconocidos se dejan intactos. El enlace se abre en una nueva pestaña. El botón se oculta cuando el atributo no está definido. Consulta la sección <a href=\"#update-url\">Enlace de actualización de reunión</a> abajo para ver ejemplos. <br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>",
-    "showFormats": "Show a comma-separated list of <strong>format codes</strong> (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Takes precedence over <code>CrumbWidgetConfig.showFormats</code>. Default: <code>false</code>. <br /><em>Values:</em> <code>\"true\"</code>, <code>\"false\"</code>, <code>\"1\"</code>, or <code>\"0\"</code>",
+    "showFormats": "Muestra una lista separada por comas de <strong>códigos de formato</strong> (p. ej. <code>C, O, BT</code>) debajo del nombre de cada reunión en la lista/tarjetas. <code>C</code> (Cerrada) y <code>O</code> (Abierta) van primero; el resto de códigos se ordena alfabéticamente. Tiene prioridad sobre <code>CrumbWidgetConfig.showFormats</code>. Predeterminado: <code>false</code>. <br /><em>Valores:</em> <code>\"true\"</code>, <code>\"false\"</code>, <code>\"1\"</code> o <code>\"0\"</code>",
+    "inlineFormats": "<strong>Cadenas clave de formato</strong> separadas por comas (p. ej. <code>M,W</code>) que se resaltan junto al nombre de cada reunión en la lista/tarjetas. Cada formato coincidente muestra su nombre localizado (p. ej. «Mujeres») como sufijo atenuado — un resaltado seleccionado para reuniones de interés especial, independiente de <code>data-show-formats</code>. Tiene prioridad sobre <code>CrumbWidgetConfig.inlineFormats</code>. Opcional: predeterminado <code>\"\"</code> (ninguno). Las cadenas clave de formato de BMLT varían según el servidor, así que un código solo aparece donde el servidor realmente lo usa. <br /><em>Ejemplo:</em> <code>data-inline-formats=\"M,W\"</code>",
+    "formats": "Limita el widget a las reuniones que coinciden con una o varias <strong>cadenas clave de formato</strong> (p. ej. <code>O</code>, <code>BT</code>). Separadas por comas. El filtro se aplica en el cliente tras la descarga. Tiene prioridad sobre <code>CrumbWidgetConfig.formats</code>; lo sobrescribe el parámetro de consulta <code>?formats=</code>. Predeterminado: <code>\"\"</code> (sin restricción). <br /><em>Ejemplo:</em> <code>data-formats=\"O\"</code>",
+    "geolocationRadius": "Radio de búsqueda fijo o automático para «Cerca de mí». Un número <strong>positivo</strong> fija un radio en millas/km. Un <strong>entero negativo</strong> usa el radio automático de BMLT (p. ej. <code>-50</code> encuentra ~50 reuniones cercanas). Tiene prioridad sobre <code>CrumbWidgetConfig.geolocationRadius</code>. Predeterminado: <code>-50</code>.",
+    "distanceOptions": "Valores de distancia separados por comas (en <code>distanceUnit</code>) que se muestran en el desplegable «Cerca de mí». Tiene prioridad sobre <code>CrumbWidgetConfig.distanceOptions</code>. Predeterminado: <code>5,10,15,25,50,100</code>. <br /><em>Ejemplo:</em> <code>data-distance-options=\"5,10,25\"</code>",
+    "distanceUnit": "Unidad para mostrar distancias. Tiene prioridad sobre <code>CrumbWidgetConfig.distanceUnit</code>. Predeterminado: se detecta automáticamente según la configuración regional. <br /><em>Valores:</em> <code>mi</code> o <code>km</code>",
+    "height": "Altura fija del widget en píxeles. Tiene prioridad sobre <code>CrumbWidgetConfig.height</code>. Omítelo para usar la altura natural del contenido. <br /><em>Ejemplo:</em> <code>data-height=\"600\"</code>",
+    "darkMode": "Esquema de color oscuro. Tiene prioridad sobre <code>CrumbWidgetConfig.darkMode</code>. Predeterminado: <code>false</code>. <br /><em>Valores:</em> <code>auto</code> (sigue la preferencia del sistema operativo), <code>true</code> / <code>1</code> (forzar oscuro), <code>false</code> / <code>0</code> (forzar claro)",
+    "nowOffset": "Minutos de margen antes de considerar una reunión como pasada. Las reuniones que comenzaron en los últimos <code>nowOffset</code> minutos siguen apareciendo al principio; las anteriores pasan al final de la lista. Tiene prioridad sobre <code>CrumbWidgetConfig.nowOffset</code>. Predeterminado: <code>10</code>. Establece <code>0</code> para pasarlas al final de inmediato.",
+    "hideHeader": "Oculta la barra de título «Buscador de Reuniones» y el recuento de reuniones en la parte superior del widget. Tiene prioridad sobre <code>CrumbWidgetConfig.hideHeader</code>. Predeterminado: <code>false</code>. <br /><em>Valores:</em> <code>true</code>, <code>false</code>, <code>1</code> o <code>0</code>",
+    "language": "Sobrescribe el idioma de la interfaz. Tiene prioridad sobre <code>CrumbWidgetConfig.language</code>. Predeterminado: <code>navigator.language</code>, con inglés como alternativa. <br /><em>Ejemplo:</em> <code>data-language=\"fr\"</code> <br />Códigos admitidos: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>",
     "virtual": "Activa el modo <strong>Buscador Virtual</strong>: carga reuniones en línea (virtuales) e híbridas de todas las zonas horarias, ordenadas según cuál empieza antes y mostradas en la hora local del visitante (la hora y la zona propias de cada reunión aparecen en su página de detalle). Las reuniones se cargan de un día de la semana a la vez (hoy de forma predeterminada) y se almacenan en caché al cambiar de día. Fuerza la vista de lista y desactiva el mapa y la búsqueda por ubicación. Funciona mejor con <code>aggregator.bmltenabled.org</code>, donde el servidor también ordena los resultados por inicio más próximo; en otros servidores raíz el orden se calcula en el navegador. Tiene prioridad sobre <code>CrumbWidgetConfig.virtual</code>. Predeterminado: <code>false</code>. <br /><em>Valores:</em> <code>\"true\"</code>, <code>\"false\"</code>, <code>\"1\"</code> o <code>\"0\"</code>",
     "defaultDay": "Preselecciona un filtro de día al cargar. <code>\"today\"</code> abre la lista mostrando solo el día actual del visitante; el chip del día se puede quitar para ver todos los días. Se ignora en el modo Virtual Finder, que ya carga un día a la vez. Tiene prioridad sobre <code>CrumbWidgetConfig.defaultDay</code>. Predeterminado: sin definir (todos los días). <br /><em>Valores:</em> <code>\"today\"</code>"
   },
@@ -174,14 +184,15 @@
       "distanceUnit": "Unidad mostrada junto a las distancias en el desplegable Cerca de mí. Por defecto: detectada automáticamente a partir de la configuración regional resuelta (<code>en-US</code>, <code>en-GB</code>, <code>en-LR</code>, <code>my-MM</code> → <code>'mi'</code>; cualquier otra → <code>'km'</code>). Establécela explícitamente para forzar una unidad.",
       "nowOffset": "Minutos de margen antes de considerar una reunión como pasada. Las reuniones que comenzaron en los últimos <code>nowOffset</code> minutos siguen apareciendo al principio de la lista; las anteriores del día actual pasan al final (como si ocurrieran la próxima semana). Por defecto: <code>10</code>. Establece <code>0</code> para que pasen al final inmediatamente al terminar la hora de inicio.",
       "hideHeader": "Oculta la barra de título \"Buscador de reuniones\" y el conteo de reuniones en la parte superior del widget. Por defecto: <code>false</code>.",
-      "showFormats": "Show a comma-separated list of <strong>format codes</strong> (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Equivalent to the <code>data-show-formats</code> attribute (the attribute takes precedence). Default: <code>false</code>.",
+      "showFormats": "Muestra una lista separada por comas de <strong>códigos de formato</strong> (p. ej. <code>C, O, BT</code>) debajo del nombre de cada reunión en la lista/tarjetas. <code>C</code> (Cerrada) y <code>O</code> (Abierta) van primero; el resto de códigos se ordena alfabéticamente. Equivale al atributo <code>data-show-formats</code> (el atributo tiene prioridad). Predeterminado: <code>false</code>.",
+      "inlineFormats": "Resalta una o varias <strong>cadenas clave de formato</strong> (p. ej. <code>'M'</code>, <code>'W'</code>) junto al nombre de cada reunión en la lista/tarjetas. El formato coincidente de cada reunión muestra su nombre localizado (p. ej. «Mujeres») como sufijo atenuado — un resaltado seleccionado para reuniones de interés especial, independiente de <code>showFormats</code>. Equivale al atributo <code>data-inline-formats</code> (el atributo tiene prioridad). Opcional: predeterminado <code>[]</code> (ninguno). Las cadenas clave de formato de BMLT varían según el servidor, así que un código solo aparece donde el servidor realmente lo usa. <br /><em>Ejemplo:</em> <code>inlineFormats: ['M', 'W']</code>",
       "darkMode": "Esquema de color oscuro integrado. <code>'auto'</code> sigue la preferencia del sistema operativo (<code>prefers-color-scheme</code>); <code>true</code> fuerza el modo oscuro independientemente del sistema; <code>false</code> (por defecto) lo desactiva. Funciona junto con <a href=\"#tile-dark-config\">los mosaicos en modo oscuro</a>.",
       "mapTiles": "Proveedor de mosaicos personalizado. Sustituye los mosaicos predeterminados de OpenStreetMap. Consulta <a href=\"#tile-config\">Proveedor de mosaicos</a> más abajo.",
       "mapTilesDark": "Proveedor alternativo de mosaicos cuando <code>prefers-color-scheme: dark</code>. Cambia automáticamente al cambiar el tema del sistema. Consulta <a href=\"#tile-dark-config\">Mosaicos modo oscuro</a> más abajo.",
       "mapMarkers": "Marcador personalizado para las ubicaciones de reuniones. Sustituye al marcador NA predeterminado. Consulta <a href=\"#marker-config\">Config de marcadores</a> más abajo.",
       "height": "Altura del widget en píxeles. Equivalente al atributo <code>data-height</code>. Omítelo para que el widget crezca hasta su altura de contenido natural.",
-      "basePath": "Ruta base para el enrutado mediante History API (p. ej. <code>'/meetings'</code>). Equivalente al atributo <code>data-path</code> — produce URLs limpias sin el fragmento <code>#</code>. Consulta <a href=\"#routing\">Enrutado</a> para más detalles.",
       "formats": "Limita el widget a las reuniones que coinciden con una o varias <strong>cadenas clave de formato</strong> (p. ej. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). El filtro se aplica <em>después</em> de la respuesta de la API, por lo que se recuperan todas las reuniones y el filtro por clave de formato reduce el conjunto en el cliente. Varias claves se combinan con AND — una reunión debe coincidir con todas las claves listadas. Las cadenas clave son estables entre servidores BMLT, así que es la mejor opción para un filtrado independiente del servidor. Para filtrado en el servidor por ID numérico, usa <code>data-format-ids</code>. Predeterminado: <code>[]</code> (sin restricción). <br /><em>Ejemplo:</em> <code>formats: ['O']</code>",
+      "basePath": "Ruta base para el enrutado mediante History API (p. ej. <code>'/meetings'</code>). Equivalente al atributo <code>data-path</code> — produce URLs limpias sin el fragmento <code>#</code>. Consulta <a href=\"#routing\">Enrutado</a> para más detalles.",
       "updateUrl": "Plantilla de URL para el enlace <strong>«Actualizar info de la reunión»</strong> al pie del panel de detalle. Equivalente al atributo <code>data-update-url</code> (el atributo tiene prioridad). Tokens: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — codificados en URL al sustituirse. Funciona con el formulario de actualización de bmlt-workflow, cualquier formulario alojado personalizado o URLs <code>mailto:</code>. El enlace se abre en una nueva pestaña. Oculto cuando no está definido. Consulta la sección <a href=\"#update-url\">Enlace de actualización de reunión</a> abajo para ver ejemplos.",
       "virtual": "Activa el modo <strong>Buscador Virtual</strong>: reuniones en línea e híbridas de todo el mundo, cargadas de un día a la vez (predeterminado: hoy), ordenadas por inicio más próximo y mostradas en la hora local del visitante. Fuerza la vista de lista y desactiva el mapa y la búsqueda por ubicación. Equivale al atributo <code>data-virtual</code> (el atributo tiene prioridad). Predeterminado: <code>false</code>.",
       "defaultDay": "Preselecciona un filtro de día al cargar. <code>'today'</code> abre la lista mostrando solo el día actual del visitante; el chip del día se puede quitar para ver todos los días. Se ignora en el modo Virtual Finder. Equivale al atributo <code>data-default-day</code> (el atributo tiene prioridad). Predeterminado: sin definir (todos los días)."
@@ -221,6 +232,37 @@
     "p4": "El botón Cerca de mí abre un desplegable de distancia para que los usuarios elijan hasta dónde buscar. Seleccionar un radio aplica un filtro de distancia en el cliente sobre las reuniones ya cargadas — no se realiza una nueva petición al cambiar el radio. Las distancias disponibles provienen de <code>distanceOptions</code>, limitadas por <code>geolocationRadius</code>; las opciones sin reuniones en rango se ocultan automáticamente. Usa <code>distanceUnit</code> para mostrar kilómetros en lugar de millas.",
     "p5": "Cuando estás en la vista de mapa con Cerca de mí activo, al desplazar o ampliar el mapa aparece un botón <strong>Buscar en esta zona</strong> en la parte superior. Al pulsarlo, se recargan reuniones centradas en la vista actual del mapa, usando el mismo radio seleccionado. El mapa se queda en la posición del usuario — no salta a los nuevos resultados.",
     "p6": "El campo de búsqueda también obtiene un pequeño menú desplegable de modo: los usuarios pueden cambiar entre <em>Filtrar reuniones</em> (el predeterminado — un filtro de texto del lado del cliente sobre las reuniones ya cargadas) y <em>Buscar ubicación</em>. En modo ubicación, escribir una ciudad, código postal o dirección (p. ej. <code>Edgartown, MA</code> o <code>02539</code>) y presionar Enter resuelve el lugar a través de OpenStreetMap Nominatim y recarga reuniones cercanas a las coordenadas resultantes. El radio utilizado es la última elección de Cerca de mí, si existe, o <code>geolocationRadius</code>. El tráfico de geocodificación va directamente a <code>nominatim.openstreetmap.org</code> — no se requiere clave de API, pero los consumidores deben respetar la <a href=\"https://operations.osmfoundation.org/policies/nominatim/\">política de uso de Nominatim</a> (máximo una solicitud por segundo; las solicitudes deben incluir un User-Agent identificando tu aplicación — <code>bmlt-query-client</code> establece uno por defecto)."
+  },
+  "updateUrl": {
+    "title": "Enlace para actualizar info de la reunión",
+    "intro": "Añade un botón <strong>«Actualizar info de la reunión»</strong> al pie de cada panel de detalle configurando <code>data-update-url</code> (o <code>updateUrl</code> en la configuración global) con una plantilla de URL. El widget sustituye los tokens por reunión al hacer clic y abre el resultado en una nueva pestaña. Si la opción no está definida, el botón usa el formulario de actualización del cuerpo de servicio de la reunión cuando el servidor lo proporciona (ver más abajo); de lo contrario, se oculta.",
+    "tokens": "Tokens soportados (cada valor se codifica en URL al sustituirse; los <code>{tokens}</code> desconocidos se dejan intactos):",
+    "th": {
+      "token": "Token",
+      "value": "Valor"
+    },
+    "token": {
+      "meetingId": "El <code>id_bigint</code> de la reunión BMLT — el identificador canónico que esperan la mayoría de los formularios de actualización.",
+      "meetingName": "Nombre legible de la reunión. Útil en asuntos de <code>mailto:</code>.",
+      "serverUrl": "La URL del servidor raíz BMLT configurada (el valor de <code>data-server</code>).",
+      "returnUrl": "La URL de la página actual — útil como enlace de regreso o referencia de auditoría en los envíos."
+    },
+    "serviceBody": {
+      "title": "Automático: formulario de actualización del cuerpo de servicio",
+      "body": "Cuando <code>updateUrl</code> no está definido, el widget recurre a la <code>meeting_update_url</code> que BMLT Server 4.2.9+ guarda en cada cuerpo de servicio (normalmente una página de BMLT Workflow). La URL se consulta al abrir el panel de detalles de una reunión (una solicitud en caché por cuerpo de servicio) y el botón enlaza a <code>&lt;URL del formulario&gt;?meeting_id=&lt;id&gt;</code>, conservando cualquier query string existente. En el agregador, el id es el <code>source_id</code> de la reunión (su id en su propio servidor raíz), porque el formulario no reconoce el <code>id_bigint</code> del agregador. Solo se usan URL <code>http(s)</code>. Si el cuerpo de servicio no tiene URL o la consulta falla, el botón permanece oculto. Un <code>updateUrl</code> explícito siempre tiene prioridad."
+    },
+    "workflow": {
+      "title": "Ejemplo: integración con bmlt-workflow",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> es un plugin de WordPress que expone un formulario de actualización de reunión mediante el shortcode <code>[bmltwf-meeting-update-form]</code>. El JavaScript del formulario lee <code>?meeting_id=</code> de la URL para preseleccionar la reunión, así que la plantilla solo necesita el token <code>{meeting_id}</code>:"
+    },
+    "mailto": {
+      "title": "Ejemplo: enlace mailto",
+      "body": "¿No tienes un formulario alojado? Apunta a una URL <code>mailto:</code> — el cliente de correo del usuario se abre con el asunto y el cuerpo prerrellenados. Los tokens se codifican en URL, así que son seguros dentro de los parámetros de consulta de <code>mailto:</code>:"
+    },
+    "custom": {
+      "title": "Ejemplo: cualquier endpoint personalizado",
+      "body": "Cualquier URL que acepte un identificador de reunión en la cadena de consulta funciona. El enlace se abre en una nueva pestaña, así que tu endpoint puede ser una página completa (un Google Form, un formulario de Airtable, un CMS personalizado, etc.). Pasa <code>{return_url}</code> para que tu formulario tenga un enlace de regreso a la página de la reunión:"
+    }
   },
   "queryParams": {
     "title": "Parámetros de consulta URL",
@@ -433,9 +475,9 @@
   "findServiceBody": {
     "title": "Encontrar el ID de tu cuerpo de servicio",
     "intro": "Cada inserción a continuación filtra las reuniones por un <strong>cuerpo de servicio</strong> específico (área, región o zona) pasando su ID numérico en <code>data-service-body</code>.",
+    "calloutSdle": "<strong>La forma fácil — búsqueda por ubicación.</strong> Visita <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, haz clic en cualquier punto del mapa (o busca una dirección) y el popup mostrará el cuerpo de servicio que cubre esa zona. Abre <strong>Server details</strong> en el popup para ver tanto la <strong>URL del servidor</strong> como el <strong>ID del cuerpo de servicio</strong> — para tu servidor local o el agregador. Haz clic en cualquier valor para copiarlo y pégalo en <code>data-server</code> y <code>data-service-body</code>.",
     "callout1": "<strong>¿No conoces la URL de tu servidor o el ID de cuerpo de servicio?</strong> Visita <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — lista los servidores BMLT conocidos y los cuerpos de servicio en cada uno. Encuentra tu área, región o zona para obtener tanto la URL <code>data-server</code> como el ID <code>data-service-body</code> en un solo lugar.",
-    "callout2": "<strong>Consejo:</strong> los cuerpos de servicio hijos siempre se incluyen automáticamente. Si pasas el ID de una región, se incluyen las reuniones de todas las áreas que dependen de ella — no necesitas listar cada área hija.",
-    "calloutSdle": "<strong>La forma fácil — búsqueda por ubicación.</strong> Visita <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, haz clic en cualquier punto del mapa (o busca una dirección) y el popup mostrará el cuerpo de servicio que cubre esa zona. Abre <strong>Server details</strong> en el popup para ver tanto la <strong>URL del servidor</strong> como el <strong>ID del cuerpo de servicio</strong> — para tu servidor local o el agregador. Haz clic en cualquier valor para copiarlo y pégalo en <code>data-server</code> y <code>data-service-body</code>."
+    "callout2": "<strong>Consejo:</strong> los cuerpos de servicio hijos siempre se incluyen automáticamente. Si pasas el ID de una región, se incluyen las reuniones de todas las áreas que dependen de ella — no necesitas listar cada área hija."
   },
   "googleSites": {
     "title": "Google Sites",
@@ -564,9 +606,10 @@
       "columns": "Columnas de tabla a mostrar. Consulta <a href=\"#global-config\">Config global</a>.",
       "nowOffset": "Minutos de margen antes de considerar una reunión como pasada. Por defecto <code>10</code>; establece <code>0</code> para pasarla al final inmediatamente.",
       "hideHeader": "Oculta la barra de título \"Buscador de reuniones\" y el conteo de reuniones. Por defecto <code>false</code>.",
-      "showFormats": "Show a comma-separated list of format codes (e.g. <code>C, O, BT</code>) beneath each meeting name in the list/cards. <code>C</code> (Closed) and <code>O</code> (Open) are pinned to the front; remaining codes are alphabetized. Defaults to <code>false</code>.",
+      "showFormats": "Muestra una lista separada por comas de códigos de formato (p. ej. <code>C, O, BT</code>) debajo del nombre de cada reunión en la lista/tarjetas. <code>C</code> (Cerrada) y <code>O</code> (Abierta) van primero; el resto de códigos se ordena alfabéticamente. Predeterminado: <code>false</code>.",
       "height": "Altura fija del widget en píxeles. Omítelo para altura natural.",
       "formats": "Cadenas de clave de formato (p. ej. <code>['O', 'BT']</code>) a las que se restringe el widget. Filtro en el cliente tras la obtención. Usa filtrado numérico al estilo de <code>serviceBodyIds</code> mediante el atributo <code>data-format-ids</code> del widget para filtrado en el servidor.",
+      "inlineFormats": "Cadenas clave de formato (p. ej. <code>['M', 'W']</code>) que se resaltan junto al nombre de cada reunión en la lista/tarjetas. El formato coincidente de cada reunión muestra su nombre localizado (p. ej. «Mujeres») como sufijo atenuado. Opcional: predeterminado <code>[]</code> (ninguno). Las cadenas clave de formato de BMLT varían según el servidor.",
       "basePath": "Ruta base para el enrutamiento mediante History API (p. ej. <code>'/meetings'</code>). Produce URL limpias sin el fragmento <code>#</code>. Equivalente al atributo <code>data-path</code>.",
       "updateUrl": "Plantilla de URL para el enlace \"Actualizar información de la reunión\" en el panel de detalles de la reunión. Admite los tokens <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> (codificados en URL). Funciona con bmlt-workflow, formularios alojados o URL <code>mailto:</code>.",
       "map": "Configuración de proveedor de mosaicos y marcadores. Consulta <a href=\"#tile-config\">Proveedor de mosaicos</a>."
@@ -576,36 +619,5 @@
   "philosophy": {
     "title": "Filosofía",
     "body": "Este proyecto busca cubrir bien las necesidades de la mayoría de los cuerpos de servicio de NA — no todos los casos de uso posibles. Se mantiene intencionalmente simple y enfocado. Las nuevas funciones se sopesan frente al coste para el código; las peticiones nicho que inflan el proyecto para todos los demás suelen quedar fuera de alcance. Si necesitas una personalización profunda, esta puede no ser la herramienta adecuada."
-  },
-  "updateUrl": {
-    "title": "Enlace para actualizar info de la reunión",
-    "intro": "Añade un botón <strong>«Actualizar info de la reunión»</strong> al pie de cada panel de detalle configurando <code>data-update-url</code> (o <code>updateUrl</code> en la configuración global) con una plantilla de URL. El widget sustituye los tokens por reunión al hacer clic y abre el resultado en una nueva pestaña. Si la opción no está definida, el botón usa el formulario de actualización del cuerpo de servicio de la reunión cuando el servidor lo proporciona (ver más abajo); de lo contrario, se oculta.",
-    "tokens": "Tokens soportados (cada valor se codifica en URL al sustituirse; los <code>{tokens}</code> desconocidos se dejan intactos):",
-    "th": {
-      "token": "Token",
-      "value": "Valor"
-    },
-    "token": {
-      "meetingId": "El <code>id_bigint</code> de la reunión BMLT — el identificador canónico que esperan la mayoría de los formularios de actualización.",
-      "meetingName": "Nombre legible de la reunión. Útil en asuntos de <code>mailto:</code>.",
-      "serverUrl": "La URL del servidor raíz BMLT configurada (el valor de <code>data-server</code>).",
-      "returnUrl": "La URL de la página actual — útil como enlace de regreso o referencia de auditoría en los envíos."
-    },
-    "serviceBody": {
-      "title": "Automático: formulario de actualización del cuerpo de servicio",
-      "body": "Cuando <code>updateUrl</code> no está definido, el widget recurre a la <code>meeting_update_url</code> que BMLT Server 4.2.9+ guarda en cada cuerpo de servicio (normalmente una página de BMLT Workflow). La URL se consulta al abrir el panel de detalles de una reunión (una solicitud en caché por cuerpo de servicio) y el botón enlaza a <code>&lt;URL del formulario&gt;?meeting_id=&lt;id&gt;</code>, conservando cualquier query string existente. En el agregador, el id es el <code>source_id</code> de la reunión (su id en su propio servidor raíz), porque el formulario no reconoce el <code>id_bigint</code> del agregador. Solo se usan URL <code>http(s)</code>. Si el cuerpo de servicio no tiene URL o la consulta falla, el botón permanece oculto. Un <code>updateUrl</code> explícito siempre tiene prioridad."
-    },
-    "workflow": {
-      "title": "Ejemplo: integración con bmlt-workflow",
-      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> es un plugin de WordPress que expone un formulario de actualización de reunión mediante el shortcode <code>[bmltwf-meeting-update-form]</code>. El JavaScript del formulario lee <code>?meeting_id=</code> de la URL para preseleccionar la reunión, así que la plantilla solo necesita el token <code>{meeting_id}</code>:"
-    },
-    "mailto": {
-      "title": "Ejemplo: enlace mailto",
-      "body": "¿No tienes un formulario alojado? Apunta a una URL <code>mailto:</code> — el cliente de correo del usuario se abre con el asunto y el cuerpo prerrellenados. Los tokens se codifican en URL, así que son seguros dentro de los parámetros de consulta de <code>mailto:</code>:"
-    },
-    "custom": {
-      "title": "Ejemplo: cualquier endpoint personalizado",
-      "body": "Cualquier URL que acepte un identificador de reunión en la cadena de consulta funciona. El enlace se abre en una nueva pestaña, así que tu endpoint puede ser una página completa (un Google Form, un formulario de Airtable, un CMS personalizado, etc.). Pasa <code>{return_url}</code> para que tu formulario tenga un enlace de regreso a la página de la reunión:"
-    }
   }
 }
