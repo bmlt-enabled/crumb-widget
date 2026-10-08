@@ -1,3 +1,8 @@
+## Unreleased
+
+- **Automatic "Update Meeting Info" link from the service body** — when no `updateUrl` is configured, the meeting detail panel now falls back to the `meeting_update_url` that BMLT Server 4.2.9+ stores on each service body (usually a BMLT Workflow page), linking to `<form URL>?meeting_id=<id>` and keeping any query string the form URL already has. On the aggregator the id is the meeting's `source_id` (its id on its own root server; `id_bigint` there is the aggregator's id, which the form doesn't recognise), so `source_id` is now requested in `data_field_key`. The URL is looked up only when a detail panel opens: one `GetServiceBodies` request per service body, cached for the session, and reused from the service-body-name lookup when that one already ran. Only `http(s)` URLs are accepted from the server. If the body has no URL, the meeting has no usable id, or the lookup fails, the button stays hidden. An explicit `updateUrl` always takes precedence, so existing embeds are unaffected
+- **Upgrade `bmlt-query-client` to `^1.6.0`** — types `Meeting.source_id` and `ServiceBody.meeting_update_url`
+
 ## 1.6.0 (July 30, 2026)
 
 - **Data attribute coverage** — nine settings that previously required `CrumbWidgetConfig` can now also be set as HTML data attributes (the attribute takes precedence over the config value in all cases): `data-formats` (format key filter), `data-geolocation-radius`, `data-distance-options` (comma-separated), `data-distance-unit` (`mi` or `km`), `data-height` (pixels), `data-dark-mode` (`auto`, `true`/`1`, `false`/`0`), `data-now-offset`, `data-hide-header`, and `data-language` (BCP-47 tag). The only settings still exclusive to `CrumbWidgetConfig` are the `map` options (tile providers and custom markers)

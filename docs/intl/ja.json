@@ -578,7 +578,7 @@
   },
   "updateUrl": {
     "title": "ミーティング情報更新リンク",
-    "intro": "<code>data-update-url</code>(またはグローバル設定の<code>updateUrl</code>)をURLテンプレートに設定することで、各ミーティング詳細パネルの下部に<strong>「ミーティング情報を更新」</strong>ボタンを追加します。ウィジェットはクリック時にミーティングごとのトークンを置換し、結果を新しいタブで開きます。オプションが未設定の場合ボタンは非表示になるため、選択的にオプトインできます。",
+    "intro": "<code>data-update-url</code>(またはグローバル設定の<code>updateUrl</code>)をURLテンプレートに設定することで、各ミーティング詳細パネルの下部に<strong>「ミーティング情報を更新」</strong>ボタンを追加します。ウィジェットはクリック時にミーティングごとのトークンを置換し、結果を新しいタブで開きます。オプションが未設定の場合、サーバーが提供していればミーティングのサービスボディの更新フォームを代わりに使用し（下記参照）、提供されていなければボタンは非表示になります。",
     "tokens": "サポートされるトークン(各値は置換時にURLエンコードされます; 未知の<code>{tokens}</code>はそのまま残されます):",
     "th": {
       "token": "トークン",
@@ -589,6 +589,10 @@
       "meetingName": "人間が読めるミーティング名。<code>mailto:</code>の件名で便利。",
       "serverUrl": "設定されたBMLTルートサーバーURL(<code>data-server</code>の値)。",
       "returnUrl": "現在のページのURL — 提出物の戻りリンクや監査参照として便利。"
+    },
+    "serviceBody": {
+      "title": "自動：サービスボディの更新フォーム",
+      "body": "<code>updateUrl</code> が未設定の場合、ウィジェットは BMLT Server 4.2.9 以降が各サービスボディに保存する <code>meeting_update_url</code>（通常は BMLT Workflow のページ）を代わりに使用します。URL はミーティングの詳細パネルを開いたときに取得され（サービスボディごとに 1 回のキャッシュされたリクエスト）、ボタンは既存のクエリ文字列を保ったまま <code>&lt;フォームURL&gt;?meeting_id=&lt;id&gt;</code> にリンクします。アグリゲーターではアグリゲーター独自の <code>id_bigint</code> をフォームが認識しないため、ミーティングの <code>source_id</code>（元のルートサーバー上の ID）を使用します。<code>http(s)</code> の URL のみ使用されます。サービスボディに URL がない場合や取得に失敗した場合、ボタンは非表示のままです。明示的な <code>updateUrl</code> が常に優先されます。"
     },
     "workflow": {
       "title": "例: bmlt-workflow連携",

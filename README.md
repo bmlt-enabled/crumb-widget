@@ -43,7 +43,7 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 - Individual meeting links via built-in router
 - 13 built-in languages (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — including RTL layout for Persian)
 - Configurable columns, map tiles, and custom markers
-- Optional "Update Meeting Info" link on each meeting detail — point at a [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow) form, any custom form, or a `mailto:` URL ([docs](https://crumb.bmlt.app/#update-url))
+- Optional "Update Meeting Info" link on each meeting detail — point at a [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow) form, any custom form, or a `mailto:` URL — or, with nothing configured, automatically uses the service body's update form from BMLT Server 4.2.9+ ([docs](https://crumb.bmlt.app/#update-url))
 - Printer-friendly list view
 
 ## Quick Start

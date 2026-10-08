@@ -578,7 +578,7 @@
   },
   "updateUrl": {
     "title": "Meeting-Update-Link",
-    "intro": "Füge einen <strong>„Meeting-Info aktualisieren\"</strong>-Button am Fuß jedes Meeting-Detail-Panels hinzu, indem du <code>data-update-url</code> (oder <code>updateUrl</code> in der globalen Konfiguration) auf eine URL-Vorlage setzt. Das Widget ersetzt die Tokens pro Meeting beim Klick und öffnet das Ergebnis in einem neuen Tab. Der Button ist ausgeblendet, wenn die Option nicht gesetzt ist, sodass du sie selektiv aktivieren kannst.",
+    "intro": "Füge einen <strong>„Meeting-Info aktualisieren\"</strong>-Button am Fuß jedes Meeting-Detail-Panels hinzu, indem du <code>data-update-url</code> (oder <code>updateUrl</code> in der globalen Konfiguration) auf eine URL-Vorlage setzt. Das Widget ersetzt die Tokens pro Meeting beim Klick und öffnet das Ergebnis in einem neuen Tab. Ist die Option nicht gesetzt, verwendet der Button stattdessen das Aktualisierungsformular des Service-Body des Meetings, sofern der Server eines liefert (siehe unten); andernfalls ist er ausgeblendet.",
     "tokens": "Unterstützte Tokens (jeder Wert wird beim Einsetzen URL-codiert; unbekannte <code>{tokens}</code> bleiben unverändert):",
     "th": {
       "token": "Token",
@@ -589,6 +589,10 @@
       "meetingName": "Menschlich lesbarer Meeting-Name. Nützlich in <code>mailto:</code>-Betreffzeilen.",
       "serverUrl": "Die konfigurierte BMLT-Root-Server-URL (der Wert von <code>data-server</code>).",
       "returnUrl": "Die URL der aktuellen Seite — nützlich als Rück-Link oder Audit-Referenz in Einreichungen."
+    },
+    "serviceBody": {
+      "title": "Automatisch: Aktualisierungsformular des Service-Body",
+      "body": "Ist <code>updateUrl</code> nicht gesetzt, greift das Widget auf die <code>meeting_update_url</code> zurück, die BMLT Server 4.2.9+ für jeden Service-Body speichert (meist eine BMLT-Workflow-Seite). Die URL wird abgerufen, wenn das Detailfenster eines Meetings geöffnet wird (eine zwischengespeicherte Anfrage pro Service-Body), und der Button verlinkt auf <code>&lt;Formular-URL&gt;?meeting_id=&lt;ID&gt;</code>, wobei ein vorhandener Query-String erhalten bleibt. Auf dem Aggregator ist die ID die <code>source_id</code> des Meetings (seine ID auf dem eigenen Root-Server), da das Formular die <code>id_bigint</code> des Aggregators nicht erkennt. Es werden nur <code>http(s)</code>-URLs verwendet. Hat der Service-Body keine URL oder schlägt der Abruf fehl, bleibt der Button ausgeblendet. Ein explizit gesetztes <code>updateUrl</code> hat immer Vorrang."
     },
     "workflow": {
       "title": "Beispiel: bmlt-workflow-Integration",

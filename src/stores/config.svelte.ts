@@ -2,6 +2,7 @@ import type { AppConfig, Column } from '@/types';
 import { setHashMode } from '@bmlt-enabled/svelte-spa-router';
 import { initLocalization, SUPPORTED_LANGUAGES } from './localization';
 import { detectDistanceUnit } from '@utils/constants';
+import { isAggregatorServer } from '@utils/format';
 import {
   parseFormatIds,
   parseFormatKeys,
@@ -104,8 +105,7 @@ export function initConfig(el: HTMLElement): void {
   config.tiles = globalCfg.map?.tiles;
   config.tilesDark = globalCfg.map?.tiles_dark;
   config.columns = validColumns(globalCfg.columns, dataColumns);
-  // eslint-disable-next-line svelte/prefer-svelte-reactivity
-  const isAggregator = URL.canParse(server) && new URL(server).hostname === 'aggregator.bmltenabled.org';
+  const isAggregator = isAggregatorServer(server);
   // data-query overrides CrumbWidgetConfig.query
   config.query = validQuery(el.getAttribute('data-query') ?? globalCfg.query);
   // Defaults on for the unconstrained aggregator only. With a service body the result set is

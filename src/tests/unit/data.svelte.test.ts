@@ -1,5 +1,5 @@
 import { describe, test, expect, vi, beforeEach } from 'vitest';
-import { dataState, loadData, loadVirtualData, loadMeetingById, clearVirtualDayCache, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
+import { dataState, getServiceBodyUpdateUrl, loadData, loadVirtualData, loadMeetingById, clearVirtualDayCache, loadDataByCoordinates, loadDataByAddress } from '@stores/data.svelte';
 import { config } from '@stores/config.svelte';
 import { viewerTimeZone } from '@utils/timezone';
 import type { Meeting, Format } from '@/types';
@@ -268,6 +268,60 @@ describe('service body names', () => {
     expect(dataState.error).toBeNull();
     expect(dataState.meetings).toHaveLength(1);
     expect(dataState.meetings[0]!.service_body_name).toBeUndefined();
+  });
+});
+
+describe('getServiceBodyUpdateUrl', () => {
+  // The cache is module-level, so each test uses its own server URL to stay isolated.
+  test('fetches only the requested service body and returns its meeting_update_url', async () => {
+    mockGetServiceBodies.mockResolvedValue([{ id: '667', name: 'Boston Area', meeting_update_url: 'https://nerna.org/meeting-update-form/' }]);
+    await expect(getServiceBodyUpdateUrl('https://sb1.example.org/main_server', 667)).resolves.toBe('https://nerna.org/meeting-update-form/');
+    expect(mockGetServiceBodies).toHaveBeenCalledWith({ services: [667] });
+  });
+
+  test('caches per service body, including in-flight requests', async () => {
+    mockGetServiceBodies.mockResolvedValue([{ id: '5', name: 'X', meeting_update_url: 'https://example.org/form' }]);
+    const [a, b] = await Promise.all([getServiceBodyUpdateUrl('https://sb2.example.org/main_server', 5), getServiceBodyUpdateUrl('https://sb2.example.org/main_server', 5)]);
+    await getServiceBodyUpdateUrl('https://sb2.example.org/main_server', 5);
+    expect(a).toBe('https://example.org/form');
+    expect(b).toBe(a);
+    expect(mockGetServiceBodies).toHaveBeenCalledTimes(1);
+  });
+
+  test('returns empty string when the body has no URL or is not returned', async () => {
+    mockGetServiceBodies.mockResolvedValue([{ id: '5', name: 'X', meeting_update_url: '' }]);
+    await expect(getServiceBodyUpdateUrl('https://sb3.example.org/main_server', 5)).resolves.toBe('');
+    mockGetServiceBodies.mockResolvedValue([]);
+    await expect(getServiceBodyUpdateUrl('https://sb3.example.org/main_server', 6)).resolves.toBe('');
+  });
+
+  test('resolves to empty string on failure and retries on the next call', async () => {
+    mockGetServiceBodies.mockRejectedValueOnce(new Error('boom'));
+    await expect(getServiceBodyUpdateUrl('https://sb4.example.org/main_server', 5)).resolves.toBe('');
+    mockGetServiceBodies.mockResolvedValue([{ id: '5', name: 'X', meeting_update_url: 'https://example.org/form' }]);
+    await expect(getServiceBodyUpdateUrl('https://sb4.example.org/main_server', 5)).resolves.toBe('https://example.org/form');
+    expect(mockGetServiceBodies).toHaveBeenCalledTimes(2);
+  });
+
+  test('skips the request for an invalid id or missing server', async () => {
+    await expect(getServiceBodyUpdateUrl('https://sb5.example.org/main_server', 0)).resolves.toBe('');
+    await expect(getServiceBodyUpdateUrl('https://sb5.example.org/main_server', NaN)).resolves.toBe('');
+    await expect(getServiceBodyUpdateUrl('', 5)).resolves.toBe('');
+    expect(mockGetServiceBodies).not.toHaveBeenCalled();
+  });
+
+  test('reuses the service body name lookup instead of making a second request', async () => {
+    mockSearch.mockResolvedValue({ meetings: [rawMeeting({ service_body_bigint: '95', service_body_name: '' })], formats: [] });
+    mockGetServiceBodies.mockResolvedValue([{ id: '95', name: 'Capital Area', meeting_update_url: 'https://example.org/form' }]);
+    await loadData('https://sb6.example.org/main_server');
+    await expect(getServiceBodyUpdateUrl('https://sb6.example.org/main_server', 95)).resolves.toBe('https://example.org/form');
+    expect(mockGetServiceBodies).toHaveBeenCalledTimes(1);
+  });
+
+  test('requests source_id in data_field_key', async () => {
+    mockSearch.mockResolvedValue({ meetings: [], formats: [] });
+    await loadData('https://example.org/main_server');
+    expect(String(mockSearch.mock.calls[0]![0].data_field_key).split(',')).toContain('source_id');
   });
 });
 

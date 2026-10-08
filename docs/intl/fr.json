@@ -578,7 +578,7 @@
   },
   "updateUrl": {
     "title": "Lien de mise à jour des infos de réunion",
-    "intro": "Ajoutez un bouton <strong>« Mettre à jour les infos de la réunion »</strong> au bas de chaque panneau de détails en réglant <code>data-update-url</code> (ou <code>updateUrl</code> dans la config globale) sur un modèle d'URL. Le widget substitue les tokens par réunion au moment du clic et ouvre le résultat dans un nouvel onglet. Le bouton est masqué quand l'option n'est pas définie, vous pouvez donc l'activer de manière sélective.",
+    "intro": "Ajoutez un bouton <strong>« Mettre à jour les infos de la réunion »</strong> au bas de chaque panneau de détails en réglant <code>data-update-url</code> (ou <code>updateUrl</code> dans la config globale) sur un modèle d'URL. Le widget substitue les tokens par réunion au moment du clic et ouvre le résultat dans un nouvel onglet. Si l'option n'est pas définie, le bouton utilise le formulaire de mise à jour de l'organe de service de la réunion lorsque le serveur en fournit un (voir ci-dessous), et il est masqué sinon.",
     "tokens": "Tokens pris en charge (chaque valeur est encodée en URL lors de la substitution ; les <code>{tokens}</code> inconnus sont laissés intacts) :",
     "th": {
       "token": "Token",
@@ -589,6 +589,10 @@
       "meetingName": "Nom lisible de la réunion. Utile dans les sujets <code>mailto:</code>.",
       "serverUrl": "L'URL du serveur racine BMLT configurée (la valeur de <code>data-server</code>).",
       "returnUrl": "L'URL de la page actuelle — utile comme lien de retour ou référence d'audit dans les soumissions."
+    },
+    "serviceBody": {
+      "title": "Automatique : formulaire de mise à jour de l'organe de service",
+      "body": "Lorsque <code>updateUrl</code> n'est pas défini, le widget utilise la <code>meeting_update_url</code> que BMLT Server 4.2.9+ enregistre sur chaque organe de service (généralement une page BMLT Workflow). L'URL est récupérée à l'ouverture du panneau de détails d'une réunion (une requête mise en cache par organe de service), et le bouton pointe vers <code>&lt;URL du formulaire&gt;?meeting_id=&lt;id&gt;</code>, en conservant toute query string existante. Sur l'agrégateur, l'id est le <code>source_id</code> de la réunion (son id sur son propre serveur racine), car le formulaire ne reconnaît pas l'<code>id_bigint</code> de l'agrégateur. Seules les URL <code>http(s)</code> sont utilisées. Si l'organe de service n'a pas d'URL ou si la récupération échoue, le bouton reste masqué. Un <code>updateUrl</code> explicite a toujours la priorité."
     },
     "workflow": {
       "title": "Exemple : intégration bmlt-workflow",

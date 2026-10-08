@@ -7,7 +7,19 @@
 
   import { config } from '@stores/config.svelte';
   import { clearSelectedMeeting, selectMeeting, uiState } from '@stores/ui.svelte';
-  import { getDirectionsUrl, getConferenceProvider, normalizeVirtualLink, formatTime, formatEndTime, formatUpdateUrl, getTimezoneAbbr, sortFormats } from '@utils/format';
+  import {
+    getDirectionsUrl,
+    getConferenceProvider,
+    normalizeVirtualLink,
+    formatTime,
+    formatEndTime,
+    formatUpdateUrl,
+    buildServiceBodyUpdateUrl,
+    isAggregatorServer,
+    getTimezoneAbbr,
+    sortFormats
+  } from '@utils/format';
+  import { getServiceBodyUpdateUrl } from '@stores/data.svelte';
   import { DEFAULT_LOCATION_MARKER, buildMarkerIcon } from '@utils/markers';
   import { observeMapResize, buildDirectionsLinkHtml, resolveTileConfig, applyTileLayer } from '@utils/mapUtils';
   import { t } from '@stores/localization';
@@ -34,11 +46,16 @@
 
   const showMap = $derived(meeting.isInPerson && !!meeting.latitude && !!meeting.longitude);
 
+  // Explicit updateUrl template, if configured.
   const updateLink = $derived.by(() => {
     if (!config.updateUrl) return null;
     const returnUrl = typeof window !== 'undefined' ? window.location.href : '';
     return formatUpdateUrl(config.updateUrl, meeting, config.serverUrl, returnUrl);
   });
+
+  // Otherwise fall back to the service body's meeting_update_url (BMLT Server 4.2.9+).
+  // The lookup is cached per body and never rejects, so this is cheap to re-derive.
+  const serviceBodyFormUrl = $derived(config.updateUrl ? null : getServiceBodyUpdateUrl(config.serverUrl, Number(meeting.service_body_bigint)));
 
   let activeFmtId = $state<string | null>(null);
 
@@ -96,6 +113,18 @@
     leafletMap?.remove();
   });
 </script>
+
+{#snippet updateButton(href: string)}
+  <a
+    {href}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="bmlt-btn-secondary mx-4 mt-4 flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-base font-medium no-underline transition-colors"
+  >
+    <Icon name="edit" class="h-4 w-4" />
+    {$t.updateMeetingInfo}
+  </a>
+{/snippet}
 
 <div class="bmlt-detail flex h-full flex-col">
   <!-- Header -->
@@ -274,17 +303,16 @@
         {/if}
       </div>
 
-      <!-- Update meeting info link (configurable; integrates with bmlt-workflow or any external form/mailto) -->
+      <!-- Update meeting info link: explicit updateUrl template, else the service body's meeting_update_url -->
       {#if updateLink}
-        <a
-          href={updateLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bmlt-btn-secondary mx-4 mt-4 flex items-center justify-center gap-2 rounded-lg border px-3 py-2.5 text-base font-medium no-underline transition-colors"
-        >
-          <Icon name="edit" class="h-4 w-4" />
-          {$t.updateMeetingInfo}
-        </a>
+        {@render updateButton(updateLink)}
+      {:else if serviceBodyFormUrl}
+        {#await serviceBodyFormUrl then formUrl}
+          {@const href = formUrl ? buildServiceBodyUpdateUrl(formUrl, meeting, isAggregatorServer(config.serverUrl)) : null}
+          {#if href}
+            {@render updateButton(href)}
+          {/if}
+        {/await}
       {/if}
     </div>
 

@@ -27,8 +27,13 @@ const PAGE_SIZE = 5000;
 // omit it; for those, resolveServiceBodyNames() below still resolves the name
 // client-side from service_body_bigint as a fallback (a no-op when the name is
 // already present).
+//
+// `source_id` is the meeting's id on its own root server, returned only by the
+// aggregator (where id_bigint is the aggregator's id). The service-body update-form
+// link needs it; ordinary root servers just omit it.
 const MEETING_DATA_FIELDS = [
   'id_bigint',
+  'source_id',
   'meeting_name',
   'weekday_tinyint',
   'start_time',
@@ -131,7 +136,7 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
 // server did not supply one for. Used by the service_body column, the meeting
 // detail panel, and the service body filter. Best-effort: if the lookup fails
 // the names stay empty, exactly as they would have been anyway.
-async function resolveServiceBodyNames(client: BmltClient, meetings: Meeting[]): Promise<void> {
+async function resolveServiceBodyNames(client: BmltClient, serverUrl: string, meetings: Meeting[]): Promise<void> {
   if (meetings.length === 0 || meetings.every((m) => m.service_body_name)) return;
 
   // Ask only for the service bodies actually referenced by the result set —
@@ -147,11 +152,48 @@ async function resolveServiceBodyNames(client: BmltClient, meetings: Meeting[]):
     return;
   }
 
+  for (const b of bodies) cacheUpdateUrl(serverUrl, Number(b.id), b.meeting_update_url);
+
   const nameById = new Map(bodies.map((b) => [String(b.id), b.name]));
   for (const meeting of meetings) {
     if (meeting.service_body_name) continue;
     meeting.service_body_name = nameById.get(String(meeting.service_body_bigint)) ?? '';
   }
+}
+
+// Service body id → its `meeting_update_url` ('' when unset), keyed per server.
+// Filled lazily when a meeting detail opens with no explicit updateUrl configured,
+// or for free by resolveServiceBodyNames() when that lookup runs anyway. Storing the
+// promise dedupes concurrent opens of meetings from the same body.
+// eslint-disable-next-line svelte/prefer-svelte-reactivity -- plain lookup cache, never rendered directly
+const updateUrlCache = new Map<string, Promise<string>>();
+
+function cacheUpdateUrl(serverUrl: string, serviceBodyId: number, url: string | undefined): void {
+  updateUrlCache.set(`${serverUrl}|${serviceBodyId}`, Promise.resolve(url ?? ''));
+}
+
+/**
+ * Resolves a service body's meeting update form URL via GetServiceBodies (one
+ * body per request, cached for the session). Never rejects: a failed lookup
+ * resolves to '' (so the button stays hidden) and is not cached, so a later open
+ * can retry. The value is unvalidated server data — see buildServiceBodyUpdateUrl.
+ */
+export function getServiceBodyUpdateUrl(serverUrl: string, serviceBodyId: number): Promise<string> {
+  if (!serverUrl || !Number.isFinite(serviceBodyId) || serviceBodyId <= 0) return Promise.resolve('');
+  const key = `${serverUrl}|${serviceBodyId}`;
+  const cached = updateUrlCache.get(key);
+  if (cached) return cached;
+  const pending = (async () => {
+    try {
+      const bodies = await new BmltClient({ serverURL: serverUrl }).getServiceBodies({ services: [serviceBodyId] });
+      return bodies.find((b) => Number(b.id) === serviceBodyId)?.meeting_update_url ?? '';
+    } catch {
+      updateUrlCache.delete(key);
+      return '';
+    }
+  })();
+  updateUrlCache.set(key, pending);
+  return pending;
 }
 
 function hasFormatKey(meeting: ProcessedMeeting, key: string): boolean {
@@ -254,7 +296,7 @@ async function load(serverUrl: string, params: SearchParams, opts: { byId?: bool
     // Fallback for older servers that don't return service_body_name inline:
     // resolve any still-missing names from service_body_bigint. A no-op when the
     // server already supplied every name (modern servers and the aggregator).
-    await resolveServiceBodyNames(client, meetingsResp);
+    await resolveServiceBodyNames(client, serverUrl, meetingsResp);
 
     if (request !== activeRequest) return;
 

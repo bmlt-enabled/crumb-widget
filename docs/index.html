@@ -2517,7 +2517,7 @@
         <h2 id="update-url" data-i18n="updateUrl.title">Update Meeting Info Link</h2>
         <p data-i18n-html="updateUrl.intro">
           Add an <strong>"Update Meeting Info"</strong> button at the bottom of every meeting detail panel by setting <code>data-update-url</code> (or <code>updateUrl</code> in the global config) to a
-          URL template. The widget substitutes per-meeting tokens at click time and opens the result in a new tab. The button is hidden when the option is unset, so you can opt in selectively.
+          URL template. The widget substitutes per-meeting tokens at click time and opens the result in a new tab. If the option is unset, the button falls back to the meeting's service body update form when the server provides one (see below), and is hidden otherwise.
         </p>
         <p data-i18n-html="updateUrl.tokens">Supported tokens (each value is URL-encoded on substitution; unknown <code>{tokens}</code> are left intact):</p>
         <div class="table-wrap">
@@ -2548,6 +2548,14 @@
             </tbody>
           </table>
         </div>
+
+        <h3 data-i18n="updateUrl.serviceBody.title">Automatic: service body update form</h3>
+        <p data-i18n-html="updateUrl.serviceBody.body">
+          When <code>updateUrl</code> is not set, the widget falls back to the <code>meeting_update_url</code> that BMLT Server 4.2.9+ stores on each service body (usually a BMLT Workflow page). The
+          URL is looked up when a meeting's detail panel opens (one cached request per service body), and the button links to <code>&lt;form URL&gt;?meeting_id=&lt;id&gt;</code>, keeping any existing
+          query string. On the aggregator the id is the meeting's <code>source_id</code> (its id on its own root server), because the aggregator's <code>id_bigint</code> is not recognised by the form.
+          Only <code>http(s)</code> URLs are used. If the service body has no URL, or the lookup fails, the button stays hidden. An explicit <code>updateUrl</code> always takes precedence.
+        </p>
 
         <h3 data-i18n="updateUrl.workflow.title">Example: bmlt-workflow integration</h3>
         <p data-i18n-html="updateUrl.workflow.body">

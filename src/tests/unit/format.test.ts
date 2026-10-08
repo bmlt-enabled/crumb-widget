@@ -6,6 +6,8 @@ import {
   getTimeOfDay,
   formatAddress,
   formatUpdateUrl,
+  buildServiceBodyUpdateUrl,
+  isAggregatorServer,
   sortMeetings,
   isInProgress,
   getPlatform,
@@ -477,6 +479,62 @@ describe('formatUpdateUrl', () => {
 
   test('substitutes the same token multiple times', () => {
     expect(formatUpdateUrl('https://example.org/{meeting_id}/edit?ref={meeting_id}', meeting, serverUrl, returnUrl)).toBe('https://example.org/42/edit?ref=42');
+  });
+});
+
+describe('buildServiceBodyUpdateUrl', () => {
+  const rootMeeting = { id_bigint: '42' };
+  const aggMeeting = { id_bigint: '160159', source_id: 85 };
+
+  test('appends meeting_id to a form URL without a query string', () => {
+    expect(buildServiceBodyUpdateUrl('https://nerna.org/meeting-update-form/', rootMeeting, false)).toBe('https://nerna.org/meeting-update-form/?meeting_id=42');
+  });
+
+  test('preserves an existing query string', () => {
+    expect(buildServiceBodyUpdateUrl('https://example.org/?page_id=12', rootMeeting, false)).toBe('https://example.org/?page_id=12&meeting_id=42');
+  });
+
+  test('replaces a meeting_id already on the form URL rather than duplicating it', () => {
+    expect(buildServiceBodyUpdateUrl('https://example.org/form?meeting_id=1', rootMeeting, false)).toBe('https://example.org/form?meeting_id=42');
+  });
+
+  test('uses source_id on the aggregator, not the aggregator id_bigint', () => {
+    expect(buildServiceBodyUpdateUrl('https://nerna.org/meeting-update-form/', aggMeeting, true)).toBe('https://nerna.org/meeting-update-form/?meeting_id=85');
+  });
+
+  test('uses id_bigint on a root server even if source_id is present', () => {
+    expect(buildServiceBodyUpdateUrl('https://example.org/form', aggMeeting, false)).toBe('https://example.org/form?meeting_id=160159');
+  });
+
+  test('returns null on the aggregator when source_id is missing', () => {
+    expect(buildServiceBodyUpdateUrl('https://nerna.org/meeting-update-form/', { id_bigint: '160159' }, true)).toBeNull();
+  });
+
+  test('returns null when the meeting id is empty', () => {
+    expect(buildServiceBodyUpdateUrl('https://example.org/form', { id_bigint: '' }, false)).toBeNull();
+  });
+
+  test('trims surrounding whitespace from the form URL', () => {
+    expect(buildServiceBodyUpdateUrl('  https://example.org/form  ', rootMeeting, false)).toBe('https://example.org/form?meeting_id=42');
+  });
+
+  test.each(['', '   ', 'not a url', '/relative/form', 'javascript:alert(1)', 'mailto:web@example.org', 'data:text/html,<b>x</b>', 'ftp://example.org/form'])(
+    'rejects non-http(s) form URL %j',
+    (formUrl) => {
+      expect(buildServiceBodyUpdateUrl(formUrl, rootMeeting, false)).toBeNull();
+    }
+  );
+});
+
+describe('isAggregatorServer', () => {
+  test('recognises the aggregator', () => {
+    expect(isAggregatorServer('https://aggregator.bmltenabled.org/main_server/')).toBe(true);
+  });
+
+  test('is false for other servers and junk', () => {
+    expect(isAggregatorServer('https://bmlt.example.org/main_server/')).toBe(false);
+    expect(isAggregatorServer('')).toBe(false);
+    expect(isAggregatorServer('not a url')).toBe(false);
   });
 });
 

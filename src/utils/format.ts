@@ -312,3 +312,28 @@ export function formatUpdateUrl(template: string, meeting: Pick<Meeting, 'id_big
   };
   return template.replace(/\{(\w+)\}/g, (match, key: string) => (key in tokens ? encodeURIComponent(tokens[key] ?? '') : match));
 }
+
+// The BMLT aggregator re-serves meetings from many root servers under its own
+// ids; `source_id` carries each meeting's id on its home server.
+export function isAggregatorServer(serverUrl: string): boolean {
+  return URL.canParse(serverUrl) && new URL(serverUrl).hostname === 'aggregator.bmltenabled.org';
+}
+
+/**
+ * Builds the "Update meeting info" link from a service body's `meeting_update_url`
+ * (BMLT Server 4.2.9+), following the BMLT Workflow / crouton convention of
+ * `<form url>?meeting_id=<id on the meeting's own root server>`. The form URL is
+ * third-party server data, so anything that isn't an absolute http(s) URL is
+ * rejected. On the aggregator the id must be `source_id` — `id_bigint` there is the
+ * aggregator's own id, which the form wouldn't recognise — so a meeting without
+ * one gets no link. Returns null when no usable link can be built.
+ */
+export function buildServiceBodyUpdateUrl(formUrl: string, meeting: Pick<Meeting, 'id_bigint' | 'source_id'>, isAggregator: boolean): string | null {
+  if (!URL.canParse(formUrl.trim())) return null;
+  const url = new URL(formUrl.trim());
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return null;
+  const id = isAggregator ? meeting.source_id : meeting.id_bigint;
+  if (id == null || String(id).trim() === '' || !(Number(id) > 0)) return null;
+  url.searchParams.set('meeting_id', String(id));
+  return url.href;
+}

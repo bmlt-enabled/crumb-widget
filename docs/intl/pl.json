@@ -578,7 +578,7 @@
   },
   "updateUrl": {
     "title": "Link aktualizacji informacji o mityngu",
-    "intro": "Dodaj przycisk <strong>„Zaktualizuj info o mityngu\"</strong> u dołu każdego panelu szczegółów mityngu, ustawiając <code>data-update-url</code> (lub <code>updateUrl</code> w konfiguracji globalnej) na szablon URL. Widget podstawia tokeny per mityng w momencie kliknięcia i otwiera wynik w nowej karcie. Przycisk jest ukryty, gdy opcja nie jest ustawiona, więc możesz włączyć ją selektywnie.",
+    "intro": "Dodaj przycisk <strong>„Zaktualizuj info o mityngu\"</strong> u dołu każdego panelu szczegółów mityngu, ustawiając <code>data-update-url</code> (lub <code>updateUrl</code> w konfiguracji globalnej) na szablon URL. Widget podstawia tokeny per mityng w momencie kliknięcia i otwiera wynik w nowej karcie. Jeśli opcja nie jest ustawiona, przycisk korzysta z formularza aktualizacji struktury służb mityngu, o ile serwer go udostępnia (zobacz niżej); w przeciwnym razie jest ukryty.",
     "tokens": "Obsługiwane tokeny (każda wartość jest kodowana URL przy podstawieniu; nieznane <code>{tokeny}</code> pozostają nietknięte):",
     "th": {
       "token": "Token",
@@ -589,6 +589,10 @@
       "meetingName": "Czytelna dla człowieka nazwa mityngu. Przydatna w tematach <code>mailto:</code>.",
       "serverUrl": "Skonfigurowany URL serwera root BMLT (wartość <code>data-server</code>).",
       "returnUrl": "URL bieżącej strony — przydatny jako link powrotny lub referencja audytu w zgłoszeniach."
+    },
+    "serviceBody": {
+      "title": "Automatycznie: formularz aktualizacji struktury służb",
+      "body": "Gdy <code>updateUrl</code> nie jest ustawione, widżet korzysta z <code>meeting_update_url</code>, które BMLT Server 4.2.9+ przechowuje dla każdej struktury służb (zwykle strona BMLT Workflow). Adres jest pobierany przy otwarciu panelu szczegółów mityngu (jedno zapytanie z pamięcią podręczną na strukturę służb), a przycisk prowadzi do <code>&lt;URL formularza&gt;?meeting_id=&lt;id&gt;</code>, zachowując istniejący query string. Na agregatorze identyfikatorem jest <code>source_id</code> mityngu (jego id na własnym serwerze głównym), ponieważ formularz nie rozpoznaje <code>id_bigint</code> agregatora. Używane są tylko adresy <code>http(s)</code>. Jeśli struktura służb nie ma adresu lub pobieranie się nie powiedzie, przycisk pozostaje ukryty. Jawnie ustawione <code>updateUrl</code> ma zawsze pierwszeństwo."
     },
     "workflow": {
       "title": "Przykład: integracja z bmlt-workflow",

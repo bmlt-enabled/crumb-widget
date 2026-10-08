@@ -1,9 +1,15 @@
 import { describe, test, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/svelte';
+import { render, screen, waitFor } from '@testing-library/svelte';
 import MeetingDetail from '@components/MeetingDetail.svelte';
 import type { ProcessedMeeting, Format } from '@/types/index';
 import { config } from '@stores/config.svelte';
+import { getServiceBodyUpdateUrl } from '@stores/data.svelte';
+
+vi.mock('@stores/data.svelte', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@stores/data.svelte')>()),
+  getServiceBodyUpdateUrl: vi.fn()
+}));
 
 // Mock leaflet — MeetingDetail uses L.map, L.marker, etc. in onMount
 vi.mock('leaflet', () => {
@@ -95,6 +101,7 @@ beforeEach(() => {
   config.containerId = 'crumb-widget';
   config.updateUrl = undefined;
   config.serverUrl = 'https://bmlt.example.org/main_server/';
+  vi.mocked(getServiceBodyUpdateUrl).mockReset().mockResolvedValue('');
 });
 
 afterEach(() => {
@@ -293,6 +300,48 @@ describe('MeetingDetail — update meeting link', () => {
     config.updateUrl = 'mailto:web@example.org?subject=Update%20{meeting_name}&body=ID:%20{meeting_id}';
     render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '99', meeting_name: 'Test' }) } });
     expect(screen.getByRole('link', { name: /Update Meeting Info/i })).toHaveAttribute('href', 'mailto:web@example.org?subject=Update%20Test&body=ID:%2099');
+  });
+});
+
+describe('MeetingDetail — service body update form fallback', () => {
+  test('links to the service body form with id_bigint on a root server', async () => {
+    vi.mocked(getServiceBodyUpdateUrl).mockResolvedValue('https://example.org/form?page_id=12');
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '42', service_body_bigint: '3' }) } });
+    const link = await screen.findByRole('link', { name: /Update Meeting Info/i });
+    expect(link).toHaveAttribute('href', 'https://example.org/form?page_id=12&meeting_id=42');
+    expect(getServiceBodyUpdateUrl).toHaveBeenCalledWith('https://bmlt.example.org/main_server/', 3);
+  });
+
+  test('uses source_id on the aggregator', async () => {
+    config.serverUrl = 'https://aggregator.bmltenabled.org/main_server/';
+    vi.mocked(getServiceBodyUpdateUrl).mockResolvedValue('https://nerna.org/meeting-update-form/');
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '160159', source_id: 85, service_body_bigint: '667' }) } });
+    expect(await screen.findByRole('link', { name: /Update Meeting Info/i })).toHaveAttribute('href', 'https://nerna.org/meeting-update-form/?meeting_id=85');
+  });
+
+  test('hides the button on the aggregator when source_id is missing', async () => {
+    config.serverUrl = 'https://aggregator.bmltenabled.org/main_server/';
+    vi.mocked(getServiceBodyUpdateUrl).mockResolvedValue('https://nerna.org/meeting-update-form/');
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '160159', service_body_bigint: '667' }) } });
+    await waitFor(() => expect(getServiceBodyUpdateUrl).toHaveBeenCalled());
+    await Promise.resolve();
+    expect(screen.queryByText('Update Meeting Info')).not.toBeInTheDocument();
+  });
+
+  test('hides the button when the server returns a non-http(s) URL', async () => {
+    vi.mocked(getServiceBodyUpdateUrl).mockResolvedValue('javascript:alert(1)');
+    render(MeetingDetail, { props: { meeting: makeMeeting() } });
+    await waitFor(() => expect(getServiceBodyUpdateUrl).toHaveBeenCalled());
+    await Promise.resolve();
+    expect(screen.queryByText('Update Meeting Info')).not.toBeInTheDocument();
+  });
+
+  test('explicit updateUrl wins and skips the service body lookup', () => {
+    config.updateUrl = 'https://example.org/update?meeting_id={meeting_id}';
+    vi.mocked(getServiceBodyUpdateUrl).mockResolvedValue('https://nerna.org/meeting-update-form/');
+    render(MeetingDetail, { props: { meeting: makeMeeting({ id_bigint: '42' }) } });
+    expect(screen.getByRole('link', { name: /Update Meeting Info/i })).toHaveAttribute('href', 'https://example.org/update?meeting_id=42');
+    expect(getServiceBodyUpdateUrl).not.toHaveBeenCalled();
   });
 });
 

@@ -578,7 +578,7 @@
   },
   "updateUrl": {
     "title": "Link til opdatering af mødeinfo",
-    "intro": "Tilføj en <strong>\"Opdater mødeinfo\"</strong>-knap nederst på hver mødedetaljepanel ved at sætte <code>data-update-url</code> (eller <code>updateUrl</code> i den globale konfiguration) til en URL-skabelon. Widgeten erstatter tokens pr. møde ved klik og åbner resultatet i en ny fane. Knappen er skjult, når indstillingen ikke er sat, så du kan tilvælge det selektivt.",
+    "intro": "Tilføj en <strong>\"Opdater mødeinfo\"</strong>-knap nederst på hver mødedetaljepanel ved at sætte <code>data-update-url</code> (eller <code>updateUrl</code> i den globale konfiguration) til en URL-skabelon. Widgeten erstatter tokens pr. møde ved klik og åbner resultatet i en ny fane. Hvis indstillingen ikke er sat, bruger knappen i stedet mødets serviceenheds opdateringsformular, når serveren leverer en (se nedenfor), og ellers er den skjult.",
     "tokens": "Understøttede tokens (hver værdi URL-kodes ved substitution; ukendte <code>{tokens}</code> efterlades urørte):",
     "th": {
       "token": "Token",
@@ -589,6 +589,10 @@
       "meetingName": "Menneskeligt læsbart mødenavn. Nyttigt i <code>mailto:</code>-emner.",
       "serverUrl": "Den konfigurerede BMLT-rod-server-URL (værdien af <code>data-server</code>).",
       "returnUrl": "URL'en for den aktuelle side — nyttig som tilbagelink eller revisionsreference i indsendelser."
+    },
+    "serviceBody": {
+      "title": "Automatisk: serviceenhedens opdateringsformular",
+      "body": "Når <code>updateUrl</code> ikke er sat, bruger widgetten i stedet den <code>meeting_update_url</code>, som BMLT Server 4.2.9+ gemmer på hver serviceenhed (typisk en BMLT Workflow-side). URL'en slås op, når et mødes detaljepanel åbnes (én cachet forespørgsel pr. serviceenhed), og knappen linker til <code>&lt;formular-URL&gt;?meeting_id=&lt;id&gt;</code>, hvor en eksisterende forespørgselsstreng bevares. På aggregatoren er id'et mødets <code>source_id</code> (dets id på dets egen root-server), fordi aggregatorens <code>id_bigint</code> ikke genkendes af formularen. Kun <code>http(s)</code>-URL'er bruges. Hvis serviceenheden ikke har en URL, eller opslaget mislykkes, forbliver knappen skjult. En eksplicit <code>updateUrl</code> har altid forrang."
     },
     "workflow": {
       "title": "Eksempel: bmlt-workflow-integration",
