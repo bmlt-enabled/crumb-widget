@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | فارسی
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | فارسی
 </p>
 
 <p align="center">
@@ -43,7 +43,7 @@
 - صفحهٔ جزئیات جلسه شامل مسیریابی، پیوند پیوستن آنلاین و قالب‌ها
 - جستجوی نزدیک بر اساس موقعیت‌یابی جغرافیایی
 - پیوند به هر جلسه از طریق مسیریاب توکار
-- ۱۳ زبان توکار (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — شامل چینش RTL برای فارسی)
+- ۱۴ زبان توکار (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — شامل چینش RTL برای فارسی)
 - ستون‌ها، کاشی‌های نقشه و نشانگرهای قابل تنظیم
 - پیوند اختیاری «به‌روزرسانی اطلاعات جلسه» در صفحهٔ جزئیات هر جلسه — به فرم [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)، هر فرم سفارشی دیگر یا یک نشانی `mailto:` اشاره می‌کند — یا، بدون پیکربندی، به‌طور خودکار از فرم به‌روزرسانی نهاد خدماتی در BMLT Server 4.2.9 به بعد استفاده می‌کند ([مستندات](https://crumb.bmlt.app/?lang=fa#update-url))
 - نمای فهرست مناسب چاپ

@@ -1471,7 +1471,7 @@
             </div>
             <div class="quick-feature">
               <div class="qf-title" data-i18n="memberFeatures.f3.title">Works everywhere</div>
-              <div class="qf-body" data-i18n="memberFeatures.f3.body">Mobile-friendly. 13 languages including Persian (RTL). Light and dark mode. Printer-friendly list.</div>
+              <div class="qf-body" data-i18n="memberFeatures.f3.body">Mobile-friendly. 14 languages including Persian (RTL). Light and dark mode. Printer-friendly list.</div>
             </div>
           </div>
         </div>
@@ -2092,7 +2092,7 @@
                 <td data-i18n-html="attributes.language">
                   Override the UI language. Takes precedence over <code>CrumbWidgetConfig.language</code>. Defaults to <code>navigator.language</code>, falling back to English. <br /><em>Example:</em>
                   <code>data-language="fr"</code> <br />Supported codes: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>,
-                  <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>
+                  <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>
                 </td>
               </tr>
               <tr>
@@ -2459,6 +2459,10 @@
               <tr>
                 <td><code>ja</code></td>
                 <td data-i18n="language.name.ja">Japanese</td>
+              </tr>
+              <tr>
+                <td><code>fi</code></td>
+                <td data-i18n="language.name.fi">Finnish</td>
               </tr>
             </tbody>
           </table>
@@ -3698,6 +3702,7 @@ mountCrumbWidget(document.getElementById('my-widget'), {
         { code: 'el', label: 'Ελληνικά' },
         { code: 'ru', label: 'Русский' },
         { code: 'ja', label: '日本語' },
+        { code: 'fi', label: 'Suomi' },
         { code: 'fa', label: 'فارسی' }
       ];
       var RTL_LANGS = ['fa', 'ar', 'he', 'ur'];

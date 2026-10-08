@@ -1,0 +1,623 @@
+{
+  "page": {
+    "title": "BMLT Crumb Widget — Dokumentaatio"
+  },
+  "nav": {
+    "theme": {
+      "light": "Vaalea tila",
+      "dark": "Tumma tila"
+    },
+    "liveDemo": "→ Kokeile demoa",
+    "qaTests": "→ Laadunvarmistuksen testisivut",
+    "overview": "Yleiskuvaus",
+    "videos": "Video-ohjeet",
+    "quickStart": "Pika-aloitus",
+    "attributes": "Data-attribuutit",
+    "globalConfig": "Yleiset asetukset",
+    "language": "Kieli",
+    "geolocation": "Paikannus",
+    "updateUrl": "Kokoustietojen päivityslinkki",
+    "queryParams": "URL-osoitteen kyselyparametrit",
+    "cssVars": "CSS-muuttujat",
+    "cssDarkMode": "Tumma tila",
+    "cssClasses": "CSS-apuluokat",
+    "tileConfig": "Kuvatiilien tarjoaja",
+    "tileDarkConfig": "Tumman tilan kuvatiilet",
+    "markerConfig": "Karttamerkkien asetukset",
+    "exampleBasic": "Perusupotus",
+    "exampleServiceBody": "Palveluelinsuodatin",
+    "exampleMulti": "Useita palveluelimiä",
+    "exampleMap": "Kartta oletusnäkymänä",
+    "exampleWordpress": "WordPress",
+    "exampleDrupal": "Drupal",
+    "routingModes": "Reititystavat",
+    "findServiceBody": "Palveluelimesi tunnisteen selvittäminen",
+    "googleSites": "Google Sites",
+    "squarespace": "Squarespace",
+    "wix": "Wix",
+    "features": "Ominaisuudet",
+    "browserSupport": "Selaintuki",
+    "faq": "Usein kysytyt kysymykset ja ongelmanratkaisu",
+    "npmInstall": "Asennus",
+    "npmUsage": "Käyttö",
+    "npmOptions": "Asetukset",
+    "philosophy": "Periaatteet",
+    "privacy": "Tietosuojaseloste",
+    "section": {
+      "configuration": "Asetukset",
+      "examples": "Esimerkit",
+      "routing": "Reititys",
+      "siteBuilders": "Verkkosivustojen rakennustyökalut",
+      "reference": "Viiteopas",
+      "npm": "npm-paketti",
+      "legal": "Oikeudelliset tiedot"
+    },
+    "exampleJoomla": "Joomla"
+  },
+  "header": {
+    "subtitle": "NA-kokoushaun pienoisohjelma, jonka voi upottaa mille tahansa verkkosivustolle.",
+    "btn": {
+      "liveDemo": "Kokeile demoa",
+      "github": "GitHub",
+      "qaTests": "Laadunvarmistuksen testit"
+    }
+  },
+  "th": {
+    "property": "Ominaisuus",
+    "type": "Tyyppi",
+    "description": "Kuvaus"
+  },
+  "badge": {
+    "required": "Pakollinen",
+    "optional": "Valinnainen"
+  },
+  "yesNo": {
+    "yes": "Kyllä",
+    "no": "Ei"
+  },
+  "whatIs": {
+    "p1": "<strong>Crumb on kokoushaku, jonka voit lisätä palveluelimesi verkkosivustolle.</strong> Jäsenet voivat etsiä NA-kokouksen kirjoittamalla kaupungin nimen, napauttamalla \"Lähelläni\" tai selaamalla luetteloa ja karttaa — suoraan sivustollasi, ilman erillistä sovellusta. Crumb on maksuton ja sen lähdekoodi on avoin."
+  },
+  "pickPlatform": {
+    "label": "Aloita",
+    "heading": "Valitse alustasi",
+    "sub": "Palveluelimesi verkkosivuston alustasta riippumatta Crumbin voi lisätä siihen. Valitse omaa toteutustasi vastaava vaihtoehto:",
+    "cards": {
+      "wordpress": "Asenna virallinen Crumb-lisäosa WordPressin lisäosahakemistosta.",
+      "drupal": "Asenna Crumb-moduuli Drupalin versioon 10.3+ tai 11.",
+      "joomla": "Asenna Crumb-laajennus Joomlan versioon 4, 5 tai 6.",
+      "squarespace": "Liitä pieni koodilohko mille tahansa Squarespace-sivulle.",
+      "wix": "Lisää Crumb-upotus Wixin HTML-lohkoon.",
+      "other": "Muu alusta / Pelkkä HTML",
+      "otherDesc": "Google Sites, pelkkä HTML tai mikä tahansa sivusto, jolle voi lisätä koodikatkelman.",
+      "install": "Asenna lisäosa →",
+      "viewSteps": "Näytä ohjeet →",
+      "copySnippet": "Kopioi koodikatkelma →"
+    }
+  },
+  "memberFeatures": {
+    "label": "Mitä jäsenesi saavat",
+    "heading": "Kokousten nopeaan löytämiseen",
+    "f1": {
+      "title": "Haku ja suodattimet",
+      "body": "Suodata päivän, kokousmuodon tai vuorokaudenajan mukaan tai katso vain parhaillaan käynnissä olevat kokoukset. Hae nimellä tai sijainnilla kirjoittamalla hakukenttään."
+    },
+    "f2": {
+      "title": "Kartta ja Lähelläni",
+      "body": "Vuorovaikutteinen kartta. Löydä lähimmät kokoukset napauttamalla \"Lähelläni\" tai kirjoittamalla kaupunki tai postinumero. Reittiohjeet avautuvat Google Mapsissa."
+    },
+    "f3": {
+      "title": "Toimii kaikkialla",
+      "body": "Sopii mobiililaitteille. 14 kieltä, mukaan lukien oikealta vasemmalle kirjoitettava persia (RTL). Vaalea ja tumma tila. Tulostukseen sopiva luettelo."
+    }
+  },
+  "videos": {
+    "label": "Katso ja opi",
+    "heading": "Video-ohjeet",
+    "sub": "Lyhyitä ohjevideoita käyttöönotosta WordPressissä ja pelkkään HTML:ään perustuvilla sivustoilla. <a href=\"https://www.youtube.com/playlist?list=PLHh53O-Z4V4YG1sEJkVBTImR3XJ72gGCy\" target=\"_blank\" rel=\"noopener\">Katso koko soittolista YouTubessa →</a>",
+    "v1": {
+      "title": "Lisää NA-kokoushaku mille tahansa verkkosivustolle",
+      "duration": "Crumb Widget · 90 sekuntia"
+    },
+    "v2": {
+      "title": "Rajaa Crumbin kokoukset yhteen palveluelimeen",
+      "duration": "Crumb Widget · 2 minuuttia"
+    },
+    "v3": {
+      "title": "Lisää NA-kokoushaku WordPressiin",
+      "duration": "Crumb-lisäosa · 3 minuuttia"
+    },
+    "v4": {
+      "title": "Siirry Croutonista Crumbiin",
+      "duration": "Crumbin WordPress-lisäosa · 2 minuuttia"
+    }
+  },
+  "overview": {
+    "title": "Tietoja Crumbista",
+    "p1": "Crumb Widget hakee tietoja <a href=\"https://bmlt.app\" target=\"_blank\" rel=\"noopener\">BMLT-palvelimelta</a> (tietokannasta, johon alueesi tallentaa kokoustiedot) ja muodostaa niistä helppokäyttöisen kokoushaun sivustollesi — mukana ovat haku, suodattimet, luettelo ja vuorovaikutteinen kartta.",
+    "p2": "Teknisesti kyseessä on <strong>yksi JavaScript-tiedosto</strong>. Jos käytät jotakin yllä olevista lisäosista, sinun ei tarvitse hallita tyylitiedostoja tai tehdä erillisiä määrityksiä, eikä kehittäjää tarvita."
+  },
+  "quickStart": {
+    "title": "Pika-aloitus (koodikatkelma)",
+    "intro": "Jos sivustollesi voi liittää pienen HTML-katkelman — esimerkiksi Squarespacen koodilohkoon, Wixin HTML-upotukseen tai tavalliselle verkkosivulle — tämä on kaikki, mitä tarvitset. Korvaa palvelimen URL-osoite palveluelimesi BMLT-palvelimen osoitteella ja liitä katkelma haluamaasi kohtaan sivulla:",
+    "autoInit": "Pienoisohjelma käynnistyy automaattisesti skriptin latautuessa, joten muuta JavaScript-koodia ei tarvita.",
+    "viewport": "<strong>Tärkeää:</strong> Varmista, että sivullasi on <code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" /&gt;</code> <code>&lt;head&gt;</code>-osiossa. Tämä varmistaa, että sivu näkyy oikein mobiililaitteilla ja pienillä näytöillä."
+  },
+  "attributes": {
+    "title": "Data-attribuutit",
+    "intro": "Kaikki asetukset määritetään <code>data-*</code>-attribuutteina <code>#crumb-widget</code>-div-elementtiin.",
+    "th": {
+      "attribute": "Attribuutti",
+      "description": "Kuvaus"
+    },
+    "server": "BMLT-palvelimesi täydellinen URL-osoite. <br /><em>Esimerkki:</em> <code>https://example.org/main_server</code>",
+    "serviceBody": "Rajaa kokoukset yhteen tai useampaan palveluelimeen. Arvoksi käy yksi numeerinen tunniste tai pilkuilla erotettu luettelo. Jätä pois, jos haluat näyttää kaikki palvelimen kokoukset. <br /><em>Yksi:</em> <code>\"42\"</code> <br /><em>Useita:</em> <code>\"42,57,103\"</code> <br /><strong>Huomaa:</strong> rekursiivinen haku on aina käytössä — alaiset palveluelimet sisällytetään automaattisesti, eikä tätä voi poistaa käytöstä.",
+    "formatIds": "Rajaa pienoisohjelma kokouksiin, jotka vastaavat yhtä tai useampaa <strong>kokousmuodon tunnistetta</strong> (numeerisia ja palvelinkohtaisia). Suodatin vaikuttaa BMLT-rajapinnan tasolla, joten vain ehtoja vastaavat kokoukset haetaan. Tästä on hyötyä esimerkiksi silloin, kun haluat upottaa luettelon vain avoimista kokouksista. <br /><em>Yksi:</em> <code>\"4\"</code> <br /><em>Useita:</em> <code>\"4,7,12\"</code> (JA — kokousten on vastattava kaikkia lueteltuja tunnisteita) <br />Kokousmuotojen tunnisteet ovat palvelinkohtaisia. Tarkista ne BMLT:n hallinnasta tai käyttämällä <code>GetFormats</code>-toimintoa. Jos haluat suodattaa palvelimesta riippumatta koodin perusteella (esim. <code>O</code>, <code>BT</code>), käytä sen sijaan yleisten asetusten <code>formats</code>-asetusta.",
+    "view": "Oletusnäkymä pienoisohjelman latautuessa. <br /><em>Arvot:</em> <code>list</code> (oletus), <code>map</code> tai <code>both</code> <br /><code>both</code> näyttää kiinteän korkuisen kartan koko kokousluettelon yläpuolella. Luettelo- ja karttanäkymän vaihtopainiketta ei näytetä. <br />Voidaan ohittaa käytön aikana <code>?view=</code>-kyselyparametrilla (katso <a href=\"#query-params\">URL-osoitteen kyselyparametrit</a>).",
+    "columns": "Luettelonäkymässä näytettävät sarakkeet pilkuilla erotettuna luettelona. Sallitut arvot ovat samat kuin yleisten asetusten <code>columns</code>-asetuksessa: <code>time</code>, <code>distance</code>, <code>name</code>, <code>location</code>, <code>address</code>, <code>service_body</code>, <code>formats</code>. Jos molemmat on määritetty, <code>CrumbWidgetConfig.columns</code> ohittaa tämän arvon. <br /><em>Esimerkki:</em> <code>data-columns=\"time,name,address\"</code>",
+    "path": "Ottaa käyttöön History API -reitityksen (selkeät URL-osoitteet ilman <code>#</code>-merkkiä) ja määrittää peruspolun. Ilman tätä attribuuttia käytetään fragmenttipohjaista reititystä (oletus). <br /><em>Esimerkki:</em> <code>data-path=\"/meetings\"</code> tuottaa esimerkiksi URL-osoitteen <code>/meetings/monday-night-meeting-42</code> <br />Käytä <code>data-path=\"\"</code>, jos haluat polkupohjaisen reitityksen ilman etuliitettä (esim. iframe-upotuksissa). <br />Katso lisätietoja kohdasta <a href=\"#routing\">Reititys</a>.",
+    "updateUrl": "Näytä <strong>\"Päivitä kokoustiedot\"</strong> -linkki jokaisen kokouksen tietopaneelin alareunassa. Linkki käyttää hallitsemaasi URL-mallia. Malli täydennetään kokouskohtaisesti paikkamerkeillä <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code> ja <code>{return_url}</code> — jokainen arvo URL-koodataan sijoituksen yhteydessä. Tarkoitettu liitettäväksi <a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a>-päivityslomakkeeseen, itse ylläpidettyyn lomakkeeseen tai <code>mailto:</code>-linkkiin. Tuntemattomat paikkamerkit jätetään ennalleen. Linkki avautuu uuteen välilehteen. Painike piilotetaan, jos attribuuttia ei ole määritetty. Katso esimerkit alla olevasta <a href=\"#update-url\">Kokoustietojen päivityslinkki</a> -osiosta. <br /><em>bmlt-workflow:</em> <code>data-update-url=\"https://example.org/meeting-update/?meeting_id={meeting_id}\"</code>",
+    "showFormats": "Näytä pilkuilla erotettu luettelo <strong>kokousmuotokoodeista</strong> (esim. <code>C, O, BT</code>) kunkin kokouksen nimen alla luettelossa tai korteissa. <code>C</code> (Suljettu) ja <code>O</code> (Avoin) näytetään aina ensin; muut koodit järjestetään aakkosittain. Ohittaa asetuksen <code>CrumbWidgetConfig.showFormats</code>. Oletus: <code>false</code>. <br /><em>Arvot:</em> <code>\"true\"</code>, <code>\"false\"</code>, <code>\"1\"</code> tai <code>\"0\"</code>",
+    "inlineFormats": "Pilkuilla erotetut <strong>kokousmuotojen avainmerkkijonot</strong> (esim. <code>M,W</code>), jotka korostetaan kunkin kokouksen nimen vieressä luettelossa tai korteissa. Kunkin vastaavan kokousmuodon käännetty nimi (esim. \"Naisille\") näytetään hillittynä lisätekstinä — näin erityiskohderyhmille tarkoitettuja kokouksia voi korostaa valikoidusti asetuksesta <code>data-show-formats</code> riippumatta. Ohittaa asetuksen <code>CrumbWidgetConfig.inlineFormats</code>. Otettava käyttöön erikseen: oletus on <code>\"\"</code> (ei mitään). Huomaa, että BMLT:n kokousmuotojen avainmerkkijonot vaihtelevat palvelimittain, joten koodi näkyy vain, jos palvelin todella käyttää sitä. <br /><em>Esimerkki:</em> <code>data-inline-formats=\"M,W\"</code>",
+    "formats": "Rajaa pienoisohjelma kokouksiin, jotka vastaavat yhtä tai useampaa <strong>kokousmuodon avainmerkkijonoa</strong> (esim. <code>O</code>, <code>BT</code>). Erota arvot pilkuilla. Suodatus tehdään selaimessa tietojen haun jälkeen. Ohittaa asetuksen <code>CrumbWidgetConfig.formats</code>; <code>?formats=</code>-kyselyparametri ohittaa tämän arvon. Oletus: <code>\"\"</code> (ei rajausta). <br /><em>Esimerkki:</em> <code>data-formats=\"O\"</code>",
+    "geolocationRadius": "Kiinteä tai automaattinen hakusäde Lähelläni-haulle. <strong>Positiivinen</strong> luku määrittää kiinteän säteen maileina tai kilometreinä. <strong>Negatiivinen kokonaisluku</strong> käyttää BMLT:n automaattista hakusädettä (esim. <code>-50</code> etsii noin 50 lähistöllä olevaa kokousta). Ohittaa asetuksen <code>CrumbWidgetConfig.geolocationRadius</code>. Oletus: <code>-50</code>.",
+    "distanceOptions": "Pilkuilla erotetut etäisyysarvot (<code>distanceUnit</code>-yksikössä), jotka näytetään Lähelläni-pudotusvalikossa. Ohittaa asetuksen <code>CrumbWidgetConfig.distanceOptions</code>. Oletus: <code>5,10,15,25,50,100</code>. <br /><em>Esimerkki:</em> <code>data-distance-options=\"5,10,25\"</code>",
+    "distanceUnit": "Etäisyyksien näyttämisessä käytettävä yksikkö. Ohittaa asetuksen <code>CrumbWidgetConfig.distanceUnit</code>. Oletus: päätellään automaattisesti kieli- ja alueasetuksista. <br /><em>Arvot:</em> <code>mi</code> tai <code>km</code>",
+    "height": "Pienoisohjelman kiinteä korkeus pikseleinä. Ohittaa asetuksen <code>CrumbWidgetConfig.height</code>. Jätä pois, jos haluat sisällön määrittävän korkeuden. <br /><em>Esimerkki:</em> <code>data-height=\"600\"</code>",
+    "darkMode": "Tumma värimaailma. Ohittaa asetuksen <code>CrumbWidgetConfig.darkMode</code>. Oletus: <code>false</code>. <br /><em>Arvot:</em> <code>auto</code> (seuraa käyttöjärjestelmän asetusta), <code>true</code> / <code>1</code> (pakota tumma tila), <code>false</code> / <code>0</code> (pakota vaalea tila)",
+    "nowOffset": "Aika minuutteina, jonka kuluttua kokous katsotaan menneeksi. Viimeisten <code>nowOffset</code> minuutin aikana alkaneet kokoukset näkyvät edelleen alussa; aiemmin alkaneet siirtyvät luettelon loppuun. Ohittaa asetuksen <code>CrumbWidgetConfig.nowOffset</code>. Oletus: <code>10</code>. Aseta arvoksi <code>0</code>, jos haluat kokousten siirtyvän loppuun heti alkamisen jälkeen.",
+    "hideHeader": "Piilota \"Kokoushaku\"-otsikkopalkki ja kokousten lukumäärä pienoisohjelman yläosasta. Ohittaa asetuksen <code>CrumbWidgetConfig.hideHeader</code>. Oletus: <code>false</code>. <br /><em>Arvot:</em> <code>true</code>, <code>false</code>, <code>1</code> tai <code>0</code>",
+    "language": "Määritä käyttöliittymän kieli. Ohittaa asetuksen <code>CrumbWidgetConfig.language</code>. Oletuksena käytetään arvoa <code>navigator.language</code>, ja jos kieli ei ole tuettu, käytetään englantia. <br /><em>Esimerkki:</em> <code>data-language=\"fr\"</code> <br />Tuetut koodit: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>",
+    "virtual": "Ota käyttöön <strong>Verkkokokoushaku</strong>: lataa verkko- ja hybridikokoukset kaikilta aikavyöhykkeiltä, järjestä ne seuraavaksi alkavat ensin ja näytä ajat kävijän paikallisessa ajassa (kunkin kokouksen oma aika ja aikavyöhyke näytetään sen tietosivulla). Kokoukset ladataan viikonpäivä kerrallaan (oletuksena tänään) ja tallennetaan välimuistiin päiviä vaihdettaessa. Pakottaa luettelonäkymän ja poistaa kartan sekä sijaintihaun käytöstä. Toimii parhaiten palvelimella <code>aggregator.bmltenabled.org</code>, joka myös järjestää tulokset seuraavaksi alkavat ensin; muilla juuripalvelimilla järjestys lasketaan selaimessa. Ohittaa asetuksen <code>CrumbWidgetConfig.virtual</code>. Oletus: <code>false</code>. <br /><em>Arvot:</em> <code>\"true\"</code>, <code>\"false\"</code>, <code>\"1\"</code> tai <code>\"0\"</code>",
+    "defaultDay": "Valitse viikonpäiväsuodatin valmiiksi latauksen yhteydessä. <code>\"today\"</code> avaa luettelon, jossa näytetään vain kävijän nykyisen päivän kokoukset; päivävalinnan voi tyhjentää, jolloin kaikkien päivien kokoukset näytetään. Ei vaikuta Verkkokokoushaussa, joka lataa jo valmiiksi yhden päivän kerrallaan. Ohittaa asetuksen <code>CrumbWidgetConfig.defaultDay</code>. Oletus: ei määritetty (kaikki päivät). <br /><em>Arvot:</em> <code>\"today\"</code>"
+  },
+  "globalConfig": {
+    "title": "Yleisten asetusten objekti",
+    "intro": "Määritä <code>CrumbWidgetConfig</code> globaaliksi muuttujaksi <strong>ennen</strong> skriptin lataamista. Useimmat asetukset voidaan määrittää myös <a href=\"#attributes\">data-attribuutteina</a> — attribuutti ohittaa aina vastaavan asetuksen arvon. <code>CrumbWidgetConfig</code> on edelleen ainoa tapa määrittää <code>map</code>-asetukset (kuvatiilien tarjoajat ja mukautetut karttamerkit), ja siitä on hyötyä, kun asetukset pitää määrittää palvelinpuolen koodissa HTML-elementin sijaan.",
+    "row": {
+      "view": "Määritä oletusnäkymä. Ohittaa attribuutin <code>data-view</code>. <code>'both'</code> näyttää kiinteän korkuisen kartan koko kokousluettelon yläpuolella; luettelo- ja karttanäkymän vaihtopainike piilotetaan.",
+      "language": "Määritä käyttöliittymän kieli (esim. <code>'es'</code>, <code>'fr'</code>). Vastaa attribuuttia <code>data-language</code> (attribuutti on etusijalla). Oletuksena käytetään arvoa <code>navigator.language</code>, ja jos kieli ei ole tuettu, käytetään englantia. Tuetut kielet: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
+      "columns": "Luettelonäkymässä näytettävät sarakkeet. Oletus: <code>['time', 'distance', 'name', 'location', 'address']</code>. Ohittaa attribuutin <code>data-columns</code>. Piilota sarake jättämällä sen nimi pois. Mahdolliset arvot: <code>time</code>, <code>distance</code> (näytetään vain paikannuksen ollessa käytössä), <code>name</code>, <code>location</code> (kokouspaikan tai rakennuksen nimi), <code>address</code> (katuosoite ja lähi- tai verkkokokouksen merkit), <code>service_body</code>, <code>formats</code> (yksi merkki jokaista kokousmuotoa kohti; näyttää sen käännetyn nimen — esim. <code>Open</code>, <code>Basic Text</code> — avainmerkkijonon sijaan). <code>service_body</code> ja <code>formats</code> ovat oletuksena piilossa — lisää ne erikseen, jos haluat näyttää ne.",
+      "geolocation": "Ota käyttöön sijaintiin perustuva haku: <strong>Lähelläni</strong>-painike (paikantaa käyttäjän automaattisesti selaimen avulla, vaatii HTTPS-yhteyden) ja hakukentän <strong>Hae paikkaa</strong> -tila, joka selvittää kirjoitetun kaupungin, postinumeron tai osoitteen (esim. <code>Edgartown, MA</code> tai <code>02539</code>) sijainnin OpenStreetMap Nominatimin avulla. Oletus on useimmilla palvelimilla <code>false</code>, mutta <code>true</code>, kun <code>data-server</code> osoittaa palvelimeen <code>aggregator.bmltenabled.org</code> eikä arvoa <code>service-body</code> ole määritetty (palveluelimeen rajaamaton koontipalvelu tarvitsee sijainnin hyödyllisten tulosten palauttamiseksi). Jos selaimen paikannus epäonnistuu tai siihen ei anneta lupaa, näytetään virhe — tietoja ei ladata vaihtoehtoisella tavalla. <strong>Huomaa:</strong> <code>serviceBodyIds</code>-suodattimet eivät vaikuta sijaintihakuihin; tulokset määräytyvät kokonaan läheisyyden perusteella.",
+      "geolocationRadius": "Määrittää hakusäteen paikannusta käytettäessä. <strong>Positiivinen</strong> arvo määrittää kiinteän säteen maileina (tai kilometreinä asetuksen <code>distanceUnit</code> mukaan) ja rajoittaa Lähelläni-etäisyysvalikon enimmäisarvoa. <strong>Negatiivinen kokonaisluku</strong> käyttää BMLT:n automaattista hakusädettä — palvelin laajentaa hakua, kunnes se löytää suunnilleen näin monta kokousta (esim. <code>-50</code> löytää noin 50 lähistöllä olevaa kokousta); etäisyysvalikko näyttää tällöin kaikki <code>distanceOptions</code>-vaihtoehdot ilman ylärajaa. Vastaa attribuuttia <code>data-geolocation-radius</code> (attribuutti on etusijalla). Oletus: <code>-50</code>.",
+      "distanceOptions": "Lähelläni-pudotusvalikossa näytettävät etäisyysarvot (<code>distanceUnit</code>-yksikössä). Kun <code>geolocationRadius</code> on positiivinen luku, sitä suuremmat vaihtoehdot piilotetaan ja luku lisätään viimeiseksi vaihtoehdoksi, ellei sitä jo ole. Kun <code>geolocationRadius</code> on negatiivinen (automaattinen hakusäde), kaikki vaihtoehdot näytetään sellaisinaan. Vastaa attribuuttia <code>data-distance-options</code> (attribuutti on etusijalla). Oletus: <code>[5, 10, 15, 25, 50, 100]</code>.",
+      "distanceUnit": "Lähelläni-pudotusvalikossa etäisyyksien vieressä näytettävä yksikkö. Vastaa attribuuttia <code>data-distance-unit</code> (attribuutti on etusijalla). Oletus: päätellään automaattisesti käytössä olevista kieli- ja alueasetuksista (<code>en-US</code>, <code>en-GB</code>, <code>en-LR</code>, <code>my-MM</code> → <code>'mi'</code>; kaikki muut → <code>'km'</code>). Määritä arvo erikseen, jos haluat pakottaa tietyn yksikön.",
+      "nowOffset": "Aika minuutteina, jonka kuluttua kokous katsotaan menneeksi. Viimeisten <code>nowOffset</code> minuutin aikana alkaneet kokoukset näkyvät edelleen luettelon alussa; aiemmin tänään alkaneet siirtyvät luettelon loppuun (kuin ne pidettäisiin ensi viikolla). Vastaa attribuuttia <code>data-now-offset</code> (attribuutti on etusijalla). Oletus: <code>10</code>. Aseta arvoksi <code>0</code>, jos haluat kokouksen siirtyvän loppuun heti alkamisajan mentyä.",
+      "hideHeader": "Piilota \"Kokoushaku\"-otsikkopalkki ja kokousten lukumäärä pienoisohjelman yläosasta. Vastaa attribuuttia <code>data-hide-header</code> (attribuutti on etusijalla). Oletus: <code>false</code>.",
+      "showFormats": "Näytä pilkuilla erotettu luettelo <strong>kokousmuotokoodeista</strong> (esim. <code>C, O, BT</code>) kunkin kokouksen nimen alla luettelossa tai korteissa. <code>C</code> (Suljettu) ja <code>O</code> (Avoin) näytetään aina ensin; muut koodit järjestetään aakkosittain. Vastaa attribuuttia <code>data-show-formats</code> (attribuutti on etusijalla). Oletus: <code>false</code>.",
+      "inlineFormats": "Korosta yhtä tai useampaa <strong>kokousmuodon avainmerkkijonoa</strong> (esim. <code>'M'</code>, <code>'W'</code>) kunkin kokouksen nimen vieressä luettelossa tai korteissa. Kokousta vastaavan kokousmuodon käännetty nimi (esim. \"Naisille\") näytetään hillittynä lisätekstinä — näin erityiskohderyhmille tarkoitettuja kokouksia voi korostaa valikoidusti asetuksesta <code>showFormats</code> riippumatta. Vastaa attribuuttia <code>data-inline-formats</code> (attribuutti on etusijalla). Otettava käyttöön erikseen: oletus on <code>[]</code> (ei mitään). Huomaa, että BMLT:n kokousmuotojen avainmerkkijonot vaihtelevat palvelimittain, joten koodi näkyy vain, jos palvelin todella käyttää sitä. <br /><em>Esimerkki:</em> <code>inlineFormats: ['M', 'W']</code>",
+      "darkMode": "Sisäänrakennettu tumma värimaailma. <code>'auto'</code> seuraa kävijän käyttöjärjestelmän asetusta (<code>prefers-color-scheme</code>); <code>true</code> pakottaa tumman tilan käyttöjärjestelmän asetuksesta riippumatta; <code>false</code> (oletus) poistaa sen käytöstä. Vastaa attribuuttia <code>data-dark-mode</code> (attribuutti on etusijalla). Toimii yhdessä <a href=\"#tile-dark-config\">tumman tilan kuvatiilien</a> kanssa.",
+      "mapTiles": "Mukautettu kartan kuvatiilien tarjoaja. Korvaa oletuksena käytetyt OpenStreetMap-kuvatiilet. Katso alla oleva kohta <a href=\"#tile-config\">Kuvatiilien tarjoaja</a>.",
+      "mapTilesDark": "Vaihtoehtoinen kuvatiilien tarjoaja, jota käytetään, kun <code>prefers-color-scheme: dark</code>. Vaihtuu automaattisesti käyttöjärjestelmän teeman muuttuessa. Katso alla oleva kohta <a href=\"#tile-dark-config\">Tumman tilan kuvatiilet</a>.",
+      "mapMarkers": "Mukautettu karttamerkki kokouspaikoille. Korvaa oletuksena käytetyn NA-karttamerkin. Katso alla oleva kohta <a href=\"#marker-config\">Karttamerkkien asetukset</a>.",
+      "height": "Pienoisohjelman korkeus pikseleinä. Vastaa attribuuttia <code>data-height</code>. Jätä pois, jos haluat pienoisohjelman kasvavan sisällön tarvitsemaan korkeuteen.",
+      "formats": "Rajaa pienoisohjelma kokouksiin, jotka vastaavat yhtä tai useampaa <strong>kokousmuodon avainmerkkijonoa</strong> (esim. <code>'O'</code>, <code>'BT'</code>, <code>'WC'</code>). Suodatus tehdään rajapinnan vastauksen <em>jälkeen</em>, joten kaikki kokoukset haetaan edelleen, ja avainmerkkijonoon perustuva suodatin rajaa tulosjoukkoa selaimessa. Useat avaimet yhdistetään JA-ehdolla — kokouksen on vastattava jokaista lueteltua avainta. Avainmerkkijonot ovat samoja eri BMLT-palvelimilla, joten tämä on paras vaihtoehto palvelimesta riippumattomaan suodatukseen. Jos haluat suodattaa palvelimella numeerisen kokousmuototunnisteen perusteella, käytä sen sijaan attribuuttia <code>data-format-ids</code>. Vastaa attribuuttia <code>data-formats</code> (attribuutti on etusijalla). Oletus: <code>[]</code> (ei rajausta). <br /><em>Esimerkki:</em> <code>formats: ['O']</code>",
+      "basePath": "History API -reitityksen peruspolku (esim. <code>'/meetings'</code>). Vastaa attribuuttia <code>data-path</code> — tuottaa selkeät URL-osoitteet ilman <code>#</code>-fragmenttia. Katso lisätietoja kohdasta <a href=\"#routing\">Reititys</a>.",
+      "updateUrl": "Kokouksen tietopaneelin alareunassa näkyvän <strong>\"Päivitä kokoustiedot\"</strong> -linkin URL-malli. Vastaa attribuuttia <code>data-update-url</code> (attribuutti on etusijalla). Paikkamerkit: <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code>, <code>{return_url}</code> — arvot URL-koodataan sijoituksen yhteydessä. Toimii bmlt-workflow'n päivityslomakkeen, itse ylläpidetyn lomakkeen tai <code>mailto:</code>-osoitteiden kanssa. Linkki avautuu uuteen välilehteen. Piilotetaan, jos arvoa ei ole määritetty. Katso esimerkit alla olevasta <a href=\"#update-url\">Kokoustietojen päivityslinkki</a> -osiosta.",
+      "virtual": "Ota käyttöön <strong>Verkkokokoushaku</strong> — verkko- ja hybridikokoukset ympäri maailmaa ladataan viikonpäivä kerrallaan (oletus: tänään), järjestetään seuraavaksi alkavat ensin ja näytetään kävijän paikallisessa ajassa. Pakottaa luettelonäkymän ja poistaa kartan sekä sijaintihaun käytöstä. Vastaa attribuuttia <code>data-virtual</code> (attribuutti on etusijalla). Oletus: <code>false</code>.",
+      "defaultDay": "Valitse viikonpäiväsuodatin valmiiksi latauksen yhteydessä. <code>'today'</code> avaa luettelon, jossa näytetään vain kävijän nykyisen päivän kokoukset; päivävalinnan voi tyhjentää, jolloin kaikkien päivien kokoukset näytetään. Ei vaikuta Verkkokokoushaussa. Vastaa attribuuttia <code>data-default-day</code> (attribuutti on etusijalla). Oletus: ei määritetty (kaikki päivät)."
+    }
+  },
+  "language": {
+    "title": "Kieli",
+    "intro": "Pienoisohjelma tunnistaa kävijän kielen automaattisesti <code>navigator.language</code>-arvosta ja käyttää tarvittaessa englantia. Voit ohittaa tämän <code>language</code>-asetuksella:",
+    "codes": "Kielikoodit tunnistetaan perusosan perusteella, joten <code>'fr-CA'</code> käyttää kieltä <code>fr</code>. Tuetut kielet:",
+    "th": {
+      "code": "Koodi",
+      "language": "Kieli"
+    },
+    "name": {
+      "en": "englanti",
+      "es": "espanja",
+      "fr": "ranska",
+      "de": "saksa",
+      "pt": "portugali",
+      "it": "italia",
+      "sv": "ruotsi",
+      "da": "tanska",
+      "el": "kreikka",
+      "fa": "persia",
+      "pl": "puola",
+      "ru": "venäjä",
+      "ja": "japani",
+      "fi": "Suomi"
+    }
+  },
+  "geolocation": {
+    "title": "Paikannus",
+    "p0": "Oletusarvo on <code>true</code>, kun <code>data-server</code> osoittaa BMLT-koontipalveluun (<code>aggregator.bmltenabled.org</code>) eikä <code>service-body</code>-arvoa ole asetettu, koska muuten koontipalvelu ei pysty rajaamaan hakua. Kaikissa muissa kokoonpanoissa oletusarvo on <code>false</code>. Voit ohittaa kumman tahansa oletusarvon määrittämällä <code>geolocation</code>-arvon erikseen <code>CrumbWidgetConfig</code>-asetuksiin.",
+    "p1": "Ota <strong>Lähelläni</strong>-painike käyttöön asetuksella <code>geolocation: true</code>. Kun se on käytössä, pienoisohjelma yrittää myös paikantaa käyttäjän automaattisesti sivun latautuessa ja näyttää lähialueen kokoukset. Toiminto edellyttää suojattua ympäristöä (HTTPS).",
+    "p2": "Jos paikannus estetään tai se ei ole käytettävissä, näytetään virheilmoitus. Pienoisohjelma ei siirry ilmoittamatta lataamaan kaikkia kokouksia. Tämä on tarkoituksellista: suurilla palvelimilla kaikkien kokousten lataaminen ilman palveluelimen mukaista rajausta voisi tuottaa kymmeniä tuhansia tuloksia.",
+    "p3": "<strong>Palveluelinsuodattimet eivät vaikuta paikannushakuihin.</strong> Lähelläni-toiminnon tulokset määräytyvät kokonaan käyttäjän koordinaattien ja <code>geolocationRadius</code>-arvon perusteella. Jos <code>serviceBodyIds</code>-arvoja ei ole määritetty, Lähelläni-painiketta ei voi kytkeä pois päältä, koska paikannus on ainoa tietolähde.",
+    "p4": "Lähelläni-painike avaa etäisyysvalikon, josta käyttäjä voi valita hakuetäisyyden. Hakusäteen valinta suodattaa jo ladattuja kokouksia etäisyyden perusteella selaimessa. Hakusäteen vaihtaminen ei tee uutta verkkopyyntöä. Kun <code>geolocationRadius</code> on positiivinen luku, etäisyysvaihtoehdot tulevat <code>distanceOptions</code>-asetuksesta enintään kyseiseen arvoon asti. Vaihtoehdot, joiden etäisyydellä ei ole kokouksia, piilotetaan automaattisesti. Kun <code>geolocationRadius</code> on negatiivinen kokonaisluku (automaattinen hakusäde), kaikki <code>distanceOptions</code>-vaihtoehdot näytetään ilman ylärajaa. Ensimmäinen haku löytää suunnilleen itseisarvon verran kokouksia, ja etäisyyden valitseminen valikosta vaihtaa käyttöön kiinteän hakusäteen. Asetuksella <code>distanceUnit</code> voit näyttää kilometrit mailien sijaan.",
+    "p5": "Kun Lähelläni-toiminto on käytössä karttanäkymässä, kartan siirtäminen tai zoomaaminen tuo kartan yläreunaan <strong>Hae tältä alueelta</strong>-painikkeen. Sen napsauttaminen lataa kokoukset uudelleen nykyisen karttanäkymän keskikohdan ympäriltä käyttäen samaa valittua hakusädettä. Kartta pysyy käyttäjän valitsemassa kohdassa eikä siirry näyttämään kaikkia uusia tuloksia.",
+    "p6": "Hakukenttään tulee myös pieni hakutilan valikko. Käyttäjä voi vaihtaa tilojen <em>Suodata kokouksia</em> (oletus: selaimessa toimiva tekstisuodatin jo ladatuille kokouksille) ja <em>Hae paikkaa</em> välillä. Sijaintitilassa kaupungin, postinumeron tai osoitteen kirjoittaminen (esimerkiksi <code>Edgartown, MA</code> tai <code>02539</code>) ja Enterin painaminen selvittää paikan OpenStreetMap Nominatimin avulla ja lataa kokoukset uudelleen saatujen koordinaattien läheltä. Hakusäteenä käytetään viimeisintä Lähelläni-valintaa, jos sellainen on tehty, muuten <code>geolocationRadius</code>-arvoa. Geokoodauksen pyynnöt lähetetään suoraan osoitteeseen <code>nominatim.openstreetmap.org</code>. API-avainta ei tarvita, mutta käyttäjien tulee noudattaa <a href=\"https://operations.osmfoundation.org/policies/nominatim/\">Nominatimin käyttöehtoja</a> (enintään yksi pyyntö sekunnissa, ja pyyntöjen tulee sisältää sovelluksen tunnistava User-Agent — <code>bmlt-query-client</code> asettaa sen oletuksena)."
+  },
+  "updateUrl": {
+    "title": "Kokoustietojen päivityslinkki",
+    "intro": "Lisää <strong>\"Päivitä kokoustiedot\"</strong>-painike jokaisen kokouksen tietopaneelin alareunaan määrittämällä <code>data-update-url</code>-arvoksi (tai yleisten asetusten <code>updateUrl</code>-arvoksi) URL-malli. Pienoisohjelma korvaa kokouskohtaiset paikkamerkit napsautushetkellä ja avaa muodostetun osoitteen uudessa välilehdessä. Jos asetusta ei ole määritetty, painike käyttää kokouksen palveluelimen päivityslomaketta, jos palvelin tarjoaa sellaisen (katso alla). Muussa tapauksessa painike piilotetaan.",
+    "tokens": "Tuetut paikkamerkit (jokainen arvo URL-koodataan korvattaessa; tuntemattomat <code>{tokens}</code> jätetään ennalleen):",
+    "th": {
+      "token": "Paikkamerkki",
+      "value": "Arvo"
+    },
+    "token": {
+      "meetingId": "BMLT-kokouksen <code>id_bigint</code> — ensisijainen tunniste, jota useimmat päivityslomakkeet odottavat.",
+      "meetingName": "Kokouksen nimi luettavassa muodossa. Hyödyllinen <code>mailto:</code>-linkillä luotavan viestin aiheessa.",
+      "serverUrl": "Määritetty BMLT-juuripalvelimen URL-osoite (<code>data-server</code>-arvo).",
+      "returnUrl": "Nykyisen sivun URL-osoite — hyödyllinen paluulinkkinä tai lomakelähetysten jäljittämisessä."
+    },
+    "serviceBody": {
+      "title": "Automaattisesti: palveluelimen päivityslomake",
+      "body": "Kun <code>updateUrl</code>-arvoa ei ole asetettu, pienoisohjelma käyttää <code>meeting_update_url</code>-arvoa, jonka BMLT Server 4.2.9+ tallentaa kullekin palveluelimelle (yleensä BMLT Workflow -sivu). URL-osoite haetaan kokouksen tietopaneelin avautuessa (yksi välimuistiin tallennettava pyyntö palveluelintä kohti), ja painike linkittää osoitteeseen <code>&lt;form URL&gt;?meeting_id=&lt;id&gt;</code> säilyttäen mahdollisen aiemman kyselymerkkijonon. Koontipalvelussa tunniste on kokouksen <code>source_id</code> (sen tunniste omalla juuripalvelimellaan), koska lomake ei tunnista koontipalvelun <code>id_bigint</code>-arvoa. Vain <code>http(s)</code>-osoitteita käytetään. Jos palveluelimellä ei ole URL-osoitetta tai haku epäonnistuu, painike pysyy piilotettuna. Erikseen määritetty <code>updateUrl</code> on aina ensisijainen."
+    },
+    "workflow": {
+      "title": "Esimerkki: bmlt-workflow-integraatio",
+      "body": "<a href=\"https://github.com/bmlt-enabled/bmlt-workflow\">bmlt-workflow</a> on WordPress-lisäosa, joka tarjoaa kokoustietojen päivityslomakkeen lyhytkoodilla <code>[bmltwf-meeting-update-form]</code>. Lomakkeen JavaScript lukee kyselymerkkijonon <code>?meeting_id=</code>-arvon ja valitsee kokouksen etukäteen, joten URL-malliin tarvitaan vain <code>{meeting_id}</code>-paikkamerkki:"
+    },
+    "mailto": {
+      "title": "Esimerkki: mailto-linkki",
+      "body": "Eikö sinulla ole verkossa olevaa lomaketta? Käytä <code>mailto:</code>-osoitetta: käyttäjän sähköpostiohjelma avautuu, ja viestin aihe sekä sisältö ovat valmiiksi täytettyinä. Paikkamerkkien arvot URL-koodataan, joten niitä voi käyttää turvallisesti <code>mailto:</code>-kyselyparametreissa:"
+    },
+    "custom": {
+      "title": "Esimerkki: oma päätepiste",
+      "body": "Mikä tahansa URL-osoite, joka vastaanottaa kokouksen tunnisteen kyselymerkkijonossa, toimii. Linkki avautuu uudessa välilehdessä, joten päätepiste voi olla kokonainen sivu (Google-lomake, Airtable-lomake, oma sisällönhallintajärjestelmä jne.). Välitä <code>{return_url}</code>, jotta lomakkeella on paluulinkki kokoussivulle:"
+    }
+  },
+  "queryParams": {
+    "title": "URL-kyselyparametrit",
+    "intro": "Kyselyparametri <code>?view=</code> määrittää aloitusnäkymän ja ohittaa arvot <code>data-view</code> ja <code>view</code>:",
+    "th": {
+      "value": "Arvo",
+      "behaviour": "Toiminta"
+    },
+    "row": {
+      "list": "Pakota luettelonäkymä sivun latautuessa",
+      "map": "Pakota karttanäkymä sivun latautuessa",
+      "both": "Näytä kartta koko kokousluettelon yläpuolella; luettelo-/karttanäkymän valitsin piilotetaan",
+      "auto": "Paikanna sivun latautuessa — jos paikannus onnistuu, näytä kartta ja lähialueen tulokset; jos se epäonnistuu, näytä kaikkien kokousten luettelo"
+    },
+    "example": "Esimerkki: <code>https://example.org/meetings/?view=auto</code>",
+    "disable": "Kun <code>geolocation: true</code> on asetettu, pienoisohjelma pyytää paikannuslupaa automaattisesti sivun latautuessa myös arvoilla <code>?view=map</code> ja <code>?view=both</code>. Arvo <code>?view=list</code> estää automaattisen lupapyynnön. Käyttäjä voi silti käynnistää paikannuksen itse Lähelläni-painikkeella.",
+    "servicesAndFormats": "Kolme muuta kyselyparametria ohittaa vastaavat upotusasetukset, joten saman sivun hakua voi kohdentaa URL-osoitteella: <code>?services=</code> ohittaa arvon <code>data-service-body</code> (pilkuilla erotetut palveluelinten tunnisteet); <code>?format_ids=</code> ohittaa arvon <code>data-format-ids</code> (pilkuilla erotetut numeeriset kokousmuotojen tunnisteet, palvelinpuolen suodatin); ja <code>?formats=</code> ohittaa arvot <code>data-formats</code> ja <code>CrumbWidgetConfig.formats</code> (pilkuilla erotetut kokousmuotojen avainmerkkijonot, asiakaspuolen suodatin). Kaikki kolme hyväksyvät tyhjän arvon, jolla määritetty suodatin tyhjennetään (esimerkiksi <code>?formats=</code>)."
+  },
+  "cssVars": {
+    "title": "CSS-muuttujat",
+    "intro": "Pienoisohjelma tarjoaa mukautettuja CSS-ominaisuuksia, joilla voit muuttaa sen ulkoasua koskematta JavaScriptiin. Aseta haluamasi arvot <code>#crumb-widget</code>-elementille. Määritä vain ne, jotka haluat ohittaa.",
+    "th": {
+      "variable": "Muuttuja",
+      "default": "Oletusarvo",
+      "controls": "Vaikutus"
+    },
+    "row": {
+      "fontFamily": "Pienoisohjelman fonttiluettelo",
+      "fontSize": "Perusfonttikoko",
+      "crumbRem": "Sisäinen \"rem-yksikkö\" tekstille, välistyksille ja pyöristyssäteille. Sen vähimmäisarvo on 16 px, joten sivuston teemat, jotka pienentävät <code>&lt;html&gt;</code>-elementin fonttikokoa, eivät voi pienentää pienoisohjelmaa. Arvo kasvaa, kun käyttäjä asettaa selaimeen suuremman oletusfonttikoon.",
+      "background": "Pienoisohjelman ja toimintopalkin tausta",
+      "text": "Ensisijaisen tekstin väri",
+      "border": "Reunukset ja erottimet",
+      "accent": "Aktiiviset painikkeet, linkit ja kohdistuksen ilmaisimet",
+      "accentLight": "Rivin tausta osoittimen ollessa sen päällä ja aktiivisen suodatinpaneelin tausta",
+      "borderRadius": "Korttien ja painikkeiden kulmien pyöristyssäde",
+      "rowAlt": "Vuorottelevien (parillisten) rivien tausta",
+      "inPerson": "Lähikokousmerkin teksti",
+      "inPersonBg": "Lähikokousmerkin tausta",
+      "virtual": "Verkkokokousmerkin teksti",
+      "virtualBg": "Verkkokokousmerkin tausta",
+      "surface": "Syötekenttien, painikkeiden ja avautuvien valikoiden taustat",
+      "hover": "Neutraali tila osoittimen ollessa päällä (painikkeet ja rivit, jotka eivät käytä korostusväriä)",
+      "divider": "Rivien ja luettelon sisäiset erotinviivat",
+      "textSecondary": "Toissijainen / hillitty teksti (taulukon otsikot, aika, sijainti)",
+      "textMuted": "Hyvin hillitty teksti (alatunnisteen lukumäärä, tyhjän näkymän viestit)",
+      "inProgressBg": "Käynnissä olevan kokouksen ilmoituspalkin ja rivin tausta",
+      "inProgressText": "Käynnissä olevan kokouksen ilmoituspalkin teksti"
+    }
+  },
+  "cssDarkMode": {
+    "title": "Tumma tila",
+    "intro": "Pienoisohjelmassa on sisäänrakennettu tumma väripaletti. Ota se käyttöön <code>darkMode</code>-asetuksella. Erillistä CSS:ää ei tarvita. Toimii yhdessä <a href=\"#tile-dark-config\">tumman tilan kuvatiilien</a> asetuksen kanssa.",
+    "custom": "Jos haluat käyttää omaa tummaa väripalettia, määritä CSS-muuttujille uudet arvot suoraan:"
+  },
+  "cssClasses": {
+    "title": "CSS-apuluokat",
+    "intro": "Näitä luokkia käytetään pienoisohjelman sisällä. Voit kohdistaa niihin myös omaa CSS:ää, jos haluat muokata ulkoasua lisää.",
+    "th": {
+      "class": "Luokka",
+      "usedOn": "Käyttökohde"
+    },
+    "row": {
+      "btnPrimary": "Korostusvärillä täytetyt painikkeet — aktiiviset suodatinmerkit, näkymän valitsin, Liity kokoukseen",
+      "btnSecondary": "Reunukselliset painikkeet — Reittiohjeet",
+      "link": "Linkin näköiset painikkeet — Takaisin, sähköpostiyhteystieto",
+      "badgeInPerson": "Lähikokouksen merkki",
+      "badgeVirtual": "Verkkokokouksen merkki",
+      "card": "Tietonäkymän osioiden kortit",
+      "row": "Kokousluettelon taulukon rivit",
+      "formatChip": "Kokousmuotojen merkit kokousluettelossa",
+      "formatPill": "Kokousmuotojen merkit kokouksen tietopaneelissa"
+    }
+  },
+  "tileConfig": {
+    "title": "Kuvatiilien tarjoaja",
+    "intro": "Kartta käyttää oletuksena <a href=\"https://www.openstreetmap.org/\" target=\"_blank\" rel=\"noopener\">OpenStreetMapin</a> kuvatiiliä. Voit vaihtaa mihin tahansa <a href=\"https://leaflet-extras.github.io/leaflet-providers/preview/\" target=\"_blank\" rel=\"noopener\">Leaflet-yhteensopivaan kuvatiilien tarjoajaan</a> määrittämällä asetuksen <code>map.tiles</code>.",
+    "row": {
+      "url": "Kuvatiilen URL-malli. Käytä paikkamerkkejä <code>{z}</code>, <code>{x}</code>, <code>{y}</code> (ja <code>{r}</code> retina-tarkkuutta varten, jos sitä tuetaan).",
+      "attribution": "HTML-muotoinen lähdemerkintä, joka näytetään kartan lähdemerkintäelementissä. Useimpien kuvatiilien tarjoajien käyttöehdot edellyttävät sitä."
+    }
+  },
+  "tileDarkConfig": {
+    "title": "Tumman tilan kuvatiilet",
+    "intro": "Määritä <code>map.tiles_dark</code>, jos haluat käyttää eri kuvatiilitasoa kävijöille, joilla on <code>prefers-color-scheme: dark</code>. Taso vaihtuu automaattisesti käyttöjärjestelmän teeman muuttuessa, eikä sivua tarvitse ladata uudelleen. Jos asetus puuttuu, samoja kuvatiiliä käytetään kaikissa väriteemoissa.",
+    "googleNote": "<strong>Google Mapsin kuvatiilet:</strong> Googlen kuvatiilirajapinta edellyttää istuntotunnistetta, joka haetaan palvelinpuolella (tai asiakaspuolella tehtävällä haulla lyhytaikaista käyttöä varten). Koska tunniste pitää hakea ennen kuin <code>CrumbWidgetConfig</code> asetetaan, <code>https://cdn.aws.bmlt.app/crumb-widget.js</code> pitää ladata dynaamisesti tunnisteen valmistuttua. Alla oleva esimerkki käyttää <a href=\"https://developers.google.com/maps/documentation/tile/\" target=\"_blank\" rel=\"noopener\">Google Map Tiles API</a> -rajapintaa. Tarvitset <strong>Referer-otsakkeen perusteella rajatun API-avaimen</strong>, jolle Map Tiles API on otettu käyttöön."
+  },
+  "markerConfig": {
+    "title": "Karttamerkkien asetukset",
+    "intro": "Objektilla <code>map.markers.location</code> voit korvata oletuksena käytetyn NA-karttamerkin millä tahansa kuvalla tai suoraan upotetulla SVG:llä.",
+    "row": {
+      "html": "Karttamerkin elementin sisälle renderöitävä HTML. Tavallisesti <code>&lt;img&gt;</code>-tunniste tai suoraan upotettu SVG.",
+      "width": "Kuvakkeen leveys pikseleinä.",
+      "height": "Kuvakkeen korkeus pikseleinä. Ankkuripiste asetetaan kuvakkeen alareunan keskelle."
+    }
+  },
+  "exampleBasic": {
+    "title": "Esimerkki: perusupotus",
+    "intro": "Näytä kaikki julkisen BMLT-palvelimen kokoukset:"
+  },
+  "exampleServiceBody": {
+    "title": "Esimerkki: suodata palveluelimen mukaan",
+    "intro": "Näytä vain palveluelimeen 42 (ja sen alaisiin palveluelimiin) kuuluvat kokoukset:"
+  },
+  "exampleMulti": {
+    "title": "Esimerkki: useita palveluelimiä",
+    "intro": "Anna pilkuilla erotettu luettelo, jos haluat mukaan useiden palveluelinten kokoukset:"
+  },
+  "exampleMap": {
+    "title": "Esimerkki: karttanäkymä oletuksena"
+  },
+  "exampleWordpress": {
+    "title": "Esimerkki: WordPress",
+    "intro": "Helpoin tapa lisätä Crumb Widget WordPress-sivustolle on virallinen <a href=\"https://wordpress.org/plugins/crumb/\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>-lisäosa (<a href=\"https://github.com/bmlt-enabled/crumb-widget\" target=\"_blank\" rel=\"noopener\">GitHub</a>). Se tarjoaa tälle pienoisohjelmalle lyhytkoodin ja asetusnäkymän, joten koodia ei tarvita.",
+    "installation": "Asennus",
+    "install": {
+      "1": "Etsi <strong>Crumb</strong> WordPressin lisäosahakemistosta tai lataa lisäosan ZIP-tiedosto sivustolle itse.",
+      "2": "Aktivoi lisäosa.",
+      "3": "Siirry kohtaan <strong>Asetukset → Crumb</strong> ja anna BMLT-palvelimesi URL-osoite.",
+      "4": "Lisää lyhytkoodi mille tahansa sivulle tai artikkeliin."
+    },
+    "shortcode": "Lyhytkoodi",
+    "serverNote": "Lisäosan asetuksissa määritettyä BMLT-palvelimen URL-osoitetta käytetään oletuksena. Voit ohittaa sen tai suodattaa palveluelimen mukaan suoraan lyhytkoodissa:",
+    "advanced": "Lisäasetukset",
+    "advancedIntro": "Kaikki <a href=\"#global-config\">yleiset asetukset</a> (kieli, paikannus, sarakkeet, kartan kuvatiilet jne.) voi määrittää teemasi <code>functions.php</code>-tiedostossa <code>crumb_config</code>-suodattimella:",
+    "switchFromCroutonHeading": "Siirtyminen Croutonista",
+    "switchFromCroutonIntro": "<strong>Crumb</strong>-lisäosa on vaihtoehto <a href=\"https://wordpress.org/plugins/crouton/\" target=\"_blank\" rel=\"noopener\"><strong>crouton</strong></a>-lisäosalle, ja sen voi ottaa käyttöön muokkaamatta sivuja. Asenna Crumb ja poista sitten crouton käytöstä. Olemassa olevat sivut toimivat edelleen.",
+    "switchFromCrouton": {
+      "1": "Croutonin lyhytkoodit <code>[bmlt_tabs]</code>, <code>[bmlt_map]</code>, <code>[crouton_tabs]</code> ja <code>[crouton_map]</code> rekisteröidään automaattisesti ja muunnetaan käyttämään Crumb-pienoisohjelmaa. Karttalyhytkoodit renderöidään asetuksella <code>view=\"both\"</code> ja välilehtilyhytkoodit asetuksella <code>view=\"list\"</code>.",
+      "2": "Lyhytkoodin attribuutit <code>root_server</code>, <code>service_body</code>, <code>service_body_1</code>, <code>formats</code> ja <code>report_update_url</code> yhdistetään vastaaviin Crumb-asetuksiin.",
+      "3": "Croutonin tallennettuja asetuksia (palvelimen URL-osoite, palveluelin, kokousmuotojen tunnisteet, päivitysosoite) käytetään varavaihtoehtoina, kun vastaava Crumb-asetus on tyhjä. Tarkista perityt arvot kohdassa <strong>Asetukset → Crumb</strong> ja tallenna ne napsauttamalla <strong>Tallenna muutokset</strong>.",
+      "4": "Jos molemmat lisäosat ovat aktiivisia, crouton käsittelee edelleen omat lyhytkoodinsa. Crumb ottaa ne vastuulleen vasta, kun crouton poistetaan käytöstä."
+    }
+  },
+  "exampleDrupal": {
+    "title": "Esimerkki: Drupal",
+    "intro": "Lisää Crumb Widget Drupal 10.3+- tai 11-sivustolle <a href=\"https://github.com/bmlt-enabled/crumb-drupal\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>-moduulilla. Moduuli tarjoaa pienoisohjelman sijoitettavana lohkona, runkotekstikenttien <code>[crumb]</code>-lyhytkoodisuodattimen sekä renderöintipalvelun ohjelmallisia upotuksia varten. Julkaisut ovat osoitteessa <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-drupal/releases</a>.",
+    "installation": "Asennus",
+    "install": {
+      "1": "Lataa uusin <code>crumb.zip</code> <a href=\"https://github.com/bmlt-enabled/crumb-drupal/releases\" target=\"_blank\" rel=\"noopener\">julkaisusivulta</a>.",
+      "2": "Pura se hakemistoon <code>web/modules/contrib/</code> (tai <code>web/modules/custom/</code>).",
+      "3": "Ota käyttöön komennolla <code>drush en crumb</code> tai ylläpitonäkymän kohdasta <strong>Laajenna (Extend)</strong>.",
+      "4": "Siirry kohtaan <strong>Asetukset → Verkkopalvelut → Crumb (Configuration → Web services → Crumb)</strong> ja anna BMLT-palvelimesi URL-osoite."
+    },
+    "embedBlock": "Upotus lohkona",
+    "embedBlockBody": "Helpoin tapa: sijoita <strong>Crumb-kokoushaku (Crumb meeting finder)</strong> -lohko (luokka: BMLT) haluamaasi alueeseen kohdasta <strong>Rakenne → Lohkojen sijoittelu (Structure → Block layout)</strong>. Lohkokohtaisilla asetuksilla voi ohittaa palvelimen, palveluelimen, näkymän ja paikannuksen asetukset.",
+    "embedShortcode": "Upotus lyhytkoodilla runkotekstikenttiin",
+    "embedShortcodeBody": "Ota tekstimuodolle käyttöön suodatin <strong>Crumb-kokoushaun lyhytkoodi (Crumb meeting finder shortcode)</strong> (<strong>Asetukset → Sisällön luominen → Tekstimuodot ja editorit (Configuration → Content authoring → Text formats and editors)</strong>) ja käytä sitten:",
+    "serverNote": "Moduulin asetuksissa määritettyä BMLT-palvelimen URL-osoitetta käytetään oletuksena. Voit ohittaa sen tai suodattaa palveluelimen mukaan suoraan lyhytkoodissa:",
+    "advanced": "Lisäasetukset",
+    "advancedIntro": "Kaikki <a href=\"#global-config\">yleiset asetukset</a> (kieli, paikannus, sarakkeet, kartan kuvatiilet jne.) voidaan määrittää ohjelmallisesti minkä tahansa oman moduulin <code>hook_crumb_config_alter()</code>-funktiolla:"
+  },
+  "exampleJoomla": {
+    "title": "Esimerkki: Joomla",
+    "intro": "Lisää Crumb Widget Joomla 4-, 5- tai 6-sivustolle <a href=\"https://github.com/bmlt-enabled/crumb-joomla\" target=\"_blank\" rel=\"noopener\"><strong>Crumb</strong></a>-laajennuksella. Paketti sisältää sisältöliitännäisen (artikkeleissa käytettävä <code>{crumb}</code>-lyhytkoodi) ja sivustomoduulin (moduulipaikkoja varten), jotka käyttävät samoja asetuksia. Julkaisut löytyvät osoitteesta <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">github.com/bmlt-enabled/crumb-joomla/releases</a>.",
+    "installation": "Asennus",
+    "install": {
+      "1": "Lataa uusin <code>pkg_crumb.zip</code> <a href=\"https://github.com/bmlt-enabled/crumb-joomla/releases\" target=\"_blank\" rel=\"noopener\">julkaisusivulta</a>.",
+      "2": "Siirry Joomlan ylläpidossa kohtaan <strong>Järjestelmä → Asennus → Laajennukset (System → Install → Extensions)</strong> ja lataa paketin zip-tiedosto palveluun.",
+      "3": "Ota liitännäinen käyttöön: siirry kohtaan <strong>Järjestelmä → Liitännäiset (System → Plugins)</strong>, hae sanalla \"Crumb\", avaa <strong>Sisältö - Crumb (Content - Crumb)</strong>, määritä BMLT-palvelimen URL, tallenna ja vaihda tilaksi <strong>Käytössä (Enabled)</strong>. (Joomlassa sisältöliitännäiset ovat oletusarvoisesti poissa käytöstä.)"
+    },
+    "embedShortcode": "Upotus artikkeleihin lyhytkoodilla",
+    "embedShortcodeBody": "Kun sisältöliitännäinen on käytössä, lisää lyhytkoodi minkä tahansa artikkelin tekstiin:",
+    "serverNote": "Oletusarvoisesti käytetään liitännäisen asetuksiin määritettyä BMLT-palvelimen URLia. Voit korvata sen tai suodattaa palveluelimen mukaan suoraan lyhytkoodissa:",
+    "embedModule": "Upotus moduulilla",
+    "embedModuleBody": "Julkaise <strong>Crumb</strong>-moduuli mihin tahansa moduulipaikkaan kohdassa <strong>Sisältö → Sivustomoduulit → Uusi → Crumb (Content → Site Modules → New → Crumb)</strong>. Moduulikohtaisiin asetuksiin kuuluvat palvelimen URL, palveluelinsuodatin, oletusnäkymä ja CSS-malli.",
+    "advanced": "Lisäasetukset",
+    "advancedIntro": "Määritä asetukset, joille ei ole omia lomakekenttiä (kieli, tumma tila, omat kartan kuvatiilet jne.), liitännäisen tai moduulin asetuspaneelin <strong>Pienoisohjelman JSON-asetukset (Widget Configuration (JSON))</strong> -kentässä. JSON jäsennetään ja lisätään sivulle muodossa <code>window.CrumbWidgetConfig</code> pienoisohjelman yhteydessä."
+  },
+  "features": {
+    "title": "Ominaisuudet",
+    "item": {
+      "listView": "<strong>Luettelonäkymä</strong> — päivän ja ajan mukaan järjestetty kokoustaulukko, jossa on osallistumistapaa kuvaavat merkit",
+      "mapView": "<strong>Karttanäkymä</strong> — interaktiivinen Leaflet-kartta lähikokouksille (myös niille, joihin voi osallistua verkossa); näet paikan kokoukset napsauttamalla karttamerkkiä; kun Lähelläni on käytössä, kartan siirtäminen tai zoomaaminen tuo esiin <em>Hae tältä alueelta</em> -painikkeen",
+      "detailView": "<strong>Tietonäkymä</strong> — kokouksen kaikki tiedot: aikataulu, osoite ja Google Mapsin reittiohjeet, verkkokokouksen liittymispainike, kokousmuodot ja lisätiedot",
+      "textSearch": "<strong>Tekstihaku</strong> — reaaliaikainen suodatus kokouksen nimen, sijainnin ja lisätietojen perusteella",
+      "weekdayFilter": "<strong>Viikonpäiväsuodatin</strong> — valitse yksittäisiä viikonpäiviä tai poista niitä valinnasta",
+      "venueFilter": "<strong>Osallistumistavan suodatin</strong> — lähi- tai verkkokokous (kokoukset, joilla on sekä fyysinen kokouspaikka että verkkolinkki, näkyvät molemmissa)",
+      "timeFilter": "<strong>Vuorokaudenajan suodatin</strong> — aamu, iltapäivä, ilta tai yö",
+      "formatFilter": "<strong>Kokousmuotosuodatin</strong> — usean valinnan pudotusvalikko kokousmuodon perusteella suodattamiseen (esim. avoin, suljettu, puhujakokous); näyttää vain ladatuissa kokoustiedoissa esiintyvät kokousmuodot",
+      "localeTime": "<strong>Alueasetusten mukainen kellonaika</strong> — kokousajat näytetään automaattisesti 12 tunnin (AM/PM) tai 24 tunnin muodossa käyttäjän selaimen alueasetusten perusteella",
+      "recursive": "<strong>Palveluelinten hierarkian tuki</strong> — alaiset palveluelimet sisällytetään aina mukaan",
+      "multiBody": "<strong>Useita palveluelimiä</strong> — yhdistä alueita erottamalla tunnisteet pilkuilla",
+      "print": "<strong>Tulostukseen sopiva luettelonäkymä</strong> — kun käyttäjä tulostaa sivun, pienoisohjelma vaihtaa automaattisesti selkeään mustavalkoiseen aikatauluun, joka on ryhmitelty viikonpäivittäin, toistaa taulukon otsikot eri sivuilla ja tulostaa verkkokokousten koko URLin"
+    }
+  },
+  "routing": {
+    "title": "Reititys",
+    "intro": "Pienoisohjelma käyttää oletusarvoisesti <strong>hash-pohjaista reititystä</strong> kokousten tietosivujen URLeissa (esim. <code>example.com/#/monday-night-meeting-42</code>). Tämä toimii sellaisenaan missä tahansa verkkopalvelussa ilman palvelinasetusten muutoksia.",
+    "prettyUrls": "Selkeät URLit (History API)",
+    "prettyUrlsIntro": "Saat selkeät URLit ilman <code>#</code>-fragmenttia lisäämällä <code>data-path</code>-attribuutin, jonka arvona on peruspolkusi:",
+    "prettyUrlsBody": "Tämä tuottaa esimerkiksi URLin <code>example.com/meetings/monday-night-meeting-42</code>. Palvelimesi on määritettävä näyttämään sama sivu kaikilla peruspolun alaisilla poluilla, jotta suorat käynnit ja sivun päivitykset toimivat:",
+    "th": {
+      "server": "Palvelin",
+      "config": "Asetukset"
+    },
+    "row": {
+      "drupal": "Määritä <strong>Selkeiden URLien peruspolku (Base Path for Pretty URLs)</strong> kohdassa <em>Asetukset → Verkkopalvelut → Crumb (Configuration → Web services → Crumb)</em>; moduuli rekisteröi tarvittavan reitin automaattisesti.",
+      "joomla": "Määritä <strong>Selkeiden URLien peruspolku (Base Path for Pretty URLs)</strong> <em>Sisältö - Crumb (Content - Crumb)</em> -liitännäisen asetuksissa (tai moduulissa). Käytä sen kanssa Joomlan <em>Hakukoneystävälliset URLit (Search Engine Friendly URLs)</em> ja <em>URLien uudelleenkirjoitus (URL Rewriting)</em> -asetuksia kohdassa <em>Järjestelmä → Yleiset asetukset → Sivusto (System → Global Configuration → Site)</em>.",
+      "cloudflare": "Lisää julkaisuhakemistoosi <code>_redirects</code>-tiedosto, joka sisältää rivin <code>/meetings/* /meetings/index.html 200</code> (tai <code>/* /index.html 200</code>, jos sivu on juuripolussa)."
+    },
+    "iframes": "Upotus iframe-kehyksiin (Google Sites jne.)",
+    "iframesP1": "Kun upotat pienoisohjelman iframe-kehyksiä käyttävään palveluun, kuten Google Sitesiin, kaikki pienoisohjelman sisäinen navigointi (kokousten napsauttaminen, Takaisin-painike ja rinnakkaisten kokousten linkit) toimii normaalisti. Suora linkitys tiettyyn kokoukseen URLin kautta ei kuitenkaan ole tuettu, koska pienoisohjelma toimii välityspalvelimen kautta ladatussa iframe-kehyksessä eikä voi hallita pääsivun URLia.",
+    "iframesP2": "Erityisiä asetuksia ei tarvita — oletusarvoinen hash-pohjainen reititys toimii iframe-kehysten sisällä. <code>data-path</code>-attribuuttia ei tarvita iframe-upotuksiin."
+  },
+  "siteBuilders": {
+    "title": "Verkkosivujen rakennuspalvelut",
+    "intro": "Crumb Widget voidaan upottaa myös yleisiin verkkosivujen rakennuspalveluihin, mutta käyttöönotto vaihtelee alustan mukaan."
+  },
+  "findServiceBody": {
+    "title": "Palveluelimen tunnisteen löytäminen",
+    "intro": "Jokainen alla oleva upotus rajaa kokoukset tiettyyn <strong>palveluelimeen</strong> (paikallisalueeseen, alueeseen tai vyöhykkeeseen) antamalla sen numeerisen tunnisteen <code>data-service-body</code>-attribuutissa.",
+    "calloutSdle": "<strong>Helppo tapa — hae sijainnin perusteella.</strong> Siirry osoitteeseen <a href=\"https://sdle.org\" target=\"_blank\" rel=\"noopener\">sdle.org</a>, napsauta mitä tahansa kohtaa kartalla (tai hae osoitetta), niin ponnahdusikkuna näyttää alueen kattavan palveluelimen. Avaa ponnahdusikkunan <strong>Palvelimen tiedot (Server details)</strong>, niin näet sekä <strong>Palvelimen URLin (Server URL)</strong> että <strong>Palveluelimen tunnisteen (Service Body ID)</strong> — joko oman palvelimesi tai koontipalvelun tiedoista. Kopioi arvo napsauttamalla sitä ja liitä arvot sitten <code>data-server</code>- ja <code>data-service-body</code>-attribuutteihin.",
+    "callout1": "<strong>Etkö tiedä palvelimesi URLia tai palveluelimesi tunnistetta?</strong> Selaa sivustoa <a href=\"https://tally.bmlt.app/\" target=\"_blank\" rel=\"noopener\">tally.bmlt.app</a> — se luettelee tunnetut BMLT-palvelimet ja kunkin palveluelimet. Etsi paikallisalueesi, alueesi tai vyöhykkeesi, niin saat samasta paikasta sekä <code>data-server</code>-URLin että <code>data-service-body</code>-tunnisteen.",
+    "callout2": "<strong>Vinkki:</strong> Alaiset palveluelimet sisällytetään aina automaattisesti. Jos annat alueen tunnisteen, mukaan tulevat kaikkien sen alaisten paikallisalueiden kokoukset — jokaista paikallisaluetta ei tarvitse luetella erikseen."
+  },
+  "googleSites": {
+    "title": "Google Sites",
+    "intro": "Google Sites tukee HTML-, CSS- ja JavaScript-koodin upotusta kohdassa <strong>Lisää → Upota → Upota koodi (Insert → Embed → Embed code)</strong>. Voit myös käyttää koko sivun upotusta, jos haluat kokoushaun omalle sivulleen.",
+    "step": {
+      "1": "Avaa sivustosi Google Sitesissa.",
+      "2": "Napsauta <strong>Lisää (Insert)</strong> → <strong>Upota (Embed)</strong>.",
+      "3": "Valitse <strong>Upota koodi (Embed code)</strong>.",
+      "4": "Liitä pienoisohjelman HTML-koodi ja skripti.",
+      "5": "Napsauta <strong>Lisää (Insert)</strong> ja julkaise sitten sivustosi."
+    },
+    "note": "<strong>Huomaa:</strong> Google Sitesissa JavaScript on sijoitettava <code>&lt;script&gt;</code>-tunnisteiden sisään, kun käytät koodin upotusta. Koska Google Sites suorittaa pienoisohjelman välityspalvelimen kautta ladatussa iframe-kehyksessä, suoria linkkejä tiettyihin kokouksiin ei tueta — kaikki pienoisohjelman sisäinen navigointi toimii kuitenkin normaalisti.",
+    "demoLink": "<a href=\"https://sites.google.com/view/crumb-seattle/\" target=\"_blank\">Katso toimiva demo Google Sitesissa &rarr;</a>"
+  },
+  "squarespace": {
+    "title": "Squarespace",
+    "intro": "Squarespacessa upotukseen käytetään <strong>Koodilohkoa (Code Block)</strong>, johon voi lisätä HTML- ja JavaScript-koodia sellaisenaan. Squarespacen ohjeiden mukaan JavaScriptiä tukevat koodilohkot ovat käytettävissä <strong>Core-, Plus-, Advanced-, Business-, Commerce Basic- ja Commerce Advanced</strong>-tilauksissa. Ilmainen Personal-tilaus ei tue JavaScriptiä koodilohkoissa.",
+    "before": "Tarvitset ennen aloittamista kaksi arvoa:",
+    "value": {
+      "server": "<code>data-server</code> — BMLT-palvelimesi <code>/main_server/</code>-URL",
+      "body": "<code>data-service-body</code> — paikallisalueesi, alueesi tai vyöhykkeesi numeerinen tunniste (katso <a href=\"#find-service-body\">Palveluelimen tunnisteen löytäminen</a>)"
+    },
+    "step": {
+      "1": "Kirjaudu Squarespaceen ja avaa sivu, jolle haluat kokoushaun.",
+      "2": "Napsauta <strong>Muokkaa (Edit)</strong>, siirrä sitten osoitin kohtaan, johon haluat pienoisohjelman, ja napsauta <strong>+</strong>-painiketta (Lisää lohko / Add Block).",
+      "3": "Etsi ja lisää <strong>Koodi (Code)</strong> -lohko.",
+      "4": "Varmista koodilohkon editorissa, että <strong>Tila (Mode)</strong> -pudotusvalikon arvona on <strong>HTML</strong> ja että <strong>Näytä lähdekoodi (Display Source)</strong> on <em>poissa käytöstä</em> (muuten Squarespace näyttää tunnisteet sellaisinaan eikä suorita koodia).",
+      "5": "Liitä alla oleva koodikatkelma ja korvaa <code>data-server</code> ja <code>data-service-body</code> omilla arvoillasi.",
+      "6": "Sulje lohko napsauttamalla sen ulkopuolella ja napsauta sitten <strong>Tallenna (Save)</strong>. Julkaise sivu, jos se ei vielä ole julkaistu."
+    },
+    "note": "<strong>Huomaa:</strong> Squarespace näyttää koodilohkot sivun normaalissa asettelussa, joten pienoisohjelma käyttää korkeussuunnassa niin paljon tilaa kuin tarvitsee. Jos esikatselu näyttää tyhjältä, avaa lohko uudelleen ja varmista, että <strong>Näytä lähdekoodi (Display Source)</strong> on poissa käytöstä ja <strong>Tila (Mode)</strong> on <strong>HTML</strong>. Jos tilauksesi ei salli JavaScriptiä koodilohkoissa, sinun on vaihdettava sitä tukevaan tilaukseen, ennen kuin pienoisohjelma voi latautua."
+  },
+  "wix": {
+    "title": "Wix",
+    "intro": "Wixissä upotus jakautuu kahteen paikkaan: pienoisohjelman HTML-säiliö sijoitetaan sivulle <strong>Upota HTML (Embed HTML)</strong> -elementtinä (Wix käyttää nimiä \"Omat upotukset → Upota HTML (Custom Embeds → Embed HTML)\" tai \"Upota pienoisohjelma (Embed a Widget)\"), ja lataajan <code>&lt;script&gt;</code> lisätään kohtaan <strong>Asetukset → Oma koodi (Settings → Custom Code)</strong>, jotta se latautuu vain kerran käynnin aikana. Wixin ohjeiden mukaan Oma koodi edellyttää, että sivustosi on <strong>julkaistu</strong> ja että käytössä on <strong>maksullinen tilaus, johon on liitetty verkkotunnus</strong>.",
+    "before": "Tarvitset ennen aloittamista kaksi arvoa:",
+    "value": {
+      "server": "<code>data-server</code> — BMLT-palvelimesi <code>/main_server/</code>-URL",
+      "body": "<code>data-service-body</code> — paikallisalueesi, alueesi tai vyöhykkeesi numeerinen tunniste (katso <a href=\"#find-service-body\">Palveluelimen tunnisteen löytäminen</a>)"
+    },
+    "step1Heading": "<strong>Vaihe 1 — Lisää latausskripti (kerran sivustoa kohti):</strong>",
+    "step1": {
+      "1": "Siirry Wixin hallintapaneelissa kohtaan <strong>Asetukset (Settings)</strong> → <strong>Lisäasetukset (Advanced)</strong> → <strong>Oma koodi (Custom Code)</strong>.",
+      "2": "Napsauta <strong>+ Lisää omaa koodia (+ Add Custom Code)</strong>.",
+      "3": "Liitä alla oleva lataajan koodikatkelma koodikenttään.",
+      "4": "Valitse kohdassa <strong>Lisää koodi sivuille (Add Code to Pages)</strong> joko <em>Kaikki sivut (All pages)</em> tai vain sivu, jolla pienoisohjelma näytetään (lataaminen vain tarvittavilla sivuilla on nopeampaa).",
+      "5": "Aseta <strong>Koodin sijoituspaikka (Place Code in)</strong> -valinnaksi <strong>Sivun rungon loppu (Body – end)</strong>.",
+      "6": "Anna nimeksi esimerkiksi <em>Crumb Widgetin lataaja</em> ja napsauta <strong>Käytä (Apply)</strong>."
+    },
+    "step2Heading": "<strong>Vaihe 2 — Lisää pienoisohjelman säiliö sivulle:</strong>",
+    "step2": {
+      "1": "Avaa sivu Wix Editorissa.",
+      "2": "Napsauta <strong>+ Lisää elementtejä (+ Add Elements)</strong> → <strong>Upota koodi (Embed Code)</strong> → <strong>Upota HTML (Embed HTML)</strong> (Wix Studiossa polku on <strong>Upotukset ja sosiaalinen media (Embed &amp; Social)</strong> → <strong>HTML-iframe/upotus (HTML iframe/Embed)</strong>).",
+      "3": "Sijoita elementti kohtaan, jossa haluat pienoisohjelman näkyvän, ja napsauta <strong>Syötä koodi (Enter Code)</strong>.",
+      "4": "Liitä alla oleva säiliön koodikatkelma ja korvaa <code>data-server</code> ja <code>data-service-body</code> omilla arvoillasi.",
+      "5": "Napsauta <strong>Päivitä (Update)</strong>. Muuta elementin koko suunnilleen haluamaasi korkeuteen — Wixin Upota HTML -elementillä on kiinteä koko, joten varaa kokousluettelolle ja kartalle riittävästi tilaa (esim. korkeudeksi <code>800px</code>).",
+      "6": "Napsauta <strong>Julkaise (Publish)</strong>."
+    },
+    "note": "<strong>Huomaa:</strong> Wixin Upota HTML -elementti näytetään iframe-kehyksen sisällä. Siksi pienoisohjelma ei voi muuttaa ympäröivän sivun kokoa, eivätkä suorat linkit yksittäisiin kokouksiin päivitä selaimen URLia. Kaikki pienoisohjelman sisäinen navigointi (luettelo, kartta, kokouksen tiedot, suodattimet) toimii silti normaalisti. Jos et näe asetuksissa Oma koodi (Custom Code) -valintaa, tilauksesi ei todennäköisesti sisällä sitä — tarkista, että sivustosi on julkaistu maksullisella tilauksella, johon on liitetty verkkotunnus."
+  },
+  "browserSupport": {
+    "title": "Selaintuki",
+    "intro": "Kaikki nykyaikaiset selaimet. Internet Exploreria ei tueta."
+  },
+  "faq": {
+    "title": "Usein kysytyt kysymykset ja vianmääritys",
+    "nothing": {
+      "title": "Mitään ei näy — pienoisohjelman alue on tyhjä",
+      "body": "Kaksi yleisintä syytä:",
+      "li1": "<strong>Väärä palvelimen URL.</strong> Avaa <code>data-server</code>-arvon URL selaimessa. Sen pitäisi avata BMLT:n ylläpitosivu (tai ainakin vastata). Tarkista URLin lopussa oleva polku — useimmat palvelimet edellyttävät loppuun <code>/main_server/</code>-polkua.",
+      "li2": "<strong>Säiliö puuttuu.</strong> Pienoisohjelma liitetään elementtiin, jolla on <code>id=\"crumb-widget\"</code>. Jos tunniste on kirjoitettu väärin tai <code>&lt;div&gt;</code> puuttuu, mitään ei näytetä.",
+      "li3": "<strong>CORS-virheet.</strong> Avaa selaimesi kehittäjäkonsoli (F12). Jos näet CORS-virheen, BMLT-palvelimesi ei salli pyyntöjä sivustosi verkkotunnuksesta — ota yhteyttä palvelimen ylläpitäjään.",
+      "li4": "<strong>Säiliöllä ei ole korkeutta.</strong> Jos asetat arvoksi <code>data-view=\"map\"</code> tai <code>data-view=\"both\"</code>, ympäröivä säiliö tarvitsee korkeuden. Lisää <code>style=\"height:600px\"</code> <code>&lt;div&gt;</code>-elementtiin."
+    },
+    "map": {
+      "title": "Kartta on tyhjä tai ei lataudu",
+      "li1": "<strong>Yhdelläkään kokouksella ei ole koordinaatteja.</strong> Kartta näyttää vain kokoukset, joilla on kelvolliset leveys- ja pituusasteet BMLT-palvelimellasi. Tarkista kokoukset BMLT:n ylläpidossa.",
+      "li2": "<strong>Kuvatiilien tarjoaja on estetty.</strong> Jos sivustollasi on tiukka Content-Security-Policy-käytäntö, varmista, että kuvatiilien URLit (oletus: <code>tile.openstreetmap.org</code>) sallitaan <code>img-src</code>- ja <code>connect-src</code>-direktiiveissä.",
+      "li3": "<strong>Paikannus on estetty.</strong> Lähelläni-haku edellyttää, että käyttäjä antaa selaimessa luvan sijaintinsa käyttöön. Jos lupa evätään, käytetään sen sijaan teksti- tai postinumerohakua."
+    },
+    "colors": {
+      "title": "Miten vaihdan värit sivustoni mukaisiksi?",
+      "body": "Korvaa pienoisohjelman CSS-muuttujien arvot — katso <a href=\"#css-vars\">CSS-muuttujat</a>. Tummasta tilasta kerrotaan kohdassa <a href=\"#css-dark-mode\">Tumma tila</a>. Voit myös käyttää yhtä valmiista aputeemoista — katso <a href=\"#css-classes\">CSS-apuluokat</a>."
+    },
+    "serviceBody": {
+      "title": "Palveluelinsuodattimeni ei näytä kokouksia — miksi?",
+      "li1": "<strong>Väärä palveluelimen tunniste.</strong> Tunnisteen on oltava palveluelimen numeerinen tunniste omalla BMLT-palvelimellasi, ei palveluelimen nimi. Katso <a href=\"#find-service-body\">Palveluelimen tunnisteen löytäminen</a>.",
+      "li2": "<strong>Ei julkaistuja kokouksia.</strong> Palveluelin voi olla olemassa, vaikka sillä ei ole palvelimella aktiivisia tai julkaistuja kokouksia.",
+      "li3": "<strong>Rekursio on aina käytössä.</strong> Alaiset palveluelimet sisällytetään automaattisesti — tätä ei voi poistaa käytöstä. Jos haluat vain yhden tietyn palveluelimen, sillä ei saa olla alaisia palveluelimiä palvelimella."
+    },
+    "iframe": {
+      "title": "Voinko upottaa tämän iframe-kehykseen (Google Sites jne.)?",
+      "body": "Kyllä. Aseta <code>data-router=\"hash\"</code>, jotta yksittäisten kokousten linkit käyttävät <code>#</code>-muotoisia URLeja. Ne toimivat iframe-kehyksissä, joissa pääsivu hallitsee osoitepalkkia. Katso <a href=\"#routing\">Reititys</a> ja <a href=\"#google-sites\">Google Sites -esimerkki</a>."
+    },
+    "help": {
+      "title": "En pääse eteenpäin — mistä saan apua?",
+      "li1": "<strong>Virhe tai ominaisuuspyyntö:</strong> avaa ilmoitus <a href=\"https://github.com/bmlt-enabled/crumb-widget/issues\" target=\"_blank\" rel=\"noopener\">GitHubissa</a>.",
+      "li2": "<strong>Sähköposti:</strong> <a href=\"mailto:help@bmlt.app\">help@bmlt.app</a>.",
+      "li3": "<strong>Yhteisö:</strong> <a href=\"https://www.facebook.com/groups/bmltapp/\" target=\"_blank\" rel=\"noopener\">BMLT:n Facebook-ryhmä</a>."
+    }
+  },
+  "npmPackage": {
+    "title": "npm-paketti",
+    "intro": "CDN-palvelusta ladattavan script-tunnisteupotuksen lisäksi Crumb Widget on saatavilla npm-pakettina JavaScript-/TypeScript-projekteihin (React, Svelte, Vue, pelkkä Vite jne.).",
+    "installation": "Asennus",
+    "peerDep": "<code>leaflet</code> on vertaisriippuvuus — asenna se <code>crumb-widget</code>-paketin rinnalle, jotta pakettia käyttävät projektit voivat välttää saman riippuvuuden päällekkäiset asennukset ja lukita haluamansa version.",
+    "usage": "Käyttö",
+    "usageIntro": "Tuo <code>mountCrumbWidget</code> ja kutsu sitä DOM-elementillä ja asetuksillasi. Pienoisohjelma liittää itsensä elementtiin ja lisää oman CSS:nsä — erillistä tyylitiedostoa ei tarvitse tuoda.",
+    "svelteIntro": "Varmista Svelte-komponentissa <code>onMount</code>-funktion avulla, että elementti on olemassa ennen pienoisohjelman liittämistä:",
+    "options": "Asetukset",
+    "optionsIntro": "Kaikki <a href=\"#global-config\">yleiset asetukset</a> ovat käytettävissä. Lisäksi tarvitaan kaksi pakollista kenttää:",
+    "th": {
+      "option": "Asetus",
+      "required": "Pakollinen"
+    },
+    "row": {
+      "serverUrl": "BMLT-palvelimen URL.",
+      "serviceBodyIds": "Palveluelinten tunnisteet, joiden mukaan suodatetaan. Jätä pois tai anna arvoksi <code>[]</code>, jos haluat näyttää kaikki.",
+      "view": "Aloitusnäkymä. Oletusarvo on <code>'list'</code>. <code>'both'</code> näyttää kartan luettelon yläpuolella ilman näkymän vaihtopainiketta.",
+      "geolocation": "Ota käyttöön Lähelläni ja kirjoitettuun sijaintiin perustuva haku (kaupunki, postinumero, osoite). Oletusarvo on <code>false</code>, paitsi <code>true</code>, kun <code>serverURL</code> on koontipalvelu eikä <code>serviceBodyIds</code>-arvoja ole.",
+      "geolocationRadius": "Hakusäde. Positiivinen arvo = kiinteä etäisyys maileina tai kilometreinä (rajaa etäisyyspudotusvalikon arvot). Negatiivinen kokonaisluku = BMLT:n automaattinen hakusäde: etsi noin N lähellä olevaa kokousta (esim. <code>-50</code>). Oletusarvo on <code>-50</code>.",
+      "distanceOptions": "Lähelläni-pudotusvalikossa näytettävät etäisyydet. Oletusarvo on <code>[5,10,15,25,50,100]</code>.",
+      "distanceUnit": "Etäisyyksien yksikkötunnus. Jos jätetään pois, tunnistetaan automaattisesti käytettävistä alueasetuksista (esim. <code>en-US</code> → <code>'mi'</code>, <code>de-DE</code> → <code>'km'</code>).",
+      "darkMode": "Tumman tilan asetus. Oletusarvo on <code>false</code>.",
+      "language": "BCP-47-kielitunniste (esim. <code>'es'</code>). Oletuksena käytetään selaimen kieli- ja alueasetuksia.",
+      "columns": "Näytettävät taulukon sarakkeet. Katso <a href=\"#global-config\">Yleiset asetukset</a>.",
+      "nowOffset": "Viive minuutteina ennen kuin kokous katsotaan menneeksi. Oletusarvo on <code>10</code>; aseta arvoksi <code>0</code>, jos haluat kokouksen siirtyvän menneisiin heti.",
+      "hideHeader": "Piilota Kokoushaku-otsikkopalkki ja kokousten määrä. Oletusarvo on <code>false</code>.",
+      "showFormats": "Näytä pilkuin erotettu luettelo kokousmuotokoodeista (esim. <code>C, O, BT</code>) kunkin kokouksen nimen alla luettelossa tai korteissa. <code>C</code> (suljettu) ja <code>O</code> (avoin) näytetään aina ensin; muut koodit järjestetään aakkosittain. Oletusarvo on <code>false</code>.",
+      "height": "Pienoisohjelman kiinteä korkeus pikseleinä. Jätä pois, jos haluat korkeuden määräytyvän sisällön mukaan.",
+      "formats": "Kokousmuotojen avainmerkkijonot (esim. <code>['O', 'BT']</code>), joihin pienoisohjelma rajataan. Suodatus tehdään asiakaspuolella tietojen haun jälkeen. Palvelinpuolen suodatukseen käytä <code>serviceBodyIds</code>-tyylistä numeerista suodatusta pienoisohjelman <code>data-format-ids</code>-attribuutilla.",
+      "inlineFormats": "Kokousmuotojen avainmerkkijonot (esim. <code>['M', 'W']</code>), jotka näytetään korostettuina kunkin kokouksen nimen vieressä luettelossa tai korteissa. Jokaisen kokouksen vastaava kokousmuoto näyttää lokalisoidun nimensä (esim. \"Naiset\") hillitysti nimen perässä. Otetaan käyttöön erikseen: oletusarvo on <code>[]</code> (ei mitään). Huomaa, että BMLT:n kokousmuotojen avainmerkkijonot vaihtelevat palvelimittain.",
+      "basePath": "History API -reitityksen peruspolku (esim. <code>'/meetings'</code>). Tuottaa selkeät URLit ilman <code>#</code>-fragmenttia. Vastaa <code>data-path</code>-attribuuttia.",
+      "updateUrl": "Kokouksen tietopaneelin Päivitä kokoustiedot -linkin URL-malli. Tukee paikkamerkkejä <code>{meeting_id}</code>, <code>{meeting_name}</code>, <code>{server_url}</code> ja <code>{return_url}</code> (URL-koodattuina). Toimii bmlt-workflow'n, palvelimella olevien lomakkeiden tai <code>mailto:</code>-URLien kanssa.",
+      "map": "Kuvatiilien tarjoajan ja karttamerkkien asetukset. Katso <a href=\"#tile-config\">Kuvatiilien tarjoaja</a>."
+    },
+    "note": "<strong>Huomaa:</strong> npm-paketti kokoaa Svelten ja kaikki tyylit yhteen JS-tiedostoon. <code>leaflet</code> on vertaisriippuvuus (asenna se <code>crumb-widget</code>-paketin rinnalle), jotta voit välttää päällekkäiset asennukset sovelluksesi muun Leafletiä käyttävän koodin kanssa. Jokainen <code>mountCrumbWidget</code>-kutsu on itsenäinen, mutta useita pienoisohjelmia samalla sivulla ei tällä hetkellä tueta."
+  },
+  "philosophy": {
+    "title": "Periaatteet",
+    "body": "Tämän projektin tavoitteena on palvella hyvin useimpien NA-palveluelinten tarpeita, eikä kattaa kaikkia mahdollisia käyttötapoja. Se pidetään tarkoituksella yksinkertaisena ja rajattuna. Uusia ominaisuuksia arvioitaessa punnitaan niiden vaikutusta koodin määrään ja ylläpitoon. Yleensä projektin piiriin eivät kuulu erityistoiveet, jotka paisuttavat sitä kaikkien käyttäjien kannalta. Jos tarvitset laajoja omia mukautuksia, tämä ei välttämättä ole sinulle sopiva työkalu."
+  }
+}

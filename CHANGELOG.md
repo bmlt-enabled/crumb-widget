@@ -1,3 +1,7 @@
+## Unreleased
+
+- **Finnish translation** (`fi`) — widget UI and documentation page, plus a Finnish README. 14 languages total. BMLT has no Finnish `lang_enum`, so format names come from the server in its default language (same as Japanese)
+
 ## 1.6.1 (October 8, 2026)
 
 - **Automatic "Update Meeting Info" link from the service body** — when no `updateUrl` is configured, the meeting detail panel now falls back to the `meeting_update_url` that BMLT Server 4.2.9+ stores on each service body (usually a BMLT Workflow page), linking to `<form URL>?meeting_id=<id>` and keeping any query string the form URL already has. On the aggregator the id is the meeting's `source_id` (its id on its own root server; `id_bigint` there is the aggregator's id, which the form doesn't recognise), so `source_id` is now requested in `data_field_key`. The URL is looked up only when a detail panel opens: one `GetServiceBodies` request per service body, cached for the session, and reused from the service-body-name lookup when that one already ran. Only `http(s)` URLs are accepted from the server. If the body has no URL, the meeting has no usable id, or the lookup fails, the button stays hidden. An explicit `updateUrl` always takes precedence, so existing embeds are unaffected

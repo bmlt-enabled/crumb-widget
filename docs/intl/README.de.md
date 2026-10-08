@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | Deutsch | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | Deutsch | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ Ein einbettbares NA-Meeting-Finder-Widget. Erstellt mit Svelte 5 und als einzeln
 - Meeting-Details mit Wegbeschreibung, Beitrittslink für virtuelle Meetings und Formaten
 - Standortbasierte Umkreissuche
 - Individuelle Meeting-Links über integrierten Router
-- 13 eingebaute Sprachen (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — einschließlich RTL-Layout für Persisch)
+- 14 eingebaute Sprachen (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — einschließlich RTL-Layout für Persisch)
 - Konfigurierbare Spalten, Kartenkacheln und benutzerdefinierte Marker
 - Optionaler »Meetinginformationen aktualisieren«-Link auf jeder Meeting-Detailseite — verweist auf ein [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)-Formular, ein beliebiges eigenes Formular oder eine `mailto:`-URL — oder, ohne Konfiguration, automatisch das Aktualisierungsformular des Service-Body aus BMLT Server 4.2.9+ ([Dokumentation](https://crumb.bmlt.app/?lang=de#update-url))
 - Druckerfreundliche Listenansicht

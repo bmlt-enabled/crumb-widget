@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Λειτουργεί παντού",
-      "body": "Φιλικό προς κινητά. 13 γλώσσες συμπεριλαμβανομένων των Περσικών (RTL). Φωτεινή και σκοτεινή λειτουργία. Λίστα κατάλληλη για εκτύπωση."
+      "body": "Φιλικό προς κινητά. 14 γλώσσες συμπεριλαμβανομένων των Περσικών (RTL). Φωτεινή και σκοτεινή λειτουργία. Λίστα κατάλληλη για εκτύπωση."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "Για επιλογές που δεν είναι διαθέσιμες ως χαρακτηριστικά data, ορίστε το <code>CrumbWidgetConfig</code> ως καθολική μεταβλητή <strong>πριν</strong> από τη φόρτωση του script.",
     "row": {
       "view": "Παρακάμπτει την προεπιλεγμένη προβολή. Έχει προτεραιότητα έναντι του <code>data-view</code>. Το <code>'both'</code> εμφανίζει χάρτη σταθερού ύψους πάνω από την πλήρη λίστα· ο εναλλάκτης λίστα/χάρτη αποκρύπτεται.",
-      "language": "Παρακάμπτει τη γλώσσα διεπαφής (π.χ. <code>'es'</code>, <code>'fr'</code>). Προεπιλογή: <code>navigator.language</code>, με fallback στα αγγλικά. Υποστηριζόμενες: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Παρακάμπτει τη γλώσσα διεπαφής (π.χ. <code>'es'</code>, <code>'fr'</code>). Προεπιλογή: <code>navigator.language</code>, με fallback στα αγγλικά. Υποστηριζόμενες: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "Στήλες που εμφανίζονται στην προβολή λίστας. Προεπιλογή: <code>['time', 'distance', 'name', 'location', 'address']</code>. Έχει προτεραιότητα έναντι του <code>data-columns</code>. Παραλείψτε ένα όνομα στήλης για να την αποκρύψετε. Διαθέσιμες τιμές: <code>time</code>, <code>distance</code> (εμφανίζεται μόνο όταν η γεωτοποθέτηση είναι ενεργή), <code>name</code>, <code>location</code> (όνομα χώρου/κτιρίου), <code>address</code> (διεύθυνση οδού με ετικέτες αυτοπροσώπως/online), <code>service_body</code>, <code>formats</code>. Το <code>service_body</code> είναι κρυφό από προεπιλογή — προσθέστε το ρητά για να εμφανίσετε το όνομα του service body.",
       "geolocation": "Ενεργοποιεί την αναζήτηση με βάση την τοποθεσία: ένα κουμπί <strong>Κοντά μου</strong> (γεωεντοπίζει τον χρήστη μέσω του προγράμματος περιήγησης, απαιτεί HTTPS) και μια λειτουργία <strong>Αναζήτηση τοποθεσίας</strong> στο πεδίο αναζήτησης που επιλύει μια πόλη, ταχ. κώδικα ή διεύθυνση (π.χ. <code>Edgartown, MA</code> ή <code>02539</code>) μέσω του OpenStreetMap Nominatim. Προεπιλογή: <code>false</code> για τους περισσότερους διακομιστές, <code>true</code> όταν το <code>data-server</code> δείχνει στο <code>aggregator.bmltenabled.org</code> χωρίς ορισμένο <code>service-body</code> (ο μη περιορισμένος συγκεντρωτής χρειάζεται μια τοποθεσία για να επιστρέψει χρήσιμα αποτελέσματα). Εάν η γεωγραφική θέση του προγράμματος περιήγησης αποτύχει ή απορριφθεί, εμφανίζεται σφάλμα — δεν εκτελείται εναλλακτική φόρτωση. <strong>Σημείωση:</strong> τα φίλτρα <code>serviceBodyIds</code> δεν επηρεάζουν τις αναζητήσεις με βάση την τοποθεσία· τα αποτελέσματα καθορίζονται αποκλειστικά από την εγγύτητα.",
       "geolocationRadius": "Μέγιστη ακτίνα αναζήτησης κατά τη χρήση γεωτοποθέτησης. Λειτουργεί ως όριο για το dropdown απόστασης Κοντά μου — επιλογές πάνω από αυτή την τιμή αποκρύπτονται. Προεπιλογή: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Περσικά",
       "pl": "Πολωνικά",
       "ru": "Ρωσικά",
-      "ja": "Ιαπωνικά"
+      "ja": "Ιαπωνικά",
+      "fi": "Φινλανδικά"
     }
   },
   "geolocation": {

@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Funktioniert überall",
-      "body": "Mobilfreundlich. 13 Sprachen inklusive Persisch (RTL). Hell- und Dunkelmodus. Druckfreundliche Liste."
+      "body": "Mobilfreundlich. 14 Sprachen inklusive Persisch (RTL). Hell- und Dunkelmodus. Druckfreundliche Liste."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "Für Optionen, die nicht als Datenattribute verfügbar sind, definiere <code>CrumbWidgetConfig</code> als globale Variable <strong>vor</strong> dem Laden des Skripts.",
     "row": {
       "view": "Überschreibt die Standardansicht. Hat Vorrang vor <code>data-view</code>. <code>'both'</code> zeigt eine Karte mit fester Höhe über der vollständigen Liste; der Listen-/Karten-Umschalter wird ausgeblendet.",
-      "language": "Überschreibt die UI-Sprache (z. B. <code>'es'</code>, <code>'fr'</code>). Standard: <code>navigator.language</code>, mit Fallback auf Englisch. Unterstützt: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Überschreibt die UI-Sprache (z. B. <code>'es'</code>, <code>'fr'</code>). Standard: <code>navigator.language</code>, mit Fallback auf Englisch. Unterstützt: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "In der Listenansicht angezeigte Spalten. Standard: <code>['time', 'distance', 'name', 'location', 'address']</code>. Hat Vorrang vor <code>data-columns</code>. Lass einen Spaltennamen weg, um ihn auszublenden. Verfügbare Werte: <code>time</code>, <code>distance</code> (wird nur angezeigt, wenn die Geolokation aktiv ist), <code>name</code>, <code>location</code> (Veranstaltungsort/Gebäudename), <code>address</code> (Straßenadresse mit Präsenz/Online-Badges), <code>service_body</code>, <code>formats</code>. <code>service_body</code> ist standardmäßig ausgeblendet — füge es explizit hinzu, um den Service-Body-Namen anzuzeigen.",
       "geolocation": "Aktiviert die ortsbasierte Suche: einen <strong>In meiner Nähe</strong>-Button (geolokalisiert den Benutzer über den Browser, erfordert HTTPS) und einen <strong>Ort suchen</strong>-Modus im Suchfeld, der eine Stadt, Postleitzahl oder Adresse (z. B. <code>Edgartown, MA</code> oder <code>02539</code>) über OpenStreetMap Nominatim auflöst. Standard: <code>false</code> für die meisten Server, <code>true</code> wenn <code>data-server</code> auf <code>aggregator.bmltenabled.org</code> ohne gesetzten <code>service-body</code> verweist (der ungefilterte Aggregator benötigt einen Ort, um nützliche Ergebnisse zu liefern). Schlägt die Browser-Geolokalisierung fehl oder wird verweigert, wird ein Fehler angezeigt — es findet kein Fallback-Laden statt. <strong>Hinweis:</strong> <code>serviceBodyIds</code>-Filter haben keinen Einfluss auf Ortssuchen; die Ergebnisse werden ausschließlich durch Entfernung bestimmt.",
       "geolocationRadius": "Maximaler Suchradius bei Geolokation. Wirkt als Obergrenze für das Distanz-Dropdown von In meiner Nähe — Optionen über diesem Wert werden ausgeblendet. Standard: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Persisch",
       "pl": "Polnisch",
       "ru": "Russisch",
-      "ja": "Japanisch"
+      "ja": "Japanisch",
+      "fi": "Finnisch"
     }
   },
   "geolocation": {

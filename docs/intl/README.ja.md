@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | 日本語 | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | 日本語 | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@
 - 道順、オンライン参加リンク、形式を含むミーティング詳細
 - 位置情報を使った近隣検索
 - 組み込みルーターによる個別ミーティングへのリンク
-- 13 の組み込み言語（English、Español、Português (Brasil)、Français、Deutsch、Italiano、Svenska、Dansk、Polski、Ελληνικά、Русский、日本語、فارسی — ペルシア語の RTL レイアウトを含む）
+- 14 の組み込み言語（English、Español、Português (Brasil)、Français、Deutsch、Italiano、Svenska、Dansk、Polski、Ελληνικά、Русский、日本語、Suomi、فارسی — ペルシア語の RTL レイアウトを含む）
 - カスタマイズ可能な列、地図タイル、マーカー
 - 各ミーティング詳細にオプションの「ミーティング情報を更新」リンク — [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow) のフォーム、任意のカスタムフォーム、または `mailto:` URL を指定可能。未設定の場合は BMLT Server 4.2.9 以降のサービスボディの更新フォームを自動的に使用（[ドキュメント](https://crumb.bmlt.app/?lang=ja#update-url)）
 - 印刷向きのリスト表示

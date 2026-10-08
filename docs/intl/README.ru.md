@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | Русский | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | Русский | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@
 - Детали встречи с маршрутом, ссылкой для виртуального присоединения и форматами
 - Поиск ближайших встреч по геолокации
 - Ссылки на отдельные встречи через встроенный маршрутизатор
-- 13 встроенных языков (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — включая RTL-раскладку для персидского)
+- 14 встроенных языков (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — включая RTL-раскладку для персидского)
 - Настраиваемые столбцы, тайлы карты и пользовательские маркеры
 - Необязательная ссылка «Обновить информацию о собрании» в деталях каждого собрания — указывает на форму [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), любую пользовательскую форму или URL `mailto:` — или, без настройки, автоматически использует форму обновления служебного органа из BMLT Server 4.2.9+ ([документация](https://crumb.bmlt.app/?lang=ru#update-url))
 - Вид списка, удобный для печати

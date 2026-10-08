@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Работает везде",
-      "body": "Удобен для мобильных устройств. 13 языков, включая персидский (RTL). Светлая и тёмная темы. Список, удобный для печати."
+      "body": "Удобен для мобильных устройств. 14 языков, включая персидский (RTL). Светлая и тёмная темы. Список, удобный для печати."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "Для опций, недоступных через data-атрибуты, определите <code>CrumbWidgetConfig</code> как глобальную переменную <strong>до</strong> загрузки скрипта.",
     "row": {
       "view": "Переопределяет представление по умолчанию. Имеет приоритет над <code>data-view</code>. <code>'both'</code> показывает карту фиксированной высоты над полным списком; переключатель список/карта скрыт.",
-      "language": "Переопределяет язык интерфейса (например, <code>'es'</code>, <code>'fr'</code>). По умолчанию: <code>navigator.language</code>, с откатом на английский. Поддерживаемые: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Переопределяет язык интерфейса (например, <code>'es'</code>, <code>'fr'</code>). По умолчанию: <code>navigator.language</code>, с откатом на английский. Поддерживаемые: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "Столбцы для отображения в режиме списка. По умолчанию: <code>['time', 'distance', 'name', 'location', 'address']</code>. Имеет приоритет над <code>data-columns</code>. Опустите имя столбца, чтобы скрыть его. Доступные значения: <code>time</code>, <code>distance</code> (отображается только при активной геолокации), <code>name</code>, <code>location</code> (название места/здания), <code>address</code> (улица с метками офлайн/онлайн), <code>service_body</code>, <code>formats</code>. <code>service_body</code> по умолчанию скрыт — добавьте его явно, чтобы показать имя service body.",
       "geolocation": "Включает поиск по местоположению: кнопку <strong>Рядом со мной</strong> (геолокация пользователя через браузер, требует HTTPS) и режим <strong>Поиск места</strong> в поле поиска, который определяет город, индекс или адрес (например, <code>Edgartown, MA</code> или <code>02539</code>) через OpenStreetMap Nominatim. По умолчанию: <code>false</code> для большинства серверов, <code>true</code> когда <code>data-server</code> указывает на <code>aggregator.bmltenabled.org</code> без установленного <code>service-body</code> (неограниченному агрегатору нужно местоположение для возврата полезных результатов). Если геолокация браузера не удалась или была отклонена, отображается ошибка — резервная загрузка не выполняется. <strong>Примечание:</strong> фильтры <code>serviceBodyIds</code> не влияют на поиск по местоположению; результаты определяются исключительно по близости.",
       "geolocationRadius": "Максимальный радиус поиска при использовании геолокации. Действует как ограничение для выпадающего списка дистанций Рядом со мной — варианты выше этого значения скрываются. По умолчанию: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Персидский",
       "pl": "Польский",
       "ru": "Русский",
-      "ja": "Японский"
+      "ja": "Японский",
+      "fi": "Финский"
     }
   },
   "geolocation": {

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 English | <a href="docs/intl/README.es.md">Español</a> | <a href="docs/intl/README.pt-BR.md">Português (Brasil)</a> | <a href="docs/intl/README.fr.md">Français</a> | <a href="docs/intl/README.de.md">Deutsch</a> | <a href="docs/intl/README.it.md">Italiano</a> | <a href="docs/intl/README.sv.md">Svenska</a> | <a href="docs/intl/README.da.md">Dansk</a> | <a href="docs/intl/README.pl.md">Polski</a> | <a href="docs/intl/README.el.md">Ελληνικά</a> | <a href="docs/intl/README.ru.md">Русский</a> | <a href="docs/intl/README.ja.md">日本語</a> | <a href="docs/intl/README.fa.md">فارسی</a>
+  🌐 English | <a href="docs/intl/README.es.md">Español</a> | <a href="docs/intl/README.pt-BR.md">Português (Brasil)</a> | <a href="docs/intl/README.fr.md">Français</a> | <a href="docs/intl/README.de.md">Deutsch</a> | <a href="docs/intl/README.it.md">Italiano</a> | <a href="docs/intl/README.sv.md">Svenska</a> | <a href="docs/intl/README.da.md">Dansk</a> | <a href="docs/intl/README.pl.md">Polski</a> | <a href="docs/intl/README.el.md">Ελληνικά</a> | <a href="docs/intl/README.ru.md">Русский</a> | <a href="docs/intl/README.ja.md">日本語</a> | <a href="docs/intl/README.fi.md">Suomi</a> | <a href="docs/intl/README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ An embeddable NA meeting finder widget. Built with Svelte 5, distributed as a si
 - Meeting detail with directions, virtual join link, and formats
 - Geolocation-based nearby search, plus typed location search by city, postal code, or address
 - Individual meeting links via built-in router
-- 13 built-in languages (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — including RTL layout for Persian)
+- 14 built-in languages (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — including RTL layout for Persian)
 - Configurable columns, map tiles, and custom markers
 - Optional "Update Meeting Info" link on each meeting detail — point at a [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow) form, any custom form, or a `mailto:` URL — or, with nothing configured, automatically uses the service body's update form from BMLT Server 4.2.9+ ([docs](https://crumb.bmlt.app/#update-url))
 - Printer-friendly list view

@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Funciona en todas partes",
-      "body": "Compatible con móviles. 13 idiomas incluyendo persa (RTL). Modo claro y oscuro. Lista lista para imprimir."
+      "body": "Compatible con móviles. 14 idiomas incluyendo persa (RTL). Modo claro y oscuro. Lista lista para imprimir."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "Para opciones que no están disponibles como atributos de datos, define <code>CrumbWidgetConfig</code> como variable global <strong>antes</strong> de cargar el script.",
     "row": {
       "view": "Sobrescribe la vista por defecto. Tiene precedencia sobre <code>data-view</code>. <code>'both'</code> muestra un mapa de altura fija sobre la lista completa de reuniones; el conmutador lista/mapa se oculta.",
-      "language": "Sobrescribe el idioma de la interfaz (p. ej. <code>'es'</code>, <code>'fr'</code>). Por defecto usa <code>navigator.language</code>, con inglés como respaldo. Idiomas admitidos: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Sobrescribe el idioma de la interfaz (p. ej. <code>'es'</code>, <code>'fr'</code>). Por defecto usa <code>navigator.language</code>, con inglés como respaldo. Idiomas admitidos: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "Columnas a mostrar en la vista de lista. Por defecto: <code>['time', 'distance', 'name', 'location', 'address']</code>. Tiene prioridad sobre <code>data-columns</code>. Omite cualquier nombre de columna para ocultarla. Valores disponibles: <code>time</code>, <code>distance</code> (solo se muestra cuando la geolocalización está activa), <code>name</code>, <code>location</code> (nombre del local), <code>address</code> (dirección con etiquetas presencial/en línea), <code>service_body</code>, <code>formats</code>. <code>service_body</code> está oculto por defecto — añádelo explícitamente para mostrar el nombre del cuerpo de servicio.",
       "geolocation": "Habilita la búsqueda por ubicación: un botón <strong>Cerca de mí</strong> (geolocaliza al usuario a través del navegador, requiere HTTPS) y un modo <strong>Buscar ubicación</strong> en el campo de búsqueda que resuelve una ciudad, código postal o dirección (p. ej. <code>Edgartown, MA</code> o <code>02539</code>) a través de OpenStreetMap Nominatim. Predeterminado: <code>false</code> para la mayoría de los servidores, <code>true</code> cuando <code>data-server</code> apunta a <code>aggregator.bmltenabled.org</code> sin <code>service-body</code> establecido (el agregador sin restricciones necesita una ubicación para devolver resultados útiles). Si la geolocalización del navegador falla o se deniega, se muestra un error — no se realiza carga alternativa. <strong>Nota:</strong> los filtros <code>serviceBodyIds</code> no afectan las búsquedas por ubicación; los resultados se determinan completamente por proximidad.",
       "geolocationRadius": "Radio máximo de búsqueda al usar geolocalización. Actúa como tope para el desplegable de distancias de Cerca de mí — las opciones por encima de este valor se ocultan. Por defecto: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Persa",
       "pl": "Polaco",
       "ru": "Ruso",
-      "ja": "Japonés"
+      "ja": "Japonés",
+      "fi": "Finés"
     }
   },
   "geolocation": {

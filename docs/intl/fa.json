@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "همه‌جا کار می‌کند",
-      "body": "سازگار با موبایل. ۱۳ زبان از جمله فارسی (RTL). حالت روشن و تاریک. فهرست مناسب چاپ."
+      "body": "سازگار با موبایل. ۱۴ زبان از جمله فارسی (RTL). حالت روشن و تاریک. فهرست مناسب چاپ."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "برای گزینه‌هایی که به صورت ویژگی داده در دسترس نیستند، <code>CrumbWidgetConfig</code> را به عنوان یک متغیر سراسری <strong>قبل از</strong> بارگذاری اسکریپت تعریف کنید.",
     "row": {
       "view": "نمای پیش‌فرض را بازنویسی می‌کند. بر <code>data-view</code> اولویت دارد. <code>'both'</code> یک نقشه با ارتفاع ثابت را بالای فهرست کامل نمایش می‌دهد و دکمهٔ فهرست/نقشه پنهان می‌شود.",
-      "language": "بازنویسی زبان رابط کاربری (مثلاً <code>'es'</code>, <code>'fr'</code>). به‌طور پیش‌فرض از <code>navigator.language</code> استفاده می‌کند و در صورت نبود، به انگلیسی برمی‌گردد. زبان‌های پشتیبانی‌شده: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "بازنویسی زبان رابط کاربری (مثلاً <code>'es'</code>, <code>'fr'</code>). به‌طور پیش‌فرض از <code>navigator.language</code> استفاده می‌کند و در صورت نبود، به انگلیسی برمی‌گردد. زبان‌های پشتیبانی‌شده: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "ستون‌هایی که در نمای فهرست نمایش داده می‌شوند. پیش‌فرض: <code>['time', 'distance', 'name', 'location', 'address']</code>. بر <code>data-columns</code> اولویت دارد. هر ستون را که نمی‌خواهید نمایش داده شود، حذف کنید. مقادیر در دسترس: <code>time</code>، <code>distance</code> (فقط وقتی موقعیت‌یابی فعال است نمایش داده می‌شود)، <code>name</code>، <code>location</code> (نام محل/ساختمان)، <code>address</code> (آدرس خیابان به همراه نشان حضوری/آنلاین)، <code>service_body</code>, <code>formats</code>. <code>service_body</code> به طور پیش‌فرض پنهان است — برای نمایش نام کمیتهٔ خدماتی، آن را به‌صراحت اضافه کنید.",
       "geolocation": "جستجوی مبتنی بر مکان را فعال می‌کند: یک دکمه <strong>نزدیک من</strong> (موقعیت کاربر را از طریق مرورگر تشخیص می‌دهد، نیازمند HTTPS است) و یک حالت <strong>جستجوی مکان</strong> در فیلد جستجو که شهر، کد پستی یا آدرس (مثلاً <code>Edgartown, MA</code> یا <code>02539</code>) را از طریق OpenStreetMap Nominatim حل می‌کند. پیش‌فرض: <code>false</code> برای بیشتر سرورها، <code>true</code> وقتی <code>data-server</code> به <code>aggregator.bmltenabled.org</code> بدون تنظیم <code>service-body</code> اشاره می‌کند (تجمیع‌کننده نامحدود برای بازگرداندن نتایج مفید نیاز به یک مکان دارد). اگر موقعیت‌یابی مرورگر ناموفق باشد یا رد شود، خطایی نمایش داده می‌شود — هیچ بارگذاری جایگزینی انجام نمی‌شود. <strong>نکته:</strong> فیلترهای <code>serviceBodyIds</code> هیچ تأثیری بر جستجوهای مکانی ندارند؛ نتایج کاملاً بر اساس نزدیکی تعیین می‌شوند.",
       "geolocationRadius": "حداکثر شعاع جستجو هنگام استفاده از موقعیت‌یابی. به‌عنوان سقف فهرست کشویی فاصلهٔ نزدیک من عمل می‌کند — گزینه‌های بالای این مقدار پنهان می‌شوند. پیش‌فرض: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "فارسی",
       "pl": "لهستانی",
       "ru": "روسی",
-      "ja": "ژاپنی"
+      "ja": "ژاپنی",
+      "fi": "فنلاندی"
     }
   },
   "geolocation": {

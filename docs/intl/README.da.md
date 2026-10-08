@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | Dansk | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | Dansk | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ En indlejrbar widget til at finde NA-møder. Bygget med Svelte 5 og distribueret
 - Mødedetaljer med rutevejledning, link til virtuelle møder og formater
 - Geolokationsbaseret søgning efter nærliggende møder
 - Individuelle mødelinks via indbygget router
-- 13 indbyggede sprog (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — inklusive RTL-layout for persisk)
+- 14 indbyggede sprog (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — inklusive RTL-layout for persisk)
 - Konfigurerbare kolonner, kortfliser og brugerdefinerede markører
 - Valgfrit »Opdater mødeoplysninger«-link på hver mødedetalje — pegende på en [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)-formular, en tilpasset formular eller en `mailto:`-URL — eller, uden konfiguration, automatisk serviceenhedens opdateringsformular fra BMLT Server 4.2.9+ ([dokumentation](https://crumb.bmlt.app/?lang=da#update-url))
 - Printvenlig listevisning

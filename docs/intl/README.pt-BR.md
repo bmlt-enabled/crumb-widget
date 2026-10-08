@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | Português (Brasil) | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | Português (Brasil) | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ Um widget incorporável para buscar reuniões de NA. Construído com Svelte 5 e 
 - Detalhe da reunião com rotas, link para entrar virtualmente e formatos
 - Busca por proximidade baseada em geolocalização
 - Links para reuniões individuais via roteador embutido
-- 13 idiomas embutidos (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — incluindo layout RTL para persa)
+- 14 idiomas embutidos (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — incluindo layout RTL para persa)
 - Colunas, tiles de mapa e marcadores personalizáveis
 - Link opcional "Atualizar informações da reunião" em cada detalhe de reunião — aponta para um formulário do [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), qualquer formulário personalizado ou uma URL `mailto:` — ou, sem configuração, usa automaticamente o formulário de atualização do corpo de serviço do BMLT Server 4.2.9+ ([docs](https://crumb.bmlt.app/?lang=pt-BR#update-url))
 - Visão de lista pronta para impressão

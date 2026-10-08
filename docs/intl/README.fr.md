@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | Français | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | Français | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ Un widget intégrable de recherche de réunions NA. Construit avec Svelte 5 et d
 - Détail de réunion avec itinéraire, lien pour rejoindre en virtuel et formats
 - Recherche par proximité basée sur la géolocalisation
 - Liens vers des réunions individuelles via le routeur intégré
-- 13 langues intégrées (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — y compris la disposition RTL pour le persan)
+- 14 langues intégrées (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — y compris la disposition RTL pour le persan)
 - Colonnes, tuiles de carte et marqueurs personnalisables
 - Lien optionnel « Mettre à jour les informations de la réunion » sur chaque détail de réunion — pointe vers un formulaire [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), n'importe quel formulaire personnalisé ou une URL `mailto:` — ou, sans configuration, utilise automatiquement le formulaire de mise à jour de l'organe de service fourni par BMLT Server 4.2.9+ ([docs](https://crumb.bmlt.app/?lang=fr#update-url))
 - Vue liste adaptée à l'impression

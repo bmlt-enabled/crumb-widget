@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Fungerar överallt",
-      "body": "Mobilvänlig. 13 språk inklusive persiska (RTL). Ljust och mörkt läge. Utskriftsvänlig lista."
+      "body": "Mobilvänlig. 14 språk inklusive persiska (RTL). Ljust och mörkt läge. Utskriftsvänlig lista."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "För alternativ som inte är tillgängliga som dataattribut, definiera <code>CrumbWidgetConfig</code> som en global variabel <strong>innan</strong> du laddar skriptet.",
     "row": {
       "view": "Åsidosätter standardvyn. Har företräde framför <code>data-view</code>. <code>'both'</code> visar en karta med fast höjd över hela listan; list/karta-växeln döljs.",
-      "language": "Åsidosätter UI-språket (t.ex. <code>'es'</code>, <code>'fr'</code>). Standard: <code>navigator.language</code>, med engelska som reserv. Stödda: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Åsidosätter UI-språket (t.ex. <code>'es'</code>, <code>'fr'</code>). Standard: <code>navigator.language</code>, med engelska som reserv. Stödda: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "Kolumner som visas i listvyn. Standard: <code>['time', 'distance', 'name', 'location', 'address']</code>. Har företräde framför <code>data-columns</code>. Utelämna ett kolumnnamn för att dölja det. Tillgängliga värden: <code>time</code>, <code>distance</code> (visas endast när geolokalisering är aktiv), <code>name</code>, <code>location</code> (lokal/byggnadsnamn), <code>address</code> (gatuadress med fysisk/online-märken), <code>service_body</code>, <code>formats</code>. <code>service_body</code> är dold som standard — lägg till det uttryckligen för att visa service body-namnet.",
       "geolocation": "Aktiverar platsbaserad sökning: en <strong>Nära mig</strong>-knapp (positionerar användaren via webbläsaren, kräver HTTPS) och ett <strong>Sök plats</strong>-läge på sökfältet som löser en ort, postnummer eller adress (t.ex. <code>Edgartown, MA</code> eller <code>02539</code>) via OpenStreetMap Nominatim. Standard: <code>false</code> för de flesta servrar, <code>true</code> när <code>data-server</code> pekar mot <code>aggregator.bmltenabled.org</code> utan <code>service-body</code> satt (den obegränsade aggregatorn behöver en plats för att returnera användbara resultat). Om webbläsarens platsbestämning misslyckas eller nekas visas ett fel — ingen reservladdning sker. <strong>OBS:</strong> <code>serviceBodyIds</code>-filter påverkar inte platssökningar; resultat avgörs helt av närhet.",
       "geolocationRadius": "Maximal sökradie vid geolokalisering. Fungerar som tak för Nära mig-distansrullgardinen — alternativ över detta värde döljs. Standard: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Persiska",
       "pl": "Polska",
       "ru": "Ryska",
-      "ja": "Japanska"
+      "ja": "Japanska",
+      "fi": "Finska"
     }
   },
   "geolocation": {

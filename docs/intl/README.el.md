@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | Ελληνικά | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | Ελληνικά | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@
 - Λεπτομέρειες συνάντησης με οδηγίες, σύνδεσμο εικονικής συμμετοχής και μορφές
 - Αναζήτηση κοντινών συναντήσεων με βάση τη γεωτοποθεσία
 - Σύνδεσμοι μεμονωμένων συναντήσεων μέσω ενσωματωμένου δρομολογητή
-- 13 ενσωματωμένες γλώσσες (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — συμπεριλαμβανομένης διάταξης RTL για τα Περσικά)
+- 14 ενσωματωμένες γλώσσες (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — συμπεριλαμβανομένης διάταξης RTL για τα Περσικά)
 - Παραμετροποιήσιμες στήλες, πλακίδια χάρτη και προσαρμοσμένοι δείκτες
 - Προαιρετικός σύνδεσμος «Ενημέρωση πληροφοριών συνάντησης» σε κάθε λεπτομέρεια συνάντησης — οδηγεί σε φόρμα [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), σε οποιαδήποτε προσαρμοσμένη φόρμα ή σε URL `mailto:` — ή, χωρίς ρύθμιση, αυτόματα τη φόρμα ενημέρωσης του φορέα υπηρεσίας από τον BMLT Server 4.2.9+ ([τεκμηρίωση](https://crumb.bmlt.app/?lang=el#update-url))
 - Φιλική προς εκτύπωση προβολή λίστας

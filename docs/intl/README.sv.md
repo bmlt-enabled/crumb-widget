@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | Svenska | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | Svenska | <a href="README.da.md">Dansk</a> | <a href="README.pl.md">Polski</a> | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ En inbäddningsbar widget för att hitta NA-möten. Byggd med Svelte 5 och distr
 - Mötesdetaljer med vägbeskrivning, länk för virtuellt deltagande och format
 - Geolokationsbaserad sökning efter närliggande möten
 - Individuella möteslänkar via inbyggd router
-- 13 inbyggda språk (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — inklusive RTL-layout för persiska)
+- 14 inbyggda språk (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — inklusive RTL-layout för persiska)
 - Konfigurerbara kolumner, kartrutor och anpassade markörer
 - Valfri "Uppdatera mötesinformation"-länk i varje mötesdetalj — pekar på ett [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow)-formulär, valfritt anpassat formulär eller en `mailto:`-URL — eller, utan konfiguration, automatiskt serviceenhetens uppdateringsformulär från BMLT Server 4.2.9+ ([docs](https://crumb.bmlt.app/?lang=sv#update-url))
 - Utskriftsvänlig listvy

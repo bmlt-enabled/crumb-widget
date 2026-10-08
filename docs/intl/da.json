@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Virker overalt",
-      "body": "Mobilvenlig. 13 sprog inklusive persisk (RTL). Lys og mørk tilstand. Udskrivningsvenlig liste."
+      "body": "Mobilvenlig. 14 sprog inklusive persisk (RTL). Lys og mørk tilstand. Udskrivningsvenlig liste."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "For indstillinger, der ikke er tilgængelige som dataattributter, definér <code>CrumbWidgetConfig</code> som en global variabel <strong>før</strong> indlæsning af scriptet.",
     "row": {
       "view": "Tilsidesætter standardvisningen. Har forrang for <code>data-view</code>. <code>'both'</code> viser et kort med fast højde over den fulde mødeliste; liste/kort-skifteren skjules.",
-      "language": "Tilsidesætter UI-sproget (f.eks. <code>'es'</code>, <code>'fr'</code>). Standard er <code>navigator.language</code> med fallback til engelsk. Understøttede: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Tilsidesætter UI-sproget (f.eks. <code>'es'</code>, <code>'fr'</code>). Standard er <code>navigator.language</code> med fallback til engelsk. Understøttede: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "Kolonner, der vises i listevisning. Standard: <code>['time', 'distance', 'name', 'location', 'address']</code>. Har forrang for <code>data-columns</code>. Udelad et kolonnenavn for at skjule det. Tilgængelige værdier: <code>time</code>, <code>distance</code> (vises kun, når geolokation er aktiv), <code>name</code>, <code>location</code> (sted/bygning), <code>address</code> (vejadresse med fysisk/online-mærker), <code>service_body</code>, <code>formats</code>. <code>service_body</code> er skjult som standard — tilføj det eksplicit for at vise service body-navnet.",
       "geolocation": "Aktiverer placeringsbaseret søgning: en <strong>Nær mig</strong>-knap (positionerer brugeren via browseren, kræver HTTPS) og en <strong>Søg sted</strong>-tilstand på søgefeltet, der løser en by, postnummer eller adresse (fx <code>Edgartown, MA</code> eller <code>02539</code>) via OpenStreetMap Nominatim. Standard: <code>false</code> for de fleste servere, <code>true</code> når <code>data-server</code> peger mod <code>aggregator.bmltenabled.org</code> uden <code>service-body</code> sat (den ubegrænsede aggregator har brug for en placering for at returnere nyttige resultater). Hvis browserens stedsbestemmelse fejler eller nægtes, vises en fejl — ingen reserveindlæsning. <strong>Bemærk:</strong> <code>serviceBodyIds</code>-filtre påvirker ikke stedsøgninger; resultater bestemmes udelukkende af nærhed.",
       "geolocationRadius": "Maksimal søgeradius ved brug af geolokation. Fungerer som loft for I-nærheden-distancedropdownen — indstillinger over denne værdi skjules. Standard: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Persisk",
       "pl": "Polsk",
       "ru": "Russisk",
-      "ja": "Japansk"
+      "ja": "Japansk",
+      "fi": "Finsk"
     }
   },
   "geolocation": {

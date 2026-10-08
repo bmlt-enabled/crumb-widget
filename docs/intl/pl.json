@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "Działa wszędzie",
-      "body": "Przyjazny dla urządzeń mobilnych. 13 języków, w tym perski (RTL). Tryb jasny i ciemny. Lista przyjazna do druku."
+      "body": "Przyjazny dla urządzeń mobilnych. 14 języków, w tym perski (RTL). Tryb jasny i ciemny. Lista przyjazna do druku."
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "Dla opcji niedostępnych jako atrybuty data zdefiniuj <code>CrumbWidgetConfig</code> jako zmienną globalną <strong>przed</strong> załadowaniem skryptu.",
     "row": {
       "view": "Nadpisuje domyślny widok. Ma pierwszeństwo nad <code>data-view</code>. <code>'both'</code> pokazuje mapę o stałej wysokości nad pełną listą; przełącznik lista/mapa jest ukryty.",
-      "language": "Nadpisuje język interfejsu (np. <code>'es'</code>, <code>'fr'</code>). Domyślnie: <code>navigator.language</code>, z fallbackiem na angielski. Obsługiwane: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>.",
+      "language": "Nadpisuje język interfejsu (np. <code>'es'</code>, <code>'fr'</code>). Domyślnie: <code>navigator.language</code>, z fallbackiem na angielski. Obsługiwane: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>.",
       "columns": "Kolumny pokazywane w widoku listy. Domyślnie: <code>['time', 'distance', 'name', 'location', 'address']</code>. Ma pierwszeństwo nad <code>data-columns</code>. Pomiń nazwę kolumny, aby ją ukryć. Dostępne wartości: <code>time</code>, <code>distance</code> (renderowane tylko, gdy geolokalizacja jest aktywna), <code>name</code>, <code>location</code> (nazwa lokalu/budynku), <code>address</code> (adres ulicy z odznakami stacjonarne/online), <code>service_body</code>, <code>formats</code>. <code>service_body</code> jest domyślnie ukryta — dodaj ją jawnie, aby pokazać nazwę service body.",
       "geolocation": "Włącza wyszukiwanie według lokalizacji: przycisk <strong>Blisko mnie</strong> (geolokalizuje użytkownika przez przeglądarkę, wymaga HTTPS) oraz tryb <strong>Szukaj lokalizacji</strong> w polu wyszukiwania, który rozwiązuje miasto, kod pocztowy lub adres (np. <code>Edgartown, MA</code> lub <code>02539</code>) przez OpenStreetMap Nominatim. Domyślnie: <code>false</code> dla większości serwerów, <code>true</code> gdy <code>data-server</code> wskazuje na <code>aggregator.bmltenabled.org</code> bez ustawionego <code>service-body</code> (nieograniczony agregator potrzebuje lokalizacji, aby zwrócić użyteczne wyniki). Jeśli geolokalizacja przeglądarki zawiedzie lub zostanie odmówiona, wyświetlany jest błąd — bez ładowania awaryjnego. <strong>Uwaga:</strong> filtry <code>serviceBodyIds</code> nie mają wpływu na wyszukiwania według lokalizacji; wyniki są określane wyłącznie przez bliskość.",
       "geolocationRadius": "Maksymalny promień wyszukiwania przy geolokalizacji. Działa jako limit dla rozwijanej listy odległości W pobliżu — opcje powyżej tej wartości są ukryte. Domyślnie: <code>75</code>.",
@@ -208,7 +208,8 @@
       "fa": "Perski",
       "pl": "Polski",
       "ru": "Rosyjski",
-      "ja": "Japoński"
+      "ja": "Japoński",
+      "fi": "Fiński"
     }
   },
   "geolocation": {

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | Polski | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fa.md">فارسی</a>
+  🌐 <a href="https://github.com/bmlt-enabled/crumb-widget/">English</a> | <a href="README.es.md">Español</a> | <a href="README.pt-BR.md">Português (Brasil)</a> | <a href="README.fr.md">Français</a> | <a href="README.de.md">Deutsch</a> | <a href="README.it.md">Italiano</a> | <a href="README.sv.md">Svenska</a> | <a href="README.da.md">Dansk</a> | Polski | <a href="README.el.md">Ελληνικά</a> | <a href="README.ru.md">Русский</a> | <a href="README.ja.md">日本語</a> | <a href="README.fi.md">Suomi</a> | <a href="README.fa.md">فارسی</a>
 </p>
 
 <p align="center">
@@ -41,7 +41,7 @@ Osadzalny widżet wyszukiwarki spotkań NA. Zbudowany przy użyciu Svelte 5 i dy
 - Szczegóły spotkania z trasą dojazdu, linkiem do dołączenia wirtualnego i formatami
 - Wyszukiwanie pobliskich spotkań na podstawie geolokalizacji
 - Linki do pojedynczych spotkań przez wbudowany router
-- 13 wbudowanych języków (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, فارسی — w tym układ RTL dla perskiego)
+- 14 wbudowanych języków (English, Español, Português (Brasil), Français, Deutsch, Italiano, Svenska, Dansk, Polski, Ελληνικά, Русский, 日本語, Suomi, فارسی — w tym układ RTL dla perskiego)
 - Konfigurowalne kolumny, kafelki mapy i niestandardowe znaczniki
 - Opcjonalny link „Zaktualizuj informacje o mityngu" w szczegółach każdego mityngu — wskazujący na formularz [bmlt-workflow](https://github.com/bmlt-enabled/bmlt-workflow), dowolny niestandardowy formularz lub adres `mailto:` — lub, bez konfiguracji, automatycznie formularz aktualizacji struktury służb z BMLT Server 4.2.9+ ([dokumentacja](https://crumb.bmlt.app/?lang=pl#update-url))
 - Widok listy przyjazny dla drukarki

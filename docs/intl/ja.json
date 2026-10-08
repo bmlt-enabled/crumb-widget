@@ -108,7 +108,7 @@
     },
     "f3": {
       "title": "どこでも動作",
-      "body": "モバイル対応。ペルシャ語(RTL)を含む13言語。ライトとダークモード。印刷に適したリスト。"
+      "body": "モバイル対応。ペルシャ語(RTL)を含む14言語。ライトとダークモード。印刷に適したリスト。"
     }
   },
   "videos": {
@@ -166,7 +166,7 @@
     "intro": "data 属性として用意されていないオプションについては、スクリプトを読み込む<strong>前に</strong>グローバル変数として <code>CrumbWidgetConfig</code> を定義してください。",
     "row": {
       "view": "既定のビューを上書きします。<code>data-view</code> よりも優先されます。<code>'both'</code> は、固定高の地図を完全なリストの上に表示し、リスト／地図切替は非表示になります。",
-      "language": "UI 言語を上書きします（例: <code>'es'</code>, <code>'fr'</code>）。既定では <code>navigator.language</code> を使用し、フォールバックは英語です。対応: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>。",
+      "language": "UI 言語を上書きします（例: <code>'es'</code>, <code>'fr'</code>）。既定では <code>navigator.language</code> を使用し、フォールバックは英語です。対応: <code>en</code>, <code>es</code>, <code>fr</code>, <code>de</code>, <code>pt</code>, <code>it</code>, <code>sv</code>, <code>da</code>, <code>el</code>, <code>fa</code>, <code>pl</code>, <code>ru</code>, <code>ja</code>, <code>fi</code>。",
       "columns": "リスト表示で表示する列です。既定: <code>['time', 'distance', 'name', 'location', 'address']</code>。<code>data-columns</code> よりも優先されます。非表示にしたい列名は省略します。利用可能な値: <code>time</code>, <code>distance</code>（位置情報が有効な場合のみ表示されます）、<code>name</code>, <code>location</code>（会場／建物名）、<code>address</code>（住所と対面／オンラインのバッジ）、<code>service_body</code>, <code>formats</code>。<code>service_body</code> は既定で非表示です。サービスボディ名を表示するには明示的に追加してください。",
       "geolocation": "位置情報による検索を有効にします: <strong>近くを検索</strong>ボタン（ブラウザでユーザーの位置を取得、HTTPS が必要）と検索フィールドの<strong>場所を検索</strong>モードで、市、郵便番号、住所（例: <code>Edgartown, MA</code> や <code>02539</code>）を OpenStreetMap Nominatim 経由で解決します。デフォルト: ほとんどのサーバーで <code>false</code>、<code>data-server</code> が <code>aggregator.bmltenabled.org</code> を指し <code>service-body</code> が未設定の場合は <code>true</code>（制約のないアグリゲーターは有用な結果を返すために位置が必要）。ブラウザのジオロケーションが失敗または拒否されると、エラーが表示されます — フォールバック読み込みは行われません。<strong>注意:</strong> <code>serviceBodyIds</code> フィルターは位置検索に影響しません; 結果は完全に近接度によって決まります。",
       "geolocationRadius": "位置情報を使用する際の最大検索半径です。現在地周辺の距離プルダウンの上限として機能し、この値を超えるオプションは非表示になります。既定: <code>75</code>。",
@@ -208,7 +208,8 @@
       "fa": "ペルシア語",
       "pl": "ポーランド語",
       "ru": "ロシア語",
-      "ja": "日本語"
+      "ja": "日本語",
+      "fi": "フィンランド語"
     }
   },
   "geolocation": {
