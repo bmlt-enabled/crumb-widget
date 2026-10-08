@@ -1,6 +1,6 @@
 {
   "name": "crumb-widget",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Embeddable NA meeting finder widget for BMLT root servers, with list and map views, filtering, geolocation, and i18n",
   "keywords": [
     "bmlt",

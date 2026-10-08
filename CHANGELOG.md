@@ -1,4 +1,4 @@
-## Unreleased
+## 1.6.2 (October 8, 2026)
 
 - **Finnish translation** (`fi`) — widget UI and documentation page, plus a Finnish README. 14 languages total. BMLT has no Finnish `lang_enum`, so format names come from the server in its default language (same as Japanese)
 
