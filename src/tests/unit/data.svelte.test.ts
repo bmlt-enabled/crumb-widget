@@ -561,6 +561,28 @@ describe('raw query mode', () => {
     expect(dataState.meetings).toHaveLength(1);
   });
 
+  test('coerces numeric fields the raw passthrough leaves as strings (lat/lng/published)', async () => {
+    config.query = 'meeting_key=location_province&meeting_key_value=NC';
+    // rawQuery() is a verbatim passthrough, so it hands back BMLT's real JSON shape
+    // where these fields are strings — the structured client would have coerced them.
+    const stringyMeeting = rawMeeting({
+      latitude: '34.2148718' as unknown as number,
+      longitude: '-77.8625' as unknown as number,
+      published: '1' as unknown as number,
+      weekday_tinyint: '2' as unknown as number,
+      venue_type: '1' as unknown as number
+    });
+    mockRawQuery.mockResolvedValue({ meetings: [stringyMeeting], formats: [] });
+    await loadData('https://example.org/main_server');
+    const m = dataState.meetings[0]!;
+    expect(typeof m.latitude).toBe('number');
+    expect(m.latitude).toBeCloseTo(34.2148718);
+    expect(m.longitude).toBeCloseTo(-77.8625);
+    expect(m.published).toBe(1);
+    // Regression guard for `n.latitude.toFixed(6)` in the group key.
+    expect(() => m.latitude.toFixed(6)).not.toThrow();
+  });
+
   test('appends page_size and get_used_formats=1 if the embedder did not include them', async () => {
     config.query = 'weekdays=2';
     mockRawQuery.mockResolvedValue({ meetings: [], formats: [] });

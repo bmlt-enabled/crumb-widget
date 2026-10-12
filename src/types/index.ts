@@ -69,7 +69,7 @@ export interface AppConfig {
   inlineFormats: string[];
   /** Template URL for the "Update meeting info" link (see {@link CrumbWidgetConfig.updateUrl}). */
   updateUrl?: string;
-  /** Raw BMLT query string passed through to `client.rawQuery()` verbatim. */
+  /** Raw BMLT query string passed through to `client.rawQuery()` verbatim; must include `switcher=GetSearchResults`. */
   query?: string;
   /**
    * Virtual-meeting finder mode: load virtual + hybrid meetings from across
@@ -251,7 +251,9 @@ export interface CrumbWidgetConfig {
    */
   updateUrl?: string;
   /**
-   * Raw BMLT query string passed through to `client.rawQuery()` (e.g. `"meeting_key=location_nation&meeting_key_value[]=USA"`).
+   * Raw BMLT query string passed through to `client.rawQuery()`. It must name the
+   * GetSearchResults switcher — the widget does not add one — e.g.
+   * `"switcher=GetSearchResults&meeting_key=location_nation&meeting_key_value[]=USA"`.
    * Replaces the default service-body-based load entirely. When set, geolocation is forced off —
    * "Near Me", typed-location search, and "Search this area" are all disabled to avoid layering
    * `lat_val`/`long_val`/`geo_width` on top of the custom query. `get_used_formats=1` is appended

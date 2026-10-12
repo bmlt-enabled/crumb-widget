@@ -1,3 +1,7 @@
+## 1.6.3 (October 12, 2026)
+
+- **Fix raw-query (`query` / `data-query`) crashing on real server data** — the raw path hands BMLT's response straight through `rawQuery()`, which (unlike `searchMeetingsWithFormats()`) does not coerce the numeric fields the JSON interface returns as strings. Every meeting therefore arrived with a string `latitude`/`longitude`/`published`, and the group-key builder's `latitude.toFixed(6)` threw `n.latitude.toFixed is not a function`, leaving the widget stuck on "Loading meetings…". The raw path now normalizes those fields to numbers before rendering, matching the structured path. The unit mock had used numeric coordinates, so this went unnoticed since `query` shipped in 1.5.0; the test now uses string coordinates like the server actually sends. Also clarified in the docs that a raw `query` must include `switcher=GetSearchResults` — the widget does not add one
+
 ## 1.6.2 (October 8, 2026)
 
 - **Finnish translation** (`fi`) — widget UI and documentation page, plus a Finnish README. 14 languages total. BMLT has no Finnish `lang_enum`, so format names come from the server in its default language (same as Japanese)

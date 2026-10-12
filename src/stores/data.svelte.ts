@@ -132,6 +132,25 @@ function processMeetings(meetingsResp: Meeting[]): ProcessedMeeting[] {
   });
 }
 
+// rawQuery() is a verbatim passthrough: unlike searchMeetingsWithFormats() it does
+// not coerce BMLT's numeric fields, which the JSON interface returns as strings
+// (latitude "34.05", published "1", …). Downstream code trusts the Meeting type's
+// number fields as real numbers — e.g. latitude.toFixed() in the group key — so the
+// raw path must coerce them itself to hand processMeetings() the same shape the
+// structured path produces.
+const toFloat = (v: unknown): number => (typeof v === 'number' ? v : parseFloat(v as string));
+const toInt = (v: unknown): number => (typeof v === 'number' ? v : Number(v));
+function normalizeRawMeetings(meetings: Meeting[]): Meeting[] {
+  return meetings.map((m) => ({
+    ...m,
+    latitude: toFloat(m.latitude),
+    longitude: toFloat(m.longitude),
+    published: toInt(m.published),
+    weekday_tinyint: toInt(m.weekday_tinyint),
+    venue_type: toInt(m.venue_type)
+  }));
+}
+
 // Fill in service_body_name from a GetServiceBodies lookup for any meeting the
 // server did not supply one for. Used by the service_body column, the meeting
 // detail panel, and the service body filter. Best-effort: if the lookup fails
@@ -277,7 +296,7 @@ async function load(serverUrl: string, params: SearchParams, opts: { byId?: bool
         const { lang_enum: _omit, ...rest } = extras;
         resp = await client.rawQuery<MeetingsWithFormats>(buildRawQuery(config.query, rest));
       }
-      meetingsResp = resp.meetings;
+      meetingsResp = normalizeRawMeetings(resp.meetings);
       formatsResp = resp.formats;
     } else {
       const withFormatLock = !opts.byId && config.formatIds.length > 0 ? { ...params, formats: config.formatIds } : params;
