@@ -45,6 +45,8 @@ const baseConfig: AppConfig = {
   containerId: 'crumb-widget',
   columns: ['time', 'name', 'location', 'address'],
   geolocation: false,
+  geoApiApplication: 'crumb-widget',
+  geoApiUrl: 'https://geo.aws.bmlt.app',
   geolocationRadius: 75,
   distanceOptions: [5, 10, 15, 25, 50, 100],
   distanceUnit: 'mi',

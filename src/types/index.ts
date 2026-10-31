@@ -46,6 +46,16 @@ export interface AppConfig {
   columns: Column[];
   /** Whether to show "Near Me" + typed-location search. */
   geolocation: boolean;
+  /**
+   * Optional API key for the BMLT geocoding service (https://geo.aws.bmlt.app).
+   * When set, the typed-location search geocodes addresses through that service
+   * instead of Nominatim. Unset (the default) keeps Nominatim.
+   */
+  geoApiKey?: string;
+  /** Analytics identifier sent as the geo-api `application` param. Defaults to `'crumb-widget'`. */
+  geoApiApplication: string;
+  /** Base URL of the geo-api (override for self-hosted instances). Defaults to `'https://geo.aws.bmlt.app'`. */
+  geoApiUrl: string;
   /** Fixed radius (positive) or BMLT auto-radius (negative integer). */
   geolocationRadius: number;
   /** Distance options offered in the distance filter dropdown. */
@@ -193,8 +203,25 @@ export interface CrumbWidgetConfig {
   view?: 'list' | 'map' | 'both';
   /** Columns to show in the meeting list (order matters). */
   columns?: Column[];
-  /** Show Near Me + typed location search (city/zip via Nominatim). Defaults to true on the unconstrained aggregator. */
+  /** Show Near Me + typed location search. Geocoding uses Nominatim unless {@link CrumbWidgetConfig.geoApi} is set. Defaults to true on the unconstrained aggregator. */
   geolocation?: boolean;
+  /**
+   * Opt the typed-location search into the BMLT geocoding service
+   * (https://geo.aws.bmlt.app) instead of Nominatim. Only takes effect when a
+   * `key` is provided (register for one at geo.aws.bmlt.app). The key is sent
+   * from the browser, so it is public in the embed — that is expected: the
+   * service is browser-first and rate-limits per key/account. Equivalent
+   * attributes: `data-geo-api-key`, `data-geo-api-application`, `data-geo-api-url`
+   * (the attributes take precedence).
+   */
+  geoApi?: {
+    /** Bearer API key (`geo_...`). Presence enables the service. */
+    key?: string;
+    /** Analytics identifier. Defaults to `'crumb-widget'`. */
+    application?: string;
+    /** Base URL override for self-hosted instances. Defaults to `'https://geo.aws.bmlt.app'`. */
+    url?: string;
+  };
   /** Positive = fixed radius in miles/km. Negative integer = BMLT auto-radius: find roughly N nearby meetings. */
   geolocationRadius?: number;
   /** Values shown in the distance filter dropdown (in `distanceUnit`). */

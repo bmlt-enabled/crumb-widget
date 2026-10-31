@@ -2087,6 +2087,32 @@
                 </td>
               </tr>
               <tr>
+                <td>data-geo-api-key</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.geoApiKey">
+                  Opt the typed-location search into the <a href="https://geo.aws.bmlt.app" target="_blank" rel="noopener">BMLT geocoding service</a> instead of Nominatim. Set this to a
+                  <code>geo_…</code> API key (register for one at <a href="https://geo.aws.bmlt.app" target="_blank" rel="noopener">geo.aws.bmlt.app</a>). The service is cached, Google-backed, and
+                  purpose-built for BMLT apps. The key is sent from the browser, so it is public in the embed — that is expected: the service is browser-first and rate-limits per key and account. When
+                  unset, geocoding stays on Nominatim. Takes precedence over <code>CrumbWidgetConfig.geoApi.key</code>. <br /><em>Example:</em> <code>data-geo-api-key="geo_your_key_here"</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-geo-api-application</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.geoApiApplication">
+                  Analytics identifier sent with each geocoding request (only used when <code>data-geo-api-key</code> is set). Takes precedence over <code>CrumbWidgetConfig.geoApi.application</code>.
+                  Default: <code>crumb-widget</code>. <br /><em>Example:</em> <code>data-geo-api-application="my-site"</code>
+                </td>
+              </tr>
+              <tr>
+                <td>data-geo-api-url</td>
+                <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
+                <td data-i18n-html="attributes.geoApiUrl">
+                  Base URL of the geocoding service, for self-hosted instances (only used when <code>data-geo-api-key</code> is set). Takes precedence over <code>CrumbWidgetConfig.geoApi.url</code>.
+                  Default: <code>https://geo.aws.bmlt.app</code>. <br /><em>Example:</em> <code>data-geo-api-url="https://geo.example.org"</code>
+                </td>
+              </tr>
+              <tr>
                 <td>data-language</td>
                 <td><span class="badge badge-optional" data-i18n="badge.optional">Optional</span></td>
                 <td data-i18n-html="attributes.language">

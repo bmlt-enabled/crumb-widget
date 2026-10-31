@@ -623,4 +623,50 @@ describe('initConfig', () => {
       expect(config.geolocation).toBe(false);
     });
   });
+
+  describe('geo-api', () => {
+    test('geoApiKey is undefined by default with sensible defaults', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/' }));
+      expect(config.geoApiKey).toBeUndefined();
+      expect(config.geoApiApplication).toBe('crumb-widget');
+      expect(config.geoApiUrl).toBe('https://geo.aws.bmlt.app');
+    });
+
+    test('data-geo-api-key enables the service', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/', 'data-geo-api-key': 'geo_abc123' }));
+      expect(config.geoApiKey).toBe('geo_abc123');
+    });
+
+    test('blank data-geo-api-key stays undefined', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/', 'data-geo-api-key': '   ' }));
+      expect(config.geoApiKey).toBeUndefined();
+    });
+
+    test('data-geo-api-application and data-geo-api-url override defaults', () => {
+      initConfig(
+        makeElement({
+          'data-server': 'https://example.com/main_server/',
+          'data-geo-api-key': 'geo_abc123',
+          'data-geo-api-application': 'my-site',
+          'data-geo-api-url': 'https://geo.example.org/'
+        })
+      );
+      expect(config.geoApiApplication).toBe('my-site');
+      // trailing slash stripped so `${url}/api/geocode` is clean
+      expect(config.geoApiUrl).toBe('https://geo.example.org');
+    });
+
+    test('invalid data-geo-api-url falls back to the default', () => {
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/', 'data-geo-api-url': 'not-a-url' }));
+      expect(config.geoApiUrl).toBe('https://geo.aws.bmlt.app');
+    });
+
+    test('CrumbWidgetConfig.geoApi is read; data-* attributes take precedence', () => {
+      window.CrumbWidgetConfig = { geoApi: { key: 'geo_global', application: 'global-app', url: 'https://geo.global.org' } };
+      initConfig(makeElement({ 'data-server': 'https://example.com/main_server/', 'data-geo-api-key': 'geo_attr' }));
+      expect(config.geoApiKey).toBe('geo_attr');
+      expect(config.geoApiApplication).toBe('global-app');
+      expect(config.geoApiUrl).toBe('https://geo.global.org');
+    });
+  });
 });

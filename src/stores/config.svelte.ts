@@ -30,6 +30,8 @@ export const CONFIG_DEFAULTS = {
   view: 'list',
   columns: ALL_COLUMNS,
   geolocation: false,
+  geoApiApplication: 'crumb-widget',
+  geoApiUrl: 'https://geo.aws.bmlt.app',
   geolocationRadius: -50,
   distanceOptions: [5, 10, 15, 25, 50, 100],
   distanceUnit: 'mi',
@@ -119,6 +121,14 @@ export function initConfig(el: HTMLElement): void {
   config.geolocation = !config.query && !config.virtual && validBoolean('geolocation', geolocationAttr ?? globalCfg.geolocation, isAggregator && config.serviceBodyIds.length === 0);
   const geolocationRadiusAttr = el.getAttribute('data-geolocation-radius');
   config.geolocationRadius = validRadius('geolocationRadius', geolocationRadiusAttr != null ? parseFloat(geolocationRadiusAttr) : globalCfg.geolocationRadius, CONFIG_DEFAULTS.geolocationRadius);
+  // Optional BMLT geocoding service (https://geo.aws.bmlt.app). A key opts the typed-location
+  // search into that service instead of Nominatim; absent, geocoding stays on Nominatim.
+  // data-geo-api-* attributes override the CrumbWidgetConfig.geoApi object.
+  const geoApiKey = (el.getAttribute('data-geo-api-key') ?? globalCfg.geoApi?.key)?.trim();
+  config.geoApiKey = geoApiKey ? geoApiKey : undefined;
+  config.geoApiApplication = (el.getAttribute('data-geo-api-application') ?? globalCfg.geoApi?.application)?.trim() || CONFIG_DEFAULTS.geoApiApplication;
+  const geoApiUrl = validServerUrl(el.getAttribute('data-geo-api-url') ?? globalCfg.geoApi?.url);
+  config.geoApiUrl = (geoApiUrl || CONFIG_DEFAULTS.geoApiUrl).replace(/\/+$/, '');
   const distanceOptionsAttr = el.getAttribute('data-distance-options');
   config.distanceOptions = validDistanceOptions(
     distanceOptionsAttr != null

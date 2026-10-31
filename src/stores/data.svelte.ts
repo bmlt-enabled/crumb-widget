@@ -5,6 +5,8 @@ import type { Meeting, Format, MeetingsWithFormats } from 'bmlt-query-client';
 import { VENUE_TYPE } from '@/types';
 import type { ProcessedMeeting } from '@/types';
 import { formatTime, formatAddress, getTimeOfDay, sortMeetings, normalizeVirtualLink } from '@utils/format';
+import { geocodeViaGeoApi } from '@utils/geocode';
+import type { GeocodeResult } from '@utils/geocode';
 import { toViewerSchedule, viewerTimeZone } from '@utils/timezone';
 import { config } from '@stores/config.svelte';
 import { getLanguage, t } from '@stores/localization';
@@ -441,8 +443,35 @@ export async function loadDataByAddress(serverUrl: string, address: string, geoW
   let coords: { latitude: number; longitude: number };
   let displayName: string;
   try {
-    const client = new BmltClient({ serverURL: serverUrl });
-    const result = await client.geocodeAddress(trimmed);
+    let result: GeocodeResult | null;
+    if (config.geoApiKey) {
+      // Optional BMLT geocoding service instead of Nominatim. Any failure (bad/revoked
+      // key, rate limit, network, or no match) resolves to the "location not found"
+      // message below — we do not silently fall back to Nominatim. The console.warn
+      // helps embedders distinguish a geo-api misconfiguration from a genuine no-match.
+      try {
+        result = await geocodeViaGeoApi({
+          baseUrl: config.geoApiUrl,
+          apiKey: config.geoApiKey,
+          application: config.geoApiApplication,
+          search: trimmed,
+          language: getLanguage()
+        });
+      } catch (err) {
+        console.warn('[crumb-widget] geo-api geocode failed:', err);
+        result = null;
+      }
+    } else {
+      const client = new BmltClient({ serverURL: serverUrl });
+      result = await client.geocodeAddress(trimmed);
+    }
+    if (!result) {
+      if (request === activeRequest) {
+        dataState.error = get(t).locationNotFound;
+        dataState.loading = false;
+      }
+      return null;
+    }
     coords = result.coordinates;
     displayName = result.display_name;
   } catch (err) {
